@@ -1,0 +1,274 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a8e1e2d4383d9e4081fe3bdfd1bfed4, type: 3}
+  m_Name: PATATAS_BRAVAS_CONTROLLER
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: 114277858093761784}
+  - {fileID: 114073956426395334}
+  - {fileID: 114507523331420728}
+  - {fileID: 114357140570682068}
+  - {fileID: 114913048169967506}
+  SceneComponent: {fileID: 0}
+--- !u!114 &114073956426395334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
+  m_Name: Extract Position
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -40, y: -136}
+  ports:
+    keys:
+    - gameObjectIntoNode
+    - positionExtracted
+    values:
+    - _fieldName: gameObjectIntoNode
+      _node: {fileID: 114073956426395334}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: GameObjectFromScene
+        node: {fileID: 114277858093761784}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: positionExtracted
+      _node: {fileID: 114073956426395334}
+      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: InputFeatures
+        node: {fileID: 114507523331420728}
+        reroutePoints: []
+      - fieldName: InputFeatures
+        node: {fileID: 114357140570682068}
+        reroutePoints:
+        - {x: 346.48035, y: 351.62622}
+        - {x: 496.5758, y: 337.33142}
+        - {x: 643.0976, y: 358.77365}
+        - {x: 832.5038, y: 315.88922}
+        - {x: 644.8844, y: 298.02072}
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  gameObjectIntoNode: {fileID: 0}
+  positionExtracted: {fileID: 0}
+  m_PositionExtracted:
+    m_Values:
+    - 0.86
+    - -2.46
+    - -0.44471583
+--- !u!114 &114277858093761784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
+  m_Name: Game Object Node
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -392, y: -120}
+  ports:
+    keys:
+    - GameObjectFromScene
+    values:
+    - _fieldName: GameObjectFromScene
+      _node: {fileID: 114277858093761784}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: gameObjectIntoNode
+        node: {fileID: 114073956426395334}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  GameObjectFromScene: {fileID: 0}
+--- !u!114 &114357140570682068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
+  m_Name: IML Configuration
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1032, y: -248}
+  ports:
+    keys:
+    - IMLTrainingExamplesNodes
+    - InputFeatures
+    - ModelOutput
+    values:
+    - _fieldName: IMLTrainingExamplesNodes
+      _node: {fileID: 114357140570682068}
+      _typeQualifiedName: System.Collections.Generic.List`1[[IMLGoldsmiths.TrainingExamplesNode,
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
+        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: TrainingExamplesNodeToOutput
+        node: {fileID: 114507523331420728}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: InputFeatures
+      _node: {fileID: 114357140570682068}
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: positionExtracted
+        node: {fileID: 114073956426395334}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: ModelOutput
+      _node: {fileID: 114357140570682068}
+      _typeQualifiedName: IMLGoldsmiths.IMLConfiguration, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: IMLModelOutputs
+        node: {fileID: 114913048169967506}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  IMLTrainingExamplesNodes:
+  - {fileID: 114507523331420728}
+  InputFeatures:
+  - {fileID: 114073956426395334}
+  ModelOutput: {fileID: 0}
+  PredictedRapidlibOutput:
+  - 1
+  DelayedPredictedOutput:
+  - 1
+  m_ExpectedInputList: 03000000
+  m_ExpectedOutputList: 00000000
+  m_LearningType: 0
+  RapidLibComponent: {fileID: 0}
+--- !u!114 &114507523331420728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
+  m_Name: Training Examples Node
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 277.1408, y: -263.3182}
+  ports:
+    keys:
+    - InputFeatures
+    - TrainingExamplesNodeToOutput
+    values:
+    - _fieldName: InputFeatures
+      _node: {fileID: 114507523331420728}
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: positionExtracted
+        node: {fileID: 114073956426395334}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: TrainingExamplesNodeToOutput
+      _node: {fileID: 114507523331420728}
+      _typeQualifiedName: IMLGoldsmiths.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: IMLTrainingExamplesNodes
+        node: {fileID: 114357140570682068}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  InputFeatures:
+  - {fileID: 114073956426395334}
+  TrainingExamplesNodeToOutput: {fileID: 114507523331420728}
+  TrainingExamplesVector: []
+  m_DesiredInputsConfig: 03000000
+  m_DesiredOutputsConfig: 00000000
+  IMLConfigurationNodesConnected: []
+  StartDelay: 0
+  CaptureRate: 10
+  RecordTime: -1
+  EnableCollectDataShortcut: 0
+--- !u!114 &114913048169967506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
+  m_Name: Realtime IML Output Node
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1764.2927, y: -158.48094}
+  ports:
+    keys:
+    - IMLModelOutputs
+    values:
+    - _fieldName: IMLModelOutputs
+      _node: {fileID: 114913048169967506}
+      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: ModelOutput
+        node: {fileID: 114357140570682068}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  IMLModelOutputs: {fileID: 0}
+  m_IMLOutputVector:
+  - 1

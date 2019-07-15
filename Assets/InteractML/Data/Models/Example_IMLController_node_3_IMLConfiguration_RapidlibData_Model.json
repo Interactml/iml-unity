@@ -1,0 +1,54 @@
+{
+   "metadata" : {
+      "creator" : "Rapid API C++",
+      "inputNames" : [ "inputs-1", "inputs-2", "inputs-3" ],
+      "numInputs" : 3,
+      "numOutputs" : 1,
+      "version" : "v0.1.1"
+   },
+   "modelSet" : [
+      {
+         "inBases" : [ 0.42000007629394531, 0.085000038146972656, 1.8400000482797623 ],
+         "inRanges" : [ 7.119999885559082, 5.804999828338623, 2.3100000470876694 ],
+         "inputNames" : [ "inputs-1", "inputs-2", "inputs-3" ],
+         "modelType" : "Neural Network",
+         "nodes" : [
+            {
+               "Node 1" : -2.1185091379181977,
+               "Node 2" : 3.6920224627591285,
+               "Node 3" : -0.6064263882953902,
+               "Threshold" : 1.4897717370174979,
+               "name" : "Linear Node 0"
+            },
+            {
+               "Attrib inputs-1" : 7.6087725725304658,
+               "Attrib inputs-2" : -0.40489160636672877,
+               "Attrib inputs-3" : 19.598365891423182,
+               "Threshold" : 12.794226906414377,
+               "name" : "Sigmoid Node 1"
+            },
+            {
+               "Attrib inputs-1" : 3.0393474953525272,
+               "Attrib inputs-2" : -0.12889605190093473,
+               "Attrib inputs-3" : -9.411483736293242,
+               "Threshold" : -11.59726720674384,
+               "name" : "Sigmoid Node 2"
+            },
+            {
+               "Attrib inputs-1" : -6.0857571319793085,
+               "Attrib inputs-2" : 9.4008491007547654,
+               "Attrib inputs-3" : 1.3542822618580921,
+               "Threshold" : -3.5261113622193201,
+               "name" : "Sigmoid Node 3"
+            }
+         ],
+         "numHiddenLayers" : 1,
+         "numHiddenNodes" : 3,
+         "numHiddenOutputs" : 1,
+         "numInputs" : 3,
+         "outBase" : 2.5,
+         "outRange" : 2.5,
+         "whichInputs" : [ 0, 1, 2 ]
+      }
+   ]
+}

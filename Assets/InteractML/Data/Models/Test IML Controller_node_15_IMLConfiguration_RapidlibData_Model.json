@@ -1,0 +1,36 @@
+{
+   "metadata" : {
+      "creator" : "Rapid API C++",
+      "inputNames" : [ "inputs-1" ],
+      "numInputs" : 1,
+      "numOutputs" : 1,
+      "version" : "v0.1.1"
+   },
+   "modelSet" : [
+      {
+         "inBases" : [ 4 ],
+         "inRanges" : [ 3 ],
+         "inputNames" : [ "inputs-1" ],
+         "modelType" : "Neural Network",
+         "nodes" : [
+            {
+               "Node 1" : 2.6407997182675285,
+               "Threshold" : -1.4716500687104515,
+               "name" : "Linear Node 0"
+            },
+            {
+               "Attrib inputs-1" : 2.1037798236905081,
+               "Threshold" : 0.57807676897474025,
+               "name" : "Sigmoid Node 1"
+            }
+         ],
+         "numHiddenLayers" : 1,
+         "numHiddenNodes" : 1,
+         "numHiddenOutputs" : 1,
+         "numInputs" : 1,
+         "outBase" : 4,
+         "outRange" : 3,
+         "whichInputs" : [ 0 ]
+      }
+   ]
+}
