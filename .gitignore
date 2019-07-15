@@ -1,0 +1,61 @@
+############
+## Windows
+############
+
+# Windows image file caches
+Thumbs.db
+
+#############
+# OS X only:
+#############
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+
+##################
+# Unity ignores:
+#
+# !!! WARNING !!!
+#
+# Åc you MUST convert Unity to using Metafiles *before* you start using this
+#  .gitignore file, or you WILL lose data!
+#
+
+Temp/
+Obj/
+UnityGenerated/
+Library/
+# Builds folder
+Builds/
+Video/
+
+# include meta files
+!*.*.meta
+
+# ===================================== #
+# Visual Studio / MonoDevelop generated #
+# ===================================== #
+ExportedObj/
+*.svd
+*.userprefs
+*.csproj
+*.pidb
+*.suo
+*.sln
+*.user
+*.unityproj
+*.booproj
+*.pdb
+
+# ===================================== #
+# Custom ignored folders for InteractML #
+# ===================================== #
+Packages/
+Assets/OpenCVForUnity/
+
+ 
