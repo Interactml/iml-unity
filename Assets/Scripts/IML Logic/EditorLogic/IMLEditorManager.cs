@@ -89,8 +89,10 @@ public class IMLEditorManager
             {                
                 // Reset them
                 component.ResetAllModels();
-                // Re-Train them
+                // Re-Train them (if marked with Retrain)
                 component.ReTrainAllModels();
+                // Run them (if marked with RunOnAwake)
+                component.RunAllModels();
             }
             //Debug.Log("**Models reconfigured in editor status: " + playModeStatus + "**");
         }

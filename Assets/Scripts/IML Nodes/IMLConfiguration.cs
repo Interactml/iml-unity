@@ -95,8 +95,12 @@ namespace InteractML
         /// <summary>
         /// Flag that controls if the iml model should be trained when entering/leaving playmode
         /// </summary>
-        [HideInInspector]
         public bool TrainOnPlaymodeChange;
+
+        /// <summary>
+        /// Flag that controls if the iml model should run when the game awakes 
+        /// </summary>
+        public bool RunOnAwake;
 
         #endregion
 

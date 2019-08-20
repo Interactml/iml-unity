@@ -147,7 +147,8 @@ MonoBehaviour:
   m_ExpectedOutputList: 00000000
   m_LearningType: 1
   RapidLibComponent: {fileID: 0}
-  TrainOnPlaymodeChange: 0
+  TrainOnPlaymodeChange: 1
+  RunOnAwake: 1
 --- !u!114 &114644513291579226
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,6 +16,11 @@ public class SineWaveExample : MonoBehaviour
     AudioSource audioSource;
     int timeIndex = 0;
 
+    /// <summary>
+    /// Flag to control if the sound can play
+    /// </summary>
+    public bool canPlay;
+
     void Start()
     {
         audioSource = gameObject.AddComponent<AudioSource>();
@@ -27,6 +32,8 @@ public class SineWaveExample : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
+            canPlay = !canPlay;
+        if (canPlay)
         {
             if (!audioSource.isPlaying)
             {

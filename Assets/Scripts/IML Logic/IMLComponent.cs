@@ -218,6 +218,9 @@ namespace InteractML
 
                 // Retrain them
                 ReTrainAllModels();
+
+                // Run the models
+                RunAllModels();
             }
 
 #endif
@@ -854,11 +857,28 @@ namespace InteractML
         /// </summary>
         public void ReTrainAllModels()
         {
-            //Debug.Log("**Retraining all models...**");
+            Debug.Log("**Retraining all models...**");
 
             //// COROUTINE APPROACH
             IEnumerator coroutineToStart = ReTrainAllModelsCoroutine();
             StartCoroutine(coroutineToStart);
+        }
+
+        /// <summary>
+        /// Runs all models that are marked with RunOnAwake
+        /// </summary>
+        public void RunAllModels()
+        {
+            foreach (var imlConfigNode in IMLConfigurationNodesList)
+            {
+                if (imlConfigNode)
+                {
+                    // Only eun if the flag is marked to do so
+                    if (imlConfigNode.RunOnAwake)
+                        imlConfigNode.ToggleRunning();
+                }
+            }
+
         }
 
         /// <summary>
