@@ -37,7 +37,7 @@ MonoBehaviour:
   - {fileID: 114811611838066988}
   - {fileID: 114247239337280674}
   - {fileID: 114871194921193606}
-  - {fileID: 114792826287429054}
+  - {fileID: 114324581167178174}
   SceneComponent: {fileID: 0}
 --- !u!114 &114010043976543316
 MonoBehaviour:
@@ -196,7 +196,8 @@ MonoBehaviour:
   m_ExpectedOutputList: 00000000
   m_LearningType: 0
   RapidLibComponent: {fileID: 0}
-  TrainOnPlaymodeChange: 0
+  TrainOnPlaymodeChange: 1
+  RunOnAwake: 1
 --- !u!114 &114243934175305422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,7 +244,7 @@ MonoBehaviour:
   m_Name: Extract Rotation
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -200, y: -1192}
+  position: {x: -200, y: -1144}
   ports:
     keys:
     - gameObjectIntoNode
@@ -265,7 +266,15 @@ MonoBehaviour:
       _node: {fileID: 114247239337280674}
       _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: InputFeatures
+        node: {fileID: 114929005190181280}
+        reroutePoints: []
+      - fieldName: InputFeatures
+        node: {fileID: 114948667100810690}
+        reroutePoints:
+        - {x: 583, y: -1137}
+        - {x: 1068, y: -1106}
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -382,7 +391,31 @@ MonoBehaviour:
     keys: []
     values: []
   DevMode: 0
-  note: 'LEAP MOTION PALM AND FINGERS
+  note: 'LEAP MOTION LEFT FINGERS
+
+
+
+'
+--- !u!114 &114324581167178174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -520, y: -1512}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: 'LEAP MOTION RIGHT PALM
+
 
 
 
@@ -824,62 +857,6 @@ MonoBehaviour:
     - 0.15585816
     - 0.1633849
     - 0.178385
---- !u!114 &114792826287429054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
-  m_Name: Extract Position
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -216, y: -1048}
-  ports:
-    keys:
-    - gameObjectIntoNode
-    - positionExtracted
-    values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 114792826287429054}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
-      _node: {fileID: 114792826287429054}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections:
-      - fieldName: InputFeatures
-        node: {fileID: 114929005190181280}
-        reroutePoints: []
-      - fieldName: InputFeatures
-        node: {fileID: 114948667100810690}
-        reroutePoints:
-        - {x: 687.1109, y: -1129.6863}
-        - {x: 1046.4069, y: -1070.7972}
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
-  m_PositionExtracted:
-    m_Values:
-    - 0.28638566
-    - -0.17923765
-    - -0.09187639
 --- !u!114 &114811611838066988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1090,8 +1067,8 @@ MonoBehaviour:
       - fieldName: positionExtracted
         node: {fileID: 114811611838066988}
         reroutePoints: []
-      - fieldName: positionExtracted
-        node: {fileID: 114792826287429054}
+      - fieldName: rotationExtracted
+        node: {fileID: 114247239337280674}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1112,10 +1089,10 @@ MonoBehaviour:
   DevMode: 0
   InputFeatures:
   - {fileID: 114811611838066988}
-  - {fileID: 114792826287429054}
+  - {fileID: 114247239337280674}
   TrainingExamplesNodeToOutput: {fileID: 114929005190181280}
   TrainingExamplesVector: []
-  m_DesiredInputsConfig: 0300000003000000
+  m_DesiredInputsConfig: 0300000004000000
   m_DesiredOutputsConfig: 00000000
   IMLConfigurationNodesConnected: []
   StartDelay: 0
@@ -1164,8 +1141,8 @@ MonoBehaviour:
       - fieldName: positionExtracted
         node: {fileID: 114811611838066988}
         reroutePoints: []
-      - fieldName: positionExtracted
-        node: {fileID: 114792826287429054}
+      - fieldName: rotationExtracted
+        node: {fileID: 114247239337280674}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1188,14 +1165,15 @@ MonoBehaviour:
   - {fileID: 114929005190181280}
   InputFeatures:
   - {fileID: 114811611838066988}
-  - {fileID: 114792826287429054}
+  - {fileID: 114247239337280674}
   ModelOutput: {fileID: 0}
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
   - 0
-  m_ExpectedInputList: 0300000003000000
+  m_ExpectedInputList: 0300000004000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 0
   RapidLibComponent: {fileID: 0}
-  TrainOnPlaymodeChange: 0
+  TrainOnPlaymodeChange: 1
+  RunOnAwake: 1

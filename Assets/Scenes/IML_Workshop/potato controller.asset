@@ -147,7 +147,7 @@ MonoBehaviour:
   m_ExpectedOutputList: 00000000
   m_LearningType: 1
   RapidLibComponent: {fileID: 0}
-  TrainOnPlaymodeChange: 1
+  TrainOnPlaymodeChange: 0
   RunOnAwake: 1
 --- !u!114 &114644513291579226
 MonoBehaviour:
@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Name: Game Object Node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -536, y: -200}
+  position: {x: -792, y: -248}
   ports:
     keys:
     - GameObjectFromScene
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Name: Extract Position
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -248, y: -168}
+  position: {x: -488, y: -216}
   ports:
     keys:
     - gameObjectIntoNode
@@ -253,11 +253,14 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
-        node: {fileID: 114602802440798334}
-        reroutePoints: []
-      - fieldName: InputFeatures
         node: {fileID: 114426497703847202}
         reroutePoints: []
+      - fieldName: InputFeatures
+        node: {fileID: 114602802440798334}
+        reroutePoints:
+        - {x: -111.800186, y: -30.014053}
+        - {x: 79.46103, y: 172.03177}
+        - {x: 614.82, y: 170.17537}
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0

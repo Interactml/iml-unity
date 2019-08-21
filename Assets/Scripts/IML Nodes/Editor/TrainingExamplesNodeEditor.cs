@@ -51,6 +51,9 @@ namespace InteractML
             // RECORD EXAMPLES BUTTON 
             ShowRecordExamplesButton();
 
+            // RECORD ONE SINGLE EXAMPLE BUTTON
+            ShowRecordOneExampleButton();
+
             // CLEAR ALL TRAINING EXAMPLES BUTTON
             ShowClearAllExamplesButton();
 
@@ -79,6 +82,62 @@ namespace InteractML
             EditorGUILayout.LabelField("Total No. Training Examples: ", numberExamplesText);
 
             EditorGUILayout.LabelField("Total No. Desired Outputs: ", m_TrainingExamplesNode.DesiredOutputFeatures.Count.ToString());
+
+        }
+
+        private void ShowRecordOneExampleButton()
+        {
+            // Only run button logic when there are features to extract from
+            if (!Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.InputFeatures))
+            {
+                string nameButton = "";
+
+                if (m_TrainingExamplesNode.CollectingData)
+                    nameButton = "STOP Recording Example";
+                else
+                    nameButton = "Record ONE Example";
+
+                bool disableButton = false;
+
+                // If there are any models connected we check some conditions
+                if (!Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.IMLConfigurationNodesConnected))
+                {
+                    for (int i = 0; i < m_TrainingExamplesNode.IMLConfigurationNodesConnected.Count; i++)
+                    {
+                        var IMLConfigNodeConnected = m_TrainingExamplesNode.IMLConfigurationNodesConnected[i];
+                        // Disable button if model(s) connected are runnning or training
+                        if (IMLConfigNodeConnected.Running || IMLConfigNodeConnected.Training)
+                        {
+                            disableButton = true;
+                            break;
+                        }
+
+                    }
+                }
+
+                // Draw button
+                if (disableButton)
+                    GUI.enabled = false;
+                if (GUILayout.Button(nameButton))
+                {
+                    m_TrainingExamplesNode.AddSingleTrainingExample();
+                }
+                // Always enable it back at the end
+                GUI.enabled = true;
+
+
+            }
+            // If there are no features to extract from we draw a disabled button
+            else
+            {
+                GUI.enabled = false;
+                if (GUILayout.Button("Record Examples"))
+                {
+                    m_TrainingExamplesNode.ToggleCollectExamples();
+                }
+                GUI.enabled = true;
+
+            }
 
         }
 

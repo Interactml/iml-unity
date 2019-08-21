@@ -182,6 +182,14 @@ namespace InteractML
         }
 
         /// <summary>
+        /// Adds a single training example to the node's list
+        /// </summary>
+        public void AddSingleTrainingExample()
+        {
+            AddTrainingExamplePrivate();
+        }
+
+        /// <summary>
         /// Update logic per node
         /// </summary>
         public void UpdateLogic()
@@ -371,7 +379,7 @@ namespace InteractML
                 else if (!Application.isPlaying || Time.time >= m_TimeToNextCapture)
                 {
                     ////Debug.Log ("recording");
-                    AddTrainingExample();
+                    AddTrainingExamplePrivate();
                     m_TimeToNextCapture = Time.time + 1.0f / CaptureRate;
                 }
 
@@ -382,7 +390,7 @@ namespace InteractML
         /// <summary>
         /// Adds a single training example 
         /// </summary>
-        private void AddTrainingExample()
+        private void AddTrainingExamplePrivate()
         {
             // Declare new example to add to vector
             IMLTrainingExample newExample = new IMLTrainingExample();
