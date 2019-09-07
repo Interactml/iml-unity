@@ -38,6 +38,7 @@ MonoBehaviour:
   - {fileID: 114247239337280674}
   - {fileID: 114871194921193606}
   - {fileID: 114324581167178174}
+  - {fileID: 114053878440522792}
   SceneComponent: {fileID: 0}
 --- !u!114 &114010043976543316
 MonoBehaviour:
@@ -121,9 +122,52 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.2932173
-    - -0.18033138
-    - 0.07319397
+    - 0.38158122
+    - 0.29816076
+    - 0.6071545
+--- !u!114 &114053878440522792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051a7e150efca304da37d460de663b87, type: 3}
+  m_Name: Extract Velocity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -30.833647, y: -809.59625}
+  ports:
+    keys:
+    - FeatureToInput
+    - VelocityExtracted
+    values:
+    - _fieldName: FeatureToInput
+      _node: {fileID: 114053878440522792}
+      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: VelocityExtracted
+      _node: {fileID: 114053878440522792}
+      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  FeatureToInput: {fileID: 0}
+  VelocityExtracted: {fileID: 0}
+  m_VelocityExtracted:
+    m_Values: []
+  m_LastFrameFeatureValue: []
 --- !u!114 &114108558201034724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,10 +328,10 @@ MonoBehaviour:
   rotationExtracted: {fileID: 0}
   m_RotationExtracted:
     m_Values:
-    - -0.0047781384
-    - 0.71753776
-    - 0.0045702844
-    - 0.69648826
+    - 0.2958209
+    - -0.5050427
+    - -0.5361081
+    - 0.6082845
   GameObjInputMissing: 0
 --- !u!114 &114255138219269668
 MonoBehaviour:
@@ -337,9 +381,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.069080405
-    - 0.164717
-    - 0.16853167
+    - 0.41254547
+    - 0.25457096
+    - 0.5628902
 --- !u!114 &114260423947491974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,9 +512,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.012643484
-    - 0.12756705
-    - 0.05364634
+    - 0.4077213
+    - 0.3255415
+    - 0.54817235
 --- !u!114 &114383917118793088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -664,7 +708,7 @@ MonoBehaviour:
   note: 'OPEN/CLOSING HAND
 
 
-    OUTPUT: 8 (Attack1)'
+    OUTPUT: 8 (Stun)'
 --- !u!114 &114663350036161056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -713,9 +757,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.10321554
-    - 0.16357322
-    - 0.11175693
+    - 0.45059222
+    - 0.2843867
+    - 0.52725184
 --- !u!114 &114681883242046384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -764,9 +808,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.09370983
-    - 0.16404256
-    - 0.14382152
+    - 0.42989233
+    - 0.2713521
+    - 0.5345287
 --- !u!114 &114762007122857022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -852,11 +896,11 @@ MonoBehaviour:
   DistanceExtracted: {fileID: 0}
   m_DistancesExtracted:
     m_Values:
-    - 0.17390522
-    - 0.15841772
-    - 0.15585816
-    - 0.1633849
-    - 0.178385
+    - 0.0049119014
+    - 0.010099871
+    - 0.011336677
+    - 0.008327177
+    - 0.0048181857
 --- !u!114 &114811611838066988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -909,9 +953,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.2932173
-    - -0.18033138
-    - 0.07319397
+    - 0.38158122
+    - 0.29816076
+    - 0.6071545
 --- !u!114 &114849844208104980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -960,9 +1004,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.09181025
-    - 0.16284208
-    - 0.082408115
+    - 0.45810494
+    - 0.30086663
+    - 0.5420648
 --- !u!114 &114870395820478542
 MonoBehaviour:
   m_ObjectHideFlags: 0

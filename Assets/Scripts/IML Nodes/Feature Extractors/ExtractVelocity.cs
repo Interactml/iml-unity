@@ -106,6 +106,14 @@ namespace InteractML.FeatureExtractors
                     if (!isUpdated)
                     {
 
+                        // We check in case the input feature length changed
+                        if (m_CurrentVelocity == null || m_CurrentVelocity.Length != featureToUse.Values.Length)
+                        {
+                            // If it did, we resize the current vel vector and lastframe vector
+                            m_CurrentVelocity = new float[featureToUse.Values.Length];
+                            m_LastFrameFeatureValue = null;
+                        }
+
                         if (m_LastFrameFeatureValue == null || m_LastFrameFeatureValue.Length != m_CurrentVelocity.Length)
                         {
                             if (m_CurrentVelocity == null)

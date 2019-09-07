@@ -145,7 +145,7 @@ MonoBehaviour:
   - 0
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 00000000
-  m_LearningType: 1
+  m_LearningType: 0
   RapidLibComponent: {fileID: 0}
   TrainOnPlaymodeChange: 0
   RunOnAwake: 1
@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Name: Game Object Node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -792, y: -248}
+  position: {x: -1064, y: -248}
   ports:
     keys:
     - GameObjectFromScene
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Name: Extract Position
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -488, y: -216}
+  position: {x: -824, y: -216}
   ports:
     keys:
     - gameObjectIntoNode
@@ -261,6 +261,9 @@ MonoBehaviour:
         - {x: -111.800186, y: -30.014053}
         - {x: 79.46103, y: 172.03177}
         - {x: 614.82, y: 170.17537}
+      - fieldName: FeatureToInput
+        node: {fileID: 0}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
