@@ -64,11 +64,10 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  InputFeatures:
-  - {fileID: 114861695977173522}
+  InputFeatures: []
   TrainingExamplesNodeToOutput: {fileID: 114426497703847202}
   TrainingExamplesVector: []
-  m_DesiredInputsConfig: 03000000
+  m_DesiredInputsConfig: 
   m_DesiredOutputsConfig: 00000000
   IMLConfigurationNodesConnected: []
   StartDelay: 0
@@ -253,16 +252,13 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
-        node: {fileID: 114426497703847202}
-        reroutePoints: []
-      - fieldName: InputFeatures
         node: {fileID: 114602802440798334}
         reroutePoints:
         - {x: -111.800186, y: -30.014053}
         - {x: 79.46103, y: 172.03177}
         - {x: 614.82, y: 170.17537}
-      - fieldName: FeatureToInput
-        node: {fileID: 0}
+      - fieldName: InputFeatures
+        node: {fileID: 114426497703847202}
         reroutePoints: []
       _direction: 1
       _connectionType: 0

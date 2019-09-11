@@ -144,13 +144,13 @@ namespace InteractML.FeatureExtractors
 
                         featureToUse.Values.CopyTo(m_LastFrameFeatureValue, 0);
 
-                        for (int i = 0; i < m_CurrentVelocity.Length; i++)
-                        {
-                            Debug.Log(i + " = " + m_CurrentVelocity[i]);
+                        //for (int i = 0; i < m_CurrentVelocity.Length; i++)
+                        //{
+                        //    //Debug.Log(i + " = " + m_CurrentVelocity[i]);
 
-                            // Store last known feature values for next frame
-                            //m_LastFrameFeatureValue[i] = featureToUse.Values[i];
-                        }
+                        //    // Store last known feature values for next frame
+                        //    //m_LastFrameFeatureValue[i] = featureToUse.Values[i];
+                        //}
 
                         // Make sure to mark the feature as updated to avoid calculating twice
                         isUpdated = true;
