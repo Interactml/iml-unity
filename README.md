@@ -14,6 +14,6 @@ InteractML is an Unity3d Plugin that enables developers to configure, train, and
 * Supported from Unity 5.3 and up
 
 ### Limitations
-* Windows only (for the moment)
+* Windows/Mac compatibility (Mac only supports classification at the moment)
 * Alpha stage
 
