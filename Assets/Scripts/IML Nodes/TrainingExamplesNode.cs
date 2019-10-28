@@ -127,12 +127,12 @@ namespace InteractML
 
         #region Unity Messages
 
-        public void OnValidate()
-        {
-            // Check that the output list is being updated properly
-            //UpdateOutputsList();
+        //public void OnValidate()
+        //{
+        //    // Check that the output list is being updated properly
+        //    //UpdateOutputsList();
 
-        }
+        //}
 
         private void OnDestroy()
         {

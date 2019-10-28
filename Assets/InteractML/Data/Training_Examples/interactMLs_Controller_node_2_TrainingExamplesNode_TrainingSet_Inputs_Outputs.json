@@ -5,7 +5,7 @@
         "InputType": 0,
         "InputData": {
           "Values": [
-            1.0
+            3.0
           ],
           "DataType": 0
         }
@@ -16,7 +16,7 @@
         "OutputType": 0,
         "OutputData": {
           "Values": [
-            3.0
+            0.0
           ],
           "DataType": 0
         }
@@ -29,7 +29,7 @@
         "InputType": 0,
         "InputData": {
           "Values": [
-            5.0
+            12.0
           ],
           "DataType": 0
         }
@@ -40,7 +40,7 @@
         "OutputType": 0,
         "OutputData": {
           "Values": [
-            12.0
+            20.0
           ],
           "DataType": 0
         }

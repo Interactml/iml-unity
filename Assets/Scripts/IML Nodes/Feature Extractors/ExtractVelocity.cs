@@ -89,7 +89,7 @@ namespace InteractML.FeatureExtractors
         /// <returns></returns>
         public object UpdateFeature()
         {
-            Debug.Log("Extracting Velocity...");
+            //Debug.Log("Extracting Velocity...");
             // The velocity extractor expects any other feature extracted to make calculations
             FeatureToInput = GetInputValue<Node>("FeatureToInput");
             // If we managed to get the input

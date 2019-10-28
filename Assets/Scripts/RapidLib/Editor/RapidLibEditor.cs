@@ -2,7 +2,7 @@
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(RapidLib))]
+[CustomEditor(typeof(RapidLib))] //name of script you want to created in the editor as a component 
 [CanEditMultipleObjects]
 public class RapidLibEditor : Editor
 {
@@ -10,8 +10,7 @@ public class RapidLibEditor : Editor
 
     public override void OnInspectorGUI()
     {
-
-        // Show information about runtime keys for interaction
+         // Show information about runtime keys for interaction
         GUIStyle styleGUIBox = new GUIStyle(GUI.skin.box);
         styleGUIBox.richText = true;
         if ((target as RapidLib).AllowKeyboardShortcuts)

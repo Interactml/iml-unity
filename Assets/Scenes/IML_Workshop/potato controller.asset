@@ -32,7 +32,7 @@ MonoBehaviour:
   m_Name: Training Examples Node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 72, y: -344}
+  position: {x: -216, y: -280}
   ports:
     keys:
     - InputFeatures
@@ -64,10 +64,11 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  InputFeatures: []
+  InputFeatures:
+  - {fileID: 114861695977173522}
   TrainingExamplesNodeToOutput: {fileID: 114426497703847202}
   TrainingExamplesVector: []
-  m_DesiredInputsConfig: 
+  m_DesiredInputsConfig: 03000000
   m_DesiredOutputsConfig: 00000000
   IMLConfigurationNodesConnected: []
   StartDelay: 0
@@ -87,7 +88,7 @@ MonoBehaviour:
   m_Name: IML Configuration
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 744, y: -280}
+  position: {x: 408, y: -264}
   ports:
     keys:
     - IMLTrainingExamplesNodes
@@ -161,7 +162,7 @@ MonoBehaviour:
   m_Name: Realtime IML Output Node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1320, y: -248}
+  position: {x: 952, y: -232}
   ports:
     keys:
     - IMLModelOutputs
@@ -195,7 +196,7 @@ MonoBehaviour:
   m_Name: Game Object Node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1064, y: -248}
+  position: {x: -904, y: -216}
   ports:
     keys:
     - GameObjectFromScene
@@ -228,7 +229,7 @@ MonoBehaviour:
   m_Name: Extract Position
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -824, y: -216}
+  position: {x: -552, y: -216}
   ports:
     keys:
     - gameObjectIntoNode
@@ -252,13 +253,10 @@ MonoBehaviour:
         PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
-        node: {fileID: 114602802440798334}
-        reroutePoints:
-        - {x: -111.800186, y: -30.014053}
-        - {x: 79.46103, y: 172.03177}
-        - {x: 614.82, y: 170.17537}
-      - fieldName: InputFeatures
         node: {fileID: 114426497703847202}
+        reroutePoints: []
+      - fieldName: InputFeatures
+        node: {fileID: 114602802440798334}
         reroutePoints: []
       _direction: 1
       _connectionType: 0

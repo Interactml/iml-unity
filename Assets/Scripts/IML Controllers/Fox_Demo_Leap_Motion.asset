@@ -38,8 +38,49 @@ MonoBehaviour:
   - {fileID: 114247239337280674}
   - {fileID: 114871194921193606}
   - {fileID: 114324581167178174}
-  - {fileID: 114053878440522792}
+  - {fileID: 114964523626434266}
+  - {fileID: 114259514581295684}
+  - {fileID: 114313809726534684}
+  - {fileID: 114585773044923226}
+  - {fileID: 114387068067455594}
+  - {fileID: 114926250237349256}
+  - {fileID: 114243182286763708}
+  - {fileID: 114930582521853118}
+  - {fileID: 114037009951859728}
+  - {fileID: 114833012837605150}
+  - {fileID: 114683921223975454}
+  - {fileID: 114005986754164770}
+  - {fileID: 114542359165737036}
+  - {fileID: 114434660954448230}
   SceneComponent: {fileID: 0}
+--- !u!114 &114005986754164770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 600, y: -2056}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: 'ROTATING QUICKLY LEFT HAND
+
+
+    OUTPUTS:
+
+    No movement: 0 (Idle)
+
+    Rotating quickly: 10 (Fire1)
+
+'
 --- !u!114 &114010043976543316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,10 +163,10 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.38158122
-    - 0.29816076
-    - 0.6071545
---- !u!114 &114053878440522792
+    - 0.2932173
+    - -0.18033138
+    - 0.07319397
+--- !u!114 &114037009951859728
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,40 +175,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 051a7e150efca304da37d460de663b87, type: 3}
-  m_Name: Extract Velocity
+  m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
+  m_Name: Realtime IML Output Node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -30.833647, y: -809.59625}
+  position: {x: 1896, y: -2776}
   ports:
     keys:
-    - FeatureToInput
-    - VelocityExtracted
+    - IMLModelOutputs
     values:
-    - _fieldName: FeatureToInput
-      _node: {fileID: 114053878440522792}
+    - _fieldName: IMLModelOutputs
+      _node: {fileID: 114037009951859728}
       _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
         PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: ModelOutput
+        node: {fileID: 114930582521853118}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: VelocityExtracted
-      _node: {fileID: 114053878440522792}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
   DevMode: 0
-  FeatureToInput: {fileID: 0}
-  VelocityExtracted: {fileID: 0}
-  m_VelocityExtracted:
-    m_Values: []
-  m_LastFrameFeatureValue: []
+  IMLModelOutputs: {fileID: 0}
+  m_IMLOutputVector:
+  - 0
 --- !u!114 &114108558201034724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +274,32 @@ MonoBehaviour:
   RapidLibComponent: {fileID: 0}
   TrainOnPlaymodeChange: 1
   RunOnAwake: 1
+--- !u!114 &114243182286763708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 680, y: -2984}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: 'CLAPPING BOTH HANDS
+
+
+    OUTPUTS:
+
+    No clap = 0 (Idle)
+
+    Clapping = 5 (Jumping)'
 --- !u!114 &114243934175305422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,6 +377,9 @@ MonoBehaviour:
         reroutePoints:
         - {x: 583, y: -1137}
         - {x: 1068, y: -1106}
+      - fieldName: FeatureToInput
+        node: {fileID: 114833012837605150}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -328,10 +389,10 @@ MonoBehaviour:
   rotationExtracted: {fileID: 0}
   m_RotationExtracted:
     m_Values:
-    - 0.2958209
-    - -0.5050427
-    - -0.5361081
-    - 0.6082845
+    - -0.0047781384
+    - 0.71753776
+    - 0.0045702844
+    - 0.69648826
   GameObjInputMissing: 0
 --- !u!114 &114255138219269668
 MonoBehaviour:
@@ -381,9 +442,42 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.41254547
-    - 0.25457096
-    - 0.5628902
+    - 0.069080405
+    - 0.164717
+    - 0.16853167
+--- !u!114 &114259514581295684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
+  m_Name: Game Object Node
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -520, y: -2856}
+  ports:
+    keys:
+    - GameObjectFromScene
+    values:
+    - _fieldName: GameObjectFromScene
+      _node: {fileID: 114259514581295684}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: gameObjectIntoNode
+        node: {fileID: 114313809726534684}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  GameObjectFromScene: {fileID: 0}
+  GameObjMissing: 0
 --- !u!114 &114260423947491974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,6 +534,57 @@ MonoBehaviour:
 
 
 '
+--- !u!114 &114313809726534684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
+  m_Name: Extract Position
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -168, y: -2856}
+  ports:
+    keys:
+    - gameObjectIntoNode
+    - positionExtracted
+    values:
+    - _fieldName: gameObjectIntoNode
+      _node: {fileID: 114313809726534684}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: GameObjectFromScene
+        node: {fileID: 114259514581295684}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: positionExtracted
+      _node: {fileID: 114313809726534684}
+      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: FeatureToInput
+        node: {fileID: 114585773044923226}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  gameObjectIntoNode: {fileID: 0}
+  positionExtracted: {fileID: 0}
+  m_PositionExtracted:
+    m_Values:
+    - 0.28638566
+    - -0.17923765
+    - -0.09187639
 --- !u!114 &114324581167178174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,7 +603,7 @@ MonoBehaviour:
     keys: []
     values: []
   DevMode: 0
-  note: 'LEAP MOTION RIGHT PALM
+  note: 'LEAP MOTION LEFT PALM
 
 
 
@@ -512,9 +657,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.4077213
-    - 0.3255415
-    - 0.54817235
+    - 0.012643484
+    - 0.12756705
+    - 0.05364634
 --- !u!114 &114383917118793088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,6 +693,100 @@ MonoBehaviour:
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
   GameObjMissing: 0
+--- !u!114 &114387068067455594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051a7e150efca304da37d460de663b87, type: 3}
+  m_Name: Extract Velocity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 120, y: -2600}
+  ports:
+    keys:
+    - FeatureToInput
+    - VelocityExtracted
+    values:
+    - _fieldName: FeatureToInput
+      _node: {fileID: 114387068067455594}
+      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: positionExtracted
+        node: {fileID: 114811611838066988}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: VelocityExtracted
+      _node: {fileID: 114387068067455594}
+      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: InputFeatures
+        node: {fileID: 114926250237349256}
+        reroutePoints: []
+      - fieldName: InputFeatures
+        node: {fileID: 114930582521853118}
+        reroutePoints:
+        - {x: 416, y: -2992}
+        - {x: 1152, y: -2992}
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  FeatureToInput: {fileID: 114811611838066988}
+  VelocityExtracted: {fileID: 0}
+  m_VelocityExtracted:
+    m_Values:
+    - 0
+    - 0
+    - 0
+  m_LastFrameFeatureValue:
+  - 0.2932173
+  - -0.18033138
+  - 0.07319397
+--- !u!114 &114434660954448230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
+  m_Name: Realtime IML Output Node
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1784, y: -1848}
+  ports:
+    keys:
+    - IMLModelOutputs
+    values:
+    - _fieldName: IMLModelOutputs
+      _node: {fileID: 114434660954448230}
+      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: ModelOutput
+        node: {fileID: 114542359165737036}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  IMLModelOutputs: {fileID: 0}
+  m_IMLOutputVector:
+  - 0
 --- !u!114 &114473463963574854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -687,6 +926,140 @@ MonoBehaviour:
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
   GameObjMissing: 0
+--- !u!114 &114542359165737036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
+  m_Name: IML Configuration
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1192, y: -1880}
+  ports:
+    keys:
+    - IMLTrainingExamplesNodes
+    - InputFeatures
+    - ModelOutput
+    values:
+    - _fieldName: IMLTrainingExamplesNodes
+      _node: {fileID: 114542359165737036}
+      _typeQualifiedName: System.Collections.Generic.List`1[[InteractML.TrainingExamplesNode,
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
+        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: TrainingExamplesNodeToOutput
+        node: {fileID: 114683921223975454}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: InputFeatures
+      _node: {fileID: 114542359165737036}
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: VelocityExtracted
+        node: {fileID: 114833012837605150}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: ModelOutput
+      _node: {fileID: 114542359165737036}
+      _typeQualifiedName: InteractML.IMLConfiguration, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: IMLModelOutputs
+        node: {fileID: 114434660954448230}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  IMLTrainingExamplesNodes:
+  - {fileID: 114683921223975454}
+  InputFeatures:
+  - {fileID: 114833012837605150}
+  ModelOutput: {fileID: 0}
+  PredictedRapidlibOutput:
+  - 0
+  DelayedPredictedOutput:
+  - 0
+  m_ExpectedInputList: 05000000
+  m_ExpectedOutputList: 00000000
+  m_LearningType: 0
+  RapidLibComponent: {fileID: 0}
+  TrainOnPlaymodeChange: 1
+  RunOnAwake: 0
+--- !u!114 &114585773044923226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051a7e150efca304da37d460de663b87, type: 3}
+  m_Name: Extract Velocity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 120, y: -2840}
+  ports:
+    keys:
+    - FeatureToInput
+    - VelocityExtracted
+    values:
+    - _fieldName: FeatureToInput
+      _node: {fileID: 114585773044923226}
+      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: positionExtracted
+        node: {fileID: 114313809726534684}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: VelocityExtracted
+      _node: {fileID: 114585773044923226}
+      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: InputFeatures
+        node: {fileID: 114926250237349256}
+        reroutePoints: []
+      - fieldName: InputFeatures
+        node: {fileID: 114930582521853118}
+        reroutePoints:
+        - {x: 400, y: -3008}
+        - {x: 1152, y: -3008}
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  FeatureToInput: {fileID: 114313809726534684}
+  VelocityExtracted: {fileID: 0}
+  m_VelocityExtracted:
+    m_Values:
+    - 0
+    - 0
+    - 0
+  m_LastFrameFeatureValue:
+  - 0.28638566
+  - -0.17923765
+  - -0.09187639
 --- !u!114 &114624362103144972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -757,9 +1130,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.45059222
-    - 0.2843867
-    - 0.52725184
+    - 0.10321554
+    - 0.16357322
+    - 0.11175693
 --- !u!114 &114681883242046384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -808,9 +1181,65 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.42989233
-    - 0.2713521
-    - 0.5345287
+    - 0.09370983
+    - 0.16404256
+    - 0.14382152
+--- !u!114 &114683921223975454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
+  m_Name: Training Examples Node
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 456, y: -1896}
+  ports:
+    keys:
+    - InputFeatures
+    - TrainingExamplesNodeToOutput
+    values:
+    - _fieldName: InputFeatures
+      _node: {fileID: 114683921223975454}
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: VelocityExtracted
+        node: {fileID: 114833012837605150}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: TrainingExamplesNodeToOutput
+      _node: {fileID: 114683921223975454}
+      _typeQualifiedName: InteractML.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: IMLTrainingExamplesNodes
+        node: {fileID: 114542359165737036}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  InputFeatures:
+  - {fileID: 114833012837605150}
+  TrainingExamplesNodeToOutput: {fileID: 114683921223975454}
+  TrainingExamplesVector: []
+  m_DesiredInputsConfig: 05000000
+  m_DesiredOutputsConfig: 00000000
+  IMLConfigurationNodesConnected: []
+  StartDelay: 0
+  CaptureRate: 10
+  RecordTime: -1
+  EnableCollectDataShortcut: 0
 --- !u!114 &114762007122857022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -896,11 +1325,11 @@ MonoBehaviour:
   DistanceExtracted: {fileID: 0}
   m_DistancesExtracted:
     m_Values:
-    - 0.0049119014
-    - 0.010099871
-    - 0.011336677
-    - 0.008327177
-    - 0.0048181857
+    - 0.17390522
+    - 0.15841772
+    - 0.15585816
+    - 0.1633849
+    - 0.178385
 --- !u!114 &114811611838066988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -944,6 +1373,9 @@ MonoBehaviour:
         node: {fileID: 114948667100810690}
         reroutePoints:
         - {x: 1072.2957, y: -1137.6495}
+      - fieldName: FeatureToInput
+        node: {fileID: 114387068067455594}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -953,9 +1385,71 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.38158122
-    - 0.29816076
-    - 0.6071545
+    - 0.2932173
+    - -0.18033138
+    - 0.07319397
+--- !u!114 &114833012837605150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051a7e150efca304da37d460de663b87, type: 3}
+  m_Name: Extract Velocity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 88, y: -1880}
+  ports:
+    keys:
+    - FeatureToInput
+    - VelocityExtracted
+    values:
+    - _fieldName: FeatureToInput
+      _node: {fileID: 114833012837605150}
+      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: rotationExtracted
+        node: {fileID: 114247239337280674}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: VelocityExtracted
+      _node: {fileID: 114833012837605150}
+      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+      connections:
+      - fieldName: InputFeatures
+        node: {fileID: 114683921223975454}
+        reroutePoints: []
+      - fieldName: InputFeatures
+        node: {fileID: 114542359165737036}
+        reroutePoints:
+        - {x: 432, y: -2080}
+        - {x: 992, y: -2080}
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  FeatureToInput: {fileID: 114247239337280674}
+  VelocityExtracted: {fileID: 0}
+  m_VelocityExtracted:
+    m_Values:
+    - 0
+    - 0
+    - 0
+    - 0
+  m_LastFrameFeatureValue:
+  - -0.0047781384
+  - 0.71753776
+  - 0.0045702844
+  - 0.69648826
 --- !u!114 &114849844208104980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1004,9 +1498,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.45810494
-    - 0.30086663
-    - 0.5420648
+    - 0.09181025
+    - 0.16284208
+    - 0.082408115
 --- !u!114 &114870395820478542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1083,6 +1577,66 @@ MonoBehaviour:
   DevMode: 0
   note: "MOVING AND ROTATING HAND LEFT/RIGHT\n\nOUTPUTS: \nHand center = 0 (Idle)\nHand
     Left = 2 (Right)\nHand Right = 1 (Left)"
+--- !u!114 &114926250237349256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
+  m_Name: Training Examples Node
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 520, y: -2840}
+  ports:
+    keys:
+    - InputFeatures
+    - TrainingExamplesNodeToOutput
+    values:
+    - _fieldName: InputFeatures
+      _node: {fileID: 114926250237349256}
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: VelocityExtracted
+        node: {fileID: 114585773044923226}
+        reroutePoints: []
+      - fieldName: VelocityExtracted
+        node: {fileID: 114387068067455594}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: TrainingExamplesNodeToOutput
+      _node: {fileID: 114926250237349256}
+      _typeQualifiedName: InteractML.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: IMLTrainingExamplesNodes
+        node: {fileID: 114930582521853118}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  InputFeatures:
+  - {fileID: 114585773044923226}
+  - {fileID: 114387068067455594}
+  TrainingExamplesNodeToOutput: {fileID: 114926250237349256}
+  TrainingExamplesVector: []
+  m_DesiredInputsConfig: 0500000005000000
+  m_DesiredOutputsConfig: 00000000
+  IMLConfigurationNodesConnected: []
+  StartDelay: 0
+  CaptureRate: 10
+  RecordTime: -1
+  EnableCollectDataShortcut: 1
 --- !u!114 &114929005190181280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1142,7 +1696,85 @@ MonoBehaviour:
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableCollectDataShortcut: 1
+  EnableCollectDataShortcut: 0
+--- !u!114 &114930582521853118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
+  m_Name: IML Configuration
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1256, y: -2808}
+  ports:
+    keys:
+    - IMLTrainingExamplesNodes
+    - InputFeatures
+    - ModelOutput
+    values:
+    - _fieldName: IMLTrainingExamplesNodes
+      _node: {fileID: 114930582521853118}
+      _typeQualifiedName: System.Collections.Generic.List`1[[InteractML.TrainingExamplesNode,
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
+        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: TrainingExamplesNodeToOutput
+        node: {fileID: 114926250237349256}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: InputFeatures
+      _node: {fileID: 114930582521853118}
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
+        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
+        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: VelocityExtracted
+        node: {fileID: 114585773044923226}
+        reroutePoints: []
+      - fieldName: VelocityExtracted
+        node: {fileID: 114387068067455594}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: ModelOutput
+      _node: {fileID: 114930582521853118}
+      _typeQualifiedName: InteractML.IMLConfiguration, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: IMLModelOutputs
+        node: {fileID: 114037009951859728}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  IMLTrainingExamplesNodes:
+  - {fileID: 114926250237349256}
+  InputFeatures:
+  - {fileID: 114585773044923226}
+  - {fileID: 114387068067455594}
+  ModelOutput: {fileID: 0}
+  PredictedRapidlibOutput:
+  - 0
+  DelayedPredictedOutput:
+  - 0
+  m_ExpectedInputList: 0500000005000000
+  m_ExpectedOutputList: 00000000
+  m_LearningType: 0
+  RapidLibComponent: {fileID: 0}
+  TrainOnPlaymodeChange: 1
+  RunOnAwake: 1
 --- !u!114 &114948667100810690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1221,3 +1853,27 @@ MonoBehaviour:
   RapidLibComponent: {fileID: 0}
   TrainOnPlaymodeChange: 1
   RunOnAwake: 1
+--- !u!114 &114964523626434266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -520, y: -3032}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: 'LEAP MOTION RIGHT PALM
+
+
+
+
+'
