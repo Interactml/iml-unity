@@ -56,7 +56,7 @@ ExportedObj/
 # Custom ignored folders for InteractML #
 # ===================================== #
 Packages/
-Assets/OpenCVForUnity
+Assets/Dependencies/OpenCVForUnity
 Assets/StreamingAssets
 Assets/Scripts/OpenCV_Trackers
 .collabignore
