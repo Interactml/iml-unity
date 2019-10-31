@@ -41,8 +41,7 @@ MonoBehaviour:
     values:
     - _fieldName: FeatureToInput
       _node: {fileID: 114186045075632734}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114315671501912336}
@@ -53,8 +52,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: VelocityExtracted
       _node: {fileID: 114186045075632734}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 114507523331420728}
@@ -93,7 +91,7 @@ MonoBehaviour:
   m_Name: Game Object Node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -616, y: -120}
+  position: {x: -632, y: -136}
   ports:
     keys:
     - GameObjectFromScene
@@ -146,8 +144,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114315671501912336}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeatureToInput
         node: {fileID: 114186045075632734}
@@ -199,9 +196,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: InputFeatures
       _node: {fileID: 114357140570682068}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: VelocityExtracted
         node: {fileID: 114186045075632734}
@@ -259,9 +256,9 @@ MonoBehaviour:
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 114507523331420728}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: VelocityExtracted
         node: {fileID: 114186045075632734}
@@ -314,8 +311,7 @@ MonoBehaviour:
     values:
     - _fieldName: IMLModelOutputs
       _node: {fileID: 114913048169967506}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: ModelOutput
         node: {fileID: 114357140570682068}

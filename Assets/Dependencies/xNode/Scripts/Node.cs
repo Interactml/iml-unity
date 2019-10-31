@@ -51,18 +51,59 @@ namespace XNode {
             Strict,
         }
 
+#region Obsolete
+        [Obsolete("Use DynamicPorts instead")]
+        public IEnumerable<NodePort> InstancePorts { get { return DynamicPorts; } }
+
+        [Obsolete("Use DynamicOutputs instead")]
+        public IEnumerable<NodePort> InstanceOutputs { get { return DynamicOutputs; } }
+
+        [Obsolete("Use DynamicInputs instead")]
+        public IEnumerable<NodePort> InstanceInputs { get { return DynamicInputs; } }
+
+        [Obsolete("Use AddDynamicInput instead")]
+        public NodePort AddInstanceInput(Type type, Node.ConnectionType connectionType = Node.ConnectionType.Multiple, Node.TypeConstraint typeConstraint = TypeConstraint.None, string fieldName = null) {
+            return AddInstanceInput(type, connectionType, typeConstraint, fieldName);
+        }
+
+        [Obsolete("Use AddDynamicOutput instead")]
+        public NodePort AddInstanceOutput(Type type, Node.ConnectionType connectionType = Node.ConnectionType.Multiple, Node.TypeConstraint typeConstraint = TypeConstraint.None, string fieldName = null) {
+            return AddDynamicOutput(type, connectionType, typeConstraint, fieldName);
+        }
+
+        [Obsolete("Use AddDynamicPort instead")]
+        private NodePort AddInstancePort(Type type, NodePort.IO direction, Node.ConnectionType connectionType = Node.ConnectionType.Multiple, Node.TypeConstraint typeConstraint = TypeConstraint.None, string fieldName = null) {
+            return AddDynamicPort(type, direction, connectionType, typeConstraint, fieldName);
+        }
+
+        [Obsolete("Use RemoveDynamicPort instead")]
+        public void RemoveInstancePort(string fieldName) {
+            RemoveDynamicPort(fieldName);
+        }
+
+        [Obsolete("Use RemoveDynamicPort instead")]
+        public void RemoveInstancePort(NodePort port) {
+            RemoveDynamicPort(port);
+        }
+
+        [Obsolete("Use ClearDynamicPorts instead")]
+        public void ClearInstancePorts() {
+            ClearDynamicPorts();
+        }
+#endregion
+
         /// <summary> Iterate over all ports on this node. </summary>
         public IEnumerable<NodePort> Ports { get { foreach (NodePort port in ports.Values) yield return port; } }
         /// <summary> Iterate over all outputs on this node. </summary>
         public IEnumerable<NodePort> Outputs { get { foreach (NodePort port in Ports) { if (port.IsOutput) yield return port; } } }
         /// <summary> Iterate over all inputs on this node. </summary>
         public IEnumerable<NodePort> Inputs { get { foreach (NodePort port in Ports) { if (port.IsInput) yield return port; } } }
-        /// <summary> Iterate over all instane ports on this node. </summary>
-        public IEnumerable<NodePort> InstancePorts { get { foreach (NodePort port in Ports) { if (port.IsDynamic) yield return port; } } }
-        /// <summary> Iterate over all instance outputs on this node. </summary>
-        public IEnumerable<NodePort> InstanceOutputs { get { foreach (NodePort port in Ports) { if (port.IsDynamic && port.IsOutput) yield return port; } } }
-        /// <summary> Iterate over all instance inputs on this node. </summary>
-        public IEnumerable<NodePort> InstanceInputs { get { foreach (NodePort port in Ports) { if (port.IsDynamic && port.IsInput) yield return port; } } }
+        /// <summary> Iterate over all dynamic ports on this node. </summary>
+        public IEnumerable<NodePort> DynamicPorts { get { foreach (NodePort port in Ports) { if (port.IsDynamic) yield return port; } } }
+        /// <summary> Iterate over all dynamic outputs on this node. </summary>
+        public IEnumerable<NodePort> DynamicOutputs { get { foreach (NodePort port in Ports) { if (port.IsDynamic && port.IsOutput) yield return port; } } }
+        /// <summary> Iterate over all dynamic inputs on this node. </summary>
+        public IEnumerable<NodePort> DynamicInputs { get { foreach (NodePort port in Ports) { if (port.IsDynamic && port.IsInput) yield return port; } } }
         /// <summary> Parent <see cref="NodeGraph"/> </summary>
         [SerializeField] public NodeGraph graph;
         /// <summary> Position on the <see cref="NodeGraph"/> </summary>
@@ -73,8 +114,7 @@ namespace XNode {
         /// <summary> Used during node instantiation to fix null/misconfigured graph during OnEnable/Init. Set it before instantiating a node. Will automatically be unset during OnEnable </summary>
         public static NodeGraph graphHotfix;
 
-
-        #region DevMode Variables
+	#region DevMode Variables
 
         /// <summary>
         /// Flag to enable special dev options
@@ -99,7 +139,7 @@ namespace XNode {
         }
 
         /// <summary> Initialize node. Called on enable. </summary>
-        protected virtual void Init() {
+        protected virtual void Init() { 
             /**
              * DEV MODE CODE CHANGE COLOR
              */
@@ -107,36 +147,36 @@ namespace XNode {
             {
                 m_customColor = Color.white;
             }
-        }
+	}
 
         /// <summary> Checks all connections for invalid references, and removes them. </summary>
         public void VerifyConnections() {
             foreach (NodePort port in Ports) port.VerifyConnections();
         }
 
-#region Instance Ports
+#region Dynamic Ports
         /// <summary> Convenience function. </summary>
         /// <seealso cref="AddInstancePort"/>
         /// <seealso cref="AddInstanceOutput"/>
-        public NodePort AddInstanceInput(Type type, Node.ConnectionType connectionType = Node.ConnectionType.Multiple, Node.TypeConstraint typeConstraint = TypeConstraint.None, string fieldName = null) {
-            return AddInstancePort(type, NodePort.IO.Input, connectionType, typeConstraint, fieldName);
+        public NodePort AddDynamicInput(Type type, Node.ConnectionType connectionType = Node.ConnectionType.Multiple, Node.TypeConstraint typeConstraint = TypeConstraint.None, string fieldName = null) {
+            return AddDynamicPort(type, NodePort.IO.Input, connectionType, typeConstraint, fieldName);
         }
 
         /// <summary> Convenience function. </summary>
         /// <seealso cref="AddInstancePort"/>
         /// <seealso cref="AddInstanceInput"/>
-        public NodePort AddInstanceOutput(Type type, Node.ConnectionType connectionType = Node.ConnectionType.Multiple, Node.TypeConstraint typeConstraint = TypeConstraint.None, string fieldName = null) {
-            return AddInstancePort(type, NodePort.IO.Output, connectionType, typeConstraint, fieldName);
+        public NodePort AddDynamicOutput(Type type, Node.ConnectionType connectionType = Node.ConnectionType.Multiple, Node.TypeConstraint typeConstraint = TypeConstraint.None, string fieldName = null) {
+            return AddDynamicPort(type, NodePort.IO.Output, connectionType, typeConstraint, fieldName);
         }
 
         /// <summary> Add a dynamic, serialized port to this node. </summary>
-        /// <seealso cref="AddInstanceInput"/>
-        /// <seealso cref="AddInstanceOutput"/>
-        private NodePort AddInstancePort(Type type, NodePort.IO direction, Node.ConnectionType connectionType = Node.ConnectionType.Multiple, Node.TypeConstraint typeConstraint = TypeConstraint.None, string fieldName = null) {
+        /// <seealso cref="AddDynamicInput"/>
+        /// <seealso cref="AddDynamicOutput"/>
+        private NodePort AddDynamicPort(Type type, NodePort.IO direction, Node.ConnectionType connectionType = Node.ConnectionType.Multiple, Node.TypeConstraint typeConstraint = TypeConstraint.None, string fieldName = null) {
             if (fieldName == null) {
-                fieldName = "instanceInput_0";
+                fieldName = "dynamicInput_0";
                 int i = 0;
-                while (HasPort(fieldName)) fieldName = "instanceInput_" + (++i);
+                while (HasPort(fieldName)) fieldName = "dynamicInput_" + (++i);
             } else if (HasPort(fieldName)) {
                 Debug.LogWarning("Port '" + fieldName + "' already exists in " + name, this);
                 return ports[fieldName];
@@ -146,25 +186,27 @@ namespace XNode {
             return port;
         }
 
-        /// <summary> Remove an instance port from the node </summary>
-        public void RemoveInstancePort(string fieldName) {
-            RemoveInstancePort(GetPort(fieldName));
+        /// <summary> Remove an dynamic port from the node </summary>
+        public void RemoveDynamicPort(string fieldName) {
+            NodePort dynamicPort = GetPort(fieldName);
+            if (dynamicPort == null) throw new ArgumentException("port " + fieldName + " doesn't exist");
+            RemoveDynamicPort(GetPort(fieldName));
         }
 
-        /// <summary> Remove an instance port from the node </summary>
-        public void RemoveInstancePort(NodePort port) {
+        /// <summary> Remove an dynamic port from the node </summary>
+        public void RemoveDynamicPort(NodePort port) {
             if (port == null) throw new ArgumentNullException("port");
             else if (port.IsStatic) throw new ArgumentException("cannot remove static port");
             port.ClearConnections();
             ports.Remove(port.fieldName);
         }
 
-        /// <summary> Removes all instance ports from the node </summary>
-        [ContextMenu("Clear Instance Ports")]
-        public void ClearInstancePorts() {
-            List<NodePort> instancePorts = new List<NodePort>(InstancePorts);
-            foreach (NodePort port in instancePorts) {
-                RemoveInstancePort(port);
+        /// <summary> Removes all dynamic ports from the node </summary>
+        [ContextMenu("Clear Dynamic Ports")]
+        public void ClearDynamicPorts() {
+            List<NodePort> dynamicPorts = new List<NodePort>(DynamicPorts);
+            foreach (NodePort port in dynamicPorts) {
+                RemoveDynamicPort(port);
             }
         }
 #endregion
@@ -242,18 +284,20 @@ namespace XNode {
         public class InputAttribute : Attribute {
             public ShowBackingValue backingValue;
             public ConnectionType connectionType;
-            public bool instancePortList;
+            [Obsolete("Use dynamicPortList instead")]
+            public bool instancePortList { get { return dynamicPortList; } set { dynamicPortList = value; } }
+            public bool dynamicPortList;
             public TypeConstraint typeConstraint;
 
             /// <summary> Mark a serializable field as an input port. You can access this through <see cref="GetInputPort(string)"/> </summary>
             /// <param name="backingValue">Should we display the backing value for this port as an editor field? </param>
             /// <param name="connectionType">Should we allow multiple connections? </param>
             /// <param name="typeConstraint">Constrains which input connections can be made to this port </param>
-            /// <param name="instancePortList">If true, will display a reorderable list of inputs instead of a single port. Will automatically add and display values for lists and arrays </param>
-            public InputAttribute(ShowBackingValue backingValue = ShowBackingValue.Unconnected, ConnectionType connectionType = ConnectionType.Multiple, TypeConstraint typeConstraint = TypeConstraint.None, bool instancePortList = false) {
+            /// <param name="dynamicPortList">If true, will display a reorderable list of inputs instead of a single port. Will automatically add and display values for lists and arrays </param>
+            public InputAttribute(ShowBackingValue backingValue = ShowBackingValue.Unconnected, ConnectionType connectionType = ConnectionType.Multiple, TypeConstraint typeConstraint = TypeConstraint.None, bool dynamicPortList = false) {
                 this.backingValue = backingValue;
                 this.connectionType = connectionType;
-                this.instancePortList = instancePortList;
+                this.dynamicPortList = dynamicPortList;
                 this.typeConstraint = typeConstraint;
             }
         }
@@ -263,17 +307,29 @@ namespace XNode {
         public class OutputAttribute : Attribute {
             public ShowBackingValue backingValue;
             public ConnectionType connectionType;
-            public bool instancePortList;
+            [Obsolete("Use dynamicPortList instead")]
+            public bool instancePortList { get { return dynamicPortList; } set { dynamicPortList = value; } }
+            public bool dynamicPortList;
+            public TypeConstraint typeConstraint;
 
             /// <summary> Mark a serializable field as an output port. You can access this through <see cref="GetOutputPort(string)"/> </summary>
             /// <param name="backingValue">Should we display the backing value for this port as an editor field? </param>
             /// <param name="connectionType">Should we allow multiple connections? </param>
-            /// <param name="instancePortList">If true, will display a reorderable list of outputs instead of a single port. Will automatically add and display values for lists and arrays </param>
-            public OutputAttribute(ShowBackingValue backingValue = ShowBackingValue.Never, ConnectionType connectionType = ConnectionType.Multiple, bool instancePortList = false) {
+            /// <param name="typeConstraint">Constrains which input connections can be made from this port </param>
+            /// <param name="dynamicPortList">If true, will display a reorderable list of outputs instead of a single port. Will automatically add and display values for lists and arrays </param>
+            public OutputAttribute(ShowBackingValue backingValue = ShowBackingValue.Never, ConnectionType connectionType = ConnectionType.Multiple, TypeConstraint typeConstraint = TypeConstraint.None, bool dynamicPortList = false) {
                 this.backingValue = backingValue;
                 this.connectionType = connectionType;
-                this.instancePortList = instancePortList;
+                this.dynamicPortList = dynamicPortList;
+                this.typeConstraint = typeConstraint;
             }
+
+            /// <summary> Mark a serializable field as an output port. You can access this through <see cref="GetOutputPort(string)"/> </summary>
+            /// <param name="backingValue">Should we display the backing value for this port as an editor field? </param>
+            /// <param name="connectionType">Should we allow multiple connections? </param>
+            /// <param name="dynamicPortList">If true, will display a reorderable list of outputs instead of a single port. Will automatically add and display values for lists and arrays </param>
+            [Obsolete("Use constructor with TypeConstraint")]
+            public OutputAttribute(ShowBackingValue backingValue, ConnectionType connectionType, bool dynamicPortList) : this(backingValue, connectionType, TypeConstraint.None, dynamicPortList) { }
         }
 
         [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
