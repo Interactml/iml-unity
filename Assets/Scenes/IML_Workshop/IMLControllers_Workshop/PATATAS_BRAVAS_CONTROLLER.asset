@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Name: Game Object Node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -632, y: -152}
+  position: {x: -616, y: -120}
   ports:
     keys:
     - GameObjectFromScene
