@@ -54,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 10
+    serializedVersion: 12
     m_Resolution: 2
     m_BakeResolution: 1
     m_AtlasSize: 512
@@ -62,6 +62,7 @@ LightmapSettings:
     m_AOMaxDistance: 1
     m_CompAOExponent: 0
     m_CompAOExponentDirect: 0
+    m_ExtractAmbientOcclusion: 0
     m_Padding: 2
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 0
@@ -76,10 +77,16 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
+    m_PVREnvironmentSampleCount: 500
+    m_PVREnvironmentReferencePointCount: 2048
+    m_PVRFilteringMode: 2
+    m_PVRDenoiserTypeDirect: 0
+    m_PVRDenoiserTypeIndirect: 0
+    m_PVRDenoiserTypeAO: 0
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
     m_PVRFilterTypeAO: 0
-    m_PVRFilteringMode: 1
+    m_PVREnvironmentMIS: 0
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
@@ -87,7 +94,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaDirect: 0.5
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
-    m_ShowResolutionOverlay: 1
+    m_ExportTrainingData: 0
+    m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 0
 --- !u!196 &4
@@ -164,7 +172,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2167576}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -180,7 +188,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2167576}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -200,6 +208,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &2167580
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -313,7 +322,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 132046295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -329,7 +338,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 132046295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -394,12 +403,13 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 163540623}
   m_Enabled: 1
-  serializedVersion: 8
+  serializedVersion: 9
   m_Type: 1
   m_Color: {r: 1, g: 0.94979715, b: 0.6691177, a: 1}
   m_Intensity: 0.66
   m_Range: 10
   m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -409,6 +419,24 @@ Light:
     m_Bias: 0.035
     m_NormalBias: 0
     m_NearPlane: 0.93
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
@@ -416,12 +444,15 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  m_RenderingLayerMask: 1
   m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1.1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &163540625
@@ -488,7 +519,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 175632793}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -504,7 +535,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 175632793}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -588,7 +619,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 182129963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -604,7 +635,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 182129963}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1198,7 +1229,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 205772873}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -1214,7 +1245,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 205772873}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1234,6 +1265,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &205772877
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1299,6 +1331,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1374,7 +1407,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 255445952}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -1390,7 +1423,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 255445952}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1410,6 +1443,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &255445956
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1469,7 +1503,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 283886842}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -1485,7 +1519,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 283886842}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1571,7 +1605,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 287475876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -1587,7 +1621,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 287475876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1607,6 +1641,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &287475880
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1718,7 +1753,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 356084404}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -1734,7 +1769,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 356084404}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1818,7 +1853,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 440782214}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -1834,7 +1869,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 440782214}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -6076,7 +6111,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 512023478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -6092,7 +6127,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 512023478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -6176,7 +6211,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 533021440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -6192,7 +6227,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 533021440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -6276,7 +6311,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 573029191}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -6292,7 +6327,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 573029191}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -6376,7 +6411,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 575195938}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -6392,7 +6427,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 575195938}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -6476,7 +6511,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 581237779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -6492,7 +6527,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 581237779}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -7978,7 +8013,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 667340293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -7994,7 +8029,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 667340293}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -8154,398 +8189,50 @@ MonoBehaviour:
   - 0
   trainingExamples:
   - input:
-    - 0.3765319883823395
-    - 0.9581635594367981
-    - -4
+    - 0.008945937268435955
+    - 0.0066619268618524075
+    - 0.0053827338851988316
+    - 0.005635320208966732
+    - 0.011329319328069687
     output:
     - 0
   - input:
-    - 0.3765319883823395
-    - 0.9581635594367981
-    - -4
+    - 0.028668783605098724
+    - 0.03046320378780365
+    - 0.003517890116199851
+    - 0.004266008734703064
+    - 0.008505676873028278
     output:
-    - 0
+    - 9
   - input:
-    - 0.3765319883823395
-    - 0.9581635594367981
-    - -4
-    output:
-    - 0
-  - input:
-    - 0.3765319883823395
-    - 0.9581635594367981
-    - -4
-    output:
-    - 0
-  - input:
-    - 0.3765319883823395
-    - 0.9581635594367981
-    - -4
-    output:
-    - 0
-  - input:
-    - 0.3765319883823395
-    - 0.9581635594367981
-    - -4
-    output:
-    - 0
-  - input:
-    - 0.3765319883823395
-    - 0.9581635594367981
-    - -4
-    output:
-    - 0
-  - input:
-    - 0.3765319883823395
-    - 0.9581635594367981
-    - -4
-    output:
-    - 0
-  - input:
-    - 0.3765319883823395
-    - 0.9581635594367981
-    - -4
-    output:
-    - 0
-  - input:
-    - 5.773496150970459
-    - 0.7908153533935547
-    - -4
-    output:
-    - 1
-  - input:
-    - 5.773496150970459
-    - 0.7908153533935547
-    - -4
-    output:
-    - 1
-  - input:
-    - 5.773496150970459
-    - 0.7908153533935547
-    - -4
-    output:
-    - 1
-  - input:
-    - 5.773496150970459
-    - 0.7908153533935547
-    - -4
-    output:
-    - 1
-  - input:
-    - 5.773496150970459
-    - 0.7908153533935547
-    - -4
-    output:
-    - 1
-  - input:
-    - 5.773496150970459
-    - 0.7908153533935547
-    - -4
-    output:
-    - 1
-  - input:
-    - 5.773496150970459
-    - 0.7908153533935547
-    - -4
-    output:
-    - 1
-  - input:
-    - 5.773496150970459
-    - 0.7908153533935547
-    - -4
-    output:
-    - 1
-  - input:
-    - -5.104104995727539
-    - 0.7489789128303528
-    - -4
-    output:
-    - -1
-  - input:
-    - -5.104104995727539
-    - 0.7489789128303528
-    - -4
-    output:
-    - -1
-  - input:
-    - -5.104104995727539
-    - 0.7489789128303528
-    - -4
-    output:
-    - -1
-  - input:
-    - -5.104104995727539
-    - 0.7489789128303528
-    - -4
-    output:
-    - -1
-  - input:
-    - -5.104104995727539
-    - 0.7489789128303528
-    - -4
-    output:
-    - -1
-  - input:
-    - -5.104104995727539
-    - 0.7489789128303528
-    - -4
-    output:
-    - -1
-  - input:
-    - -5.104104995727539
-    - 0.7489789128303528
-    - -4
-    output:
-    - -1
-  - input:
-    - -5.104104995727539
-    - 0.7489789128303528
-    - -4
-    output:
-    - -1
-  - input:
-    - -5.104104995727539
-    - 0.7489789128303528
-    - -4
-    output:
-    - -1
-  - input:
-    - -5.104104995727539
-    - 0.7071412801742554
-    - -4
-    output:
-    - -1
-  - input:
-    - -5.187778949737549
-    - 0.7071412801742554
-    - -4
-    output:
-    - -1
-  - input:
-    - -5.187778949737549
-    - 0.7071412801742554
-    - -4
-    output:
-    - -1
-  - input:
-    - -5.187778949737549
-    - 0.7071412801742554
-    - -4
-    output:
-    - -1
-  - input:
-    - 20.332746505737305
-    - 0.6234683990478516
-    - -2
-    output:
-    - 0
-  - input:
-    - 20.332746505737305
-    - 0.6234683990478516
-    - -2
-    output:
-    - 0
-  - input:
-    - -3.6431682109832764
-    - 2.5128402709960938
-    - 1
-    output:
-    - 0
-  - input:
-    - -3.6431682109832764
-    - 2.5128402709960938
-    - 1
-    output:
-    - 0
-  - input:
-    - -2.963932991027832
-    - 2.759835720062256
-    - 1
-    output:
-    - 0
-  - input:
-    - 2.1612014770507812
-    - 3.5625674724578857
-    - 1
-    output:
-    - 0
-  - input:
-    - -1.7907097339630127
-    - 3.1920762062072754
-    - 1
-    output:
-    - 0
-  - input:
-    - 3.3961739540100098
-    - 3.0068299770355225
-    - 1
-    output:
-    - 0
-  - input:
-    - 3.7666661739349365
-    - 2.451092481613159
-    - 1
-    output:
-    - 0
-  - input:
-    - -2.6551904678344727
-    - 2.451092481613159
-    - 1
-    output:
-    - 0
-  - input:
-    - 4.692895412445068
-    - 3.3773224353790283
-    - 1
-    output:
-    - 0
-  - input:
-    - -5.0016374588012695
-    - 1.5866115093231201
-    - 1
-    output:
-    - 0
-  - input:
-    - -1.2967212200164795
-    - 1.8953547477722168
-    - 1
-    output:
-    - 0
-  - input:
-    - 0.8027318716049194
-    - -0.1423490047454834
-    - 1
-    output:
-    - 0
-  - input:
-    - 0.12349776178598404
-    - -0.01885199546813965
-    - 1
-    output:
-    - 0
-  - input:
-    - -2.1612017154693604
-    - 1.0926231145858765
-    - 1
-    output:
-    - 0
-  - input:
-    - 2.65519118309021
-    - 0.5986335277557373
-    - 1
-    output:
-    - 0
-  - input:
-    - -0.926228940486908
-    - 0.8456289172172546
-    - 1
-    output:
-    - 0
-  - input:
-    - 1.049726128578186
-    - 0.9691259860992432
-    - 1
-    output:
-    - 0
-  - input:
-    - 0.3087432086467743
-    - 1.2161202430725098
-    - 1
+    - 0.028308875858783722
+    - 0.03064694069325924
+    - 0.020815927535295486
+    - 0.02782236784696579
+    - 0.016002317890524864
     output:
     - 0
   trainingSerieses: []
   run: 0
   collectData: 0
   jsonString: "{\n   \"metadata\" : {\n      \"creator\" : \"Rapid API C++\",\n      \"inputNames\"
-    : [ \"inputs-1\", \"inputs-2\", \"inputs-3\" ],\n      \"numInputs\" : 3,\n      \"numOutputs\"
-    : 1,\n      \"version\" : \"v0.1.1\"\n   },\n   \"modelSet\" : [\n      {\n         \"examples\"
-    : [\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.37653198838233948, 0.9581635594367981, -4 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.37653198838233948,
-    0.9581635594367981, -4 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.37653198838233948, 0.9581635594367981,
-    -4 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.37653198838233948, 0.9581635594367981, -4 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.37653198838233948,
-    0.9581635594367981, -4 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.37653198838233948, 0.9581635594367981,
-    -4 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.37653198838233948, 0.9581635594367981, -4 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.37653198838233948,
-    0.9581635594367981, -4 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.37653198838233948, 0.9581635594367981,
-    -4 ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 5.773496150970459, 0.79081535339355469, -4 ]\n            },\n            {\n
-    \              \"class\" : 1,\n               \"features\" : [ 5.773496150970459,
-    0.79081535339355469, -4 ]\n            },\n            {\n               \"class\"
-    : 1,\n               \"features\" : [ 5.773496150970459, 0.79081535339355469,
-    -4 ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 5.773496150970459, 0.79081535339355469, -4 ]\n            },\n            {\n
-    \              \"class\" : 1,\n               \"features\" : [ 5.773496150970459,
-    0.79081535339355469, -4 ]\n            },\n            {\n               \"class\"
-    : 1,\n               \"features\" : [ 5.773496150970459, 0.79081535339355469,
-    -4 ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 5.773496150970459, 0.79081535339355469, -4 ]\n            },\n            {\n
-    \              \"class\" : 1,\n               \"features\" : [ 5.773496150970459,
-    0.79081535339355469, -4 ]\n            },\n            {\n               \"class\"
-    : -1,\n               \"features\" : [ -5.1041049957275391, 0.74897891283035278,
-    -4 ]\n            },\n            {\n               \"class\" : -1,\n               \"features\"
-    : [ -5.1041049957275391, 0.74897891283035278, -4 ]\n            },\n            {\n
-    \              \"class\" : -1,\n               \"features\" : [ -5.1041049957275391,
-    0.74897891283035278, -4 ]\n            },\n            {\n               \"class\"
-    : -1,\n               \"features\" : [ -5.1041049957275391, 0.74897891283035278,
-    -4 ]\n            },\n            {\n               \"class\" : -1,\n               \"features\"
-    : [ -5.1041049957275391, 0.74897891283035278, -4 ]\n            },\n            {\n
-    \              \"class\" : -1,\n               \"features\" : [ -5.1041049957275391,
-    0.74897891283035278, -4 ]\n            },\n            {\n               \"class\"
-    : -1,\n               \"features\" : [ -5.1041049957275391, 0.74897891283035278,
-    -4 ]\n            },\n            {\n               \"class\" : -1,\n               \"features\"
-    : [ -5.1041049957275391, 0.74897891283035278, -4 ]\n            },\n            {\n
-    \              \"class\" : -1,\n               \"features\" : [ -5.1041049957275391,
-    0.74897891283035278, -4 ]\n            },\n            {\n               \"class\"
-    : -1,\n               \"features\" : [ -5.1041049957275391, 0.70714128017425537,
-    -4 ]\n            },\n            {\n               \"class\" : -1,\n               \"features\"
-    : [ -5.1877789497375488, 0.70714128017425537, -4 ]\n            },\n            {\n
-    \              \"class\" : -1,\n               \"features\" : [ -5.1877789497375488,
-    0.70714128017425537, -4 ]\n            },\n            {\n               \"class\"
-    : -1,\n               \"features\" : [ -5.1877789497375488, 0.70714128017425537,
-    -4 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 20.332746505737305, 0.62346839904785156, -2 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 20.332746505737305,
-    0.62346839904785156, -2 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ -3.6431682109832764, 2.5128402709960938,
-    1 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ -3.6431682109832764, 2.5128402709960938, 1 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ -2.963932991027832,
-    2.7598357200622559, 1 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 2.1612014770507813, 3.5625674724578857,
-    1 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ -1.7907097339630127, 3.1920762062072754, 1 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 3.3961739540100098,
-    3.0068299770355225, 1 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 3.7666661739349365, 2.4510924816131592,
-    1 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ -2.6551904678344727, 2.4510924816131592, 1 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 4.6928954124450684,
-    3.3773224353790283, 1 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ -5.0016374588012695, 1.5866115093231201,
-    1 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ -1.2967212200164795, 1.8953547477722168, 1 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.80273187160491943,
-    -0.1423490047454834, 1 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.12349776178598404, -0.018851995468139648,
-    1 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ -2.1612017154693604, 1.0926231145858765, 1 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 2.65519118309021,
-    0.5986335277557373, 1 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ -0.92622894048690796, 0.84562891721725464,
-    1 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 1.049726128578186, 0.96912598609924316, 1 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.30874320864677429,
-    1.2161202430725098, 1 ]\n            }\n         ],\n         \"inputNames\" :
-    [ \"inputs-1\", \"inputs-2\", \"inputs-3\" ],\n         \"k\" : 1,\n         \"modelType\"
-    : \"kNN Classificiation\",\n         \"numInputs\" : 3,\n         \"whichInputs\"
-    : [ 0, 1, 2 ]\n      }\n   ]\n}\n"
+    : [ \"inputs-1\", \"inputs-2\", \"inputs-3\", \"inputs-4\", \"inputs-5\" ],\n
+    \     \"numInputs\" : 5,\n      \"numOutputs\" : 1,\n      \"version\" : \"v0.1.1\"\n
+    \  },\n   \"modelSet\" : [\n      {\n         \"examples\" : [\n            {\n
+    \              \"class\" : 0,\n               \"features\" : [\n                  0.008945937268435955,\n
+    \                 0.0066619268618524075,\n                  0.0053827338851988316,\n
+    \                 0.005635320208966732,\n                  0.011329319328069687\n
+    \              ]\n            },\n            {\n               \"class\" : 9,\n
+    \              \"features\" : [\n                  0.028668783605098724,\n                  0.03046320378780365,\n
+    \                 0.003517890116199851,\n                  0.004266008734703064,\n
+    \                 0.0085056768730282784\n               ]\n            },\n            {\n
+    \              \"class\" : 0,\n               \"features\" : [\n                  0.028308875858783722,\n
+    \                 0.030646940693259239,\n                  0.020815927535295486,\n
+    \                 0.02782236784696579,\n                  0.016002317890524864\n
+    \              ]\n            }\n         ],\n         \"inputNames\" : [ \"inputs-1\",
+    \"inputs-2\", \"inputs-3\", \"inputs-4\", \"inputs-5\" ],\n         \"k\" : 1,\n
+    \        \"modelType\" : \"kNN Classificiation\",\n         \"numInputs\" : 5,\n
+    \        \"whichInputs\" : [ 0, 1, 2, 3, 4 ]\n      }\n   ]\n}\n"
   m_Features: 
   m_DistancesToFirstInput: []
 --- !u!114 &710918715
@@ -9426,981 +9113,398 @@ MonoBehaviour:
   - 0
   trainingExamples:
   - input:
-    - 0.09580836445093155
-    - 0.09325700998306274
+    - 0.3765319883823395
+    - 0.9581635594367981
+    - -4
     output:
     - 0
   - input:
-    - 0.09569516777992249
-    - 0.0929972305893898
+    - 0.3765319883823395
+    - 0.9581635594367981
+    - -4
     output:
     - 0
   - input:
-    - 0.09572562575340271
-    - 0.09282758086919785
+    - 0.3765319883823395
+    - 0.9581635594367981
+    - -4
     output:
     - 0
   - input:
-    - 0.0956103727221489
-    - 0.09250091761350632
+    - 0.3765319883823395
+    - 0.9581635594367981
+    - -4
     output:
     - 0
   - input:
-    - 0.095456562936306
-    - 0.09260094910860062
+    - 0.3765319883823395
+    - 0.9581635594367981
+    - -4
     output:
     - 0
   - input:
-    - 0.09526664018630981
-    - 0.09266392141580582
+    - 0.3765319883823395
+    - 0.9581635594367981
+    - -4
     output:
     - 0
   - input:
-    - 0.0953277125954628
-    - 0.09272834658622742
+    - 0.3765319883823395
+    - 0.9581635594367981
+    - -4
     output:
     - 0
   - input:
-    - 0.09524953365325928
-    - 0.09264656901359558
+    - 0.3765319883823395
+    - 0.9581635594367981
+    - -4
     output:
     - 0
   - input:
-    - 0.09533119946718216
-    - 0.09233620017766953
+    - 0.3765319883823395
+    - 0.9581635594367981
+    - -4
     output:
     - 0
   - input:
-    - 0.09531447291374207
-    - 0.09256946295499802
-    output:
-    - 0
-  - input:
-    - 0.09503098577260971
-    - 0.09248654544353485
-    output:
-    - 0
-  - input:
-    - 0.0950702652335167
-    - 0.0925399512052536
-    output:
-    - 0
-  - input:
-    - 0.0950097069144249
-    - 0.0924382135272026
-    output:
-    - 0
-  - input:
-    - 0.09492968022823334
-    - 0.09217128157615662
-    output:
-    - 0
-  - input:
-    - 0.09492447972297668
-    - 0.09237314760684967
-    output:
-    - 0
-  - input:
-    - 0.0948706790804863
-    - 0.09174419194459915
-    output:
-    - 0
-  - input:
-    - 0.09485786408185959
-    - 0.0915864109992981
-    output:
-    - 0
-  - input:
-    - 0.09481444954872131
-    - 0.09227176755666733
-    output:
-    - 0
-  - input:
-    - 0.0950264260172844
-    - 0.09173992276191711
-    output:
-    - 0
-  - input:
-    - 0.09494136273860931
-    - 0.09101472795009613
-    output:
-    - 0
-  - input:
-    - 0.09485210478305817
-    - 0.0917641669511795
-    output:
-    - 0
-  - input:
-    - 0.09481419622898102
-    - 0.0917966216802597
-    output:
-    - 0
-  - input:
-    - 0.09472227841615677
-    - 0.0915854200720787
-    output:
-    - 0
-  - input:
-    - 0.0947732999920845
-    - 0.09186846017837524
-    output:
-    - 0
-  - input:
-    - 0.0948096215724945
-    - 0.09125114977359772
-    output:
-    - 0
-  - input:
-    - 0.09471038728952408
-    - 0.09088262915611267
-    output:
-    - 0
-  - input:
-    - 0.09485336393117905
-    - 0.0918530747294426
-    output:
-    - 0
-  - input:
-    - 0.09484695643186569
-    - 0.0903717651963234
-    output:
-    - 0
-  - input:
-    - 0.09490233659744263
-    - 0.08967981487512589
-    output:
-    - 0
-  - input:
-    - 0.09491308778524399
-    - 0.08990001678466797
-    output:
-    - 0
-  - input:
-    - 0.09481939673423767
-    - 0.08978455513715744
-    output:
-    - 0
-  - input:
-    - 0.09456764161586761
-    - 0.08975435793399811
-    output:
-    - 0
-  - input:
-    - 0.09461022913455963
-    - 0.09051736444234848
-    output:
-    - 0
-  - input:
-    - 0.09466107934713364
-    - 0.09016754478216171
-    output:
-    - 0
-  - input:
-    - 0.09433998912572861
-    - 0.08999398350715637
-    output:
-    - 0
-  - input:
-    - 0.09439343959093094
-    - 0.09163312613964081
-    output:
-    - 0
-  - input:
-    - 0.09433086961507797
-    - 0.09100595116615295
-    output:
-    - 0
-  - input:
-    - 0.09418060630559921
-    - 0.09091473370790482
-    output:
-    - 0
-  - input:
-    - 0.09414893388748169
-    - 0.09146708250045776
-    output:
-    - 0
-  - input:
-    - 0.0941050723195076
-    - 0.0915156900882721
-    output:
-    - 0
-  - input:
-    - 0.0938873216509819
-    - 0.0910855084657669
-    output:
-    - 0
-  - input:
-    - 0.09222368150949478
-    - 0.09008421748876572
-    output:
-    - 0
-  - input:
-    - 0.09127329289913177
-    - 0.08851563930511475
-    output:
-    - 0
-  - input:
-    - 0.09357520192861557
-    - 0.09062496572732925
-    output:
-    - 0
-  - input:
-    - 0.10212595015764236
-    - 0.09710898250341415
-    output:
-    - 0
-  - input:
-    - 0.11233803629875183
-    - 0.10439112037420273
-    output:
-    - 0
-  - input:
-    - 0.12562008202075958
-    - 0.11772319674491882
-    output:
-    - 0
-  - input:
-    - 0.1371571570634842
-    - 0.1310456097126007
-    output:
-    - 0
-  - input:
-    - 0.14842388033866882
-    - 0.14410357177257538
-    output:
-    - 0
-  - input:
-    - 0.16543075442314148
-    - 0.16573482751846313
-    output:
-    - 0
-  - input:
-    - 0.17659611999988556
-    - 0.16954410076141357
-    output:
-    - 0
-  - input:
-    - 0.18289028108119965
-    - 0.17652730643749237
-    output:
-    - 0
-  - input:
-    - 0.188130721449852
-    - 0.17973104119300842
-    output:
-    - 0
-  - input:
-    - 0.18709571659564972
-    - 0.18071073293685913
-    output:
-    - 0
-  - input:
-    - 0.18718062341213226
-    - 0.1809941679239273
-    output:
-    - 0
-  - input:
-    - 0.18964390456676483
-    - 0.18162836134433746
-    output:
-    - 0
-  - input:
-    - 0.18865829706192017
-    - 0.1813051998615265
-    output:
-    - 0
-  - input:
-    - 0.19355493783950806
-    - 0.18284887075424194
-    output:
-    - 0
-  - input:
-    - 0.19142307341098785
-    - 0.1811528205871582
-    output:
-    - 0
-  - input:
-    - 0.19049270451068878
-    - 0.1804114431142807
-    output:
-    - 0
-  - input:
-    - 0.18992756307125092
-    - 0.18149444460868835
-    output:
-    - 0
-  - input:
-    - 0.18987895548343658
-    - 0.18090517818927765
-    output:
-    - 0
-  - input:
-    - 0.18915419280529022
-    - 0.17973706126213074
-    output:
-    - 0
-  - input:
-    - 0.18856531381607056
-    - 0.18089501559734344
-    output:
-    - 0
-  - input:
-    - 0.18854741752147675
-    - 0.17913250625133514
-    output:
-    - 0
-  - input:
-    - 0.18402433395385742
-    - 0.17676088213920593
-    output:
-    - 0
-  - input:
-    - 0.15255819261074066
-    - 0.14747492969036102
-    output:
-    - 0
-  - input:
-    - 0.11011567711830139
-    - 0.10357747226953506
-    output:
-    - 0
-  - input:
-    - 0.10087200999259949
-    - 0.09529845416545868
-    output:
-    - 0
-  - input:
-    - 0.09922244399785995
-    - 0.09633668512105942
-    output:
-    - 0
-  - input:
-    - 0.09966365247964859
-    - 0.09652425348758698
-    output:
-    - 0
-  - input:
-    - 0.10001523047685623
-    - 0.09640777111053467
-    output:
-    - 0
-  - input:
-    - 0.10020821541547775
-    - 0.09540573507547379
-    output:
-    - 0
-  - input:
-    - 0.09982864558696747
-    - 0.09526834636926651
-    output:
-    - 0
-  - input:
-    - 0.09957067668437958
-    - 0.0954589769244194
-    output:
-    - 0
-  - input:
-    - 0.198927640914917
-    - 0.14393475651741028
-    output:
-    - 2
-  - input:
-    - 0.19542287290096283
-    - 0.14417776465415955
-    output:
-    - 2
-  - input:
-    - 0.1958371251821518
-    - 0.14433377981185913
-    output:
-    - 2
-  - input:
-    - 0.1975097358226776
-    - 0.1443890780210495
-    output:
-    - 2
-  - input:
-    - 0.19229480624198914
-    - 0.14410243928432465
-    output:
-    - 2
-  - input:
-    - 0.1775532364845276
-    - 0.1452776938676834
-    output:
-    - 2
-  - input:
-    - 0.17831896245479584
-    - 0.1483813375234604
-    output:
-    - 2
-  - input:
-    - 0.1774449199438095
-    - 0.14777939021587372
-    output:
-    - 2
-  - input:
-    - 0.1759728193283081
-    - 0.14810886979103088
-    output:
-    - 2
-  - input:
-    - 0.17907200753688812
-    - 0.14777307212352753
-    output:
-    - 2
-  - input:
-    - 0.18013149499893188
-    - 0.1459684520959854
-    output:
-    - 2
-  - input:
-    - 0.18146386742591858
-    - 0.1452261358499527
-    output:
-    - 2
-  - input:
-    - 0.18654897809028625
-    - 0.14412912726402283
-    output:
-    - 2
-  - input:
-    - 0.1871289759874344
-    - 0.14421145617961884
-    output:
-    - 2
-  - input:
-    - 0.18702571094036102
-    - 0.14417211711406708
-    output:
-    - 2
-  - input:
-    - 0.18554431200027466
-    - 0.14447110891342163
-    output:
-    - 2
-  - input:
-    - 0.18631614744663239
-    - 0.14445127546787262
-    output:
-    - 2
-  - input:
-    - 0.19066393375396729
-    - 0.14405375719070435
-    output:
-    - 2
-  - input:
-    - 0.1943446844816208
-    - 0.14261209964752197
-    output:
-    - 2
-  - input:
-    - 0.19489091634750366
-    - 0.14267310500144958
-    output:
-    - 2
-  - input:
-    - 0.19395588338375092
-    - 0.14212925732135773
-    output:
-    - 2
-  - input:
-    - 0.19125652313232422
-    - 0.14271418750286102
-    output:
-    - 2
-  - input:
-    - 0.19087032973766327
-    - 0.14262638986110687
-    output:
-    - 2
-  - input:
-    - 0.1851203888654709
-    - 0.1437539905309677
-    output:
-    - 2
-  - input:
-    - 0.18228989839553833
-    - 0.14406313002109528
-    output:
-    - 2
-  - input:
-    - 0.18414898216724396
-    - 0.14389199018478394
-    output:
-    - 2
-  - input:
-    - 0.18652184307575226
-    - 0.14319145679473877
-    output:
-    - 2
-  - input:
-    - 0.18837472796440125
-    - 0.14245380461215973
-    output:
-    - 2
-  - input:
-    - 0.18833167850971222
-    - 0.14225730299949646
-    output:
-    - 2
-  - input:
-    - 0.20930160582065582
-    - 0.21475750207901
+    - 5.773496150970459
+    - 0.7908153533935547
+    - -4
     output:
     - 1
   - input:
-    - 0.2095215767621994
-    - 0.21515096724033356
+    - 5.773496150970459
+    - 0.7908153533935547
+    - -4
     output:
     - 1
   - input:
-    - 0.20768533647060394
-    - 0.2153220772743225
+    - 5.773496150970459
+    - 0.7908153533935547
+    - -4
     output:
     - 1
   - input:
-    - 0.2078470140695572
-    - 0.21514195203781128
+    - 5.773496150970459
+    - 0.7908153533935547
+    - -4
     output:
     - 1
   - input:
-    - 0.2084975689649582
-    - 0.2145613431930542
+    - 5.773496150970459
+    - 0.7908153533935547
+    - -4
     output:
     - 1
   - input:
-    - 0.20760229229927063
-    - 0.21448494493961334
+    - 5.773496150970459
+    - 0.7908153533935547
+    - -4
     output:
     - 1
   - input:
-    - 0.20764516294002533
-    - 0.21442456543445587
+    - 5.773496150970459
+    - 0.7908153533935547
+    - -4
     output:
     - 1
   - input:
-    - 0.20800064504146576
-    - 0.215233713388443
+    - 5.773496150970459
+    - 0.7908153533935547
+    - -4
     output:
     - 1
   - input:
-    - 0.20814651250839233
-    - 0.2161894142627716
+    - -5.104104995727539
+    - 0.7489789128303528
+    - -4
     output:
-    - 1
+    - -1
   - input:
-    - 0.2086823284626007
-    - 0.21643753349781036
+    - -5.104104995727539
+    - 0.7489789128303528
+    - -4
     output:
-    - 1
+    - -1
   - input:
-    - 0.20895858108997345
-    - 0.21558813750743866
+    - -5.104104995727539
+    - 0.7489789128303528
+    - -4
     output:
-    - 1
+    - -1
   - input:
-    - 0.20911739766597748
-    - 0.21467378735542297
+    - -5.104104995727539
+    - 0.7489789128303528
+    - -4
     output:
-    - 1
+    - -1
   - input:
-    - 0.2096465677022934
-    - 0.2148432433605194
+    - -5.104104995727539
+    - 0.7489789128303528
+    - -4
     output:
-    - 1
+    - -1
   - input:
-    - 0.21056079864501953
-    - 0.21688272058963776
+    - -5.104104995727539
+    - 0.7489789128303528
+    - -4
     output:
-    - 1
+    - -1
   - input:
-    - 0.21018129587173462
-    - 0.21721002459526062
+    - -5.104104995727539
+    - 0.7489789128303528
+    - -4
     output:
-    - 1
+    - -1
   - input:
-    - 0.21025176346302032
-    - 0.216093048453331
+    - -5.104104995727539
+    - 0.7489789128303528
+    - -4
     output:
-    - 1
+    - -1
   - input:
-    - 0.21159648895263672
-    - 0.21603946387767792
+    - -5.104104995727539
+    - 0.7489789128303528
+    - -4
     output:
-    - 1
+    - -1
   - input:
-    - 0.21116535365581512
-    - 0.21688364446163177
+    - -5.104104995727539
+    - 0.7071412801742554
+    - -4
     output:
-    - 1
+    - -1
   - input:
-    - 0.21117918193340302
-    - 0.2171788066625595
+    - -5.187778949737549
+    - 0.7071412801742554
+    - -4
     output:
-    - 1
+    - -1
   - input:
-    - 0.21180473268032074
-    - 0.21677492558956146
+    - -5.187778949737549
+    - 0.7071412801742554
+    - -4
     output:
-    - 1
+    - -1
   - input:
-    - 0.2118595391511917
-    - 0.21709823608398438
+    - -5.187778949737549
+    - 0.7071412801742554
+    - -4
     output:
-    - 1
+    - -1
   - input:
-    - 0.21084032952785492
-    - 0.21728792786598206
+    - 20.332746505737305
+    - 0.6234683990478516
+    - -2
     output:
-    - 1
+    - 0
   - input:
-    - 0.21012233197689056
-    - 0.21595941483974457
+    - 20.332746505737305
+    - 0.6234683990478516
+    - -2
     output:
-    - 1
+    - 0
   - input:
-    - 0.2101326882839203
-    - 0.21322157979011536
-    output:
+    - -3.6431682109832764
+    - 2.5128402709960938
     - 1
+    output:
+    - 0
   - input:
-    - 0.21046330034732819
-    - 0.21398286521434784
-    output:
+    - -3.6431682109832764
+    - 2.5128402709960938
     - 1
+    output:
+    - 0
   - input:
-    - 0.21068346500396729
-    - 0.2153598666191101
-    output:
+    - -2.963932991027832
+    - 2.759835720062256
     - 1
+    output:
+    - 0
   - input:
-    - 0.2103152722120285
-    - 0.2151053249835968
-    output:
+    - 2.1612014770507812
+    - 3.5625674724578857
     - 1
+    output:
+    - 0
   - input:
-    - 0.21133117377758026
-    - 0.21456550061702728
-    output:
+    - -1.7907097339630127
+    - 3.1920762062072754
     - 1
+    output:
+    - 0
   - input:
-    - 0.21142370998859406
-    - 0.214168980717659
-    output:
+    - 3.3961739540100098
+    - 3.0068299770355225
     - 1
+    output:
+    - 0
   - input:
-    - 0.21207961440086365
-    - 0.21373358368873596
-    output:
+    - 3.7666661739349365
+    - 2.451092481613159
     - 1
+    output:
+    - 0
   - input:
-    - 0.21124745905399323
-    - 0.2134028524160385
-    output:
+    - -2.6551904678344727
+    - 2.451092481613159
     - 1
+    output:
+    - 0
   - input:
-    - 0.21178413927555084
-    - 0.21413293480873108
-    output:
+    - 4.692895412445068
+    - 3.3773224353790283
     - 1
+    output:
+    - 0
   - input:
-    - 0.2114962339401245
-    - 0.2137346714735031
-    output:
+    - -5.0016374588012695
+    - 1.5866115093231201
     - 1
+    output:
+    - 0
   - input:
-    - 0.2111935317516327
-    - 0.21495142579078674
-    output:
+    - -1.2967212200164795
+    - 1.8953547477722168
     - 1
+    output:
+    - 0
   - input:
-    - 0.2117987424135208
-    - 0.21584877371788025
-    output:
+    - 0.8027318716049194
+    - -0.1423490047454834
     - 1
+    output:
+    - 0
   - input:
-    - 0.21335342526435852
-    - 0.21568343043327332
-    output:
+    - 0.12349776178598404
+    - -0.01885199546813965
     - 1
+    output:
+    - 0
   - input:
-    - 0.21605925261974335
-    - 0.21498194336891174
-    output:
+    - -2.1612017154693604
+    - 1.0926231145858765
     - 1
+    output:
+    - 0
   - input:
-    - 0.216607928276062
-    - 0.21378850936889648
-    output:
+    - 2.65519118309021
+    - 0.5986335277557373
     - 1
+    output:
+    - 0
   - input:
-    - 0.21410387754440308
-    - 0.2151881605386734
-    output:
+    - -0.926228940486908
+    - 0.8456289172172546
     - 1
+    output:
+    - 0
   - input:
-    - 0.21594037115573883
-    - 0.21639783680438995
-    output:
+    - 1.049726128578186
+    - 0.9691259860992432
     - 1
+    output:
+    - 0
   - input:
-    - 0.21665845811367035
-    - 0.2170906960964203
-    output:
+    - 0.3087432086467743
+    - 1.2161202430725098
     - 1
+    output:
+    - 0
   trainingSerieses: []
   run: 0
   collectData: 0
   jsonString: "{\n   \"metadata\" : {\n      \"creator\" : \"Rapid API C++\",\n      \"inputNames\"
-    : [ \"inputs-1\", \"inputs-2\" ],\n      \"numInputs\" : 2,\n      \"numOutputs\"
+    : [ \"inputs-1\", \"inputs-2\", \"inputs-3\" ],\n      \"numInputs\" : 3,\n      \"numOutputs\"
     : 1,\n      \"version\" : \"v0.1.1\"\n   },\n   \"modelSet\" : [\n      {\n         \"examples\"
     : [\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.095808364450931549, 0.093257009983062744 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.095695167779922485,
-    0.092997230589389801 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.09572562575340271, 0.092827580869197845
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.095610372722148895, 0.092500917613506317 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.095456562936306,
-    0.092600949108600616 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.095266640186309814, 0.092663921415805817
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.095327712595462799, 0.092728346586227417 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.095249533653259277,
-    0.092646569013595581 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.095331199467182159, 0.092336200177669525
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.095314472913742065, 0.092569462954998016 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.095030985772609711,
-    0.092486545443534851 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.095070265233516693, 0.092539951205253601
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.095009706914424896, 0.092438213527202606 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.094929680228233337,
-    0.092171281576156616 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.094924479722976685, 0.09237314760684967
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.094870679080486298, 0.091744191944599152 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.094857864081859589,
-    0.091586410999298096 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.094814449548721313, 0.092271767556667328
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.095026426017284393, 0.091739922761917114 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.094941362738609314,
-    0.09101472795009613 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.094852104783058167, 0.091764166951179504
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.094814196228981018, 0.091796621680259705 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.094722278416156769,
-    0.091585420072078705 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.094773299992084503, 0.091868460178375244
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.094809621572494507, 0.091251149773597717 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.094710387289524078,
-    0.090882629156112671 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.094853363931179047, 0.091853074729442596
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.094846956431865692, 0.090371765196323395 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.094902336597442627,
-    0.089679814875125885 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.094913087785243988, 0.089900016784667969
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.094819396734237671, 0.08978455513715744 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.094567641615867615,
-    0.089754357933998108 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.094610229134559631, 0.09051736444234848
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.094661079347133636, 0.090167544782161713 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.094339989125728607,
-    0.089993983507156372 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.094393439590930939, 0.091633126139640808
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.094330869615077972, 0.091005951166152954 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.094180606305599213,
-    0.090914733707904816 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.094148933887481689, 0.091467082500457764
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.094105072319507599, 0.091515690088272095 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.093887321650981903,
-    0.091085508465766907 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.092223681509494781, 0.090084217488765717
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.091273292899131775, 0.088515639305114746 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.09357520192861557,
-    0.090624965727329254 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.10212595015764236, 0.097108982503414154
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.11233803629875183, 0.10439112037420273 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.12562008202075958,
-    0.11772319674491882 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.13715715706348419, 0.13104560971260071
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.14842388033866882, 0.14410357177257538 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.16543075442314148,
-    0.16573482751846313 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.17659611999988556, 0.16954410076141357
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.18289028108119965, 0.17652730643749237 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.18813072144985199,
-    0.17973104119300842 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.18709571659564972, 0.18071073293685913
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.18718062341213226, 0.18099416792392731 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.18964390456676483,
-    0.18162836134433746 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.18865829706192017, 0.18130519986152649
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.19355493783950806, 0.18284887075424194 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.19142307341098785,
-    0.1811528205871582 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.19049270451068878, 0.1804114431142807
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.18992756307125092, 0.18149444460868835 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.18987895548343658,
-    0.18090517818927765 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.18915419280529022, 0.17973706126213074
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.18856531381607056, 0.18089501559734344 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.18854741752147675,
-    0.17913250625133514 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.18402433395385742, 0.17676088213920593
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.15255819261074066, 0.14747492969036102 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.11011567711830139,
-    0.10357747226953506 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.10087200999259949, 0.095298454165458679
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.099222443997859955, 0.096336685121059418 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.09966365247964859,
-    0.096524253487586975 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.10001523047685623, 0.096407771110534668
-    ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
-    : [ 0.10020821541547775, 0.095405735075473785 ]\n            },\n            {\n
-    \              \"class\" : 0,\n               \"features\" : [ 0.099828645586967468,
-    0.09526834636926651 ]\n            },\n            {\n               \"class\"
-    : 0,\n               \"features\" : [ 0.099570676684379578, 0.095458976924419403
-    ]\n            },\n            {\n               \"class\" : 2,\n               \"features\"
-    : [ 0.19892764091491699, 0.14393475651741028 ]\n            },\n            {\n
-    \              \"class\" : 2,\n               \"features\" : [ 0.19542287290096283,
-    0.14417776465415955 ]\n            },\n            {\n               \"class\"
-    : 2,\n               \"features\" : [ 0.19583712518215179, 0.14433377981185913
-    ]\n            },\n            {\n               \"class\" : 2,\n               \"features\"
-    : [ 0.19750973582267761, 0.1443890780210495 ]\n            },\n            {\n
-    \              \"class\" : 2,\n               \"features\" : [ 0.19229480624198914,
-    0.14410243928432465 ]\n            },\n            {\n               \"class\"
-    : 2,\n               \"features\" : [ 0.17755323648452759, 0.14527769386768341
-    ]\n            },\n            {\n               \"class\" : 2,\n               \"features\"
-    : [ 0.17831896245479584, 0.14838133752346039 ]\n            },\n            {\n
-    \              \"class\" : 2,\n               \"features\" : [ 0.17744491994380951,
-    0.14777939021587372 ]\n            },\n            {\n               \"class\"
-    : 2,\n               \"features\" : [ 0.17597281932830811, 0.14810886979103088
-    ]\n            },\n            {\n               \"class\" : 2,\n               \"features\"
-    : [ 0.17907200753688812, 0.14777307212352753 ]\n            },\n            {\n
-    \              \"class\" : 2,\n               \"features\" : [ 0.18013149499893188,
-    0.14596845209598541 ]\n            },\n            {\n               \"class\"
-    : 2,\n               \"features\" : [ 0.18146386742591858, 0.1452261358499527
-    ]\n            },\n            {\n               \"class\" : 2,\n               \"features\"
-    : [ 0.18654897809028625, 0.14412912726402283 ]\n            },\n            {\n
-    \              \"class\" : 2,\n               \"features\" : [ 0.18712897598743439,
-    0.14421145617961884 ]\n            },\n            {\n               \"class\"
-    : 2,\n               \"features\" : [ 0.18702571094036102, 0.14417211711406708
-    ]\n            },\n            {\n               \"class\" : 2,\n               \"features\"
-    : [ 0.18554431200027466, 0.14447110891342163 ]\n            },\n            {\n
-    \              \"class\" : 2,\n               \"features\" : [ 0.18631614744663239,
-    0.14445127546787262 ]\n            },\n            {\n               \"class\"
-    : 2,\n               \"features\" : [ 0.19066393375396729, 0.14405375719070435
-    ]\n            },\n            {\n               \"class\" : 2,\n               \"features\"
-    : [ 0.19434468448162079, 0.14261209964752197 ]\n            },\n            {\n
-    \              \"class\" : 2,\n               \"features\" : [ 0.19489091634750366,
-    0.14267310500144958 ]\n            },\n            {\n               \"class\"
-    : 2,\n               \"features\" : [ 0.19395588338375092, 0.14212925732135773
-    ]\n            },\n            {\n               \"class\" : 2,\n               \"features\"
-    : [ 0.19125652313232422, 0.14271418750286102 ]\n            },\n            {\n
-    \              \"class\" : 2,\n               \"features\" : [ 0.19087032973766327,
-    0.14262638986110687 ]\n            },\n            {\n               \"class\"
-    : 2,\n               \"features\" : [ 0.18512038886547089, 0.14375399053096771
-    ]\n            },\n            {\n               \"class\" : 2,\n               \"features\"
-    : [ 0.18228989839553833, 0.14406313002109528 ]\n            },\n            {\n
-    \              \"class\" : 2,\n               \"features\" : [ 0.18414898216724396,
-    0.14389199018478394 ]\n            },\n            {\n               \"class\"
-    : 2,\n               \"features\" : [ 0.18652184307575226, 0.14319145679473877
-    ]\n            },\n            {\n               \"class\" : 2,\n               \"features\"
-    : [ 0.18837472796440125, 0.14245380461215973 ]\n            },\n            {\n
-    \              \"class\" : 2,\n               \"features\" : [ 0.18833167850971222,
-    0.14225730299949646 ]\n            },\n            {\n               \"class\"
-    : 1,\n               \"features\" : [ 0.20930160582065582, 0.21475750207901001
-    ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 0.2095215767621994, 0.21515096724033356 ]\n            },\n            {\n
-    \              \"class\" : 1,\n               \"features\" : [ 0.20768533647060394,
-    0.21532207727432251 ]\n            },\n            {\n               \"class\"
-    : 1,\n               \"features\" : [ 0.20784701406955719, 0.21514195203781128
-    ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 0.20849756896495819, 0.2145613431930542 ]\n            },\n            {\n
-    \              \"class\" : 1,\n               \"features\" : [ 0.20760229229927063,
-    0.21448494493961334 ]\n            },\n            {\n               \"class\"
-    : 1,\n               \"features\" : [ 0.20764516294002533, 0.21442456543445587
-    ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 0.20800064504146576, 0.21523371338844299 ]\n            },\n            {\n
-    \              \"class\" : 1,\n               \"features\" : [ 0.20814651250839233,
-    0.21618941426277161 ]\n            },\n            {\n               \"class\"
-    : 1,\n               \"features\" : [ 0.20868232846260071, 0.21643753349781036
-    ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 0.20895858108997345, 0.21558813750743866 ]\n            },\n            {\n
-    \              \"class\" : 1,\n               \"features\" : [ 0.20911739766597748,
-    0.21467378735542297 ]\n            },\n            {\n               \"class\"
-    : 1,\n               \"features\" : [ 0.2096465677022934, 0.21484324336051941
-    ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 0.21056079864501953, 0.21688272058963776 ]\n            },\n            {\n
-    \              \"class\" : 1,\n               \"features\" : [ 0.21018129587173462,
-    0.21721002459526062 ]\n            },\n            {\n               \"class\"
-    : 1,\n               \"features\" : [ 0.21025176346302032, 0.21609304845333099
-    ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 0.21159648895263672, 0.21603946387767792 ]\n            },\n            {\n
-    \              \"class\" : 1,\n               \"features\" : [ 0.21116535365581512,
-    0.21688364446163177 ]\n            },\n            {\n               \"class\"
-    : 1,\n               \"features\" : [ 0.21117918193340302, 0.21717880666255951
-    ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 0.21180473268032074, 0.21677492558956146 ]\n            },\n            {\n
-    \              \"class\" : 1,\n               \"features\" : [ 0.21185953915119171,
-    0.21709823608398438 ]\n            },\n            {\n               \"class\"
-    : 1,\n               \"features\" : [ 0.21084032952785492, 0.21728792786598206
-    ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 0.21012233197689056, 0.21595941483974457 ]\n            },\n            {\n
-    \              \"class\" : 1,\n               \"features\" : [ 0.21013268828392029,
-    0.21322157979011536 ]\n            },\n            {\n               \"class\"
-    : 1,\n               \"features\" : [ 0.21046330034732819, 0.21398286521434784
-    ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 0.21068346500396729, 0.21535986661911011 ]\n            },\n            {\n
-    \              \"class\" : 1,\n               \"features\" : [ 0.2103152722120285,
-    0.2151053249835968 ]\n            },\n            {\n               \"class\"
-    : 1,\n               \"features\" : [ 0.21133117377758026, 0.21456550061702728
-    ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 0.21142370998859406, 0.214168980717659 ]\n            },\n            {\n
-    \              \"class\" : 1,\n               \"features\" : [ 0.21207961440086365,
-    0.21373358368873596 ]\n            },\n            {\n               \"class\"
-    : 1,\n               \"features\" : [ 0.21124745905399323, 0.21340285241603851
-    ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 0.21178413927555084, 0.21413293480873108 ]\n            },\n            {\n
-    \              \"class\" : 1,\n               \"features\" : [ 0.21149623394012451,
-    0.21373467147350311 ]\n            },\n            {\n               \"class\"
-    : 1,\n               \"features\" : [ 0.21119353175163269, 0.21495142579078674
-    ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 0.21179874241352081, 0.21584877371788025 ]\n            },\n            {\n
-    \              \"class\" : 1,\n               \"features\" : [ 0.21335342526435852,
-    0.21568343043327332 ]\n            },\n            {\n               \"class\"
-    : 1,\n               \"features\" : [ 0.21605925261974335, 0.21498194336891174
-    ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 0.21660792827606201, 0.21378850936889648 ]\n            },\n            {\n
-    \              \"class\" : 1,\n               \"features\" : [ 0.21410387754440308,
-    0.2151881605386734 ]\n            },\n            {\n               \"class\"
-    : 1,\n               \"features\" : [ 0.21594037115573883, 0.21639783680438995
-    ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
-    : [ 0.21665845811367035, 0.21709069609642029 ]\n            }\n         ],\n         \"inputNames\"
-    : [ \"inputs-1\", \"inputs-2\" ],\n         \"k\" : 1,\n         \"modelType\"
-    : \"kNN Classificiation\",\n         \"numInputs\" : 2,\n         \"whichInputs\"
-    : [ 0, 1 ]\n      }\n   ]\n}\n"
+    : [ 0.37653198838233948, 0.9581635594367981, -4 ]\n            },\n            {\n
+    \              \"class\" : 0,\n               \"features\" : [ 0.37653198838233948,
+    0.9581635594367981, -4 ]\n            },\n            {\n               \"class\"
+    : 0,\n               \"features\" : [ 0.37653198838233948, 0.9581635594367981,
+    -4 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
+    : [ 0.37653198838233948, 0.9581635594367981, -4 ]\n            },\n            {\n
+    \              \"class\" : 0,\n               \"features\" : [ 0.37653198838233948,
+    0.9581635594367981, -4 ]\n            },\n            {\n               \"class\"
+    : 0,\n               \"features\" : [ 0.37653198838233948, 0.9581635594367981,
+    -4 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
+    : [ 0.37653198838233948, 0.9581635594367981, -4 ]\n            },\n            {\n
+    \              \"class\" : 0,\n               \"features\" : [ 0.37653198838233948,
+    0.9581635594367981, -4 ]\n            },\n            {\n               \"class\"
+    : 0,\n               \"features\" : [ 0.37653198838233948, 0.9581635594367981,
+    -4 ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
+    : [ 5.773496150970459, 0.79081535339355469, -4 ]\n            },\n            {\n
+    \              \"class\" : 1,\n               \"features\" : [ 5.773496150970459,
+    0.79081535339355469, -4 ]\n            },\n            {\n               \"class\"
+    : 1,\n               \"features\" : [ 5.773496150970459, 0.79081535339355469,
+    -4 ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
+    : [ 5.773496150970459, 0.79081535339355469, -4 ]\n            },\n            {\n
+    \              \"class\" : 1,\n               \"features\" : [ 5.773496150970459,
+    0.79081535339355469, -4 ]\n            },\n            {\n               \"class\"
+    : 1,\n               \"features\" : [ 5.773496150970459, 0.79081535339355469,
+    -4 ]\n            },\n            {\n               \"class\" : 1,\n               \"features\"
+    : [ 5.773496150970459, 0.79081535339355469, -4 ]\n            },\n            {\n
+    \              \"class\" : 1,\n               \"features\" : [ 5.773496150970459,
+    0.79081535339355469, -4 ]\n            },\n            {\n               \"class\"
+    : -1,\n               \"features\" : [ -5.1041049957275391, 0.74897891283035278,
+    -4 ]\n            },\n            {\n               \"class\" : -1,\n               \"features\"
+    : [ -5.1041049957275391, 0.74897891283035278, -4 ]\n            },\n            {\n
+    \              \"class\" : -1,\n               \"features\" : [ -5.1041049957275391,
+    0.74897891283035278, -4 ]\n            },\n            {\n               \"class\"
+    : -1,\n               \"features\" : [ -5.1041049957275391, 0.74897891283035278,
+    -4 ]\n            },\n            {\n               \"class\" : -1,\n               \"features\"
+    : [ -5.1041049957275391, 0.74897891283035278, -4 ]\n            },\n            {\n
+    \              \"class\" : -1,\n               \"features\" : [ -5.1041049957275391,
+    0.74897891283035278, -4 ]\n            },\n            {\n               \"class\"
+    : -1,\n               \"features\" : [ -5.1041049957275391, 0.74897891283035278,
+    -4 ]\n            },\n            {\n               \"class\" : -1,\n               \"features\"
+    : [ -5.1041049957275391, 0.74897891283035278, -4 ]\n            },\n            {\n
+    \              \"class\" : -1,\n               \"features\" : [ -5.1041049957275391,
+    0.74897891283035278, -4 ]\n            },\n            {\n               \"class\"
+    : -1,\n               \"features\" : [ -5.1041049957275391, 0.70714128017425537,
+    -4 ]\n            },\n            {\n               \"class\" : -1,\n               \"features\"
+    : [ -5.1877789497375488, 0.70714128017425537, -4 ]\n            },\n            {\n
+    \              \"class\" : -1,\n               \"features\" : [ -5.1877789497375488,
+    0.70714128017425537, -4 ]\n            },\n            {\n               \"class\"
+    : -1,\n               \"features\" : [ -5.1877789497375488, 0.70714128017425537,
+    -4 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
+    : [ 20.332746505737305, 0.62346839904785156, -2 ]\n            },\n            {\n
+    \              \"class\" : 0,\n               \"features\" : [ 20.332746505737305,
+    0.62346839904785156, -2 ]\n            },\n            {\n               \"class\"
+    : 0,\n               \"features\" : [ -3.6431682109832764, 2.5128402709960938,
+    1 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
+    : [ -3.6431682109832764, 2.5128402709960938, 1 ]\n            },\n            {\n
+    \              \"class\" : 0,\n               \"features\" : [ -2.963932991027832,
+    2.7598357200622559, 1 ]\n            },\n            {\n               \"class\"
+    : 0,\n               \"features\" : [ 2.1612014770507813, 3.5625674724578857,
+    1 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
+    : [ -1.7907097339630127, 3.1920762062072754, 1 ]\n            },\n            {\n
+    \              \"class\" : 0,\n               \"features\" : [ 3.3961739540100098,
+    3.0068299770355225, 1 ]\n            },\n            {\n               \"class\"
+    : 0,\n               \"features\" : [ 3.7666661739349365, 2.4510924816131592,
+    1 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
+    : [ -2.6551904678344727, 2.4510924816131592, 1 ]\n            },\n            {\n
+    \              \"class\" : 0,\n               \"features\" : [ 4.6928954124450684,
+    3.3773224353790283, 1 ]\n            },\n            {\n               \"class\"
+    : 0,\n               \"features\" : [ -5.0016374588012695, 1.5866115093231201,
+    1 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
+    : [ -1.2967212200164795, 1.8953547477722168, 1 ]\n            },\n            {\n
+    \              \"class\" : 0,\n               \"features\" : [ 0.80273187160491943,
+    -0.1423490047454834, 1 ]\n            },\n            {\n               \"class\"
+    : 0,\n               \"features\" : [ 0.12349776178598404, -0.018851995468139648,
+    1 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
+    : [ -2.1612017154693604, 1.0926231145858765, 1 ]\n            },\n            {\n
+    \              \"class\" : 0,\n               \"features\" : [ 2.65519118309021,
+    0.5986335277557373, 1 ]\n            },\n            {\n               \"class\"
+    : 0,\n               \"features\" : [ -0.92622894048690796, 0.84562891721725464,
+    1 ]\n            },\n            {\n               \"class\" : 0,\n               \"features\"
+    : [ 1.049726128578186, 0.96912598609924316, 1 ]\n            },\n            {\n
+    \              \"class\" : 0,\n               \"features\" : [ 0.30874320864677429,
+    1.2161202430725098, 1 ]\n            }\n         ],\n         \"inputNames\" :
+    [ \"inputs-1\", \"inputs-2\", \"inputs-3\" ],\n         \"k\" : 1,\n         \"modelType\"
+    : \"kNN Classificiation\",\n         \"numInputs\" : 3,\n         \"whichInputs\"
+    : [ 0, 1, 2 ]\n      }\n   ]\n}\n"
   m_Features: 
   m_DistancesToFirstInput: []
 --- !u!114 &710918718
@@ -10882,7 +9986,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 725885461}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -10898,7 +10002,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 725885461}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -10918,6 +10022,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &725885465
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11032,7 +10137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 896211468}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -11052,6 +10157,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &896211471
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11111,7 +10217,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 899851938}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -11127,7 +10233,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 899851938}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -11211,7 +10317,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 902405090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -11227,7 +10333,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 902405090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -16975,9 +16081,10 @@ Camera:
   m_ClearFlags: 3
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -17055,7 +16162,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1027119486}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -17071,7 +16178,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1027119486}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -17155,7 +16262,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1094392585}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -17171,7 +16278,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1094392585}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -17257,7 +16364,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1098376838}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -17273,7 +16380,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1098376838}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -17293,6 +16400,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1098376842
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -17382,7 +16490,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1131131513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -17398,7 +16506,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1131131513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -17542,6 +16650,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -17652,6 +16761,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 1
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -17712,12 +16822,13 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1147160330}
   m_Enabled: 1
-  serializedVersion: 8
+  serializedVersion: 9
   m_Type: 1
   m_Color: {r: 0.6509804, g: 0.84144384, b: 0.8666667, a: 1}
   m_Intensity: 0.82
   m_Range: 10
   m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -17727,6 +16838,24 @@ Light:
     m_Bias: 0.11
     m_NormalBias: 0
     m_NearPlane: 0.6
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
@@ -17734,12 +16863,15 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!1 &1173397526
@@ -17817,6 +16949,8 @@ MonoBehaviour:
     ExpectedIMLValue: 7
   - BirdInput: Stun
     ExpectedIMLValue: 8
+  - BirdInput: Attack1
+    ExpectedIMLValue: 9
 --- !u!114 &1173397530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17879,7 +17013,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1175643659}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -17895,7 +17029,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1175643659}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -17981,7 +17115,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1179722430}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -17997,7 +17131,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1179722430}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -18017,6 +17151,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1179722434
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18157,7 +17292,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1298490826}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -18173,7 +17308,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1298490826}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -18331,7 +17466,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1337895489}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -18351,6 +17486,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1337895492
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18501,7 +17637,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1393301328}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -18517,7 +17653,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1393301328}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -18537,6 +17673,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1393301332
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18596,7 +17733,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1399123825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -18612,7 +17749,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1399123825}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -18698,7 +17835,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1401522905}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -18714,7 +17851,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1401522905}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -18734,6 +17871,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1401522909
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -18793,7 +17931,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1423147082}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -18809,7 +17947,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1423147082}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -18893,7 +18031,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1454197687}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -18909,7 +18047,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1454197687}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -18993,7 +18131,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1472472654}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -19009,7 +18147,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1472472654}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -19112,9 +18250,10 @@ Camera:
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.62552905, g: 0.684092, b: 0.7761194, a: 0.019607844}
   m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -19198,9 +18337,10 @@ Camera:
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.32352942, g: 0.32352942, b: 0.32352942, a: 0.019607844}
   m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -19300,7 +18440,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1502722031}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -19316,7 +18456,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1502722031}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -19401,7 +18541,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1545912681}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -19417,7 +18557,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1545912681}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -19437,6 +18577,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1545912685
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19498,7 +18639,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1559469750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -19514,7 +18655,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1559469750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -19534,6 +18675,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1559469754
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20104,7 +19246,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1581447398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -20120,7 +19262,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1581447398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -20140,6 +19282,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1581447402
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20176,7 +19319,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1619050452}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1077351063, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalAxis: Horizontal
@@ -20195,7 +19338,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1619050452}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -619905303, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_FirstSelected: {fileID: 0}
@@ -20266,7 +19409,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1629314761}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -20282,7 +19425,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1629314761}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -20302,6 +19445,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1629314765
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20362,7 +19506,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1679188707}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -20378,7 +19522,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1679188707}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -20398,6 +19542,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1679188711
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20459,7 +19604,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1749894496}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -20475,7 +19620,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1749894496}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -20495,6 +19640,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1749894500
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20554,7 +19700,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1776374737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -20570,7 +19716,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1776374737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -20666,7 +19812,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1837918374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -20682,7 +19828,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1837918374}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -20766,7 +19912,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1857603550}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
@@ -20782,7 +19928,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1857603550}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -20980,7 +20126,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1883127509}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -20996,7 +20142,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1883127509}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -21112,7 +20258,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1933323229}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -21128,7 +20274,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1933323229}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -21213,7 +20359,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1939373502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -21229,7 +20375,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1939373502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -21249,6 +20395,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &1939373506
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21358,7 +20505,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2019049961}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1980459831, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 1
@@ -21464,7 +20611,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2074679558}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -21480,7 +20627,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2074679558}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -21564,7 +20711,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2084876330}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -21580,7 +20727,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2084876330}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -21664,7 +20811,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2093509399}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -21684,6 +20831,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &2093509402
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21745,7 +20893,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2113643588}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -21761,7 +20909,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2113643588}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -21781,6 +20929,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!222 &2113643592
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21840,7 +20989,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2115802700}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.094}
@@ -21856,7 +21005,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2115802700}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -21940,7 +21089,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2132777182}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
@@ -21956,7 +21105,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2132777182}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
