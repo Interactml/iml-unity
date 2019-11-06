@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+#if ODIN_INSPECTOR
+using Sirenix.OdinInspector.Editor;
+#endif
 
 namespace XNodeEditor.Internal {
 	/// <summary> Handles caching of custom editor classes and their target types. Accessible with GetEditor(Type type) </summary>
@@ -14,10 +17,29 @@ namespace XNodeEditor.Internal {
 		/// <summary> Custom editors defined with [CustomNodeEditor] </summary>
 		private static Dictionary<Type, Type> editorTypes;
 		private static Dictionary<K, T> editors = new Dictionary<K, T>();
+		public NodeEditorWindow window;
 		public K target;
 		public SerializedObject serializedObject;
+#if ODIN_INSPECTOR
+		private PropertyTree _objectTree;
+		public PropertyTree objectTree {
+			get {
+				if (this._objectTree == null) {
+					try {
+						bool wasInEditor = NodeEditor.inNodeEditor;
+						NodeEditor.inNodeEditor = true;
+						this._objectTree = PropertyTree.Create(this.serializedObject);
+						NodeEditor.inNodeEditor = wasInEditor;
+					} catch (ArgumentException ex) {
+						Debug.Log(ex);
+					}
+				}
+				return this._objectTree;
+			}
+		}
+#endif
 
-		public static T GetEditor(K target) {
+		public static T GetEditor(K target, NodeEditorWindow window) {
 			if (target == null) return null;
 			T editor;
 			if (!editors.TryGetValue(target, out editor)) {
@@ -26,9 +48,12 @@ namespace XNodeEditor.Internal {
 				editor = Activator.CreateInstance(editorType) as T;
 				editor.target = target;
 				editor.serializedObject = new SerializedObject(target);
+				editor.window = window;
+				editor.OnCreate();
 				editors.Add(target, editor);
 			}
 			if (editor.target == null) editor.target = target;
+			if (editor.window != window) editor.window = window;
 			if (editor.serializedObject == null) editor.serializedObject = new SerializedObject(target);
 			return editor;
 		}
@@ -46,7 +71,7 @@ namespace XNodeEditor.Internal {
 			editorTypes = new Dictionary<Type, Type>();
 
 			//Get all classes deriving from NodeEditor via reflection
-			Type[] nodeEditors = XNodeEditor.NodeEditorWindow.GetDerivedTypes(typeof(T));
+			Type[] nodeEditors = typeof(T).GetDerivedTypes();
 			for (int i = 0; i < nodeEditors.Length; i++) {
 				if (nodeEditors[i].IsAbstract) continue;
 				var attribs = nodeEditors[i].GetCustomAttributes(typeof(A), false);
@@ -55,6 +80,9 @@ namespace XNodeEditor.Internal {
 				editorTypes.Add(attrib.GetInspectedType(), nodeEditors[i]);
 			}
 		}
+
+		/// <summary> Called on creation, after references have been set </summary>
+		public virtual void OnCreate() { }
 
 		public interface INodeEditorAttrib {
 			Type GetInspectedType();

@@ -2,22 +2,27 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
+using System;
+using Object = UnityEngine.Object;
 
 namespace XNodeEditor {
     [InitializeOnLoad]
     public partial class NodeEditorWindow : EditorWindow {
         public static NodeEditorWindow current;
 
-        /// <summary>
-        /// Name of the window
-        /// </summary>
-        private string _windowName = "InteractML";
-
         /// <summary> Stores node positions for all nodePorts. </summary>
         public Dictionary<XNode.NodePort, Rect> portConnectionPoints { get { return _portConnectionPoints; } }
         private Dictionary<XNode.NodePort, Rect> _portConnectionPoints = new Dictionary<XNode.NodePort, Rect>();
         [SerializeField] private NodePortReference[] _references = new NodePortReference[0];
         [SerializeField] private Rect[] _rects = new Rect[0];
+
+        private Func<bool> isDocked {
+            get {
+                if (_isDocked == null) _isDocked = this.GetIsDockedDelegate();
+                return _isDocked;
+            }
+        }
+        private Func<bool> _isDocked;
 
         [System.Serializable] private class NodePortReference {
             [SerializeField] private XNode.Node _node;
@@ -66,14 +71,36 @@ namespace XNodeEditor {
         public XNode.NodeGraph graph;
         public Vector2 panOffset { get { return _panOffset; } set { _panOffset = value; Repaint(); } }
         private Vector2 _panOffset;
-        public float zoom { get { return _zoom; } set { _zoom = Mathf.Clamp(value, 1f, 5f); Repaint(); } }
+        public float zoom { get { return _zoom; } set { _zoom = Mathf.Clamp(value, NodeEditorPreferences.GetSettings().minZoom, NodeEditorPreferences.GetSettings().maxZoom); Repaint(); } }
         private float _zoom = 1;
 
         void OnFocus() {
             current = this;
-            current.titleContent.text = _windowName;
-            graphEditor = NodeGraphEditor.GetEditor(graph);
+            ValidateGraphEditor();
             if (graphEditor != null && NodeEditorPreferences.GetSettings().autoSave) AssetDatabase.SaveAssets();
+        }
+
+        [InitializeOnLoadMethod]
+        private static void OnLoad() {
+            Selection.selectionChanged -= OnSelectionChanged;
+            Selection.selectionChanged += OnSelectionChanged;
+        }
+
+        /// <summary> Handle Selection Change events</summary>
+        private static void OnSelectionChanged() {
+            XNode.NodeGraph nodeGraph = Selection.activeObject as XNode.NodeGraph;
+            if (nodeGraph && !AssetDatabase.Contains(nodeGraph)) {
+                Open(nodeGraph);
+            }
+        }
+
+        /// <summary> Make sure the graph editor is assigned and to the right object </summary>
+        private void ValidateGraphEditor() {
+            NodeGraphEditor graphEditor = NodeGraphEditor.GetEditor(graph, this);
+            if (this.graphEditor != graphEditor) {
+                this.graphEditor = graphEditor;
+                graphEditor.OnOpen();
+            }
         }
 
         /// <summary> Create editor window </summary>
@@ -129,8 +156,9 @@ namespace XNodeEditor {
 
         public Vector2 GridToWindowPositionNoClipped(Vector2 gridPosition) {
             Vector2 center = position.size * 0.5f;
-            float xOffset = (center.x * zoom + (panOffset.x + gridPosition.x));
-            float yOffset = (center.y * zoom + (panOffset.y + gridPosition.y));
+            // UI Sharpness complete fix - Round final offset not panOffset
+            float xOffset = Mathf.Round(center.x * zoom + (panOffset.x + gridPosition.x));
+            float yOffset = Mathf.Round(center.y * zoom + (panOffset.y + gridPosition.y));
             return new Vector2(xOffset, yOffset);
         }
 
@@ -152,12 +180,19 @@ namespace XNodeEditor {
         public static bool OnOpen(int instanceID, int line) {
             XNode.NodeGraph nodeGraph = EditorUtility.InstanceIDToObject(instanceID) as XNode.NodeGraph;
             if (nodeGraph != null) {
-                NodeEditorWindow w = GetWindow(typeof(NodeEditorWindow), false, "xNode", true) as NodeEditorWindow;
-                w.wantsMouseMove = true;
-                w.graph = nodeGraph;
+                Open(nodeGraph);
                 return true;
             }
             return false;
+        }
+
+        /// <summary>Open the provided graph in the NodeEditor</summary>
+        public static void Open(XNode.NodeGraph graph) {
+            if (!graph) return;
+
+            NodeEditorWindow w = GetWindow(typeof(NodeEditorWindow), false, "xNode", true) as NodeEditorWindow;
+            w.wantsMouseMove = true;
+            w.graph = graph;
         }
 
         /// <summary> Repaint all open NodeEditorWindows. </summary>
@@ -167,15 +202,5 @@ namespace XNodeEditor {
                 windows[i].Repaint();
             }
         }
-
-        /// <summary>
-        /// Unity event that is called 10 times per second. 
-        /// </summary>
-        public void OnInspectorUpdate()
-        {
-            // We call this xNode framework to repaint all nodes
-            RepaintAll();
-        }
-
     }
 }
