@@ -54,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 10
+    serializedVersion: 12
     m_Resolution: 2
     m_BakeResolution: 40
     m_AtlasSize: 1024
@@ -62,6 +62,7 @@ LightmapSettings:
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
     m_CompAOExponentDirect: 0
+    m_ExtractAmbientOcclusion: 0
     m_Padding: 2
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
@@ -76,10 +77,16 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
+    m_PVREnvironmentSampleCount: 500
+    m_PVREnvironmentReferencePointCount: 2048
+    m_PVRFilteringMode: 2
+    m_PVRDenoiserTypeDirect: 0
+    m_PVRDenoiserTypeIndirect: 0
+    m_PVRDenoiserTypeAO: 0
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
     m_PVRFilterTypeAO: 0
-    m_PVRFilteringMode: 1
+    m_PVREnvironmentMIS: 0
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
@@ -87,7 +94,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaDirect: 0.5
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
-    m_ShowResolutionOverlay: 1
+    m_ExportTrainingData: 0
+    m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -137,12 +145,13 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 590225352}
   m_Enabled: 1
-  serializedVersion: 8
+  serializedVersion: 9
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -152,6 +161,24 @@ Light:
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
@@ -159,12 +186,15 @@ Light:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &590225354
@@ -252,6 +282,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -280,7 +311,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 672594436}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.86, y: -2.46, z: -0.44471583}
+  m_LocalPosition: {x: -3.55, y: -2.46, z: -0.44471583}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -318,9 +349,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AllowExternalData: 1
   m_ExternalInputFeatures:
-  - 0.8600000143051147
-  - -2.4600000381469727
-  - -0.44471582770347595
+  - 0
+  - 0
+  - 0
   m_ExternalOutputFeatures:
   - 0
   AllowKeyboardShortcuts: 0
@@ -333,120 +364,258 @@ MonoBehaviour:
   - 0
   trainingExamples:
   - input:
-    - 0.8600000143051147
-    - -8.329999923706055
-    - -0.44471582770347595
-    output:
     - 0
-  - input:
-    - 0.8600000143051147
-    - -8.329999923706055
-    - -0.44471582770347595
-    output:
     - 0
-  - input:
-    - 0.8600000143051147
-    - -8.329999923706055
-    - -0.44471582770347595
-    output:
     - 0
-  - input:
-    - 0.8600000143051147
-    - -8.329999923706055
-    - -0.44471582770347595
     output:
+    - 10
+  - input:
     - 0
-  - input:
-    - 0.8600000143051147
-    - -0.6800000071525574
-    - -0.44471582770347595
+    - 0
+    - 0
     output:
-    - 1
+    - 10
   - input:
-    - 0.8600000143051147
-    - -0.6800000071525574
-    - -0.44471582770347595
+    - 0
+    - -13.00660228729248
+    - 0
     output:
-    - 1
+    - 10
   - input:
-    - 0.8600000143051147
-    - -0.6800000071525574
-    - -0.44471582770347595
+    - -5.204753398895264
+    - 0
+    - 0
     output:
-    - 1
+    - 10
   - input:
-    - 0.8600000143051147
-    - -0.6800000071525574
-    - -0.44471582770347595
+    - -7.7722368240356445
+    - 25.907377243041992
+    - 0
     output:
-    - 1
+    - 10
   - input:
-    - 0.8600000143051147
-    - -0.6800000071525574
-    - -0.44471582770347595
+    - 7.819468975067139
+    - 7.819483280181885
+    - 0
     output:
-    - 1
+    - 10
   - input:
-    - 0.8600000143051147
-    - 5.579999923706055
-    - -0.44471582770347595
+    - 7.858790397644043
+    - 0
+    - 0
     output:
-    - 2
+    - 10
   - input:
-    - 0.8600000143051147
-    - 5.579999923706055
-    - -0.44471582770347595
+    - 0
+    - -15.602958679199219
+    - 0
     output:
-    - 2
+    - 10
   - input:
-    - 0.8600000143051147
-    - 5.579999923706055
-    - -0.44471582770347595
+    - -5.1940412521362305
+    - -2.59709095954895
+    - 0
     output:
-    - 2
+    - 10
   - input:
-    - 0.8600000143051147
-    - 5.579999923706055
-    - -0.44471582770347595
+    - -5.20474910736084
+    - 7.807053089141846
+    - 0
     output:
-    - 2
+    - 10
   - input:
-    - 0.8600000143051147
-    - 5.579999923706055
-    - -0.44471582770347595
+    - 0
+    - 0
+    - 0
     output:
-    - 2
+    - 36
   - input:
-    - 0.8600000143051147
-    - 5.579999923706055
-    - -0.44471582770347595
+    - 131.16453552246094
+    - -10.493151664733887
+    - 0
     output:
-    - 2
+    - 36
+  - input:
+    - -67.8302230834961
+    - 10.435389518737793
+    - 0
+    output:
+    - 36
+  - input:
+    - -44.11355209350586
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - 52.320640563964844
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - -36.62058639526367
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - 0
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - 0
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - -65.32401275634766
+    - 7.838901519775391
+    - 0
+    output:
+    - 36
+  - input:
+    - 94.00896453857422
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - 0
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - 0
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - 52.142208099365234
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - -140.76565551757812
+    - 10.427066802978516
+    - 0
+    output:
+    - 36
+  - input:
+    - 62.51564407348633
+    - -5.209705352783203
+    - 0
+    output:
+    - 36
+  - input:
+    - 0
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - -38.94364547729492
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - 36.33041763305664
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - 7.8582305908203125
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - -164.9579620361328
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - 193.38938903808594
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - -13.027230262756348
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - -7.867682933807373
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - 114.58666229248047
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - -47.14042663574219
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - 23.39860725402832
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - 0
+    - 0
+    - 0
+    output:
+    - 36
+  - input:
+    - -54.570037841796875
+    - 0
+    - 0
+    output:
+    - 36
   trainingSerieses: []
   run: 0
   collectData: 0
   jsonString: "{\n   \"metadata\" : {\n      \"creator\" : \"Rapid API C++\",\n      \"inputNames\"
     : [ \"inputs-1\", \"inputs-2\", \"inputs-3\" ],\n      \"numInputs\" : 3,\n      \"numOutputs\"
     : 1,\n      \"version\" : \"v0.1.1\"\n   },\n   \"modelSet\" : [\n      {\n         \"inBases\"
-    : [ 0.86000001430511475, -1.375, -0.44471582770347595 ],\n         \"inRanges\"
-    : [ 1, 6.9549999237060547, 1 ],\n         \"inputNames\" : [ \"inputs-1\", \"inputs-2\",
+    : [ 14.215713500976563, 5.1522092819213867, 0 ],\n         \"inRanges\" : [ 179.17367553710938,
+    20.755167961120605, 1 ],\n         \"inputNames\" : [ \"inputs-1\", \"inputs-2\",
     \"inputs-3\" ],\n         \"modelType\" : \"Neural Network\",\n         \"nodes\"
-    : [\n            {\n               \"Node 1\" : -0.17235704315138273,\n               \"Node
-    2\" : 1.6454447549039335,\n               \"Node 3\" : 1.3430027046381232,\n               \"Threshold\"
-    : -1.2890582082687545,\n               \"name\" : \"Linear Node 0\"\n            },\n
-    \           {\n               \"Attrib inputs-1\" : -0.3645229957032195,\n               \"Attrib
-    inputs-2\" : 0.072856854668100754,\n               \"Attrib inputs-3\" : 0.46886777112423139,\n
-    \              \"Threshold\" : -0.51446557091932454,\n               \"name\"
-    : \"Sigmoid Node 1\"\n            },\n            {\n               \"Attrib inputs-1\"
-    : -0.19183294949299673,\n               \"Attrib inputs-2\" : 1.7559811740570788,\n
+    : [\n            {\n               \"Node 1\" : 1.5952759510505179,\n               \"Node
+    2\" : -1.602261618574887,\n               \"Node 3\" : 2.5234714190673011,\n               \"Threshold\"
+    : 0.88107775324125726,\n               \"name\" : \"Linear Node 0\"\n            },\n
+    \           {\n               \"Attrib inputs-1\" : -0.90434271320339354,\n               \"Attrib
+    inputs-2\" : 1.6000943484187229,\n               \"Attrib inputs-3\" : 0.46886777112423139,\n
+    \              \"Threshold\" : -2.1120812746015716,\n               \"name\" :
+    \"Sigmoid Node 1\"\n            },\n            {\n               \"Attrib inputs-1\"
+    : 2.3290146193548402,\n               \"Attrib inputs-2\" : 2.4811534050932265,\n
     \              \"Attrib inputs-3\" : -0.3116180239528189,\n               \"Threshold\"
-    : -0.41584694037848458,\n               \"name\" : \"Sigmoid Node 2\"\n            },\n
-    \           {\n               \"Attrib inputs-1\" : 0.4964613255480087,\n               \"Attrib
-    inputs-2\" : 1.5692032571524945,\n               \"Attrib inputs-3\" : 0.22583896321188968,\n
-    \              \"Threshold\" : -0.28199479799737959,\n               \"name\"
-    : \"Sigmoid Node 3\"\n            }\n         ],\n         \"numHiddenLayers\"
-    : 1,\n         \"numHiddenNodes\" : 3,\n         \"numHiddenOutputs\" : 1,\n         \"numInputs\"
-    : 3,\n         \"outBase\" : 1,\n         \"outRange\" : 1,\n         \"whichInputs\"
+    : -2.7179359471316564,\n               \"name\" : \"Sigmoid Node 2\"\n            },\n
+    \           {\n               \"Attrib inputs-1\" : 3.8338849479506174,\n               \"Attrib
+    inputs-2\" : -3.7155596269229805,\n               \"Attrib inputs-3\" : 0.22583896321188968,\n
+    \              \"Threshold\" : -5.5649239588992767,\n               \"name\" :
+    \"Sigmoid Node 3\"\n            }\n         ],\n         \"numHiddenLayers\" :
+    1,\n         \"numHiddenNodes\" : 3,\n         \"numHiddenOutputs\" : 1,\n         \"numInputs\"
+    : 3,\n         \"outBase\" : 23,\n         \"outRange\" : 13,\n         \"whichInputs\"
     : [ 0, 1, 2 ]\n      }\n   ]\n}\n"
   m_Features: 
   m_DistancesToFirstInput: []
@@ -524,9 +693,10 @@ Camera:
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2

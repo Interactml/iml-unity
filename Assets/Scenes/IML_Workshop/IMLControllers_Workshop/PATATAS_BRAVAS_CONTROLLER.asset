@@ -75,7 +75,7 @@ MonoBehaviour:
     - 0
     - 0
   m_LastFrameFeatureValue:
-  - 0.86
+  - -3.55
   - -2.46
   - -0.44471583
 --- !u!114 &114277858093761784
@@ -158,7 +158,7 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.86
+    - -3.55
     - -2.46
     - -0.44471583
 --- !u!114 &114357140570682068
@@ -290,7 +290,7 @@ MonoBehaviour:
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableCollectDataShortcut: 0
+  EnableCollectDataShortcut: 1
 --- !u!114 &114913048169967506
 MonoBehaviour:
   m_ObjectHideFlags: 0

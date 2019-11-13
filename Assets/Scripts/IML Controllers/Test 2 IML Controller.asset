@@ -20,75 +20,13 @@ MonoBehaviour:
   - {fileID: 114198160991211680}
   - {fileID: 114089634755134970}
   - {fileID: 114561687253865438}
-  - {fileID: 114332065019697332}
-  - {fileID: 114948585228430880}
-  - {fileID: 114148923663127846}
-  - {fileID: 114720339656510350}
-  - {fileID: 114724553938736422}
-  - {fileID: 114387266868604892}
-  - {fileID: 114017701466754054}
-  - {fileID: 114961437460117270}
   - {fileID: 114672023078464350}
   - {fileID: 114684351830139164}
   - {fileID: 114481253295702772}
   - {fileID: 114415009484950518}
   - {fileID: 114939869055346562}
   - {fileID: 114632788447459270}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   SceneComponent: {fileID: 0}
---- !u!114 &114017701466754054
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d00b690a08c1f254a94f7a277199f27a, type: 3}
-  m_Name: Extract Vector 4
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1016, y: 1320}
-  ports:
-    keys:
-    - inputVector4
-    - vector4FeatureExtracted
-    values:
-    - _fieldName: inputVector4
-      _node: {fileID: 114017701466754054}
-      _typeQualifiedName: UnityEngine.Vector4, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Vector4ToOutput
-        node: {fileID: 114961437460117270}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: vector4FeatureExtracted
-      _node: {fileID: 114017701466754054}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  inputVector4: {x: 0, y: 0, z: 0, w: 0}
-  vector4FeatureExtracted: {fileID: 0}
-  m_v4Extracted:
-    m_Values:
-    - 2.22
-    - 0
-    - 4.85
-    - 3.44
 --- !u!114 &114089634755134970
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,40 +60,6 @@ MonoBehaviour:
   DevMode: 0
   Value: 1.45
   FloatToOutput: 1.45
-  ValueName: 
---- !u!114 &114148923663127846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeb2c13cdf3f76540a07154b6ab66241, type: 3}
-  m_Name: Integer Node
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1256, y: 840}
-  ports:
-    keys:
-    - IntToOutput
-    values:
-    - _fieldName: IntToOutput
-      _node: {fileID: 114148923663127846}
-      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: inputInteger
-        node: {fileID: 114948585228430880}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  Value: 85
-  IntToOutput: 85
   ValueName: 
 --- !u!114 &114177197113771980
 MonoBehaviour:
@@ -213,8 +117,7 @@ MonoBehaviour:
     values:
     - _fieldName: IMLModelOutputs
       _node: {fileID: 114198160991211680}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: ModelOutput
         node: {fileID: 114218022189098120}
@@ -262,9 +165,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: InputFeatures
       _node: {fileID: 114218022189098120}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: VelocityExtracted
         node: {fileID: 114481253295702772}
@@ -300,40 +203,7 @@ MonoBehaviour:
   m_LearningType: 0
   RapidLibComponent: {fileID: 0}
   TrainOnPlaymodeChange: 1
---- !u!114 &114332065019697332
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4ce357579833a349823c2b8eb63e23a, type: 3}
-  m_Name: Vector 2 Node
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1256, y: 1016}
-  ports:
-    keys:
-    - Vector2ToOutput
-    values:
-    - _fieldName: Vector2ToOutput
-      _node: {fileID: 114332065019697332}
-      _typeQualifiedName: UnityEngine.Vector2, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: inputVector2
-        node: {fileID: 114720339656510350}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  Value: {x: 0, y: 0}
-  Vector2ToOutput: {x: 0, y: 0}
-  ValueName: 
+  RunOnAwake: 0
 --- !u!114 &114384427608774700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,9 +225,9 @@ MonoBehaviour:
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 114384427608774700}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114999128324209254}
@@ -387,40 +257,6 @@ MonoBehaviour:
   CaptureRate: 10
   RecordTime: -1
   EnableCollectDataShortcut: 0
---- !u!114 &114387266868604892
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ef4cb3371f9e4a47a6d68726e6c8f83, type: 3}
-  m_Name: Vector 3 Node
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1256, y: 1160}
-  ports:
-    keys:
-    - Vector3ToOutput
-    values:
-    - _fieldName: Vector3ToOutput
-      _node: {fileID: 114387266868604892}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: inputVector3
-        node: {fileID: 114724553938736422}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  Value: {x: 2.44, y: 0, z: 0}
-  Vector3ToOutput: {x: 2.44, y: 0, z: 0}
-  ValueName: 
 --- !u!114 &114415009484950518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,8 +311,7 @@ MonoBehaviour:
     values:
     - _fieldName: FeatureToInput
       _node: {fileID: 114481253295702772}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114684351830139164}
@@ -487,8 +322,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: VelocityExtracted
       _node: {fileID: 114481253295702772}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 114672023078464350}
@@ -509,9 +343,9 @@ MonoBehaviour:
     - 0
     - 0
   m_LastFrameFeatureValue:
-  - -22.754366
-  - -8.744406
-  - 2
+  - -2.94
+  - -0.6957213
+  - -0.44471583
 --- !u!114 &114561687253865438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,8 +379,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: floatExtracted
       _node: {fileID: 114561687253865438}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections: []
       _direction: 1
       _connectionType: 0
@@ -580,8 +413,7 @@ MonoBehaviour:
     values:
     - _fieldName: FeatureToInput
       _node: {fileID: 114632788447459270}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114939869055346562}
@@ -592,9 +424,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: FeaturesToMeasureDistanceToFirst
       _node: {fileID: 114632788447459270}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114684351830139164}
@@ -605,8 +437,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: DistanceExtracted
       _node: {fileID: 114632788447459270}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections: []
       _direction: 1
       _connectionType: 0
@@ -619,7 +450,7 @@ MonoBehaviour:
   DistanceExtracted: {fileID: 0}
   m_DistancesExtracted:
     m_Values:
-    - 598.2258
+    - 9.3254
 --- !u!114 &114672023078464350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -641,9 +472,9 @@ MonoBehaviour:
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 114672023078464350}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: VelocityExtracted
         node: {fileID: 114481253295702772}
@@ -709,8 +540,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114684351830139164}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeatureToInput
         node: {fileID: 114481253295702772}
@@ -727,100 +557,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - -22.754366
-    - -8.744406
-    - 2
---- !u!114 &114720339656510350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9ad8b84fa1e1ffb4fb4145f15376e710, type: 3}
-  m_Name: Extract Vector 2
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1016, y: 1032}
-  ports:
-    keys:
-    - inputVector2
-    - vector2FeatureExtracted
-    values:
-    - _fieldName: inputVector2
-      _node: {fileID: 114720339656510350}
-      _typeQualifiedName: UnityEngine.Vector2, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Vector2ToOutput
-        node: {fileID: 114332065019697332}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: vector2FeatureExtracted
-      _node: {fileID: 114720339656510350}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  inputVector2: {x: 0, y: 0}
-  vector2FeatureExtracted: {fileID: 0}
---- !u!114 &114724553938736422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91d5b2c98ef7df34f8a142d223be5aa6, type: 3}
-  m_Name: Extract Vector 3
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1016, y: 1176}
-  ports:
-    keys:
-    - inputVector3
-    - vector3FeatureExtracted
-    values:
-    - _fieldName: inputVector3
-      _node: {fileID: 114724553938736422}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Vector3ToOutput
-        node: {fileID: 114387266868604892}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: vector3FeatureExtracted
-      _node: {fileID: 114724553938736422}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  inputVector3: {x: 0, y: 0, z: 0}
-  vector3FeatureExtracted: {fileID: 0}
-  m_v3Extracted:
-    m_Values:
-    - 2.44
-    - 0
-    - 0
+    - -2.94
+    - -0.6957213
+    - -0.44471583
 --- !u!114 &114939869055346562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -854,8 +593,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114939869055346562}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeatureToInput
         node: {fileID: 114632788447459270}
@@ -872,83 +610,6 @@ MonoBehaviour:
     - 0
     - 0
     - 0
---- !u!114 &114948585228430880
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aac2c9734bc7f9c4bba814ad6ad827d2, type: 3}
-  m_Name: Extract Int
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1016, y: 856}
-  ports:
-    keys:
-    - inputInteger
-    - integerFeatureExtracted
-    values:
-    - _fieldName: inputInteger
-      _node: {fileID: 114948585228430880}
-      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: IntToOutput
-        node: {fileID: 114148923663127846}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: integerFeatureExtracted
-      _node: {fileID: 114948585228430880}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  inputInteger: 0
-  integerFeatureExtracted: {fileID: 0}
---- !u!114 &114961437460117270
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 259c466d9c6c3b942b232f923e5d0c17, type: 3}
-  m_Name: Vector 4 Node
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1256, y: 1320}
-  ports:
-    keys:
-    - Vector4ToOutput
-    values:
-    - _fieldName: Vector4ToOutput
-      _node: {fileID: 114961437460117270}
-      _typeQualifiedName: UnityEngine.Vector4, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: inputVector4
-        node: {fileID: 114017701466754054}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  Value: {x: 2.22, y: 0, z: 4.85, w: 3.44}
-  Vector4ToOutput: {x: 2.22, y: 0, z: 4.85, w: 3.44}
-  ValueName: 
 --- !u!114 &114999128324209254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -982,8 +643,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114999128324209254}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 114384427608774700}
@@ -997,6 +657,6 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - -22.754366
-    - -8.744406
-    - 2
+    - -2.94
+    - -0.6957213
+    - -0.44471583

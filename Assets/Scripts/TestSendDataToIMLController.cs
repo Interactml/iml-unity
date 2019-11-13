@@ -8,20 +8,13 @@ public class TestSendDataToIMLController : MonoBehaviour
     public IMLComponent IMLcomponentToSendData;
 
     [SendToIMLController]
-    public float floatValue;
+    public float floatValueToSend;
 
-    [SendToIMLController]
-    public int intValue;
+    public double[][] valuesPulled;
 
-    [SendToIMLController]
-    public Vector2 v2Value;
+    public double oneValuePulled;
 
-    [SendToIMLController]
-    public Vector3 v3Value;
 
-    [SendToIMLController]
-    public Vector4 v4Value;
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +27,10 @@ public class TestSendDataToIMLController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // Copy outputs array
+        IMLcomponentToSendData.IMLControllerOutputs.CopyTo(valuesPulled);
+
+        // Get first of the outputs
+        oneValuePulled = valuesPulled[0][0];
     }
 }
