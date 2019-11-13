@@ -8,12 +8,6 @@ using System.IO;
 using Newtonsoft.Json;
 using InteractML;
 
-[Serializable]
-public class RapidlibTrainingExample
-{
-    public double[] input;
-    public double[] output;
-}
 
 [Serializable]
 public class TrainingSeries
