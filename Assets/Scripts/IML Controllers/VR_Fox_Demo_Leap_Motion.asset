@@ -135,7 +135,7 @@ MonoBehaviour:
   DevMode: 0
   IMLModelOutputs: {fileID: 0}
   m_IMLOutputVector:
-  - 2
+  - 0
 --- !u!114 &114018606463082566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,9 +244,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 19.650927
-    - 1.4077053
-    - 20.274088
+    - 19.38324
+    - 1.3940772
+    - 20.214163
 --- !u!114 &114037009951859728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -363,9 +363,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 19.281881
-    - 1.5678227
-    - 20.212835
+    - 19.858683
+    - 1.5292726
+    - 20.278969
 --- !u!114 &114078309581208858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,8 +471,8 @@ MonoBehaviour:
   m_ExpectedOutputList: 00000000
   m_LearningType: 0
   RapidLibComponent: {fileID: 0}
-  TrainOnPlaymodeChange: 0
-  RunOnAwake: 0
+  TrainOnPlaymodeChange: 1
+  RunOnAwake: 1
 --- !u!114 &114141302831876420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -568,8 +568,8 @@ MonoBehaviour:
   m_ExpectedOutputList: 00000000
   m_LearningType: 0
   RapidLibComponent: {fileID: 0}
-  TrainOnPlaymodeChange: 0
-  RunOnAwake: 0
+  TrainOnPlaymodeChange: 1
+  RunOnAwake: 1
 --- !u!114 &114198625317458438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -639,7 +639,7 @@ MonoBehaviour:
   DistanceExtracted: {fileID: 0}
   m_DistancesExtracted:
     m_Values:
-    - 0.13700692
+    - 0.20656651
 --- !u!114 &114235704378732892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -780,10 +780,10 @@ MonoBehaviour:
   rotationExtracted: {fileID: 0}
   m_RotationExtracted:
     m_Values:
-    - -0.027826518
-    - 0.4101612
-    - 0.9016099
-    - -0.13451031
+    - 0.25725928
+    - -0.5352667
+    - 0.37188414
+    - -0.71344906
   GameObjInputMissing: 0
 --- !u!114 &114255138219269668
 MonoBehaviour:
@@ -833,9 +833,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 19.73097
-    - 1.4141212
-    - 20.295969
+    - 19.383614
+    - 1.5292782
+    - 20.300707
 --- !u!114 &114259514581295684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1043,11 +1043,11 @@ MonoBehaviour:
   DistanceExtracted: {fileID: 0}
   m_DistancesExtracted:
     m_Values:
-    - 0.0063615106
-    - 0.004268811
-    - 0.0043183584
-    - 0.0033822488
-    - 0.0098570995
+    - 0.026311949
+    - 0.02853004
+    - 0.018884394
+    - 0.025769347
+    - 0.01594695
 --- !u!114 &114293193503366146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1096,9 +1096,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 19.279453
-    - 1.5479679
-    - 20.211275
+    - 19.83048
+    - 1.5381408
+    - 20.29564
 --- !u!114 &114313809726534684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1158,9 +1158,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 19.281017
-    - 1.5093534
-    - 20.158594
+    - 19.79676
+    - 1.3940772
+    - 20.214163
 --- !u!114 &114324581167178174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1255,7 +1255,7 @@ MonoBehaviour:
   DistanceExtracted: {fileID: 0}
   m_DistancesExtracted:
     m_Values:
-    - 0.27840483
+    - 0.20656651
 --- !u!114 &114378620732791270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1304,9 +1304,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 19.759832
-    - 1.4011672
-    - 20.282555
+    - 19.321318
+    - 1.5292728
+    - 20.278969
 --- !u!114 &114383917118793088
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1400,9 +1400,9 @@ MonoBehaviour:
     - 0
     - 0
   m_LastFrameFeatureValue:
-  - 19.650927
-  - 1.4077053
-  - 20.274088
+  - 19.38324
+  - 1.3940772
+  - 20.214163
 --- !u!114 &114434660954448230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1787,9 +1787,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 19.274723
-    - 1.5238988
-    - 20.21455
+    - 19.796387
+    - 1.5292783
+    - 20.300707
 --- !u!114 &114585773044923226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1850,9 +1850,9 @@ MonoBehaviour:
     - 0
     - 0
   m_LastFrameFeatureValue:
-  - 19.281017
-  - 1.5093534
-  - 20.158594
+  - 19.79676
+  - 1.3940772
+  - 20.214163
 --- !u!114 &114605592322287672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1904,9 +1904,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 19.16559
-    - 1.3535669
-    - 20.473894
+    - 19.59
+    - 1.59
+    - 19.86
 --- !u!114 &114619803355211376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2008,9 +2008,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 19.721716
-    - 1.4262421
-    - 20.3108
+    - 19.411646
+    - 1.5031738
+    - 20.292746
 --- !u!114 &114681883242046384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2059,9 +2059,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 19.734238
-    - 1.4107404
-    - 20.300808
+    - 19.305937
+    - 1.4914412
+    - 20.191994
 --- !u!114 &114683921223975454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2166,9 +2166,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 19.280352
-    - 1.5759056
-    - 20.232265
+    - 19.874063
+    - 1.4914411
+    - 20.191994
 --- !u!114 &114762007122857022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2254,11 +2254,11 @@ MonoBehaviour:
   DistanceExtracted: {fileID: 0}
   m_DistancesExtracted:
     m_Values:
-    - 0.011974905
-    - 0.024168495
-    - 0.006702562
-    - 0.007663909
-    - 0.0069269547
+    - 0.026312012
+    - 0.028529843
+    - 0.018884238
+    - 0.015946975
+    - 0.025769316
 --- !u!114 &114811611838066988
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2310,9 +2310,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 19.650927
-    - 1.4077053
-    - 20.274088
+    - 19.38324
+    - 1.3940772
+    - 20.214163
 --- !u!114 &114832926824065512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2361,9 +2361,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 19.263578
-    - 1.515639
-    - 20.22164
+    - 19.768354
+    - 1.5031745
+    - 20.292746
 --- !u!114 &114833012837605150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2422,10 +2422,10 @@ MonoBehaviour:
     - 0
     - 0
   m_LastFrameFeatureValue:
-  - -0.027826518
-  - 0.4101612
-  - 0.9016099
-  - -0.13451031
+  - 0.25725928
+  - -0.5352667
+  - 0.37188414
+  - -0.71344906
 --- !u!114 &114849844208104980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2474,9 +2474,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 19.804459
-    - 1.4319075
-    - 20.270823
+    - 19.349522
+    - 1.5381405
+    - 20.29564
 --- !u!114 &114870395820478542
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2626,13 +2626,13 @@ MonoBehaviour:
   m_Name: Text Note
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 664, y: -4120}
+  position: {x: 744, y: -4248}
   ports:
     keys: []
     values: []
   DevMode: 0
-  note: "OPEN/CLOSING LEFT HAND\n\nOUTPUT: \nHand Opened  = 0 (Idle)\nHand Closed
-    = 8 (Stun)"
+  note: "OPEN/CLOSING LEFT HAND\n\nOUTPUT: \nHand Closed  = 0 (Idle)\nHand Opened
+    \ = 0 (Idle)\nHand Two fingers up = 9 (Attack1)\nHand One finger up = 3 (Backwards)\n"
 --- !u!114 &114927205570658306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2877,9 +2877,9 @@ MonoBehaviour:
   - {fileID: 114198625317458438}
   ModelOutput: {fileID: 0}
   PredictedRapidlibOutput:
-  - 2
+  - 0
   DelayedPredictedOutput:
-  - 2
+  - 0
   m_ExpectedInputList: 0500000005000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 0
