@@ -196,9 +196,9 @@ namespace InteractML
         {
             destroyModel(model);
         }
-        
+
         /// <summary>
-        /// Gets a pointer to the specified model JSON string
+        /// Get a JSON representation of the model in the form of a styled string
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -206,9 +206,9 @@ namespace InteractML
         {
             return getJSON(model);
         }
-        
+
         /// <summary>
-        /// Pushes a JSON string containing a model into a specific model 
+        /// Configure empty model with string. See GetJSON()
         /// </summary>
         /// <param name="model"></param>
         /// <param name="jsonString"></param>
