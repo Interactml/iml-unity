@@ -82,6 +82,16 @@ namespace InteractML
 
         #endregion
 
+        #region Destructor
+
+        ~RapidLibClass()
+        {
+            // We make sure to destroy the model when the class gets destroyed
+            model.DestroyModel();
+        }
+
+        #endregion
+
 
         #region Public Methods
 
