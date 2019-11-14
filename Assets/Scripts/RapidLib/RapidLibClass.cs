@@ -13,7 +13,7 @@ namespace InteractML
         /// <summary>
         /// Pointer to the rapidlib dll model
         /// </summary>
-        RapidlibModel model;
+        RapidlibModel m_Model;
 
         /// <summary>
         /// Options of learning type in Rapidlib
@@ -23,25 +23,25 @@ namespace InteractML
         /// <summary>
         /// The specific learning type selected
         /// </summary>
-        public LearningType learningType;
+        private LearningType m_LearningType;
 
         /// <summary>
         /// The list of training examples (for classification and regression)
         /// </summary>
-        public List<RapidlibTrainingExample> trainingExamples;
+        private List<RapidlibTrainingExample> m_TrainingExamples;
 
         /// <summary>
         /// List of different training examples series (for DTW)
         /// </summary>
-        public List<TrainingSeries> trainingSerieses;
+        private List<TrainingSeries> m_TrainingExamplesSeries;
 
-        public bool run = false;
+        private bool run = false;
         /// <summary>
         /// Is the model running?
         /// </summary>
         public bool Running { get { return run; } }
 
-        public bool collectData = false;
+        private bool collectData = false;
         /// <summary>
         /// Can the model collect data?
         /// </summary>
@@ -60,16 +60,16 @@ namespace InteractML
         /// <summary>
         /// String containing the model in a JSON format
         /// </summary>
-        public string jsonString = "";
+        public string jsonModelString = "";
 
         /// <summary>
         /// Data Path to stored model in disk
         /// </summary>
-        private string modelDataPath;
+        private string m_ModelDataPath;
         /// <summary>
         /// Data path to stored training examples in disk
         /// </summary>
-        private string trainingExamplesDataPath;
+        private string m_TrainingExamplesDataPath;
 
         #endregion
 
@@ -77,7 +77,28 @@ namespace InteractML
 
         public RapidLibClass()
         {
+            Initialize();
+        }
 
+        public RapidLibClass(LearningType learningType)
+        {
+            m_LearningType = learningType;
+            Initialize();
+        }
+
+        public RapidLibClass(LearningType learningType, string dataPathModel)
+        {
+            m_LearningType = learningType;
+            m_ModelDataPath = dataPathModel;            
+            Initialize();
+        }
+
+        public RapidLibClass(LearningType learningType, string dataPathModel, string dataPathTrainingSet)
+        {
+            m_LearningType = learningType;
+            m_ModelDataPath = dataPathModel;
+            m_TrainingExamplesDataPath = dataPathTrainingSet;
+            Initialize();
         }
 
         #endregion
@@ -87,7 +108,7 @@ namespace InteractML
         ~RapidLibClass()
         {
             // We make sure to destroy the model when the class gets destroyed
-            model.DestroyModel();
+            m_Model.DestroyModel();
         }
 
         #endregion
@@ -95,11 +116,31 @@ namespace InteractML
 
         #region Public Methods
 
-        public void LoadDataFromDiskAndReturnModel(ref string jsonModel, ref List<RapidlibTrainingExample> trainingExamplesList, string dataPathModel, string dataPathTrainingExamples)
+        /// <summary>
+        /// Loads both model and training set from disk (will only load the ones that have a datapath)
+        /// </summary>
+        /// <param name="jsonModel"></param>
+        /// <param name="trainingExamplesList"></param>
+        /// <param name="dataPathModel"></param>
+        /// <param name="dataPathTrainingExamples"></param>
+        /// <returns>True if managed to load everything, false otherwise</returns>
+        public bool LoadModelAndTrainingDataFromDisk(ref string jsonModel, ref List<RapidlibTrainingExample> trainingExamplesList, string dataPathModel, string dataPathTrainingExamples)
         {
-            // We load the model and the training set from disk
-            jsonModel = LoadModelFromDisk(dataPathModel);
-            trainingExamplesList = LoadTrainingSetFromDisk(dataPathTrainingExamples);
+            bool successLoadingAll = true;
+            // Only load data if we have the datapaths
+            if (!String.IsNullOrEmpty(dataPathModel))
+                jsonModel = LoadModelFromDisk(dataPathModel);
+            else
+                successLoadingAll = false;
+
+            if (!String.IsNullOrEmpty(dataPathTrainingExamples))
+                trainingExamplesList = LoadTrainingSetFromDisk(dataPathTrainingExamples);
+            else
+                successLoadingAll = false;
+
+            // Succesfully loaded everything?
+            return successLoadingAll;
+
         }
 
         public RapidlibModel CreateClassificationModel()
@@ -131,16 +172,15 @@ namespace InteractML
 
             // Code to initialize model 
 
-            model = CreateRapidlibModel(learningType);
-
+            m_Model = CreateRapidlibModel(m_LearningType);
 
             // We load the model and the training set from disk as json string
-            LoadDataFromDiskAndReturnModel(ref jsonString, ref trainingExamples, modelDataPath, trainingExamplesDataPath);
+            LoadModelAndTrainingDataFromDisk(ref jsonModelString, ref m_TrainingExamples, m_ModelDataPath, m_TrainingExamplesDataPath);
 
             //Debug.Log("Training Examples list Count: " + trainingExamples.Count);
 
             // We configure the model with the data from the json string
-            model.ConfigureModelWithJson(jsonString);
+            m_Model.ConfigureModelWithJson(jsonModelString);
 
         }
         
