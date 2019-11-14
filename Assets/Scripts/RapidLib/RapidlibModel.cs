@@ -69,10 +69,19 @@ namespace InteractML
         /// </summary>
         public void DestroyModel()
         {
-            // If we have an address to drestroy...
+            // If we have an address to destroy...
             if ((int)m_ModelAddress != 0)
             {
-                RapidlibLinkerDLL.DestroyModel(m_ModelAddress);
+                // If our model is dtw, we need to call the specific destructor
+                if (m_TypeOfModel == ModelType.DTW)
+                {
+                    RapidlibLinkerDLL.DestroySeriesClassificationModel(m_ModelAddress);
+                }
+                // If our model is either classification or regression, we call the other generic destructor
+                else
+                {
+                    RapidlibLinkerDLL.DestroyModel(m_ModelAddress);
+                }
             }
             // We set the pointer to none
             m_ModelAddress = (IntPtr)0;
