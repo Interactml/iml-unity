@@ -202,5 +202,14 @@ namespace XNodeEditor {
                 windows[i].Repaint();
             }
         }
+
+        /// <summary>
+        /// Unity event that is called 10 times per second. 
+        /// </summary>
+        public void OnInspectorUpdate()
+        {
+            // We call this xNode framework to repaint all nodes
+            RepaintAll();
+        }
     }
 }
