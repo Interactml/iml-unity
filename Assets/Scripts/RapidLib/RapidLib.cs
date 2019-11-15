@@ -9,10 +9,24 @@ using Newtonsoft.Json;
 using InteractML;
 
 
+/// <summary>
+/// [DEPRECATED] Use RapidlibTrainingExample instead
+/// </summary>
+[Serializable]
+public class TrainingExample
+{
+    public double[] Input;
+    public double[] Output;
+
+}
+
+/// <summary>
+/// [DEPRECATED] Use RapidlibTrainingSerie instead
+/// </summary>
 [Serializable]
 public class TrainingSeries
 {
-    public List<RapidlibTrainingExample> examples;
+    public List<TrainingExample> examples;
 }
 
 [ExecuteInEditMode]
@@ -62,7 +76,7 @@ public class RapidLib : MonoBehaviour {
     //public double[] TrainingOutputs;
 
     [SerializeField]
-    public List<RapidlibTrainingExample> trainingExamples;
+    public List<TrainingExample> trainingExamples;
 
     [HideInInspector]
     public List<TrainingSeries> trainingSerieses;
@@ -418,7 +432,7 @@ public class RapidLib : MonoBehaviour {
 
     public void AddTrainingExample()
     {
-        RapidlibTrainingExample newExample = new RapidlibTrainingExample();
+        TrainingExample newExample = new TrainingExample();
 
         // Calculate size of the new example input vector [I CAN MOVE THIS TO THE START OF THE PROGRAM]
         int sizeNewExampleInput = 0;
@@ -427,14 +441,14 @@ public class RapidLib : MonoBehaviour {
             sizeNewExampleInput += (m_LengthsFeatureVector[i] * inputs.Length);
         }
 
-        newExample.input = new double[sizeNewExampleInput];
+        newExample.Input = new double[sizeNewExampleInput];
 
-        m_ExtractFeatures(ref newExample.input, inputs);
+        m_ExtractFeatures(ref newExample.Input, inputs);
 
-        newExample.output = new double[outputs.Length];
+        newExample.Output = new double[outputs.Length];
         for (int i = 0; i < outputs.Length; i++)
         {
-            newExample.output[i] = outputs[i];
+            newExample.Output[i] = outputs[i];
         }
 
         //Array.Resize<TrainingExample>(ref trainingExamples, trainingExamples.Length + 1);
@@ -447,20 +461,20 @@ public class RapidLib : MonoBehaviour {
     /// Adds an already created training example to rapidlib
     /// </summary>
     /// <param name="newExample"></param>
-    public void AddTrainingExample(RapidlibTrainingExample newExample)
+    public void AddTrainingExample(TrainingExample newExample)
     {
         // If the new examples is not null...
         if (newExample != null)
         {
             // We make sure that the inputs and outputs are not null
-            if (newExample.input == null || newExample.output == null)
+            if (newExample.Input == null || newExample.Output == null)
             {
                 return;
             }
             // We make sure that the list is not null
             if (trainingExamples == null)
             {
-                trainingExamples = new List<RapidlibTrainingExample>();
+                trainingExamples = new List<TrainingExample>();
             }
             // If everything is good, we add the example to the list
             trainingExamples.Add(newExample);
@@ -562,9 +576,9 @@ public class RapidLib : MonoBehaviour {
         //for(int i = 0; i < trainingExamples.Length; i++)
         if (learningType != LearningType.DTW)
         {
-            foreach (RapidlibTrainingExample example in trainingExamples)
+            foreach (TrainingExample example in trainingExamples)
             {
-                addTrainingExample(trainingSet, example.input, example.input.Length, example.output, example.output.Length);
+                addTrainingExample(trainingSet, example.Input, example.Input.Length, example.Output, example.Output.Length);
             }
         }
 
@@ -596,10 +610,10 @@ public class RapidLib : MonoBehaviour {
                 {
                     trainingSet = createTrainingSet();
                     //for(int i = 0; i < trainingExamples.Length; i++)
-                    foreach (RapidlibTrainingExample example in series.examples)
+                    foreach (TrainingExample example in series.examples)
                     {
                         //Debug.Log(example);
-                        addTrainingExample(trainingSet, example.input, example.input.Length, example.output, example.output.Length);
+                        addTrainingExample(trainingSet, example.Input, example.Input.Length, example.Output, example.Output.Length);
                     }
                     //Debug.Log(model);
                     //Debug.Log(trainingSet);
@@ -665,7 +679,7 @@ public class RapidLib : MonoBehaviour {
             if (!run)
             {
                 trainingSerieses.Add(new TrainingSeries());
-                trainingSerieses.Last().examples = new List<RapidlibTrainingExample>(trainingExamples);
+                trainingSerieses.Last().examples = new List<TrainingExample>(trainingExamples);
             }
             trainingExamples.Clear();
         }
@@ -758,9 +772,9 @@ public class RapidLib : MonoBehaviour {
                 {
                     IntPtr trainingSet = createTrainingSet();
 
-                    foreach (RapidlibTrainingExample example in trainingExamples)
+                    foreach (TrainingExample example in trainingExamples)
                     {
-                        addTrainingExample(trainingSet, example.input, example.input.Length, example.output, example.output.Length);
+                        addTrainingExample(trainingSet, example.Input, example.Input.Length, example.Output, example.Output.Length);
                     }
                     if (outputs.Length < 1)
                     {
@@ -1053,12 +1067,17 @@ public class RapidLib : MonoBehaviour {
     /// </summary>
     /// <param name="listToSave">The list of training examples</param>
     /// <param name="filePath">File path without file extension</param>
-    private void SaveTrainingSetToDisk (List<RapidlibTrainingExample> listToSave, string filePath)
+    private void SaveTrainingSetToDisk (List<TrainingExample> listToSave, string filePath)
     {
         // If external data is being injected, we use the IMLDataSerialization tool (to avoid inconsistencies in files and folders)
         if (AllowExternalData)
         {
-            IMLDataSerialization.SaveTrainingSetToDiskRapidlib(listToSave, m_ExternalFileNameForIO);
+            List<RapidlibTrainingExample> auxList = new List<RapidlibTrainingExample>(listToSave.Count);          
+            for (int i = 0; i < listToSave.Count; i++)
+            {
+                auxList.Add(new RapidlibTrainingExample(listToSave[i].Input, listToSave[i].Output));
+            }
+            IMLDataSerialization.SaveTrainingSetToDiskRapidlib(auxList, m_ExternalFileNameForIO);
 
         }
         // If internal data is being used, we used deprecated serialization from rapidlib (we know it works)
@@ -1118,7 +1137,7 @@ public class RapidLib : MonoBehaviour {
                     //Debug.Log("Input_" + i.ToString() + ": " + JsonHelper.ToJson(listToSave[i].input));
                     //Debug.Log("PATH: " + auxFilePath);
                     // Write on the path
-                    File.WriteAllText(auxFilePath, JsonHelper.ToJson(listToSave[i].input));
+                    File.WriteAllText(auxFilePath, JsonHelper.ToJson(listToSave[i].Input));
 
                     // OUTPUT
                     // We save each input and output array as a JSON
@@ -1133,7 +1152,7 @@ public class RapidLib : MonoBehaviour {
                     //Debug.Log("Output_" + i.ToString() + ": " + JsonHelper.ToJson(listToSave[i].input));
                     //Debug.Log("PATH: " + auxFilePath);
                     // Write on the path
-                    File.WriteAllText(auxFilePath, JsonHelper.ToJson(listToSave[i].input));
+                    File.WriteAllText(auxFilePath, JsonHelper.ToJson(listToSave[i].Input));
 
                 }
 
@@ -1150,12 +1169,29 @@ public class RapidLib : MonoBehaviour {
     /// </summary>
     /// <param name="filePath"></param>
     /// <returns>Returns a list with training set</returns>
-    private List<RapidlibTrainingExample> LoadTrainingSetFromDisk (string filePath)
+    private List<TrainingExample> LoadTrainingSetFromDisk (string filePath)
     {
         // If external data is being injected, we use the IMLDataSerialization tool (to avoid inconsistencies in files and folders)
         if (AllowExternalData)
         {
-            return IMLDataSerialization.LoadTrainingSetFromDiskRapidlib(m_ExternalFileNameForIO);
+            // Convert to deprecated data type
+            List<RapidlibTrainingExample> loadedList = IMLDataSerialization.LoadTrainingSetFromDiskRapidlib(m_ExternalFileNameForIO);
+            List<TrainingExample> returnList = new List<TrainingExample>(loadedList.Count);
+            for (int i = 0; i < loadedList.Count; i++)
+            {
+
+                // Only translate values if they are not null or empty
+                if (loadedList[i].Input != null && loadedList[i].Input.Length > 0 
+                    && loadedList[i].Output != null && loadedList[i].Output.Length > 0)
+                {
+                    TrainingExample auxExample = new TrainingExample();
+                    auxExample.Input = loadedList[i].Input;
+                    auxExample.Output = loadedList[i].Output;
+                    // Add each example one by one 
+                    returnList.Add(auxExample);
+                }
+            }
+            return returnList;
         }
         // If internal data is being used, we used deprecated serialization from rapidlib (we know it works)
         else
@@ -1179,7 +1215,7 @@ public class RapidLib : MonoBehaviour {
                 Directory.CreateDirectory(subFolderPath);
             }
 
-            List<RapidlibTrainingExample> auxList = new List<RapidlibTrainingExample>();
+            List<TrainingExample> auxList = new List<TrainingExample>();
 
             // If the option to serialize witht JSON dot net is active...
             if (SerializeWithJSONDotNet)
@@ -1193,7 +1229,7 @@ public class RapidLib : MonoBehaviour {
                     //Debug.Log("The file exists and we read from it!");
                     string jsonTrainingExamplesList = File.ReadAllText(auxFilePath);
                     if (jsonTrainingExamplesList != null)
-                        auxList = JsonConvert.DeserializeObject<List<RapidlibTrainingExample>>(jsonTrainingExamplesList);
+                        auxList = JsonConvert.DeserializeObject<List<TrainingExample>>(jsonTrainingExamplesList);
 
                     //Debug.Log("What we read is: " + jsonTrainingExamplesList);
                 }
@@ -1214,12 +1250,12 @@ public class RapidLib : MonoBehaviour {
                         // Input deserialisation
                         contents = JsonHelper.FromJson<double>(File.ReadAllText(inputFiles[i]));
                         //Debug.Log(contents);
-                        auxList.Add(new RapidlibTrainingExample());
-                        auxList[i].input = contents;
+                        auxList.Add(new TrainingExample());
+                        auxList[i].Input = contents;
                         // Output deserialisation
                         contents = JsonHelper.FromJson<double>(File.ReadAllText(outputFiles[i]));
                         //Debug.Log(contents.ToString());
-                        auxList[i].output = contents;
+                        auxList[i].Output = contents;
 
                     }
                 }

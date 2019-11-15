@@ -269,7 +269,7 @@ namespace InteractML
                 else
                 {
                     // We make sure that the training examples are not null
-                    RapidLibComponent.trainingExamples = new List<RapidlibTrainingExample>();
+                    RapidLibComponent.trainingExamples = new List<TrainingExample>();
                 }
 
                 // Create and add the training examples (all inside the method)
@@ -562,7 +562,7 @@ namespace InteractML
                                         // Add example to rapidlib
                                         if (RapidLibComponent != null)
                                         {
-                                            RapidlibTrainingExample newExample = new RapidlibTrainingExample();
+                                            TrainingExample newExample = new TrainingExample();
 
                                             // INPUT VECTOR RAPIDLIB
                                             int rapidlibInputVectorSize = 0;
@@ -572,7 +572,7 @@ namespace InteractML
                                                 rapidlibInputVectorSize += IMLTrainingExample.Inputs[k].InputData.Values.Length;
                                             }
                                             // Create rapidlib input by constructing a vector size of all IML input features combined
-                                            newExample.input = new double[rapidlibInputVectorSize];
+                                            newExample.Input = new double[rapidlibInputVectorSize];
                                             // Create a pointer to know keep the boundaries in our input vector while we add IML features
                                             int pointerVector = 0;
                                             // Go through all IML input features and add their features to the rapidlib vector
@@ -587,7 +587,7 @@ namespace InteractML
                                                 // Add IML data to rapidlib vector
                                                 for (int w = 0; w < IMLInputFeature.InputData.Values.Length; w++)
                                                 {
-                                                    newExample.input[w + pointerVector] = IMLInputFeature.InputData.Values[w];
+                                                    newExample.Input[w + pointerVector] = IMLInputFeature.InputData.Values[w];
                                                 }
                                                 // Move vector pointer forward
                                                 pointerVector += IMLInputFeature.InputData.Values.Length;
@@ -601,7 +601,7 @@ namespace InteractML
                                                 rapidlibOutputVectorSize += IMLTrainingExample.Outputs[k].OutputData.Values.Length;
                                             }
                                             // Create rapidlib Output by constructing a vector size of all IML Output features combined
-                                            newExample.output = new double[rapidlibOutputVectorSize];
+                                            newExample.Output = new double[rapidlibOutputVectorSize];
                                             // Create a pointer to know keep the boundaries in our Output vector while we add IML features
                                             pointerVector = 0;
                                             // Go through all IML Output features and add their features to the rapidlib vector
@@ -616,7 +616,7 @@ namespace InteractML
                                                 // Add IML data to rapidlib vector
                                                 for (int w = 0; w < IMLOutputFeature.OutputData.Values.Length; w++)
                                                 {
-                                                    newExample.output[w + pointerVector] = IMLOutputFeature.OutputData.Values[w];
+                                                    newExample.Output[w + pointerVector] = IMLOutputFeature.OutputData.Values[w];
                                                 }
                                                 // Move vector pointer forward
                                                 pointerVector += IMLOutputFeature.OutputData.Values.Length;

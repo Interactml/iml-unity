@@ -3,7 +3,8 @@
 namespace InteractML
 {
     /// <summary>
-    /// Holds address and configuration for a rapidlibmodel in memory
+    /// Holds address and configuration for a rapidlibmodel in memory. 
+    /// Very basic and clean. Use if you are implementing training logic yourself
     /// </summary>
     public struct RapidlibModel
     {

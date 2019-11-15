@@ -27,7 +27,8 @@ public class RapidLibEditor : Editor
         rapidLib.outputs[0] = EditorGUILayout.DoubleField("Desired Output", rapidLib.outputs[0]);
 
         // NUMBER OF TRAINING EXAMPLES
-        GUILayout.Label("No. Training Examples: " + rapidLib.trainingExamples.Count);
+        int numExamples = (rapidLib.trainingExamples != null ? rapidLib.trainingExamples.Count : 0);
+        GUILayout.Label("No. Training Examples: " + numExamples);
 
 
         // ADD TRAINING EXAMPLE BUTTON

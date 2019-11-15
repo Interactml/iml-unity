@@ -5,6 +5,10 @@ using System.Runtime.InteropServices;
 
 namespace InteractML
 {
+    /// <summary>
+    /// Higher level class that holds a model, its training set and methods to deal with both. 
+    /// Use this if you want more functionalities than just a model
+    /// </summary>
     public class RapidLibClass
     {
 
@@ -33,7 +37,7 @@ namespace InteractML
         /// <summary>
         /// List of different training examples series (for DTW)
         /// </summary>
-        private List<TrainingSeries> m_TrainingExamplesSeries;
+        private List<RapidlibTrainingSerie> m_TrainingExamplesSeries;
 
         private bool run = false;
         /// <summary>
