@@ -9,7 +9,7 @@ namespace InteractML
     /// Higher level class that holds a model, its training set and methods to deal with both. 
     /// Use this if you want more functionalities than just a model
     /// </summary>
-    public class RapidLibClass
+    public class EasyRapidlib
     {
 
         #region Variables
@@ -79,25 +79,25 @@ namespace InteractML
 
         #region Constructors
 
-        public RapidLibClass()
+        public EasyRapidlib()
         {
             Initialize();
         }
 
-        public RapidLibClass(LearningType learningType)
+        public EasyRapidlib(LearningType learningType)
         {
             m_LearningType = learningType;
             Initialize();
         }
 
-        public RapidLibClass(LearningType learningType, string dataPathModel)
+        public EasyRapidlib(LearningType learningType, string dataPathModel)
         {
             m_LearningType = learningType;
             m_ModelDataPath = dataPathModel;            
             Initialize();
         }
 
-        public RapidLibClass(LearningType learningType, string dataPathModel, string dataPathTrainingSet)
+        public EasyRapidlib(LearningType learningType, string dataPathModel, string dataPathTrainingSet)
         {
             m_LearningType = learningType;
             m_ModelDataPath = dataPathModel;
@@ -109,7 +109,7 @@ namespace InteractML
 
         #region Destructor
 
-        ~RapidLibClass()
+        ~EasyRapidlib()
         {
             // We make sure to destroy the model when the class gets destroyed
             m_Model.DestroyModel();
