@@ -157,6 +157,11 @@ namespace InteractML
                 // We store the loaded string 
                 m_ModelJSONString = stringLoaded;
             }
+            // If we couldn't load anything, throw exception
+            else
+            {
+                throw new Exception("Couldn't load rapidlib model because nothing was found in provided path: " + filePath);
+            }
         }
 
         #endregion
