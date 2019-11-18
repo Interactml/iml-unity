@@ -6,7 +6,7 @@ namespace InteractML
     /// Holds address and configuration for a rapidlibmodel in memory. 
     /// Very basic and clean. Use if you are implementing training logic yourself
     /// </summary>
-    public struct RapidlibModel
+    public class RapidlibModel
     {
         #region Variables
 
@@ -35,8 +35,24 @@ namespace InteractML
 
         #endregion
 
-        #region Struct Constructor
+        #region Constructor
 
+        /// <summary>
+        /// Creates an empty instance without any model
+        /// </summary>
+        public RapidlibModel()
+        {
+            // Set default values
+            m_ModelAddress = (IntPtr)0;
+            m_ModelJSONString = "";
+            m_TypeOfModel = ModelType.None;
+
+        }
+
+        /// <summary>
+        /// Creates a specific model type
+        /// </summary>
+        /// <param name="modelToCreate"></param>
         public RapidlibModel(ModelType modelToCreate)
         {
             // Set default values
@@ -59,6 +75,16 @@ namespace InteractML
                 default:
                     break;
             }
+        }
+
+        #endregion
+
+        #region Destructor
+
+        ~RapidlibModel()
+        {
+            // Make sure to destroy the model when the class is collected by the GC
+            DestroyModel();
         }
 
         #endregion
