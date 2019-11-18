@@ -4,30 +4,70 @@ using System;
 namespace InteractML
 {
     /// <summary>
-    /// Holds a serie of training examples
+    /// Holds a serie of training examples following the format for DTW
     /// (Useful when working with time series or several frames as one example)
     /// </summary>
     [Serializable]
     public struct RapidlibTrainingSerie
     {
-        private List<RapidlibTrainingExample> exampleSerie;
+        private List<double[]> m_ExampleSerie;
 
-        public RapidlibTrainingSerie(List<RapidlibTrainingExample> serie)
+        private string m_LabelSerie;
+        /// <summary>
+        /// The label (output) for this serie
+        /// </summary>
+        public string LabelSerie { get => m_LabelSerie; set => m_LabelSerie = value; }
+
+
+        #region Constructors
+
+        public RapidlibTrainingSerie(List<double[]> serie)
         {
             if (serie != null)
             {
-                exampleSerie = new List<RapidlibTrainingExample>(serie);
+                m_ExampleSerie = new List<double[]>(serie);
             }
             else
             {
-                exampleSerie = new List<RapidlibTrainingExample>();
+                m_ExampleSerie = new List<double[]>();
             }
+
+            m_LabelSerie = "";
         }
 
-        public void AddTrainingExample(RapidlibTrainingExample trainingExample)
+        public RapidlibTrainingSerie(List<double[]> serie, string labelSerie)
         {
-            exampleSerie.Add(trainingExample);
+            if (serie != null)
+            {
+                m_ExampleSerie = new List<double[]>(serie);
+            }
+            else
+            {
+                m_ExampleSerie = new List<double[]>();
+            }
+
+            if (!String.IsNullOrEmpty(labelSerie))
+            {
+                m_LabelSerie = labelSerie;
+            }
+            else
+            {
+                m_LabelSerie = "";
+
+            }
+
         }
+
+        #endregion
+
+        #region Public Methods
+
+        public void AddTrainingExample(double[] input, string output)
+        {
+            m_ExampleSerie.Add(input);
+        }
+
+        #endregion
     }
 
 }
