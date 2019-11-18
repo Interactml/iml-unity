@@ -202,9 +202,9 @@ namespace InteractML
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public static IntPtr GetJSON(IntPtr model)
+        public static string GetJSON(IntPtr model)
         {
-            return getJSON(model);
+            return Marshal.PtrToStringAnsi(getJSON(model));
         }
 
         /// <summary>

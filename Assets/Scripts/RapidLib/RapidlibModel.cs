@@ -20,7 +20,7 @@ namespace InteractML
         /// <summary>
         /// The json string containing all info of a model
         /// </summary>
-        public string ModelJSONString { get => m_ModelJSONString; set => m_ModelJSONString = value; }
+        public string ModelJSONString { get => m_ModelJSONString; }
 
         /// <summary>
         /// Different types of model available
@@ -128,6 +128,36 @@ namespace InteractML
             RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
         }
 
+        /// <summary>
+        /// Saves the current model to the desired filePath
+        /// </summary>
+        /// <param name="filePath"></param>
+        public void SaveModelToDisk(string filePath)
+        {
+            // Transforms the model into a stylised json string
+            m_ModelJSONString = RapidlibLinkerDLL.GetJSON(m_ModelAddress);
+            // Saves the model as a stylised json string to the specified filepath
+            IMLDataSerialization.SaveRapidlibModelToDisk(m_ModelJSONString, filePath);
+        }
+
+        /// <summary>
+        /// Loads the model in the specified path into this instance
+        /// </summary>
+        /// <param name="filePath"></param>
+        public void LoadModelFromDisk(string filePath)
+        {
+            // Attempt to load model
+            string stringLoaded = IMLDataSerialization.LoadRapidlibModelFromDisk(filePath);
+
+            // If we loaded something...
+            if (!String.IsNullOrEmpty(stringLoaded))
+            {
+                // We configure our model with the configuration loaded
+                ConfigureModelWithJson(stringLoaded);
+                // We store the loaded string 
+                m_ModelJSONString = stringLoaded;
+            }
+        }
 
         #endregion
 
