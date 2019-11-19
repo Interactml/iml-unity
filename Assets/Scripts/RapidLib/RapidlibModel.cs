@@ -101,7 +101,90 @@ namespace InteractML
 
         #region Public Methods
 
-        /* MODEL IML LOGIC */
+        /* RUNNING LOGIC */
+
+        /// <summary>
+        /// Runs the model and provides the output predictions (classification and regression)
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="outputPredictions">The </param>
+        public void Run(double[] inputs, ref double[] outputPredictions)
+        {
+            // We run only classification and regression with the data passed in
+            switch (m_TypeOfModel)
+            {
+                case ModelType.kNN:
+                    RapidlibLinkerDLL.Process(m_ModelAddress,
+                        inputs, inputs.Length,
+                        outputPredictions, outputPredictions.Length);
+                    break;
+                case ModelType.NeuralNetwork:
+                    RapidlibLinkerDLL.Process(m_ModelAddress,
+                        inputs, inputs.Length,
+                        outputPredictions, outputPredictions.Length);
+                    break;
+                case ModelType.DTW:
+                    throw new Exception("Wrong format of data for DTW model! Are you trying to run a classification or regression?");
+                case ModelType.None:
+                    throw new Exception("You can't run an unitialised model!");
+                default:
+                    break;
+            }
+
+            // We mark the model as running
+            m_ModelStatus = IMLSpecifications.ModelStatus.Running;
+        }
+        
+        /// <summary>
+        /// Runs the model and provides the closest trainingSerie the model is trained with
+        /// </summary>
+        /// <param name="inputSerie"></param>
+        /// <returns></returns>
+        public int Run(RapidlibTrainingSerie inputSerie)
+        {
+            int outputDTW = -1;
+            // We only run DTW with the data passed in
+            switch (m_TypeOfModel)
+            {
+                case ModelType.kNN:
+                    throw new Exception("Wrong format of data for Classification model! Are you trying to run a DTW?");
+                case ModelType.NeuralNetwork:
+                    throw new Exception("Wrong format of data for Regression model! Are you trying to run a DTW?");
+                case ModelType.DTW:
+                    IntPtr dtwSerie = TransformTrainingSerieForRapidlib(this, inputSerie);
+                    outputDTW = RapidlibLinkerDLL.RunSeriesClassification(m_ModelAddress, dtwSerie);
+                    // Make sure to destroy the serie because it is outside of the GC scope
+                    RapidlibLinkerDLL.DestroyTrainingSet(dtwSerie);
+                    break;
+                case ModelType.None:
+                    throw new Exception("You can't run an unitialised model!");
+                default:
+                    break;
+            }
+
+            // If we got any output, we mark the model as running
+            if (outputDTW != -1)
+                m_ModelStatus = IMLSpecifications.ModelStatus.Running;
+
+            return outputDTW;
+        }
+
+        /// <summary>
+        /// Stops the model in case it is running
+        /// </summary>
+        /// <returns></returns>
+        public bool StopRunning()
+        {
+            bool isStop = false;
+            if (m_ModelStatus == IMLSpecifications.ModelStatus.Running)
+            {
+                m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+                isStop = true;
+            }
+            return isStop;
+        }
+
+        /* TRAINING LOGIC */
 
         /// <summary>
         /// Trains the model with a list of training examples (classification or regression)
@@ -146,19 +229,33 @@ namespace InteractML
         /// <returns>True if training succeeded</returns>
         public bool Train(List<RapidlibTrainingSerie> trainingSeries)
         {
-            bool isTrained = false;
+            bool isTrained = true;
             // Only allow training of DTW (because of the format of the training data)
             switch (m_TypeOfModel)
             {
                 case ModelType.kNN:
+                    isTrained = false;
                     throw new Exception("A list of training examples, not series is required to train a classification model!");
                 case ModelType.NeuralNetwork:
+                    isTrained = false;
                     throw new Exception("A list of training examples, not series is required to train a regression model!");
                 case ModelType.DTW:
-                    // TO DO 
-                    // Implement DTW training functionality
+                    // Reset model in dll memory
+                    RapidlibLinkerDLL.ResetSeriesClassification(m_ModelAddress);
+                    // Create rapidlib training examples series in rapidlib dll memory
+                    IntPtr[] dtwSeriesAdresses = TransformTrainingSeriesForRapidlib(this, trainingSeries);
+                    // Loop trhough the serieses to add them and then destroy them (they are out of the GC scope)
+                    for (int i = 0; i < dtwSeriesAdresses.Length; i++)
+                    {
+                        bool trainedOnSerie = RapidlibLinkerDLL.AddSeries(m_ModelAddress, dtwSeriesAdresses[i]);
+                        RapidlibLinkerDLL.DestroyTrainingSet(dtwSeriesAdresses[i]);
+                        // If one of them fails, we record the training as failed
+                        if (!trainedOnSerie)
+                            isTrained = false;
+                    }
                     break;
                 case ModelType.None:
+                    isTrained = false;
                     throw new Exception("You can't train on an unitialised model!");
                 default:
                     break;
@@ -166,9 +263,6 @@ namespace InteractML
 
             if (isTrained)
                 m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
-
-            // Once the training is done, we need to destroy the c++ training list outside of the GC scope
-
 
             return isTrained;
         }
@@ -325,6 +419,69 @@ namespace InteractML
             // Return the address for the training set in memory
             return rapidlibTrainingSetAddress;
         }
+
+        /// <summary>
+        /// Transforms the provided C# training series list into a format suitable for the rapidlib dll 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="trainingSeriesToTransform"></param>
+        /// <returns>The memory addresses to the newly created and configured training series sets</returns>
+        private IntPtr[] TransformTrainingSeriesForRapidlib(RapidlibModel model, List<RapidlibTrainingSerie> trainingSeriesToTransform)
+        {
+            if (model.TypeOfModel != ModelType.DTW)
+            {
+                throw new Exception("You can't create a rapidlib training series set in memory for the rapidlib dll with a non DTW model!");
+            }
+            // Define the array of addresses to return
+            IntPtr[] trainingSeriesSetAddress = new IntPtr[trainingSeriesToTransform.Count];
+            for (int i = 0; i < trainingSeriesSetAddress.Length; i++)
+            {
+                // Get the memory address for an empty c++ training set
+                trainingSeriesSetAddress[i] = RapidlibLinkerDLL.CreateTrainingSet();
+
+            }
+
+            // Configure the new training set in memory with the C# list of examples
+            for (int i = 0; i < trainingSeriesToTransform.Count; i++)
+            {
+                // We have index i to select each training series address and add all examples per serie to it
+                for (int j = 0; j < trainingSeriesToTransform[i].ExampleSerie.Count; j++)
+                {
+                    RapidlibLinkerDLL.AddTrainingExample(trainingSeriesSetAddress[i],
+                        trainingSeriesToTransform[i].ExampleSerie[j], trainingSeriesToTransform[i].ExampleSerie.Count,
+                        trainingSeriesToTransform[i].ExampleSerie[j], trainingSeriesToTransform[i].ExampleSerie.Count); // We provide the serie as an output because it is ignored when running it and we need something
+
+                }
+            }
+            // Return the address for the training series set in memory
+            return trainingSeriesSetAddress;
+        }
+
+        /// <summary>
+        /// Creates a training serie in the rapidlib dll memory based on one in C# memory and returns its address
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="trainingSeriesToTransform"></param>
+        /// <returns>The memory address to the newly created and configured training series set</returns>
+        private IntPtr TransformTrainingSerieForRapidlib(RapidlibModel model, RapidlibTrainingSerie trainingSeriesToTransform)
+        {
+            if (model.TypeOfModel != ModelType.DTW)
+            {
+                throw new Exception("You can't create a rapidlib training series set in memory for the rapidlib dll with a non DTW model!");
+            }
+            // Get the memory address for an empty c++ training set
+            IntPtr trainingSeriesSetAddress = RapidlibLinkerDLL.CreateTrainingSet();
+            // Configure the new training set in memory with the C# list of examples (we only need the inputs)
+            foreach (var serie in trainingSeriesToTransform.ExampleSerie)
+            {
+                RapidlibLinkerDLL.AddTrainingExample(trainingSeriesSetAddress,
+                    serie, serie.Length,
+                    serie, serie.Length); // We provide the serie as an output because it is ignored when running it and we need something
+            }
+            // Return the address for the training series set in memory
+            return trainingSeriesSetAddress;
+        }
+
 
         #endregion
     }

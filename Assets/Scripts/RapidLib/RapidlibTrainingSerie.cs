@@ -11,13 +11,16 @@ namespace InteractML
     public struct RapidlibTrainingSerie
     {
         private List<double[]> m_ExampleSerie;
+        /// <summary>
+        /// The example serie of features to input
+        /// </summary>
+        public List<double[]> ExampleSerie { get => m_ExampleSerie; }
 
         private string m_LabelSerie;
         /// <summary>
         /// The label (output) for this serie
         /// </summary>
         public string LabelSerie { get => m_LabelSerie; set => m_LabelSerie = value; }
-
 
         #region Constructors
 
