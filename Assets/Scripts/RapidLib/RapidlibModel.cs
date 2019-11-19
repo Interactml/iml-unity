@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace InteractML
 {
@@ -33,6 +34,13 @@ namespace InteractML
         /// </summary>
         public ModelType TypeOfModel { get => m_TypeOfModel; set => m_TypeOfModel = value; }
 
+        private IMLSpecifications.ModelStatus m_ModelStatus;
+        /// <summary>
+        /// The current status of the model (running, trained, training)
+        /// </summary>
+        public IMLSpecifications.ModelStatus ModelStatus { get => m_ModelStatus; }
+
+
         #endregion
 
         #region Constructor
@@ -46,6 +54,7 @@ namespace InteractML
             m_ModelAddress = (IntPtr)0;
             m_ModelJSONString = "";
             m_TypeOfModel = ModelType.None;
+            m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
 
         }
 
@@ -59,6 +68,7 @@ namespace InteractML
             m_ModelAddress = (IntPtr)0;
             m_ModelJSONString = "";
             m_TypeOfModel = modelToCreate;
+            m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
 
             // Creates the specific model type
             switch (modelToCreate)
@@ -91,6 +101,69 @@ namespace InteractML
 
         #region Public Methods
 
+        /* MODEL IML LOGIC */
+
+        /// <summary>
+        /// Trains the model with a list of training examples (classification or regression)
+        /// </summary>
+        /// <param name="trainingExamples"></param>
+        public bool Train(List<RapidlibTrainingExample> trainingExamples)
+        {
+            bool isTrained = false;
+            // Only allow training of classification and regression (because of the format of the training data)
+            switch (m_TypeOfModel)
+            {
+                case ModelType.kNN:
+                    isTrained = RapidlibLinkerDLL.TrainClassification(m_ModelAddress, TransformTrainingExamplesForRapidlib(trainingExamples));
+                    break;
+                case ModelType.NeuralNetwork:
+                    isTrained = RapidlibLinkerDLL.TrainRegression(m_ModelAddress, TransformTrainingExamplesForRapidlib(trainingExamples));
+                    break;
+                case ModelType.DTW:
+                    throw new Exception("A list of training series is required to train a DTW model!");
+                case ModelType.None:
+                    throw new Exception("You can't train on an unitialised model!");
+                default:
+                    break;
+            }
+
+            if (isTrained)
+                m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+
+            return isTrained;
+        }
+
+        /// <summary>
+        /// Trains the model with a list of training series (DTW)
+        /// </summary>
+        /// <param name="trainingSeries"></param>
+        /// <returns></returns>
+        public bool Train(List<RapidlibTrainingSerie> trainingSeries)
+        {
+            bool isTrained = false;
+            // Only allow training of DTW (because of the format of the training data)
+            switch (m_TypeOfModel)
+            {
+                case ModelType.kNN:
+                    throw new Exception("A list of training examples, not series is required to train a classification model!");
+                case ModelType.NeuralNetwork:
+                    throw new Exception("A list of training examples, not series is required to train a regression model!");
+                case ModelType.DTW:
+                    // TO DO 
+                    // Implement DTW training functionality
+                    break;
+                case ModelType.None:
+                    throw new Exception("You can't train on an unitialised model!");
+                default:
+                    break;
+            }
+
+
+            return isTrained;
+        }
+
+        /* MODEL CONFIGURATION */
+
         /// <summary>
         /// Destroys the model we have a reference for and set the address to none
         /// </summary>
@@ -116,7 +189,8 @@ namespace InteractML
             m_ModelJSONString = "";
             // We set the model type to none
             m_TypeOfModel = ModelType.None;
-
+            // We set the training status to untrained
+            m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
         }
 
         /// <summary>
@@ -125,8 +199,16 @@ namespace InteractML
         /// <param name="jsonstring"></param>
         public void ConfigureModelWithJson(string jsonstring)
         {
-            RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
+            if (!String.IsNullOrEmpty(jsonstring))
+            {
+                // Configure the model in memory
+                RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
+                // Set the status to trained (since we assume the model we loaded was trained)
+                m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+            }
         }
+
+        /* I/O FOR MODEL DATA */
 
         /// <summary>
         /// Saves the current model with the desired fileName (filePath configured in IMLDataSerialization)
@@ -179,6 +261,8 @@ namespace InteractML
             m_ModelAddress = RapidlibLinkerDLL.CreateClassificationModel();
             // We set the type of model to kNN
             m_TypeOfModel = ModelType.kNN;
+            // Since it is a new model, the status of the model is now untrained
+            m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
         }
 
         /// <summary>
@@ -192,6 +276,8 @@ namespace InteractML
             m_ModelAddress = RapidlibLinkerDLL.CreateRegressionModel();
             // We set the type of model to kNN
             m_TypeOfModel = ModelType.NeuralNetwork;
+            // Since it is a new model, the status of the model is now untrained
+            m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
         }
 
         /// <summary>
@@ -205,8 +291,29 @@ namespace InteractML
             m_ModelAddress = RapidlibLinkerDLL.CreateSeriesClassificationModel();
             // We set the type of model to kNN
             m_TypeOfModel = ModelType.DTW;
+            // Since it is a new model, the status of the model is now untrained
+            m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
         }
 
+        /// <summary>
+        /// Transforms the provided C# training examples list into a format suitable for the Rapidlib dll
+        /// </summary>
+        /// <param name="trainingExamplesToTransform"></param>
+        /// <returns>The memory address to the newly created and configured training set</returns>
+        private IntPtr TransformTrainingExamplesForRapidlib(List<RapidlibTrainingExample> trainingExamplesToTransform)
+        {
+            // Get the memory address for an empty c++ training set
+            IntPtr rapidlibTrainingSetAddress = RapidlibLinkerDLL.CreateTrainingSet();
+            // Configure the new training set in memory with the C# list of examples
+            foreach (RapidlibTrainingExample example in trainingExamplesToTransform)
+            {
+                RapidlibLinkerDLL.AddTrainingExample(rapidlibTrainingSetAddress,
+                    example.Input, example.Output.Length,
+                    example.Output, example.Output.Length);
+            }
+            // Return the address for the training set in memory
+            return rapidlibTrainingSetAddress;
+        }
 
         #endregion
     }

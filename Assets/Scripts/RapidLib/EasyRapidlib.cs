@@ -113,13 +113,44 @@ namespace InteractML
 
         #region Public Methods
 
+        /* TRAINING AND RUNNING METHODS */
+
+        public bool TrainModel()
+        {
+            bool isTrained = false;
+            // Will train differently depending on the learning type
+            switch (m_LearningType)
+            {
+                case LearningType.Classification:
+                    isTrained = m_Model.Train(m_TrainingExamples);
+                    break;
+                case LearningType.Regression:
+                    isTrained = m_Model.Train(m_TrainingExamples);
+                    break;
+                case LearningType.DTW:
+                    isTrained = m_Model.Train(m_TrainingExamplesSeries);
+                    break;
+                default:
+                    break;
+            }
+            return isTrained;
+        }
+
         /* SAVING TO DISK METHODS*/
 
+        /// <summary>
+        /// Saves the internal model to disk with the specified name (folderPath configured in IMLDataSerialization)
+        /// </summary>
+        /// <param name="fileName"></param>
         public void SaveModelToDisk(string fileName)
         {
             m_Model.SaveModelToDisk(fileName);
         }
 
+        /// <summary>
+        /// Saves the interal training examples with the specified name (fodlerPath configured in IMLDataSerialization)
+        /// </summary>
+        /// <param name="fileName"></param>
         public void SaveTrainingExamplesToDisk(string fileName)
         {
             IMLDataSerialization.SaveTrainingSetToDiskRapidlib(m_TrainingExamples, fileName);
@@ -304,9 +335,6 @@ namespace InteractML
         {
             return IMLDataSerialization.LoadTrainingSetFromDiskRapidlib(fileName);
         }
-
-
-
 
         #endregion
 
