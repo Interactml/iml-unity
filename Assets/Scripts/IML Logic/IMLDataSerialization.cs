@@ -151,6 +151,16 @@ namespace InteractML
         }
 
         /// <summary>
+        /// Saves a training series set (from Rapidlib) to disk
+        /// </summary>
+        /// <param name="listToSave"></param>
+        /// <param name="fileName"></param>
+        public static void SaveTrainingSeriesSetsToDiskRapidlib(List<RapidlibTrainingSerie> listToSave, string fileName)
+        {
+            SaveTrainingSetToDisk<RapidlibTrainingSerie>(listToSave, fileName);
+        }
+
+        /// <summary>
         /// Loads Training Data Set from Disk assuming it is stored solely as BaseDataType (not using IMLTrainingExamples)
         /// </summary>
         /// <param name="filePath"></param>
@@ -211,6 +221,26 @@ namespace InteractML
 
         }
 
+        /// <summary>
+        /// Loads a training series set from disk (for Rapidlib)
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static List<RapidlibTrainingSerie> LoadTrainingSeriesSetsFromDiskRapidlib(string fileName)
+        {
+            List<RapidlibTrainingSerie> auxList = LoadTrainingSetFromDisk<RapidlibTrainingSerie>(fileName);
+
+            if (auxList != null)
+            {
+                return auxList;
+            }
+            else
+            {
+                Debug.LogError("Training series set to load from disk is null!");
+                return null;
+            }
+
+        }
 
         public static void SaveRapidlibModelToDisk(string modelToSave, string fileName)
         {

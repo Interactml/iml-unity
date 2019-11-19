@@ -148,12 +148,21 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Saves the interal training examples with the specified name (fodlerPath configured in IMLDataSerialization)
+        /// Saves the interal training examples with the specified name (folderPath configured in IMLDataSerialization)
         /// </summary>
         /// <param name="fileName"></param>
         public void SaveTrainingExamplesToDisk(string fileName)
         {
             IMLDataSerialization.SaveTrainingSetToDiskRapidlib(m_TrainingExamples, fileName);
+        }
+
+        /// <summary>
+        /// Saves the internal training series with the specified name (folderPath configured in IMLDataSerialization)
+        /// </summary>
+        /// <param name="fileName"></param>
+        public void SaveTrainingSeriesToDisk(string fileName)
+        {
+            IMLDataSerialization.SaveTrainingSeriesSetsToDiskRapidlib(m_TrainingExamplesSeries, fileName);
         }
 
         /* LOADING FROM DISK METHODS */
@@ -214,6 +223,21 @@ namespace InteractML
             m_TrainingExamples = LoadTrainingSetFromDiskPrivate(fileName);
 
             return isLoaded;
+        }
+
+        /// <summary>
+        /// Loads the training series with the specific fileName into EasyRapidlib's internal training series list
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public bool LoadTrainingSeriesFromDisk(string fileName)
+        {
+            bool isLoaded = false;
+
+            m_TrainingExamplesSeries = IMLDataSerialization.LoadTrainingSeriesSetsFromDiskRapidlib(fileName);
+
+            return isLoaded;
+
         }
 
         /// <summary>
