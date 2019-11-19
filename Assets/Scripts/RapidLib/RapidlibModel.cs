@@ -106,18 +106,21 @@ namespace InteractML
         /// <summary>
         /// Trains the model with a list of training examples (classification or regression)
         /// </summary>
-        /// <param name="trainingExamples"></param>
+        /// <param name="trainingExamples">True if training succeeded</param>
         public bool Train(List<RapidlibTrainingExample> trainingExamples)
         {
             bool isTrained = false;
+            IntPtr trainingSetAddress = (IntPtr)0;
             // Only allow training of classification and regression (because of the format of the training data)
             switch (m_TypeOfModel)
             {
                 case ModelType.kNN:
-                    isTrained = RapidlibLinkerDLL.TrainClassification(m_ModelAddress, TransformTrainingExamplesForRapidlib(trainingExamples));
+                    trainingSetAddress = TransformTrainingExamplesForRapidlib(trainingExamples);
+                    isTrained = RapidlibLinkerDLL.TrainClassification(m_ModelAddress, trainingSetAddress);
                     break;
                 case ModelType.NeuralNetwork:
-                    isTrained = RapidlibLinkerDLL.TrainRegression(m_ModelAddress, TransformTrainingExamplesForRapidlib(trainingExamples));
+                    trainingSetAddress = TransformTrainingExamplesForRapidlib(trainingExamples);
+                    isTrained = RapidlibLinkerDLL.TrainRegression(m_ModelAddress, trainingSetAddress);
                     break;
                 case ModelType.DTW:
                     throw new Exception("A list of training series is required to train a DTW model!");
@@ -128,7 +131,10 @@ namespace InteractML
             }
 
             if (isTrained)
-                m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+                m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+
+            // Once the training is done, we need to destroy the c++ training list outside of the GC scope
+            RapidlibLinkerDLL.DestroyTrainingSet(trainingSetAddress);
 
             return isTrained;
         }
@@ -137,7 +143,7 @@ namespace InteractML
         /// Trains the model with a list of training series (DTW)
         /// </summary>
         /// <param name="trainingSeries"></param>
-        /// <returns></returns>
+        /// <returns>True if training succeeded</returns>
         public bool Train(List<RapidlibTrainingSerie> trainingSeries)
         {
             bool isTrained = false;
@@ -157,6 +163,11 @@ namespace InteractML
                 default:
                     break;
             }
+
+            if (isTrained)
+                m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+
+            // Once the training is done, we need to destroy the c++ training list outside of the GC scope
 
 
             return isTrained;
