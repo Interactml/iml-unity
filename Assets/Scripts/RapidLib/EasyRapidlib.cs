@@ -136,6 +136,29 @@ namespace InteractML
             return isTrained;
         }
 
+        /// <summary>
+        /// Runs a prediction of the model (classification and regression)
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public double[] Run(double[] input) 
+        {
+
+            double[] outputModel = new double[0];
+            m_Model.Run(input, ref outputModel);
+            return outputModel;
+        }
+
+        /// <summary>
+        /// Runs the model and provides the closest training serie to the one input
+        /// </summary>
+        /// <param name="dtwInputSerie"></param>
+        /// <returns></returns>
+        public int Run(RapidlibTrainingSerie dtwInputSerie)
+        {
+            return m_Model.Run(dtwInputSerie);
+        }
+
         /* SAVING TO DISK METHODS*/
 
         /// <summary>
