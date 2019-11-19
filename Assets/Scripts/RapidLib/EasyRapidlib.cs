@@ -159,22 +159,22 @@ namespace InteractML
         /* LOADING FROM DISK METHODS */
 
         /// <summary>
-        /// Loads both model and training set from disk (will only load the ones that have a datapath)
+        /// (folderPath specified in IMLDataserialization) Loads both model and training set from disk (will only load the ones that have a name)
         /// </summary>
         /// <param name="model"></param>
         /// <param name="trainingExamplesList"></param>
-        /// <param name="dataPathModel"></param>
-        /// <param name="dataPathTrainingExamples"></param>
+        /// <param name="fileNameModel"></param>
+        /// <param name="fileNameTrainingExamples"></param>
         /// <returns>True if managed to load everything, false otherwise</returns>
-        public bool LoadModelAndTrainingDataFromDisk(string dataPathModel, string dataPathTrainingExamples)
+        public bool LoadModelAndTrainingDataFromDisk(string fileNameModel, string fileNameTrainingExamples)
         {
             bool successLoadingAll = true;
             // Only load data if we have the datapaths
-            if (!String.IsNullOrEmpty(dataPathModel))
-                successLoadingAll = LoadModelFromDisk(dataPathModel);
+            if (!String.IsNullOrEmpty(fileNameModel))
+                successLoadingAll = LoadModelFromDisk(fileNameModel);
 
-            if (!String.IsNullOrEmpty(dataPathTrainingExamples))
-                successLoadingAll = LoadTrainigExamplesFromDisk(dataPathTrainingExamples);
+            if (!String.IsNullOrEmpty(fileNameTrainingExamples))
+                successLoadingAll = LoadTrainigExamplesFromDisk(fileNameTrainingExamples);
 
             // Succesfully loaded everything?
             return successLoadingAll;
@@ -182,7 +182,8 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Loads a model from the specified fileName into EasyRapidlib's model
+        /// Loads a model with the specified fileName into EasyRapidlib's model
+        /// (folderPath specified in IMLDataserialization)
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
@@ -202,6 +203,7 @@ namespace InteractML
 
         /// <summary>
         /// Loads the training examples in the specified fileName into EasyRapidlib's training examples list
+        /// (folderPath specified in IMLDataserialization)
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
