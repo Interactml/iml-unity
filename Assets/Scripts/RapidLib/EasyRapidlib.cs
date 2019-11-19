@@ -33,11 +33,21 @@ namespace InteractML
         /// The list of training examples (for classification and regression)
         /// </summary>
         private List<RapidlibTrainingExample> m_TrainingExamples;
+        /// <summary>
+        /// The list of training examples (for classification and regression)
+        /// </summary>
+        public List<RapidlibTrainingExample> TrainingExamples { get => m_TrainingExamples; set => m_TrainingExamples = value; }
+
 
         /// <summary>
         /// List of different training examples series (for DTW)
         /// </summary>
         private List<RapidlibTrainingSerie> m_TrainingExamplesSeries;
+        /// <summary>
+        /// List of different training examples series (for DTW)
+        /// </summary>
+        public List<RapidlibTrainingSerie> TrainingExamplesSeries { get => m_TrainingExamplesSeries; set => m_TrainingExamplesSeries = value; }
+
 
         /// <summary>
         /// Returns the current model status
