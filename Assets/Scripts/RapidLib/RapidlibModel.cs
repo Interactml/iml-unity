@@ -129,25 +129,25 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Saves the current model to the desired filePath
+        /// Saves the current model with the desired fileName (filePath configured in IMLDataSerialization)
         /// </summary>
-        /// <param name="filePath"></param>
-        public void SaveModelToDisk(string filePath)
+        /// <param name="fileName"></param>
+        public void SaveModelToDisk(string fileName)
         {
             // Transforms the model into a stylised json string
             m_ModelJSONString = RapidlibLinkerDLL.GetJSON(m_ModelAddress);
-            // Saves the model as a stylised json string to the specified filepath
-            IMLDataSerialization.SaveRapidlibModelToDisk(m_ModelJSONString, filePath);
+            // Saves the model as a stylised json with the specified fileName
+            IMLDataSerialization.SaveRapidlibModelToDisk(m_ModelJSONString, fileName);
         }
 
         /// <summary>
-        /// Loads the model in the specified path into this instance
+        /// Loads the model with the specified name into this instance
         /// </summary>
-        /// <param name="filePath"></param>
-        public void LoadModelFromDisk(string filePath)
+        /// <param name="fileName"></param>
+        public void LoadModelFromDisk(string fileName)
         {
             // Attempt to load model
-            string stringLoaded = IMLDataSerialization.LoadRapidlibModelFromDisk(filePath);
+            string stringLoaded = IMLDataSerialization.LoadRapidlibModelFromDisk(fileName);
 
             // If we loaded something...
             if (!String.IsNullOrEmpty(stringLoaded))
@@ -160,7 +160,7 @@ namespace InteractML
             // If we couldn't load anything, throw exception
             else
             {
-                throw new Exception("Couldn't load rapidlib model because nothing was found in provided path: " + filePath);
+                throw new Exception("Couldn't load rapidlib model because nothing was found in provided path: " + fileName);
             }
         }
 

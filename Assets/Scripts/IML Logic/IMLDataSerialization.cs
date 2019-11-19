@@ -7,11 +7,15 @@ using Newtonsoft.Json;
 
 namespace InteractML
 {
+    /// <summary>
+    /// Offers a collection of functions to serialize/deserialize IML data from disk
+    /// </summary>
     public static class IMLDataSerialization
     {
         #region Variables
 
-        private static string m_FolderDataPathName;
+        private static string m_DefaultFolderDataPathName = "InteractML/Data";
+        private static string m_FolderDataPathName = "InteractML/Data";
         private static string m_SubFolderTrainingSetPathName;
         private static string m_SubFolderModelPathName;
         private static string m_DataPathModel;
@@ -24,6 +28,23 @@ namespace InteractML
         #endregion
 
         #region Public Methods
+
+        /// <summary>
+        /// Overrides the folder data path
+        /// </summary>
+        /// <param name="newFolderDataPath"></param>
+        public static void OverrideFolderDataPath (string newFolderDataPath)
+        {
+            m_FolderDataPathName = newFolderDataPath;
+        }
+
+        /// <summary>
+        /// Sets the folder data path value to default under "InteractML/Data"
+        /// </summary>
+        public static void SetFolderDataPathToDefault()
+        {
+            m_FolderDataPathName = m_DefaultFolderDataPathName;
+        }
 
         /// <summary>
         /// Instantiates an abstract IML base data into a specific one
@@ -349,9 +370,6 @@ namespace InteractML
             // Set up file names
             m_FileModelName = fileName + "_Model";
             m_FileTrainingSetName = fileName + "_TrainingSet";
-
-            // Set up file folder name
-            m_FolderDataPathName = "InteractML/Data";
 
             // Set up training Examples subfolder 
             m_SubFolderTrainingSetPathName = m_FolderDataPathName + "/Training_Examples";

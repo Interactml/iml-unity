@@ -39,11 +39,15 @@ namespace InteractML
         /// </summary>
         private List<RapidlibTrainingSerie> m_TrainingExamplesSeries;
 
-        private bool run = false;
+        /// <summary>
+        /// Returns the current model status
+        /// </summary>
+        private IMLSpecifications.ModelStatus m_ModelStatus;
+
         /// <summary>
         /// Is the model running?
         /// </summary>
-        public bool Running { get { return run; } }
+        public bool Running { get { return m_ModelStatus == IMLSpecifications.ModelStatus.Running ? true : false; } }
 
         private bool collectData = false;
         /// <summary>
@@ -51,29 +55,19 @@ namespace InteractML
         /// </summary>
         public bool CollectingData { get { return collectData; } }
 
-        private bool train = false;
         /// <summary>
         /// Is the model training?
         /// </summary>
-        public bool Training { get { return train; } }
+        public bool Training { get { return m_ModelStatus == IMLSpecifications.ModelStatus.Training ? true : false; } }
         /// <summary>
         /// Is the model trained?
         /// </summary>
-        public bool Trained { get; private set; }
+        public bool Trained { get { return m_ModelStatus == IMLSpecifications.ModelStatus.Trained ? true : false; } }
 
         /// <summary>
         /// String containing the model in a JSON format
         /// </summary>
         public string jsonModelString = "";
-
-        /// <summary>
-        /// Data Path to stored model in disk
-        /// </summary>
-        private string m_ModelDataPath;
-        /// <summary>
-        /// Data path to stored training examples in disk
-        /// </summary>
-        private string m_TrainingExamplesDataPath;
 
         #endregion
 
@@ -81,74 +75,121 @@ namespace InteractML
 
         public EasyRapidlib()
         {
+            // Init internal values
             Initialize();
         }
 
         public EasyRapidlib(LearningType learningType)
         {
+            // Set the specified learning type
             m_LearningType = learningType;
+            // Init internal values
             Initialize();
         }
 
         public EasyRapidlib(LearningType learningType, string dataPathModel)
         {
+            // Set the specified learning type
             m_LearningType = learningType;
-            m_ModelDataPath = dataPathModel;            
+            // Init internal values
             Initialize();
+            // We attempt to load the model 
+            LoadModelFromDisk(dataPathModel);
+
         }
 
         public EasyRapidlib(LearningType learningType, string dataPathModel, string dataPathTrainingSet)
         {
+            // Set the specified learning type
             m_LearningType = learningType;
-            m_ModelDataPath = dataPathModel;
-            m_TrainingExamplesDataPath = dataPathTrainingSet;
+            // Init internal values
             Initialize();
+            // We attempt to load the training examples
+            LoadModelAndTrainingDataFromDisk(dataPathModel, dataPathTrainingSet);
+
         }
 
         #endregion
 
         #region Public Methods
 
+        /* SAVING TO DISK METHODS*/
+
+        public void SaveModelToDisk(string fileName)
+        {
+            m_Model.SaveModelToDisk(fileName);
+        }
+
+        public void SaveTrainingExamplesToDisk(string fileName)
+        {
+            IMLDataSerialization.SaveTrainingSetToDiskRapidlib(m_TrainingExamples, fileName);
+        }
+
+        /* LOADING FROM DISK METHODS */
+
         /// <summary>
         /// Loads both model and training set from disk (will only load the ones that have a datapath)
         /// </summary>
-        /// <param name="jsonModel"></param>
+        /// <param name="model"></param>
         /// <param name="trainingExamplesList"></param>
         /// <param name="dataPathModel"></param>
         /// <param name="dataPathTrainingExamples"></param>
         /// <returns>True if managed to load everything, false otherwise</returns>
-        public bool LoadModelAndTrainingDataFromDisk(ref string jsonModel, ref List<RapidlibTrainingExample> trainingExamplesList, string dataPathModel, string dataPathTrainingExamples)
+        public bool LoadModelAndTrainingDataFromDisk(string dataPathModel, string dataPathTrainingExamples)
         {
             bool successLoadingAll = true;
             // Only load data if we have the datapaths
             if (!String.IsNullOrEmpty(dataPathModel))
-                jsonModel = LoadModelFromDisk(dataPathModel);
-            else
-                successLoadingAll = false;
+                successLoadingAll = LoadModelFromDisk(dataPathModel);
 
             if (!String.IsNullOrEmpty(dataPathTrainingExamples))
-                trainingExamplesList = LoadTrainingSetFromDisk(dataPathTrainingExamples);
-            else
-                successLoadingAll = false;
+                successLoadingAll = LoadTrainigExamplesFromDisk(dataPathTrainingExamples);
 
             // Succesfully loaded everything?
             return successLoadingAll;
 
         }
 
-        public RapidlibModel CreateClassificationModel()
+        /// <summary>
+        /// Loads a model from the specified fileName into EasyRapidlib's model
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public bool LoadModelFromDisk(string fileName)
         {
-            return new RapidlibModel(RapidlibModel.ModelType.kNN); ;
+            bool isLoaded = false;
+
+            m_Model = LoadModelFromDiskPrivate(fileName);
+
+            if (m_Model.TypeOfModel != RapidlibModel.ModelType.None)
+            {
+                isLoaded = true;
+            }
+
+            return isLoaded;
         }
 
-        public RapidlibModel CreateRegressionModel()
+        /// <summary>
+        /// Loads the training examples in the specified fileName into EasyRapidlib's training examples list
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public bool LoadTrainigExamplesFromDisk(string fileName)
         {
-            return new RapidlibModel(RapidlibModel.ModelType.NeuralNetwork);
+            bool isLoaded = false;
+
+            m_TrainingExamples = LoadTrainingSetFromDiskPrivate(fileName);
+
+            return isLoaded;
         }
 
-        public RapidlibModel CreateTimeSeriesClassificationModel()
+        /// <summary>
+        /// Overrides the current model with the specified type
+        /// </summary>
+        /// <param name="type"></param>
+        public void OverrideModel(LearningType type)
         {
-            return new RapidlibModel(RapidlibModel.ModelType.DTW);
+            m_Model = CreateRapidlibModel(type);
         }
 
         #endregion
@@ -160,23 +201,32 @@ namespace InteractML
         /// </summary>
         private void Initialize()
         {
-            // Set the trained flag to false
-            Trained = false;
+            // Set the model status to untrained
+            m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
 
             // Code to initialize model 
 
             m_Model = CreateRapidlibModel(m_LearningType);
 
-            // We load the model and the training set from disk as json string
-            LoadModelAndTrainingDataFromDisk(ref jsonModelString, ref m_TrainingExamples, m_ModelDataPath, m_TrainingExamplesDataPath);
-
             //Debug.Log("Training Examples list Count: " + trainingExamples.Count);
 
-            // We configure the model with the data from the json string
-            m_Model.ConfigureModelWithJson(jsonModelString);
-
         }
-        
+
+        private RapidlibModel CreateClassificationModel()
+        {
+            return new RapidlibModel(RapidlibModel.ModelType.kNN); ;
+        }
+
+        private RapidlibModel CreateRegressionModel()
+        {
+            return new RapidlibModel(RapidlibModel.ModelType.NeuralNetwork);
+        }
+
+        private RapidlibModel CreateTimeSeriesClassificationModel()
+        {
+            return new RapidlibModel(RapidlibModel.ModelType.DTW);
+        }
+
         /// <summary>
         /// Creates a rapidlib model based on the learning type specified
         /// </summary>
@@ -213,20 +263,24 @@ namespace InteractML
         /// Saves the model to disk
         /// </summary>
         /// <param name="modelJSON">The model in JSON format</param>
-        /// <param name="filePath">The full file path (including the filename itself)</param>
-        private void SaveModelToDisk(string modelJSON, string filePath)
+        /// <param name="fileName">The name to give the file (filePath configured in IMLDataSerialization)</param>
+        private void SaveModelToDiskPrivate(string modelJSON, string fileName)
         {
-            IMLDataSerialization.SaveRapidlibModelToDisk(modelJSON, filePath);
+            IMLDataSerialization.SaveRapidlibModelToDisk(modelJSON, fileName);
         }
 
         /// <summary>
-        /// Loads a model from disk at the specified path
+        /// Loads a model from disk with the specified name (filePath is configured in IMLDataSerialization)
         /// </summary>
-        /// <param name="filePath">The complete file path, including the name of the file</param>
-        /// <returns>Returns a string JSON containing the model configuration </returns>
-        private string LoadModelFromDisk(string filePath)
+        /// <param name="fileName">The name of the file (file path configured in IMLDataSerialization)</param>
+        /// <returns>Returns a model </returns>
+        private RapidlibModel LoadModelFromDiskPrivate(string fileName)
         {
-            return IMLDataSerialization.LoadRapidlibModelFromDisk(filePath);
+            // Creates a model and loads from the path
+            RapidlibModel auxModel = new RapidlibModel();
+            auxModel.LoadModelFromDisk(fileName);
+            // Returns the loaded model
+            return auxModel;
         }
 
         /* === Training Examples IO Methods === */
@@ -235,21 +289,20 @@ namespace InteractML
         /// Saves Training Data Set to disk
         /// </summary>
         /// <param name="listToSave">The list of training examples</param>
-        /// <param name="filePath">File path without file extension</param>
-        private void SaveTrainingSetToDisk(List<RapidlibTrainingExample> listToSave, string filePath)
+        /// <param name="fileName">File name (file path configured in IMLDataSerialization)</param>
+        private void SaveTrainingSetToDisk(List<RapidlibTrainingExample> listToSave, string fileName)
         {
-            IMLDataSerialization.SaveTrainingSetToDiskRapidlib(listToSave, filePath);
+            IMLDataSerialization.SaveTrainingSetToDiskRapidlib(listToSave, fileName);
         }
-
 
         /// <summary>
         /// Loads Training Data Set from Disk
         /// </summary>
-        /// <param name="filePath"></param>
+        /// <param name="fileName"></param>
         /// <returns>Returns a list with training set</returns>
-        private List<RapidlibTrainingExample> LoadTrainingSetFromDisk(string filePath)
+        private List<RapidlibTrainingExample> LoadTrainingSetFromDiskPrivate(string fileName)
         {
-            return IMLDataSerialization.LoadTrainingSetFromDiskRapidlib(filePath);
+            return IMLDataSerialization.LoadTrainingSetFromDiskRapidlib(fileName);
         }
 
 
