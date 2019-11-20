@@ -20,6 +20,11 @@ namespace InteractML
         RapidlibModel m_Model;
 
         /// <summary>
+        /// Is the model inside easy rapidlib totally empty?
+        /// </summary>
+        public bool isModelEmpty { get { return (m_Model.ModelAddress == (IntPtr)0 ? true : false); } }
+
+        /// <summary>
         /// Options of learning type in Rapidlib
         /// </summary>
         public enum LearningType { Classification, Regression, DTW };
@@ -123,8 +128,71 @@ namespace InteractML
 
         #region Public Methods
 
+        /* ADD TRAINING EXAMPLES METHODS */
+
+        /// <summary>
+        /// Adds a new training example to the internal list with the raw data to the internal list
+        /// </summary>
+        /// <param name="input">Example inputs</param>
+        /// <param name="output">Example outputs we would expect to predict</param>
+        public void AddTrainingExample(double[] input, double[] output)
+        {
+            // Make sure to init list
+            if (m_TrainingExamples == null)
+                m_TrainingExamples = new List<RapidlibTrainingExample>();
+            // Add a new example to the list
+            m_TrainingExamples.Add(new RapidlibTrainingExample(input, output));
+        }
+
+        /// <summary>
+        /// Adds a new training example to the internal list 
+        /// </summary>
+        /// <param name="newExample"></param>
+        public void AddTrainingExample(RapidlibTrainingExample newExample)
+        {
+            // Make sure to init list
+            if (m_TrainingExamples == null)
+                m_TrainingExamples = new List<RapidlibTrainingExample>();
+            // Add a new example to the list
+            m_TrainingExamples.Add(newExample);
+
+        }
+
+        /// <summary>
+        /// Adds a new training example serie with the raw data to the internal list
+        /// </summary>
+        /// <param name="inputSerie">The example serie of values to train on </param>
+        /// <param name="label">The expected label to predict with this serie</param>
+        public void AddTrainingExampleSerie(List<double[]> inputSerie, string label)
+        {
+            // Make sure to init list
+            if (m_TrainingExamplesSeries == null)
+                m_TrainingExamplesSeries = new List<RapidlibTrainingSerie>();
+            // Add a new training example serie to the list
+            m_TrainingExamplesSeries.Add(new RapidlibTrainingSerie(inputSerie, label));
+
+        }
+
+        /// <summary>
+        /// Adds a new training example serie to the internal list
+        /// </summary>
+        /// <param name="newSerie"></param>
+        public void AddTrainingExampleSerie(RapidlibTrainingSerie newSerie)
+        {
+            // Make sure to init list
+            if (m_TrainingExamplesSeries == null)
+                m_TrainingExamplesSeries = new List<RapidlibTrainingSerie>();
+            // Add a new training example serie to the list
+            m_TrainingExamplesSeries.Add(newSerie);
+
+        }
+
         /* TRAINING AND RUNNING METHODS */
 
+        /// <summary>
+        /// Trains the model based on the specified learning type
+        /// </summary>
+        /// <returns></returns>
         public bool TrainModel()
         {
             bool isTrained = false;
@@ -151,10 +219,10 @@ namespace InteractML
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-        public double[] Run(double[] input) 
+        public double[] Run(double[] input, int outputLength) 
         {
 
-            double[] outputModel = new double[0];
+            double[] outputModel = new double[outputLength];
             m_Model.Run(input, ref outputModel);
             return outputModel;
         }

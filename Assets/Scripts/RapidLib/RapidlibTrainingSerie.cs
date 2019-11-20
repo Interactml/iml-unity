@@ -14,7 +14,7 @@ namespace InteractML
         /// <summary>
         /// The example serie of features to input
         /// </summary>
-        public List<double[]> ExampleSerie { get => m_ExampleSerie; }
+        public List<double[]> ExampleSerie { get { return m_ExampleSerie; } }
 
         private string m_LabelSerie;
         /// <summary>
@@ -68,6 +68,12 @@ namespace InteractML
         public void AddTrainingExample(double[] input, string output)
         {
             m_ExampleSerie.Add(input);
+        }
+
+        public void ClearSerie()
+        {
+            m_ExampleSerie.Clear();
+            m_LabelSerie = "";
         }
 
         #endregion
