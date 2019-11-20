@@ -33,6 +33,7 @@ namespace InteractML
         /// The specific learning type selected
         /// </summary>
         private LearningType m_LearningType;
+        public LearningType LearningTypeModel { get => m_LearningType; }
 
         /// <summary>
         /// The list of training examples (for classification and regression)

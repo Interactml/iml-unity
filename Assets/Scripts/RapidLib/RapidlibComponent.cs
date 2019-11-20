@@ -36,7 +36,7 @@ namespace InteractML
         public int OutputDTW;
 
         private bool run = false;
-        public bool Running { get { return m_EasyRapidlib.Running; } }
+        public bool Running { get { return run; } }
 
         public bool collectData = false;
         public bool CollectingData { get { return collectData; } }
@@ -126,7 +126,18 @@ namespace InteractML
 
         // Called when the script is loaded or a value is changed in the inspector (Called in the editor only).
         private void OnValidate()
-        {           
+        {
+            // Make sure easy rapidlib instance exists
+            if (m_EasyRapidlib == null)
+                m_EasyRapidlib = new EasyRapidlib(learningType);
+
+            // Did the learning type change in the editor?
+            if (learningType != m_EasyRapidlib.LearningTypeModel)
+            {
+                // Override model
+                m_EasyRapidlib.OverrideModel(learningType);
+            }
+            
             // Make sure that any of the lists to use are null
             if (m_LengthsFeatureVector == null)
                 m_LengthsFeatureVector = new int[0];
@@ -231,14 +242,6 @@ namespace InteractML
         public void StartRunning()
         {
             run = true;
-            if (learningType == EasyRapidlib.LearningType.DTW)
-            {
-                StartCollectingData();
-            }
-            else
-            {
-                StopCollectingData();
-            }
         }
 
         public void StopRunning()
@@ -264,6 +267,7 @@ namespace InteractML
             {
                 StartRunning();
             }
+
         }
 
         /* TRAINING METHODS */
@@ -343,7 +347,7 @@ namespace InteractML
         public List<RapidlibTrainingExample> GetTrainingExamples()
         {
             if (m_EasyRapidlib == null)
-                m_EasyRapidlib = new EasyRapidlib();
+                m_EasyRapidlib = new EasyRapidlib(learningType);
             if (m_EasyRapidlib.TrainingExamples ==  null)
                 m_EasyRapidlib.TrainingExamples = new List<RapidlibTrainingExample>();
             return m_EasyRapidlib.TrainingExamples;
@@ -352,7 +356,7 @@ namespace InteractML
         public List<RapidlibTrainingSerie> GetTrainingExamplesSeries()
         {
             if (m_EasyRapidlib == null)
-                m_EasyRapidlib = new EasyRapidlib();
+                m_EasyRapidlib = new EasyRapidlib(learningType);
             if (m_EasyRapidlib.TrainingExamplesSeries == null)
                 m_EasyRapidlib.TrainingExamplesSeries = new List<RapidlibTrainingSerie>();
             return m_EasyRapidlib.TrainingExamplesSeries;
@@ -382,7 +386,8 @@ namespace InteractML
             }
 
             // Initialise instance of easy rapidlib
-            m_EasyRapidlib = new EasyRapidlib();
+            if (m_EasyRapidlib == null)
+                m_EasyRapidlib = new EasyRapidlib(learningType);
 
         }
 

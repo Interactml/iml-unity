@@ -290,7 +290,7 @@ MonoBehaviour:
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableCollectDataShortcut: 1
+  EnableCollectDataShortcut: 0
 --- !u!114 &114913048169967506
 MonoBehaviour:
   m_ObjectHideFlags: 0
