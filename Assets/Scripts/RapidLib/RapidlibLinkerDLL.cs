@@ -183,7 +183,7 @@ namespace InteractML
         /// <param name="output"></param>
         /// <param name="numOutputs"></param>
         /// <returns></returns>
-        public static int Process(IntPtr model, double[] input, int numInputs, double[] output, int numOutputs)
+        public static int Process(IntPtr model, double[] input, int numInputs, ref double[] output, int numOutputs)
         {
             return process(model, input, numInputs, output, numOutputs);
         }

@@ -116,12 +116,12 @@ namespace InteractML
                 case ModelType.kNN:
                     RapidlibLinkerDLL.Process(m_ModelAddress,
                         inputs, inputs.Length,
-                        outputPredictions, outputPredictions.Length);
+                        ref outputPredictions, outputPredictions.Length);
                     break;
                 case ModelType.NeuralNetwork:
                     RapidlibLinkerDLL.Process(m_ModelAddress,
                         inputs, inputs.Length,
-                        outputPredictions, outputPredictions.Length);
+                        ref outputPredictions, outputPredictions.Length);
                     break;
                 case ModelType.DTW:
                     throw new Exception("Wrong format of data for DTW model! Are you trying to run a classification or regression?");
@@ -413,7 +413,7 @@ namespace InteractML
             foreach (RapidlibTrainingExample example in trainingExamplesToTransform)
             {
                 RapidlibLinkerDLL.AddTrainingExample(rapidlibTrainingSetAddress,
-                    example.Input, example.Output.Length,
+                    example.Input, example.Input.Length,
                     example.Output, example.Output.Length);
             }
             // Return the address for the training set in memory

@@ -20,6 +20,11 @@ namespace InteractML
 
         }
 
+        /// <summary>
+        /// Adds values to the arrays at the end
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="output"></param>
         public void AddExample (double input, double output)
         {
             Array.Resize(ref Input, Input.Length + 1);
@@ -30,6 +35,11 @@ namespace InteractML
 
         }
 
+        /// <summary>
+        /// Adds values to the arrays a the end
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="outputs"></param>
         public void AddExample (double[] inputs, double[] outputs)
         {
             int originalSize = Input.Length;
@@ -45,6 +55,18 @@ namespace InteractML
             {
                 Output[i] = outputs[i];
             }
+        }
+
+        /// <summary>
+        /// Overrides current values with the new ones passed in
+        /// </summary>
+        public void OverrideExample(double[] inputs, double[] outputs)
+        {
+            Input = new double[inputs.Length];
+            Output = new double[outputs.Length];
+
+            Array.Copy(inputs, Input, Input.Length);
+            Array.Copy(outputs, Output, Output.Length);
         }
     }
 
