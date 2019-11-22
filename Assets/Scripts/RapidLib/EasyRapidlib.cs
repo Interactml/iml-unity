@@ -184,7 +184,7 @@ namespace InteractML
             if (m_TrainingExamplesSeries == null)
                 m_TrainingExamplesSeries = new List<RapidlibTrainingSerie>();
             // Add a new training example serie to the list
-            m_TrainingExamplesSeries.Add(newSerie);
+            m_TrainingExamplesSeries.Add(new RapidlibTrainingSerie(newSerie));
 
         }
 
@@ -348,7 +348,10 @@ namespace InteractML
         /// <param name="type"></param>
         public void OverrideModel(LearningType type)
         {
+            // We create a new model (the GC will dispose of the previous one)
             m_Model = CreateRapidlibModel(type);
+            // We match the learning type with the new one
+            m_LearningType = type;
         }
 
         #endregion

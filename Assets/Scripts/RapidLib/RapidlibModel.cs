@@ -428,14 +428,23 @@ namespace InteractML
         /// <returns>The memory addresses to the newly created and configured training series sets</returns>
         private IntPtr[] TransformTrainingSeriesForRapidlib(RapidlibModel model, List<RapidlibTrainingSerie> trainingSeriesToTransform)
         {
+            // We check that we are transforming for the right kind of model
             if (model.TypeOfModel != ModelType.DTW)
-            {
                 throw new Exception("You can't create a rapidlib training series set in memory for the rapidlib dll with a non DTW model!");
-            }
+            // We first check that we have series to input, or we will get a c++ memory exception
+            if (trainingSeriesToTransform.Count == 0)
+                throw new Exception("You can't train a DTW model without any serie.");
+
+
+
             // Define the array of addresses to return
             IntPtr[] trainingSeriesSetAddress = new IntPtr[trainingSeriesToTransform.Count];
             for (int i = 0; i < trainingSeriesSetAddress.Length; i++)
             {
+                // Avoid memory exceptions making sure that the input examples serie is not null or empty
+                if (trainingSeriesToTransform[i].ExampleSerie == null || trainingSeriesToTransform[i].ExampleSerie.Count == 0 )
+                    throw new Exception("You can't train a DTW model on an empty serie!");
+
                 // Get the memory address for an empty c++ training set
                 trainingSeriesSetAddress[i] = RapidlibLinkerDLL.CreateTrainingSet();
 

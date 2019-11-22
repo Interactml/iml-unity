@@ -61,18 +61,58 @@ namespace InteractML
 
         }
 
+        public RapidlibTrainingSerie(RapidlibTrainingSerie serieToCopy)
+        {
+            if (serieToCopy.ExampleSerie != null)
+                m_ExampleSerie = new List<double[]>(serieToCopy.ExampleSerie);
+            else
+                m_ExampleSerie = new List<double[]>();
+
+            if (!String.IsNullOrEmpty(serieToCopy.LabelSerie))
+                m_LabelSerie = serieToCopy.LabelSerie;
+            else
+                m_LabelSerie = "";
+
+        }
+
         #endregion
 
         #region Public Methods
 
-        public void AddTrainingExample(double[] input, string output)
+        /// <summary>
+        /// Adds a training example input into the serie
+        /// </summary>
+        /// <param name="input"></param>
+        public void AddTrainingExample(double[] input)
         {
+            if (m_ExampleSerie == null)
+                m_ExampleSerie = new List<double[]>();
             m_ExampleSerie.Add(input);
         }
 
+        /// <summary>
+        /// Adds a training example into the serie (all outputs must be the same per serie)
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="output"></param>
+        public void AddTrainingExample(double[] input, string output)
+        {
+            if (m_ExampleSerie == null)
+                m_ExampleSerie = new List<double[]>();
+            m_ExampleSerie.Add(input);
+            m_LabelSerie = output;
+        }
+
+        /// <summary>
+        /// Clears serie inputs and label
+        /// </summary>
         public void ClearSerie()
         {
-            m_ExampleSerie.Clear();
+            if (m_ExampleSerie == null)
+                m_ExampleSerie = new List<double[]>();
+            else
+                m_ExampleSerie.Clear();
+
             m_LabelSerie = "";
         }
 

@@ -907,15 +907,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AllowKeyboardShortcuts: 0
-  learningType: 0
+  learningType: 1
   startDelay: 0
   captureRate: 10
   recordTime: -1
   inputs:
   - {fileID: 672594441}
-  outputs:
-  - 0
-  - 0
+  outputs: []
   OutputDTW: 0
   collectData: 0
   m_Features: 00000000
