@@ -235,7 +235,7 @@ namespace InteractML
         /// <returns></returns>
         public int Run(RapidlibTrainingSerie dtwInputSerie)
         {
-            return m_Model.Run(dtwInputSerie);
+            return m_Model.Run(new RapidlibTrainingSerie(dtwInputSerie));
         }
 
         /* SAVING TO DISK METHODS*/

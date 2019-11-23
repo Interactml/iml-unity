@@ -142,6 +142,9 @@ namespace InteractML
         /// <returns></returns>
         public int Run(RapidlibTrainingSerie inputSerie)
         {
+            // Make sure to only run if the model is trained
+            if (m_ModelStatus == IMLSpecifications.ModelStatus.Untrained)
+                throw new Exception("You can't run an untrained model!");
             int outputDTW = -1;
             // We only run DTW with the data passed in
             switch (m_TypeOfModel)
@@ -152,6 +155,15 @@ namespace InteractML
                     throw new Exception("Wrong format of data for Regression model! Are you trying to run a DTW?");
                 case ModelType.DTW:
                     IntPtr dtwSerie = TransformTrainingSerieForRapidlib(this, inputSerie);
+
+                    /* DEBUG CODE TO SEE WHAT IS BEING CREATED IN C++ UNMANAGED MEMORY */
+
+                    //double* doublePointer;
+                    //double[][] pulledSerie = new double[inputSerie.ExampleSerie.Count][];
+                    //System.Runtime.InteropServices.Marshal.Copy(dtwSerie, pulledSerie, 0, pulledSerie.Length);
+
+                    /* END OF DEBUG CODE */
+
                     outputDTW = RapidlibLinkerDLL.RunSeriesClassification(m_ModelAddress, dtwSerie);
                     // Make sure to destroy the serie because it is outside of the GC scope
                     RapidlibLinkerDLL.DestroyTrainingSet(dtwSerie);

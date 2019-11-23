@@ -425,12 +425,12 @@ namespace InteractML
                 // DTW
                 if (learningType == EasyRapidlib.LearningType.DTW)
                 {
-                    // If the running serie is not null or empty...
-                    if (m_RunningSerieDTW.ExampleSerie != null && m_RunningSerieDTW.ExampleSerie.Count > 0)
-                    {
-                        // We start adding examples to the running serie until the user stops
-                        AddExampleToSerie(ref m_RunningSerieDTW);
-                    }
+                    // We init the running serie if it is null
+                    if (m_RunningSerieDTW.ExampleSerie == null)
+                        m_RunningSerieDTW = new RapidlibTrainingSerie();
+
+                    // We start adding examples to the running serie until the user stops
+                    AddExampleToSerie(ref m_RunningSerieDTW);                    
                 }
                 // Classification and Regression
                 else
