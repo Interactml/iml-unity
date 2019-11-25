@@ -58,8 +58,8 @@ public class RapidLibEditor : Editor
             nameButton = "STOP Running";
         else
             nameButton = "Run";
-        // Disable button if model is Collecting data
-        if (rapidLib.CollectingData)
+        // Disable button if model is Collecting data (but not DTW)
+        if (rapidLib.CollectingData && rapidLib.learningType != RapidLib.LearningType.DTW)
             GUI.enabled = false;
         if (GUILayout.Button(nameButton))
         {
