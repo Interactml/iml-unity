@@ -158,7 +158,16 @@ namespace InteractML
         /// <returns>The position of the closest known serie in the model </returns>
         public static int RunSeriesClassification(IntPtr model, IntPtr trainingSet)
         {
-            return runSeriesClassification(model, trainingSet);
+            int result = -1;
+            try
+            {
+                result = runSeriesClassification(model, trainingSet);
+            }
+            catch (System.ComponentModel.Win32Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            return result;
         }
         
         /// <summary>

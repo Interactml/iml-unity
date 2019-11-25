@@ -87,7 +87,13 @@ namespace InteractML
         {
             if (m_ExampleSerie == null)
                 m_ExampleSerie = new List<double[]>();
-            m_ExampleSerie.Add(input);
+            // Create a new instance to avoid passing a reference from outside to our list
+            double[] inputSerie = new double[input.Length];
+            for (int i = 0; i < input.Length; i++)
+            {
+                inputSerie[i] = input[i];
+            }
+            m_ExampleSerie.Add(inputSerie);
         }
 
         /// <summary>
@@ -99,7 +105,13 @@ namespace InteractML
         {
             if (m_ExampleSerie == null)
                 m_ExampleSerie = new List<double[]>();
-            m_ExampleSerie.Add(input);
+            // Create a new instance to avoid passing a reference from outside to our list
+            double[] inputSerie = new double[input.Length];
+            for (int i = 0; i < input.Length; i++)
+            {
+                inputSerie[i] = input[i];
+            }
+            m_ExampleSerie.Add(inputSerie);
             m_LabelSerie = output;
         }
 

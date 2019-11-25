@@ -2,14 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using InteractML;
+using System;
 
+/// <summary>
+/// Dummy class to test that Rapidlib functions are working
+/// </summary>
 public class DummyRapidlib : MonoBehaviour
 {
     RapidlibModel m_Model;
+    RapidlibModel m_ModelDTW;
 
     public List<RapidlibTrainingExample> m_TrainingExamples;
+    public List<RapidlibTrainingSerie> m_TrainingSeries;
+    private RapidlibTrainingSerie m_TrainingSerie; // Used to add serie to bigger list, clear after added
 
     public RapidlibTrainingExample m_RunningExample;
+    public RapidlibTrainingSerie m_RunningSerie;
 
     public Transform Input;
 
@@ -19,15 +27,23 @@ public class DummyRapidlib : MonoBehaviour
 
     public double[] OutputFromModel;
 
+    [Header("DTW Settings")]
+    public string DesiredOutputDTW;
+    public string OutputFromDTW;
+
     // Start is called before the first frame update
     void Start()
     {
         // Make a new classification model
         m_Model = new RapidlibModel(RapidlibModel.ModelType.kNN);
 
+        // Make a new dtw model
+        m_ModelDTW = new RapidlibModel(RapidlibModel.ModelType.DTW);
+
         // Init lists
         m_TrainingExamples = new List<RapidlibTrainingExample>();
         m_InputValues = new double[3];
+        m_TrainingSeries = new List<RapidlibTrainingSerie>();
 
     }
 
@@ -47,6 +63,16 @@ public class DummyRapidlib : MonoBehaviour
 
             // Add example to list
             m_TrainingExamples.Add(m_RunningExample);
+
+            // Add example to training serie
+            m_TrainingSerie.AddTrainingExample(m_RunningExample.Input, DesiredOutputDTW);
+        }
+        // If space is up, we send serie to training series list
+        if (UnityEngine.Input.GetKeyUp(KeyCode.Space))
+        {
+            m_TrainingSeries.Add(new RapidlibTrainingSerie(m_TrainingSerie));
+            // We clear the training serie after it was added
+            m_TrainingSerie.ClearSerie();
         }
 
         // Train model when pressed T
@@ -54,7 +80,8 @@ public class DummyRapidlib : MonoBehaviour
         {
             bool isTrained = m_Model.Train(m_TrainingExamples);
             Debug.Log("Model trained? = " + isTrained);
-
+            bool isTrainedDTW = m_ModelDTW.Train(m_TrainingSeries);
+            Debug.Log("Model DTW trained? = " + isTrainedDTW);
         }
 
         // Run model constantly
@@ -66,6 +93,42 @@ public class DummyRapidlib : MonoBehaviour
             }
             m_Model.Run(m_InputValues, ref OutputFromModel);
             Debug.Log("Output model: " + OutputFromModel[0]);
+        }
+
+        // Collect serie for running DTW when mouse is down
+        if (UnityEngine.Input.GetKey(KeyCode.Mouse0))
+        {
+            m_RunningSerie.AddTrainingExample(m_InputValues);
+        }
+        // Run model DTW when mouse down is being released
+        else if (UnityEngine.Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            // Only run if model is trained
+            if (m_ModelDTW.ModelStatus == IMLSpecifications.ModelStatus.Trained)
+            {
+                /* DEBUG CODE */
+                //IntPtr trainingSetDTW = RapidlibLinkerDLL.CreateTrainingSet();
+
+                //for (int i = 0; i < m_RunningSerie.ExampleSerie.Count; i++)
+                //{
+
+                //    RapidlibLinkerDLL.AddTrainingExample(trainingSetDTW,
+                //        m_RunningSerie.ExampleSerie[i], m_RunningSerie.ExampleSerie.Count,
+                //        m_RunningSerie.ExampleSerie[i], m_RunningSerie.ExampleSerie.Count);
+                //}
+
+                //OutputFromDTW = RapidlibLinkerDLL.RunSeriesClassification(m_ModelDTW.ModelAddress, trainingSetDTW).ToString();
+
+                //RapidlibLinkerDLL.DestroyTrainingSet(trainingSetDTW);
+
+                /* END OF DEBUG CODE */
+
+                OutputFromDTW = m_ModelDTW.Run(m_RunningSerie).ToString();
+
+            }
+
+            // Clear serie for next run
+            m_RunningSerie.ClearSerie();
         }
     }
 }

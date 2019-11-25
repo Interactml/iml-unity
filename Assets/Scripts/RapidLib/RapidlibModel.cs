@@ -154,7 +154,18 @@ namespace InteractML
                 case ModelType.NeuralNetwork:
                     throw new Exception("Wrong format of data for Regression model! Are you trying to run a DTW?");
                 case ModelType.DTW:
-                    IntPtr dtwSerie = TransformTrainingSerieForRapidlib(this, inputSerie);
+                    //IntPtr dtwSerie = TransformTrainingSerieForRapidlib(this, inputSerie);
+
+                    IntPtr trainingSetDTW = RapidlibLinkerDLL.CreateTrainingSet();
+
+                    for (int i = 0; i < inputSerie.ExampleSerie.Count; i++)
+                    {
+
+                        RapidlibLinkerDLL.AddTrainingExample(trainingSetDTW,
+                            inputSerie.ExampleSerie[i], inputSerie.ExampleSerie.Count,
+                            inputSerie.ExampleSerie[i], inputSerie.ExampleSerie.Count);
+                    }
+
 
                     /* DEBUG CODE TO SEE WHAT IS BEING CREATED IN C++ UNMANAGED MEMORY */
 
@@ -164,9 +175,9 @@ namespace InteractML
 
                     /* END OF DEBUG CODE */
 
-                    outputDTW = RapidlibLinkerDLL.RunSeriesClassification(m_ModelAddress, dtwSerie);
+                    outputDTW = RapidlibLinkerDLL.RunSeriesClassification(m_ModelAddress, trainingSetDTW);
                     // Make sure to destroy the serie because it is outside of the GC scope
-                    RapidlibLinkerDLL.DestroyTrainingSet(dtwSerie);
+                    RapidlibLinkerDLL.DestroyTrainingSet(trainingSetDTW);
                     break;
                 case ModelType.None:
                     throw new Exception("You can't run an unitialised model!");
@@ -493,11 +504,12 @@ namespace InteractML
             // Get the memory address for an empty c++ training set
             IntPtr trainingSeriesSetAddress = RapidlibLinkerDLL.CreateTrainingSet();
             // Configure the new training set in memory with the C# list of examples (we only need the inputs)
-            foreach (var serie in trainingSeriesToTransform.ExampleSerie)
+            for (int i = 0; i < trainingSeriesToTransform.ExampleSerie.Count; i++)
             {
                 RapidlibLinkerDLL.AddTrainingExample(trainingSeriesSetAddress,
-                    serie, serie.Length,
-                    serie, serie.Length); // We provide the serie as an output because it is ignored when running it and we need something
+                    trainingSeriesToTransform.ExampleSerie[i], trainingSeriesToTransform.ExampleSerie.Count,
+                    trainingSeriesToTransform.ExampleSerie[i], trainingSeriesToTransform.ExampleSerie.Count);
+
             }
             // Return the address for the training series set in memory
             return trainingSeriesSetAddress;
