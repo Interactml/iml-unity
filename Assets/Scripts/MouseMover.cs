@@ -10,6 +10,8 @@ public class MouseMover : MonoBehaviour {
     private GameObject m_ObjToMove;
     private Vector3 m_CurrentMouseWorldPos;
 
+    public bool MoveAxisZ;
+
 	// Use this for initialization
 	void Start () {
         m_ObjToMove = this.gameObject;
@@ -27,8 +29,11 @@ public class MouseMover : MonoBehaviour {
         m_CurrentMouseWorldPos.x = newMousePosWorldPoint.x;
         m_CurrentMouseWorldPos.y = newMousePosWorldPoint.y;
 
-        // Mouse wheel moves obj in Z axis
-        m_CurrentMouseWorldPos.z += Input.mouseScrollDelta.y;
+        if (MoveAxisZ)
+        {
+            // Mouse wheel moves obj in Z axis
+            m_CurrentMouseWorldPos.z += Input.mouseScrollDelta.y;
+        }
 
         // Apply directly to position
         m_ObjToMove.transform.position = m_CurrentMouseWorldPos;
