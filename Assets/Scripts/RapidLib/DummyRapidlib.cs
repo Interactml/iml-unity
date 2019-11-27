@@ -123,8 +123,7 @@ public class DummyRapidlib : MonoBehaviour
 
                 /* END OF DEBUG CODE */
 
-                OutputFromDTW = m_ModelDTW.Run(m_RunningSerie).ToString();
-
+                OutputFromDTW = m_ModelDTW.Run(m_RunningSerie);
             }
 
             // Clear serie for next run

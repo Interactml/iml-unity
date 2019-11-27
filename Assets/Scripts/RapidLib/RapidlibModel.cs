@@ -156,16 +156,13 @@ namespace InteractML
                 case ModelType.DTW:
                     //IntPtr dtwSerie = TransformTrainingSerieForRapidlib(this, inputSerie);
 
-                    IntPtr trainingSetDTW = RapidlibLinkerDLL.CreateTrainingSet();
+                    IntPtr runningSeriesAddressDTW = RapidlibLinkerDLL.CreateTrainingSeries();
 
-                    for (int i = 0; i < inputSerie.ExampleSerie.Count; i++)
+                    // Add each feature in running series to the one in unmananged memmory
+                    foreach (var feature in inputSerie.ExampleSerie)
                     {
-
-                        RapidlibLinkerDLL.AddTrainingExample(trainingSetDTW,
-                            inputSerie.ExampleSerie[i], inputSerie.ExampleSerie.Count,
-                            inputSerie.ExampleSerie[i], inputSerie.ExampleSerie.Count);
+                        RapidlibLinkerDLL.AddInputsToSeries(runningSeriesAddressDTW, feature, feature.Length);
                     }
-
 
                     /* DEBUG CODE TO SEE WHAT IS BEING CREATED IN C++ UNMANAGED MEMORY */
 
@@ -175,9 +172,9 @@ namespace InteractML
 
                     /* END OF DEBUG CODE */
 
-                    RapidlibLinkerDLL.RunSeriesClassification(m_ModelAddress, trainingSetDTW, ref outputDTW);
+                    outputDTW = RapidlibLinkerDLL.RunSeriesClassification(m_ModelAddress, runningSeriesAddressDTW);
                     // Make sure to destroy the serie because it is outside of the GC scope
-                    RapidlibLinkerDLL.DestroyTrainingSet(trainingSetDTW);
+                    RapidlibLinkerDLL.DestroyTrainingSeries(runningSeriesAddressDTW);
                     break;
                 case ModelType.None:
                     throw new Exception("You can't run an unitialised model!");
@@ -265,17 +262,12 @@ namespace InteractML
                 case ModelType.DTW:
                     // Reset model in dll memory
                     RapidlibLinkerDLL.ResetSeriesClassification(m_ModelAddress);
-                    // Create rapidlib training examples series in rapidlib dll memory
-                    IntPtr[] dtwSeriesAdresses = TransformTrainingSeriesForRapidlib(this, trainingSeries);
-                    // Loop trhough the serieses to add them and then destroy them (they are out of the GC scope)
-                    for (int i = 0; i < dtwSeriesAdresses.Length; i++)
-                    {
-                        bool trainedOnSerie = RapidlibLinkerDLL.AddSeries(m_ModelAddress, dtwSeriesAdresses[i]);
-                        RapidlibLinkerDLL.DestroyTrainingSet(dtwSeriesAdresses[i]);
-                        // If one of them fails, we record the training as failed
-                        if (!trainedOnSerie)
-                            isTrained = false;
-                    }
+                    // Create rapidlib training series collection in rapidlib dll memory
+                    IntPtr dtwSeriesCollectionAddress = TransformTrainingSeriesCollectionForRapidlib(this, trainingSeries);
+                    // Train dtw model with that unmanaged series collection
+                    isTrained = RapidlibLinkerDLL.TrainSeriesClassification(m_ModelAddress, dtwSeriesCollectionAddress);
+                    // Destroy unmanaged training series collection 
+                    RapidlibLinkerDLL.DestroyTrainingSeriesCollection(dtwSeriesCollectionAddress);
                     break;
                 case ModelType.None:
                     isTrained = false;
@@ -444,12 +436,12 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Transforms the provided C# training series list into a format suitable for the rapidlib dll 
+        /// Transforms the provided C# training series collection list into a format suitable for the rapidlib dll 
         /// </summary>
         /// <param name="model"></param>
         /// <param name="trainingSeriesToTransform"></param>
-        /// <returns>The memory addresses to the newly created and configured training series sets</returns>
-        private IntPtr[] TransformTrainingSeriesForRapidlib(RapidlibModel model, List<RapidlibTrainingSerie> trainingSeriesToTransform)
+        /// <returns>The memory address to the newly created and configured training series collection</returns>
+        private IntPtr TransformTrainingSeriesCollectionForRapidlib(RapidlibModel model, List<RapidlibTrainingSerie> trainingSeriesToTransform)
         {
             // We check that we are transforming for the right kind of model
             if (model.TypeOfModel != ModelType.DTW)
@@ -458,35 +450,27 @@ namespace InteractML
             if (trainingSeriesToTransform.Count == 0)
                 throw new Exception("You can't train a DTW model without any serie.");
 
+            // Define the series collection address to return
+            IntPtr trainingSeriesCollectionAddress = RapidlibLinkerDLL.CreateTrainingSeriesCollection();
 
-
-            // Define the array of addresses to return
-            IntPtr[] trainingSeriesSetAddress = new IntPtr[trainingSeriesToTransform.Count];
-            for (int i = 0; i < trainingSeriesSetAddress.Length; i++)
+            // Create as many series as we have, and add them to the series collection
+            foreach (var series in trainingSeriesToTransform)
             {
-                // Avoid memory exceptions making sure that the input examples serie is not null or empty
-                if (trainingSeriesToTransform[i].ExampleSerie == null || trainingSeriesToTransform[i].ExampleSerie.Count == 0 )
-                    throw new Exception("You can't train a DTW model on an empty serie!");
-
-                // Get the memory address for an empty c++ training set
-                trainingSeriesSetAddress[i] = RapidlibLinkerDLL.CreateTrainingSet();
-
-            }
-
-            // Configure the new training set in memory with the C# list of examples
-            for (int i = 0; i < trainingSeriesToTransform.Count; i++)
-            {
-                // We have index i to select each training series address and add all examples per serie to it
-                for (int j = 0; j < trainingSeriesToTransform[i].ExampleSerie.Count; j++)
+                IntPtr trainingSeriesUnmanaged = RapidlibLinkerDLL.CreateTrainingSeries();
+                // Add features one by one to unmanaged series
+                foreach (var feature in series.ExampleSerie)
                 {
-                    RapidlibLinkerDLL.AddTrainingExample(trainingSeriesSetAddress[i],
-                        trainingSeriesToTransform[i].ExampleSerie[j], trainingSeriesToTransform[i].ExampleSerie.Count,
-                        trainingSeriesToTransform[i].ExampleSerie[j], trainingSeriesToTransform[i].ExampleSerie.Count); // We provide the serie as an output because it is ignored when running it and we need something
-
+                    // Adds one feature
+                    RapidlibLinkerDLL.AddInputsToSeries(trainingSeriesUnmanaged, feature, feature.Length);
                 }
+                // Adds label to serie
+                RapidlibLinkerDLL.AddLabelToSeries(trainingSeriesUnmanaged, series.LabelSerie);
+                // Adds the unamanged series to the unmanaged series collection
+                RapidlibLinkerDLL.AddSeriesToSeriesCollection(trainingSeriesCollectionAddress, trainingSeriesUnmanaged);
             }
-            // Return the address for the training series set in memory
-            return trainingSeriesSetAddress;
+
+            // Return the address for the training series collection in unmanaged memory
+            return trainingSeriesCollectionAddress;
         }
 
         /// <summary>
@@ -502,17 +486,14 @@ namespace InteractML
                 throw new Exception("You can't create a rapidlib training series set in memory for the rapidlib dll with a non DTW model!");
             }
             // Get the memory address for an empty c++ training set
-            IntPtr trainingSeriesSetAddress = RapidlibLinkerDLL.CreateTrainingSet();
+            IntPtr trainingSeriesAddress = RapidlibLinkerDLL.CreateTrainingSeries();
             // Configure the new training set in memory with the C# list of examples (we only need the inputs)
-            for (int i = 0; i < trainingSeriesToTransform.ExampleSerie.Count; i++)
+            foreach (var feature in trainingSeriesToTransform.ExampleSerie)
             {
-                RapidlibLinkerDLL.AddTrainingExample(trainingSeriesSetAddress,
-                    trainingSeriesToTransform.ExampleSerie[i], trainingSeriesToTransform.ExampleSerie.Count,
-                    trainingSeriesToTransform.ExampleSerie[i], trainingSeriesToTransform.ExampleSerie.Count);
-
+                RapidlibLinkerDLL.AddInputsToSeries(trainingSeriesAddress, feature, feature.Length);
             }
             // Return the address for the training series set in memory
-            return trainingSeriesSetAddress;
+            return trainingSeriesAddress;
         }
 
 

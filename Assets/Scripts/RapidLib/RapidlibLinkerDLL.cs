@@ -33,7 +33,7 @@ namespace InteractML
         [DllImport("RapidLibPlugin")]
         private static extern bool trainSeriesClassification(IntPtr model, IntPtr trainingSeriesCollection);
         [DllImport("RapidLibPlugin")]
-        private static extern void runSeriesClassification(IntPtr model, IntPtr runningSeries, string outputString);
+        private static extern IntPtr runSeriesClassification(IntPtr model, IntPtr runningSeries);
         [DllImport("RapidLibPlugin")]
         private static extern int getSeriesClassificationCosts(IntPtr model, double[] output, int numOutputs);
 
@@ -163,9 +163,9 @@ namespace InteractML
         /// </summary>
         /// <param name="model"></param>
         /// <param name="trainingSeriesCollection"></param>
-        public static void TrainSeriesClassification(IntPtr model, IntPtr trainingSeriesCollection)
+        public static bool TrainSeriesClassification(IntPtr model, IntPtr trainingSeriesCollection)
         {
-            trainSeriesClassification(model, trainingSeriesCollection);
+            return trainSeriesClassification(model, trainingSeriesCollection);
         }
 
         /// <summary>
@@ -188,33 +188,23 @@ namespace InteractML
         }
         
         /// <summary>
-        /// [DEPRECATED] Adds a trainingSet as a new serie to the specified DTW model
-        /// </summary>
-        /// <param name="model"></param>
-        /// <param name="trainingSet"></param>
-        /// <returns>True if succesfully added the serie</returns>
-        public static bool AddSeries(IntPtr model, IntPtr trainingSet)
-        {
-            throw new NotImplementedException("Add series is no longer usable");
-        }
-        
-        /// <summary>
         /// Runs the specified DTW model against the provided training examples serie
         /// </summary>
         /// <param name="model"></param>
         /// <param name="runningSeries"></param>
         /// <returns>The position of the closest known serie in the model </returns>
-        public static void RunSeriesClassification(IntPtr model, IntPtr runningSeries, ref string outputString)
+        public static string RunSeriesClassification(IntPtr model, IntPtr runningSeries)
         {
-            outputString = "";
+            string outputString = "";
             try
             {
-                runSeriesClassification(model, runningSeries, outputString);
+                outputString = Marshal.PtrToStringAnsi(runSeriesClassification(model, runningSeries));
             }
             catch (System.ComponentModel.Win32Exception e)
             {
                 throw new Exception("Error when running dtw model: " + e.Message);
-            }            
+            }
+            return outputString;
         }
         
         /// <summary>
@@ -349,7 +339,15 @@ namespace InteractML
         /// <returns></returns>
         public static IntPtr CreateTrainingSeries()
         {
-            return createTrainingSeries();
+            try
+            {
+                return createTrainingSeries();
+            }
+            catch (System.ComponentModel.Win32Exception e)
+            {
+                throw new Exception("Error when creating unmanaged training series: " + e.Message);
+            }
+
         }
 
         /// <summary>
@@ -362,7 +360,7 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Adds a feature (or set of features) to a training series 
+        /// Adds a single feature to a training series in unmanaged memory
         /// </summary>
         /// <param name="series"></param>
         /// <param name="inputs"></param>
@@ -397,7 +395,14 @@ namespace InteractML
         /// <param name="seriesCollection"></param>
         public static void DestroyTrainingSeriesCollection(IntPtr seriesCollection)
         {
-            destroyTrainingSeriesCollection(seriesCollection);
+            try
+            {
+                destroyTrainingSeriesCollection(seriesCollection);
+            }
+            catch (System.ComponentModel.Win32Exception e)
+            {
+                throw new Exception("Error when destroying unmanaged training series collection: " + e.Message);
+            }
         }
 
         /// <summary>
