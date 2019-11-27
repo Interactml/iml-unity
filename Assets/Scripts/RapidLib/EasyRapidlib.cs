@@ -233,7 +233,7 @@ namespace InteractML
         /// </summary>
         /// <param name="dtwInputSerie"></param>
         /// <returns></returns>
-        public int Run(RapidlibTrainingSerie dtwInputSerie)
+        public string Run(RapidlibTrainingSerie dtwInputSerie)
         {
             return m_Model.Run(new RapidlibTrainingSerie(dtwInputSerie));
         }

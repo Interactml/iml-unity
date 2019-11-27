@@ -33,7 +33,7 @@ namespace InteractML
         /// <summary>
         /// Last class predicted by the dtw algorithm
         /// </summary>
-        public int OutputDTW;
+        public string OutputDTW;
 
         private bool run = false;
         public bool Running { get { return run; } }

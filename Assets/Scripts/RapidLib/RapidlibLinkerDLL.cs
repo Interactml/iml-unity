@@ -31,9 +31,9 @@ namespace InteractML
         [DllImport("RapidLibPlugin")]
         private static extern void destroySeriesClassificationModel(IntPtr model);
         [DllImport("RapidLibPlugin")]
-        private static extern bool addSeries(IntPtr model, IntPtr trainingSet);
+        private static extern bool trainSeriesClassification(IntPtr model, IntPtr trainingSeriesCollection);
         [DllImport("RapidLibPlugin")]
-        private static extern int runSeriesClassification(IntPtr model, IntPtr trainingSet);
+        private static extern void runSeriesClassification(IntPtr model, IntPtr runningSeries, string outputString);
         [DllImport("RapidLibPlugin")]
         private static extern int getSeriesClassificationCosts(IntPtr model, double[] output, int numOutputs);
 
@@ -62,6 +62,23 @@ namespace InteractML
         [DllImport("RapidLibPlugin")]
         private static extern double getOutput(IntPtr trainingSet, int i, int j);
 
+        // TRAINING SERIES
+        [DllImport("RapidLibPlugin")]
+        private static extern IntPtr createTrainingSeries();
+        [DllImport("RapidLibPlugin")]
+        private static extern void destroyTrainingSeries(IntPtr series);
+        [DllImport("RapidLibPlugin")]
+        private static extern void addInputsToSeries(IntPtr series, double[] inputs, int numInputs);
+        [DllImport("RapidLibPlugin")]
+        private static extern void addLabelToSeries(IntPtr series, string labelString);
+        [DllImport("RapidLibPlugin")]
+        private static extern IntPtr createTrainingSeriesCollection();
+        [DllImport("RapidLibPlugin")]
+        private static extern void destroyTrainingSeriesCollection(IntPtr seriesCollection);
+        [DllImport("RapidLibPlugin")]
+        private static extern void addSeriesToSeriesCollection(IntPtr seriesCollection, IntPtr series);
+
+
         #endregion
 
         #region Public Methods
@@ -75,7 +92,14 @@ namespace InteractML
         /// <returns>Pointer to model</returns>
         public static IntPtr CreateRegressionModel()
         {
-            return createRegressionModel();
+            try
+            {
+                return createRegressionModel();
+            }
+            catch (System.ComponentModel.Win32Exception e)
+            {
+                throw new Exception("Error when creating regression model: " + e.Message);
+            }
         }
         
         /// <summary>
@@ -96,18 +120,25 @@ namespace InteractML
         /// <returns>Pointer to model</returns>
         public static IntPtr CreateClassificationModel()
         {
-            return createClassificationModel();
+            try
+            {
+                return createClassificationModel();
+            }
+            catch (System.ComponentModel.Win32Exception e)
+            {
+                throw new Exception("Error when creating classification model: " + e.Message);
+            }
         }
 
         /// <summary>
         /// Trains a rapidlib classification model
         /// </summary>
         /// <param name="model"></param>
-        /// <param name="trainingSet"></param>
+        /// <param name="trainingSeriesCollection"></param>
         /// <returns>True if succesfully trained</returns>
-        public static bool TrainClassification(IntPtr model, IntPtr trainingSet)
+        public static bool TrainClassification(IntPtr model, IntPtr trainingSeriesCollection)
         {
-            return trainClassification(model, trainingSet);
+            return trainClassification(model, trainingSeriesCollection);
         }
 
         /* === DTW === */
@@ -117,7 +148,24 @@ namespace InteractML
         /// <returns>Pointer to model</returns>
         public static IntPtr CreateSeriesClassificationModel()
         {
-            return createSeriesClassificationModel();
+            try
+            {
+                return createSeriesClassificationModel();
+            }
+            catch (System.ComponentModel.Win32Exception e)
+            {
+                throw new Exception("Error when creating DTW model: " + e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Trains a rapidlib trime series classification model (DTW) with a series collection in unmanaged memory
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="trainingSeriesCollection"></param>
+        public static void TrainSeriesClassification(IntPtr model, IntPtr trainingSeriesCollection)
+        {
+            trainSeriesClassification(model, trainingSeriesCollection);
         }
 
         /// <summary>
@@ -140,34 +188,33 @@ namespace InteractML
         }
         
         /// <summary>
-        /// Adds a trainingSet as a new serie to the specified DTW model
+        /// [DEPRECATED] Adds a trainingSet as a new serie to the specified DTW model
         /// </summary>
         /// <param name="model"></param>
         /// <param name="trainingSet"></param>
         /// <returns>True if succesfully added the serie</returns>
         public static bool AddSeries(IntPtr model, IntPtr trainingSet)
         {
-            return addSeries(model, trainingSet);
+            throw new NotImplementedException("Add series is no longer usable");
         }
         
         /// <summary>
         /// Runs the specified DTW model against the provided training examples serie
         /// </summary>
         /// <param name="model"></param>
-        /// <param name="trainingSet"></param>
+        /// <param name="runningSeries"></param>
         /// <returns>The position of the closest known serie in the model </returns>
-        public static int RunSeriesClassification(IntPtr model, IntPtr trainingSet)
+        public static void RunSeriesClassification(IntPtr model, IntPtr runningSeries, ref string outputString)
         {
-            int result = -1;
+            outputString = "";
             try
             {
-                result = runSeriesClassification(model, trainingSet);
+                runSeriesClassification(model, runningSeries, outputString);
             }
             catch (System.ComponentModel.Win32Exception e)
             {
-                throw new Exception(e.Message);
-            }
-            return result;
+                throw new Exception("Error when running dtw model: " + e.Message);
+            }            
         }
         
         /// <summary>
@@ -290,6 +337,77 @@ namespace InteractML
         public static double GetOutput(IntPtr trainingSet, int trainingExamplePos, int outputPos)
         {
             return getOutput(trainingSet, trainingExamplePos, outputPos);
+        }
+
+        /* ==== TRAINING SERIES ==== */
+
+        // TRAINING SERIES
+
+        /// <summary>
+        /// Returns a single training series instance in unmanaged memory
+        /// </summary>
+        /// <returns></returns>
+        public static IntPtr CreateTrainingSeries()
+        {
+            return createTrainingSeries();
+        }
+
+        /// <summary>
+        /// Destroys a single training series instance in unmanaged memory
+        /// </summary>
+        /// <param name="seriesToDestroy"></param>
+        public static void DestroyTrainingSeries(IntPtr seriesToDestroy)
+        {
+            destroyTrainingSeries(seriesToDestroy);
+        }
+
+        /// <summary>
+        /// Adds a feature (or set of features) to a training series 
+        /// </summary>
+        /// <param name="series"></param>
+        /// <param name="inputs"></param>
+        /// <param name="numInputs"></param>
+        public static void AddInputsToSeries(IntPtr series, double[] inputs, int numInputs)
+        {
+            addInputsToSeries(series, inputs, numInputs);
+        }
+
+        /// <summary>
+        /// Adds label to a serie in unmanaged memory
+        /// </summary>
+        /// <param name="series"></param>
+        /// <param name="label"></param>
+        public static void AddLabelToSeries(IntPtr series, string label)
+        {
+            addLabelToSeries(series, label);
+        }
+
+        /// <summary>
+        /// Creates a collection of training series in unmanaged memory (useful when training dtw models)
+        /// </summary>
+        /// <returns>Pointer to series collection in unmanaged memory</returns>
+        public static IntPtr CreateTrainingSeriesCollection()
+        {
+            return createTrainingSeriesCollection();
+        }
+
+        /// <summary>
+        /// Destroys collection of training series in unmanaged memory
+        /// </summary>
+        /// <param name="seriesCollection"></param>
+        public static void DestroyTrainingSeriesCollection(IntPtr seriesCollection)
+        {
+            destroyTrainingSeriesCollection(seriesCollection);
+        }
+
+        /// <summary>
+        /// Adds a series to a collection of series in unmanaged memory
+        /// </summary>
+        /// <param name="seriesCollection"></param>
+        /// <param name="series"></param>
+        public static void AddSeriesToSeriesCollection(IntPtr seriesCollection, IntPtr series)
+        {
+            addSeriesToSeriesCollection(seriesCollection, series);
         }
 
 

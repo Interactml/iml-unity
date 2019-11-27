@@ -140,12 +140,12 @@ namespace InteractML
         /// </summary>
         /// <param name="inputSerie"></param>
         /// <returns></returns>
-        public int Run(RapidlibTrainingSerie inputSerie)
+        public string Run(RapidlibTrainingSerie inputSerie)
         {
             // Make sure to only run if the model is trained
             if (m_ModelStatus == IMLSpecifications.ModelStatus.Untrained)
                 throw new Exception("You can't run an untrained model!");
-            int outputDTW = -1;
+            string outputDTW = "";
             // We only run DTW with the data passed in
             switch (m_TypeOfModel)
             {
@@ -175,7 +175,7 @@ namespace InteractML
 
                     /* END OF DEBUG CODE */
 
-                    outputDTW = RapidlibLinkerDLL.RunSeriesClassification(m_ModelAddress, trainingSetDTW);
+                    RapidlibLinkerDLL.RunSeriesClassification(m_ModelAddress, trainingSetDTW, ref outputDTW);
                     // Make sure to destroy the serie because it is outside of the GC scope
                     RapidlibLinkerDLL.DestroyTrainingSet(trainingSetDTW);
                     break;
@@ -186,7 +186,7 @@ namespace InteractML
             }
 
             // If we got any output, we mark the model as running
-            if (outputDTW != -1)
+            if (!String.IsNullOrEmpty(outputDTW))
                 m_ModelStatus = IMLSpecifications.ModelStatus.Running;
 
             return outputDTW;

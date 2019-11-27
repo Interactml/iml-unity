@@ -35,7 +35,7 @@ public class DummyRapidlib : MonoBehaviour
     void Start()
     {
         // Make a new classification model
-        m_Model = new RapidlibModel(RapidlibModel.ModelType.kNN);
+        m_Model = new RapidlibModel(RapidlibModel.ModelType.NeuralNetwork);
 
         // Make a new dtw model
         m_ModelDTW = new RapidlibModel(RapidlibModel.ModelType.DTW);
