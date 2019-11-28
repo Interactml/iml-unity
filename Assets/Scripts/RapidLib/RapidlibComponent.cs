@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace InteractML
 {
@@ -341,7 +342,14 @@ namespace InteractML
         [ContextMenu("Clear Training Examples")]
         public void ClearTrainingExamples()
         {
-             m_EasyRapidlib.TrainingExamples.Clear();
+            if (learningType == EasyRapidlib.LearningType.DTW)
+            {
+                m_EasyRapidlib.TrainingExamplesSeries.Clear();
+            }
+            else
+            {
+                m_EasyRapidlib.TrainingExamples.Clear();
+            }
         }
 
         public List<RapidlibTrainingExample> GetTrainingExamples()
@@ -360,6 +368,42 @@ namespace InteractML
             if (m_EasyRapidlib.TrainingExamplesSeries == null)
                 m_EasyRapidlib.TrainingExamplesSeries = new List<RapidlibTrainingSerie>();
             return m_EasyRapidlib.TrainingExamplesSeries;
+        }
+
+        public void SaveDataToDisk()
+        {
+            m_EasyRapidlib.SaveModelToDisk("RapidlibComponent_Model_" + this.name + "_" + SceneManager.GetActiveScene().name);
+            m_EasyRapidlib.SaveTrainingExamplesToDisk("RapidlibComponent_TrainingExamples_" + this.name + "_" + SceneManager.GetActiveScene().name);
+            m_EasyRapidlib.SaveTrainingSeriesToDisk("RapidlibComponent_TrainingSeriesCollection_" + this.name + "_" + SceneManager.GetActiveScene().name);
+        }
+
+        public void LoadDataFromDisk()
+        {
+            bool modelLoaded = m_EasyRapidlib.LoadModelFromDisk("RapidlibComponent_Model_" + this.name + "_" + SceneManager.GetActiveScene().name);
+
+            if (modelLoaded)
+            {
+                // Do we need to update our learning type?
+                if (learningType != m_EasyRapidlib.LearningTypeModel)
+                {
+                    learningType = m_EasyRapidlib.LearningTypeModel;
+                }
+            }
+
+            // If we have a dtw model...
+            if (learningType == EasyRapidlib.LearningType.DTW)
+            {
+                // We attempt to load a training series collection
+                m_EasyRapidlib.LoadTrainingSeriesFromDisk("RapidlibComponent_TrainingSeriesCollection_" + this.name + "_" + SceneManager.GetActiveScene().name);
+
+            }
+            // If it is a classification or regression model...
+            else
+            {
+                // We attempt to load a training examples set
+                m_EasyRapidlib.LoadTrainigExamplesFromDisk("RapidlibComponent_TrainingExamples_" + this.name + "_" + SceneManager.GetActiveScene().name);
+            }
+
         }
 
         #endregion

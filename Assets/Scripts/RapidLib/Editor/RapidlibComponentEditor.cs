@@ -81,8 +81,8 @@ public class RapidLibComponentEditor : Editor
             nameButton = "STOP Running";
         else
             nameButton = "Run";
-        // Disable button if model is Collecting data
-        if (rapidLib.CollectingData)
+        // Disable button if model is Collecting data only for classification and regression
+        if (rapidLib.CollectingData && rapidLib.learningType != EasyRapidlib.LearningType.DTW) 
             GUI.enabled = false;
         if (GUILayout.Button(nameButton))
         {
@@ -118,15 +118,15 @@ public class RapidLibComponentEditor : Editor
         GUI.enabled = true;
 
 
-        //// DEBUG SAVING LOADING BUTTON
-        //if (GUILayout.Button("Save Stuff"))
-        //{
-        //    rapidLib.SaveDataToDisk();
-        //}
+        // DEBUG SAVING LOADING BUTTON
+        if (GUILayout.Button("Save Stuff"))
+        {
+            rapidLib.SaveDataToDisk();
+        }
 
-        //if (GUILayout.Button("Load Stuff"))
-        //{
-        //    rapidLib.LoadDataFromDiskAndReturnModel();
-        //}
+        if (GUILayout.Button("Load Stuff"))
+        {
+            rapidLib.LoadDataFromDisk();
+        }
     }
 }

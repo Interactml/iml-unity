@@ -321,6 +321,21 @@ namespace InteractML
         {
             if (!String.IsNullOrEmpty(jsonstring))
             {
+                //  Make sure that the model address is pointing to a real model in unmanaged memory
+                if (m_ModelAddress == IntPtr.Zero)
+                {
+                    // Check if we need to create a classification model
+                    if (jsonstring.Contains("\"modelType\" : \"kNN Classificiation\""))
+                    {
+                        CreateClassificationModel();
+                    }
+                    // Or if it is a regression model
+                    else if (jsonstring.Contains("\"modelType\" : \"Neural Network\""))
+                    {
+                        CreateRegressionModel();
+                    }
+
+                }
                 // Configure the model in memory
                 RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
                 // Set the status to trained (since we assume the model we loaded was trained)
@@ -336,6 +351,9 @@ namespace InteractML
         /// <param name="fileName"></param>
         public void SaveModelToDisk(string fileName)
         {
+            if (TypeOfModel == ModelType.DTW)
+                throw new NotImplementedException("Saving a DTW model to disk is currently not implemented");
+
             // Transforms the model into a stylised json string
             m_ModelJSONString = RapidlibLinkerDLL.GetJSON(m_ModelAddress);
             // Saves the model as a stylised json with the specified fileName
@@ -348,6 +366,9 @@ namespace InteractML
         /// <param name="fileName"></param>
         public void LoadModelFromDisk(string fileName)
         {
+            if (TypeOfModel == ModelType.DTW)
+                throw new NotImplementedException("Loading a DTW model from disk is currently not implemented");
+
             // Attempt to load model
             string stringLoaded = IMLDataSerialization.LoadRapidlibModelFromDisk(fileName);
 

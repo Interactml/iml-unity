@@ -260,7 +260,19 @@ namespace InteractML
         /// <param name="jsonString"></param>
         public static void PutJSON(IntPtr model, string jsonString)
         {
-            putJSON(model, jsonString);
+            if (jsonString.Contains("\"modelSet\" : null"))
+                throw new Exception("We can't configure a null rapidlib model with a json config file!");
+            if (model == IntPtr.Zero)
+                throw new Exception("The address to the model is zero, aborting configuration.");
+
+            try
+            {
+                putJSON(model, jsonString);
+            }
+            catch (System.ComponentModel.Win32Exception e)
+            {
+                throw new Exception("Error when configuring model with json config file: " + e.Message);
+            }
         }
 
         // TRAINING EXAMPLES

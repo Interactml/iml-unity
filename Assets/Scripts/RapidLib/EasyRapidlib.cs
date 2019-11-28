@@ -309,6 +309,25 @@ namespace InteractML
                 isLoaded = true;
             }
 
+            // Check in case we need to update our learning type
+            switch (m_Model.TypeOfModel)
+            {
+                case RapidlibModel.ModelType.kNN:
+                    m_LearningType = LearningType.Classification;
+                    break;
+                case RapidlibModel.ModelType.NeuralNetwork:
+                    m_LearningType = LearningType.Regression;
+                    break;
+                case RapidlibModel.ModelType.DTW:
+                    m_LearningType = LearningType.DTW;
+                    break;
+                case RapidlibModel.ModelType.None:
+                    isLoaded = false;
+                    break;
+                default:
+                    break;
+            }
+
             return isLoaded;
         }
 
