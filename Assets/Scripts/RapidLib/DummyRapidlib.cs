@@ -103,8 +103,17 @@ public class DummyRapidlib : MonoBehaviour
         // Run model DTW when mouse down is being released
         else if (UnityEngine.Input.GetKeyUp(KeyCode.Mouse0))
         {
-            // Only run if model is trained
-            if (m_ModelDTW.ModelStatus == IMLSpecifications.ModelStatus.Trained)
+            bool canRun = false;
+            if (m_ModelDTW.ModelStatus == IMLSpecifications.ModelStatus.Running)
+            {
+                canRun = true;
+            }
+            else if (m_ModelDTW.ModelStatus == IMLSpecifications.ModelStatus.Trained)
+            {
+                canRun = true;
+            }
+            // Only run if model is trained or running
+            if (canRun)
             {
                 /* DEBUG CODE */
                 //IntPtr trainingSetDTW = RapidlibLinkerDLL.CreateTrainingSet();
