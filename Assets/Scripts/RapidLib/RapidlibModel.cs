@@ -334,12 +334,19 @@ namespace InteractML
                     {
                         CreateRegressionModel();
                     }
+                    // Or if it is a dtw model
+                    else if (jsonstring.Contains("\"modelType\" : \"Series Classification\""))
+                    {
+                        CreateTimeSeriesClassificationModel();
+                        // After we have created it, we exit the method since we can't configure it!
+                        return;
+                    }
 
                 }
                 // Configure the model in memory
                 RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
                 // Set the status to trained (since we assume the model we loaded was trained)
-                m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+                m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
             }
         }
 
@@ -352,12 +359,25 @@ namespace InteractML
         public void SaveModelToDisk(string fileName)
         {
             if (TypeOfModel == ModelType.DTW)
-                throw new NotImplementedException("Saving a DTW model to disk is currently not implemented");
+            {
+                // We save the model as a stylised json, with very little info (in the future we can expand this with number inputs and outputs)
+                m_ModelJSONString = "{" +
+                        " \"metadata\" : { " +
+                            " \"creator\" : \"InteractML API C#\", " +
+                            " \"version\" : \"v0.2\"" +
+                        "}, " +
+                        " \"modelType\" : \"Series Classification\" "+
+                    "}";
+            }
+            else
+            {
+                // Transforms the model into a stylised json string
+                m_ModelJSONString = RapidlibLinkerDLL.GetJSON(m_ModelAddress);
+            }
 
-            // Transforms the model into a stylised json string
-            m_ModelJSONString = RapidlibLinkerDLL.GetJSON(m_ModelAddress);
             // Saves the model as a stylised json with the specified fileName
             IMLDataSerialization.SaveRapidlibModelToDisk(m_ModelJSONString, fileName);
+
         }
 
         /// <summary>

@@ -962,7 +962,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AllowKeyboardShortcuts: 0
-  learningType: 0
+  learningType: 2
   startDelay: 0
   captureRate: 10
   recordTime: -1

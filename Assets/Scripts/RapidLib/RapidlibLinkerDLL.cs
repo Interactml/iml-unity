@@ -262,6 +262,8 @@ namespace InteractML
         {
             if (jsonString.Contains("\"modelSet\" : null"))
                 throw new Exception("We can't configure a null rapidlib model with a json config file!");
+            else if (jsonString.Contains("\"modelType\" : \"Series Classification\""))
+                throw new NotImplementedException("DTW model configuration from file not implemented yet, you will need to manually retrain it!");
             if (model == IntPtr.Zero)
                 throw new Exception("The address to the model is zero, aborting configuration.");
 
