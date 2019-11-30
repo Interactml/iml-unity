@@ -233,7 +233,7 @@ namespace InteractML
         {
             return process(model, input, numInputs, output, numOutputs);
         }
-        
+
         /// <summary>
         /// Removes the specified model from memory
         /// </summary>

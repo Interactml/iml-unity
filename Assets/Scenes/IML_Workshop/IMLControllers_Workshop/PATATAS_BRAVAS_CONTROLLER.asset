@@ -17,67 +17,8 @@ MonoBehaviour:
   - {fileID: 114507523331420728}
   - {fileID: 114357140570682068}
   - {fileID: 114913048169967506}
-  - {fileID: 114186045075632734}
   - {fileID: 114315671501912336}
   SceneComponent: {fileID: 0}
---- !u!114 &114186045075632734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 051a7e150efca304da37d460de663b87, type: 3}
-  m_Name: Extract Velocity
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -120, y: -120}
-  ports:
-    keys:
-    - FeatureToInput
-    - VelocityExtracted
-    values:
-    - _fieldName: FeatureToInput
-      _node: {fileID: 114186045075632734}
-      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: positionExtracted
-        node: {fileID: 114315671501912336}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: VelocityExtracted
-      _node: {fileID: 114186045075632734}
-      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: InputFeatures
-        node: {fileID: 114507523331420728}
-        reroutePoints: []
-      - fieldName: InputFeatures
-        node: {fileID: 114357140570682068}
-        reroutePoints:
-        - {x: 209.98961, y: 280.59164}
-        - {x: 864.00726, y: 264.7675}
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  FeatureToInput: {fileID: 114315671501912336}
-  VelocityExtracted: {fileID: 0}
-  m_VelocityExtracted:
-    m_Values:
-    - 0
-    - 0
-    - 0
-  m_LastFrameFeatureValue:
-  - -3.55
-  - -2.46
-  - -0.44471583
 --- !u!114 &114277858093761784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,9 +87,15 @@ MonoBehaviour:
       _node: {fileID: 114315671501912336}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: FeatureToInput
-        node: {fileID: 114186045075632734}
-        reroutePoints: []
+      - fieldName: InputFeatures
+        node: {fileID: 114507523331420728}
+        reroutePoints:
+        - {x: 64, y: -112}
+      - fieldName: InputFeatures
+        node: {fileID: 114357140570682068}
+        reroutePoints:
+        - {x: 223.70555, y: 298.2612}
+        - {x: 848.1784, y: 275.49396}
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -158,9 +105,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - -3.55
-    - -2.46
-    - -0.44471583
+    - -0.34366724
+    - 8.770706
+    - 1
 --- !u!114 &114357140570682068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,8 +147,8 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: VelocityExtracted
-        node: {fileID: 114186045075632734}
+      - fieldName: positionExtracted
+        node: {fileID: 114315671501912336}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -223,16 +170,15 @@ MonoBehaviour:
   IMLTrainingExamplesNodes:
   - {fileID: 114507523331420728}
   InputFeatures:
-  - {fileID: 114186045075632734}
+  - {fileID: 114315671501912336}
   ModelOutput: {fileID: 0}
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
-  - 0
-  m_ExpectedInputList: 05000000
+  - 9.625248790856979
+  m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 1
-  RapidLibComponent: {fileID: 0}
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
 --- !u!114 &114507523331420728
@@ -260,8 +206,8 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: VelocityExtracted
-        node: {fileID: 114186045075632734}
+      - fieldName: positionExtracted
+        node: {fileID: 114315671501912336}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -281,16 +227,16 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   InputFeatures:
-  - {fileID: 114186045075632734}
+  - {fileID: 114315671501912336}
   TrainingExamplesNodeToOutput: {fileID: 114507523331420728}
   TrainingExamplesVector: []
-  m_DesiredInputsConfig: 05000000
+  m_DesiredInputsConfig: 03000000
   m_DesiredOutputsConfig: 00000000
   IMLConfigurationNodesConnected: []
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableCollectDataShortcut: 0
+  EnableCollectDataShortcut: 1
 --- !u!114 &114913048169967506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,4 +269,4 @@ MonoBehaviour:
   DevMode: 0
   IMLModelOutputs: {fileID: 0}
   m_IMLOutputVector:
-  - 0
+  - 9.625248790856979

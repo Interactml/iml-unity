@@ -99,7 +99,10 @@ public class IMLEditorManager
         // We save models if we are leaving a new playmode
         if (playModeStatus == PlayModeStateChange.ExitingEditMode || playModeStatus == PlayModeStateChange.ExitingPlayMode)
         {
-
+            foreach (var component in m_IMLComponents)
+            {
+                component.SaveAllModels();
+            }
         }
     }
 

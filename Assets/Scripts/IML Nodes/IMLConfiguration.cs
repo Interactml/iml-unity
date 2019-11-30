@@ -61,12 +61,16 @@ namespace InteractML
         [SerializeField]
         private IMLSpecifications.LearningType m_LearningType;
 
-        private IMLSpecifications.ModelStatus m_ModelStatus;
+        private IMLSpecifications.ModelStatus m_ModelStatus { get { return m_Model != null ? m_Model.ModelStatus : IMLSpecifications.ModelStatus.Untrained; } }
         /// <summary>
         /// The current status of the model
         /// </summary>
-        public IMLSpecifications.ModelStatus ModelStatus { get { return m_Model != null ? m_Model.ModelStatus : IMLSpecifications.ModelStatus.Untrained; } }
-        public bool Running { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Running); } }
+        public IMLSpecifications.ModelStatus ModelStatus { get => m_ModelStatus; }
+        /// <summary>
+        /// Flags that controls if the model should run or not
+        /// </summary>
+        private bool m_Running;
+        public bool Running { get { return m_Running; } }
         public bool Training { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Training); } }
         public bool Trained { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Trained); } }
         public bool Untrained { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Untrained); } }
@@ -150,7 +154,18 @@ namespace InteractML
 
         public void OnValidate()
         {
-            InstantiateRapidlibModel(m_LearningType);
+            // Checks that the rapidlib model is instanced (only if model is null)
+            if (m_Model == null)
+            {
+                m_Model = InstantiateRapidlibModel(m_LearningType);
+            }
+
+            // Did the learning type change in the editor?
+            if ((int)m_LearningType != (int)m_Model.TypeOfModel)
+            {
+                // Override model
+                OverrideModel(m_LearningType);
+            }
         }
 
         public void OnDestroy()
@@ -170,7 +185,8 @@ namespace InteractML
         public void Initialize()
         {
             // Make sure the model is initialised properly
-            InstantiateRapidlibModel(m_LearningType);
+            if (m_Model == null)
+            m_Model = InstantiateRapidlibModel(m_LearningType);
 
             // Init lists
             if (Lists.IsNullOrEmpty(ref IMLTrainingExamplesNodes))
@@ -188,38 +204,37 @@ namespace InteractML
             if (Lists.IsNullOrEmpty(ref m_RapidlibTrainingExamples))
                 m_RapidlibTrainingExamples = new List<RapidlibTrainingExample>();
 
-
             m_NodeConnectionChanged = false;
 
             m_LastKnownRapidlibOutputVectorSize = 0;
         }
 
-        public void InstantiateRapidlibModel(IMLSpecifications.LearningType learningType)
+        /// <summary>
+        /// Instantiates a rapidlibmodel
+        /// </summary>
+        /// <param name="learningType"></param>
+        public RapidlibModel InstantiateRapidlibModel(IMLSpecifications.LearningType learningType)
         {
-            if (m_Model == null)
+            RapidlibModel model = new RapidlibModel();
+            switch (learningType)
             {
-                switch (learningType)
-                {
-                    case IMLSpecifications.LearningType.Classification:
-                        m_Model = new RapidlibModel(RapidlibModel.ModelType.kNN);
-                        break;
-                    case IMLSpecifications.LearningType.Regression:
-                        m_Model = new RapidlibModel(RapidlibModel.ModelType.NeuralNetwork);
-                        break;
-                    case IMLSpecifications.LearningType.DTW:
-                        m_Model = new RapidlibModel(RapidlibModel.ModelType.DTW);
-                        break;
-                    default:
-                        break;
-                }
+                case IMLSpecifications.LearningType.Classification:
+                    model = new RapidlibModel(RapidlibModel.ModelType.kNN);
+                    break;
+                case IMLSpecifications.LearningType.Regression:
+                    model = new RapidlibModel(RapidlibModel.ModelType.NeuralNetwork);
+                    break;
+                case IMLSpecifications.LearningType.DTW:
+                    model = new RapidlibModel(RapidlibModel.ModelType.DTW);
+                    break;
+                default:
+                    break;
             }
-
-
+            return model;
         }
 
         public void UpdateLogic()
         {
-
             // Transform rapidlib output to IMLTypes (needed to be called the first thing to work properly)
             TransformPredictedOuputToIMLTypes();
 
@@ -235,17 +250,11 @@ namespace InteractML
             // Create rapidlib predicted output vector
             CreateRapidLibOutputVector();
 
-            // Update learning type
-            UpdateLearningType(m_LearningType);
-
-            // Update Training Status
-            UpdateModelStatus();
-
             // Update Number of Training Examples Connected
             UpdateTotalNumberTrainingExamples();
 
             // Get the output from rapidlib
-            UpdatePredictedOutput();
+            PredictedRapidlibOutput = RunModel();
 
             // Transform rapidlib output to IMLTypes (needed to be called the first thing to work properly)
             TransformPredictedOuputToIMLTypes();
@@ -274,15 +283,28 @@ namespace InteractML
 
         public void ToggleRunning()
         {
-            if (m_RapidlibInputVector != null && m_RapidlibOutputVector != null)
+            // If the system is not running...
+            if (!m_Running)
             {
-                UpdateInputVector();
+                // Set flag to true if running inputs/outputs are not null and the model is trained!
+                if (m_RapidlibInputVector != null && m_RapidlibOutputVector != null && Trained)
+                {
+                    UpdateInputVector();
 
-                m_Model.Run(m_RapidlibInputVector, ref m_RapidlibOutputVector);
+                    m_Running = true;
+                }
+                else
+                {
+                    Debug.LogError("Rapidlib vectors for realtime predictions are null!");
+                }
             }
+            // If the system is already running...
             else
             {
-                Debug.LogError("Rapidlib vectors for realtime predictions are null!");
+                // Set flag to false
+                m_Running = false;
+                // Stop model
+                m_Model.StopRunning();
             }
         }
 
@@ -299,18 +321,12 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Resets the rapidlib instance (by destroying all instances and creating a new one)
+        /// Resets the rapidlibModel instance
         /// </summary>
         public void ResetModel()
         {
-            // TO DO: Take care of only the Rapidlib reference to this node (not working at the moment, relying on a general graph call from IML Component)            
-
-            // Call IML Component reset all models 
-            var controllerGraph = (graph as IMLController);
-            if (controllerGraph)
-            {
-                controllerGraph.SceneComponent.ResetAllModels();
-            }
+            // Take care of only the RapidlibModel reference to this node            
+            m_Model = InstantiateRapidlibModel(m_LearningType);
         }
 
         /// <summary>
@@ -394,26 +410,33 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Updates the predicted output from the rapidlib predictions
+        /// Runs the model and updates the predicted output from the rapidlib predictions by 
         /// </summary>
-        private void UpdatePredictedOutput()
-        {
-            if (m_Model != null)
+        private double[] RunModel()
+        {            
+            // Only do calculations if running flag is true (useful for UI)
+            if (m_Running)
             {
-                // Update input vector with latest features
-                UpdateInputVector();
-
-                // Update the delayed predicted output (seemed to fix some bug with the UI? MIGHT NOT NEED ANYMORE)
-                if (DelayedPredictedOutput == null || DelayedPredictedOutput.Length != PredictedRapidlibOutput.Length)
+                // Only allow running if the model exists and it is trained or running
+                if (m_Model != null && (m_ModelStatus == IMLSpecifications.ModelStatus.Trained || m_ModelStatus == IMLSpecifications.ModelStatus.Running))
                 {
-                    DelayedPredictedOutput = new double[PredictedRapidlibOutput.Length];
+                    // Update input vector with latest features
+                    UpdateInputVector();
+
+                    // Update the delayed predicted output (seemed to fix some bug with the UI? MIGHT NOT NEED ANYMORE)
+                    if (DelayedPredictedOutput == null || DelayedPredictedOutput.Length != PredictedRapidlibOutput.Length)
+                    {
+                        DelayedPredictedOutput = new double[PredictedRapidlibOutput.Length];
+                    }
+                    PredictedRapidlibOutput.CopyTo(DelayedPredictedOutput, 0);
+
+                    // Run model
+                    m_Model.Run(m_RapidlibInputVector, ref m_RapidlibOutputVector);
                 }
-                PredictedRapidlibOutput.CopyTo(DelayedPredictedOutput, 0);
-
-                // Run model
-                m_Model.Run(m_RapidlibInputVector, ref m_RapidlibOutputVector);
-
             }
+
+            // Return the rapidlib output vector if it is not null
+            return m_RapidlibOutputVector != null ? m_RapidlibOutputVector : new double[0];
         }
 
         /// <summary>
@@ -494,7 +517,7 @@ namespace InteractML
             }
         }
 
-        private void UpdateLearningType(IMLSpecifications.LearningType learningType)
+        private void OverrideModel(IMLSpecifications.LearningType learningType)
         {
             switch (learningType)
             {
@@ -510,11 +533,6 @@ namespace InteractML
                 default:
                     break;
             }
-        }
-
-        private void UpdateModelStatus()
-        {
-            m_ModelStatus = m_Model.ModelStatus;
         }
 
         private void UpdateTotalNumberTrainingExamples()

@@ -110,6 +110,10 @@ namespace InteractML
         /// <param name="outputPredictions">The </param>
         public void Run(double[] inputs, ref double[] outputPredictions)
         {
+            // We only allow running if the model is trained
+            if (m_ModelStatus == IMLSpecifications.ModelStatus.Untrained)
+                throw new Exception("You can't run an untrained model!");
+            
             // We run only classification and regression with the data passed in
             switch (m_TypeOfModel)
             {
