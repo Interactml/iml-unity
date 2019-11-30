@@ -108,7 +108,7 @@ namespace InteractML
         private void ShowTrainModelButton()
         {
             // Only run button logic when rapidlib reference not null
-            if (m_IMLConfigNode.RapidLibComponent != null)
+            if (m_IMLConfigNode.Model != null)
             {
                 string nameButton = "";
 
@@ -144,7 +144,7 @@ namespace InteractML
 
         private void ShowRunModelButton()
         {
-            if (m_IMLConfigNode.RapidLibComponent != null)
+            if (m_IMLConfigNode.Model != null)
             {
                 string nameButton = "";
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System.IO;
 using Newtonsoft.Json;
+using System;
 
 namespace InteractML
 {
@@ -383,7 +384,23 @@ namespace InteractML
 
         }
 
+        public static string GetValueFromJSON(string valueName, string jsonFile)
+        {
+            int index = jsonFile.IndexOf(valueName);
+            string valueToReturn = "";
+            // If that property is there...
+            if (index != -1)
+            {
+                // We get the 5 values after the string
+                string dataFromJson = jsonFile.Substring(index + 6);
+                // Get only the digits
+                valueToReturn = new string(dataFromJson.Where(char.IsDigit).ToArray());
+            }
 
+            Debug.Log("Value read from JSON is: " + valueToReturn);
+
+            return valueToReturn;
+        }
         #endregion
 
         #region Private Methods

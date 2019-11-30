@@ -386,9 +386,6 @@ namespace InteractML
         /// <param name="fileName"></param>
         public void LoadModelFromDisk(string fileName)
         {
-            if (TypeOfModel == ModelType.DTW)
-                throw new NotImplementedException("Loading a DTW model from disk is currently not implemented");
-
             // Attempt to load model
             string stringLoaded = IMLDataSerialization.LoadRapidlibModelFromDisk(fileName);
 
@@ -407,6 +404,29 @@ namespace InteractML
             }
         }
 
+        /* INFO ABOUT LOADED MODEL */
+
+        public int GetNumExpectedInputs()
+        {
+            int number = -1;
+            if (!String.IsNullOrEmpty(m_ModelJSONString))
+            {
+                number = int.Parse(IMLDataSerialization.GetValueFromJSON("numInputs", m_ModelJSONString));
+
+            }
+            return number;
+        }
+
+        public int GetNumExpectedOutputs()
+        {
+            int number = -1;
+            if (!String.IsNullOrEmpty(m_ModelJSONString))
+            {
+                number = int.Parse(IMLDataSerialization.GetValueFromJSON("numOutputs", m_ModelJSONString));
+
+            }
+            return number;
+        }
         #endregion
 
         #region Private Methods

@@ -784,34 +784,6 @@ namespace InteractML
             SendGameObjectsToIMLController();
         }
 
-        /// <summary>
-        /// Adds a text to the queue to be sent to the IML Controller
-        /// </summary>
-        /// <param name="newText"></param>
-        public void SendText(string newText)
-        {
-            // TO DO: Handle text sent as a queue
-            for (int i = 0; i < textNoteNodesList.Count; i++)
-            {
-                textNoteNodesList[i].note = newText;
-            }
-        }
-
-        /// <summary>
-        /// Adds a Vector3 to the queue to be sent to the IML Controller
-        /// </summary>
-        /// <param name="vector"></param>
-        public void SendVector3(Vector3 vector)
-        {
-            // TO DO: Handle info sent as a queue
-            for (int i = 0; i < vectorNodesList.Count; i++)
-            {
-                vectorNodesList[i].x = vector.x;
-                vectorNodesList[i].y = vector.y;
-                vectorNodesList[i].z = vector.z;
-            }
-        }
-
         [ContextMenu("Delete All Models")]
         public void DeleteAllModels()
         {
@@ -834,6 +806,32 @@ namespace InteractML
         }
 
         /// <summary>
+        /// Reload all models from disk (when possible)
+        /// </summary>
+        public void LoadAllModelsFromDisk()
+        {
+            foreach (var IMLConfigNode in IMLConfigurationNodesList)
+            {
+                // Loads the model in the IMLConfigNode
+                IMLConfigNode.LoadModelFromDisk(MLController.name);
+            }
+            
+        }
+
+        /// <summary>
+        /// Saves all models to disk (when possible)
+        /// </summary>
+        public void SaveAllModels()
+        {
+            foreach (var IMLConfigNode in IMLConfigurationNodesList)
+            {
+                // Loads the model in the IMLConfigNode
+                IMLConfigNode.SaveModelToDisk(MLController.name);
+            }
+
+        }
+
+        /// <summary>
         /// Resets all models for the IML Config nodes (by destroying and re-creating them)
         /// </summary>
         public void ResetAllModels()
@@ -842,14 +840,14 @@ namespace InteractML
 
             DeleteAllModels();
 
-            // Go through the list of iml config nodes and instantiate new rapidlibs
-            foreach (var imlConfigNode in IMLConfigurationNodesList)
-            {
-                if (imlConfigNode)
-                {
-                    imlConfigNode.InstantiateRapidlib();                    
-                }
-            }
+            //// Go through the list of iml config nodes and instantiate new rapidlibs
+            //foreach (var imlConfigNode in IMLConfigurationNodesList)
+            //{
+            //    if (imlConfigNode)
+            //    {
+            //        imlConfigNode.InstantiateRapidlibModel();                    
+            //    }
+            //}
         }
 
         /// <summary>

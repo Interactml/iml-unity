@@ -28,7 +28,7 @@ namespace InteractML
         /// The list of predicted outputs
         /// </summary>
         public List<IMLBaseDataType> PredictedOutput;
-        
+
         [HideInInspector]
         public double[] PredictedRapidlibOutput;
         [HideInInspector]
@@ -65,21 +65,30 @@ namespace InteractML
         /// <summary>
         /// The current status of the model
         /// </summary>
-        public IMLSpecifications.ModelStatus ModelStatus { get { return m_ModelStatus; } }
+        public IMLSpecifications.ModelStatus ModelStatus { get { return m_Model != null ? m_Model.ModelStatus : IMLSpecifications.ModelStatus.Untrained; } }
         public bool Running { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Running); } }
         public bool Training { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Training); } }
         public bool Trained { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Trained); } }
         public bool Untrained { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Untrained); } }
 
+
         /// <summary>
-        /// Reference to the rapidlib component in this training examples node
+        /// Reference to the rapidlib model this node is holding
         /// </summary>
-        [SerializeField, HideInInspector]
-        public RapidLib RapidLibComponent;
+        private RapidlibModel m_Model;
+        /// <summary>
+        /// Public reference to the rapidlib model this node is holding
+        /// </summary>
+        public RapidlibModel Model { get => m_Model; }
+
         /// <summary>
         /// The list of training examples that we will pass to rapidlib in the correct format
         /// </summary>
-        private List<RapidlibTrainingExample> m_RapidlibExamples;
+        private List<RapidlibTrainingExample> m_RapidlibTrainingExamples;
+        /// <summary>
+        /// Private list of rapidlib training series collection (for dtw)
+        /// </summary>
+        private List<RapidlibTrainingSerie> m_RapidlibTrainingSeriesCollection;
         /// <summary>
         /// Vector used to compute the realtime predictions in rapidlib based on the training data
         /// </summary>
@@ -141,22 +150,11 @@ namespace InteractML
 
         public void OnValidate()
         {
-            InstantiateRapidlib();
+            InstantiateRapidlibModel(m_LearningType);
         }
 
         public void OnDestroy()
         {
-            // Destroy rapidlib connected to avoid stacking them in memory
-            if (RapidLibComponent != null)
-            {
-#if UNITY_EDITOR
-                DestroyImmediate(RapidLibComponent);
-#else
-                Destroy(RapidLibComponent);
-#endif
-                RapidLibComponent = null;
-            }
-
             // Remove reference of this node in the IMLComponent controlling this node (if any)
             var MLController = graph as IMLController;
             if (MLController.SceneComponent != null)
@@ -171,10 +169,9 @@ namespace InteractML
 
         public void Initialize()
         {
-            // Make sure that rapidlib allows external data to be injected
-            if (RapidLibComponent != null)
-                RapidLibComponent.AllowExternalData = true;
-            
+            // Make sure the model is initialised properly
+            InstantiateRapidlibModel(m_LearningType);
+
             // Init lists
             if (Lists.IsNullOrEmpty(ref IMLTrainingExamplesNodes))
                 IMLTrainingExamplesNodes = new List<TrainingExamplesNode>();
@@ -188,8 +185,8 @@ namespace InteractML
             if (Lists.IsNullOrEmpty(ref m_ExpectedOutputList))
                 m_ExpectedOutputList = new List<IMLSpecifications.OutputsEnum>();
 
-            if (Lists.IsNullOrEmpty(ref m_RapidlibExamples))
-                m_RapidlibExamples = new List<RapidlibTrainingExample>();
+            if (Lists.IsNullOrEmpty(ref m_RapidlibTrainingExamples))
+                m_RapidlibTrainingExamples = new List<RapidlibTrainingExample>();
 
 
             m_NodeConnectionChanged = false;
@@ -197,23 +194,26 @@ namespace InteractML
             m_LastKnownRapidlibOutputVectorSize = 0;
         }
 
-        public void InstantiateRapidlib()
+        public void InstantiateRapidlibModel(IMLSpecifications.LearningType learningType)
         {
-            // If the rapidlib reference is not there, create it
-            if (RapidLibComponent == null)
+            if (m_Model == null)
             {
-                var IMLGraph = (graph as IMLController);
-                // If we have an IML Component where to create the rapidlib component...
-                if (IMLGraph.SceneComponent != null)
+                switch (learningType)
                 {
-                    // Create the rapidlib component in that gameobject
-                    RapidLibComponent = IMLGraph.SceneComponent.gameObject.AddComponent<RapidLib>();
-                    // Configure it to allow external data
-                    RapidLibComponent.AllowExternalData = true;
-
-                    //Debug.Log("CREATING RAPIDLIB REFERENCE");
+                    case IMLSpecifications.LearningType.Classification:
+                        m_Model = new RapidlibModel(RapidlibModel.ModelType.kNN);
+                        break;
+                    case IMLSpecifications.LearningType.Regression:
+                        m_Model = new RapidlibModel(RapidlibModel.ModelType.NeuralNetwork);
+                        break;
+                    case IMLSpecifications.LearningType.DTW:
+                        m_Model = new RapidlibModel(RapidlibModel.ModelType.DTW);
+                        break;
+                    default:
+                        break;
                 }
             }
+
 
         }
 
@@ -236,7 +236,7 @@ namespace InteractML
             CreateRapidLibOutputVector();
 
             // Update learning type
-            UpdateLearningType();
+            UpdateLearningType(m_LearningType);
 
             // Update Training Status
             UpdateModelStatus();
@@ -258,29 +258,18 @@ namespace InteractML
 
         public void TrainModel()
         {
-            if (RapidLibComponent)
-            {
-                if (RapidLibComponent.trainingExamples != null)
-                {
-                    // Flush previous examples contained in the model
-                    if (RapidLibComponent.trainingExamples.Count > 0)
-                        RapidLibComponent.ClearTrainingExamples();
-                }
-                else
-                {
-                    // We make sure that the training examples are not null
-                    RapidLibComponent.trainingExamples = new List<TrainingExample>();
-                }
+            if (m_RapidlibTrainingSeriesCollection == null)
+                m_RapidlibTrainingSeriesCollection = new List<RapidlibTrainingSerie>();
 
-                // Create and add the training examples (all inside the method)
-                CreateRapidlibTrainingExamples();
+            // Transform the IML Training Examples into a format suitable for Rapidlib
+            m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes);
 
-                // Trains rapidlib with the examples added
-                RapidLibComponent.Train();
+            // Trains rapidlib with the examples added
+            m_Model.Train(m_RapidlibTrainingExamples);
 
-                //Debug.Log("***Retraining IML Config node with num Examples: " + RapidLibComponent.trainingExamples.Count + " Rapidlib training succesful: " + RapidLibComponent.Trained + "***");
+            //Debug.Log("***Retraining IML Config node with num Examples: " + RapidLibComponent.trainingExamples.Count + " Rapidlib training succesful: " + RapidLibComponent.Trained + "***");
 
-            }
+  
         }
 
         public void ToggleRunning()
@@ -289,9 +278,7 @@ namespace InteractML
             {
                 UpdateInputVector();
 
-                RapidLibComponent.InjectExternalData(m_RapidlibInputVector, m_RapidlibOutputVector, GetJSONFileName());
-
-                RapidLibComponent.ToggleRunning();
+                m_Model.Run(m_RapidlibInputVector, ref m_RapidlibOutputVector);
             }
             else
             {
@@ -326,7 +313,52 @@ namespace InteractML
             }
         }
 
+        /// <summary>
+        /// Saves current model to disk (dataPath specified in IMLDataSerialization)
+        /// </summary>
+        /// <param name="fileName"></param>
+        public void SaveModelToDisk(string fileName)
+        {
+            m_Model.SaveModelToDisk(this.name + fileName);
+        }
 
+        /// <summary>
+        /// Loads the current model from disk (dataPath specified in IMLDataSerialization)
+        /// </summary>
+        /// <param name="fileName"></param>
+        public void LoadModelFromDisk(string fileName)
+        {
+            m_Model.LoadModelFromDisk(this.name + fileName);
+            // We update the node learning type to match the one from the loaded model
+            switch (m_Model.TypeOfModel)
+            {
+                case RapidlibModel.ModelType.kNN:
+                    m_LearningType = IMLSpecifications.LearningType.Classification;
+                    // Configure inputs and outputs
+                    PredictedOutput = new List<IMLBaseDataType>(m_Model.GetNumExpectedOutputs());
+                    // TO DO
+                    // Still left to configure inputs
+                    // Still left to configure the type of the inputs and outputs
+                    break;
+                case RapidlibModel.ModelType.NeuralNetwork:
+                    m_LearningType = IMLSpecifications.LearningType.Regression;
+                    // Configure inputs and outputs
+                    PredictedOutput = new List<IMLBaseDataType>(m_Model.GetNumExpectedOutputs());
+                    // TO DO
+                    // Still left to configure inputs
+                    // Still left to configure the type of the inputs and outputs
+                    break;
+                case RapidlibModel.ModelType.DTW:
+                    m_LearningType = IMLSpecifications.LearningType.DTW;
+                    // DTW model will need to retrain!
+                    Debug.LogError("DTW RETRAINING WHEN LOADING MODEL NOT IMPLEMENTED YET!");
+                    break;
+                case RapidlibModel.ModelType.None:
+                    break;
+                default:
+                    break;
+            }
+        }
 
         #endregion
 
@@ -366,21 +398,20 @@ namespace InteractML
         /// </summary>
         private void UpdatePredictedOutput()
         {
-            if (RapidLibComponent != null)
+            if (m_Model != null)
             {
-                // Update input vector to inject
+                // Update input vector with latest features
                 UpdateInputVector();
 
-                RapidLibComponent.InjectExternalData(m_RapidlibInputVector, m_RapidlibOutputVector, GetJSONFileName());
-
+                // Update the delayed predicted output (seemed to fix some bug with the UI? MIGHT NOT NEED ANYMORE)
                 if (DelayedPredictedOutput == null || DelayedPredictedOutput.Length != PredictedRapidlibOutput.Length)
                 {
                     DelayedPredictedOutput = new double[PredictedRapidlibOutput.Length];
                 }
                 PredictedRapidlibOutput.CopyTo(DelayedPredictedOutput, 0);
 
-                // Get Outputs from rapidlib
-                PredictedRapidlibOutput = RapidLibComponent.GetOutputs();
+                // Run model
+                m_Model.Run(m_RapidlibInputVector, ref m_RapidlibOutputVector);
 
             }
         }
@@ -463,50 +494,27 @@ namespace InteractML
             }
         }
 
-        private void UpdateLearningType()
+        private void UpdateLearningType(IMLSpecifications.LearningType learningType)
         {
-            if (RapidLibComponent)
+            switch (learningType)
             {
-                switch (m_LearningType)
-                {
-                    case IMLSpecifications.LearningType.Classification:
-                        RapidLibComponent.learningType = RapidLib.LearningType.Classification;
-                        break;
-                    case IMLSpecifications.LearningType.Regression:
-                        RapidLibComponent.learningType = RapidLib.LearningType.Regression;
-                        break;
-                    case IMLSpecifications.LearningType.DTW:
-                        RapidLibComponent.learningType = RapidLib.LearningType.DTW;
-                        break;
-                    default:
-                        break;
-                }
+                case IMLSpecifications.LearningType.Classification:
+                    m_Model = new RapidlibModel(RapidlibModel.ModelType.kNN);
+                    break;
+                case IMLSpecifications.LearningType.Regression:
+                    m_Model = new RapidlibModel(RapidlibModel.ModelType.NeuralNetwork);
+                    break;
+                case IMLSpecifications.LearningType.DTW:
+                    m_Model = new RapidlibModel(RapidlibModel.ModelType.DTW);
+                    break;
+                default:
+                    break;
             }
         }
 
         private void UpdateModelStatus()
         {
-
-            if (RapidLibComponent)
-            {
-
-                if (RapidLibComponent.Running)
-                {
-                    m_ModelStatus = IMLSpecifications.ModelStatus.Running;
-                }
-                else if (RapidLibComponent.Training)
-                {
-                    m_ModelStatus = IMLSpecifications.ModelStatus.Training;
-                }
-                else if (RapidLibComponent.Trained)
-                {
-                    m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
-                }
-                else
-                {
-                    m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
-                }
-            }
+            m_ModelStatus = m_Model.ModelStatus;
         }
 
         private void UpdateTotalNumberTrainingExamples()
@@ -535,115 +543,108 @@ namespace InteractML
         /// <summary>
         /// Create the rapidlib training examples list in the required format
         /// </summary>
-        private void CreateRapidlibTrainingExamples()
+        private List<RapidlibTrainingExample> TransformIMLDataToRapidlib(List<TrainingExamplesNode> trainingNodesIML)
         {
-            // If the list to create is not null...
-            if (m_RapidlibExamples != null)
+            // Create list to return
+            List<RapidlibTrainingExample> rapidlibExamples = new List<RapidlibTrainingExample>();
+
+            // Go through all the IML Training Examples if we can
+            if (!Lists.IsNullOrEmpty(ref trainingNodesIML))
             {
-                // Go through all the IML Training Examples if we can
-                if (!Lists.IsNullOrEmpty(ref IMLTrainingExamplesNodes))
+                // Go through each node
+                for (int i = 0; i < trainingNodesIML.Count; i++)
                 {
-                    // Go through each node
-                    for (int i = 0; i < IMLTrainingExamplesNodes.Count; i++)
+                    // If there are training examples in this node...
+                    if (!Lists.IsNullOrEmpty(ref trainingNodesIML[i].TrainingExamplesVector))
                     {
-                        // If there are training examples in this node...
-                        if (!Lists.IsNullOrEmpty(ref IMLTrainingExamplesNodes[i].TrainingExamplesVector))
+                        // Go through all the training examples
+                        for (int j = 0; j < trainingNodesIML[i].TrainingExamplesVector.Count; j++)
                         {
-                            // Go through all the training examples
-                            for (int j = 0; j < IMLTrainingExamplesNodes[i].TrainingExamplesVector.Count; j++)
+                            // Check that individual example is not null
+                            var IMLTrainingExample = trainingNodesIML[i].TrainingExamplesVector[j];
+                            if (IMLTrainingExample != null)
                             {
-                                // Check that individual example is not null
-                                var IMLTrainingExample = IMLTrainingExamplesNodes[i].TrainingExamplesVector[j];
-                                if (IMLTrainingExample != null)
+                                // Check that inputs/outputs are not null
+                                if (IMLTrainingExample.Inputs != null && IMLTrainingExample.Outputs != null)
                                 {
-                                    // Check that inputs/outputs are not null
-                                    if (IMLTrainingExample.Inputs != null && IMLTrainingExample.Outputs != null)
-                                    {
-                                        // Add example to rapidlib
-                                        if (RapidLibComponent != null)
-                                        {
-                                            TrainingExample newExample = new TrainingExample();
+                                    // Add a new rapidlib example to list
+                                    rapidlibExamples.Add(new RapidlibTrainingExample(IMLTrainingExample.GetInputs(), IMLTrainingExample.GetOutputs()));
 
-                                            // INPUT VECTOR RAPIDLIB
-                                            int rapidlibInputVectorSize = 0;
-                                            // Go through all input features in IML Training Example and get their size
-                                            for (int k = 0; k < IMLTrainingExample.Inputs.Count; k++)
-                                            {
-                                                rapidlibInputVectorSize += IMLTrainingExample.Inputs[k].InputData.Values.Length;
-                                            }
-                                            // Create rapidlib input by constructing a vector size of all IML input features combined
-                                            newExample.Input = new double[rapidlibInputVectorSize];
-                                            // Create a pointer to know keep the boundaries in our input vector while we add IML features
-                                            int pointerVector = 0;
-                                            // Go through all IML input features and add their features to the rapidlib vector
-                                            for (int k = 0; k < IMLTrainingExample.Inputs.Count; k++)
-                                            {
-                                                // Check that the boundaries are never surpassed
-                                                if (pointerVector > rapidlibInputVectorSize)
-                                                {
-                                                    Debug.LogError("Trying to add input features to a rapidlib vector that is too small!");
-                                                }
-                                                var IMLInputFeature = IMLTrainingExample.Inputs[k];
-                                                // Add IML data to rapidlib vector
-                                                for (int w = 0; w < IMLInputFeature.InputData.Values.Length; w++)
-                                                {
-                                                    newExample.Input[w + pointerVector] = IMLInputFeature.InputData.Values[w];
-                                                }
-                                                // Move vector pointer forward
-                                                pointerVector += IMLInputFeature.InputData.Values.Length;
-                                            }
+                                    //// INPUT VECTOR RAPIDLIB
+                                    //int rapidlibInputVectorSize = 0;
+                                    //// Go through all input features in IML Training Example and get their size
+                                    //for (int k = 0; k < IMLTrainingExample.Inputs.Count; k++)
+                                    //{
+                                    //    rapidlibInputVectorSize += IMLTrainingExample.Inputs[k].InputData.Values.Length;
+                                    //}
+                                    //// Create rapidlib input by constructing a vector size of all IML input features combined
+                                    //newExample.Input = new double[rapidlibInputVectorSize];
+                                    //// Create a pointer to know keep the boundaries in our input vector while we add IML features
+                                    //int pointerVector = 0;
+                                    //// Go through all IML input features and add their features to the rapidlib vector
+                                    //for (int k = 0; k < IMLTrainingExample.Inputs.Count; k++)
+                                    //{
+                                    //    // Check that the boundaries are never surpassed
+                                    //    if (pointerVector > rapidlibInputVectorSize)
+                                    //    {
+                                    //        Debug.LogError("Trying to add input features to a rapidlib vector that is too small!");
+                                    //    }
+                                    //    var IMLInputFeature = IMLTrainingExample.Inputs[k];
+                                    //    // Add IML data to rapidlib vector
+                                    //    for (int w = 0; w < IMLInputFeature.InputData.Values.Length; w++)
+                                    //    {
+                                    //        newExample.Input[w + pointerVector] = IMLInputFeature.InputData.Values[w];
+                                    //    }
+                                    //    // Move vector pointer forward
+                                    //    pointerVector += IMLInputFeature.InputData.Values.Length;
+                                    //}
 
-                                            // OUTPUT VECTOR RAPIDLIB
-                                            int rapidlibOutputVectorSize = 0;
-                                            // Go through all Output features in IML Training Example and get their size
-                                            for (int k = 0; k < IMLTrainingExample.Outputs.Count; k++)
-                                            {
-                                                rapidlibOutputVectorSize += IMLTrainingExample.Outputs[k].OutputData.Values.Length;
-                                            }
-                                            // Create rapidlib Output by constructing a vector size of all IML Output features combined
-                                            newExample.Output = new double[rapidlibOutputVectorSize];
-                                            // Create a pointer to know keep the boundaries in our Output vector while we add IML features
-                                            pointerVector = 0;
-                                            // Go through all IML Output features and add their features to the rapidlib vector
-                                            for (int k = 0; k < IMLTrainingExample.Outputs.Count; k++)
-                                            {
-                                                // Check that the boundaries are never surpassed
-                                                if (pointerVector > rapidlibOutputVectorSize)
-                                                {
-                                                    Debug.LogError("Trying to add Output features to a rapidlib vector that is too small!");
-                                                }
-                                                var IMLOutputFeature = IMLTrainingExample.Outputs[k];
-                                                // Add IML data to rapidlib vector
-                                                for (int w = 0; w < IMLOutputFeature.OutputData.Values.Length; w++)
-                                                {
-                                                    newExample.Output[w + pointerVector] = IMLOutputFeature.OutputData.Values[w];
-                                                }
-                                                // Move vector pointer forward
-                                                pointerVector += IMLOutputFeature.OutputData.Values.Length;
-                                            }
+                                    //// OUTPUT VECTOR RAPIDLIB
+                                    //int rapidlibOutputVectorSize = 0;
+                                    //// Go through all Output features in IML Training Example and get their size
+                                    //for (int k = 0; k < IMLTrainingExample.Outputs.Count; k++)
+                                    //{
+                                    //    rapidlibOutputVectorSize += IMLTrainingExample.Outputs[k].OutputData.Values.Length;
+                                    //}
+                                    //// Create rapidlib Output by constructing a vector size of all IML Output features combined
+                                    //newExample.Output = new double[rapidlibOutputVectorSize];
+                                    //// Create a pointer to know keep the boundaries in our Output vector while we add IML features
+                                    //pointerVector = 0;
+                                    //// Go through all IML Output features and add their features to the rapidlib vector
+                                    //for (int k = 0; k < IMLTrainingExample.Outputs.Count; k++)
+                                    //{
+                                    //    // Check that the boundaries are never surpassed
+                                    //    if (pointerVector > rapidlibOutputVectorSize)
+                                    //    {
+                                    //        Debug.LogError("Trying to add Output features to a rapidlib vector that is too small!");
+                                    //    }
+                                    //    var IMLOutputFeature = IMLTrainingExample.Outputs[k];
+                                    //    // Add IML data to rapidlib vector
+                                    //    for (int w = 0; w < IMLOutputFeature.OutputData.Values.Length; w++)
+                                    //    {
+                                    //        newExample.Output[w + pointerVector] = IMLOutputFeature.OutputData.Values[w];
+                                    //    }
+                                    //    // Move vector pointer forward
+                                    //    pointerVector += IMLOutputFeature.OutputData.Values.Length;
+                                    //}
 
+                                    //// ADD EXAMPLE TO list to return
+                                    //rapidlibExamples.Add(newExample);
 
-                                            // ADD EXAMPLE TO RAPIDLIB
-                                            RapidLibComponent.AddTrainingExample(newExample);
-
-                                        }
-                                    }
-                                    // If there are null outputs we debug an error
-                                    else
-                                    {
-                                        Debug.LogError("Null inputs/outputs found when training IML model. Training aborted!");
-                                    }
+                                }
+                                // If there are null outputs we debug an error
+                                else
+                                {
+                                    Debug.LogError("Null inputs/outputs found when training IML model. Training aborted!");
                                 }
                             }
                         }
                     }
                 }
             }
-            // In case it is null, we make sure to initialize the class
-            else
-            {
-                Initialize();
-            }
+
+            // Return list
+            return rapidlibExamples;
         }
 
         /// <summary>
