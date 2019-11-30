@@ -791,18 +791,18 @@ namespace InteractML
 
             // I tried deleting the IML Config nodes, but that gave errors when controlling Rapidlib! Avoiding to do that at all.
 
-            // Destroy all rapidlib components attached to this gameobject (since we don't need them any more)
-            var rapidlibsInGameObject = this.GetComponents<RapidLib>();
+//            // Destroy all rapidlib components attached to this gameobject (since we don't need them any more)
+//            var rapidlibsInGameObject = this.GetComponents<RapidLib>();
 
-            foreach (var rapidlibComponent in rapidlibsInGameObject)
-            {
-#if UNITY_EDITOR
-                DestroyImmediate(rapidlibComponent);
-#else
-                    Destroy(rapidlibComponent);
-#endif
+//            foreach (var rapidlibComponent in rapidlibsInGameObject)
+//            {
+//#if UNITY_EDITOR
+//                DestroyImmediate(rapidlibComponent);
+//#else
+//                    Destroy(rapidlibComponent);
+//#endif
 
-            }
+//            }
         }
 
         /// <summary>
@@ -825,10 +825,23 @@ namespace InteractML
         {
             foreach (var IMLConfigNode in IMLConfigurationNodesList)
             {
-                // Loads the model in the IMLConfigNode
+                // Save model to disk
                 IMLConfigNode.SaveModelToDisk(MLController.name);
             }
 
+        }
+
+        /// <summary>
+        /// Stops all models if they are running
+        /// </summary>
+        public void StopAllModels()
+        {
+            foreach (var IMLConfigNode in IMLConfigurationNodesList)
+            {
+                // Stop model if they are running
+                if (IMLConfigNode.Running)
+                    IMLConfigNode.ToggleRunning();
+            }
         }
 
         /// <summary>

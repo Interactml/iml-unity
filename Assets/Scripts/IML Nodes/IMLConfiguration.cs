@@ -325,8 +325,11 @@ namespace InteractML
         /// </summary>
         public void ResetModel()
         {
-            // Take care of only the RapidlibModel reference to this node            
+            // Take care of the RapidlibModel reference to this node            
             m_Model = InstantiateRapidlibModel(m_LearningType);
+
+            // We reset the running flag
+            m_Running = false;
         }
 
         /// <summary>

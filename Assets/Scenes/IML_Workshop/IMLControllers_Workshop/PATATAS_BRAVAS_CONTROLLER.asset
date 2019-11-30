@@ -105,8 +105,8 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - -0.34366724
-    - 8.770706
+    - 8.3
+    - -0.31
     - 1
 --- !u!114 &114357140570682068
 MonoBehaviour:
@@ -175,12 +175,12 @@ MonoBehaviour:
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
-  - 9.625248790856979
+  - 8
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 00000000
-  m_LearningType: 1
+  m_LearningType: 0
   TrainOnPlaymodeChange: 0
-  RunOnAwake: 0
+  RunOnAwake: 1
 --- !u!114 &114507523331420728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,4 +269,4 @@ MonoBehaviour:
   DevMode: 0
   IMLModelOutputs: {fileID: 0}
   m_IMLOutputVector:
-  - 9.625248790856979
+  - 8

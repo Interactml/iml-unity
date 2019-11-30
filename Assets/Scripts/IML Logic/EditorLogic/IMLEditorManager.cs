@@ -53,7 +53,7 @@ public class IMLEditorManager
                 foreach (var MLcomponent in m_IMLComponents)
                 {
                     //Debug.Log("**EDITOR**");
-                    //MLcomponent.UpdateLogic();
+                    MLcomponent.UpdateLogic();
                 }
             }
 
@@ -82,26 +82,27 @@ public class IMLEditorManager
     /// <param name="playModeStatus"></param>
     private static void PlayModeStateChangedLogic(PlayModeStateChange playModeStatus)
     {
-        // We load models if we are entering a new playmode
+        // We load models if we are entering a playmode or editormode
         if (playModeStatus == PlayModeStateChange.EnteredEditMode || playModeStatus == PlayModeStateChange.EnteredPlayMode)
         {
             // Reload all models (if we can) when we enter playmode or when we come back to the editor
-            foreach (var component in m_IMLComponents)
+            foreach (var MLComponent in m_IMLComponents)
             {
-                //// Reload models
-                //component.LoadAllModelsFromDisk();             
-                //// Run them (if marked with RunOnAwake)
-                //component.RunAllModels();
+                // Reload models
+                MLComponent.LoadAllModelsFromDisk();
+                // Run them (if marked with RunOnAwake)
+                MLComponent.RunAllModels();
             }
             //Debug.Log("**Models reconfigured in editor status: " + playModeStatus + "**");
         }
 
-        // We save models if we are leaving a new playmode
+        // We save models if we are leaving a playmode or editormode
         if (playModeStatus == PlayModeStateChange.ExitingEditMode || playModeStatus == PlayModeStateChange.ExitingPlayMode)
         {
-            foreach (var component in m_IMLComponents)
+            foreach (var MLComponent in m_IMLComponents)
             {
-                component.SaveAllModels();
+                MLComponent.StopAllModels();
+                MLComponent.SaveAllModels();
             }
         }
     }
