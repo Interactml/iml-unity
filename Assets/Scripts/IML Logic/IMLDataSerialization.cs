@@ -31,6 +31,26 @@ namespace InteractML
         #region Public Methods
 
         /// <summary>
+        /// Parses an IML Feature into JSON
+        /// </summary>
+        /// <param name="features"></param>
+        /// <returns></returns>
+        public static string ParseIMLFeatureToJSON(List<IMLBaseDataType> features)
+        {
+            return JsonConvert.SerializeObject(features, Formatting.Indented);
+        }
+
+        /// <summary>
+        /// Parses a JSON Feature into an IML Feature
+        /// </summary>
+        /// <param name="jsonFeatures"></param>
+        /// <returns></returns>
+        public static List<IMLBaseDataType> ParseJSONToIMLFeature(string jsonFeatures)
+        {
+            return JsonConvert.DeserializeObject<List<IMLBaseDataType>>(jsonFeatures);
+        }
+
+        /// <summary>
         /// Overrides the folder data path
         /// </summary>
         /// <param name="newFolderDataPath"></param>
@@ -141,6 +161,11 @@ namespace InteractML
             SaveTrainingSetToDisk<IMLTrainingExample>(listToSave, fileName);
         }
 
+        public static void SaveTrainingSeriesCollectionToDisk(List<IMLTrainingSeries> listToSave, string fileName)
+        {
+            SaveTrainingSetToDisk<IMLTrainingSeries>(listToSave, fileName);
+        }
+
         /// <summary>
         /// Saves Training Data Set (from Rapidlib) to disk
         /// </summary>
@@ -202,6 +227,25 @@ namespace InteractML
         }
 
         /// <summary>
+        /// Loads a training series collection from disk (for InteractML)
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static List<IMLTrainingSeries> LoadTrainingSeriesCollectionFromDisk(string fileName)
+        {
+            List<IMLTrainingSeries> auxList = LoadTrainingSetFromDisk<IMLTrainingSeries>(fileName);
+            if (auxList != null)
+            {
+                return auxList;
+            }
+            else
+            {
+                Debug.LogError("IML Training series set to load from disk is null!");
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Loads a training data set from disk (for Rapidlib)
         /// </summary>
         /// <param name="fileName"></param>
@@ -227,7 +271,7 @@ namespace InteractML
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public static List<RapidlibTrainingSerie> LoadTrainingSeriesSetsFromDiskRapidlib(string fileName)
+        public static List<RapidlibTrainingSerie> LoadTrainingSeriesCollectionFromDiskRapidlib(string fileName)
         {
             List<RapidlibTrainingSerie> auxList = LoadTrainingSetFromDisk<RapidlibTrainingSerie>(fileName);
 

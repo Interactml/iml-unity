@@ -355,7 +355,7 @@ namespace InteractML
         {
             bool isLoaded = false;
 
-            m_TrainingExamplesSeries = IMLDataSerialization.LoadTrainingSeriesSetsFromDiskRapidlib(fileName);
+            m_TrainingExamplesSeries = IMLDataSerialization.LoadTrainingSeriesCollectionFromDiskRapidlib(fileName);
 
             return isLoaded;
 

@@ -28,11 +28,26 @@ namespace InteractML
         [Output, SerializeField]
         public TrainingExamplesNode TrainingExamplesNodeToOutput;
 
+        public enum CollectionMode { SingleExample, Series }
+        public CollectionMode ModeOfCollection;
+
         /// <summary>
         /// The output training examples vector of this node
         /// </summary>
         [SerializeField, HideInInspector]
         public List<IMLTrainingExample> TrainingExamplesVector;
+
+        /// <summary>
+        /// The output training examples series collection of this node
+        /// </summary>
+        [SerializeField, HideInInspector]
+        public List<IMLTrainingSeries> TrainingSeriesCollection;
+
+        /// <summary>
+        /// Series use to add information while we collect data. 
+        /// It will be later added to the training series collection
+        /// </summary>
+        private IMLTrainingSeries m_SingleSeries;
 
         public List<IMLBaseDataType> testList;
 
@@ -166,6 +181,9 @@ namespace InteractML
             if (Lists.IsNullOrEmpty(ref TrainingExamplesVector))
                 TrainingExamplesVector = new List<IMLTrainingExample>();
 
+            if (Lists.IsNullOrEmpty(ref TrainingSeriesCollection))
+                TrainingSeriesCollection = new List<IMLTrainingSeries>();
+
             if (IMLConfigurationNodesConnected == null)
                 IMLConfigurationNodesConnected = new List<IMLConfiguration>();
 
@@ -219,8 +237,23 @@ namespace InteractML
         /// </summary>
         public void ClearTrainingExamples()
         {
-            // Clear examples in node
-            TrainingExamplesVector.Clear();
+
+            // Account for mode
+            switch (ModeOfCollection)
+            {
+                case CollectionMode.SingleExample:
+                    // Clear examples in node
+                    TrainingExamplesVector.Clear();
+                    break;
+                case CollectionMode.Series:
+                    // Clear series in node
+                    TrainingSeriesCollection.Clear();
+                    break;
+                default:
+                    break;
+            }
+
+
 
             // I AM GOING TO KEEP THE DESIRED OUTPUTS UNCHANGED FOR THE MOMENT
 
@@ -378,8 +411,22 @@ namespace InteractML
                 }
                 else if (!Application.isPlaying || Time.time >= m_TimeToNextCapture)
                 {
+                    // We check which modality of collection is selected
+                    switch (ModeOfCollection)
+                    {
+                        case CollectionMode.SingleExample:
+                            AddTrainingExamplePrivate();
+                            break;
+                        case CollectionMode.Series:
+                            AddInputsToSeries(InputFeatures, 
+                                IMLDataSerialization.ParseIMLFeatureToJSON(DesiredOutputFeatures), 
+                                ref m_SingleSeries);
+                            break;
+                        default:
+                            break;
+                    }
+
                     ////Debug.Log ("recording");
-                    AddTrainingExamplePrivate();
                     m_TimeToNextCapture = Time.time + 1.0f / CaptureRate;
                 }
 
@@ -410,6 +457,25 @@ namespace InteractML
             // Add the training example to the vector
             TrainingExamplesVector.Add(newExample);
 
+        }
+
+        private void AddInputsToSeries(List<Node> inputs, string label, ref IMLTrainingSeries series)
+        {
+            // Only add if inputs are not null or empty (the series can be empty)
+            if (!Lists.IsNullOrEmpty(ref inputs))
+            {
+                // We get the Input Features from the n
+                List<IMLInput> featuresInput = new List<IMLInput>(inputs.Count);
+                // Add all the input features to the series being recorded
+                for (int i = 0; i < inputs.Count; i++)
+                {
+                    if (inputs[i] is IFeatureIML feature)
+                        featuresInput.Add(new IMLInput(feature.FeatureValues));
+                }
+
+                // Add features to series
+                m_SingleSeries.AddFeatures(featuresInput, label);
+            }
         }
 
         /// <summary>
@@ -455,6 +521,15 @@ namespace InteractML
         {
             m_CollectData = false;
 
+            // If we are in collect series mode...
+            if (ModeOfCollection == CollectionMode.Series)
+            {
+                // We add our series to the series collection
+                TrainingSeriesCollection.Add(new IMLTrainingSeries(m_SingleSeries));
+                m_SingleSeries.ClearSerie();
+
+            }
+
             // Save data to disk
             SaveDataToDisk();
         }
@@ -462,31 +537,49 @@ namespace InteractML
 
         public void SaveDataToDisk()
         {
-            IMLDataSerialization.SaveTrainingSetToDisk(TrainingExamplesVector, GetJSONFileName());
-
+            IMLDataSerialization.SaveTrainingSetToDisk(TrainingExamplesVector, GetJSONFileNameExamples());
+            IMLDataSerialization.SaveTrainingSeriesCollectionToDisk(TrainingSeriesCollection, GetJSONFileNameSeries());
         }
 
         public void LoadDataFromDisk()
         {
             //Load training data from disk
-            var auxTrainingExamplesVector = IMLDataSerialization.LoadTrainingSetFromDisk(GetJSONFileName());
+            var auxTrainingExamplesVector = IMLDataSerialization.LoadTrainingSetFromDisk(GetJSONFileNameExamples());
             if (!Lists.IsNullOrEmpty(ref auxTrainingExamplesVector))
             {
                 TrainingExamplesVector = auxTrainingExamplesVector;
                 //Debug.Log("Training Examples Vector loaded!");
             }
 
+            // Load IML Series Collection from disk
+            var auxTrainingSeriesCollection = IMLDataSerialization.LoadTrainingSeriesCollectionFromDisk(GetJSONFileNameSeries());
+            if (!Lists.IsNullOrEmpty(ref auxTrainingSeriesCollection))
+            {
+                TrainingSeriesCollection = auxTrainingSeriesCollection;
+            }
         }
 
         /// <summary>
-        /// Returns the file name we want for the JSON, both for read and write
+        /// Returns the file name we want for the regular training examples list in JSON format, both for read and write
         /// </summary>
         /// <returns></returns>
-        public string GetJSONFileName ()
+        public string GetJSONFileNameExamples ()
         {
             string graphName = this.graph.name;
             string nodeIndex = this.graph.nodes.FindIndex(a => a == this).ToString();
             string fileName = graphName + "_node_" + nodeIndex + "_" + "TrainingExamplesNode";
+            return fileName;
+        }
+
+        /// <summary>
+        /// Returns the file name we want for training SERIES in JSON format, both for read and write
+        /// </summary>
+        /// <returns></returns>
+        public string GetJSONFileNameSeries ()
+        {
+            string graphName = this.graph.name;
+            string nodeIndex = this.graph.nodes.FindIndex(a => a == this).ToString();
+            string fileName = graphName + "_node_" + nodeIndex + "_" + "_SERIES_" + "TrainingExamplesNode";
             return fileName;
         }
 

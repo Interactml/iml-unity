@@ -24,7 +24,12 @@ namespace InteractML
         /// <summary>
         /// Flag that will contorl the training examples dropdown
         /// </summary>
-        private bool m_ShowTrainingExamplesDropdown;
+        private bool m_ShowTrainingDataDropdown;
+
+        /// <summary>
+        /// Scroll for data dropdown
+        /// </summary>
+        private Vector2 m_ScrollPos;
 
         #endregion
 
@@ -41,7 +46,7 @@ namespace InteractML
             m_TrainingExamplesNode = (target as TrainingExamplesNode);
 
             // TOTAL NUMBER OF TRAINING EXAMPLES
-            ShowTotalNumberOfTrainingExamples();
+            ShowTotalNumberOfTrainingData();
 
             // DESIRED OUTPUT CONFIG AND BUILD OUTPUT LIST
             EditorGUILayout.Space();
@@ -61,8 +66,8 @@ namespace InteractML
             CheckInputFeaturesChanges();
             CheckOutputFeaturesChanges();
 
-            // TRAINING EXAMPLES DROPDOWN
-            ShowTrainingExamplesDropdown();
+            // TRAINING DATA DROPDOWN
+            ShowDataDropdown();
 
             // Error with output configuration
             var nodeTraining = target as TrainingExamplesNode;
@@ -76,12 +81,26 @@ namespace InteractML
 
         #region Private Methods
 
-        private void ShowTotalNumberOfTrainingExamples()
+        private void ShowTotalNumberOfTrainingData()
         {
-            string numberExamplesText = m_TrainingExamplesNode.TotalNumberOfTrainingExamples.ToString();
-            EditorGUILayout.LabelField("Total No. Training Examples: ", numberExamplesText);
+            string numberExamplesText = "000";
+            // Switch data collection mode
+            switch (m_TrainingExamplesNode.ModeOfCollection)
+            {
+                case TrainingExamplesNode.CollectionMode.SingleExample:
+                    numberExamplesText = m_TrainingExamplesNode.TotalNumberOfTrainingExamples.ToString();
+                    EditorGUILayout.LabelField("Total No. Training Examples: ", numberExamplesText);
+                    EditorGUILayout.LabelField("Total No. Desired Outputs: ", m_TrainingExamplesNode.DesiredOutputFeatures.Count.ToString());
+                    break;
+                case TrainingExamplesNode.CollectionMode.Series:
+                    numberExamplesText = m_TrainingExamplesNode.TrainingSeriesCollection.Count.ToString();
+                    EditorGUILayout.LabelField("Total No. Training Series: ", numberExamplesText);
+                    EditorGUILayout.LabelField("Total No. Desired Outputs: ", m_TrainingExamplesNode.DesiredOutputFeatures.Count.ToString());
+                    break;
+                default:
+                    break;
+            }
 
-            EditorGUILayout.LabelField("Total No. Desired Outputs: ", m_TrainingExamplesNode.DesiredOutputFeatures.Count.ToString());
 
         }
 
@@ -150,9 +169,34 @@ namespace InteractML
                 string nameButton = "";
 
                 if (m_TrainingExamplesNode.CollectingData )
-                    nameButton = "STOP Recording Examples";
+                {
+                    switch (m_TrainingExamplesNode.ModeOfCollection)
+                    {
+                        case TrainingExamplesNode.CollectionMode.SingleExample:
+                            nameButton = "STOP Recording Examples";
+                            break;
+                        case TrainingExamplesNode.CollectionMode.Series:
+                            nameButton = "STOP Recording Series";
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 else
-                    nameButton = "Record Examples";
+                {
+                    switch (m_TrainingExamplesNode.ModeOfCollection)
+                    {
+                        case TrainingExamplesNode.CollectionMode.SingleExample:
+                            nameButton = "Record Examples";                        
+                            break;
+                        case TrainingExamplesNode.CollectionMode.Series:
+                            nameButton = "Record Series";
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
 
                 bool disableButton = false;
 
@@ -187,8 +231,21 @@ namespace InteractML
             // If there are no features to extract from we draw a disabled button
             else
             {
+                string nameButton = "";
+                switch (m_TrainingExamplesNode.ModeOfCollection)
+                {
+                    case TrainingExamplesNode.CollectionMode.SingleExample:
+                        nameButton = "Record Examples";
+                        break;
+                    case TrainingExamplesNode.CollectionMode.Series:
+                        nameButton = "Record Series";
+                        break;
+                    default:
+                        break;
+                }
+
                 GUI.enabled = false;
-                if (GUILayout.Button("Record Examples"))
+                if (GUILayout.Button(nameButton))
                 {
                     m_TrainingExamplesNode.ToggleCollectExamples();
                 }
@@ -200,7 +257,18 @@ namespace InteractML
 
         private void ShowClearAllExamplesButton()
         {
-            string nameButton = "Delete All Training Examples";
+            string nameButton = "";
+            switch (m_TrainingExamplesNode.ModeOfCollection)
+            {
+                case TrainingExamplesNode.CollectionMode.SingleExample:
+                    nameButton = "Delete All Training Examples";
+                    break;
+                case TrainingExamplesNode.CollectionMode.Series:
+                    nameButton = "Delete All Training Series Collected";
+                    break;
+                default:
+                    break;
+            }
 
             // Only run button logic when there are training examples to delete
             if (!Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.TrainingExamplesVector))
@@ -404,14 +472,32 @@ namespace InteractML
         }
 
         /// <summary>
+        /// Shows training data dropdown accounting for differences in data
+        /// </summary>
+        private void ShowDataDropdown()
+        {
+            switch (m_TrainingExamplesNode.ModeOfCollection)
+            {
+                case TrainingExamplesNode.CollectionMode.SingleExample:
+                    ShowTrainingExamplesDropdown();
+                    break;
+                case TrainingExamplesNode.CollectionMode.Series:
+                    ShowTrainingSeriesCollectedDropdown();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Shows a dropdown with the training examples
         /// </summary>
         private void ShowTrainingExamplesDropdown()
         {
             EditorGUILayout.Space();
 
-            m_ShowTrainingExamplesDropdown = EditorGUILayout.Foldout(m_ShowTrainingExamplesDropdown, "Inspect Training Examples ");
-            if (m_ShowTrainingExamplesDropdown)
+            m_ShowTrainingDataDropdown = EditorGUILayout.Foldout(m_ShowTrainingDataDropdown, "Inspect Training Examples ");
+            if (m_ShowTrainingDataDropdown)
             {
                 EditorGUI.indentLevel++;
 
@@ -512,6 +598,119 @@ namespace InteractML
 
                 EditorGUI.indentLevel--;
             }
+        }
+
+        /// <summary>
+        /// Shows a dropdown with the training examples series
+        /// </summary>
+        private void ShowTrainingSeriesCollectedDropdown()
+        {
+            EditorGUILayout.Space();
+
+            m_ShowTrainingDataDropdown = EditorGUILayout.Foldout(m_ShowTrainingDataDropdown, "Inspect Training Series");
+            if (m_ShowTrainingDataDropdown)
+            {
+                EditorGUI.indentLevel++;
+
+                if (ReusableMethods.Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.TrainingSeriesCollection))
+                {
+                    EditorGUILayout.LabelField("Training Series List is empty");
+                }
+                else
+                {
+                    // Begins Vertical Scroll
+                    int indentLevel = EditorGUI.indentLevel;
+                    EditorGUILayout.BeginVertical();
+                    m_ScrollPos = EditorGUILayout.BeginScrollView(m_ScrollPos, GUILayout.Width(GetWidth() - 25), GUILayout.Height(GetWidth() - 100));
+
+                    // Go Series by Series
+                    for (int i = 0; i < m_TrainingExamplesNode.TrainingSeriesCollection.Count; i++)
+                    {
+                        EditorGUILayout.LabelField("Training Series " + i);
+
+                        EditorGUI.indentLevel++;
+
+                        var inputFeaturesInSeries = m_TrainingExamplesNode.TrainingSeriesCollection[i].Series;
+                        var labelSeries = m_TrainingExamplesNode.TrainingSeriesCollection[i].LabelSeries;
+
+                        // If the input features are not null...
+                        if (inputFeaturesInSeries != null)
+                        {
+                            EditorGUILayout.LabelField("No. Examples: " + inputFeaturesInSeries.Count);
+
+                            // Draw inputs
+                            for (int j = 0; j < inputFeaturesInSeries.Count; j++)
+                            {
+                                EditorGUI.indentLevel++;
+
+                                EditorGUILayout.LabelField("Input Feature " + j);                             
+
+                                // Are there any examples in series?
+                                if (inputFeaturesInSeries[j] == null)
+                                {
+                                    EditorGUILayout.LabelField("Inputs are null ");
+                                    break;
+                                }
+
+                                EditorGUI.indentLevel++;
+                                for (int k = 0; k < inputFeaturesInSeries[j].Count; k++)
+                                {
+                                    EditorGUILayout.LabelField("Input " + k + " (" + inputFeaturesInSeries[j][k].InputData.DataType + ")");
+
+                                    for (int w = 0; w < inputFeaturesInSeries[j][k].InputData.Values.Length; w++)
+                                    {
+                                        EditorGUI.indentLevel++;
+
+                                        EditorGUILayout.LabelField(inputFeaturesInSeries[j][k].InputData.Values[w].ToString());
+
+                                        EditorGUI.indentLevel--;
+                                    }
+
+
+                                }
+                                EditorGUI.indentLevel--;
+                                EditorGUI.indentLevel--;
+                            }
+                            EditorGUI.indentLevel--;
+
+                        }
+                        // If the input features are null...
+                        else
+                        {
+                            EditorGUILayout.LabelField("Input Features in series are null");
+                        }
+
+                        // If the output features for the entire series are not null...
+                        if (labelSeries != null)
+                        {
+                            // Draw output
+                            EditorGUI.indentLevel++;
+
+                            EditorGUILayout.TextArea(labelSeries);
+                            //EditorGUILayout.LabelField("TEST");
+
+                            EditorGUI.indentLevel--;
+                        }
+                        else
+                        {
+                            EditorGUILayout.LabelField("Series Output is null ");
+                        }
+
+                        EditorGUI.indentLevel--;
+
+                    }
+
+
+
+                    // Ends Vertical Scroll
+                    EditorGUI.indentLevel = indentLevel;
+                    EditorGUILayout.EndScrollView();
+                    EditorGUILayout.EndVertical();
+                }
+
+                EditorGUI.indentLevel--;
+            }
+
         }
 
         #endregion

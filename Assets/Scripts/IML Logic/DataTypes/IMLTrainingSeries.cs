@@ -11,11 +11,11 @@ namespace InteractML
     [Serializable]
     public struct IMLTrainingSeries
     {
-        private List<IMLInput> m_Series;
+        private List<List<IMLInput>> m_Series;
         /// <summary>
         /// The series of input features
         /// </summary>
-        public List<IMLInput> Series { get => m_Series; }
+        public List<List<IMLInput>> Series { get => m_Series; }
 
         private string m_LabelSeries;
         /// <summary>
@@ -26,29 +26,29 @@ namespace InteractML
 
         #region Constructors
 
-        public IMLTrainingSeries(List<IMLInput> serie)
+        public IMLTrainingSeries(List<List<IMLInput>> serie)
         {
             if (serie != null)
             {
-                m_Series = new List<IMLInput>(serie);
+                m_Series = new List<List<IMLInput>>(serie);
             }
             else
             {
-                m_Series = new List<IMLInput>();
+                m_Series = new List<List<IMLInput>>();
             }
 
             m_LabelSeries = "";
         }
 
-        public IMLTrainingSeries(List<IMLInput> serie, string LabelSeries)
+        public IMLTrainingSeries(List<List<IMLInput>> serie, string LabelSeries)
         {
             if (serie != null)
             {
-                m_Series = new List<IMLInput>(serie);
+                m_Series = new List<List<IMLInput>>(serie);
             }
             else
             {
-                m_Series = new List<IMLInput>();
+                m_Series = new List<List<IMLInput>>();
             }
 
             if (!String.IsNullOrEmpty(LabelSeries))
@@ -66,9 +66,9 @@ namespace InteractML
         public IMLTrainingSeries(IMLTrainingSeries serieToCopy)
         {
             if (serieToCopy.Series != null)
-                m_Series = new List<IMLInput>(serieToCopy.Series);
+                m_Series = new List<List<IMLInput>>(serieToCopy.Series);
             else
-                m_Series = new List<IMLInput>();
+                m_Series = new List<List<IMLInput>>();
 
             if (!String.IsNullOrEmpty(serieToCopy.LabelSeries))
                 m_LabelSeries = serieToCopy.LabelSeries;
@@ -85,39 +85,39 @@ namespace InteractML
         /// Adds a training example input into the serie
         /// </summary>
         /// <param name="input"></param>
-        public void AddTrainingExample(IMLInput input)
+        public void AddFeatures(List<IMLInput> input)
         {
             if (m_Series == null)
-                m_Series = new List<IMLInput>();
-            // Create a new instance to avoid passing a reference from outside to our list
-            IMLInput inputSerie = new IMLInput(input);
+                m_Series = new List<List<IMLInput>>();
 
-            m_Series.Add(inputSerie);
+            // Create a new instance to avoid passing a reference from outside to our list
+            m_Series.Add(new List<IMLInput>(input));
+           
         }
 
         /// <summary>
-        /// Adds a training example into the serie (all outputs must be the same per serie)
+        /// Adds a training example into the series (all outputs must be the same per serie)
         /// </summary>
         /// <param name="input"></param>
         /// <param name="output"></param>
-        public void AddTrainingExample(IMLInput input, string output)
+        public void AddFeatures(List<IMLInput> input, string output)
         {
             if (m_Series == null)
-                m_Series = new List<IMLInput>();
-            // Create a new instance to avoid passing a reference from outside to our list
-            IMLInput inputSerie = new IMLInput(input);
+                m_Series = new List<List<IMLInput>>();
 
-            m_Series.Add(inputSerie);
+            // Create a new instance to avoid passing a reference from outside to our list
+            m_Series.Add(new List<IMLInput>(input));
+
             m_LabelSeries = output;
         }
 
         /// <summary>
-        /// Clears serie inputs and label
+        /// Clears series inputs and label
         /// </summary>
         public void ClearSerie()
         {
             if (m_Series == null)
-                m_Series = new List<IMLInput>();
+                m_Series = new List<List<IMLInput>>();
             else
                 m_Series.Clear();
 

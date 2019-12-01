@@ -1,90 +1,10 @@
 {
    "metadata" : {
       "creator" : "Rapid API C++",
-      "inputNames" : [
-         "inputs-1",
-         "inputs-2",
-         "inputs-3",
-         "inputs-1",
-         "inputs-2",
-         "inputs-3"
-      ],
-      "numInputs" : 3,
-      "numOutputs" : 1,
+      "inputNames" : null,
+      "numInputs" : -1,
+      "numOutputs" : -1,
       "version" : "v0.1.1"
    },
-   "modelSet" : [
-      {
-         "examples" : [
-            {
-               "class" : 1,
-               "features" : [ -6.0332751274108887, 1.0190924406051636, 1 ]
-            },
-            {
-               "class" : 1,
-               "features" : [ -5.9950895309448242, 1.0190924406051636, 1 ]
-            },
-            {
-               "class" : 1,
-               "features" : [ -6.0332751274108887, 1.0190924406051636, 1 ]
-            },
-            {
-               "class" : 8,
-               "features" : [ 6.3005733489990234, 1.0572775602340698, 1 ]
-            },
-            {
-               "class" : 8,
-               "features" : [ 6.3005733489990234, 1.0572775602340698, 1 ]
-            }
-         ],
-         "inputNames" : [
-            "inputs-1",
-            "inputs-2",
-            "inputs-3",
-            "inputs-1",
-            "inputs-2",
-            "inputs-3"
-         ],
-         "k" : 1,
-         "modelType" : "kNN Classificiation",
-         "numInputs" : 3,
-         "whichInputs" : [ 0, 1, 2, 3, 4, 5 ]
-      },
-      {
-         "examples" : [
-            {
-               "class" : 1,
-               "features" : [ -6.0332751274108887, 1.0190924406051636, 1 ]
-            },
-            {
-               "class" : 1,
-               "features" : [ -5.9950895309448242, 1.0190924406051636, 1 ]
-            },
-            {
-               "class" : 1,
-               "features" : [ -6.0332751274108887, 1.0190924406051636, 1 ]
-            },
-            {
-               "class" : 8,
-               "features" : [ 6.3005733489990234, 1.0572775602340698, 1 ]
-            },
-            {
-               "class" : 8,
-               "features" : [ 6.3005733489990234, 1.0572775602340698, 1 ]
-            }
-         ],
-         "inputNames" : [
-            "inputs-1",
-            "inputs-2",
-            "inputs-3",
-            "inputs-1",
-            "inputs-2",
-            "inputs-3"
-         ],
-         "k" : 1,
-         "modelType" : "kNN Classificiation",
-         "numInputs" : 3,
-         "whichInputs" : [ 0, 1, 2, 3, 4, 5 ]
-      }
-   ]
+   "modelSet" : null
 }
