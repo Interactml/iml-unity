@@ -105,8 +105,8 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 6.0035443
-    - 25.579733
+    - 9.9
+    - -0.31
     - 1
 --- !u!114 &114357140570682068
 MonoBehaviour:
@@ -229,7 +229,7 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 114315671501912336}
   TrainingExamplesNodeToOutput: {fileID: 114507523331420728}
-  ModeOfCollection: 1
+  ModeOfCollection: 0
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
   m_DesiredInputsConfig: 03000000
