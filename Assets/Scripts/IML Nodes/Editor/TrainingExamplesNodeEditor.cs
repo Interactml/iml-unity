@@ -507,6 +507,11 @@ namespace InteractML
                 }
                 else
                 {
+                    // Begins Vertical Scroll
+                    int indentLevel = EditorGUI.indentLevel;
+                    EditorGUILayout.BeginVertical();
+                    m_ScrollPos = EditorGUILayout.BeginScrollView(m_ScrollPos, GUILayout.Width(GetWidth() - 25), GUILayout.Height(GetWidth() - 100));
+
                     for (int i = 0; i < m_TrainingExamplesNode.TrainingExamplesVector.Count; i++)
                     {
                         EditorGUILayout.LabelField("Training Example " + i);
@@ -593,6 +598,10 @@ namespace InteractML
 
                     }
 
+                    // Ends Vertical Scroll
+                    EditorGUI.indentLevel = indentLevel;
+                    EditorGUILayout.EndScrollView();
+                    EditorGUILayout.EndVertical();
 
                 }
 
@@ -699,8 +708,6 @@ namespace InteractML
                         EditorGUI.indentLevel--;
 
                     }
-
-
 
                     // Ends Vertical Scroll
                     EditorGUI.indentLevel = indentLevel;
