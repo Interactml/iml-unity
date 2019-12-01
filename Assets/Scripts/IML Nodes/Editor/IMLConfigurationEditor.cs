@@ -41,12 +41,39 @@ namespace InteractML
             ShowTrainingStatus();
 
             // SHOW TOTAL NUMBER OF TRAINING EXAMPLES
-            EditorGUILayout.LabelField("Total Num Training Examples: ", m_IMLConfigNode.TotalNumTrainingExamples.ToString());
+            // Account for dtw
+            if (m_IMLConfigNode.LearningType == IMLSpecifications.LearningType.DTW)
+            {
+                EditorGUILayout.LabelField("Total Num Training Series: ", m_IMLConfigNode.TotalNumTrainingData.ToString());
+            }
+            // classification/regression
+            else
+            {
+                EditorGUILayout.LabelField("Total Num Training Examples: ", m_IMLConfigNode.TotalNumTrainingData.ToString());
+            }
 
             EditorGUILayout.Space();
             // SHOW MODEL OUTPUT
             ShowModelOutput();
             EditorGUILayout.Space();
+
+            // SHOW KEYBOARD SHORTCUTS
+            // Show information about runtime keys for interaction
+            GUIStyle styleGUIBox = new GUIStyle(GUI.skin.box);
+            styleGUIBox.richText = true;
+            if (m_IMLConfigNode.KeyboardControl)
+            {
+                GUILayout.Box("<b>Runtime Keys:</b>\n <b>Train:</b> " + m_IMLConfigNode.TrainingKey.ToString() 
+                    + " | <b>Run:</b> " + m_IMLConfigNode.RunningKey, 
+                    styleGUIBox);
+                //GUILayout.Box("<b>Runtime Keys:</b>\n <b>Run:</b> R", styleGUIBox);
+
+                // Show key configs
+                m_IMLConfigNode.TrainingKey = (KeyCode) EditorGUILayout.EnumFlagsField(m_IMLConfigNode.TrainingKey);
+                m_IMLConfigNode.RunningKey = (KeyCode) EditorGUILayout.EnumFlagsField(m_IMLConfigNode.RunningKey);
+                EditorGUILayout.Space();
+
+            }
 
             // SHOW TRAIN BUTTON 
             ShowTrainModelButton();
@@ -149,9 +176,31 @@ namespace InteractML
                 string nameButton = "";
 
                 if (m_IMLConfigNode.Running)
-                    nameButton = "STOP Running";
+                {
+                    // DTW
+                    if (m_IMLConfigNode.LearningType == IMLSpecifications.LearningType.DTW)
+                    {
+                        nameButton = "STOP Populating Running Series & Run";
+                    }
+                    // Classification/Regression
+                    else
+                    {
+                        nameButton = "STOP Running";
+                    }
+                }
                 else
-                    nameButton = "Run";
+                {
+                    // DTW
+                    if (m_IMLConfigNode.LearningType == IMLSpecifications.LearningType.DTW)
+                    {
+                        nameButton = "Populate Running Series";
+                    }
+                    // Classification/Regression
+                    else
+                    {
+                        nameButton = "Run";
+                    }
+                }
 
                 // Disable button if model is Trainig OR Untrained
                 if (m_IMLConfigNode.Training || m_IMLConfigNode.Untrained)

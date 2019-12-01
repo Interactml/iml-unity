@@ -124,6 +124,28 @@ namespace InteractML
             m_LabelSeries = "";
         }
 
+        public List<double[]> GetSeriesFeatures()
+        {
+            List<double[]> valuesToReturn = new List<double[]>();
+
+            if (m_Series == null)
+                m_Series = new List<List<IMLInput>>();
+
+            // Go through features
+            foreach (var features in m_Series)
+            {
+                // Add each feature to series to return
+                foreach (var feature in features)
+                {
+                    double[] newFeature = new double[feature.InputData.Values.Length];
+                    feature.InputData.Values.CopyTo(newFeature, 0);
+                    valuesToReturn.Add(newFeature);
+                }
+            }
+
+            return valuesToReturn;
+        }
+
         #endregion
 
     }

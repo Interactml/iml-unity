@@ -105,8 +105,8 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 9.9
-    - -0.31
+    - -12.833666
+    - 26.362803
     - 1
 --- !u!114 &114357140570682068
 MonoBehaviour:
@@ -172,15 +172,18 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 114315671501912336}
   ModelOutput: {fileID: 0}
+  KeyboardControl: 1
+  TrainingKey: 116
+  RunningKey: 114
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
   - 8
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 00000000
-  m_LearningType: 0
+  m_LearningType: 2
   TrainOnPlaymodeChange: 0
-  RunOnAwake: 1
+  RunOnAwake: 0
 --- !u!114 &114507523331420728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,7 +232,7 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 114315671501912336}
   TrainingExamplesNodeToOutput: {fileID: 114507523331420728}
-  ModeOfCollection: 0
+  ModeOfCollection: 1
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
   m_DesiredInputsConfig: 03000000

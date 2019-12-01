@@ -6,8 +6,8 @@
           "InputType": 0,
           "InputData": {
             "Values": [
-              -0.39153567,
-              -2.828347,
+              -5.002954,
+              2.30511856,
               1.0
             ],
             "DataType": 3
@@ -19,7 +19,163 @@
           "InputType": 0,
           "InputData": {
             "Values": [
-              -1.69665408,
+              -3.697836,
+              2.3486228,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              -1.609646,
+              2.87066936,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              -0.304527968,
+              3.65374112,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              0.391536146,
+              4.52382,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              1.39212608,
+              5.61141825,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              1.5226382,
+              6.046459,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              1.47913384,
+              6.17696953,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              0.7395669,
+              4.045276,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              0.5220472,
+              1.0,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              0.5220472,
+              -0.696653843,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              0.5220472,
+              -1.47972536,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              0.5220472,
+              -1.74074817,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              0.5220472,
               -2.13228345,
               1.0
             ],
@@ -32,8 +188,26 @@
           "InputType": 0,
           "InputData": {
             "Values": [
-              -4.480907,
-              1.73956752,
+              0.5655505,
+              -2.39330769,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ]
+    ],
+    "LabelSeries": "[\r\n  {\r\n    \"Values\": [\r\n      1.0\r\n    ],\r\n    \"DataType\": 0\r\n  }\r\n]"
+  },
+  {
+    "Series": [
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              -3.175788,
+              4.43681145,
               1.0
             ],
             "DataType": 3
@@ -45,8 +219,8 @@
           "InputType": 0,
           "InputData": {
             "Values": [
-              -2.47972536,
-              4.654331,
+              -3.08878016,
+              4.43681145,
               1.0
             ],
             "DataType": 3
@@ -58,8 +232,8 @@
           "InputType": 0,
           "InputData": {
             "Values": [
-              2.21870184,
-              5.219883,
+              -1.8271656,
+              4.69783545,
               1.0
             ],
             "DataType": 3
@@ -71,8 +245,8 @@
           "InputType": 0,
           "InputData": {
             "Values": [
-              5.26397848,
-              1.30452812,
+              0.9135823,
+              5.045868,
               1.0
             ],
             "DataType": 3
@@ -84,7 +258,124 @@
           "InputType": 0,
           "InputData": {
             "Values": [
-              1.56614268,
+              1.95767784,
+              4.74133968,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              3.3063004,
+              3.30570984,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              3.56732368,
+              2.26161432,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              1.609646,
+              1.69606328,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              -0.21751976,
+              1.52204776,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              -0.5655515,
+              1.52204776,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              1.21811068,
+              1.4350394,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              2.827757,
+              0.5649605,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              3.871851,
+              -0.7836621,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              3.43681145,
               -2.00177217,
               1.0
             ],
@@ -97,8 +388,73 @@
           "InputType": 0,
           "InputData": {
             "Values": [
-              0.08700769,
-              -1.91476488,
+              2.523228,
+              -2.871851,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              0.8265746,
+              -3.30689049,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              -1.08759928,
+              -3.39389849,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              -2.1316936,
+              -3.21988249,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              -2.34921312,
+              -3.04586744,
+              1.0
+            ],
+            "DataType": 3
+          }
+        }
+      ],
+      [
+        {
+          "InputType": 0,
+          "InputData": {
+            "Values": [
+              -2.39271712,
+              -3.04586744,
               1.0
             ],
             "DataType": 3
@@ -106,6 +462,6 @@
         }
       ]
     ],
-    "LabelSeries": "[\r\n  {\r\n    \"Values\": [\r\n      0.0\r\n    ],\r\n    \"DataType\": 0\r\n  }\r\n]"
+    "LabelSeries": "[\r\n  {\r\n    \"Values\": [\r\n      3.0\r\n    ],\r\n    \"DataType\": 0\r\n  }\r\n]"
   }
 ]

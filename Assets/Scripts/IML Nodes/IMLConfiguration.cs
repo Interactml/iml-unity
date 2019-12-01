@@ -29,6 +29,15 @@ namespace InteractML
         /// </summary>
         public List<IMLBaseDataType> PredictedOutput;
 
+        /// <summary>
+        /// Keyboard flag to control node
+        /// </summary>
+        public bool KeyboardControl;
+        [HideInInspector]
+        public KeyCode TrainingKey;
+        [HideInInspector]
+        public KeyCode RunningKey;
+
         [HideInInspector]
         public double[] PredictedRapidlibOutput;
         [HideInInspector]
@@ -37,8 +46,8 @@ namespace InteractML
         /// <summary>
         /// Total updated number of training examples connected to this IML Configuration Node
         /// </summary>
-        private int m_TotalNumTrainingExamples;
-        public int TotalNumTrainingExamples { get { return m_TotalNumTrainingExamples; } }
+        private int m_TotalNumTrainingData;
+        public int TotalNumTrainingData { get { return m_TotalNumTrainingData; } }
 
         /// <summary>
         /// List of expected inputs
@@ -60,6 +69,8 @@ namespace InteractML
         /// </summary>
         [SerializeField]
         private IMLSpecifications.LearningType m_LearningType;
+        public IMLSpecifications.LearningType LearningType { get => m_LearningType; }
+
 
         private IMLSpecifications.ModelStatus m_ModelStatus { get { return m_Model != null ? m_Model.ModelStatus : IMLSpecifications.ModelStatus.Untrained; } }
         /// <summary>
@@ -93,6 +104,11 @@ namespace InteractML
         /// Private list of rapidlib training series collection (for dtw)
         /// </summary>
         private List<RapidlibTrainingSerie> m_RapidlibTrainingSeriesCollection;
+        /// <summary>
+        /// Series to run DTW on
+        /// </summary>
+        private IMLTrainingSeries m_RunningSeries;
+
         /// <summary>
         /// Vector used to compute the realtime predictions in rapidlib based on the training data
         /// </summary>
@@ -235,6 +251,9 @@ namespace InteractML
 
         public void UpdateLogic()
         {
+            // Handle Input
+            KeyboardInput();
+            
             // Transform rapidlib output to IMLTypes (needed to be called the first thing to work properly)
             TransformPredictedOuputToIMLTypes();
 
@@ -253,8 +272,8 @@ namespace InteractML
             // Update Number of Training Examples Connected
             UpdateTotalNumberTrainingExamples();
 
-            // Get the output from rapidlib
-            PredictedRapidlibOutput = RunModel();
+            // Perform running logic (it will account for DTW and Classification/Regression)
+            RunningLogic();
 
             // Transform rapidlib output to IMLTypes (needed to be called the first thing to work properly)
             TransformPredictedOuputToIMLTypes();
@@ -270,15 +289,23 @@ namespace InteractML
             if (m_RapidlibTrainingSeriesCollection == null)
                 m_RapidlibTrainingSeriesCollection = new List<RapidlibTrainingSerie>();
 
-            // Transform the IML Training Examples into a format suitable for Rapidlib
-            m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes);
+            // If we have a dtw model...
+            if (m_LearningType == IMLSpecifications.LearningType.DTW)
+            {
+                m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes);
+                m_Model.Train(m_RapidlibTrainingSeriesCollection);
+            }
+            // If it is a classification/regression model
+            else
+            {
+                // Transform the IML Training Examples into a format suitable for Rapidlib
+                m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes);
 
-            // Trains rapidlib with the examples added
-            m_Model.Train(m_RapidlibTrainingExamples);
+                // Trains rapidlib with the examples added
+                m_Model.Train(m_RapidlibTrainingExamples);
 
-            //Debug.Log("***Retraining IML Config node with num Examples: " + RapidLibComponent.trainingExamples.Count + " Rapidlib training succesful: " + RapidLibComponent.Trained + "***");
-
-  
+                //Debug.Log("***Retraining IML Config node with num Examples: " + RapidLibComponent.trainingExamples.Count + " Rapidlib training succesful: " + RapidLibComponent.Trained + "***");
+            }
         }
 
         public void ToggleRunning()
@@ -301,6 +328,15 @@ namespace InteractML
             // If the system is already running...
             else
             {
+                // If we are on DTW, we run the iteration at the end of the data collection period
+                if (m_LearningType == IMLSpecifications.LearningType.DTW)
+                {
+                    string predictionDTW = RunModelDTW(m_RunningSeries);
+                    // We clear running series for next run
+                    m_RunningSeries.ClearSerie();
+                    // We parse json into iml output
+                    PredictedOutput = IMLDataSerialization.ParseJSONToIMLFeature(predictionDTW);
+                }
                 // Set flag to false
                 m_Running = false;
                 // Stop model
@@ -383,6 +419,22 @@ namespace InteractML
 
         #region Private Methods
 
+        private void KeyboardInput()
+        {
+            if (KeyboardControl)
+            {
+                if (Input.GetKeyDown(TrainingKey))
+                {
+                    TrainModel();
+                }
+
+                if (Input.GetKeyDown(RunningKey))
+                {
+                    ToggleRunning();
+                }
+            }
+        }
+
         public void TransformPredictedOuputToIMLTypes()
         {
             int pointerRawOutputVector = 0;
@@ -440,6 +492,72 @@ namespace InteractML
 
             // Return the rapidlib output vector if it is not null
             return m_RapidlibOutputVector != null ? m_RapidlibOutputVector : new double[0];
+        }
+
+        /// <summary>
+        /// Runs an iteration of DTW
+        /// </summary>
+        /// <param name="seriesToRun"></param>
+        /// <returns></returns>
+        private string RunModelDTW(IMLTrainingSeries seriesToRun)
+        {
+            string result = "";
+            // Only allow running if the model exists and it is trained or running
+            if (m_Model != null && (m_ModelStatus == IMLSpecifications.ModelStatus.Trained || m_ModelStatus == IMLSpecifications.ModelStatus.Running))
+            {
+                // Run dtw
+                result = m_Model.Run(new RapidlibTrainingSerie(seriesToRun.GetSeriesFeatures(), seriesToRun.LabelSeries));
+            }
+            Debug.Log("DTW Result: " + result);
+            return result;
+        }
+
+        /// <summary>
+        /// Collects features frame by frame to the running series for DTW
+        /// </summary>
+        /// <param name="inputFeatures"></param>
+        /// <param name="runningSeries"></param>
+        private void CollectFeaturesInRunningSeries(List<Node> inputFeatures, ref IMLTrainingSeries runningSeries)
+        {
+            // Only allow collection is model is marked as 'running' (althoug we will run the model only when toggleRunning is called again)
+            if (m_Running)
+            {
+                // We don't run frame by frame, but instead we collect input features to run at the end 
+                List<IMLInput> featuresToSeries = new List<IMLInput>(inputFeatures.Count);
+                foreach (var item in inputFeatures)
+                {
+                    if (item is IFeatureIML feature)
+                    {
+                        featuresToSeries.Add(new IMLInput(feature.FeatureValues));
+                    }
+                }
+                // Add all features to runnning series
+                runningSeries.AddFeatures(featuresToSeries);
+
+            }
+
+        }
+
+        private void RunningLogic()
+        {
+            // Account for all learning types now
+            switch (m_LearningType)
+            {
+                case IMLSpecifications.LearningType.Classification:
+                    // Get the output from rapidlib
+                    PredictedRapidlibOutput = RunModel();
+                    break;
+                case IMLSpecifications.LearningType.Regression:
+                    // Get the output from rapidlib
+                    PredictedRapidlibOutput = RunModel();
+                    break;
+                case IMLSpecifications.LearningType.DTW:
+                    CollectFeaturesInRunningSeries(InputFeatures, ref m_RunningSeries);
+                    break;
+                default:
+                    break;
+            }
+
         }
 
         /// <summary>
@@ -544,14 +662,19 @@ namespace InteractML
             IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
 
             // The total number will start from 0 and keep adding the total amount of training examples from nodes connected
-            m_TotalNumTrainingExamples = 0;
+            m_TotalNumTrainingData = 0;
             if (!Lists.IsNullOrEmpty(ref IMLTrainingExamplesNodes))
             {
                 for (int i = 0; i < IMLTrainingExamplesNodes.Count; i++)
                 {
                     if (IMLTrainingExamplesNodes[i] != null)
                     {
-                        m_TotalNumTrainingExamples += IMLTrainingExamplesNodes[i].TotalNumberOfTrainingExamples;
+                        // DTW
+                        if (m_LearningType == IMLSpecifications.LearningType.DTW)
+                            m_TotalNumTrainingData += IMLTrainingExamplesNodes[i].TrainingSeriesCollection.Count;
+                        // classification/regression
+                        else
+                            m_TotalNumTrainingData += IMLTrainingExamplesNodes[i].TotalNumberOfTrainingExamples;
                     }
                     else
                     {
@@ -590,68 +713,6 @@ namespace InteractML
                                 {
                                     // Add a new rapidlib example to list
                                     rapidlibExamples.Add(new RapidlibTrainingExample(IMLTrainingExample.GetInputs(), IMLTrainingExample.GetOutputs()));
-
-                                    //// INPUT VECTOR RAPIDLIB
-                                    //int rapidlibInputVectorSize = 0;
-                                    //// Go through all input features in IML Training Example and get their size
-                                    //for (int k = 0; k < IMLTrainingExample.Inputs.Count; k++)
-                                    //{
-                                    //    rapidlibInputVectorSize += IMLTrainingExample.Inputs[k].InputData.Values.Length;
-                                    //}
-                                    //// Create rapidlib input by constructing a vector size of all IML input features combined
-                                    //newExample.Input = new double[rapidlibInputVectorSize];
-                                    //// Create a pointer to know keep the boundaries in our input vector while we add IML features
-                                    //int pointerVector = 0;
-                                    //// Go through all IML input features and add their features to the rapidlib vector
-                                    //for (int k = 0; k < IMLTrainingExample.Inputs.Count; k++)
-                                    //{
-                                    //    // Check that the boundaries are never surpassed
-                                    //    if (pointerVector > rapidlibInputVectorSize)
-                                    //    {
-                                    //        Debug.LogError("Trying to add input features to a rapidlib vector that is too small!");
-                                    //    }
-                                    //    var IMLInputFeature = IMLTrainingExample.Inputs[k];
-                                    //    // Add IML data to rapidlib vector
-                                    //    for (int w = 0; w < IMLInputFeature.InputData.Values.Length; w++)
-                                    //    {
-                                    //        newExample.Input[w + pointerVector] = IMLInputFeature.InputData.Values[w];
-                                    //    }
-                                    //    // Move vector pointer forward
-                                    //    pointerVector += IMLInputFeature.InputData.Values.Length;
-                                    //}
-
-                                    //// OUTPUT VECTOR RAPIDLIB
-                                    //int rapidlibOutputVectorSize = 0;
-                                    //// Go through all Output features in IML Training Example and get their size
-                                    //for (int k = 0; k < IMLTrainingExample.Outputs.Count; k++)
-                                    //{
-                                    //    rapidlibOutputVectorSize += IMLTrainingExample.Outputs[k].OutputData.Values.Length;
-                                    //}
-                                    //// Create rapidlib Output by constructing a vector size of all IML Output features combined
-                                    //newExample.Output = new double[rapidlibOutputVectorSize];
-                                    //// Create a pointer to know keep the boundaries in our Output vector while we add IML features
-                                    //pointerVector = 0;
-                                    //// Go through all IML Output features and add their features to the rapidlib vector
-                                    //for (int k = 0; k < IMLTrainingExample.Outputs.Count; k++)
-                                    //{
-                                    //    // Check that the boundaries are never surpassed
-                                    //    if (pointerVector > rapidlibOutputVectorSize)
-                                    //    {
-                                    //        Debug.LogError("Trying to add Output features to a rapidlib vector that is too small!");
-                                    //    }
-                                    //    var IMLOutputFeature = IMLTrainingExample.Outputs[k];
-                                    //    // Add IML data to rapidlib vector
-                                    //    for (int w = 0; w < IMLOutputFeature.OutputData.Values.Length; w++)
-                                    //    {
-                                    //        newExample.Output[w + pointerVector] = IMLOutputFeature.OutputData.Values[w];
-                                    //    }
-                                    //    // Move vector pointer forward
-                                    //    pointerVector += IMLOutputFeature.OutputData.Values.Length;
-                                    //}
-
-                                    //// ADD EXAMPLE TO list to return
-                                    //rapidlibExamples.Add(newExample);
-
                                 }
                                 // If there are null outputs we debug an error
                                 else
@@ -666,6 +727,36 @@ namespace InteractML
 
             // Return list
             return rapidlibExamples;
+        }
+
+        /// <summary>
+        /// Create a rapidlib training series list in the required format for DTW training
+        /// </summary>
+        /// <param name="trainingSeriesIML"></param>
+        /// <returns></returns>
+        private List<RapidlibTrainingSerie> TransformIMLSeriesToRapidlib(List<TrainingExamplesNode> trainingNodesIML)
+        {
+            List<RapidlibTrainingSerie> seriesToReturn = new List<RapidlibTrainingSerie>();
+
+            // Go through all the IML Training Examples if we can
+            if (!Lists.IsNullOrEmpty(ref trainingNodesIML))
+            {
+                // Go through each node
+                for (int i = 0; i < trainingNodesIML.Count; i++)
+                {
+                    // If there are training series in this node...
+                    if (!Lists.IsNullOrEmpty(ref trainingNodesIML[i].TrainingSeriesCollection))
+                    {
+                        foreach (var IMLSeries in trainingNodesIML[i].TrainingSeriesCollection)
+                        {
+                            // Add each series to the rapidlib series list to return
+                            seriesToReturn.Add(new RapidlibTrainingSerie(IMLSeries.GetSeriesFeatures(), IMLSeries.LabelSeries));
+                        }
+                    }
+                }
+            }
+
+            return seriesToReturn;
         }
 
         /// <summary>
