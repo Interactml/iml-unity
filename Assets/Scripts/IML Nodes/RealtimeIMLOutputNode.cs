@@ -46,7 +46,23 @@ namespace InteractML
             // If there is an IML node connected...
             if (IMLConfigNodeConnected)
             {
-                m_IMLOutputVector = IMLConfigNodeConnected.DelayedPredictedOutput;
+                //m_IMLOutputVector = IMLConfigNodeConnected.DelayedPredictedOutput;
+
+                double[] result = new double[0];
+
+                for (int i = 0; i < IMLConfigNodeConnected.PredictedOutput.Count; i++)
+                {
+                    // Add enough spaces in the result array
+                    System.Array.Resize(ref result, result.Length + IMLConfigNodeConnected.PredictedOutput[i].Values.Length);
+                    // Assign ml model values to result array
+                    for (int j = 0; j < IMLConfigNodeConnected.PredictedOutput[i].Values.Length; j++)
+                    {
+                        int index = result.GetUpperBound(0) - (IMLConfigNodeConnected.PredictedOutput[i].Values.Length - 1) - (j);
+                        result[index] = IMLConfigNodeConnected.PredictedOutput[i].Values[j];
+                    }
+                }
+
+                m_IMLOutputVector = result;
 
                 //for (int i = 0; i < m_IMLOutputVector.Length; i++)
                 //{
