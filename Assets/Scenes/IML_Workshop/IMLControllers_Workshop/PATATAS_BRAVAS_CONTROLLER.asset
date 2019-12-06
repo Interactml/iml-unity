@@ -94,8 +94,8 @@ MonoBehaviour:
       - fieldName: InputFeatures
         node: {fileID: 114357140570682068}
         reroutePoints:
-        - {x: 223.70555, y: 298.2612}
-        - {x: 848.1784, y: 275.49396}
+        - {x: 216.53656, y: 282.88025}
+        - {x: 832.536, y: 282.19305}
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -105,8 +105,8 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - -12.833666
-    - 26.362803
+    - 9.9
+    - -0.31
     - 1
 --- !u!114 &114357140570682068
 MonoBehaviour:
@@ -178,10 +178,10 @@ MonoBehaviour:
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
-  - 8
+  - 35.01008004026765
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 00000000
-  m_LearningType: 2
+  m_LearningType: 0
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
 --- !u!114 &114507523331420728
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Name: Training Examples Node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 277.1408, y: -263.3182}
+  position: {x: 280, y: -264}
   ports:
     keys:
     - InputFeatures
@@ -274,4 +274,4 @@ MonoBehaviour:
   DevMode: 0
   IMLModelOutputs: {fileID: 0}
   m_IMLOutputVector:
-  - 8
+  - 0

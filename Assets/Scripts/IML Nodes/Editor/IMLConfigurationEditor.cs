@@ -352,7 +352,7 @@ namespace InteractML
 
                 for (int i = 0; i < IMLConfigNode.PredictedOutput.Count; i++)
                 {
-                    IMLConfigNode.TransformPredictedOuputToIMLTypes();
+                    //IMLConfigNode.TransformPredictedOuputToIMLTypes();
                     var outputFeature = IMLConfigNode.PredictedOutput[i];
                     switch (outputFeature.DataType)
                     {

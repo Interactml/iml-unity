@@ -155,6 +155,14 @@ namespace InteractML
             base.OnCreateConnection(from, to);
 
             m_NodeConnectionChanged = true;
+
+            // We call logic for adapting arrays and inputs/outputs for ML models
+            // Create input feature vector for realtime rapidlib predictions
+            CreateRapidlibInputVector();
+
+            // Create rapidlib predicted output vector
+            CreateRapidLibOutputVector();
+
         }
 
         public override void OnRemoveConnection(NodePort port)
@@ -162,6 +170,14 @@ namespace InteractML
             base.OnRemoveConnection(port);
 
             m_NodeConnectionChanged = true;
+
+            // We call logic for adapting arrays and inputs/outputs for ML models
+            // Create input feature vector for realtime rapidlib predictions
+            CreateRapidlibInputVector();
+
+            // Create rapidlib predicted output vector
+            CreateRapidLibOutputVector();
+
         }
 
         #endregion
@@ -182,6 +198,14 @@ namespace InteractML
                 // Override model
                 OverrideModel(m_LearningType);
             }
+
+            // We call logic for adapting arrays and inputs/outputs for ML models
+            // Create input feature vector for realtime rapidlib predictions
+            CreateRapidlibInputVector();
+
+            // Create rapidlib predicted output vector
+            CreateRapidLibOutputVector();
+
         }
 
         public void OnDestroy()
@@ -223,6 +247,14 @@ namespace InteractML
             m_NodeConnectionChanged = false;
 
             m_LastKnownRapidlibOutputVectorSize = 0;
+
+            // We call logic for adapting arrays and inputs/outputs for ML models
+            // Create input feature vector for realtime rapidlib predictions
+            CreateRapidlibInputVector();
+
+            // Create rapidlib predicted output vector
+            CreateRapidLibOutputVector();
+
         }
 
         /// <summary>
@@ -254,29 +286,17 @@ namespace InteractML
             // Handle Input
             KeyboardInput();
             
-            // Transform rapidlib output to IMLTypes (needed to be called the first thing to work properly)
-            TransformPredictedOuputToIMLTypes();
-
             // Update Input Config List
             UpdateInputConfigList();
-
-            // Create input feature vector for realtime rapidlib predictions
-            CreateRapidlibInputVector();
-
-            // Update Output Format
-            UpdateOutputFormat();
-
-            // Create rapidlib predicted output vector
-            CreateRapidLibOutputVector();
 
             // Update Number of Training Examples Connected
             UpdateTotalNumberTrainingExamples();
 
-            // Perform running logic (it will account for DTW and Classification/Regression)
-            RunningLogic();
+            // Make sure that current output format matches the expected output format
+            UpdateOutputFormat();
 
-            // Transform rapidlib output to IMLTypes (needed to be called the first thing to work properly)
-            TransformPredictedOuputToIMLTypes();
+            // Perform running logic (it will account for DTW and Classification/Regression)
+            RunningLogic();         
 
             // Update feature selection matrix
             // TO DO
@@ -336,6 +356,8 @@ namespace InteractML
                     m_RunningSeries.ClearSerie();
                     // We parse json into iml output
                     PredictedOutput = IMLDataSerialization.ParseJSONToIMLFeature(predictionDTW);
+
+                    Debug.Log("Predicted output is: " + PredictedOutput[0].Values[0]);
                 }
                 // Set flag to false
                 m_Running = false;
@@ -435,12 +457,12 @@ namespace InteractML
             }
         }
 
-        public void TransformPredictedOuputToIMLTypes()
+        public void TransformPredictedOuputToIMLTypes(double[] rapidlibResults, ref List<IMLBaseDataType> IMLOutputsList)
         {
             int pointerRawOutputVector = 0;
             // Transform the raw vector output into list of iml types
             // Go through each output feature (preconfigured previously)
-            foreach (var outputFeature in PredictedOutput)
+            foreach (var outputFeature in IMLOutputsList)
             {
                 // Add corresponding values to that feature and move the pointerForward as many spaces as length the feature has
                 for (int i = 0; i < outputFeature.Values.Length; i++)
@@ -546,10 +568,14 @@ namespace InteractML
                 case IMLSpecifications.LearningType.Classification:
                     // Get the output from rapidlib
                     PredictedRapidlibOutput = RunModel();
+                    // Transform rapidlib output to IMLTypes (calling straight after getting the output so that the UI can show properly)
+                    TransformPredictedOuputToIMLTypes(PredictedRapidlibOutput, ref PredictedOutput);
                     break;
                 case IMLSpecifications.LearningType.Regression:
                     // Get the output from rapidlib
                     PredictedRapidlibOutput = RunModel();
+                    // Transform rapidlib output to IMLTypes (calling straight after getting the output so that the UI can show properly)
+                    TransformPredictedOuputToIMLTypes(PredictedRapidlibOutput, ref PredictedOutput);
                     break;
                 case IMLSpecifications.LearningType.DTW:
                     CollectFeaturesInRunningSeries(InputFeatures, ref m_RunningSeries);
