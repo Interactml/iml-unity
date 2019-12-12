@@ -122,8 +122,7 @@ MonoBehaviour:
     values:
     - _fieldName: IMLModelOutputs
       _node: {fileID: 114010043976543316}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: ModelOutput
         node: {fileID: 114948667100810690}
@@ -157,9 +156,9 @@ MonoBehaviour:
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 114018606463082566}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: VelocityExtracted
         node: {fileID: 114585773044923226}
@@ -229,8 +228,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114035907775032882}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeatureToInput
         node: {fileID: 114762007122857022}
@@ -267,8 +265,7 @@ MonoBehaviour:
     values:
     - _fieldName: IMLModelOutputs
       _node: {fileID: 114037009951859728}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: ModelOutput
         node: {fileID: 114930582521853118}
@@ -301,8 +298,7 @@ MonoBehaviour:
     values:
     - _fieldName: IMLModelOutputs
       _node: {fileID: 114059281138028592}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: ModelOutput
         node: {fileID: 114158627183916384}
@@ -348,8 +344,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114072254274634466}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeaturesToMeasureDistanceToFirst
         node: {fileID: 114290916878826764}
@@ -434,9 +429,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: InputFeatures
       _node: {fileID: 114108558201034724}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: DistanceExtracted
         node: {fileID: 114762007122857022}
@@ -531,9 +526,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: InputFeatures
       _node: {fileID: 114158627183916384}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: DistanceExtracted
         node: {fileID: 114290916878826764}
@@ -592,8 +587,7 @@ MonoBehaviour:
     values:
     - _fieldName: FeatureToInput
       _node: {fileID: 114198625317458438}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114605592322287672}
@@ -604,9 +598,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: FeaturesToMeasureDistanceToFirst
       _node: {fileID: 114198625317458438}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114313809726534684}
@@ -617,8 +611,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: DistanceExtracted
       _node: {fileID: 114198625317458438}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 114929005190181280}
@@ -765,8 +758,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: rotationExtracted
       _node: {fileID: 114247239337280674}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeatureToInput
         node: {fileID: 114833012837605150}
@@ -818,8 +810,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114255138219269668}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeaturesToMeasureDistanceToFirst
         node: {fileID: 114762007122857022}
@@ -980,8 +971,7 @@ MonoBehaviour:
     values:
     - _fieldName: FeatureToInput
       _node: {fileID: 114290916878826764}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114313809726534684}
@@ -992,9 +982,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: FeaturesToMeasureDistanceToFirst
       _node: {fileID: 114290916878826764}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114072254274634466}
@@ -1017,8 +1007,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: DistanceExtracted
       _node: {fileID: 114290916878826764}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 114455896477681330}
@@ -1081,8 +1070,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114293193503366146}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeaturesToMeasureDistanceToFirst
         node: {fileID: 114290916878826764}
@@ -1132,8 +1120,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114313809726534684}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeatureToInput
         node: {fileID: 114585773044923226}
@@ -1207,8 +1194,7 @@ MonoBehaviour:
     values:
     - _fieldName: FeatureToInput
       _node: {fileID: 114356934883696634}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114605592322287672}
@@ -1219,9 +1205,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: FeaturesToMeasureDistanceToFirst
       _node: {fileID: 114356934883696634}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114811611838066988}
@@ -1232,8 +1218,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: DistanceExtracted
       _node: {fileID: 114356934883696634}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 114929005190181280}
@@ -1289,8 +1274,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114378620732791270}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeaturesToMeasureDistanceToFirst
         node: {fileID: 114762007122857022}
@@ -1361,8 +1345,7 @@ MonoBehaviour:
     values:
     - _fieldName: FeatureToInput
       _node: {fileID: 114387068067455594}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114811611838066988}
@@ -1373,8 +1356,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: VelocityExtracted
       _node: {fileID: 114387068067455594}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 114926250237349256}
@@ -1423,8 +1405,7 @@ MonoBehaviour:
     values:
     - _fieldName: IMLModelOutputs
       _node: {fileID: 114434660954448230}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: ModelOutput
         node: {fileID: 114542359165737036}
@@ -1458,9 +1439,9 @@ MonoBehaviour:
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 114455896477681330}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: DistanceExtracted
         node: {fileID: 114290916878826764}
@@ -1585,8 +1566,7 @@ MonoBehaviour:
     values:
     - _fieldName: IMLModelOutputs
       _node: {fileID: 114493415619065000}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: ModelOutput
         node: {fileID: 114108558201034724}
@@ -1700,9 +1680,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: InputFeatures
       _node: {fileID: 114542359165737036}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: VelocityExtracted
         node: {fileID: 114833012837605150}
@@ -1772,8 +1752,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114583057323706096}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeaturesToMeasureDistanceToFirst
         node: {fileID: 114290916878826764}
@@ -1811,8 +1790,7 @@ MonoBehaviour:
     values:
     - _fieldName: FeatureToInput
       _node: {fileID: 114585773044923226}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114313809726534684}
@@ -1823,8 +1801,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: VelocityExtracted
       _node: {fileID: 114585773044923226}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 114926250237349256}
@@ -1886,8 +1863,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114605592322287672}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeatureToInput
         node: {fileID: 114356934883696634}
@@ -1993,8 +1969,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114663350036161056}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeaturesToMeasureDistanceToFirst
         node: {fileID: 114762007122857022}
@@ -2044,8 +2019,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114681883242046384}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeaturesToMeasureDistanceToFirst
         node: {fileID: 114762007122857022}
@@ -2083,9 +2057,9 @@ MonoBehaviour:
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 114683921223975454}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: VelocityExtracted
         node: {fileID: 114833012837605150}
@@ -2151,8 +2125,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114733314451815770}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeaturesToMeasureDistanceToFirst
         node: {fileID: 114290916878826764}
@@ -2191,8 +2164,7 @@ MonoBehaviour:
     values:
     - _fieldName: FeatureToInput
       _node: {fileID: 114762007122857022}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114035907775032882}
@@ -2203,9 +2175,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: FeaturesToMeasureDistanceToFirst
       _node: {fileID: 114762007122857022}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114378620732791270}
@@ -2228,8 +2200,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: DistanceExtracted
       _node: {fileID: 114762007122857022}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 114870395820478542}
@@ -2292,8 +2263,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114811611838066988}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeatureToInput
         node: {fileID: 114387068067455594}
@@ -2346,8 +2316,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114832926824065512}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeaturesToMeasureDistanceToFirst
         node: {fileID: 114290916878826764}
@@ -2385,8 +2354,7 @@ MonoBehaviour:
     values:
     - _fieldName: FeatureToInput
       _node: {fileID: 114833012837605150}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: rotationExtracted
         node: {fileID: 114247239337280674}
@@ -2397,8 +2365,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: VelocityExtracted
       _node: {fileID: 114833012837605150}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 114683921223975454}
@@ -2459,8 +2426,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114849844208104980}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeaturesToMeasureDistanceToFirst
         node: {fileID: 114762007122857022}
@@ -2498,9 +2464,9 @@ MonoBehaviour:
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 114870395820478542}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: DistanceExtracted
         node: {fileID: 114762007122857022}
@@ -2574,9 +2540,9 @@ MonoBehaviour:
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 114926250237349256}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: VelocityExtracted
         node: {fileID: 114585773044923226}
@@ -2687,9 +2653,9 @@ MonoBehaviour:
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 114929005190181280}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: DistanceExtracted
         node: {fileID: 114356934883696634}
@@ -2764,9 +2730,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: InputFeatures
       _node: {fileID: 114930582521853118}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: VelocityExtracted
         node: {fileID: 114585773044923226}
@@ -2843,9 +2809,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: InputFeatures
       _node: {fileID: 114948667100810690}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: DistanceExtracted
         node: {fileID: 114356934883696634}

@@ -50,7 +50,7 @@ namespace InteractML
         public List<IMLConfiguration> IMLConfigurationNodesList;
         private List<GameObjectNode> gameObjectNodeList;
         [HideInInspector]
-        public List<RealtimeIMLOutputNode> RealtimeIMLOutputNodesList;
+        private List<RealtimeIMLOutputNode> RealtimeIMLOutputNodesList;
         public List<IFeatureIML> FeatureNodesList;
 
         /// <summary>
@@ -523,13 +523,11 @@ namespace InteractML
                 else
                 {
                     // We go through all the nodes exporting outputs
-                    foreach (var outputNode in RealtimeIMLOutputNodesList)
+                    for (int i = 0; i < RealtimeIMLOutputNodesList.Count; i++)
                     {
-                        var output = outputNode.GetIMLControllerOutputs();
-                        //for (int i = 0; i < output.Length; i++)
-                        //{
-                        //    Debug.Log("IML Component DEBUG " + output[i]);
-                        //}
+                        var outputNode = RealtimeIMLOutputNodesList[i];
+                        IMLControllerOutputs[i] = outputNode.GetIMLControllerOutputs();
+
                     }
                 }
             }

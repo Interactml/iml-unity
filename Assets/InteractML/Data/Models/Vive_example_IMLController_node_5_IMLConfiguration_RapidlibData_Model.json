@@ -1,0 +1,380 @@
+{
+   "metadata" : {
+      "creator" : "Rapid API C++",
+      "inputNames" : [ "inputs-1", "inputs-2", "inputs-3" ],
+      "numInputs" : 3,
+      "numOutputs" : 1,
+      "version" : "v0.1.1"
+   },
+   "modelSet" : [
+      {
+         "examples" : [
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 0,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 23.386661529541016, 26.171157836914063, 17.213958740234375 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            },
+            {
+               "class" : 10,
+               "features" : [ 0, 0, 0 ]
+            }
+         ],
+         "inputNames" : [ "inputs-1", "inputs-2", "inputs-3" ],
+         "k" : 1,
+         "modelType" : "kNN Classificiation",
+         "numInputs" : 3,
+         "whichInputs" : [ 0, 1, 2 ]
+      }
+   ]
+}

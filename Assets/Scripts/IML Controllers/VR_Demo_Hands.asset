@@ -54,12 +54,19 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114220226136161628}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeatureToInput
         node: {fileID: 114528305645714926}
         reroutePoints: []
+      - fieldName: InputFeatures
+        node: {fileID: 114588875912837210}
+        reroutePoints: []
+      - fieldName: InputFeatures
+        node: {fileID: 114273849951126024}
+        reroutePoints:
+        - {x: -670.6973, y: -160.00941}
+        - {x: 115.80269, y: -259.22943}
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -69,9 +76,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.032049704
-    - -0.82490295
-    - 1.0044638
+    - 0.5093478
+    - 0.76731265
+    - -1.0805804
 --- !u!114 &114232709881693628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,8 +99,7 @@ MonoBehaviour:
     values:
     - _fieldName: IMLModelOutputs
       _node: {fileID: 114232709881693628}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: ModelOutput
         node: {fileID: 114273849951126024}
@@ -119,7 +125,7 @@ MonoBehaviour:
   m_Name: IML Configuration
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 248, y: -56}
+  position: {x: 248, y: -104}
   ports:
     keys:
     - IMLTrainingExamplesNodes
@@ -141,12 +147,12 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: InputFeatures
       _node: {fileID: 114273849951126024}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: VelocityExtracted
-        node: {fileID: 114528305645714926}
+      - fieldName: positionExtracted
+        node: {fileID: 114220226136161628}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -168,15 +174,15 @@ MonoBehaviour:
   IMLTrainingExamplesNodes:
   - {fileID: 114588875912837210}
   InputFeatures:
-  - {fileID: 114528305645714926}
+  - {fileID: 114220226136161628}
   ModelOutput: {fileID: 0}
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
   - 0
-  m_ExpectedInputList: 05000000
+  m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 00000000
-  m_LearningType: 0
+  m_LearningType: 1
   RapidLibComponent: {fileID: 0}
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
@@ -193,7 +199,7 @@ MonoBehaviour:
   m_Name: Extract Velocity
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -728, y: 40}
+  position: {x: -824, y: 248}
   ports:
     keys:
     - FeatureToInput
@@ -201,8 +207,7 @@ MonoBehaviour:
     values:
     - _fieldName: FeatureToInput
       _node: {fileID: 114528305645714926}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114220226136161628}
@@ -213,17 +218,8 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: VelocityExtracted
       _node: {fileID: 114528305645714926}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: InputFeatures
-        node: {fileID: 114588875912837210}
-        reroutePoints: []
-      - fieldName: InputFeatures
-        node: {fileID: 114273849951126024}
-        reroutePoints:
-        - {x: -384.8997, y: 512.4134}
-        - {x: 88.11783, y: 481.82547}
       - fieldName: InputFeatures
         node: {fileID: 8502545660260700992}
         reroutePoints: []
@@ -240,9 +236,9 @@ MonoBehaviour:
     - 0
     - 0
   m_LastFrameFeatureValue:
-  - 0.032049704
-  - -0.82490295
-  - 1.0044638
+  - 0.5093478
+  - 0.76731265
+  - -1.0805804
 --- !u!114 &114588875912837210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,7 +252,7 @@ MonoBehaviour:
   m_Name: Training Examples Node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -360, y: -56}
+  position: {x: -408, y: -184}
   ports:
     keys:
     - InputFeatures
@@ -264,12 +260,12 @@ MonoBehaviour:
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 114588875912837210}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: VelocityExtracted
-        node: {fileID: 114528305645714926}
+      - fieldName: positionExtracted
+        node: {fileID: 114220226136161628}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -289,10 +285,10 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   InputFeatures:
-  - {fileID: 114528305645714926}
+  - {fileID: 114220226136161628}
   TrainingExamplesNodeToOutput: {fileID: 114588875912837210}
   TrainingExamplesVector: []
-  m_DesiredInputsConfig: 05000000
+  m_DesiredInputsConfig: 03000000
   m_DesiredOutputsConfig: 00000000
   IMLConfigurationNodesConnected: []
   StartDelay: 0
@@ -345,7 +341,7 @@ MonoBehaviour:
   m_Name: Training Examples Node
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -392, y: 552}
+  position: {x: -968, y: 552}
   ports:
     keys:
     - InputFeatures
@@ -353,9 +349,9 @@ MonoBehaviour:
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 8502545660260700992}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: VelocityExtracted
         node: {fileID: 114528305645714926}

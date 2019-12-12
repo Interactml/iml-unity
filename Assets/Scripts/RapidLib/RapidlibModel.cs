@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace InteractML
 {
@@ -264,6 +265,14 @@ namespace InteractML
                     isTrained = false;
                     throw new Exception("A list of training examples, not series is required to train a regression model!");
                 case ModelType.DTW:
+                    // We make sure that nothing is null
+                    if (trainingSeries == null)
+                        throw new NullReferenceException("Can't train a DTW model when the Training Series is null.");
+                    else if (trainingSeries.Any(i => (i.ExampleSerie == null || i.ExampleSerie.Count == 0)))
+                        throw new NullReferenceException("Can't train a DTW model when the Training Series Inputs are null or empty.");
+                    else if (trainingSeries.Any(i => String.IsNullOrEmpty(i.LabelSerie)))
+                        throw new NullReferenceException("Can't train a DTW model when the Training Series Outputs are null or empty.");
+
                     // Reset model in dll memory
                     RapidlibLinkerDLL.ResetSeriesClassification(m_ModelAddress);
                     // Create rapidlib training series collection in rapidlib dll memory

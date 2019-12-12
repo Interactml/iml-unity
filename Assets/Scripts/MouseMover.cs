@@ -17,7 +17,7 @@ public class MouseMover : MonoBehaviour {
         m_ObjToMove = this.gameObject;
 
         // Init depth of movement
-        m_CurrentMouseWorldPos.z = 1f;
+        m_CurrentMouseWorldPos.z = -1f;
 
 
     }

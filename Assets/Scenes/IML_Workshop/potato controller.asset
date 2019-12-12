@@ -147,7 +147,7 @@ MonoBehaviour:
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
-  - 0.7317017004385077
+  - 0.47217311855279576
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 1
@@ -185,7 +185,7 @@ MonoBehaviour:
   DevMode: 0
   IMLModelOutputs: {fileID: 0}
   m_IMLOutputVector:
-  - 0.7317017004385077
+  - 0
 --- !u!114 &114687748882358570
 MonoBehaviour:
   m_ObjectHideFlags: 0
