@@ -15,7 +15,7 @@ namespace InteractML
         /// <summary>
         /// The series of input features
         /// </summary>
-        public List<List<IMLInput>> Series { get => m_Series; }
+        public List<List<IMLInput>> Series { get => m_Series; set => m_Series = value; }
 
         private string m_LabelSeries;
         /// <summary>

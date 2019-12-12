@@ -62,6 +62,12 @@ namespace InteractML
             // CLEAR ALL TRAINING EXAMPLES BUTTON
             ShowClearAllExamplesButton();
 
+            // Debug buttons loading stuff
+            if (GUILayout.Button("Load All Data From Disk"))
+            {
+                m_TrainingExamplesNode.LoadDataFromDisk();
+            }
+
             // WARNINGS IF FEATURES CHANGE
             CheckInputFeaturesChanges();
             CheckOutputFeaturesChanges();

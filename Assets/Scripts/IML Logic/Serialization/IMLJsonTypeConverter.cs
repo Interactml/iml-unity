@@ -43,6 +43,11 @@ public class IMLJsonTypeConverter : JsonConverter
         {
             return DeserializeIMLTrainingExample(jo);
         }
+        // If we are deserializing a Training Series...
+        else if (objectType == typeof(IMLTrainingSeries))
+        {
+            return DeserializeIMLTrainingSeries(jo);
+        }
         // If it is not one of our custom types that we control...
         else
         {
@@ -100,7 +105,7 @@ public class IMLJsonTypeConverter : JsonConverter
 
     private IMLTrainingExample DeserializeIMLTrainingExample(JObject jo)
     {
-        // We know there we are expecting an IMLDataType and know its strcuture
+        // We know there we are expecting an IMLDataType and know its structure
         var inputsRead = jo["Inputs"];
         var outputsRead = jo["Outputs"];
         // Handle in case it is not an IMLDataType
@@ -121,6 +126,22 @@ public class IMLJsonTypeConverter : JsonConverter
 
     private IMLOutput DeserializeIMLOutput(JObject jo)
     {
+        return null;
+    }
+
+    private IMLTrainingExample DeserializeIMLTrainingSeries(JObject jo)
+    {
+        // We know there we are expecting an Series and know its structure
+        var inputsRead = jo["Series"];
+        var outputsRead = jo["LabelSeries"];
+        // Handle in case it is not an IMLDataType
+        if (inputsRead == null)
+        {
+            Debug.LogError("The value to deserialize is null when transforming it. It is not an IMLDataType!");
+            return null;
+        }
+
+
         return null;
     }
 
