@@ -66,3 +66,12 @@ Assets/SteamVR_Input
 Assets/SteamVR_Resources
 .collabignore
 .vs/IML_Goldsmiths/v15/Server/
+
+# ===================================== #
+# Custom ignored metafiles for InteractML #
+# ===================================== #
+Assets/Oculus.meta
+Assets/SteamVR.meta
+Assets/SteamVR_Input.meta
+Assets/SteamVR_Resources.meta
+
