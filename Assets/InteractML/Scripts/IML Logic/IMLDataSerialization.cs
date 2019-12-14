@@ -441,7 +441,7 @@ namespace InteractML
                 valueToReturn = new string(dataFromJson.Where(char.IsDigit).ToArray());
             }
 
-            Debug.Log("Value read from JSON is: " + valueToReturn);
+            Debug.Log("Value read from JSON for property " + valueName + " is: " + valueToReturn);
 
             return valueToReturn;
         }
