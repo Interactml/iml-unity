@@ -474,9 +474,9 @@ namespace InteractML
                     //}
                     //
 
-                    if (i + pointerRawOutputVector > PredictedRapidlibOutput.Length)
+                    if (i + pointerRawOutputVector >= PredictedRapidlibOutput.Length)
                     {
-                        Debug.LogError("The rapidlib output vector is too small!");
+                        Debug.LogError("The predicted rapidlib output vector is too small when transforming to interactml types!");
                         break;
                     }
                     outputFeature.Values[i] = (float)PredictedRapidlibOutput[i + pointerRawOutputVector];
