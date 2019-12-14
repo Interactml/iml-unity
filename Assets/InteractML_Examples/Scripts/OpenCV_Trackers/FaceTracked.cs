@@ -1,4 +1,10 @@
-﻿using System.Collections;
+﻿// We set opencv preprocessor directive to false
+#undef ENABLE_OPENCV 
+
+// The class will only be compiled if using opencv is true
+#if ENABLE_OPENCV
+// Using statements
+using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
@@ -26,7 +32,7 @@ public class FaceInfo
 /// </summary>
 public class FaceTracked : MonoBehaviour
 {
-    [SerializeField]
+        [SerializeField]
     private FaceDetectionWebCamTextureExample exampleFaceTracker;
 
     public FaceInfo Face;
@@ -97,4 +103,8 @@ public class FaceTracked : MonoBehaviour
             }
         }
     }
+
 }
+
+#endif
+
