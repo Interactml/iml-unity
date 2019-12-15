@@ -595,8 +595,11 @@ namespace InteractML
             if (PredictedOutput ==  null)
                 PredictedOutput = new List<IMLBaseDataType>();
 
-            // Only changed this when there is a change in nodes
-            if (m_LastKnownRapidlibOutputVectorSize == 0 || m_LastKnownRapidlibOutputVectorSize != PredictedRapidlibOutput.Length || m_NodeConnectionChanged)
+            // Only changed this when there is a change in nodes or formats don't match
+            if (m_LastKnownRapidlibOutputVectorSize == 0 
+                || m_LastKnownRapidlibOutputVectorSize != PredictedRapidlibOutput.Length 
+                || m_NodeConnectionChanged 
+                || (m_LastKnownRapidlibOutputVectorSize > 0 && PredictedOutput.Count == 0 ) )
             {
                 // Save size of rapidlib vectorsize to work with it 
                 // DIRTY CODE.  THIS SHOULD CHECK IF THE OUTPUT CONFIGURATION ACTUALLY DID CHANGE OR NOT. YOU COULD HAVE 2 DIFF OUTPUTS CONFIGS WITH SAME VECTOR SIZE
