@@ -435,13 +435,13 @@ namespace InteractML
             // If that property is there...
             if (index != -1)
             {
-                // We get the 5 values after the string
-                string dataFromJson = jsonFile.Substring(index + 6);
+                // We get the enough values after the string (counting the chars of the word numOutputs + the spaces for the numbers)
+                string dataFromJson = jsonFile.Substring(index, 20);
                 // Get only the digits
                 valueToReturn = new string(dataFromJson.Where(char.IsDigit).ToArray());
             }
 
-            Debug.Log("Value read from JSON for property " + valueName + " is: " + valueToReturn);
+            //Debug.Log("Value read from JSON for property " + valueName + " is: " + valueToReturn);
 
             return valueToReturn;
         }
