@@ -268,24 +268,36 @@ namespace InteractML
 
         private void ShowClearAllExamplesButton()
         {
+
             string nameButton = "";
+
+            bool disableButton = false;
+
             switch (m_TrainingExamplesNode.ModeOfCollection)
             {
                 case TrainingExamplesNode.CollectionMode.SingleExample:
                     nameButton = "Delete All Training Examples";
+                    // Only run button logic when there are training examples to delete
+                    if (!Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.TrainingExamplesVector))
+                    {
+                        disableButton = false;
+                    }
                     break;
                 case TrainingExamplesNode.CollectionMode.Series:
-                    nameButton = "Delete All Training Series Collected";
+                   nameButton = "Delete All Training Series Collected";
+                    // Only run button logic when there are training examples to delete
+                    if (!Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.TrainingSeriesCollection))
+                    {
+                        disableButton = false;
+                    }
                     break;
                 default:
                     break;
             }
 
             // Only run button logic when there are training examples to delete
-            if (!Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.TrainingExamplesVector))
+            if (!disableButton)
             {
-                bool disableButton = false;
-
                 // If there are any models connected we check some conditions
                 if (!Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.IMLConfigurationNodesConnected))
                 {
@@ -295,6 +307,7 @@ namespace InteractML
                         if (IMLConfigNode.Running || IMLConfigNode.Training || m_TrainingExamplesNode.CollectingData)
                         {
                             disableButton = true;
+
                             break;
                         }
                     }
@@ -309,9 +322,6 @@ namespace InteractML
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;
-
-
-
             }
             // If there are no training examples to delete we draw a disabled button
             else
