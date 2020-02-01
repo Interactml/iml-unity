@@ -384,6 +384,9 @@ namespace InteractML
 
         private void RunFeaturesLogic()
         {
+            if (FeatureNodesList == null)
+                return;
+
             for (int i = 0; i < FeatureNodesList.Count; i++)
             {
                 // Call the update logic per node ONLY IF THEY ARE UPDATABLE (for performance reasons)
