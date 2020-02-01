@@ -81,7 +81,21 @@ namespace InteractML
             // Go through all input features in IML Training Example and get their size
             for (int k = 0; k < m_Inputs.Count; k++)
             {
-                rapidlibInputVectorSize += m_Inputs[k].InputData.Values.Length;
+                if (m_Inputs[k] == null)
+                {
+                    throw new System.NullReferenceException("Null references in training example!");
+                }
+                else
+                {
+                    if (m_Inputs[k].InputData == null)
+                    {
+                        throw new System.NullReferenceException("Null references in training example!");
+                    }
+                    else
+                    {
+                        rapidlibInputVectorSize += m_Inputs[k].InputData.Values.Length;
+                    }
+                }
             }
             // Create rapidlib input by constructing a vector size of all IML input features combined
             double[] returnValue = new double[rapidlibInputVectorSize];
