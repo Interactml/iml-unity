@@ -24,6 +24,11 @@ namespace InteractML.FeatureExtractors
         public Node rotationExtracted;
 
         /// <summary>
+        /// Controls whether to use local space or not
+        /// </summary>
+        public bool LocalSpace;
+
+        /// <summary>
         /// Feature Values extracted (ready to be read by a different node)
         /// </summary>
         public IMLBaseDataType FeatureValues { get { return m_RotationExtracted; } }
@@ -96,7 +101,11 @@ namespace InteractML.FeatureExtractors
             else
             {
                 // Set values of our feature extracted
-                m_RotationExtracted.SetValues(gameObjRef.transform.rotation);
+                if(LocalSpace)
+                    m_RotationExtracted.SetValues(gameObjRef.transform.localRotation);
+                else
+                    m_RotationExtracted.SetValues(gameObjRef.transform.rotation);
+
                 GameObjInputMissing = false;
             }
 

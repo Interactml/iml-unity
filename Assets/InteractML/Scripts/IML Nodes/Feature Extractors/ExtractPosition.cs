@@ -24,6 +24,11 @@ namespace InteractML.FeatureExtractors
         public Node positionExtracted;
 
         /// <summary>
+        /// Controls whether to use local space or not
+        /// </summary>
+        public bool LocalSpace;
+
+        /// <summary>
         /// Feature Values extracted (ready to be read by a different node)
         /// </summary>
         public IMLBaseDataType FeatureValues { get { return m_PositionExtracted; } }
@@ -90,8 +95,12 @@ namespace InteractML.FeatureExtractors
             }
             else
             {
+                
                 // Set values of our feature extracted
-                m_PositionExtracted.SetValues(gameObjRef.transform.position);
+                if (LocalSpace)
+                    m_PositionExtracted.SetValues(gameObjRef.transform.localPosition);
+                else
+                    m_PositionExtracted.SetValues(gameObjRef.transform.position);
 
             }
 

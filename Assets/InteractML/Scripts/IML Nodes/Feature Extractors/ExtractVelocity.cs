@@ -37,6 +37,7 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Used to calculate the velocity
         /// </summary>
+        [HideInInspector]
         public float[] m_LastFrameFeatureValue;
 
         /// <summary>
