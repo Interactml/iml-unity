@@ -96,7 +96,7 @@ namespace InteractML
                 EditorGUILayout.HelpBox("There are no Expected Outputs Configured!", MessageType.Error);
             }
 
-            if (m_IMLConfigNode.InputFeatures.Count == 0)
+            if (m_IMLConfigNode.InputFeatures == null || m_IMLConfigNode.InputFeatures.Count == 0)
             {
                 EditorGUILayout.HelpBox("There are no Realtime Input Features Connected!", MessageType.Error);
 
