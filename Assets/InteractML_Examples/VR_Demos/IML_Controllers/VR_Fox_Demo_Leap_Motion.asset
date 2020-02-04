@@ -187,7 +187,9 @@ MonoBehaviour:
   - {fileID: 114585773044923226}
   - {fileID: 114387068067455594}
   TrainingExamplesNodeToOutput: {fileID: 114018606463082566}
+  ModeOfCollection: 0
   TrainingExamplesVector: []
+  TrainingSeriesCollection: []
   m_DesiredInputsConfig: 0500000005000000
   m_DesiredOutputsConfig: 00000000
   IMLConfigurationNodesConnected: []
@@ -393,7 +395,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114108558201034724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,6 +460,9 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 114762007122857022}
   ModelOutput: {fileID: 0}
+  KeyboardControl: 0
+  TrainingKey: 0
+  RunningKey: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -465,7 +470,6 @@ MonoBehaviour:
   m_ExpectedInputList: 05000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 0
-  RapidLibComponent: {fileID: 0}
   TrainOnPlaymodeChange: 1
   RunOnAwake: 1
 --- !u!114 &114141302831876420
@@ -555,6 +559,9 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 114290916878826764}
   ModelOutput: {fileID: 0}
+  KeyboardControl: 0
+  TrainingKey: 0
+  RunningKey: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -562,7 +569,6 @@ MonoBehaviour:
   m_ExpectedInputList: 05000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 0
-  RapidLibComponent: {fileID: 0}
   TrainOnPlaymodeChange: 1
   RunOnAwake: 1
 --- !u!114 &114198625317458438
@@ -665,7 +671,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114243182286763708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -724,7 +730,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114247239337280674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -776,7 +782,7 @@ MonoBehaviour:
     - -0.5352667
     - 0.37188414
     - -0.71344906
-  GameObjInputMissing: 0
+  GameObjInputMissing: 1
 --- !u!114 &114255138219269668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -859,7 +865,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114260423947491974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -892,7 +898,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114268099283421844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -948,7 +954,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114290916878826764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1323,7 +1329,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114387068067455594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1382,9 +1388,9 @@ MonoBehaviour:
     - 0
     - 0
   m_LastFrameFeatureValue:
-  - 19.38324
-  - 1.3940772
-  - 20.214163
+  - 0
+  - 0
+  - 0
 --- !u!114 &114434660954448230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1466,7 +1472,9 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 114290916878826764}
   TrainingExamplesNodeToOutput: {fileID: 114455896477681330}
+  ModeOfCollection: 0
   TrainingExamplesVector: []
+  TrainingSeriesCollection: []
   m_DesiredInputsConfig: 05000000
   m_DesiredOutputsConfig: 00000000
   IMLConfigurationNodesConnected: []
@@ -1512,7 +1520,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114492344563085540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1545,7 +1553,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114493415619065000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1611,7 +1619,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114532002656852914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1644,7 +1652,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114542359165737036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1709,6 +1717,9 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 114833012837605150}
   ModelOutput: {fileID: 0}
+  KeyboardControl: 0
+  TrainingKey: 0
+  RunningKey: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -1716,7 +1727,6 @@ MonoBehaviour:
   m_ExpectedInputList: 05000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 0
-  RapidLibComponent: {fileID: 0}
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
 --- !u!114 &114583057323706096
@@ -1827,9 +1837,9 @@ MonoBehaviour:
     - 0
     - 0
   m_LastFrameFeatureValue:
-  - 19.79676
-  - 1.3940772
-  - 20.214163
+  - 0
+  - 0
+  - 0
 --- !u!114 &114605592322287672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1915,7 +1925,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114624362103144972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2084,7 +2094,9 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 114833012837605150}
   TrainingExamplesNodeToOutput: {fileID: 114683921223975454}
+  ModeOfCollection: 0
   TrainingExamplesVector: []
+  TrainingSeriesCollection: []
   m_DesiredInputsConfig: 05000000
   m_DesiredOutputsConfig: 00000000
   IMLConfigurationNodesConnected: []
@@ -2389,10 +2401,10 @@ MonoBehaviour:
     - 0
     - 0
   m_LastFrameFeatureValue:
-  - 0.25725928
-  - -0.5352667
-  - 0.37188414
-  - -0.71344906
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!114 &114849844208104980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2491,7 +2503,9 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 114762007122857022}
   TrainingExamplesNodeToOutput: {fileID: 114870395820478542}
+  ModeOfCollection: 1
   TrainingExamplesVector: []
+  TrainingSeriesCollection: []
   m_DesiredInputsConfig: 05000000
   m_DesiredOutputsConfig: 00000000
   IMLConfigurationNodesConnected: []
@@ -2571,7 +2585,9 @@ MonoBehaviour:
   - {fileID: 114585773044923226}
   - {fileID: 114387068067455594}
   TrainingExamplesNodeToOutput: {fileID: 114926250237349256}
+  ModeOfCollection: 0
   TrainingExamplesVector: []
+  TrainingSeriesCollection: []
   m_DesiredInputsConfig: 0500000005000000
   m_DesiredOutputsConfig: 00000000
   IMLConfigurationNodesConnected: []
@@ -2631,7 +2647,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114929005190181280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2684,7 +2700,9 @@ MonoBehaviour:
   - {fileID: 114356934883696634}
   - {fileID: 114198625317458438}
   TrainingExamplesNodeToOutput: {fileID: 114929005190181280}
+  ModeOfCollection: 0
   TrainingExamplesVector: []
+  TrainingSeriesCollection: []
   m_DesiredInputsConfig: 0500000005000000
   m_DesiredOutputsConfig: 00000000
   IMLConfigurationNodesConnected: []
@@ -2764,6 +2782,9 @@ MonoBehaviour:
   - {fileID: 114585773044923226}
   - {fileID: 114387068067455594}
   ModelOutput: {fileID: 0}
+  KeyboardControl: 0
+  TrainingKey: 0
+  RunningKey: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -2771,7 +2792,6 @@ MonoBehaviour:
   m_ExpectedInputList: 0500000005000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 0
-  RapidLibComponent: {fileID: 0}
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
 --- !u!114 &114948667100810690
@@ -2842,6 +2862,9 @@ MonoBehaviour:
   - {fileID: 114356934883696634}
   - {fileID: 114198625317458438}
   ModelOutput: {fileID: 0}
+  KeyboardControl: 0
+  TrainingKey: 0
+  RunningKey: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -2849,7 +2872,6 @@ MonoBehaviour:
   m_ExpectedInputList: 0500000005000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 0
-  RapidLibComponent: {fileID: 0}
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
 --- !u!114 &114964523626434266

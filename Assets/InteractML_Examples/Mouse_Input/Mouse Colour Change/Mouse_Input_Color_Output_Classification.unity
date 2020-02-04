@@ -256,13 +256,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c477b3f40f547843930edfdcbde5951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MLController: {fileID: 11400000, guid: f8a172a0253b9cb4aabc042156e813c3, type: 2}
+  MLController: {fileID: 11400000, guid: 2594d0b219b963048bec5f6d15fbf34e, type: 2}
   GameObjectsToUse:
   - {fileID: 77529449}
   TrainingExamplesNodesList:
-  - {fileID: 6732151304541360272, guid: f8a172a0253b9cb4aabc042156e813c3, type: 2}
+  - {fileID: 6732151304541360272, guid: 2594d0b219b963048bec5f6d15fbf34e, type: 2}
   IMLConfigurationNodesList:
-  - {fileID: -2164575221549548335, guid: f8a172a0253b9cb4aabc042156e813c3, type: 2}
+  - {fileID: -2164575221549548335, guid: 2594d0b219b963048bec5f6d15fbf34e, type: 2}
   FeaturesUpdated: 0
 --- !u!4 &266555835
 Transform:
