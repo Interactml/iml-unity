@@ -56,16 +56,16 @@ namespace InteractML
         /// <summary>
         /// Configuration of desired inputs for the Training Examples node 
         /// </summary>
-        [SerializeField]
+        [SerializeField, HideInInspector]
         private List<IMLSpecifications.InputsEnum> m_DesiredInputsConfig;
-        public List<IMLSpecifications.InputsEnum> DesiredInputsConfig { get { return m_DesiredInputsConfig; } }
+        public List<IMLSpecifications.InputsEnum> DesiredInputsConfig { get { return m_DesiredInputsConfig; } set { this.m_DesiredInputsConfig = value; } }
 
         /// <summary>
         /// Configuration of desired outputs for a specific Training Set
         /// </summary>
-        [SerializeField]
+        [SerializeField, HideInInspector]
         private List<IMLSpecifications.OutputsEnum> m_DesiredOutputsConfig;
-        public List<IMLSpecifications.OutputsEnum> DesiredOutputsConfig { get { return m_DesiredOutputsConfig; } }
+        public List<IMLSpecifications.OutputsEnum> DesiredOutputsConfig { get { return m_DesiredOutputsConfig; } set { this.m_DesiredOutputsConfig = value; } }
         /// <summary>
         /// This one is kept to compare if the structure of the outputs has changed
         /// </summary>
@@ -99,7 +99,9 @@ namespace InteractML
         public List<IMLConfiguration> IMLConfigurationNodesConnected;
 
         // Variables for collecting data
+        [HideInInspector]
         public float StartDelay = 0.0f;
+        [HideInInspector]
         public float CaptureRate = 10.0f;
         [HideInInspector]
         public float RecordTime = -1.0f;
@@ -115,7 +117,9 @@ namespace InteractML
         /// <summary>
         /// Flag to have a shortcut to collect data (CTRL + Space)
         /// </summary>
-        public bool EnableCollectDataShortcut;
+        public bool EnableKeyboardShortcut;
+        [HideInInspector]
+        public KeyCode RecordDataKey;
 
         #endregion
 
@@ -223,7 +227,7 @@ namespace InteractML
             CollectExamplesLogic();
 
             // Check input for keyboard shortcut in case is pressed
-            if (EnableCollectDataShortcut)
+            if (EnableKeyboardShortcut)
             {
                 if (Input.GetKeyDown(KeyCode.Space) )
                 {
@@ -581,6 +585,18 @@ namespace InteractML
             string nodeIndex = this.graph.nodes.FindIndex(a => a == this).ToString();
             string fileName = graphName + "_node_" + nodeIndex + "_" + "_SERIES_" + "TrainingExamplesNode";
             return fileName;
+        }
+
+        private void KeyboardInput()
+        {
+            if (EnableKeyboardShortcut)
+            {
+                if (Input.GetKeyDown(RecordDataKey))
+                {
+                    //TrainModel();
+                }
+
+            }
         }
 
         #endregion

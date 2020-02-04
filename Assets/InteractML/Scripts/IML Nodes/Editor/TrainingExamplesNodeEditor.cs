@@ -45,6 +45,14 @@ namespace InteractML
             // Get reference to the current node
             m_TrainingExamplesNode = (target as TrainingExamplesNode);
 
+            // SHOW INPUT CONFIG
+            ShowDesiredInputsConfigLogic();
+            EditorGUILayout.Space();
+
+            // SHOW OUTPUT CONFIG
+            ShowDesiredOutputsConfigLogic();
+            EditorGUILayout.Space();
+
             // TOTAL NUMBER OF TRAINING EXAMPLES
             ShowTotalNumberOfTrainingData();
 
@@ -52,6 +60,20 @@ namespace InteractML
             EditorGUILayout.Space();
             ShowDesiredOutputFeaturesLogic();
             EditorGUILayout.Space();
+
+            // SHOW KEYBOARD SHORTCUTS
+            // Show information about runtime keys for interaction
+            GUIStyle styleGUIBox = new GUIStyle(GUI.skin.box);
+            styleGUIBox.richText = true;
+            if (m_TrainingExamplesNode.EnableKeyboardShortcut)
+            {
+                GUILayout.Box("<b>Keyboard Shortcuts:</b>\n <b>Record:</b> " + m_TrainingExamplesNode.RecordDataKey.ToString(),
+                    styleGUIBox);
+
+                // Show key configs
+                m_TrainingExamplesNode.RecordDataKey = (KeyCode)EditorGUILayout.EnumFlagsField(m_TrainingExamplesNode.RecordDataKey);
+                EditorGUILayout.Space();
+            }
 
             // RECORD EXAMPLES BUTTON 
             ShowRecordExamplesButton();
@@ -268,11 +290,8 @@ namespace InteractML
 
         private void ShowClearAllExamplesButton()
         {
-
             string nameButton = "";
-
             bool disableButton = false;
-
             switch (m_TrainingExamplesNode.ModeOfCollection)
             {
                 case TrainingExamplesNode.CollectionMode.SingleExample:
@@ -284,7 +303,7 @@ namespace InteractML
                     }
                     break;
                 case TrainingExamplesNode.CollectionMode.Series:
-                   nameButton = "Delete All Training Series Collected";
+                    nameButton = "Delete All Training Series Collected";
                     // Only run button logic when there are training examples to delete
                     if (!Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.TrainingSeriesCollection))
                     {
@@ -294,6 +313,7 @@ namespace InteractML
                 default:
                     break;
             }
+
 
             // Only run button logic when there are training examples to delete
             if (!disableButton)
@@ -307,7 +327,6 @@ namespace InteractML
                         if (IMLConfigNode.Running || IMLConfigNode.Training || m_TrainingExamplesNode.CollectingData)
                         {
                             disableButton = true;
-
                             break;
                         }
                     }
@@ -322,6 +341,9 @@ namespace InteractML
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;
+
+
+
             }
             // If there are no training examples to delete we draw a disabled button
             else
@@ -333,16 +355,18 @@ namespace InteractML
                 }
                 GUI.enabled = true;
             }
+
         }
 
         private void ShowDesiredOutputFeaturesLogic ()
         {
             // SHOW DESIRED OUTPUT CONFIG AND BUILD OUTPUT LIST
-            EditorGUILayout.LabelField("With Desired Output: ");
+            EditorGUILayout.LabelField("Desired Output Value: ");
             // Go through the list of desired outputs and show the correct kind of config editor tool
             for (int i = 0; i < m_TrainingExamplesNode.DesiredOutputFeatures.Count; i++)
             {
-                string labelOutput = "Output " + i.ToString() + ": ";
+                int outputValueIndex = i + 1;
+                string labelOutput = "Value " + outputValueIndex + ":";
                 var outputFeature = m_TrainingExamplesNode.DesiredOutputFeatures[i];
                 // We make sure that the desired output feature list captures the value inputted by the user
                 switch (outputFeature.DataType)
@@ -382,6 +406,58 @@ namespace InteractML
 
         }
 
+        private void ShowDesiredInputsConfigLogic()
+        {
+            // SHOW DESIRED INPUT CONFIG AND BUILD INPUT LIST
+            EditorGUILayout.LabelField("Inputs: ");
+            EditorGUI.indentLevel++;
+
+            EditorGUILayout.LabelField("No. of Inputs ", m_TrainingExamplesNode.DesiredInputsConfig.Count.ToString());
+
+            // Go through the list of inputs and show the correct kind of config editor tool
+            for (int i = 0; i < m_TrainingExamplesNode.DesiredInputsConfig.Count; i++)
+            {
+                int inputValueIndex = i + 1;
+                string label = "Input " + inputValueIndex;
+                var inputFeature = m_TrainingExamplesNode.DesiredInputsConfig[i];
+                // We make sure that the desired output feature list captures the value inputted by the user
+                EditorGUILayout.EnumFlagsField(label, m_TrainingExamplesNode.DesiredInputsConfig[i]);
+
+            }
+            EditorGUI.indentLevel--;
+
+
+        }
+
+        private void ShowDesiredOutputsConfigLogic()
+        {
+            // SHOW DESIRED INPUT CONFIG AND BUILD INPUT LIST
+            EditorGUILayout.LabelField("Outputs: ");
+            EditorGUI.indentLevel++;
+
+            //EditorGUILayout.IntField("No. of Outputs ", m_TrainingExamplesNode.DesiredInputsConfig.Count.ToString());
+
+            // Check if we are changing the size of the list 
+            int originalSize = m_TrainingExamplesNode.DesiredOutputsConfig.Count;
+            int newSize = EditorGUILayout.IntField("No. of Outputs", m_TrainingExamplesNode.DesiredOutputsConfig.Count);
+            if (originalSize != newSize)
+            {
+                m_TrainingExamplesNode.DesiredOutputsConfig.Resize<IMLSpecifications.OutputsEnum>(newSize);
+            }
+            //Go through the list of inputs and show the correct kind of config editor tool
+            for (int i = 0; i < m_TrainingExamplesNode.DesiredOutputsConfig.Count; i++)
+            {
+                int outputValueIndex = i + 1;
+                string label = "Output " + outputValueIndex;
+                var inputFeature = m_TrainingExamplesNode.DesiredInputsConfig[i];
+                // We make sure that the desired output feature list captures the value inputted by the user
+                EditorGUILayout.EnumFlagsField(label, m_TrainingExamplesNode.DesiredOutputsConfig[i]);
+
+            }
+            EditorGUI.indentLevel--;
+
+
+        }
         /// <summary>
         /// Checks if the num of input features differ from what we last know to show warnings
         /// </summary>
@@ -535,7 +611,7 @@ namespace InteractML
 
                     for (int i = 0; i < m_TrainingExamplesNode.TrainingExamplesVector.Count; i++)
                     {
-                        EditorGUILayout.LabelField("Training Example " + i);
+                        EditorGUILayout.LabelField("Training Example " + (i+1));
 
                         EditorGUI.indentLevel++;
 
@@ -558,7 +634,7 @@ namespace InteractML
 
                                 EditorGUI.indentLevel++;
 
-                                EditorGUILayout.LabelField("Input " + j + " (" + inputFeatures[j].InputData.DataType + ")");
+                                EditorGUILayout.LabelField("Input " + (j+1) + " (" + inputFeatures[j].InputData.DataType + ")");
 
                                 for (int k = 0; k < inputFeatures[j].InputData.Values.Length; k++)
                                 {
@@ -592,7 +668,7 @@ namespace InteractML
 
                                 EditorGUI.indentLevel++;
 
-                                EditorGUILayout.LabelField("Output " + j+ " (" + outputFeatures[j].OutputData.DataType + ")");
+                                EditorGUILayout.LabelField("Output " + (j+1) + " (" + outputFeatures[j].OutputData.DataType + ")");
 
 
                                 for (int k = 0; k < outputFeatures[j].OutputData.Values.Length; k++)
