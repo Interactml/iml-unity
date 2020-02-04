@@ -83,11 +83,12 @@ MonoBehaviour:
   DevMode: 0
   gameObjectIntoNode: {fileID: 0}
   positionExtracted: {fileID: 0}
+  LocalSpace: 0
   m_PositionExtracted:
     m_Values:
-    - 44.155697
-    - -5.604878
-    - -1
+    - -7.36
+    - 2.07
+    - 3.9
 --- !u!114 &-6845527610141923183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,9 +153,9 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: -7769149576494201274}
   ModelOutput: {fileID: 0}
-  EnableKeyboardShortcut: 1
+  KeyboardControl: 1
   TrainingKey: 116
-  RunningKey: 115
+  RunningKey: 114
   PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
   m_ExpectedInputList: 03000000
