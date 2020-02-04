@@ -44,12 +44,12 @@ namespace InteractML
             // Account for dtw
             if (m_IMLConfigNode.LearningType == IMLSpecifications.LearningType.DTW)
             {
-                EditorGUILayout.LabelField("Total Num Training Series: ", m_IMLConfigNode.TotalNumTrainingData.ToString());
+                EditorGUILayout.LabelField("Total No. Training Series: ", m_IMLConfigNode.TotalNumTrainingData.ToString());
             }
             // classification/regression
             else
             {
-                EditorGUILayout.LabelField("Total Num Training Examples: ", m_IMLConfigNode.TotalNumTrainingData.ToString());
+                EditorGUILayout.LabelField("Total No. Training Examples: ", m_IMLConfigNode.TotalNumTrainingData.ToString());
             }
 
             EditorGUILayout.Space();
@@ -72,7 +72,6 @@ namespace InteractML
                 m_IMLConfigNode.TrainingKey = (KeyCode) EditorGUILayout.EnumFlagsField(m_IMLConfigNode.TrainingKey);
                 m_IMLConfigNode.RunningKey = (KeyCode) EditorGUILayout.EnumFlagsField(m_IMLConfigNode.RunningKey);
                 EditorGUILayout.Space();
-
             }
 
             // SHOW TRAIN BUTTON 
@@ -88,7 +87,7 @@ namespace InteractML
             }
 
             // SHOW FEATURE SELECTION MATRIX
-            ShowFeatureSelectionMatrix();
+            // ShowFeatureSelectionMatrix();
 
             // Errors with needed connections
             if (m_IMLConfigNode.ExpectedOutputList.Count == 0)
@@ -346,7 +345,7 @@ namespace InteractML
             EditorGUILayout.Space();
 
             showModelOutput = true;
-            showModelOutput = EditorGUILayout.Foldout(showModelOutput, "Model Output");
+            showModelOutput = EditorGUILayout.Foldout(showModelOutput, "Model Output Value");
             if (showModelOutput)
             {
 
@@ -357,25 +356,25 @@ namespace InteractML
                     switch (outputFeature.DataType)
                     {
                         case IMLSpecifications.DataTypes.Float:
-                            EditorGUILayout.FloatField("Output " + i + ": ", outputFeature.Values[0]);
+                            EditorGUILayout.FloatField("Output " + (i+1) + ": ", outputFeature.Values[0]);
                             break;
                         case IMLSpecifications.DataTypes.Integer:
-                            EditorGUILayout.IntField("Output " + i + ": ", (int) outputFeature.Values[0]);
+                            EditorGUILayout.IntField("Output " + (i + 1) + ": ", (int) outputFeature.Values[0]);
                             break;
                         case IMLSpecifications.DataTypes.Vector2:
                             Vector2 values = new Vector2(outputFeature.Values[0], outputFeature.Values[1]);
-                            EditorGUILayout.Vector2Field("Output " + i + ": ", values);                       
+                            EditorGUILayout.Vector2Field("Output " + (i + 1) + ": ", values);                       
                             break;
                         case IMLSpecifications.DataTypes.Vector3:
                             Vector3 valuesV3 = new Vector3(outputFeature.Values[0], outputFeature.Values[1], outputFeature.Values[2]);
-                            EditorGUILayout.Vector3Field("Output " + i + ": ", valuesV3);
+                            EditorGUILayout.Vector3Field("Output " + (i + 1) + ": ", valuesV3);
                             break;
                         case IMLSpecifications.DataTypes.Vector4:
                             Vector4 valuesV4 = new Vector4(outputFeature.Values[0], outputFeature.Values[1], outputFeature.Values[2], outputFeature.Values[3]);
-                            EditorGUILayout.Vector4Field("Output " + i + ": ", valuesV4);
+                            EditorGUILayout.Vector4Field("Output " + (i + 1) + ": ", valuesV4);
                             break;
                         case IMLSpecifications.DataTypes.SerialVector:
-                            EditorGUILayout.LabelField("Output " + i + ": ");
+                            EditorGUILayout.LabelField("Output " + (i + 1) + ": ");
                             EditorGUI.indentLevel++;
                             for (int j = 0; j < outputFeature.Values.Length; j++)
                             {

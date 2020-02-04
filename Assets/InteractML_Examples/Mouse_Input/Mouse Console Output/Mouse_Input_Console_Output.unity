@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -391,13 +391,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c477b3f40f547843930edfdcbde5951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MLController: {fileID: 11400000, guid: 3800462cc5705704299cf5c06682d91b, type: 2}
+  MLController: {fileID: 0}
   GameObjectsToUse:
   - {fileID: 672594436}
   TrainingExamplesNodesList:
-  - {fileID: 114507523331420728, guid: 3800462cc5705704299cf5c06682d91b, type: 2}
+  - {fileID: 114507523331420728, guid: a191038540a36244faf78fede7b0bfaa, type: 2}
+  - {fileID: 0}
   IMLConfigurationNodesList:
-  - {fileID: 114357140570682068, guid: 3800462cc5705704299cf5c06682d91b, type: 2}
+  - {fileID: 114357140570682068, guid: a191038540a36244faf78fede7b0bfaa, type: 2}
+  - {fileID: 0}
   FeaturesUpdated: 0
 --- !u!4 &682034987
 Transform:

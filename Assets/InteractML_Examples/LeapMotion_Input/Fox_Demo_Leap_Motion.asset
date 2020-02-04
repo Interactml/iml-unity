@@ -101,8 +101,7 @@ MonoBehaviour:
     values:
     - _fieldName: IMLModelOutputs
       _node: {fileID: 114010043976543316}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: ModelOutput
         node: {fileID: 114948667100810690}
@@ -148,8 +147,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114035907775032882}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeatureToInput
         node: {fileID: 114762007122857022}
@@ -186,8 +184,7 @@ MonoBehaviour:
     values:
     - _fieldName: IMLModelOutputs
       _node: {fileID: 114037009951859728}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: ModelOutput
         node: {fileID: 114930582521853118}
@@ -235,9 +232,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: InputFeatures
       _node: {fileID: 114108558201034724}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: DistanceExtracted
         node: {fileID: 114762007122857022}
@@ -264,6 +261,9 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 114762007122857022}
   ModelOutput: {fileID: 0}
+  EnableKeyboardShortcut: 0
+  TrainingKey: 0
+  RunningKey: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -271,7 +271,6 @@ MonoBehaviour:
   m_ExpectedInputList: 05000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 0
-  RapidLibComponent: {fileID: 0}
   TrainOnPlaymodeChange: 1
   RunOnAwake: 1
 --- !u!114 &114243182286763708
@@ -332,7 +331,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114247239337280674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,8 +365,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: rotationExtracted
       _node: {fileID: 114247239337280674}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 114929005190181280}
@@ -393,7 +391,7 @@ MonoBehaviour:
     - 0.71753776
     - 0.0045702844
     - 0.69648826
-  GameObjInputMissing: 0
+  GameObjInputMissing: 1
 --- !u!114 &114255138219269668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -427,8 +425,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114255138219269668}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeaturesToMeasureDistanceToFirst
         node: {fileID: 114762007122857022}
@@ -477,7 +474,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114260423947491974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,7 +507,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114268099283421844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,8 +564,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114313809726534684}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeatureToInput
         node: {fileID: 114585773044923226}
@@ -642,8 +638,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114378620732791270}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeaturesToMeasureDistanceToFirst
         node: {fileID: 114762007122857022}
@@ -692,7 +687,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114387068067455594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -714,8 +709,7 @@ MonoBehaviour:
     values:
     - _fieldName: FeatureToInput
       _node: {fileID: 114387068067455594}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114811611838066988}
@@ -726,8 +720,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: VelocityExtracted
       _node: {fileID: 114387068067455594}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 114926250237349256}
@@ -750,9 +743,9 @@ MonoBehaviour:
     - 0
     - 0
   m_LastFrameFeatureValue:
-  - 0.2932173
-  - -0.18033138
-  - 0.07319397
+  - 0
+  - 0
+  - 0
 --- !u!114 &114434660954448230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -773,8 +766,7 @@ MonoBehaviour:
     values:
     - _fieldName: IMLModelOutputs
       _node: {fileID: 114434660954448230}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: ModelOutput
         node: {fileID: 114542359165737036}
@@ -825,7 +817,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114492344563085540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -858,7 +850,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114493415619065000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -879,8 +871,7 @@ MonoBehaviour:
     values:
     - _fieldName: IMLModelOutputs
       _node: {fileID: 114493415619065000}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: ModelOutput
         node: {fileID: 114108558201034724}
@@ -925,7 +916,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
 --- !u!114 &114542359165737036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -961,9 +952,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: InputFeatures
       _node: {fileID: 114542359165737036}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: VelocityExtracted
         node: {fileID: 114833012837605150}
@@ -990,6 +981,9 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 114833012837605150}
   ModelOutput: {fileID: 0}
+  EnableKeyboardShortcut: 0
+  TrainingKey: 0
+  RunningKey: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -997,7 +991,6 @@ MonoBehaviour:
   m_ExpectedInputList: 05000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 0
-  RapidLibComponent: {fileID: 0}
   TrainOnPlaymodeChange: 1
   RunOnAwake: 0
 --- !u!114 &114585773044923226
@@ -1021,8 +1014,7 @@ MonoBehaviour:
     values:
     - _fieldName: FeatureToInput
       _node: {fileID: 114585773044923226}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114313809726534684}
@@ -1033,8 +1025,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: VelocityExtracted
       _node: {fileID: 114585773044923226}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 114926250237349256}
@@ -1057,9 +1048,9 @@ MonoBehaviour:
     - 0
     - 0
   m_LastFrameFeatureValue:
-  - 0.28638566
-  - -0.17923765
-  - -0.09187639
+  - 0
+  - 0
+  - 0
 --- !u!114 &114624362103144972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1115,8 +1106,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114663350036161056}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeaturesToMeasureDistanceToFirst
         node: {fileID: 114762007122857022}
@@ -1166,8 +1156,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114681883242046384}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeaturesToMeasureDistanceToFirst
         node: {fileID: 114762007122857022}
@@ -1205,9 +1194,9 @@ MonoBehaviour:
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 114683921223975454}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: VelocityExtracted
         node: {fileID: 114833012837605150}
@@ -1232,14 +1221,17 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 114833012837605150}
   TrainingExamplesNodeToOutput: {fileID: 114683921223975454}
+  ModeOfCollection: 0
   TrainingExamplesVector: []
+  TrainingSeriesCollection: []
   m_DesiredInputsConfig: 05000000
   m_DesiredOutputsConfig: 00000000
   IMLConfigurationNodesConnected: []
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableCollectDataShortcut: 0
+  EnableKeyboardShortcut: 0
+  RecordDataKey: 0
 --- !u!114 &114762007122857022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1262,8 +1254,7 @@ MonoBehaviour:
     values:
     - _fieldName: FeatureToInput
       _node: {fileID: 114762007122857022}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114035907775032882}
@@ -1274,9 +1265,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: FeaturesToMeasureDistanceToFirst
       _node: {fileID: 114762007122857022}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114378620732791270}
@@ -1299,8 +1290,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: DistanceExtracted
       _node: {fileID: 114762007122857022}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 114870395820478542}
@@ -1363,8 +1353,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114811611838066988}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 114929005190181280}
@@ -1409,8 +1398,7 @@ MonoBehaviour:
     values:
     - _fieldName: FeatureToInput
       _node: {fileID: 114833012837605150}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: rotationExtracted
         node: {fileID: 114247239337280674}
@@ -1421,8 +1409,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: VelocityExtracted
       _node: {fileID: 114833012837605150}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 114683921223975454}
@@ -1446,10 +1433,10 @@ MonoBehaviour:
     - 0
     - 0
   m_LastFrameFeatureValue:
-  - -0.0047781384
-  - 0.71753776
-  - 0.0045702844
-  - 0.69648826
+  - 0
+  - 0
+  - 0
+  - 0
 --- !u!114 &114849844208104980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1483,8 +1470,7 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: positionExtracted
       _node: {fileID: 114849844208104980}
-      _typeQualifiedName: XNode.Node, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
-        PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: FeaturesToMeasureDistanceToFirst
         node: {fileID: 114762007122857022}
@@ -1522,9 +1508,9 @@ MonoBehaviour:
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 114870395820478542}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: DistanceExtracted
         node: {fileID: 114762007122857022}
@@ -1549,14 +1535,17 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 114762007122857022}
   TrainingExamplesNodeToOutput: {fileID: 114870395820478542}
+  ModeOfCollection: 0
   TrainingExamplesVector: []
+  TrainingSeriesCollection: []
   m_DesiredInputsConfig: 05000000
   m_DesiredOutputsConfig: 00000000
   IMLConfigurationNodesConnected: []
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableCollectDataShortcut: 0
+  EnableKeyboardShortcut: 0
+  RecordDataKey: 0
 --- !u!114 &114871194921193606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1598,9 +1587,9 @@ MonoBehaviour:
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 114926250237349256}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: VelocityExtracted
         node: {fileID: 114585773044923226}
@@ -1629,14 +1618,17 @@ MonoBehaviour:
   - {fileID: 114585773044923226}
   - {fileID: 114387068067455594}
   TrainingExamplesNodeToOutput: {fileID: 114926250237349256}
+  ModeOfCollection: 0
   TrainingExamplesVector: []
+  TrainingSeriesCollection: []
   m_DesiredInputsConfig: 0500000005000000
   m_DesiredOutputsConfig: 00000000
   IMLConfigurationNodesConnected: []
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableCollectDataShortcut: 1
+  EnableKeyboardShortcut: 0
+  RecordDataKey: 0
 --- !u!114 &114929005190181280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1658,9 +1650,9 @@ MonoBehaviour:
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 114929005190181280}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114811611838066988}
@@ -1689,14 +1681,17 @@ MonoBehaviour:
   - {fileID: 114811611838066988}
   - {fileID: 114247239337280674}
   TrainingExamplesNodeToOutput: {fileID: 114929005190181280}
+  ModeOfCollection: 0
   TrainingExamplesVector: []
+  TrainingSeriesCollection: []
   m_DesiredInputsConfig: 0300000004000000
   m_DesiredOutputsConfig: 00000000
   IMLConfigurationNodesConnected: []
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableCollectDataShortcut: 0
+  EnableKeyboardShortcut: 0
+  RecordDataKey: 0
 --- !u!114 &114930582521853118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1732,9 +1727,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: InputFeatures
       _node: {fileID: 114930582521853118}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: VelocityExtracted
         node: {fileID: 114585773044923226}
@@ -1765,6 +1760,9 @@ MonoBehaviour:
   - {fileID: 114585773044923226}
   - {fileID: 114387068067455594}
   ModelOutput: {fileID: 0}
+  EnableKeyboardShortcut: 0
+  TrainingKey: 0
+  RunningKey: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -1772,7 +1770,6 @@ MonoBehaviour:
   m_ExpectedInputList: 0500000005000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 0
-  RapidLibComponent: {fileID: 0}
   TrainOnPlaymodeChange: 1
   RunOnAwake: 1
 --- !u!114 &114948667100810690
@@ -1810,9 +1807,9 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: InputFeatures
       _node: {fileID: 114948667100810690}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, Assembly-CSharp,
-        Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0,
-        Culture=neutral, PublicKeyToken=b77a5c561934e089
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: positionExtracted
         node: {fileID: 114811611838066988}
@@ -1843,6 +1840,9 @@ MonoBehaviour:
   - {fileID: 114811611838066988}
   - {fileID: 114247239337280674}
   ModelOutput: {fileID: 0}
+  EnableKeyboardShortcut: 0
+  TrainingKey: 0
+  RunningKey: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -1850,7 +1850,6 @@ MonoBehaviour:
   m_ExpectedInputList: 0300000004000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 0
-  RapidLibComponent: {fileID: 0}
   TrainOnPlaymodeChange: 1
   RunOnAwake: 1
 --- !u!114 &114964523626434266

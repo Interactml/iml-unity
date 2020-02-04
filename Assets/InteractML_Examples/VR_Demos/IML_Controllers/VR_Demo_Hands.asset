@@ -36,7 +36,7 @@ MonoBehaviour:
   m_Name: Extract Position
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1032, y: -8}
+  position: {x: -952, y: -40}
   ports:
     keys:
     - gameObjectIntoNode
@@ -73,9 +73,9 @@ MonoBehaviour:
   positionExtracted: {fileID: 0}
   m_PositionExtracted:
     m_Values:
-    - 0.063899755
-    - 1.3010739
-    - 1.0501788
+    - 0
+    - 0
+    - 0
 --- !u!114 &114232709881693628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Name: IML Configuration
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 424, y: -232}
+  position: {x: 488, y: -216}
   ports:
     keys:
     - IMLTrainingExamplesNodes
@@ -236,13 +236,13 @@ MonoBehaviour:
   VelocityExtracted: {fileID: 0}
   m_VelocityExtracted:
     m_Values:
-    - 0.017279383
-    - 0.0037064855
-    - -0.004380392
+    - 0
+    - 0
+    - 0
   m_LastFrameFeatureValue:
-  - 0.063899755
-  - 1.3010739
-  - 1.0501788
+  - 0
+  - 0
+  - 0
 --- !u!114 &114588875912837210
 MonoBehaviour:
   m_ObjectHideFlags: 0
