@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -227,7 +227,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &621054157
 Transform:
   m_ObjectHideFlags: 0
@@ -249,7 +249,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 621054156}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ec5f071f51572445aac736eab0f4346, type: 3}
   m_Name: 
@@ -391,13 +391,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c477b3f40f547843930edfdcbde5951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MLController: {fileID: 11400000, guid: 3800462cc5705704299cf5c06682d91b, type: 2}
+  MLController: {fileID: 11400000, guid: dff98aebdf27d1d4eac59c0e6fed502d, type: 2}
   GameObjectsToUse:
   - {fileID: 672594436}
   TrainingExamplesNodesList:
-  - {fileID: 114507523331420728, guid: 3800462cc5705704299cf5c06682d91b, type: 2}
+  - {fileID: 8682497231163542456, guid: dff98aebdf27d1d4eac59c0e6fed502d, type: 2}
   IMLConfigurationNodesList:
-  - {fileID: 114357140570682068, guid: 3800462cc5705704299cf5c06682d91b, type: 2}
+  - {fileID: 2323328186122159904, guid: dff98aebdf27d1d4eac59c0e6fed502d, type: 2}
   FeaturesUpdated: 0
 --- !u!4 &682034987
 Transform:
@@ -502,7 +502,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1034802511}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &1034802513
 Camera:
   m_ObjectHideFlags: 0
