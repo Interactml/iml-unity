@@ -65,7 +65,7 @@ MonoBehaviour:
   DevMode: 0
   IMLModelOutputs: {fileID: 0}
   m_IMLOutputVector:
-  - 1
+  - 0
 --- !u!114 &-2164575221549548335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
   TrainingKey: 0
   RunningKey: 0
   PredictedRapidlibOutput:
-  - 1
+  - 0
   DelayedPredictedOutput:
   - 1
   m_ExpectedInputList: 03000000
@@ -214,9 +214,9 @@ MonoBehaviour:
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
-    - -20.12966
-    - 4.6595774
-    - -1
+    - -7.36
+    - 2.07
+    - 3.9
 --- !u!114 &6732151304541360272
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -480,6 +480,7 @@ namespace InteractML
                         break;
                     }
                     outputFeature.Values[i] = (float)PredictedRapidlibOutput[i + pointerRawOutputVector];
+
                 }
                 pointerRawOutputVector += outputFeature.Values.Length;
             }
@@ -524,6 +525,7 @@ namespace InteractML
         private string RunModelDTW(IMLTrainingSeries seriesToRun)
         {
             string result = "";
+            
             // Only allow running if the model exists and it is trained or running
             if (m_Model != null && (m_ModelStatus == IMLSpecifications.ModelStatus.Trained || m_ModelStatus == IMLSpecifications.ModelStatus.Running))
             {
@@ -578,6 +580,7 @@ namespace InteractML
                     TransformPredictedOuputToIMLTypes(PredictedRapidlibOutput, ref PredictedOutput);
                     break;
                 case IMLSpecifications.LearningType.DTW:
+                    //RunModelDTW(m_RunningSeries);
                     CollectFeaturesInRunningSeries(InputFeatures, ref m_RunningSeries);
                     break;
                 default:
@@ -595,11 +598,27 @@ namespace InteractML
             if (PredictedOutput ==  null)
                 PredictedOutput = new List<IMLBaseDataType>();
 
-            // Only changed this when there is a change in nodes or formats don't match
-            if (m_LastKnownRapidlibOutputVectorSize == 0 
-                || m_LastKnownRapidlibOutputVectorSize != PredictedRapidlibOutput.Length 
-                || m_NodeConnectionChanged 
-                || (m_LastKnownRapidlibOutputVectorSize > 0 && PredictedOutput.Count == 0 ) )
+            bool updateOutFormat = false;
+            // In DTW, only update format if there is a node connection change or the predicted output is not correctly formatted
+            if (m_LearningType == IMLSpecifications.LearningType.DTW)
+            {
+                if (m_NodeConnectionChanged
+                || PredictedOutput == null
+                || PredictedOutput.Any((i => (i == null || ( i.Values == null || i.Values.Length == 0 ) ))) )
+                    updateOutFormat = true;
+            }
+            // In classification and regression, only changed format when there is a change in nodes or formats don't match
+            else
+            {
+                if (m_LastKnownRapidlibOutputVectorSize == 0
+                || m_LastKnownRapidlibOutputVectorSize != PredictedRapidlibOutput.Length
+                || m_NodeConnectionChanged
+                || (m_LastKnownRapidlibOutputVectorSize > 0 && PredictedOutput.Count == 0))
+                    updateOutFormat = true;
+            }
+
+            // If we are meant to update format...
+            if (updateOutFormat)
             {
                 // Save size of rapidlib vectorsize to work with it 
                 // DIRTY CODE.  THIS SHOULD CHECK IF THE OUTPUT CONFIGURATION ACTUALLY DID CHANGE OR NOT. YOU COULD HAVE 2 DIFF OUTPUTS CONFIGS WITH SAME VECTOR SIZE

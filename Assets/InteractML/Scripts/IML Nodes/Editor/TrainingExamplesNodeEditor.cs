@@ -449,9 +449,12 @@ namespace InteractML
             {
                 int outputValueIndex = i + 1;
                 string label = "Output " + outputValueIndex;
-                var inputFeature = m_TrainingExamplesNode.DesiredInputsConfig[i];
-                // We make sure that the desired output feature list captures the value inputted by the user
-                EditorGUILayout.EnumFlagsField(label, m_TrainingExamplesNode.DesiredOutputsConfig[i]);
+                if (m_TrainingExamplesNode.DesiredInputsConfig.Count > 0 && i < m_TrainingExamplesNode.DesiredInputsConfig.Count)
+                {
+                    var inputFeature = m_TrainingExamplesNode.DesiredInputsConfig[i];
+                    // We make sure that the desired output feature list captures the value inputted by the user
+                    EditorGUILayout.EnumFlagsField(label, m_TrainingExamplesNode.DesiredOutputsConfig[i]);
+                }
 
             }
             EditorGUI.indentLevel--;
