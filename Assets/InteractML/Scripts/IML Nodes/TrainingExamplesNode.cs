@@ -117,7 +117,7 @@ namespace InteractML
         /// <summary>
         /// Flag to have a shortcut to collect data (CTRL + Space)
         /// </summary>
-        public bool EnableKeyboardShortcut;
+        public bool EnableKeyboardControl;
         [HideInInspector]
         public KeyCode RecordDataKey;
 
@@ -216,6 +216,9 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
+            // Handle Input
+            KeyboardInput();
+
             // Keep input config list updated
             UpdateInputConfigList();
 
@@ -227,13 +230,13 @@ namespace InteractML
             CollectExamplesLogic();
 
             // Check input for keyboard shortcut in case is pressed
-            if (EnableKeyboardShortcut)
-            {
-                if (Input.GetKeyDown(KeyCode.Space) )
-                {
-                    ToggleCollectExamples();
-                }
-            }
+            //if (EnableKeyboardShortcut)
+            //{
+            //    if (Input.GetKeyDown(KeyCode.Space) )
+            //    {
+            //        ToggleCollectExamples();
+            //    }
+            //}
         }
 
         /// <summary>
@@ -589,11 +592,11 @@ namespace InteractML
 
         private void KeyboardInput()
         {
-            if (EnableKeyboardShortcut)
+            if (EnableKeyboardControl)
             {
                 if (Input.GetKeyDown(RecordDataKey))
                 {
-                    //TrainModel();
+                    ToggleCollectExamples();
                 }
 
             }

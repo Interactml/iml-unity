@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ReusableMethods;
 using System;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -37,6 +38,32 @@ namespace InteractML
 
             m_IMLConfigNode = (target as IMLConfiguration);
 
+            // SHOW KEYBOARD SHORTCUTS
+            // Show information about runtime keys for interaction
+            GUIStyle styleGUIBox = new GUIStyle(GUI.skin.box);
+            styleGUIBox.richText = true;
+            if (m_IMLConfigNode.EnableKeyboardControl)
+            {
+                GUILayout.Box("<b>Runtime Keys:</b>\n <b>Train:</b> " + m_IMLConfigNode.TrainingKey.ToString()
+                    + " | <b>Run:</b> " + m_IMLConfigNode.RunningKey,
+                    styleGUIBox);
+                //GUILayout.Box("<b>Runtime Keys:</b>\n <b>Run:</b> R", styleGUIBox);
+
+                // Show key configs
+                m_IMLConfigNode.TrainingKey = (KeyCode)EditorGUILayout.EnumFlagsField(m_IMLConfigNode.TrainingKey);
+                m_IMLConfigNode.RunningKey = (KeyCode)EditorGUILayout.EnumFlagsField(m_IMLConfigNode.RunningKey);
+                EditorGUILayout.Space();
+            }
+
+            // SHOW INPUTS CONFIG
+            EditorGUILayout.Space();
+            ShowExpectedInputsConfigLogic();
+            EditorGUILayout.Space();
+
+            // SHOW OUTPUTS CONFIG
+            ShowExpectedOutputsConfigLogic();
+            EditorGUILayout.Space();
+
             // SHOW TRAINING STATUS 
             ShowTrainingStatus();
 
@@ -56,23 +83,6 @@ namespace InteractML
             // SHOW MODEL OUTPUT
             ShowModelOutput();
             EditorGUILayout.Space();
-
-            // SHOW KEYBOARD SHORTCUTS
-            // Show information about runtime keys for interaction
-            GUIStyle styleGUIBox = new GUIStyle(GUI.skin.box);
-            styleGUIBox.richText = true;
-            if (m_IMLConfigNode.KeyboardControl)
-            {
-                GUILayout.Box("<b>Runtime Keys:</b>\n <b>Train:</b> " + m_IMLConfigNode.TrainingKey.ToString() 
-                    + " | <b>Run:</b> " + m_IMLConfigNode.RunningKey, 
-                    styleGUIBox);
-                //GUILayout.Box("<b>Runtime Keys:</b>\n <b>Run:</b> R", styleGUIBox);
-
-                // Show key configs
-                m_IMLConfigNode.TrainingKey = (KeyCode) EditorGUILayout.EnumFlagsField(m_IMLConfigNode.TrainingKey);
-                m_IMLConfigNode.RunningKey = (KeyCode) EditorGUILayout.EnumFlagsField(m_IMLConfigNode.RunningKey);
-                EditorGUILayout.Space();
-            }
 
             // SHOW TRAIN BUTTON 
             ShowTrainModelButton();
@@ -106,6 +116,54 @@ namespace InteractML
 
         #region Methods
 
+        private void ShowExpectedInputsConfigLogic()
+        {
+            // SHOW EXPECTED INPUT CONFIG AND BUILD INPUT LIST
+            EditorGUILayout.LabelField("Inputs: ");
+            EditorGUI.indentLevel++;
+
+            EditorGUILayout.LabelField("No. of Inputs ", m_IMLConfigNode.ExpectedInputList.Count.ToString());
+
+            // Go through the list of inputs and show the correct kind of config editor tool
+            for (int i = 0; i < m_IMLConfigNode.ExpectedInputList.Count; i++)
+            {
+                int inputValueIndex = i + 1;
+                string label = "Input " + inputValueIndex;
+                var inputFeature = m_IMLConfigNode.ExpectedInputList[i];
+                // We make sure that the desired output feature list captures the value inputted by the user
+                EditorGUILayout.EnumFlagsField(label, m_IMLConfigNode.ExpectedInputList[i]);
+
+            }
+            EditorGUI.indentLevel--;
+
+
+        }
+
+        private void ShowExpectedOutputsConfigLogic()
+        {
+            // SHOW EXPECTED OUTPUT CONFIG AND BUILD INPUT LIST
+            EditorGUILayout.LabelField("Outputs: ");
+            EditorGUI.indentLevel++;
+
+            EditorGUILayout.LabelField("No. of Outputs ", m_IMLConfigNode.ExpectedOutputList.Count.ToString());
+
+            //Go through the list of inputs and show the correct kind of config editor tool
+            for (int i = 0; i < m_IMLConfigNode.ExpectedOutputList.Count; i++)
+            {
+                int outputValueIndex = i + 1;
+                string label = "Output " + outputValueIndex;
+                if (m_IMLConfigNode.ExpectedInputList.Count > 0 && i < m_IMLConfigNode.ExpectedInputList.Count)
+                {
+                    var inputFeature = m_IMLConfigNode.ExpectedInputList[i];
+                    // We make sure that the desired output feature list captures the value inputted by the user
+                    EditorGUILayout.EnumFlagsField(label, m_IMLConfigNode.ExpectedOutputList[i]);
+                }
+
+            }
+            EditorGUI.indentLevel--;
+
+
+        }
         private void ShowTrainingStatus()
         {
             string trainingStatusText = m_IMLConfigNode.ModelStatus.ToString();
