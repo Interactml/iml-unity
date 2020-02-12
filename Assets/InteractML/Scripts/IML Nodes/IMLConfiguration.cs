@@ -37,7 +37,7 @@ namespace InteractML
         /// <summary>
         /// Total updated number of training examples connected to this IML Configuration Node
         /// </summary>
-        private int m_TotalNumTrainingData;
+        public int m_TotalNumTrainingData;
         public int TotalNumTrainingData { get { return m_TotalNumTrainingData; } }
 
         /// <summary>
@@ -310,26 +310,34 @@ namespace InteractML
 
         public void TrainModel()
         {
-            if (m_RapidlibTrainingSeriesCollection == null)
-                m_RapidlibTrainingSeriesCollection = new List<RapidlibTrainingSerie>();
-
-            // If we have a dtw model...
-            if (m_LearningType == IMLSpecifications.LearningType.DTW)
+           if(m_TotalNumTrainingData == 0)
             {
-                m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes);
-                m_Model.Train(m_RapidlibTrainingSeriesCollection);
+                Debug.Log("no training examples");
             }
-            // If it is a classification/regression model
             else
             {
-                // Transform the IML Training Examples into a format suitable for Rapidlib
-                m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes);
+                if (m_RapidlibTrainingSeriesCollection == null)
+                    m_RapidlibTrainingSeriesCollection = new List<RapidlibTrainingSerie>();
 
-                // Trains rapidlib with the examples added
-                m_Model.Train(m_RapidlibTrainingExamples);
+                // If we have a dtw model...
+                if (m_LearningType == IMLSpecifications.LearningType.DTW)
+                {
+                    m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes);
+                    m_Model.Train(m_RapidlibTrainingSeriesCollection);
+                }
+                // If it is a classification/regression model
+                else
+                {
+                    // Transform the IML Training Examples into a format suitable for Rapidlib
+                    m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes);
 
-                //Debug.Log("***Retraining IML Config node with num Examples: " + RapidLibComponent.trainingExamples.Count + " Rapidlib training succesful: " + RapidLibComponent.Trained + "***");
+                    // Trains rapidlib with the examples added
+                    m_Model.Train(m_RapidlibTrainingExamples);
+
+                    //Debug.Log("***Retraining IML Config node with num Examples: " + RapidLibComponent.trainingExamples.Count + " Rapidlib training succesful: " + RapidLibComponent.Trained + "***");
+                }
             }
+          
         }
 
         public void ToggleRunning()
