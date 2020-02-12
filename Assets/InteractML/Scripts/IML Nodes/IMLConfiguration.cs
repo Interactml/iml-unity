@@ -29,15 +29,6 @@ namespace InteractML
         /// </summary>
         public List<IMLBaseDataType> PredictedOutput;
 
-        /// <summary>
-        /// Keyboard flag to control node
-        /// </summary>
-        public bool KeyboardControl;
-        [HideInInspector]
-        public KeyCode TrainingKey;
-        [HideInInspector]
-        public KeyCode RunningKey;
-
         [HideInInspector]
         public double[] PredictedRapidlibOutput;
         [HideInInspector]
@@ -52,14 +43,14 @@ namespace InteractML
         /// <summary>
         /// List of expected inputs
         /// </summary>
-        [SerializeField]
+        [SerializeField, HideInInspector]
         private List<IMLSpecifications.InputsEnum> m_ExpectedInputList;
         public List<IMLSpecifications.InputsEnum> ExpectedInputList { get { return m_ExpectedInputList; } }
 
         /// <summary>
         /// List of expected outputs
         /// </summary>
-        [SerializeField]
+        [SerializeField, HideInInspector]
         private List<IMLSpecifications.OutputsEnum> m_ExpectedOutputList;
         public List<IMLSpecifications.OutputsEnum> ExpectedOutputList { get { return m_ExpectedOutputList; } }
 
@@ -71,6 +62,14 @@ namespace InteractML
         private IMLSpecifications.LearningType m_LearningType;
         public IMLSpecifications.LearningType LearningType { get => m_LearningType; }
 
+        /// <summary>
+        /// Keyboard flag to control node
+        /// </summary>
+        public bool EnableKeyboardControl;
+        [HideInInspector]
+        public KeyCode TrainingKey;
+        [HideInInspector]
+        public KeyCode RunningKey;
 
         private IMLSpecifications.ModelStatus m_ModelStatus { get { return m_Model != null ? m_Model.ModelStatus : IMLSpecifications.ModelStatus.Untrained; } }
         /// <summary>
@@ -124,11 +123,13 @@ namespace InteractML
         /// <summary>
         /// Flag that controls if the iml model should be trained when entering/leaving playmode
         /// </summary>
+        [HideInInspector]
         public bool TrainOnPlaymodeChange;
 
         /// <summary>
         /// Flag that controls if the iml model should run when the game awakes 
         /// </summary>
+        [HideInInspector]
         public bool RunOnAwake;
 
         #endregion
@@ -289,6 +290,9 @@ namespace InteractML
             // Update Input Config List
             UpdateInputConfigList();
 
+            // Update Output Config List from Training Examples Node
+            UpdateOutputConfigList();
+
             // Update Number of Training Examples Connected
             UpdateTotalNumberTrainingExamples();
 
@@ -443,7 +447,7 @@ namespace InteractML
 
         private void KeyboardInput()
         {
-            if (KeyboardControl)
+            if (EnableKeyboardControl)
             {
                 if (Input.GetKeyDown(TrainingKey))
                 {
@@ -685,6 +689,38 @@ namespace InteractML
                 }
             }
         }
+
+        /// <summary>
+        /// Updates the configuration list of outputs
+        /// </summary>
+        private void UpdateOutputConfigList()
+        {
+            // Get values from the training example node
+            IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
+
+            // Make sure that the output list is initialised
+            if (m_ExpectedOutputList == null)
+                m_ExpectedOutputList = new List<IMLSpecifications.OutputsEnum>();
+
+            // Adjust the expected outputs list based on training node connected
+            m_ExpectedOutputList.Clear();
+
+            // Loop through all training examples nodes connected
+            foreach (var trainingExamplesNode in IMLTrainingExamplesNodes)
+            {
+                // Access the list of expected outputs config from the training node connected
+                if (trainingExamplesNode.DesiredOutputsConfig != null && trainingExamplesNode.DesiredOutputsConfig.Count > 0)
+                {
+                    // Populate expected type from the trainin examples node connected
+                    foreach (var desiredOutputConfigType in trainingExamplesNode.DesiredOutputsConfig)
+                    {
+                        m_ExpectedOutputList.Add(desiredOutputConfigType);
+                    }
+                }
+            }            
+
+        }
+
 
         private void OverrideModel(IMLSpecifications.LearningType learningType)
         {

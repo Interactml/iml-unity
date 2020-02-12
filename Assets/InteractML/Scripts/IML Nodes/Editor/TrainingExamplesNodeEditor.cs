@@ -45,6 +45,22 @@ namespace InteractML
             // Get reference to the current node
             m_TrainingExamplesNode = (target as TrainingExamplesNode);
 
+            // SHOW KEYBOARD SHORTCUTS
+            // Show information about runtime keys for interaction
+            GUIStyle styleGUIBox = new GUIStyle(GUI.skin.box);
+            styleGUIBox.richText = true;
+            if (m_TrainingExamplesNode.EnableKeyboardControl)
+            {
+                GUILayout.Box("<b>Keyboard Shortcuts:</b>\n <b>Record:</b> " + m_TrainingExamplesNode.RecordDataKey.ToString(),
+                    styleGUIBox);
+
+                // Show key configs
+                m_TrainingExamplesNode.RecordDataKey = (KeyCode)EditorGUILayout.EnumFlagsField(m_TrainingExamplesNode.RecordDataKey);
+                EditorGUILayout.Space();
+            }
+
+
+
             // SHOW INPUT CONFIG
             ShowDesiredInputsConfigLogic();
             EditorGUILayout.Space();
@@ -60,20 +76,6 @@ namespace InteractML
             EditorGUILayout.Space();
             ShowDesiredOutputFeaturesLogic();
             EditorGUILayout.Space();
-
-            // SHOW KEYBOARD SHORTCUTS
-            // Show information about runtime keys for interaction
-            GUIStyle styleGUIBox = new GUIStyle(GUI.skin.box);
-            styleGUIBox.richText = true;
-            if (m_TrainingExamplesNode.EnableKeyboardShortcut)
-            {
-                GUILayout.Box("<b>Keyboard Shortcuts:</b>\n <b>Record:</b> " + m_TrainingExamplesNode.RecordDataKey.ToString(),
-                    styleGUIBox);
-
-                // Show key configs
-                m_TrainingExamplesNode.RecordDataKey = (KeyCode)EditorGUILayout.EnumFlagsField(m_TrainingExamplesNode.RecordDataKey);
-                EditorGUILayout.Space();
-            }
 
             // RECORD EXAMPLES BUTTON 
             ShowRecordExamplesButton();
@@ -461,6 +463,7 @@ namespace InteractML
 
 
         }
+
         /// <summary>
         /// Checks if the num of input features differ from what we last know to show warnings
         /// </summary>
