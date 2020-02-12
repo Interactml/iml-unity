@@ -137,7 +137,7 @@ namespace InteractML
 
         private void Initialize()
         {
-            // Initialise lists
+            // Initialise list of nodes for the IML Controller
             if (Lists.IsNullOrEmpty(ref GameObjectsToUse))
                 GameObjectsToUse = new List<GameObject>();
 
@@ -169,7 +169,7 @@ namespace InteractML
                 FeatureNodesList = new List<IFeatureIML>();
 
 
-            // We get all nodes
+            // Get all th nodes which are in the graph
             GetAllNodes();
 
             // Init logic for training examples

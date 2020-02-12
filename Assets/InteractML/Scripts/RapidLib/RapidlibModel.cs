@@ -483,7 +483,7 @@ namespace InteractML
             DestroyModel();
             // We create the new model in memory and get its address
             m_ModelAddress = RapidlibLinkerDLL.CreateSeriesClassificationModel();
-            // We set the type of model to kNN
+            // We set the type of model to DTW
             m_TypeOfModel = ModelType.DTW;
             // Since it is a new model, the status of the model is now untrained
             m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
