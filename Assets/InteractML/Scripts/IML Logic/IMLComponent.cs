@@ -175,11 +175,21 @@ namespace InteractML
             // Init logic for training examples
             if (!Lists.IsNullOrEmpty(ref TrainingExamplesNodesList))
             {
-
                 for (int i = 0; i < TrainingExamplesNodesList.Count; i++)
                 {
-                    // Initialize Training Examples Node if not already initialized
-                    TrainingExamplesNodesList[i].Initialize();
+                    var TrainingNode = TrainingExamplesNodesList[i];
+                    if (TrainingNode == null)
+                    {
+                        Debug.LogError("Null reference in Training Examples list in IML System. The list is not calculated properly and has some null spaces!");
+                        // dirty code 
+                        //TrainingExamplesNodesList.Remove(TrainingExamplesNodesList[i]);
+                    }
+                    else
+                    {
+                        // Initialize Training Examples Node if not already initialized
+                        TrainingExamplesNodesList[i].Initialize();
+                    }
+
 
                 }
 
@@ -196,6 +206,8 @@ namespace InteractML
                     if (IMLConfigNode == null)
                     {
                         Debug.LogError("Null reference in IML Config Node list in IML System. The list is not calculated properly and has some null spaces!");
+                        // dirty code 
+                        //IMLConfigurationNodesList.Remove(IMLConfigurationNodesList[i]);
                     }
                     else
                     {
@@ -293,6 +305,7 @@ namespace InteractML
             }
         }
 
+        // this should only happen when a node is added 
         /// <summary>
         /// Finds all nodes in the IML Controller and puts them in lists of their types
         /// </summary>
@@ -333,6 +346,7 @@ namespace InteractML
         /// <param name="listToAddTo"></param>
         private void CheckTypeAddNodeToList<T>(XNode.Node nodeToAdd, ref List<T> listToAddTo)
         {
+
             // We don't update if the node is null
             if (nodeToAdd == null)
             {
@@ -347,6 +361,7 @@ namespace InteractML
                 // Make sure the list is not null
                 if (listToAddTo == null)
                     listToAddTo = new List<T>();
+                Debug.Log(typeof(T) + " " + listToAddTo.Count);
                 // If the list doesn't contain that specific node, we add it
                 if (!listToAddTo.Contains(nodeToAddTyped))
                 {
@@ -381,6 +396,8 @@ namespace InteractML
                     
                 }
             }
+
+        
         }
 
         private void RunFeaturesLogic()

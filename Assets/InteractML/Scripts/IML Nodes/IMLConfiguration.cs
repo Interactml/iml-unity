@@ -37,7 +37,7 @@ namespace InteractML
         /// <summary>
         /// Total updated number of training examples connected to this IML Configuration Node
         /// </summary>
-        public int m_TotalNumTrainingData;
+        private int m_TotalNumTrainingData;
         public int TotalNumTrainingData { get { return m_TotalNumTrainingData; } }
 
         /// <summary>
@@ -310,6 +310,7 @@ namespace InteractML
 
         public void TrainModel()
         {
+            // if there are no training examples in connected training nodes do not train 
            if(m_TotalNumTrainingData == 0)
             {
                 Debug.Log("no training examples");
