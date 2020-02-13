@@ -169,30 +169,6 @@ namespace InteractML
             // Get all th nodes which are in the graph
             GetAllNodes();
 
-            // Init logic for game object examples
-            if (!Lists.IsNullOrEmpty(ref gameObjectNodeList))
-            {
-                for (int i = 0; i < gameObjectNodeList.Count; i++)
-                {
-                    Debug.Log("GO" + i);
-                    var GameNode = gameObjectNodeList[i];
-                    if (GameNode == null)
-                    {
-                        Debug.LogError("Null reference in GameObject list in IML System. The list is not calculated properly and has some null spaces!");
-                        // dirty code 
-                        gameObjectNodeList.Remove(gameObjectNodeList[i]);
-                    }
-                    else
-                    {
-                        // Initialize Training Examples Node if not already initialized
-
-                    }
-
-
-                }
-
-            }
-
             // Init logic for training examples
             if (!Lists.IsNullOrEmpty(ref TrainingExamplesNodesList))
             {
@@ -202,8 +178,6 @@ namespace InteractML
                     if (TrainingNode == null)
                     {
                         Debug.LogError("Null reference in Training Examples list in IML System. The list is not calculated properly and has some null spaces!");
-                        // dirty code 
-                        //TrainingExamplesNodesList.Remove(TrainingExamplesNodesList[i]);
                     }
                     else
                     {
@@ -227,8 +201,6 @@ namespace InteractML
                     if (IMLConfigNode == null)
                     {
                         Debug.LogError("Null reference in IML Config Node list in IML System. The list is not calculated properly and has some null spaces!");
-                        // dirty code 
-                        //IMLConfigurationNodesList.Remove(IMLConfigurationNodesList[i]);
                     }
                     else
                     {

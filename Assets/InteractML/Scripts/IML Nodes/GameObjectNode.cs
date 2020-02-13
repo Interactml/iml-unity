@@ -42,6 +42,7 @@ namespace InteractML
             if (MLController.SceneComponent != null)
             {
                 MLController.SceneComponent.DeleteGameObjectNode(this);
+                Debug.Log("destroyed");
             }
         }
 
