@@ -215,7 +215,7 @@ namespace InteractML
             var MLController = graph as IMLController;
             if (MLController.SceneComponent != null)
             {
-                MLController.SceneComponent.IMLConfigurationNodesList.Remove(this);
+                MLController.SceneComponent.DeleteIMLConfigurationNode(this);
             }
         }
 

@@ -45,12 +45,9 @@ namespace InteractML
         private List<Vector3> vector3ListToSend;
         private List<TextNote> textNoteNodesList;
         private List<Vector> vectorNodesList;
-        [HideInInspector]
-        public List<TrainingExamplesNode> TrainingExamplesNodesList;
-        [HideInInspector]
-        public List<IMLConfiguration> IMLConfigurationNodesList;
+        private List<TrainingExamplesNode> TrainingExamplesNodesList;
+        private List<IMLConfiguration> IMLConfigurationNodesList;
         private List<GameObjectNode> gameObjectNodeList;
-        [HideInInspector]
         private List<RealtimeIMLOutputNode> RealtimeIMLOutputNodesList;
         public List<IFeatureIML> FeatureNodesList;
 
@@ -171,6 +168,30 @@ namespace InteractML
 
             // Get all th nodes which are in the graph
             GetAllNodes();
+
+            // Init logic for game object examples
+            if (!Lists.IsNullOrEmpty(ref gameObjectNodeList))
+            {
+                for (int i = 0; i < gameObjectNodeList.Count; i++)
+                {
+                    Debug.Log("GO" + i);
+                    var GameNode = gameObjectNodeList[i];
+                    if (GameNode == null)
+                    {
+                        Debug.LogError("Null reference in GameObject list in IML System. The list is not calculated properly and has some null spaces!");
+                        // dirty code 
+                        gameObjectNodeList.Remove(gameObjectNodeList[i]);
+                    }
+                    else
+                    {
+                        // Initialize Training Examples Node if not already initialized
+
+                    }
+
+
+                }
+
+            }
 
             // Init logic for training examples
             if (!Lists.IsNullOrEmpty(ref TrainingExamplesNodesList))
@@ -311,6 +332,7 @@ namespace InteractML
         /// </summary>
         public void GetAllNodes ()
         {
+            Debug.Log("refreshing nodes");
             // Keep lists of nodes found updated
             if (MLController != null)
             {
@@ -361,7 +383,6 @@ namespace InteractML
                 // Make sure the list is not null
                 if (listToAddTo == null)
                     listToAddTo = new List<T>();
-                Debug.Log(typeof(T) + " " + listToAddTo.Count);
                 // If the list doesn't contain that specific node, we add it
                 if (!listToAddTo.Contains(nodeToAddTyped))
                 {
@@ -974,7 +995,7 @@ namespace InteractML
 
 
             // Keep lists of nodes found updated
-            GetAllNodes();
+            //GetAllNodes();
 
             if (MLController != null)
             {
@@ -1210,9 +1231,56 @@ namespace InteractML
 
         }
 
-#endregion
+        /// <summary>
+        /// Removes GameObjectNode From GameObjectNodeList 
+        /// </summary>
+        /// <param name="nodeToDelete"></param>
+        public void DeleteGameObjectNode(GameObjectNode nodeToDelete)
+        {
+            if (gameObjectNodeList.Contains(nodeToDelete))
+                gameObjectNodeList.Remove(nodeToDelete);
 
-#region SceneLoading
+        }
+        /// <summary>
+        /// Removes IMLConfigurationNode From IMLConfigurationNodeList 
+        /// </summary>
+        /// <param name="nodeToDelete"></param>
+        public void DeleteIMLConfigurationNode(IMLConfiguration nodeToDelete)
+        {
+            if (IMLConfigurationNodesList.Contains(nodeToDelete))
+                IMLConfigurationNodesList.Remove(nodeToDelete);
+        }
+        /// <summary>
+        /// Removes RealtimeOutputNode From RealtimeOutputNodeList 
+        /// </summary>
+        /// <param name="nodeToDelete"></param>
+        public void DeleteRealtimeIMLOutputNode(RealtimeIMLOutputNode nodeToDelete)
+        {
+            if (RealtimeIMLOutputNodesList.Contains(nodeToDelete))
+                RealtimeIMLOutputNodesList.Remove(nodeToDelete);
+        }
+        /// <summary>
+        /// Removes TrainingExamplesNode From TrainingExamplesNodeList 
+        /// </summary>
+        /// <param name="nodeToDelete"></param>
+        public void DeleteTrainingExamplesNode(TrainingExamplesNode nodeToDelete)
+        {
+            if (TrainingExamplesNodesList.Contains(nodeToDelete))
+                TrainingExamplesNodesList.Remove(nodeToDelete);
+        }
+        /// <summary>
+        /// Removes TextNoteNode From TextNoteNodeList 
+        /// </summary>
+        /// <param name="nodeToDelete"></param>
+        public void DeleteTextNoteNode(TextNote nodeToDelete)
+        {
+            if (textNoteNodesList.Contains(nodeToDelete))
+                textNoteNodesList.Remove(nodeToDelete);
+        }
+
+        #endregion
+
+        #region SceneLoading
 
 #if UNITY_EDITOR
         private void SceneOpenedLogic(UnityEngine.SceneManagement.Scene scene, UnityEditor.SceneManagement.OpenSceneMode mode)

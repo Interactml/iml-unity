@@ -35,6 +35,16 @@ namespace InteractML
             return null; // Replace this
         }
 
+        public void OnDestroy()
+        {
+            // Remove reference of this node in the IMLComponent controlling this node (if any)
+            var MLController = graph as IMLController;
+            if (MLController.SceneComponent != null)
+            {
+                MLController.SceneComponent.DeleteRealtimeIMLOutputNode(this);
+            }
+        }
+
         /// <summary>
         /// Returns the output from the IML Config Node connected
         /// </summary>

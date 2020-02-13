@@ -21,6 +21,28 @@ namespace InteractML
         {
             base.Init();
 
+            var MLController = graph as IMLController;
+            if (MLController.SceneComponent != null)
+            {
+                MLController.SceneComponent.GetAllNodes();
+               
+            }
+
+        }
+
+        void Start()
+        {
+           
+        }
+
+        public void OnDestroy()
+        {
+            // Remove reference of this node in the IMLComponent controlling this node (if any)
+            var MLController = graph as IMLController;
+            if (MLController.SceneComponent != null)
+            {
+                MLController.SceneComponent.DeleteGameObjectNode(this);
+            }
         }
 
         // Return the correct value of an output port when requested

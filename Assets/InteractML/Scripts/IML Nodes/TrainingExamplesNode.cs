@@ -159,7 +159,7 @@ namespace InteractML
             var MLController = graph as IMLController;
             if (MLController.SceneComponent != null)
             {
-                MLController.SceneComponent.TrainingExamplesNodesList.Remove(this);
+                MLController.SceneComponent.DeleteTrainingExamplesNode(this);
             }
         }
 
