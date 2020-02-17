@@ -167,7 +167,7 @@ namespace InteractML
 
 
             // Get all th nodes which are in the graph
-            //GetAllNodes();
+            GetAllNodes();
 
             // Init logic for training examples
             if (!Lists.IsNullOrEmpty(ref TrainingExamplesNodesList))
@@ -212,6 +212,8 @@ namespace InteractML
 
             // Inject GameObjects to GameObject nodes
             SendGameObjectsToIMLController();
+
+            updateGameObjectImage();
 
 #if !UNITY_EDITOR
             // If we are not on the editor...
@@ -462,7 +464,7 @@ namespace InteractML
                     for (int i = 0; i < gameObjectNodeList.Count; i++)
                     {
                         gameObjectNodeList[i].GameObjectFromScene = GameObjectsToUse[i];
-                        Debug.Log("Injecting GObject " + GameObjectsToUse[i].name);
+                       // Debug.Log("Injecting GObject " + GameObjectsToUse[i].name);
 
                     }
 
@@ -966,7 +968,7 @@ namespace InteractML
 
 
             // Keep lists of nodes found updated
-            GetAllNodes();
+            //GetAllNodes();
 
             if (MLController != null)
             {
@@ -1257,7 +1259,15 @@ namespace InteractML
             if (FeatureNodesList.Contains(nodeToDelete))
                 FeatureNodesList.Remove(nodeToDelete);
         }
-
+        //Very dirty code need to sort it out in a better way - updates the node pointer when exiting or entering play mode 
+        public void updateGameObjectImage()
+        {
+            
+            foreach (GameObjectNode GONode in gameObjectNodeList)
+            {
+                GONode.state = true;
+            }
+        }
 
         #endregion
 

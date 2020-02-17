@@ -14,6 +14,7 @@ using UnityEditor.SceneManagement;
 public class IMLEditorManager
 {
     private static List<IMLComponent> m_IMLComponents;
+    public bool modeHasChanged {get; private set;}
 
     static IMLEditorManager()
     {
@@ -82,6 +83,7 @@ public class IMLEditorManager
     /// <param name="playModeStatus"></param>
     private static void PlayModeStateChangedLogic(PlayModeStateChange playModeStatus)
     {
+        
         // We load models if we are entering a playmode or editormode
         if (playModeStatus == PlayModeStateChange.EnteredEditMode || playModeStatus == PlayModeStateChange.EnteredPlayMode)
         {
@@ -92,6 +94,7 @@ public class IMLEditorManager
                 MLComponent.LoadAllModelsFromDisk();
                 // Run them (if marked with RunOnAwake)
                 MLComponent.RunAllModels();
+                Debug.Log("here");
             }
             //Debug.Log("**Models reconfigured in editor status: " + playModeStatus + "**");
         }
@@ -105,6 +108,14 @@ public class IMLEditorManager
                 MLComponent.SaveAllModels();
             }
         }
+        if (playModeStatus == PlayModeStateChange.EnteredEditMode)
+        {
+            foreach (var MLComponent in m_IMLComponents)
+            {
+                MLComponent.updateGameObjectImage();
+                Debug.Log("here");
+            }
+        } 
     }
 
 #endif

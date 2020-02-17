@@ -14,7 +14,12 @@ namespace InteractML
         GameObjectNode gObjNode;
         Editor gameObjectEditor;
         GUIStyle stylePreview;
+        bool state;
 
+        private static void Init()
+        {
+            Debug.Log("load");
+        }
         public override void OnBodyGUI()
         {
             base.OnBodyGUI();
@@ -30,9 +35,10 @@ namespace InteractML
                 EditorGUILayout.LabelField("GameObject: " + gObj.name);
 
                 // Code to create a preview of the gObj in the node
-                if (gameObjectEditor == null)
+                if (gameObjectEditor == null||gObjNode.state)
                 {
                     gameObjectEditor = Editor.CreateEditor(gObj);
+                    gObjNode.state = false;
                 }
                 
                 // Defines the style for the gameObject preview
