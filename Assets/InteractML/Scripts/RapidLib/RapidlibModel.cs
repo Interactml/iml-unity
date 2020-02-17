@@ -357,7 +357,11 @@ namespace InteractML
 
                 }
                 // Configure the model in memory
-                RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
+                if (!jsonstring.Contains("\"modelType\" : \"Series Classification\""))
+                {
+                    RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
+                }
+               
                 // Set the status to trained (since we assume the model we loaded was trained)
                 m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
             }

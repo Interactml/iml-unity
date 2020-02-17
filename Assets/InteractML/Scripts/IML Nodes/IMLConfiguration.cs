@@ -37,7 +37,7 @@ namespace InteractML
         /// <summary>
         /// Total updated number of training examples connected to this IML Configuration Node
         /// </summary>
-        public int m_TotalNumTrainingData;
+        private int m_TotalNumTrainingData;
         public int TotalNumTrainingData { get { return m_TotalNumTrainingData; } }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace InteractML
             var MLController = graph as IMLController;
             if (MLController.SceneComponent != null)
             {
-                MLController.SceneComponent.IMLConfigurationNodesList.Remove(this);
+                MLController.SceneComponent.DeleteIMLConfigurationNode(this);
             }
         }
 
@@ -310,6 +310,7 @@ namespace InteractML
 
         public void TrainModel()
         {
+            // if there are no training examples in connected training nodes do not train 
            if(m_TotalNumTrainingData == 0)
             {
                 Debug.Log("no training examples");
@@ -440,7 +441,7 @@ namespace InteractML
                 case RapidlibModel.ModelType.DTW:
                     m_LearningType = IMLSpecifications.LearningType.DTW;
                     // DTW model will need to retrain!
-                    Debug.LogError("DTW RETRAINING WHEN LOADING MODEL NOT IMPLEMENTED YET!");
+                    Debug.Log("DTW RETRAINING WHEN LOADING MODEL NOT IMPLEMENTED YET!");
                     break;
                 case RapidlibModel.ModelType.None:
                     break;
@@ -615,7 +616,6 @@ namespace InteractML
             if (m_LearningType == IMLSpecifications.LearningType.DTW)
             {
                 if (m_NodeConnectionChanged
-                || PredictedOutput == null
                 || PredictedOutput.Any((i => (i == null || ( i.Values == null || i.Values.Length == 0 ) ))) )
                     updateOutFormat = true;
             }
@@ -634,7 +634,8 @@ namespace InteractML
             {
                 // Save size of rapidlib vectorsize to work with it 
                 // DIRTY CODE.  THIS SHOULD CHECK IF THE OUTPUT CONFIGURATION ACTUALLY DID CHANGE OR NOT. YOU COULD HAVE 2 DIFF OUTPUTS CONFIGS WITH SAME VECTOR SIZE
-                m_LastKnownRapidlibOutputVectorSize = PredictedRapidlibOutput.Length;
+                if(PredictedRapidlibOutput != null)
+                    m_LastKnownRapidlibOutputVectorSize = PredictedRapidlibOutput.Length;
                 // Adjust the desired outputs list based on configuration selected
                 PredictedOutput.Clear();
                 // Calculate required space for outputs

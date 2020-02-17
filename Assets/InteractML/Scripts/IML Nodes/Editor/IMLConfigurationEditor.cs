@@ -191,7 +191,7 @@ namespace InteractML
 
         private void ShowTrainModelButton()
         {
-            // Only run button logic when rapidlib reference not null
+            // Only run button logic when rapidlib reference not null and training examples are not null
             if (m_IMLConfigNode.Model != null && m_IMLConfigNode.TotalNumTrainingData > 0)
             {
 
