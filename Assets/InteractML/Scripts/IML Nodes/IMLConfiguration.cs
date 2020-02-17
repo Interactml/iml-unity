@@ -441,7 +441,7 @@ namespace InteractML
                 case RapidlibModel.ModelType.DTW:
                     m_LearningType = IMLSpecifications.LearningType.DTW;
                     // DTW model will need to retrain!
-                    Debug.LogError("DTW RETRAINING WHEN LOADING MODEL NOT IMPLEMENTED YET!");
+                    Debug.Log("DTW RETRAINING WHEN LOADING MODEL NOT IMPLEMENTED YET!");
                     break;
                 case RapidlibModel.ModelType.None:
                     break;

@@ -167,7 +167,7 @@ namespace InteractML
 
 
             // Get all th nodes which are in the graph
-            GetAllNodes();
+            //GetAllNodes();
 
             // Init logic for training examples
             if (!Lists.IsNullOrEmpty(ref TrainingExamplesNodesList))
@@ -304,7 +304,6 @@ namespace InteractML
         /// </summary>
         public void GetAllNodes ()
         {
-            Debug.Log("refreshing nodes");
             // Keep lists of nodes found updated
             if (MLController != null)
             {
@@ -967,7 +966,7 @@ namespace InteractML
 
 
             // Keep lists of nodes found updated
-            //GetAllNodes();
+            GetAllNodes();
 
             if (MLController != null)
             {
@@ -1252,7 +1251,7 @@ namespace InteractML
 
         #endregion
 
-        #region SceneLoading
+#region SceneLoading
 
 #if UNITY_EDITOR
         private void SceneOpenedLogic(UnityEngine.SceneManagement.Scene scene, UnityEditor.SceneManagement.OpenSceneMode mode)
