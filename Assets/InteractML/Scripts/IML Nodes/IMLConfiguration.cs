@@ -616,7 +616,6 @@ namespace InteractML
             if (m_LearningType == IMLSpecifications.LearningType.DTW)
             {
                 if (m_NodeConnectionChanged
-                || PredictedOutput == null
                 || PredictedOutput.Any((i => (i == null || ( i.Values == null || i.Values.Length == 0 ) ))) )
                     updateOutFormat = true;
             }
@@ -635,7 +634,8 @@ namespace InteractML
             {
                 // Save size of rapidlib vectorsize to work with it 
                 // DIRTY CODE.  THIS SHOULD CHECK IF THE OUTPUT CONFIGURATION ACTUALLY DID CHANGE OR NOT. YOU COULD HAVE 2 DIFF OUTPUTS CONFIGS WITH SAME VECTOR SIZE
-                m_LastKnownRapidlibOutputVectorSize = PredictedRapidlibOutput.Length;
+                if(PredictedRapidlibOutput != null)
+                    m_LastKnownRapidlibOutputVectorSize = PredictedRapidlibOutput.Length;
                 // Adjust the desired outputs list based on configuration selected
                 PredictedOutput.Clear();
                 // Calculate required space for outputs
