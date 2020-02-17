@@ -216,12 +216,17 @@ namespace InteractML
             // If rapidlib reference is null we draw a disabled button
             else
             {
+               
                 GUI.enabled = false;
+                if (m_IMLConfigNode.TotalNumTrainingData == 0)
+                {
+                    EditorGUILayout.HelpBox("There are no training examples", MessageType.Error);
+                }
                 if (GUILayout.Button("Train Model"))
                 {
                     //m_TrainingExamplesNode.ToggleCollectExamples();
                 }
-                GUI.enabled = true;
+                //GUI.enabled = true;
 
             }
 
