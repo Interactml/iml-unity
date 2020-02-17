@@ -74,7 +74,15 @@ namespace InteractML.FeatureExtractors
         {
             return UpdateFeature();
         }
-
+        public void OnDestroy()
+        {
+            // Remove reference of this node in the IMLComponent controlling this node (if any)
+            var MLController = graph as IMLController;
+            if (MLController.SceneComponent != null)
+            {
+                MLController.SceneComponent.DeleteFeatureNode(this);
+            }
+        }
         /// <summary>
         /// Updates Feature values
         /// </summary>

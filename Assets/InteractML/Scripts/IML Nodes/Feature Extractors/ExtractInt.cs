@@ -63,6 +63,15 @@ namespace InteractML.FeatureExtractors
             }
 
         }
+        public void OnDestroy()
+        {
+            // Remove reference of this node in the IMLComponent controlling this node (if any)
+            var MLController = graph as IMLController;
+            if (MLController.SceneComponent != null)
+            {
+                MLController.SceneComponent.DeleteFeatureNode(this);
+            }
+        }
 
         // Return the correct value of an output port when requested
         public override object GetValue(NodePort port)

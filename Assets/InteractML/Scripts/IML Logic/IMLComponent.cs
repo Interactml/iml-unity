@@ -462,7 +462,7 @@ namespace InteractML
                     for (int i = 0; i < gameObjectNodeList.Count; i++)
                     {
                         gameObjectNodeList[i].GameObjectFromScene = GameObjectsToUse[i];
-                        //Debug.Log("Injecting GObject " + GameObjectsToUse[i].name);
+                        Debug.Log("Injecting GObject " + GameObjectsToUse[i].name);
 
                     }
 
@@ -1248,10 +1248,20 @@ namespace InteractML
             if (textNoteNodesList.Contains(nodeToDelete))
                 textNoteNodesList.Remove(nodeToDelete);
         }
+        /// <summary>
+        /// Removes TextNoteNode From TextNoteNodeList 
+        /// </summary>
+        /// <param name="nodeToDelete"></param>
+        public void DeleteFeatureNode(IFeatureIML nodeToDelete)
+        {
+            if (FeatureNodesList.Contains(nodeToDelete))
+                FeatureNodesList.Remove(nodeToDelete);
+        }
+
 
         #endregion
 
-#region SceneLoading
+        #region SceneLoading
 
 #if UNITY_EDITOR
         private void SceneOpenedLogic(UnityEngine.SceneManagement.Scene scene, UnityEditor.SceneManagement.OpenSceneMode mode)
