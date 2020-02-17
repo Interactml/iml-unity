@@ -15,6 +15,8 @@ namespace InteractML
 
         [HideInInspector]
         public bool GameObjMissing;
+        [HideInInspector]
+        public bool state; 
 
         // Use this for initialization
         protected override void Init()
