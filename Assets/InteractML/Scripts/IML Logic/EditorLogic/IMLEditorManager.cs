@@ -94,7 +94,6 @@ public class IMLEditorManager
                 MLComponent.LoadAllModelsFromDisk();
                 // Run them (if marked with RunOnAwake)
                 MLComponent.RunAllModels();
-                Debug.Log("here");
             }
             //Debug.Log("**Models reconfigured in editor status: " + playModeStatus + "**");
         }

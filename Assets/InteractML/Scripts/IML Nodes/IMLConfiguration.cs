@@ -299,9 +299,10 @@ namespace InteractML
             // Make sure that current output format matches the expected output format
             UpdateOutputFormat();
 
-            // Perform running logic (it will account for DTW and Classification/Regression)
-            RunningLogic();         
-
+            // Perform running logic (it will account for DTW and Classification/Regression) only if there is a predicted output 
+            if (m_TotalNumTrainingData > 0)
+                RunningLogic();
+            
             // Update feature selection matrix
             // TO DO
 
@@ -310,6 +311,7 @@ namespace InteractML
 
         public void TrainModel()
         {
+            RunningLogic();
             // if there are no training examples in connected training nodes do not train 
            if(m_TotalNumTrainingData == 0)
             {
@@ -616,8 +618,11 @@ namespace InteractML
             if (m_LearningType == IMLSpecifications.LearningType.DTW)
             {
                 if (m_NodeConnectionChanged
-                || PredictedOutput.Any((i => (i == null || ( i.Values == null || i.Values.Length == 0 ) ))) )
+                || PredictedOutput.Any((i => (i == null || ( i.Values == null || i.Values.Length == 0 ) ))))
+                {
                     updateOutFormat = true;
+                }
+                    
             }
             // In classification and regression, only changed format when there is a change in nodes or formats don't match
             else
