@@ -34,21 +34,13 @@ public class ParticleSystemIMLOutput : MonoBehaviour
         foreach (ParticleSystem ps in ParticleSystems)
         {
             int i = 0;
+            Debug.Log(m_InteractMLComponent.IMLControllerOutputs.Count);
             // We go through each of the IML outputs referenced in InteractML
             foreach (var IMLOutput in m_InteractMLComponent.IMLControllerOutputs)
             {
-                if(m_ModelType == IMLSpecifications.LearningType.Classification)
-                {
-                    Debug.Log("Classification not implemented");
-                } else if (m_ModelType == IMLSpecifications.LearningType.Regression)
-                {
                     var em = ps.emission;
                     em.rateOverTime = (float)IMLOutput[i] * RegressionScaler;
-
-                } else
-                {
-
-                }
+                    Debug.Log((float)IMLOutput[i] * RegressionScaler);
             }
         }
     }
