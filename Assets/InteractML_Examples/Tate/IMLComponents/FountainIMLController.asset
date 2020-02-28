@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Training Examples
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 88, y: 472}
+  position: {x: 104, y: 504}
   ports:
     keys:
     - InputFeatures
@@ -84,7 +84,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectFromScene
-        node: {fileID: 2647825237570589509}
+        node: {fileID: 0}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -111,8 +111,8 @@ MonoBehaviour:
   m_PositionExtracted:
     m_Values:
     - 0
-    - 0
-    - 0
+    - 4.14
+    - 8.75
 --- !u!114 &-3713487025068453347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,7 +179,8 @@ MonoBehaviour:
   ModelOutput: {fileID: 0}
   PredictedRapidlibOutput:
   - 0
-  DelayedPredictedOutput: []
+  DelayedPredictedOutput:
+  - 0.9451432623265853
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 1
@@ -210,6 +211,8 @@ MonoBehaviour:
   - {fileID: 68818987050540433}
   - {fileID: -7263173863358045852}
   - {fileID: 8667776185968881833}
+  - {fileID: 0}
+  - {fileID: 0}
   SceneComponent: {fileID: 0}
 --- !u!114 &68818987050540433
 MonoBehaviour:
@@ -277,7 +280,8 @@ MonoBehaviour:
   ModelOutput: {fileID: 0}
   PredictedRapidlibOutput:
   - 0
-  DelayedPredictedOutput: []
+  DelayedPredictedOutput:
+  - 0.04094371500620886
   m_ExpectedInputList: 04000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 1
@@ -299,7 +303,7 @@ MonoBehaviour:
   m_Name: Game Object
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -616, y: 200}
+  position: {x: -776, y: -152}
   ports:
     keys:
     - GameObjectFromScene
@@ -308,13 +312,7 @@ MonoBehaviour:
       _node: {fileID: 2647825237570589509}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: gameObjectIntoNode
-        node: {fileID: -4259148262878819432}
-        reroutePoints: []
-      - fieldName: gameObjectIntoNode
-        node: {fileID: 5001071736873089117}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -369,7 +367,7 @@ MonoBehaviour:
   m_Name: Extract Rotation
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -264, y: 328}
+  position: {x: -216, y: 392}
   ports:
     keys:
     - gameObjectIntoNode
@@ -381,7 +379,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectFromScene
-        node: {fileID: 2647825237570589509}
+        node: {fileID: 0}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -407,10 +405,10 @@ MonoBehaviour:
   LocalSpace: 0
   m_RotationExtracted:
     m_Values:
-    - 0
-    - 0
-    - 0
+    - -0
     - 1
+    - -0
+    - 0
   GameObjInputMissing: 0
 --- !u!114 &7118293096145031292
 MonoBehaviour:
@@ -425,7 +423,7 @@ MonoBehaviour:
   m_Name: Training Examples
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 104, y: -152}
+  position: {x: 152, y: -200}
   ports:
     keys:
     - InputFeatures

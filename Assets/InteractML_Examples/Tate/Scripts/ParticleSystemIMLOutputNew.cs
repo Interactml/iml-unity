@@ -20,15 +20,15 @@ public class ParticleSystemIMLOutputNew : MonoBehaviour
     public IMLComponent m_InteractMLComponent;
 
     [Header("IML Controller Realtime Outputs")]
-    public List<double[]> IMLControllerOutputs;
+    public List<double[]> p_IMLControllerOutputs;
 
     [Header("Particle Systems")]
     [Tooltip("Add here all the Particle Systems to effect")]
     public List<ParticleSystem> ParticleSystems;
 
-    /*[Tooltip("Add here all the parameters you want to effect")]
-    public bool PSEmissionRate;
-    public bool PSBurstRate;*/
+    [Tooltip("Add here all the parameters you want to effect")]
+    public bool psRateOverTime;
+    public bool psSimulationSpeed;
 
     public bool effectAll; 
 
@@ -36,7 +36,12 @@ public class ParticleSystemIMLOutputNew : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        IMLControllerOutputs = m_InteractMLComponent.IMLControllerOutputs;
+        p_IMLControllerOutputs = m_InteractMLComponent.IMLControllerOutputs;
+    }
+
+    void Init()
+    {
+        
     }
 
     // Update is called once per frame
@@ -79,8 +84,18 @@ public class ParticleSystemIMLOutputNew : MonoBehaviour
             if (m_InteractMLComponent.IMLControllerOutputs.Count > i)
 			{
                 ParticleSystem ps = ParticleSystems[i];
-                var em = ps.emission;
-                em.rateOverTime = (float)m_InteractMLComponent.IMLControllerOutputs[i][0] * RegressionScaler; 
+                if (psSimulationSpeed)
+                {
+                    var em = ps.emission;
+                    em.rateOverTime = (float)m_InteractMLComponent.IMLControllerOutputs[i][0] * RegressionScaler;
+                }
+
+                if (psRateOverTime) { 
+
+                    var main = ps.main;
+                    main.simulationSpeed = (float)m_InteractMLComponent.IMLControllerOutputs[i][0] * RegressionScaler;
+                }
+               
             } else
 			{
                 Debug.Log("less particle systems then outputs");
