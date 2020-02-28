@@ -300,7 +300,7 @@ namespace InteractML
             UpdateOutputFormat();
 
             // Perform running logic (it will account for DTW and Classification/Regression) only if there is a predicted output 
-            if (m_TotalNumTrainingData > 0)
+            if (PredictedRapidlibOutput.Length != 0)
                 RunningLogic();
             
             // Update feature selection matrix
