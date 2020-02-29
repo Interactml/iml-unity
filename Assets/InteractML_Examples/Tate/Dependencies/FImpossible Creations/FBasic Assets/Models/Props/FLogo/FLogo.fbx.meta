@@ -1,0 +1,179 @@
+fileFormatVersion: 2
+guid: 9e77043b5f9eb0544b1905826afbf243
+timeCreated: 1528574132
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Cap_1
+    100002: Cube_0
+    100004: Cube_1
+    100006: Cube_2
+    100008: Cube_3
+    100010: Cube_4
+    100012: Cube_5
+    100014: Cube_6
+    100016: Cube_7
+    100018: Cylinder
+    100020: Edges
+    100022: F_Inner
+    100024: //RootNode
+    100026: Rounding
+    100028: Shield_Boole
+    100030: Shield_Inner
+    100032: Shield_Inner_2
+    100034: F_Extrude
+    100036: F_Front
+    100038: F_Rounding
+    100040: Shield_In
+    100042: Shield_Outer
+    400000: Cap_1
+    400002: Cube_0
+    400004: Cube_1
+    400006: Cube_2
+    400008: Cube_3
+    400010: Cube_4
+    400012: Cube_5
+    400014: Cube_6
+    400016: Cube_7
+    400018: Cylinder
+    400020: Edges
+    400022: F_Inner
+    400024: //RootNode
+    400026: Rounding
+    400028: Shield_Boole
+    400030: Shield_Inner
+    400032: Shield_Inner_2
+    400034: F_Extrude
+    400036: F_Front
+    400038: F_Rounding
+    400040: Shield_In
+    400042: Shield_Outer
+    2100000: No Name
+    2300000: Cap_1
+    2300002: Cube_0
+    2300004: Cube_1
+    2300006: Cube_2
+    2300008: Cube_3
+    2300010: Cube_4
+    2300012: Cube_5
+    2300014: Cube_6
+    2300016: Cube_7
+    2300018: Cylinder
+    2300020: F_Inner
+    2300022: Rounding
+    2300024: Shield_Inner_2
+    2300026: Edges
+    2300028: F_Extrude
+    2300030: F_Front
+    2300032: F_Rounding
+    2300034: Shield_In
+    2300036: Shield_Outer
+    3300000: Cap_1
+    3300002: Cube_0
+    3300004: Cube_1
+    3300006: Cube_2
+    3300008: Cube_3
+    3300010: Cube_4
+    3300012: Cube_5
+    3300014: Cube_6
+    3300016: Cube_7
+    3300018: Cylinder
+    3300020: F_Inner
+    3300022: Rounding
+    3300024: Shield_Inner_2
+    3300026: Edges
+    3300028: F_Extrude
+    3300030: F_Front
+    3300032: F_Rounding
+    3300034: Shield_In
+    3300036: Shield_Outer
+    4300000: Shield_Inner_2
+    4300002: Cylinder
+    4300004: Cube_0
+    4300006: Cube_1
+    4300008: Cube_2
+    4300010: Cube_3
+    4300012: Cube_4
+    4300014: Cube_5
+    4300016: Cube_6
+    4300018: Cube_7
+    4300020: F_Inner
+    4300022: Rounding
+    4300024: Cap_1
+    4300026: F_Front
+    4300028: F_Rounding
+    4300030: F_Extrude
+    4300032: Shield_Outer
+    4300034: Shield_In
+    4300036: Edges
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
