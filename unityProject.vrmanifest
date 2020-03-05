@@ -1,0 +1,16 @@
+{
+  "source": "Unity",
+  "applications": [
+    {
+      "app_key": "application.generated.unity.iml_goldsmiths.exe",
+      "launch_type": "url",
+      "url": "steam://launch/",
+      "action_manifest_path": "C:\\Users\\Nicola\\OneDrive - Goldsmiths College\\Unity Projects\\InteractML\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "strings": {
+        "en_us": {
+          "name": "IML_Goldsmiths [Testing]"
+        }
+      }
+    }
+  ]
+}
