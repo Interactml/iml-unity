@@ -49,7 +49,7 @@ public class IMLToAnimatorBridge : MonoBehaviour
         // Go through all the vocabulary
         for (int i = 0; i < animVocab.Count; i++)
         {
-            // Check that them amount of iml outputs between bounds
+            // Check that the amount of iml outputs is between bounds
             if (iMLComponent.IMLControllerOutputs.Count >= i+1)
             {
                 // Check if the i iml output matches the expected values
