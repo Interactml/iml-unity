@@ -177,8 +177,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   IMLModelOutputs: {fileID: 0}
-  m_IMLOutputVector:
-  - 0
+  m_IMLOutputVector: []
 --- !u!114 &-3847000466012003844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +191,7 @@ MonoBehaviour:
   m_Name: Training Examples
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1256, y: -728}
+  position: {x: 1256, y: -648}
   ports:
     keys:
     - InputFeatures
@@ -453,7 +452,7 @@ MonoBehaviour:
   m_Name: Text Note
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1320, y: -840}
+  position: {x: 1320, y: -792}
   ports:
     keys: []
     values: []
@@ -605,7 +604,7 @@ MonoBehaviour:
   CaptureRate: 10
   RecordTime: -1
   EnableKeyboardControl: 0
-  RecordDataKey: 0
+  RecordDataKey: 32
 --- !u!114 &7030627340914748870
 MonoBehaviour:
   m_ObjectHideFlags: 0
