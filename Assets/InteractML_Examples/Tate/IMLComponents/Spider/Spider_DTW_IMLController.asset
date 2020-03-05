@@ -39,7 +39,10 @@ MonoBehaviour:
       _node: {fileID: -8962959151003439704}
       _typeQualifiedName: InteractML.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: IMLTrainingExamplesNodes
+        node: {fileID: 9158614448435581575}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -48,7 +51,7 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 1470074218188737501}
   - {fileID: -6918900312600582744}
-  TrainingExamplesNodeToOutput: {fileID: 0}
+  TrainingExamplesNodeToOutput: {fileID: -8962959151003439704}
   ModeOfCollection: 1
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
@@ -60,6 +63,52 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 32
+--- !u!114 &-8070338186045646290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 104, y: 184}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: 'We need to send as well the velocities from the controllers to the IML Configuration
+    node as it is required for real time calculations
+
+'
+--- !u!114 &-7600487622071805104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -280, y: -456}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: 'We calculate the velocity of positional data. This is good to know how are
+    you moving around the scene.
+
+
+
+'
 --- !u!114 &-7483003890504493833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,7 +208,7 @@ MonoBehaviour:
   m_Name: Realtime IML Output
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 3128, y: 440}
+  position: {x: 3704, y: 56}
   ports:
     keys:
     - IMLModelOutputs
@@ -280,7 +329,10 @@ MonoBehaviour:
       _node: {fileID: -1581180848011800596}
       _typeQualifiedName: InteractML.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: IMLTrainingExamplesNodes
+        node: {fileID: 9158614448435581575}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -289,7 +341,7 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 1470074218188737501}
   - {fileID: -6918900312600582744}
-  TrainingExamplesNodeToOutput: {fileID: 0}
+  TrainingExamplesNodeToOutput: {fileID: -1581180848011800596}
   ModeOfCollection: 1
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
@@ -373,6 +425,9 @@ MonoBehaviour:
   - {fileID: -184216204786162425}
   - {fileID: -1581180848011800596}
   - {fileID: -155428915502576550}
+  - {fileID: 3716639019118044570}
+  - {fileID: -8070338186045646290}
+  - {fileID: -7600487622071805104}
   SceneComponent: {fileID: 0}
 --- !u!114 &1470074218188737501
 MonoBehaviour:
@@ -511,6 +566,28 @@ MonoBehaviour:
     - 0
     - 0
     - 0
+--- !u!114 &3716639019118044570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 104, y: -472}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: 'Sending the Velocities from controllers to different training examples nodes.
+    This way, we can separate each training examples node per output.
+
+'
 --- !u!114 &4150147029244247729
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -584,7 +661,10 @@ MonoBehaviour:
       _node: {fileID: 6817252230446398264}
       _typeQualifiedName: InteractML.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: IMLTrainingExamplesNodes
+        node: {fileID: 9158614448435581575}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -593,7 +673,7 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 1470074218188737501}
   - {fileID: -6918900312600582744}
-  TrainingExamplesNodeToOutput: {fileID: 0}
+  TrainingExamplesNodeToOutput: {fileID: 6817252230446398264}
   ModeOfCollection: 1
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
@@ -703,7 +783,7 @@ MonoBehaviour:
   m_Name: IML Configuration
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 2152, y: 136}
+  position: {x: 2936, y: 8}
   ports:
     keys:
     - IMLTrainingExamplesNodes
@@ -717,7 +797,16 @@ MonoBehaviour:
         mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: TrainingExamplesNodeToOutput
+        node: {fileID: 6817252230446398264}
+        reroutePoints: []
+      - fieldName: TrainingExamplesNodeToOutput
         node: {fileID: -3847000466012003844}
+        reroutePoints: []
+      - fieldName: TrainingExamplesNodeToOutput
+        node: {fileID: -1581180848011800596}
+        reroutePoints: []
+      - fieldName: TrainingExamplesNodeToOutput
+        node: {fileID: -8962959151003439704}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -753,7 +842,10 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   IMLTrainingExamplesNodes:
+  - {fileID: 6817252230446398264}
   - {fileID: -3847000466012003844}
+  - {fileID: -1581180848011800596}
+  - {fileID: -8962959151003439704}
   InputFeatures:
   - {fileID: 1470074218188737501}
   - {fileID: -6918900312600582744}
@@ -761,7 +853,7 @@ MonoBehaviour:
   PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
   m_ExpectedInputList: 0500000005000000
-  m_ExpectedOutputList: 00000000
+  m_ExpectedOutputList: 00000000000000000000000000000000
   m_LearningType: 2
   EnableKeyboardControl: 0
   TrainingKey: 0
