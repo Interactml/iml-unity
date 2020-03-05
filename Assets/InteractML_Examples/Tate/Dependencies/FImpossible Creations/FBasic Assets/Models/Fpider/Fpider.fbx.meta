@@ -1,0 +1,265 @@
+fileFormatVersion: 2
+guid: 02f6d757f2bffdf4e8d72b2915c3c209
+timeCreated: 1529748797
+licenseType: Store
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: BBody
+    100002: BlegLB_1
+    100004: BlegLB_2
+    100006: BlegLB_3
+    100008: BlegLB_3_2
+    100010: BlegLB_3_Goal
+    100012: BlegLF
+    100014: BlegLF_1
+    100016: BlegLF_2
+    100018: BlegLF_3
+    100020: BlegLF_3_Goal
+    100022: BlegLPB_1
+    100024: BlegLPB_2
+    100026: BlegLPB_2_2
+    100028: BlegLPB_3
+    100030: BlegLPB_3_Goal
+    100032: BlegLPF_1
+    100034: BlegLPF_1_2
+    100036: BlegLPF_2
+    100038: BlegLPF_3
+    100040: BlegLPF_3_Goal
+    100042: BLegRB_1
+    100044: BLegRB_2
+    100046: BLegRB_3
+    100048: BLegRB_3_2
+    100050: BLegRB_3_Goal
+    100052: BLegRF
+    100054: BLegRF_1
+    100056: BLegRF_2
+    100058: BLegRF_3
+    100060: BLegRF_3_Goal
+    100062: BLegRPB_1
+    100064: BLegRPB_2
+    100066: BLegRPB_2_2
+    100068: BLegRPB_3
+    100070: BLegRPB_3_Goal
+    100072: BLegRPF_1
+    100074: BLegRPF_1_2
+    100076: BLegRPF_2
+    100078: BLegRPF_3
+    100080: BLegRPF_3_Goal
+    100082: Body_Shield
+    100084: BSkeleton
+    100086: //RootNode
+    100088: Legs
+    100090: SwitchAxis
+    400000: BBody
+    400002: BlegLB_1
+    400004: BlegLB_2
+    400006: BlegLB_3
+    400008: BlegLB_3_2
+    400010: BlegLB_3_Goal
+    400012: BlegLF
+    400014: BlegLF_1
+    400016: BlegLF_2
+    400018: BlegLF_3
+    400020: BlegLF_3_Goal
+    400022: BlegLPB_1
+    400024: BlegLPB_2
+    400026: BlegLPB_2_2
+    400028: BlegLPB_3
+    400030: BlegLPB_3_Goal
+    400032: BlegLPF_1
+    400034: BlegLPF_1_2
+    400036: BlegLPF_2
+    400038: BlegLPF_3
+    400040: BlegLPF_3_Goal
+    400042: BLegRB_1
+    400044: BLegRB_2
+    400046: BLegRB_3
+    400048: BLegRB_3_2
+    400050: BLegRB_3_Goal
+    400052: BLegRF
+    400054: BLegRF_1
+    400056: BLegRF_2
+    400058: BLegRF_3
+    400060: BLegRF_3_Goal
+    400062: BLegRPB_1
+    400064: BLegRPB_2
+    400066: BLegRPB_2_2
+    400068: BLegRPB_3
+    400070: BLegRPB_3_Goal
+    400072: BLegRPF_1
+    400074: BLegRPF_1_2
+    400076: BLegRPF_2
+    400078: BLegRPF_3
+    400080: BLegRPF_3_Goal
+    400082: Body_Shield
+    400084: BSkeleton
+    400086: //RootNode
+    400088: Legs
+    400090: SwitchAxis
+    2100000: Mat.1
+    2100002: Mat
+    2100004: No Name
+    2300000: Body_Shield
+    3300000: Body_Shield
+    4300000: Body_Shield
+    4300002: Legs
+    7400000: Fpider_Look
+    7400002: Fpider_Idle
+    7400004: Fpider_Move
+    9500000: //RootNode
+    13700000: Legs
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Fpider_Look
+      takeName: C4D Animation Take
+      firstFrame: 0
+      lastFrame: 40
+      wrapMode: 0
+      orientationOffsetY: -90
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Fpider_Idle
+      takeName: C4D Animation Take
+      firstFrame: 40
+      lastFrame: 60
+      wrapMode: 0
+      orientationOffsetY: -90
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Fpider_Move
+      takeName: C4D Animation Take
+      firstFrame: 70
+      lastFrame: 89
+      wrapMode: 0
+      orientationOffsetY: -90
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
