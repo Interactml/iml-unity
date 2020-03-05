@@ -79,3 +79,4 @@ Assets/SteamVR_Resources.meta
 .vs/iml-unity/v16/Server/sqlite3/storage.ide
 .vs/iml-unity/v16/Server/sqlite3/storage.ide-shm
 .vs/iml-unity/v16/Server/sqlite3/storage.ide-wal
+*.ide
