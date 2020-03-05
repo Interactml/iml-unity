@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using InteractML;
@@ -7,11 +8,21 @@ public enum PSSetting {emissionRateSet, burstRateSet};
 
 public class ParticleSystemIMLOutputNew : MonoBehaviour
 {
-    // iml learning type 
-    public IMLSpecifications.LearningType m_ModelType;
+    [Serializable]
+    public struct PSOutput
+    {
+        public ParticleSystem ps;
+        public bool psRateOverTime;
+        public bool psSimulationSpeed;
+        public bool psAngle;
+    }
 
+    [Range(0f, 10f)]
+    public float SimulationSpeedScaler;
     [Range(0f, 100f)]
-    public float RegressionScaler;
+    public float RateTimeScaler;
+    [Range(0f, 360f)]
+    public float AngleScaler;
 
     /// <summary>
     /// The InteractML component with all the models to output
@@ -24,11 +35,9 @@ public class ParticleSystemIMLOutputNew : MonoBehaviour
 
     [Header("Particle Systems")]
     [Tooltip("Add here all the Particle Systems to effect")]
-    public List<ParticleSystem> ParticleSystems;
+    public List<PSOutput> ParticleSystems;
 
-    [Tooltip("Add here all the parameters you want to effect")]
-    public bool psRateOverTime;
-    public bool psSimulationSpeed;
+    
 
     public bool effectAll; 
 
@@ -59,18 +68,16 @@ public class ParticleSystemIMLOutputNew : MonoBehaviour
     void EffectAllPS()
 	{
         // Go through all the particle systems
-        foreach (ParticleSystem ps in ParticleSystems)
+        foreach (PSOutput pso in ParticleSystems)
         {
             int i = 0;
             // We go through each of the IML outputs referenced in InteractML
             foreach (var IMLOutput in m_InteractMLComponent.IMLControllerOutputs)
             {
-                Debug.Log("here");
                 if (IMLOutput.Length > 0)
                 {
-                    Debug.Log(ps.name);
-                    var em = ps.emission;
-                    em.rateOverTime = (float)IMLOutput[i] * RegressionScaler;
+                    var em = pso.ps.emission;
+                    em.rateOverTime = (float)IMLOutput[i] * RateTimeScaler;
                 }
 
             }
@@ -83,19 +90,28 @@ public class ParticleSystemIMLOutputNew : MonoBehaviour
 		{
             if (m_InteractMLComponent.IMLControllerOutputs.Count > i)
 			{
-                ParticleSystem ps = ParticleSystems[i];
-                if (psSimulationSpeed)
+                PSOutput pso = ParticleSystems[i];
+               if (pso.psSimulationSpeed)
                 {
-                    var em = ps.emission;
-                    em.rateOverTime = (float)m_InteractMLComponent.IMLControllerOutputs[i][0] * RegressionScaler;
+                   var main = pso.ps.main;
+                    main.simulationSpeed = (float)m_InteractMLComponent.IMLControllerOutputs[i][0] * SimulationSpeedScaler;
                 }
 
-                if (psRateOverTime) { 
+                if (pso.psRateOverTime) {
 
-                    var main = ps.main;
-                    main.simulationSpeed = (float)m_InteractMLComponent.IMLControllerOutputs[i][0] * RegressionScaler;
+                    var em = pso.ps.emission;
+                    em.rateOverTime = (float)m_InteractMLComponent.IMLControllerOutputs[i][0] * RateTimeScaler;
+
                 }
-               
+
+                if (pso.psAngle)
+                {
+                    var shape = pso.ps.shape;
+
+                    shape.angle = (float)m_InteractMLComponent.IMLControllerOutputs[i][0] * AngleScaler;
+
+                }
+
             } else
 			{
                 Debug.Log("less particle systems then outputs");

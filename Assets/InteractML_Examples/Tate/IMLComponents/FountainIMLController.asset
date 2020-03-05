@@ -1,5 +1,61 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8610128303692843015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e8312b300ccdb4784b431dbd6ddf11, type: 3}
+  m_Name: Extract Rotation
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -232, y: 360}
+  ports:
+    keys:
+    - gameObjectIntoNode
+    - rotationExtracted
+    values:
+    - _fieldName: gameObjectIntoNode
+      _node: {fileID: -8610128303692843015}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: GameObjectFromScene
+        node: {fileID: 1373153894557715737}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: rotationExtracted
+      _node: {fileID: -8610128303692843015}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: InputFeatures
+        node: {fileID: 68818987050540433}
+        reroutePoints: []
+      - fieldName: InputFeatures
+        node: {fileID: -7263173863358045852}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  gameObjectIntoNode: {fileID: 0}
+  rotationExtracted: {fileID: 0}
+  LocalSpace: 0
+  m_RotationExtracted:
+    m_Values:
+    - 0
+    - 0
+    - 0
+    - 1
+  GameObjInputMissing: 0
 --- !u!114 &-7263173863358045852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26,7 +82,7 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: rotationExtracted
-        node: {fileID: 5001071736873089117}
+        node: {fileID: -8610128303692843015}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -46,7 +102,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   InputFeatures:
-  - {fileID: 5001071736873089117}
+  - {fileID: -8610128303692843015}
   TrainingExamplesNodeToOutput: {fileID: -7263173863358045852}
   ModeOfCollection: 0
   TrainingExamplesVector: []
@@ -59,60 +115,6 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 0
---- !u!114 &-4259148262878819432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
-  m_Name: FountainIMLController
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -156.5, y: -110}
-  ports:
-    keys:
-    - gameObjectIntoNode
-    - positionExtracted
-    values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: -4259148262878819432}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
-      _node: {fileID: -4259148262878819432}
-      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: InputFeatures
-        node: {fileID: 7118293096145031292}
-        reroutePoints: []
-      - fieldName: InputFeatures
-        node: {fileID: -3713487025068453347}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
-  LocalSpace: 0
-  m_PositionExtracted:
-    m_Values:
-    - 0
-    - 4.14
-    - 8.75
 --- !u!114 &-3713487025068453347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,7 +155,7 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: positionExtracted
-        node: {fileID: -4259148262878819432}
+        node: {fileID: 4178551709630575144}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -175,12 +177,12 @@ MonoBehaviour:
   IMLTrainingExamplesNodes:
   - {fileID: 7118293096145031292}
   InputFeatures:
-  - {fileID: -4259148262878819432}
+  - {fileID: 4178551709630575144}
   ModelOutput: {fileID: 0}
   PredictedRapidlibOutput:
-  - 0
+  - 0.15987455255711125
   DelayedPredictedOutput:
-  - 0.9451432623265853
+  - 0.15987455255711125
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 1
@@ -203,16 +205,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: -3713487025068453347}
-  - {fileID: 2647825237570589509}
   - {fileID: 7118293096145031292}
-  - {fileID: -4259148262878819432}
   - {fileID: 2896052116055899951}
-  - {fileID: 5001071736873089117}
   - {fileID: 68818987050540433}
   - {fileID: -7263173863358045852}
   - {fileID: 8667776185968881833}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1373153894557715737}
+  - {fileID: 4178551709630575144}
+  - {fileID: -8610128303692843015}
   SceneComponent: {fileID: 0}
 --- !u!114 &68818987050540433
 MonoBehaviour:
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Name: IML Configuration
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 712, y: 472}
+  position: {x: 680, y: 360}
   ports:
     keys:
     - IMLTrainingExamplesNodes
@@ -254,7 +254,7 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: rotationExtracted
-        node: {fileID: 5001071736873089117}
+        node: {fileID: -8610128303692843015}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -276,12 +276,12 @@ MonoBehaviour:
   IMLTrainingExamplesNodes:
   - {fileID: -7263173863358045852}
   InputFeatures:
-  - {fileID: 5001071736873089117}
+  - {fileID: -8610128303692843015}
   ModelOutput: {fileID: 0}
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
-  - 0.04094371500620886
+  - 0
   m_ExpectedInputList: 04000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 1
@@ -290,7 +290,7 @@ MonoBehaviour:
   RunningKey: 0
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
---- !u!114 &2647825237570589509
+--- !u!114 &1373153894557715737
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -303,16 +303,22 @@ MonoBehaviour:
   m_Name: Game Object
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -776, y: -152}
+  position: {x: -600, y: 136}
   ports:
     keys:
     - GameObjectFromScene
     values:
     - _fieldName: GameObjectFromScene
-      _node: {fileID: 2647825237570589509}
+      _node: {fileID: 1373153894557715737}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: gameObjectIntoNode
+        node: {fileID: 4178551709630575144}
+        reroutePoints: []
+      - fieldName: gameObjectIntoNode
+        node: {fileID: -8610128303692843015}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -353,8 +359,8 @@ MonoBehaviour:
   DevMode: 0
   IMLModelOutputs: {fileID: 0}
   m_IMLOutputVector:
-  - 0
---- !u!114 &5001071736873089117
+  - 0.1598745584487915
+--- !u!114 &4178551709630575144
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -363,37 +369,37 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5e8312b300ccdb4784b431dbd6ddf11, type: 3}
-  m_Name: Extract Rotation
+  m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
+  m_Name: Extract Position
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -216, y: 392}
+  position: {x: -168, y: -8}
   ports:
     keys:
     - gameObjectIntoNode
-    - rotationExtracted
+    - positionExtracted
     values:
     - _fieldName: gameObjectIntoNode
-      _node: {fileID: 5001071736873089117}
+      _node: {fileID: 4178551709630575144}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectFromScene
-        node: {fileID: 0}
+        node: {fileID: 1373153894557715737}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: rotationExtracted
-      _node: {fileID: 5001071736873089117}
+    - _fieldName: positionExtracted
+      _node: {fileID: 4178551709630575144}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
-        node: {fileID: -7263173863358045852}
+        node: {fileID: 7118293096145031292}
         reroutePoints: []
       - fieldName: InputFeatures
-        node: {fileID: 68818987050540433}
+        node: {fileID: -3713487025068453347}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -401,15 +407,13 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   gameObjectIntoNode: {fileID: 0}
-  rotationExtracted: {fileID: 0}
+  positionExtracted: {fileID: 0}
   LocalSpace: 0
-  m_RotationExtracted:
+  m_PositionExtracted:
     m_Values:
-    - -0
-    - 1
-    - -0
-    - 0
-  GameObjInputMissing: 0
+    - 14.059531
+    - -9.103619
+    - -1
 --- !u!114 &7118293096145031292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,7 +440,7 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: positionExtracted
-        node: {fileID: -4259148262878819432}
+        node: {fileID: 4178551709630575144}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -456,7 +460,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   InputFeatures:
-  - {fileID: -4259148262878819432}
+  - {fileID: 4178551709630575144}
   TrainingExamplesNodeToOutput: {fileID: 7118293096145031292}
   ModeOfCollection: 0
   TrainingExamplesVector: []

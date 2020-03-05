@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace InteractML
 {
@@ -239,7 +240,10 @@ namespace InteractML
             }
 
             if (isTrained)
+            {
                 m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+            }
+                
 
             // Once the training is done, we need to destroy the c++ training list outside of the GC scope
             RapidlibLinkerDLL.DestroyTrainingSet(trainingSetAddress);
@@ -290,7 +294,10 @@ namespace InteractML
             }
 
             if (isTrained)
+            {
                 m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+            }
+                
 
             return isTrained;
         }
@@ -359,6 +366,7 @@ namespace InteractML
                 // Configure the model in memory
                 if (!jsonstring.Contains("\"modelType\" : \"Series Classification\""))
                 {
+                    Debug.Log(jsonstring);
                     RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
                 }
                
@@ -403,6 +411,7 @@ namespace InteractML
         /// <param name="fileName"></param>
         public void LoadModelFromDisk(string fileName)
         {
+            Debug.Log(fileName);
             // Attempt to load model
             string stringLoaded = IMLDataSerialization.LoadRapidlibModelFromDisk(fileName);
 
@@ -457,6 +466,7 @@ namespace InteractML
             DestroyModel();
             // We create the new model in memory and get its address
             m_ModelAddress = RapidlibLinkerDLL.CreateClassificationModel();
+            Debug.Log(m_ModelAddress);
             // We set the type of model to kNN
             m_TypeOfModel = ModelType.kNN;
             // Since it is a new model, the status of the model is now untrained
