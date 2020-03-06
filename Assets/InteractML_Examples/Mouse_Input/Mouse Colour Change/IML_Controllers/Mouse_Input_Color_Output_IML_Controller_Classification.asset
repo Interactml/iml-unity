@@ -33,6 +33,7 @@ MonoBehaviour:
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
   GameObjMissing: 0
+  state: 1
 --- !u!114 &-4927585982608454069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,9 +131,6 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 6620900826782712363}
   ModelOutput: {fileID: 0}
-  KeyboardControl: 0
-  TrainingKey: 0
-  RunningKey: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -140,6 +138,9 @@ MonoBehaviour:
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_LearningType: 0
+  EnableKeyboardControl: 0
+  TrainingKey: 0
+  RunningKey: 0
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
 --- !u!114 &11400000
@@ -274,5 +275,5 @@ MonoBehaviour:
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableKeyboardShortcut: 1
+  EnableKeyboardControl: 0
   RecordDataKey: 0

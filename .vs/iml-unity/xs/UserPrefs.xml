@@ -1,0 +1,51 @@
+﻿<Properties StartupConfiguration="{BC66C044-85D4-6305-EA02-E22EE58139F4}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/InteractML_Examples/SerialData/serialEx.cs">
+    <Files>
+      <File FileName="Assets/InteractML/Scripts/TestSendDataToIMLController.cs" Line="31" Column="41" />
+      <File FileName="Assets/InteractML_Examples/SerialData/Arduino_Data_To_IML.cs" Line="29" Column="1" />
+      <File FileName="Assets/InteractML_Examples/SerialData/serialEx.cs" Line="8" Column="269" />
+      <File FileName="Assets/Oculus/SampleFramework/Editor/OculusSampleFrameworkUtil.cs" Line="43" Column="3" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="iml-unity" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="Ardity" expanded="True">
+                  <Node name="Scripts" expanded="True">
+                    <Node name="Threads" expanded="True" />
+                  </Node>
+                </Node>
+              </Node>
+              <Node name="InteractML" expanded="True">
+                <Node name="Scripts" expanded="True">
+                  <Node name="IML Logic" expanded="True">
+                    <Node name="EditorLogic" expanded="True" />
+                  </Node>
+                </Node>
+              </Node>
+              <Node name="InteractML_Examples" expanded="True">
+                <Node name="SerialData" expanded="True">
+                  <Node name="serialEx.cs" selected="True" />
+                </Node>
+              </Node>
+              <Node name="Oculus" expanded="True">
+                <Node name="SampleFramework" expanded="True">
+                  <Node name="Editor" expanded="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bf5e9ba7-bfa8-4896-8816-3b49d56346b0" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
