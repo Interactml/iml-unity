@@ -45,11 +45,7 @@
 
 			inline fixed4 LightingTranslucent(SurfaceOutput s, fixed3 lightDir, fixed3 viewDir, fixed atten)
 			{
-				// You can remove these two lines,
-				// to save some instructions. They're just
-				// here for visual fidelity.
-				viewDir = normalize(viewDir);
-				lightDir = normalize(lightDir);
+				
 
 				// Translucency.
 				half3 transLightDir = lightDir + s.Normal * _Distortion;

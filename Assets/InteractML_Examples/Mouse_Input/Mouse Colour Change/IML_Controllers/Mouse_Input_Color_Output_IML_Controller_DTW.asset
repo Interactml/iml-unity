@@ -33,6 +33,7 @@ MonoBehaviour:
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
   GameObjMissing: 0
+  state: 0
 --- !u!114 &-7769149576494201274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,7 +103,7 @@ MonoBehaviour:
   m_Name: IML Configuration
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -360, y: -24}
+  position: {x: 696, y: -408}
   ports:
     keys:
     - IMLTrainingExamplesNodes
@@ -153,19 +154,18 @@ MonoBehaviour:
   DevMode: 0
   IMLTrainingExamplesNodes:
   - {fileID: 5402000221558968246}
-  - {fileID: 0}
   InputFeatures:
   - {fileID: -7769149576494201274}
   ModelOutput: {fileID: 0}
-  KeyboardControl: 1
-  TrainingKey: 116
-  RunningKey: 114
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput: []
   m_ExpectedInputList: 03000000
-  m_ExpectedOutputList: 01000000
-  m_LearningType: 0
+  m_ExpectedOutputList: 00000000
+  m_LearningType: 2
+  EnableKeyboardControl: 0
+  TrainingKey: 116
+  RunningKey: 114
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
 --- !u!114 &11400000
@@ -220,7 +220,7 @@ MonoBehaviour:
   DevMode: 0
   IMLModelOutputs: {fileID: 0}
   m_IMLOutputVector:
-  - 0
+  - 2
 --- !u!114 &2561013331648906579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,7 +234,7 @@ MonoBehaviour:
   m_Name: Realtime IML Output
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 276, y: 214.5}
+  position: {x: 1272, y: -440}
   ports:
     keys:
     - IMLModelOutputs
@@ -253,7 +253,7 @@ MonoBehaviour:
   DevMode: 0
   IMLModelOutputs: {fileID: 0}
   m_IMLOutputVector:
-  - 0
+  - 2
 --- !u!114 &5402000221558968246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,5 +311,5 @@ MonoBehaviour:
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableKeyboardShortcut: 1
+  EnableKeyboardControl: 0
   RecordDataKey: 32
