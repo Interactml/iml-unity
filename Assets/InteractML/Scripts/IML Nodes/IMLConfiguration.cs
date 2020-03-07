@@ -299,9 +299,8 @@ namespace InteractML
             // Make sure that current output format matches the expected output format
             UpdateOutputFormat();
 
-            // Perform running logic (it will account for DTW and Classification/Regression) only if there is a predicted output 
-            if (PredictedRapidlibOutput.Length != 0)
-                RunningLogic();
+            // Perform running logic (it will account for DTW and Classification/Regression) only if there is a predicted output            
+            RunningLogic();
             
             // Update feature selection matrix
             // TO DO
@@ -588,13 +587,11 @@ namespace InteractML
             // Account for all learning types now
             switch (m_LearningType)
             {
-                case IMLSpecifications.LearningType.Classification:
-                    // Get the output from rapidlib
-                    PredictedRapidlibOutput = RunModel();
-                    // Transform rapidlib output to IMLTypes (calling straight after getting the output so that the UI can show properly)
-                    TransformPredictedOuputToIMLTypes(PredictedRapidlibOutput, ref PredictedOutput);
-                    break;
-                case IMLSpecifications.LearningType.Regression:
+                // Classification and Regression
+                case IMLSpecifications.LearningType.Classification: case IMLSpecifications.LearningType.Regression:
+                    // Don't run when the predicteb rapidlib output is empty (this is a patch for some bug that broke the predictions)
+                    if (PredictedRapidlibOutput.Length == 0)
+                        break;
                     // Get the output from rapidlib
                     PredictedRapidlibOutput = RunModel();
                     // Transform rapidlib output to IMLTypes (calling straight after getting the output so that the UI can show properly)
