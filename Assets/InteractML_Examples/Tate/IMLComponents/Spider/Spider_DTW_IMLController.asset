@@ -39,7 +39,10 @@ MonoBehaviour:
       _node: {fileID: -8962959151003439704}
       _typeQualifiedName: InteractML.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: IMLTrainingExamplesNodes
+        node: {fileID: 9158614448435581575}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -189,9 +192,9 @@ MonoBehaviour:
     - 0
     - 0
   m_LastFrameFeatureValue:
-  - -0.054431137
-  - 1.2674421
-  - 1.0426277
+  - 0
+  - 0
+  - 0
 --- !u!114 &-5703193634620373275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +227,9 @@ MonoBehaviour:
   DevMode: 0
   IMLModelOutputs: {fileID: 0}
   m_IMLOutputVector:
+  - 0
+  - 0
+  - 0
   - 0
 --- !u!114 &-3847000466012003844
 MonoBehaviour:
@@ -327,7 +333,10 @@ MonoBehaviour:
       _node: {fileID: -1581180848011800596}
       _typeQualifiedName: InteractML.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: IMLTrainingExamplesNodes
+        node: {fileID: 9158614448435581575}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -482,13 +491,13 @@ MonoBehaviour:
   VelocityExtracted: {fileID: 0}
   m_VelocityExtracted:
     m_Values:
-    - -0.000625161
-    - -0.0005612668
-    - 0.0011275449
+    - 0
+    - 0
+    - 0
   m_LastFrameFeatureValue:
-  - 0.15779935
-  - 1.0100217
-  - 0.90660685
+  - 0
+  - 0
+  - 0
 --- !u!114 &3167230364763188572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -558,9 +567,9 @@ MonoBehaviour:
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
-    - -0.054431137
-    - 1.2674421
-    - 1.0426277
+    - 0
+    - 0
+    - 0
 --- !u!114 &3716639019118044570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -616,7 +625,7 @@ MonoBehaviour:
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
   GameObjMissing: 0
-  state: 0
+  state: 1
 --- !u!114 &6817252230446398264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -656,7 +665,10 @@ MonoBehaviour:
       _node: {fileID: 6817252230446398264}
       _typeQualifiedName: InteractML.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: IMLTrainingExamplesNodes
+        node: {fileID: 9158614448435581575}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -725,9 +737,9 @@ MonoBehaviour:
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
-    - 0.15779935
-    - 1.0100217
-    - 0.90660685
+    - 0
+    - 0
+    - 0
 --- !u!114 &7646752605101213071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -761,7 +773,7 @@ MonoBehaviour:
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
   GameObjMissing: 0
-  state: 0
+  state: 1
 --- !u!114 &9158614448435581575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -790,6 +802,15 @@ MonoBehaviour:
       connections:
       - fieldName: TrainingExamplesNodeToOutput
         node: {fileID: -3847000466012003844}
+        reroutePoints: []
+      - fieldName: TrainingExamplesNodeToOutput
+        node: {fileID: -8962959151003439704}
+        reroutePoints: []
+      - fieldName: TrainingExamplesNodeToOutput
+        node: {fileID: 6817252230446398264}
+        reroutePoints: []
+      - fieldName: TrainingExamplesNodeToOutput
+        node: {fileID: -1581180848011800596}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -826,6 +847,9 @@ MonoBehaviour:
   DevMode: 0
   IMLTrainingExamplesNodes:
   - {fileID: -3847000466012003844}
+  - {fileID: -8962959151003439704}
+  - {fileID: 6817252230446398264}
+  - {fileID: -1581180848011800596}
   InputFeatures:
   - {fileID: 1470074218188737501}
   - {fileID: -6918900312600582744}
@@ -833,7 +857,7 @@ MonoBehaviour:
   PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
   m_ExpectedInputList: 0500000005000000
-  m_ExpectedOutputList: 00000000
+  m_ExpectedOutputList: 00000000000000000000000000000000
   m_LearningType: 2
   EnableKeyboardControl: 1
   TrainingKey: 0
