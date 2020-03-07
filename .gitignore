@@ -55,7 +55,7 @@ ExportedObj/
 # ===================================== #
 # Custom ignored folders for InteractML #
 # ===================================== #
-Packages/
+Packages/*.unitypackage
 UnityPackages/
 Assets/Dependencies/OpenCVForUnity
 Assets/StreamingAssets
