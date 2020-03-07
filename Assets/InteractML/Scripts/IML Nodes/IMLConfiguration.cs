@@ -372,7 +372,8 @@ namespace InteractML
                     // We parse json into iml output
                     PredictedOutput = IMLDataSerialization.ParseJSONToIMLFeature(predictionDTW);
 
-                    Debug.Log("Predicted output is: " + PredictedOutput[0].Values[0]);
+                    if (PredictedOutput != null && PredictedOutput.Count > 0)
+                        Debug.Log("Predicted output is: " + PredictedOutput[0].Values[0]);
                 }
                 // Set flag to false
                 m_Running = false;
@@ -540,7 +541,12 @@ namespace InteractML
         private string RunModelDTW(IMLTrainingSeries seriesToRun)
         {
             string result = "";
-            
+            // If the seriesToRun is null or empty we don't allow to run DTW
+            if (seriesToRun.Series == null || seriesToRun.Series.Count == 0)
+            {
+                Debug.LogError("Null or Empty serie used in DTW, aborting calculations!");
+                return result;
+            }
             // Only allow running if the model exists and it is trained or running
             if (m_Model != null && (m_ModelStatus == IMLSpecifications.ModelStatus.Trained || m_ModelStatus == IMLSpecifications.ModelStatus.Running))
             {

@@ -151,6 +151,9 @@ namespace InteractML
             // Make sure to only run if the model is trained
             if (m_ModelStatus == IMLSpecifications.ModelStatus.Untrained)
                 throw new Exception("You can't run an untrained model!");
+            // Make sure to only run if the inputSerie is not null or empty!
+            if (inputSerie.ExampleSerie == null || inputSerie.ExampleSerie.Count == 0)
+                throw new Exception("You can't run a DTW model with an empty serie!");
             string outputDTW = "";
             // We only run DTW with the data passed in
             switch (m_TypeOfModel)
