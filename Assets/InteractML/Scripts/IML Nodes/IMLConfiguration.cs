@@ -588,12 +588,12 @@ namespace InteractML
             switch (m_LearningType)
             {
                 // Classification and Regression
-                case IMLSpecifications.LearningType.Classification: case IMLSpecifications.LearningType.Regression:
+                case IMLSpecifications.LearningType.Classification: case IMLSpecifications.LearningType.Regression:                  
+                    // Get the output from rapidlib
+                    PredictedRapidlibOutput = RunModel();
                     // Don't run when the predicteb rapidlib output is empty (this is a patch for some bug that broke the predictions)
                     if (PredictedRapidlibOutput.Length == 0)
                         break;
-                    // Get the output from rapidlib
-                    PredictedRapidlibOutput = RunModel();
                     // Transform rapidlib output to IMLTypes (calling straight after getting the output so that the UI can show properly)
                     TransformPredictedOuputToIMLTypes(PredictedRapidlibOutput, ref PredictedOutput);
                     break;
