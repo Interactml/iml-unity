@@ -52,12 +52,17 @@ public class IMLToAnimatorBridge : MonoBehaviour
             // Check that the amount of iml outputs is between bounds
             if (iMLComponent.IMLControllerOutputs.Count >= i+1)
             {
-                // Check if the i iml output matches the expected values
-                if ((int)iMLComponent.IMLControllerOutputs[i][0] == animVocab[i].ExpectedInteger)
+                // Go through each expected word and compare against the first model found
+                foreach (var word in animVocab)
                 {
-                    // If it does, we trigger the animation
-                    anim.SetTrigger(animVocab[i].TranslatedString);
+                    // Is the expected integer a current output?
+                    if (word.ExpectedInteger == (int)iMLComponent.IMLControllerOutputs[i][0])
+                    {
+                        // If it does, we trigger the animation
+                        anim.SetTrigger(word.TranslatedString);
+                    }
                 }
+                
             }
             
         }
