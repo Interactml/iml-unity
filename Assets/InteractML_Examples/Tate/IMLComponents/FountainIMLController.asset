@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9215579610299596667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1727.653, y: 368.3747}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: Output 2
 --- !u!114 &-8610128303692843015
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,6 +78,25 @@ MonoBehaviour:
     - -0
     - 1
   GameObjInputMissing: 0
+--- !u!114 &-7447131372257634198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1720, y: -328}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: Output 0
 --- !u!114 &-7263173863358045852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,8 +260,7 @@ MonoBehaviour:
   - {fileID: 4178551709630575144}
   - {fileID: -3137182754396566583}
   ModelOutput: {fileID: 0}
-  PredictedRapidlibOutput:
-  - 0
+  PredictedRapidlibOutput: []
   DelayedPredictedOutput:
   - 0.5446982828556666
   m_ExpectedInputList: 0300000003000000
@@ -288,6 +325,25 @@ MonoBehaviour:
     - -28.56897
     - 2.55999
     - 12.663696
+--- !u!114 &-2138935176841273346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1760.6746, y: 908.55634}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: Output 3
 --- !u!114 &-2098037620983611261
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,6 +526,15 @@ MonoBehaviour:
   - {fileID: 7789766593072727397}
   - {fileID: -2098037620983611261}
   - {fileID: -1170344445986347126}
+  - {fileID: -7447131372257634198}
+  - {fileID: 4672465823698622472}
+  - {fileID: -9215579610299596667}
+  - {fileID: -2138935176841273346}
+  - {fileID: 3720765786177650010}
+  - {fileID: 1836422697476953226}
+  - {fileID: 5609517788284192735}
+  - {fileID: 3248608278009987526}
+  - {fileID: 4128153385780250372}
   SceneComponent: {fileID: 0}
 --- !u!114 &68818987050540433
 MonoBehaviour:
@@ -535,8 +600,7 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: -8610128303692843015}
   ModelOutput: {fileID: 0}
-  PredictedRapidlibOutput:
-  - 0
+  PredictedRapidlibOutput: []
   DelayedPredictedOutput:
   - 0.034094205868636096
   m_ExpectedInputList: 04000000
@@ -601,6 +665,25 @@ MonoBehaviour:
     - -28.56897
     - 2.55999
     - 12.663696
+--- !u!114 &1836422697476953226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -296, y: 248}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: Only rotation
 --- !u!114 &1942475616906571871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,7 +697,7 @@ MonoBehaviour:
   m_Name: Game Object
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1256, y: 216}
+  position: {x: -1448, y: 312}
   ports:
     keys:
     - GameObjectFromScene
@@ -640,7 +723,7 @@ MonoBehaviour:
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
   GameObjMissing: 0
-  state: 1
+  state: 0
 --- !u!114 &2896052116055899951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -707,6 +790,63 @@ MonoBehaviour:
   IMLModelOutputs: {fileID: 0}
   m_IMLOutputVector:
   - 0
+--- !u!114 &3248608278009987526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1944, y: 360}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: Controls fountain 2
+--- !u!114 &3720765786177650010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -259.11, y: -514.9218}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: Calculate position and rotation
+--- !u!114 &4128153385780250372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1976, y: 904}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: 
 --- !u!114 &4178551709630575144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -761,6 +901,44 @@ MonoBehaviour:
     - -28.56897
     - 2.55999
     - 12.663696
+--- !u!114 &4672465823698622472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1704, y: -200}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: Output 1
+--- !u!114 &5609517788284192735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1928, y: -264}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: Controls fountain 1
 --- !u!114 &6081212476048779843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -774,7 +952,7 @@ MonoBehaviour:
   m_Name: Game Object
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1144, y: -168}
+  position: {x: -1432, y: -24}
   ports:
     keys:
     - GameObjectFromScene
@@ -800,7 +978,7 @@ MonoBehaviour:
   DevMode: 0
   GameObjectFromScene: {fileID: 0}
   GameObjMissing: 0
-  state: 1
+  state: 0
 --- !u!114 &7118293096145031292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -932,8 +1110,7 @@ MonoBehaviour:
   - {fileID: 557929344107028246}
   - {fileID: -625260014091351030}
   ModelOutput: {fileID: 0}
-  PredictedRapidlibOutput:
-  - 0
+  PredictedRapidlibOutput: []
   DelayedPredictedOutput:
   - 0.09144915420057032
   m_ExpectedInputList: 0300000004000000
