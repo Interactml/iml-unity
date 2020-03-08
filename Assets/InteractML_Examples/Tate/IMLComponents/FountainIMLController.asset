@@ -846,7 +846,7 @@ MonoBehaviour:
     keys: []
     values: []
   DevMode: 0
-  note: 
+  note: Controls fountain 3
 --- !u!114 &4178551709630575144
 MonoBehaviour:
   m_ObjectHideFlags: 0
