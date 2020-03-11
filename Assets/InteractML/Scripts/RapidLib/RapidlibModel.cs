@@ -208,6 +208,7 @@ namespace InteractML
             if (m_ModelStatus == IMLSpecifications.ModelStatus.Running)
             {
                 m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+                Debug.Log("hi");
                 isStop = true;
             }
             return isStop;
@@ -245,6 +246,7 @@ namespace InteractML
             if (isTrained)
             {
                 m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+                Debug.Log("hi");
             }
                 
 
@@ -299,6 +301,7 @@ namespace InteractML
             if (isTrained)
             {
                 m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+                Debug.Log("hi");
             }
                 
 
@@ -342,7 +345,8 @@ namespace InteractML
         /// <param name="jsonstring"></param>
         public void ConfigureModelWithJson(string jsonstring)
         {
-            if (!String.IsNullOrEmpty(jsonstring))
+            //dirty code need to fix DTW
+            if (!String.IsNullOrEmpty(jsonstring)&& !jsonstring.Contains("\"modelSet\" : null"))
             {
                 //  Make sure that the model address is pointing to a real model in unmanaged memory
                 if (m_ModelAddress == IntPtr.Zero)
@@ -369,12 +373,25 @@ namespace InteractML
                 // Configure the model in memory
                 if (!jsonstring.Contains("\"modelType\" : \"Series Classification\""))
                 {
-                    Debug.Log(jsonstring);
                     RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
                 }
-               
-                // Set the status to trained (since we assume the model we loaded was trained)
-                m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+
+                // Set the status to trained (since we assume the model we loaded was trained) only if not DTW as not implemented yet
+                if (!jsonstring.Contains("\"modelType\" : \"Series Classification\""))
+                {
+                    RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
+                    m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+                    Debug.Log("hi");
+                } else
+                {
+                    m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+                }
+                
+                
+            } else
+            {
+                if(jsonstring.Contains("\"modelSet\" : null"))
+                    Debug.LogWarning("json data from file null");
             }
         }
 
@@ -414,7 +431,6 @@ namespace InteractML
         /// <param name="fileName"></param>
         public void LoadModelFromDisk(string fileName)
         {
-            Debug.Log(fileName);
             // Attempt to load model
             string stringLoaded = IMLDataSerialization.LoadRapidlibModelFromDisk(fileName);
 
@@ -469,7 +485,6 @@ namespace InteractML
             DestroyModel();
             // We create the new model in memory and get its address
             m_ModelAddress = RapidlibLinkerDLL.CreateClassificationModel();
-            Debug.Log(m_ModelAddress);
             // We set the type of model to kNN
             m_TypeOfModel = ModelType.kNN;
             // Since it is a new model, the status of the model is now untrained

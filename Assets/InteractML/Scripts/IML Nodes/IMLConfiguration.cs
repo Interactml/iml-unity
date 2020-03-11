@@ -411,7 +411,7 @@ namespace InteractML
         /// <param name="fileName"></param>
         public void SaveModelToDisk(string fileName)
         {
-            m_Model.SaveModelToDisk(this.name + fileName);
+            m_Model.SaveModelToDisk(this.name + this.position + fileName);
         }
 
         /// <summary>
@@ -420,7 +420,7 @@ namespace InteractML
         /// <param name="fileName"></param>
         public void LoadModelFromDisk(string fileName)
         {
-            m_Model.LoadModelFromDisk(this.name + fileName);
+            m_Model.LoadModelFromDisk(this.name + this.position + fileName);
             // We update the node learning type to match the one from the loaded model
             switch (m_Model.TypeOfModel)
             {
