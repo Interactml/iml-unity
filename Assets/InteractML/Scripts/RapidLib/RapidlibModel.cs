@@ -208,7 +208,6 @@ namespace InteractML
             if (m_ModelStatus == IMLSpecifications.ModelStatus.Running)
             {
                 m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
-                Debug.Log("hi");
                 isStop = true;
             }
             return isStop;
@@ -246,7 +245,6 @@ namespace InteractML
             if (isTrained)
             {
                 m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
-                Debug.Log("hi");
             }
                 
 
@@ -301,7 +299,6 @@ namespace InteractML
             if (isTrained)
             {
                 m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
-                Debug.Log("hi");
             }
                 
 
@@ -381,7 +378,6 @@ namespace InteractML
                 {
                     RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
                     m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
-                    Debug.Log("hi");
                 } else
                 {
                     m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
