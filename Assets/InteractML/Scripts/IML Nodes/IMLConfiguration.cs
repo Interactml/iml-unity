@@ -299,9 +299,8 @@ namespace InteractML
             // Make sure that current output format matches the expected output format
             UpdateOutputFormat();
 
-            // Perform running logic (it will account for DTW and Classification/Regression) only if there is a predicted output 
-            if (m_TotalNumTrainingData > 0)
-                RunningLogic();
+            // Perform running logic (it will account for DTW and Classification/Regression) only if there is a predicted output            
+            RunningLogic();
             
             // Update feature selection matrix
             // TO DO
@@ -372,7 +371,8 @@ namespace InteractML
                     // We parse json into iml output
                     PredictedOutput = IMLDataSerialization.ParseJSONToIMLFeature(predictionDTW);
 
-                    Debug.Log("Predicted output is: " + PredictedOutput[0].Values[0]);
+                    if (PredictedOutput != null && PredictedOutput.Count > 0)
+                        Debug.Log("Predicted output is: " + PredictedOutput[0].Values[0]);
                 }
                 // Set flag to false
                 m_Running = false;
@@ -411,7 +411,7 @@ namespace InteractML
         /// <param name="fileName"></param>
         public void SaveModelToDisk(string fileName)
         {
-            m_Model.SaveModelToDisk(this.name + fileName);
+            m_Model.SaveModelToDisk(this.name + this.position + fileName);
         }
 
         /// <summary>
@@ -420,7 +420,7 @@ namespace InteractML
         /// <param name="fileName"></param>
         public void LoadModelFromDisk(string fileName)
         {
-            m_Model.LoadModelFromDisk(this.name + fileName);
+            m_Model.LoadModelFromDisk(this.name + this.position + fileName);
             // We update the node learning type to match the one from the loaded model
             switch (m_Model.TypeOfModel)
             {
@@ -540,7 +540,12 @@ namespace InteractML
         private string RunModelDTW(IMLTrainingSeries seriesToRun)
         {
             string result = "";
-            
+            // If the seriesToRun is null or empty we don't allow to run DTW
+            if (seriesToRun.Series == null || seriesToRun.Series.Count == 0)
+            {
+                Debug.LogError("Null or Empty serie used in DTW, aborting calculations!");
+                return result;
+            }
             // Only allow running if the model exists and it is trained or running
             if (m_Model != null && (m_ModelStatus == IMLSpecifications.ModelStatus.Trained || m_ModelStatus == IMLSpecifications.ModelStatus.Running))
             {
@@ -582,15 +587,13 @@ namespace InteractML
             // Account for all learning types now
             switch (m_LearningType)
             {
-                case IMLSpecifications.LearningType.Classification:
+                // Classification and Regression
+                case IMLSpecifications.LearningType.Classification: case IMLSpecifications.LearningType.Regression:                  
                     // Get the output from rapidlib
                     PredictedRapidlibOutput = RunModel();
-                    // Transform rapidlib output to IMLTypes (calling straight after getting the output so that the UI can show properly)
-                    TransformPredictedOuputToIMLTypes(PredictedRapidlibOutput, ref PredictedOutput);
-                    break;
-                case IMLSpecifications.LearningType.Regression:
-                    // Get the output from rapidlib
-                    PredictedRapidlibOutput = RunModel();
+                    // Don't run when the predicteb rapidlib output is empty (this is a patch for some bug that broke the predictions)
+                    if (PredictedRapidlibOutput.Length == 0)
+                        break;
                     // Transform rapidlib output to IMLTypes (calling straight after getting the output so that the UI can show properly)
                     TransformPredictedOuputToIMLTypes(PredictedRapidlibOutput, ref PredictedOutput);
                     break;

@@ -112,7 +112,6 @@ public class IMLEditorManager
             foreach (var MLComponent in m_IMLComponents)
             {
                 MLComponent.updateGameObjectImage();
-                Debug.Log("here");
             }
         } 
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace InteractML
 {
@@ -150,6 +151,9 @@ namespace InteractML
             // Make sure to only run if the model is trained
             if (m_ModelStatus == IMLSpecifications.ModelStatus.Untrained)
                 throw new Exception("You can't run an untrained model!");
+            // Make sure to only run if the inputSerie is not null or empty!
+            if (inputSerie.ExampleSerie == null || inputSerie.ExampleSerie.Count == 0)
+                throw new Exception("You can't run a DTW model with an empty serie!");
             string outputDTW = "";
             // We only run DTW with the data passed in
             switch (m_TypeOfModel)
@@ -239,7 +243,10 @@ namespace InteractML
             }
 
             if (isTrained)
+            {
                 m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+            }
+                
 
             // Once the training is done, we need to destroy the c++ training list outside of the GC scope
             RapidlibLinkerDLL.DestroyTrainingSet(trainingSetAddress);
@@ -290,7 +297,10 @@ namespace InteractML
             }
 
             if (isTrained)
+            {
                 m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+            }
+                
 
             return isTrained;
         }
@@ -332,7 +342,8 @@ namespace InteractML
         /// <param name="jsonstring"></param>
         public void ConfigureModelWithJson(string jsonstring)
         {
-            if (!String.IsNullOrEmpty(jsonstring))
+            //dirty code need to fix DTW
+            if (!String.IsNullOrEmpty(jsonstring)&& !jsonstring.Contains("\"modelSet\" : null"))
             {
                 //  Make sure that the model address is pointing to a real model in unmanaged memory
                 if (m_ModelAddress == IntPtr.Zero)
@@ -361,9 +372,22 @@ namespace InteractML
                 {
                     RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
                 }
-               
-                // Set the status to trained (since we assume the model we loaded was trained)
-                m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+
+                // Set the status to trained (since we assume the model we loaded was trained) only if not DTW as not implemented yet
+                if (!jsonstring.Contains("\"modelType\" : \"Series Classification\""))
+                {
+                    RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
+                    m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+                } else
+                {
+                    m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+                }
+                
+                
+            } else
+            {
+                if(jsonstring.Contains("\"modelSet\" : null"))
+                    Debug.LogWarning("json data from file null");
             }
         }
 

@@ -968,7 +968,7 @@ namespace InteractML
 
 
             // Keep lists of nodes found updated
-            //GetAllNodes();
+            GetAllNodes();
 
             if (MLController != null)
             {
