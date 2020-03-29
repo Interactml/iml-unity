@@ -29,6 +29,7 @@ public class RayCastFromHead : MonoBehaviour
             {
                 // Make sure box is in sight 
                 box.IsBoxInSight = true;
+                box.HighlightBox(true);
             }
         }
     }

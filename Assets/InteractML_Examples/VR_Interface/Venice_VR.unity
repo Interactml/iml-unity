@@ -7410,6 +7410,9 @@ MonoBehaviour:
   PushStrength: 10
   PushDirection: {x: 0, y: 0, z: 1}
   IsBoxInSight: 0
+  m_OriginalMat: {fileID: 8892267712812814617, guid: 518fea29d99da6647b85d30121bd9078,
+    type: 3}
+  m_HighlightMat: {fileID: 2100000, guid: 384e50bcf45173048a32c076dc62755d, type: 2}
 --- !u!54 &6271278580769787273
 Rigidbody:
   m_ObjectHideFlags: 0

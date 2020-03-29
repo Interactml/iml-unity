@@ -23,6 +23,10 @@ public class BoxForces : MonoBehaviour
 
     // Rigidbody components
     private Rigidbody m_Rigidbody;
+    [SerializeField]
+    private Material m_OriginalMat;
+    [SerializeField]
+    private Material m_HighlightMat;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +35,9 @@ public class BoxForces : MonoBehaviour
         if (m_Rigidbody == null)
         {
             m_Rigidbody = GetComponent<Rigidbody>();
-        }   
+        }
+
+        m_OriginalMat = this.GetComponent<Renderer>().material;
     }
 
     // Update is called once per frame
@@ -79,7 +85,36 @@ public class BoxForces : MonoBehaviour
 
     void LateUpdate()
     {
+        // If we enter late update not in sight already, we make sure to not highlight the box
+        if (!IsBoxInSight)
+        {
+            HighlightBox(false);
+        }
         // Sight flag is always false at the end of the frame
         IsBoxInSight = false;
+    }
+
+    /// <summary>
+    /// Highlights or not the box
+    /// </summary>
+    /// <param name="option"></param>
+    public void HighlightBox(bool option)
+    {
+        if (option)
+        {
+            // Avoid applying if the material is already applied
+            if (this.GetComponent<Renderer>().material != m_HighlightMat)
+            {
+                this.GetComponent<Renderer>().material = m_HighlightMat;
+            }
+        }
+        else if (!option)
+        {
+            // Avoid applying if the material is already applied
+            if (this.GetComponent<Renderer>().material != m_OriginalMat)
+            {
+                this.GetComponent<Renderer>().material = m_OriginalMat;
+            }
+        }
     }
 }
