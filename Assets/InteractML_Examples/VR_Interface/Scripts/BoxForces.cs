@@ -72,7 +72,7 @@ public class BoxForces : MonoBehaviour
         if (m_CanPush && IsBoxInSight)
         {
             // Add a bit of noise to the direction
-            Vector3 pushRandom = new Vector3(Random.Range(-0.5f, 1), Random.Range(-0.5f, 1), Random.Range(0, 1));
+            Vector3 pushRandom = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 1), Random.Range(-1, 1));
             // Push box 
             m_Rigidbody.AddForce(pushRandom * PushStrength, ForceMode.Impulse);
 
