@@ -621,11 +621,12 @@ namespace InteractML
                                 {
                                     // Create a new Serial Vector node into the graph
                                     newNode = MLController.AddNode<DataTypeNodes.FloatNode>();
+#if UNITY_EDITOR
                                     // Save newnode to graph on disk                              
                                     AssetDatabase.AddObjectToAsset(newNode, MLController);
                                     // Reload graph into memory since we have modified it on disk
                                     AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-
+#endif                              
                                 }
 
                                 // Configure our node appropiately
@@ -666,10 +667,12 @@ namespace InteractML
                                 {
                                     // Create a new Serial Vector node into the graph
                                     newNode = MLController.AddNode<DataTypeNodes.IntegerNode>();
+#if UNITY_EDITOR
                                     // Save newnode to graph on disk                              
                                     AssetDatabase.AddObjectToAsset(newNode, MLController);
                                     // Reload graph into memory since we have modified it on disk
                                     AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+#endif
                                 }
 
                                 // Configure our node appropiately
@@ -710,10 +713,12 @@ namespace InteractML
                                 {
                                     // Create a new Serial Vector node into the graph
                                     newNode = MLController.AddNode<DataTypeNodes.Vector2Node>();
+#if UNITY_EDITOR
                                     // Save newnode to graph on disk                              
                                     AssetDatabase.AddObjectToAsset(newNode, MLController);
                                     // Reload graph into memory since we have modified it on disk
                                     AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+#endif
 
                                 }
 
@@ -755,10 +760,12 @@ namespace InteractML
                                 {
                                     // Create a new Serial Vector node into the graph
                                     newNode = MLController.AddNode<DataTypeNodes.Vector3Node>();
+#if UNITY_EDITOR
                                     // Save newnode to graph on disk                              
                                     AssetDatabase.AddObjectToAsset(newNode, MLController);
                                     // Reload graph into memory since we have modified it on disk
                                     AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+#endif
 
                                 }
 
@@ -800,10 +807,12 @@ namespace InteractML
                                 {
                                     // Create a new Serial Vector node into the graph
                                     newNode = MLController.AddNode<DataTypeNodes.Vector4Node>();
+#if UNITY_EDITOR
                                     // Save newnode to graph on disk                              
                                     AssetDatabase.AddObjectToAsset(newNode, MLController);
                                     // Reload graph into memory since we have modified it on disk
                                     AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+#endif
 
                                 }
 
@@ -845,11 +854,12 @@ namespace InteractML
                                 {
                                     // Create a new Serial Vector node into the graph
                                     newNode = MLController.AddNode<DataTypeNodes.SerialVectorNode>();
+#if UNITY_EDITOR
                                     // Save newnode to graph on disk                              
                                     AssetDatabase.AddObjectToAsset(newNode, MLController);
                                     // Reload graph into memory since we have modified it on disk
                                     AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-
+#endif
                                 }
 
                                 // Configure our node appropiately
