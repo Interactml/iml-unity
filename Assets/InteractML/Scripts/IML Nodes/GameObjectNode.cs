@@ -5,13 +5,14 @@ using XNode;
 
 namespace InteractML
 {
+    [NodeTint("#3A3B5B")]
     public class GameObjectNode : Node
     {
         /// <summary>
         /// The GameObject from the scene to use
         /// </summary>
-        [Output]
-        public GameObject GameObjectFromScene;
+        [Output] public GameObject LiveDataOut;
+        
 
         [HideInInspector]
         public bool GameObjMissing;
@@ -50,10 +51,10 @@ namespace InteractML
         // Return the correct value of an output port when requested
         public override object GetValue(NodePort port)
         {
-            if (GameObjectFromScene != null)
+            if (LiveDataOut != null)
             {
                 GameObjMissing = false;
-                return GameObjectFromScene;
+                return LiveDataOut;
             }
             else
             {
