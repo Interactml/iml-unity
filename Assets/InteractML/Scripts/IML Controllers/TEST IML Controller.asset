@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MACHINE LEARNING SYSTEM
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 120, y: -200}
+  position: {x: 216, y: -200}
   ports:
     keys:
     - IMLTrainingExamplesNodes
@@ -76,7 +76,7 @@ MonoBehaviour:
   m_Name: TEACH THE MACHINE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -392, y: -184}
+  position: {x: -312, y: -184}
   ports:
     keys:
     - InputFeatures
@@ -103,7 +103,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   InputFeatures: []
-  TrainingExamplesNodeToOutput: {fileID: 0}
+  TrainingExamplesNodeToOutput: {fileID: -8318071887418390099}
   ModeOfCollection: 0
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: BASE DATA TYPE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1096, y: -408}
+  position: {x: -1336, y: -408}
   ports:
     keys: []
     values: []
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: LIVE VELOCITY DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -616, y: 536}
+  position: {x: -568, y: 24}
   ports:
     keys:
     - FeatureToInput
@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -616, y: -216}
+  position: {x: -840, y: -280}
   ports:
     keys:
     - gameObjectIntoNode
@@ -232,12 +232,12 @@ MonoBehaviour:
   m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 8, y: -408}
+  position: {x: -344, y: -456}
   ports:
     keys: []
     values: []
   DevMode: 0
-  note: 
+  note: ALL THE IML NODES IN ONE GRAPH
 --- !u!114 &-4291047210645113127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Name: LIVE INT DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -616, y: -328}
+  position: {x: -840, y: -392}
   ports:
     keys:
     - inputInteger
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Name: SERIAL VECTOR
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1096, y: -120}
+  position: {x: -1336, y: -120}
   ports:
     keys:
     - arrayToOutput
@@ -321,7 +321,7 @@ MonoBehaviour:
   m_Name: VECTOR3
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1096, y: 120}
+  position: {x: -1336, y: 120}
   ports:
     keys:
     - Vector3ToOutput
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Name: LIVE ROTATION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -616, y: -88}
+  position: {x: -840, y: -152}
   ports:
     keys:
     - gameObjectIntoNode
@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Name: OUTPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 552, y: -168}
+  position: {x: 664, y: -168}
   ports:
     keys:
     - IMLModelOutputs
@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Name: LIVE FLOAT DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -616, y: -440}
+  position: {x: -840, y: -504}
   ports:
     keys:
     - inputFloat
@@ -506,7 +506,7 @@ MonoBehaviour:
   m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -856, y: -40}
+  position: {x: -1080, y: -56}
   ports:
     keys:
     - GameObjectDataOut
@@ -537,7 +537,7 @@ MonoBehaviour:
   m_Name: FLOAT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1096, y: -344}
+  position: {x: -1336, y: -344}
   ports:
     keys:
     - FloatToOutput
@@ -568,7 +568,7 @@ MonoBehaviour:
   m_Name: LIVE VECTOR4 DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -616, y: 408}
+  position: {x: -840, y: 344}
   ports:
     keys:
     - inputVector4
@@ -613,7 +613,7 @@ MonoBehaviour:
   m_Name: LIVE VECTOR2 DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -616, y: 152}
+  position: {x: -840, y: 88}
   ports:
     keys:
     - inputVector2
@@ -652,7 +652,7 @@ MonoBehaviour:
   m_Name: VECTOR4
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1096, y: 248}
+  position: {x: -1336, y: 248}
   ports:
     keys:
     - Vector4ToOutput
@@ -683,7 +683,7 @@ MonoBehaviour:
   m_Name: VECTOR2
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1096, y: -8}
+  position: {x: -1336, y: -8}
   ports:
     keys:
     - Vector2ToOutput
@@ -714,7 +714,7 @@ MonoBehaviour:
   m_Name: LIVE DISTANCE BETWEEN INPUTS DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -616, y: -568}
+  position: {x: -616, y: -136}
   ports:
     keys:
     - FeatureToInput
@@ -766,7 +766,7 @@ MonoBehaviour:
   m_Name: INTEGER
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1096, y: -232}
+  position: {x: -1336, y: -232}
   ports:
     keys:
     - IntToOutput
@@ -797,7 +797,7 @@ MonoBehaviour:
   m_Name: LIVE VECTOR3 DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -616, y: 280}
+  position: {x: -840, y: 216}
   ports:
     keys:
     - inputVector3
@@ -841,7 +841,7 @@ MonoBehaviour:
   m_Name: LIVE SERIAL VECTOR DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -616, y: 40}
+  position: {x: -840, y: -24}
   ports:
     keys:
     - inputSerialVector

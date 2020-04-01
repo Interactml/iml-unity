@@ -10,6 +10,7 @@ namespace InteractML.FeatureExtractors
     /// <summary>
     /// Extracts the distance from one or several features to another one (i.e. fingers to the palm of the hand)
     /// </summary>
+    [NodeWidth(300)]
     [NodeTint("#3A3B5B")]
     public class ExtractDistanceToFirstInput : Node, IFeatureIML
     {

@@ -24,10 +24,11 @@ namespace InteractML
             Debug.Log("load");
         }
 
-        public override GUIStyle GetBodyStyle()
-        {
-            return base.GetBodyStyle();
-        }
+        //Testing change box shape to square
+        //public override GUIStyle GetBodyStyle()
+        //{
+        //    return base.GetBodyStyle();
+        //}
   
         public override void OnBodyGUI()
         {

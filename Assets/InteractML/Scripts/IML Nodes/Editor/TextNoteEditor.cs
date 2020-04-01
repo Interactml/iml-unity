@@ -14,9 +14,11 @@ namespace InteractML
 
         Vector2 scrollWindow;
         string noteText;
+        
 
         public override void OnBodyGUI()
-        {
+        { 
+
             noteText = (target as TextNote).note;
             // Show how the text area is shown
             //scrollWindow = EditorGUILayout.BeginScrollView(scrollWindow);
@@ -30,6 +32,7 @@ namespace InteractML
             noteText = EditorGUILayout.TextArea(noteText, textNoteGUIStyle, GUILayout.Height(dynamicSize*1.3f));
 
             (target as TextNote).note = noteText;
+
         }
     }
 

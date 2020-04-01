@@ -13,6 +13,7 @@ namespace InteractML
     public class TrainingExamplesNodeEditor : NodeEditor
     {
         #region Variables
+        private static GUIStyle editorLabelStyle;
 
         private TrainingExamplesNode m_TrainingExamplesNode;
         private int m_RequiredOutputListSlots = 0;
@@ -37,6 +38,8 @@ namespace InteractML
 
         public override void OnBodyGUI()
         {
+            if (editorLabelStyle == null) editorLabelStyle = new GUIStyle(EditorStyles.label);
+            EditorStyles.label.normal.textColor = Color.white;
             // Override label width for this node (since some names are quite long)
             LabelWidth = 184;
 
@@ -105,6 +108,8 @@ namespace InteractML
             {
                 EditorGUILayout.HelpBox("There are no Desired Outputs Configured!", MessageType.Error);
             }
+
+            EditorStyles.label.normal = editorLabelStyle.normal;
         }
 
         #endregion

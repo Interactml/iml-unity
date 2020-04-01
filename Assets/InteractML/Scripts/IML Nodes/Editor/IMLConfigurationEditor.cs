@@ -13,6 +13,7 @@ namespace InteractML
     public class IMLConfigurationEditor : NodeEditor
     {
         #region Variables        
+        private static GUIStyle editorLabelStyle;
 
         public bool showInputOutputMatrix;
         public bool showModelOutput;
@@ -22,6 +23,7 @@ namespace InteractML
         /// </summary>
         private IMLConfiguration m_IMLConfigNode;
 
+        
         #endregion
 
         #region Unity Messages
@@ -31,6 +33,10 @@ namespace InteractML
         /// </summary>
         public override void OnBodyGUI()
         {
+
+            if (editorLabelStyle == null) editorLabelStyle = new GUIStyle(EditorStyles.label);
+            EditorStyles.label.normal.textColor = Color.white;
+
             // Override label width for this node (since some names are quite long)
             LabelWidth = 184;
 
@@ -110,6 +116,9 @@ namespace InteractML
                 EditorGUILayout.HelpBox("There are no Realtime Input Features Connected!", MessageType.Error);
 
             }
+
+            EditorStyles.label.normal = editorLabelStyle.normal;
+
         }
 
         #endregion
