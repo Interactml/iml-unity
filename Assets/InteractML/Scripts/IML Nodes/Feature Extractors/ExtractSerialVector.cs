@@ -61,6 +61,8 @@ namespace InteractML.FeatureExtractors
 
             }
 
+            name = "LIVE SERIAL VECTOR DATA";
+
         }
         public void OnDestroy()
         {

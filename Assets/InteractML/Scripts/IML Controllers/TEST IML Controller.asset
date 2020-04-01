@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
-  m_Name: IML Configuration
+  m_Name: MACHINE LEARNING SYSTEM
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 120, y: -200}
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
-  m_Name: Training Examples
+  m_Name: TEACH THE MACHINE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -392, y: -184}
@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7adbbb5eb0634f49932781bf9de50a0, type: 3}
-  m_Name: Base Data Type
+  m_Name: BASE DATA TYPE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -1096, y: -408}
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 051a7e150efca304da37d460de663b87, type: 3}
-  m_Name: Extract Velocity
+  m_Name: LIVE VELOCITY DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -616, y: 536}
@@ -184,7 +184,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
-  m_Name: Extract Position
+  m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -616, y: -216}
@@ -229,7 +229,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
-  m_Name: Text Note
+  m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 8, y: -408}
@@ -248,7 +248,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aac2c9734bc7f9c4bba814ad6ad827d2, type: 3}
-  m_Name: Extract Int
+  m_Name: LIVE INT DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -616, y: -328}
@@ -287,7 +287,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 857ffa76de7626a4e99d3b0511c682b4, type: 3}
-  m_Name: Serial Vector
+  m_Name: SERIAL VECTOR
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -1096, y: -120}
@@ -318,7 +318,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1ef4cb3371f9e4a47a6d68726e6c8f83, type: 3}
-  m_Name: Vector 3
+  m_Name: VECTOR3
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -1096, y: 120}
@@ -349,7 +349,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5e8312b300ccdb4784b431dbd6ddf11, type: 3}
-  m_Name: Extract Rotation
+  m_Name: LIVE ROTATION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -616, y: -88}
@@ -396,7 +396,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
-  m_Name: Realtime IML Output
+  m_Name: OUTPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 552, y: -168}
@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bffaa18ed98b0d942b9f429eb8ca06fb, type: 3}
-  m_Name: Extract Float
+  m_Name: LIVE FLOAT DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -616, y: -440}
@@ -467,7 +467,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a8e1e2d4383d9e4081fe3bdfd1bfed4, type: 3}
-  m_Name: New IML Controller
+  m_Name: TEST IML Controller
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: 218526402762353012}
@@ -503,7 +503,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: GAME OBJECT
+  m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -856, y: -40}
@@ -534,7 +534,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 00534a0ab197c4d4580b7dc43b85d166, type: 3}
-  m_Name: Float
+  m_Name: FLOAT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -1096, y: -344}
@@ -565,7 +565,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d00b690a08c1f254a94f7a277199f27a, type: 3}
-  m_Name: Extract Vector 4
+  m_Name: LIVE VECTOR4 DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -616, y: 408}
@@ -610,7 +610,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9ad8b84fa1e1ffb4fb4145f15376e710, type: 3}
-  m_Name: Extract Vector 2
+  m_Name: LIVE VECTOR2 DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -616, y: 152}
@@ -649,7 +649,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 259c466d9c6c3b942b232f923e5d0c17, type: 3}
-  m_Name: Vector 4
+  m_Name: VECTOR4
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -1096, y: 248}
@@ -680,7 +680,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a4ce357579833a349823c2b8eb63e23a, type: 3}
-  m_Name: Vector 2
+  m_Name: VECTOR2
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -1096, y: -8}
@@ -711,7 +711,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 842a83d23f8374e41b4f966b7c1548a3, type: 3}
-  m_Name: Extract Distance To First Input
+  m_Name: LIVE DISTANCE BETWEEN INPUTS DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -616, y: -568}
@@ -763,7 +763,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eeb2c13cdf3f76540a07154b6ab66241, type: 3}
-  m_Name: Integer
+  m_Name: INTEGER
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -1096, y: -232}
@@ -794,7 +794,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 91d5b2c98ef7df34f8a142d223be5aa6, type: 3}
-  m_Name: Extract Vector 3
+  m_Name: LIVE VECTOR3 DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -616, y: 280}
@@ -838,7 +838,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a7fb39dae2da8543b63abe66d03fe1f, type: 3}
-  m_Name: Extract Serial Vector
+  m_Name: LIVE SERIAL VECTOR DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -616, y: 40}

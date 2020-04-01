@@ -77,6 +77,8 @@ namespace InteractML.FeatureExtractors
                 }
             }
 
+            name = "LIVE VELOCITY DATA";
+
         }
 
         // Return the correct value of an output port when requested

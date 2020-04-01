@@ -132,7 +132,9 @@ namespace InteractML
             base.Init();
 
             Initialize();
-         
+            name = "TEACH THE MACHINE";
+
+
         }
 
         // Return the correct value of an output port when requested

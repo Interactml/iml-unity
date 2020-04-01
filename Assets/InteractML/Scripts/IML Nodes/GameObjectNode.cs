@@ -30,7 +30,7 @@ namespace InteractML
                 MLController.SceneComponent.GetAllNodes();
                
             }
-            name = "GAME OBJECT";
+            name = "GAME OBJECT INPUT";
 
         }
 

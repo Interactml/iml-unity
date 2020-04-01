@@ -61,6 +61,9 @@ namespace InteractML.FeatureExtractors
 
             }
 
+            name = "LIVE FLOAT DATA";
+
+
         }
         public void OnDestroy()
         {

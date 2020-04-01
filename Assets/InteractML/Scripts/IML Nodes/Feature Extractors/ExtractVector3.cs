@@ -61,6 +61,8 @@ namespace InteractML.FeatureExtractors
 
             }
 
+            name = "LIVE VECTOR3 DATA";
+
         }
 
         // Return the correct value of an output port when requested

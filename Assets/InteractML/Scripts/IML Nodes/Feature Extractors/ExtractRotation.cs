@@ -68,6 +68,7 @@ namespace InteractML.FeatureExtractors
                 m_RotationExtracted = new IMLVector4();
 
             }
+            name = "LIVE ROTATION DATA";
         }
 
         // Return the correct value of an output port when requested

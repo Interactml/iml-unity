@@ -29,7 +29,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
-  m_Name: Training Examples Node
+  m_Name: TEACH THE MACHINE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -216, y: -280}
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
-  m_Name: IML Configuration
+  m_Name: MACHINE LEARNING SYSTEM
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 408, y: -264}
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
-  m_Name: Realtime IML Output Node
+  m_Name: OUTPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 952, y: -232}
@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: GAME OBJECT
+  m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -904, y: -216}
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
-  m_Name: Extract Position
+  m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -552, y: -216}

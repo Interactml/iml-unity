@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
-  m_Name: Text Note
+  m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 1727.653, y: 368.3747}
@@ -29,7 +29,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5e8312b300ccdb4784b431dbd6ddf11, type: 3}
-  m_Name: Extract Rotation
+  m_Name: LIVE ROTATION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -232, y: 360}
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
-  m_Name: Text Note
+  m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 1720, y: -328}
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
-  m_Name: Training Examples
+  m_Name: TEACH THE MACHINE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 88, y: 200}
@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
-  m_Name: Realtime IML Output
+  m_Name: OUTPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 1480, y: -216}
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
-  m_Name: IML Configuration
+  m_Name: MACHINE LEARNING SYSTEM
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 920, y: -856}
@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
-  m_Name: Extract Position
+  m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -232, y: -184}
@@ -336,7 +336,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
-  m_Name: Text Note
+  m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 1760.6746, y: 908.55634}
@@ -355,7 +355,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
-  m_Name: Training Examples
+  m_Name: TEACH THE MACHINE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 136, y: 776}
@@ -418,7 +418,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
-  m_Name: Realtime IML Output
+  m_Name: OUTPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 1517.9009, y: 866.36035}
@@ -451,7 +451,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5e8312b300ccdb4784b431dbd6ddf11, type: 3}
-  m_Name: Extract Rotation
+  m_Name: LIVE ROTATION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -232, y: 968}
@@ -547,7 +547,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
-  m_Name: IML Configuration
+  m_Name: MACHINE LEARNING SYSTEM
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 792, y: 264}
@@ -623,7 +623,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
-  m_Name: Extract Position
+  m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -248, y: 728}
@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
-  m_Name: Text Note
+  m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -296, y: 248}
@@ -696,7 +696,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: GAME OBJECT
+  m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -1448, y: 312}
@@ -727,7 +727,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
-  m_Name: Realtime IML Output
+  m_Name: OUTPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 1496, y: -360}
@@ -760,7 +760,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
-  m_Name: Realtime IML Output
+  m_Name: OUTPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 1493.9219, y: 328.9894}
@@ -793,7 +793,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
-  m_Name: Text Note
+  m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 1944, y: 360}
@@ -812,7 +812,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
-  m_Name: Text Note
+  m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -259.11, y: -514.9218}
@@ -831,7 +831,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
-  m_Name: Text Note
+  m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 1976, y: 904}
@@ -850,7 +850,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
-  m_Name: Extract Position
+  m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -216, y: -408}
@@ -904,7 +904,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
-  m_Name: Text Note
+  m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 1704, y: -200}
@@ -923,7 +923,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
-  m_Name: Text Note
+  m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 1928, y: -264}
@@ -942,7 +942,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: GAME OBJECT
+  m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -1432, y: -24}
@@ -973,7 +973,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
-  m_Name: Training Examples
+  m_Name: TEACH THE MACHINE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 168, y: -456}
@@ -1036,7 +1036,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
-  m_Name: IML Configuration
+  m_Name: MACHINE LEARNING SYSTEM
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 776, y: 824}

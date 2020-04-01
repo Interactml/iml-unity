@@ -141,8 +141,8 @@ namespace InteractML
         protected override void Init()
         {
             base.Init();
-
             Initialize();
+            name = "MACHINE LEARNING SYSTEM";
 
         }
 

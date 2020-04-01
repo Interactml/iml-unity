@@ -14,6 +14,8 @@ namespace InteractML
         protected override void Init()
         {
             base.Init();
+            name = "TEXT NOTE";
+
 
         }
 

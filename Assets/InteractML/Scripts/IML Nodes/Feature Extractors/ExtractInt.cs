@@ -62,6 +62,8 @@ namespace InteractML.FeatureExtractors
                 m_IntExtracted = new IMLInteger();
 
             }
+            name = "LIVE INT DATA";
+
 
         }
         public void OnDestroy()

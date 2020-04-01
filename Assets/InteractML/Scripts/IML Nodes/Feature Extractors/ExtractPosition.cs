@@ -66,6 +66,9 @@ namespace InteractML.FeatureExtractors
 
             }
 
+            name = "LIVE POSITION DATA";
+
+
         }
         public void OnDestroy()
         {

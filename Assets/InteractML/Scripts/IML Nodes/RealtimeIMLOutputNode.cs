@@ -27,6 +27,7 @@ namespace InteractML
         protected override void Init()
         {
             base.Init();
+            name = "OUTPUT";
 
         }
 

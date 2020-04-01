@@ -68,6 +68,9 @@ namespace InteractML.FeatureExtractors
             // This extractor expects any other feature extracted to make calculations
             FeatureToInput = GetInputValue<Node>("FeatureToInput");
             FeaturesToMeasureDistanceToFirst = GetInputValues<Node>("FeaturesToMeasureDistanceToFirst").ToList();
+
+            name = "LIVE DISTANCE BETWEEN INPUTS DATA";
+
         }
 
         public void OnDestroy()

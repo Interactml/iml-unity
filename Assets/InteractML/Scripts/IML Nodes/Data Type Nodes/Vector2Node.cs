@@ -20,6 +20,7 @@ namespace InteractML.DataTypeNodes
         protected override void Init()
         {
             base.Init();
+            name = "VECTOR2";
 
         }
 
