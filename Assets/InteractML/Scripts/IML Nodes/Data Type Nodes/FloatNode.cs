@@ -5,6 +5,7 @@ using XNode;
 
 namespace InteractML.DataTypeNodes
 {
+    [NodeTint("#3A3B5B")]
     public class FloatNode : Node
     {
         [SerializeField]

@@ -8,6 +8,7 @@ namespace InteractML
     /// <summary>
     /// Outputs the realtime IML Predictions from an IML Configuration node
     /// </summary>
+    [NodeTint("#3A3B5B")]
     public class RealtimeIMLOutputNode : Node
     {
         /// <summary>

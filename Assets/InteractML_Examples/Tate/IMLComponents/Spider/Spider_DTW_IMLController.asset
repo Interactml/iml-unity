@@ -413,8 +413,6 @@ MonoBehaviour:
   m_Name: Spider_DTW_IMLController
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: 7646752605101213071}
-  - {fileID: 4150147029244247729}
   - {fileID: 7030627340914748870}
   - {fileID: 3373054702386999530}
   - {fileID: 1470074218188737501}
@@ -432,6 +430,8 @@ MonoBehaviour:
   - {fileID: 3716639019118044570}
   - {fileID: -8070338186045646290}
   - {fileID: -7600487622071805104}
+  - {fileID: 4150147029244247729}
+  - {fileID: 7646752605101213071}
   SceneComponent: {fileID: 0}
 --- !u!114 &1470074218188737501
 MonoBehaviour:
@@ -544,7 +544,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectFromScene
-        node: {fileID: 4150147029244247729}
+        node: {fileID: 0}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -602,28 +602,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Game Object
+  m_Name: GAME OBJECT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -712, y: -24}
   ports:
     keys:
-    - GameObjectFromScene
+    - GameObjectDataOut
     values:
-    - _fieldName: GameObjectFromScene
+    - _fieldName: GameObjectDataOut
       _node: {fileID: 4150147029244247729}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: gameObjectIntoNode
-        node: {fileID: 3373054702386999530}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  GameObjectFromScene: {fileID: 0}
+  GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 1
 --- !u!114 &6817252230446398264
@@ -714,7 +711,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectFromScene
-        node: {fileID: 7646752605101213071}
+        node: {fileID: 0}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -750,28 +747,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Game Object
+  m_Name: GAME OBJECT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -712, y: -264}
   ports:
     keys:
-    - GameObjectFromScene
+    - GameObjectDataOut
     values:
-    - _fieldName: GameObjectFromScene
+    - _fieldName: GameObjectDataOut
       _node: {fileID: 7646752605101213071}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: gameObjectIntoNode
-        node: {fileID: 7030627340914748870}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  GameObjectFromScene: {fileID: 0}
+  GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 1
 --- !u!114 &9158614448435581575

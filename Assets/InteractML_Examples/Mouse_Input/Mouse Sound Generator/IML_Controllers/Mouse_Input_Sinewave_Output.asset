@@ -10,29 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Game Object
+  m_Name: GAME OBJECT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -328, y: -200}
   ports:
     keys:
-    - GameObjectFromScene
+    - GameObjectDataOut
     values:
-    - _fieldName: GameObjectFromScene
+    - _fieldName: GameObjectDataOut
       _node: {fileID: -8565157085726127961}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: gameObjectIntoNode
-        node: {fileID: 7550367206555960687}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  GameObjectFromScene: {fileID: 0}
+  GameObjectDataOut: {fileID: 0}
   GameObjMissing: 1
+  state: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,11 +44,11 @@ MonoBehaviour:
   m_Name: Mouse_Input_Sinewave_Output
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: -8565157085726127961}
   - {fileID: 7550367206555960687}
   - {fileID: 8682497231163542456}
   - {fileID: 2323328186122159904}
   - {fileID: 2644057686948360561}
+  - {fileID: -8565157085726127961}
   SceneComponent: {fileID: 0}
 --- !u!114 &2323328186122159904
 MonoBehaviour:
@@ -116,9 +114,6 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 7550367206555960687}
   ModelOutput: {fileID: 0}
-  KeyboardControl: 1
-  TrainingKey: 0
-  RunningKey: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -126,6 +121,9 @@ MonoBehaviour:
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 1
+  EnableKeyboardControl: 0
+  TrainingKey: 0
+  RunningKey: 0
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
 --- !u!114 &2644057686948360561
@@ -186,7 +184,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectFromScene
-        node: {fileID: -8565157085726127961}
+        node: {fileID: 0}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -274,5 +272,5 @@ MonoBehaviour:
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableKeyboardShortcut: 1
+  EnableKeyboardControl: 0
   RecordDataKey: 0

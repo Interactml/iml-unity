@@ -10,30 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Game Object
+  m_Name: GAME OBJECT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -664, y: -296}
   ports:
     keys:
-    - GameObjectFromScene
+    - GameObjectDataOut
     values:
-    - _fieldName: GameObjectFromScene
+    - _fieldName: GameObjectDataOut
       _node: {fileID: -8434405238437798617}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: gameObjectIntoNode
-        node: {fileID: 6620900826782712363}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  GameObjectFromScene: {fileID: 0}
-  GameObjMissing: 0
-  state: 1
+  GameObjectDataOut: {fileID: 0}
+  GameObjMissing: 1
+  state: 0
 --- !u!114 &-4927585982608454069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47,7 +44,7 @@ MonoBehaviour:
   m_Name: Realtime IML Output
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1304, y: -280}
+  position: {x: 984, y: -184}
   ports:
     keys:
     - IMLModelOutputs
@@ -67,6 +64,42 @@ MonoBehaviour:
   IMLModelOutputs: {fileID: 0}
   m_IMLOutputVector:
   - 0
+--- !u!114 &-4254207809817223698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: GAME OBJECT
+  m_EditorClassIdentifier: Assembly-CSharp:InteractML:GAMEOBJECTS
+  graph: {fileID: 11400000}
+  position: {x: -552, y: -120}
+  ports:
+    keys:
+    - GameObjectData
+    values:
+    - _fieldName: GameObjectData
+      _node: {fileID: -4254207809817223698}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  m_customColor:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
+  GameObjectData: {fileID: 0}
+  GameObjMissing: 0
+  state: 0
 --- !u!114 &-2164575221549548335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,12 +189,32 @@ MonoBehaviour:
   m_Name: Mouse_Input_Color_Output_IML_Controller_Classification
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: -8434405238437798617}
   - {fileID: 6620900826782712363}
   - {fileID: 6732151304541360272}
   - {fileID: -2164575221549548335}
   - {fileID: -4927585982608454069}
+  - {fileID: -8434405238437798617}
+  - {fileID: 3413682967297781931}
   SceneComponent: {fileID: 0}
+--- !u!114 &3413682967297781931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -556, y: -39.5}
+  ports:
+    keys: []
+    values: []
+  DevMode: 0
+  note: 
 --- !u!114 &6620900826782712363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,10 +238,7 @@ MonoBehaviour:
       _node: {fileID: 6620900826782712363}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: -8434405238437798617}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -231,7 +281,7 @@ MonoBehaviour:
   m_Name: Training Examples
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 49.894787, y: -338.80487}
+  position: {x: -88, y: -264}
   ports:
     keys:
     - InputFeatures

@@ -10,29 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Game Object
+  m_Name: GAME OBJECT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -664, y: -296}
   ports:
     keys:
-    - GameObjectFromScene
+    - GameObjectDataOut
     values:
-    - _fieldName: GameObjectFromScene
+    - _fieldName: GameObjectDataOut
       _node: {fileID: -8434405238437798617}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: gameObjectIntoNode
-        node: {fileID: 6620900826782712363}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  GameObjectFromScene: {fileID: 0}
+  GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
+  state: 0
 --- !u!114 &-4927585982608454069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,9 +128,6 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 6620900826782712363}
   ModelOutput: {fileID: 0}
-  KeyboardControl: 0
-  TrainingKey: 0
-  RunningKey: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -140,6 +135,9 @@ MonoBehaviour:
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_LearningType: 0
+  EnableKeyboardControl: 0
+  TrainingKey: 0
+  RunningKey: 0
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
 --- !u!114 &11400000
@@ -155,11 +153,11 @@ MonoBehaviour:
   m_Name: mouse_input_color_output IML Controller
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: -8434405238437798617}
   - {fileID: 6620900826782712363}
   - {fileID: 6732151304541360272}
   - {fileID: -2164575221549548335}
   - {fileID: -4927585982608454069}
+  - {fileID: -8434405238437798617}
   SceneComponent: {fileID: 0}
 --- !u!114 &6620900826782712363
 MonoBehaviour:
@@ -186,7 +184,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectFromScene
-        node: {fileID: -8434405238437798617}
+        node: {fileID: 0}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -211,6 +209,7 @@ MonoBehaviour:
   DevMode: 0
   gameObjectIntoNode: {fileID: 0}
   positionExtracted: {fileID: 0}
+  LocalSpace: 0
   m_PositionExtracted:
     m_Values:
     - -7.36
@@ -273,4 +272,5 @@ MonoBehaviour:
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableCollectDataShortcut: 0
+  EnableKeyboardControl: 0
+  RecordDataKey: 0

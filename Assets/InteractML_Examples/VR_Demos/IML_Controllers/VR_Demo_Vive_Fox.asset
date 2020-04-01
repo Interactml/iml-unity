@@ -10,29 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Game Object
+  m_Name: GAME OBJECT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -440, y: 168}
   ports:
     keys:
-    - GameObjectFromScene
+    - GameObjectDataOut
     values:
-    - _fieldName: GameObjectFromScene
+    - _fieldName: GameObjectDataOut
       _node: {fileID: -9061328352299520279}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: gameObjectIntoNode
-        node: {fileID: -8731574034070996121}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  GameObjectFromScene: {fileID: 0}
+  GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
+  state: 0
 --- !u!114 &-8731574034070996121
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,7 +56,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectFromScene
-        node: {fileID: -9061328352299520279}
+        node: {fileID: 0}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -81,6 +79,7 @@ MonoBehaviour:
   DevMode: 0
   gameObjectIntoNode: {fileID: 0}
   positionExtracted: {fileID: 0}
+  LocalSpace: 0
   m_PositionExtracted:
     m_Values:
     - 20
@@ -150,9 +149,6 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: -8731574034070996121}
   ModelOutput: {fileID: 0}
-  EnableKeyboardShortcut: 1
-  TrainingKey: 276
-  RunningKey: 9
   PredictedRapidlibOutput:
   - 2
   DelayedPredictedOutput:
@@ -160,6 +156,9 @@ MonoBehaviour:
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 2
+  EnableKeyboardControl: 0
+  TrainingKey: 276
+  RunningKey: 9
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
 --- !u!114 &-297175450390080479
@@ -211,8 +210,8 @@ MonoBehaviour:
   - {fileID: 8314672183479205686}
   - {fileID: -2184014291281529441}
   - {fileID: -297175450390080479}
-  - {fileID: -9061328352299520279}
   - {fileID: -8731574034070996121}
+  - {fileID: -9061328352299520279}
   SceneComponent: {fileID: 0}
 --- !u!114 &8314672183479205686
 MonoBehaviour:
@@ -271,5 +270,5 @@ MonoBehaviour:
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableKeyboardShortcut: 1
+  EnableKeyboardControl: 0
   RecordDataKey: 306

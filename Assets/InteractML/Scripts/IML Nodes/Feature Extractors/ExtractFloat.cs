@@ -9,6 +9,7 @@ namespace InteractML.FeatureExtractors
     /// <summary>
     /// Gets a float and converts it to a IMLFloat Feature
     /// </summary>
+    [NodeTint("#3A3B5B")]
     public class ExtractFloat : Node, IFeatureIML
     {
         /// <summary>

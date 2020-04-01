@@ -11,6 +11,7 @@ namespace InteractML
     /// Holds the information and list of a training examples node
     /// </summary>
     [NodeWidth(500)]
+    [NodeTint("#3A3B5B")]
     public class TrainingExamplesNode : Node
     {
 

@@ -9,6 +9,7 @@ using System;
 namespace InteractML
 {
     [NodeWidth(420)]
+    [NodeTint("#3A3B5B")]
     public class IMLConfiguration : Node
     {
 

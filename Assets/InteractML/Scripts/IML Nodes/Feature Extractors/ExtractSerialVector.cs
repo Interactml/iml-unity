@@ -9,6 +9,7 @@ namespace InteractML.FeatureExtractors
     /// <summary>
     /// Extracts a serialVector array into a Feature for a ml model
     /// </summary>
+    [NodeTint("#3A3B5B")]
     public class ExtractSerialVector : Node, IFeatureIML
     {
         /// <summary>

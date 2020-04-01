@@ -9,6 +9,7 @@ namespace InteractML.FeatureExtractors
     /// <summary>
     /// Feature extractor for positions
     /// </summary>
+    [NodeTint("#3A3B5B")]
     public class ExtractPosition : Node, IFeatureIML
     {
         /// <summary>

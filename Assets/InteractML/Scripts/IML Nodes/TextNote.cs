@@ -5,6 +5,7 @@ using XNode;
 
 namespace InteractML
 {
+    [NodeTint("#3A3B5B")]
     public class TextNote : Node
     {
         public string note;

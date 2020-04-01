@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: potato controller
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: 114687748882358570}
   - {fileID: 114861695977173522}
   - {fileID: 114426497703847202}
   - {fileID: 114602802440798334}
   - {fileID: 114644513291579226}
+  - {fileID: 114687748882358570}
   SceneComponent: {fileID: 0}
 --- !u!114 &114426497703847202
 MonoBehaviour:
@@ -76,7 +76,8 @@ MonoBehaviour:
   StartDelay: 0
   CaptureRate: 3
   RecordTime: -1
-  EnableCollectDataShortcut: 0
+  EnableKeyboardControl: 0
+  RecordDataKey: 0
 --- !u!114 &114602802440798334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,9 +142,6 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 114861695977173522}
   ModelOutput: {fileID: 0}
-  KeyboardControl: 0
-  TrainingKey: 0
-  RunningKey: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -151,6 +149,9 @@ MonoBehaviour:
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 1
+  EnableKeyboardControl: 0
+  TrainingKey: 0
+  RunningKey: 0
   TrainOnPlaymodeChange: 0
   RunOnAwake: 1
 --- !u!114 &114644513291579226
@@ -196,29 +197,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Game Object Node
+  m_Name: GAME OBJECT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -904, y: -216}
   ports:
     keys:
-    - GameObjectFromScene
+    - GameObjectDataOut
     values:
-    - _fieldName: GameObjectFromScene
+    - _fieldName: GameObjectDataOut
       _node: {fileID: 114687748882358570}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: gameObjectIntoNode
-        node: {fileID: 114861695977173522}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  GameObjectFromScene: {fileID: 0}
+  GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
+  state: 0
 --- !u!114 &114861695977173522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,7 +243,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectFromScene
-        node: {fileID: 114687748882358570}
+        node: {fileID: 0}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -267,6 +266,7 @@ MonoBehaviour:
   DevMode: 0
   gameObjectIntoNode: {fileID: 0}
   positionExtracted: {fileID: 0}
+  LocalSpace: 0
   m_PositionExtracted:
     m_Values:
     - 224

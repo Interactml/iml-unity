@@ -14,20 +14,35 @@ namespace InteractML
         GameObjectNode gObjNode;
         Editor gameObjectEditor;
         GUIStyle stylePreview;
+        
         bool state;
+
+        private static GUIStyle editorLabelStyle;
 
         private static void Init()
         {
             Debug.Log("load");
         }
+
+        public override GUIStyle GetBodyStyle()
+        {
+            return base.GetBodyStyle();
+        }
+  
         public override void OnBodyGUI()
         {
+            if (editorLabelStyle == null) editorLabelStyle = new GUIStyle(EditorStyles.label);
+            EditorStyles.label.normal.textColor = Color.white;
+
             base.OnBodyGUI();
+            
+
+
 
             gObjNode = (target as GameObjectNode);
 
             // Show label of which object is being fed to the node
-            GameObject gObj = gObjNode.GameObjectFromScene;
+            GameObject gObj = gObjNode.GameObjectDataOut;
 
             // Only draw the label if the object is not null
             if (gObj != null)
@@ -35,12 +50,12 @@ namespace InteractML
                 EditorGUILayout.LabelField("GameObject: " + gObj.name);
 
                 // Code to create a preview of the gObj in the node
-                if (gameObjectEditor == null||gObjNode.state)
+                if (gameObjectEditor == null || gObjNode.state)
                 {
                     gameObjectEditor = Editor.CreateEditor(gObj);
                     gObjNode.state = false;
                 }
-                
+
                 // Defines the style for the gameObject preview
                 if (stylePreview == null)
                 {
@@ -92,6 +107,8 @@ namespace InteractML
                 EditorGUILayout.LabelField("GameObject: " + "NULL");
                 EditorGUILayout.HelpBox("No GameObject being fed to this node from an IML Component in the Scene", MessageType.Error);
             }
+
+            EditorStyles.label.normal = editorLabelStyle.normal;
         }
     }
 

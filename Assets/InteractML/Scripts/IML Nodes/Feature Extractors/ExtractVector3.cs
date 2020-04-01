@@ -9,6 +9,7 @@ namespace InteractML.FeatureExtractors
     /// <summary>
     /// Gets a Vector3 and converts it to a IMLVector3 FEature
     /// </summary>
+    [NodeTint("#3A3B5B")]
     public class ExtractVector3 : Node, IFeatureIML
     {
         /// <summary>

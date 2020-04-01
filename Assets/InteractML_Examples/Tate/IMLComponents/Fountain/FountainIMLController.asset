@@ -44,10 +44,10 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectFromScene
-        node: {fileID: 6081212476048779843}
+        node: {fileID: 0}
         reroutePoints: []
       - fieldName: GameObjectFromScene
-        node: {fileID: 1942475616906571871}
+        node: {fileID: 0}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -297,7 +297,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectFromScene
-        node: {fileID: 1942475616906571871}
+        node: {fileID: 0}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -466,7 +466,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectFromScene
-        node: {fileID: 1942475616906571871}
+        node: {fileID: 0}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -517,8 +517,6 @@ MonoBehaviour:
   - {fileID: -7263173863358045852}
   - {fileID: 4178551709630575144}
   - {fileID: -8610128303692843015}
-  - {fileID: 6081212476048779843}
-  - {fileID: 1942475616906571871}
   - {fileID: -3137182754396566583}
   - {fileID: -5064072373161406301}
   - {fileID: 2959463974218808850}
@@ -536,6 +534,8 @@ MonoBehaviour:
   - {fileID: 5609517788284192735}
   - {fileID: 3248608278009987526}
   - {fileID: 4128153385780250372}
+  - {fileID: 1942475616906571871}
+  - {fileID: 6081212476048779843}
   SceneComponent: {fileID: 0}
 --- !u!114 &68818987050540433
 MonoBehaviour:
@@ -638,7 +638,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectFromScene
-        node: {fileID: 6081212476048779843}
+        node: {fileID: 0}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -696,34 +696,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Game Object
+  m_Name: GAME OBJECT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -1448, y: 312}
   ports:
     keys:
-    - GameObjectFromScene
+    - GameObjectDataOut
     values:
-    - _fieldName: GameObjectFromScene
+    - _fieldName: GameObjectDataOut
       _node: {fileID: 1942475616906571871}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: gameObjectIntoNode
-        node: {fileID: -3137182754396566583}
-        reroutePoints: []
-      - fieldName: gameObjectIntoNode
-        node: {fileID: -8610128303692843015}
-        reroutePoints: []
-      - fieldName: gameObjectIntoNode
-        node: {fileID: -625260014091351030}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  GameObjectFromScene: {fileID: 0}
+  GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 1
 --- !u!114 &2896052116055899951
@@ -874,7 +865,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectFromScene
-        node: {fileID: 6081212476048779843}
+        node: {fileID: 0}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -951,34 +942,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Game Object
+  m_Name: GAME OBJECT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -1432, y: -24}
   ports:
     keys:
-    - GameObjectFromScene
+    - GameObjectDataOut
     values:
-    - _fieldName: GameObjectFromScene
+    - _fieldName: GameObjectDataOut
       _node: {fileID: 6081212476048779843}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: gameObjectIntoNode
-        node: {fileID: 4178551709630575144}
-        reroutePoints: []
-      - fieldName: gameObjectIntoNode
-        node: {fileID: -8610128303692843015}
-        reroutePoints: []
-      - fieldName: gameObjectIntoNode
-        node: {fileID: 557929344107028246}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  GameObjectFromScene: {fileID: 0}
+  GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 1
 --- !u!114 &7118293096145031292

@@ -11,7 +11,7 @@ namespace InteractML
         /// <summary>
         /// The GameObject from the scene to use
         /// </summary>
-        [Output] public GameObject LiveDataOut;
+        [Output] public GameObject GameObjectDataOut;
         
 
         [HideInInspector]
@@ -30,6 +30,7 @@ namespace InteractML
                 MLController.SceneComponent.GetAllNodes();
                
             }
+            name = "GAME OBJECT";
 
         }
 
@@ -51,10 +52,10 @@ namespace InteractML
         // Return the correct value of an output port when requested
         public override object GetValue(NodePort port)
         {
-            if (LiveDataOut != null)
+            if (GameObjectDataOut != null)
             {
                 GameObjMissing = false;
-                return LiveDataOut;
+                return GameObjectDataOut;
             }
             else
             {

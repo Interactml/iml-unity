@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: VR_Demo_Hands
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: 114662130647469610}
   - {fileID: 114588875912837210}
   - {fileID: 114273849951126024}
   - {fileID: 114528305645714926}
@@ -22,6 +21,7 @@ MonoBehaviour:
   - {fileID: 8502545660260700992}
   - {fileID: 4456081093441875935}
   - {fileID: 464072712078628345}
+  - {fileID: 114662130647469610}
   SceneComponent: {fileID: 0}
 --- !u!114 &114220226136161628
 MonoBehaviour:
@@ -48,7 +48,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectFromScene
-        node: {fileID: 114662130647469610}
+        node: {fileID: 0}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -71,6 +71,7 @@ MonoBehaviour:
   DevMode: 0
   gameObjectIntoNode: {fileID: 0}
   positionExtracted: {fileID: 0}
+  LocalSpace: 0
   m_PositionExtracted:
     m_Values:
     - 0
@@ -173,9 +174,6 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 114528305645714926}
   ModelOutput: {fileID: 0}
-  KeyboardControl: 0
-  TrainingKey: 0
-  RunningKey: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -183,6 +181,9 @@ MonoBehaviour:
   m_ExpectedInputList: 05000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 0
+  EnableKeyboardControl: 0
+  TrainingKey: 0
+  RunningKey: 0
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
 --- !u!114 &114528305645714926
@@ -297,7 +298,8 @@ MonoBehaviour:
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableCollectDataShortcut: 0
+  EnableKeyboardControl: 0
+  RecordDataKey: 0
 --- !u!114 &114662130647469610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,29 +310,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Game Object Node
+  m_Name: GAME OBJECT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -1272, y: -40}
   ports:
     keys:
-    - GameObjectFromScene
+    - GameObjectDataOut
     values:
-    - _fieldName: GameObjectFromScene
+    - _fieldName: GameObjectDataOut
       _node: {fileID: 114662130647469610}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: gameObjectIntoNode
-        node: {fileID: 114220226136161628}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  GameObjectFromScene: {fileID: 0}
+  GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
+  state: 0
 --- !u!114 &464072712078628345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,4 +431,5 @@ MonoBehaviour:
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableCollectDataShortcut: 1
+  EnableKeyboardControl: 0
+  RecordDataKey: 0
