@@ -190,10 +190,18 @@ MonoBehaviour:
   position: {x: -840, y: -280}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
+    - _fieldName: LiveDataOut
+      _node: {fileID: -7433884681184319376}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: GameObjectDataIn
       _node: {fileID: -7433884681184319376}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -202,23 +210,15 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: positionExtracted
-      _node: {fileID: -7433884681184319376}
-      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
-    - 0
-    - 0
-    - 0
+    - -7.36
+    - 2.07
+    - 3.9
 --- !u!114 &-5611364213572506045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Name: LIVE INT DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -840, y: -392}
+  position: {x: -808, y: -440}
   ports:
     keys:
     - inputInteger
@@ -352,7 +352,7 @@ MonoBehaviour:
   m_Name: LIVE ROTATION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -840, y: -152}
+  position: {x: -840, y: 40}
   ports:
     keys:
     - gameObjectIntoNode
@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Name: LIVE FLOAT DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -840, y: -504}
+  position: {x: -840, y: -584}
   ports:
     keys:
     - inputFloat
@@ -506,7 +506,7 @@ MonoBehaviour:
   m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1080, y: -56}
+  position: {x: -1096, y: -72}
   ports:
     keys:
     - GameObjectDataOut
@@ -522,7 +522,7 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectDataOut: {fileID: 0}
-  GameObjMissing: 1
+  GameObjMissing: 0
   state: 0
 --- !u!114 &1804760628769615605
 MonoBehaviour:
@@ -568,7 +568,7 @@ MonoBehaviour:
   m_Name: LIVE VECTOR4 DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -840, y: 344}
+  position: {x: -840, y: 632}
   ports:
     keys:
     - inputVector4
@@ -613,7 +613,7 @@ MonoBehaviour:
   m_Name: LIVE VECTOR2 DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -840, y: 88}
+  position: {x: -840, y: 280}
   ports:
     keys:
     - inputVector2
@@ -797,7 +797,7 @@ MonoBehaviour:
   m_Name: LIVE VECTOR3 DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -840, y: 216}
+  position: {x: -840, y: 408}
   ports:
     keys:
     - inputVector3
@@ -841,7 +841,7 @@ MonoBehaviour:
   m_Name: LIVE SERIAL VECTOR DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -840, y: -24}
+  position: {x: -840, y: 168}
   ports:
     keys:
     - inputSerialVector
