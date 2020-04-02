@@ -1028,7 +1028,7 @@ namespace InteractML
             foreach (var IMLConfigNode in IMLConfigurationNodesList)
             {
                 // Loads the model in the IMLConfigNode
-                IMLConfigNode.LoadModelFromDisk(MLController.name);
+                IMLConfigNode.LoadModelFromDisk();
             }
             
         }
@@ -1041,7 +1041,7 @@ namespace InteractML
             foreach (var IMLConfigNode in IMLConfigurationNodesList)
             {
                 // Save model to disk
-                IMLConfigNode.SaveModelToDisk(MLController.name);
+                IMLConfigNode.SaveModelToDisk();
             }
 
         }

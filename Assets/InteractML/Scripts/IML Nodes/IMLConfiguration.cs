@@ -409,18 +409,18 @@ namespace InteractML
         /// Saves current model to disk (dataPath specified in IMLDataSerialization)
         /// </summary>
         /// <param name="fileName"></param>
-        public void SaveModelToDisk(string fileName)
+        public void SaveModelToDisk()
         {
-            m_Model.SaveModelToDisk(this.name + this.id + fileName);
+            m_Model.SaveModelToDisk(this.graph.name + "_IMLConfiguration" + this.id);
         }
 
         /// <summary>
         /// Loads the current model from disk (dataPath specified in IMLDataSerialization)
         /// </summary>
         /// <param name="fileName"></param>
-        public void LoadModelFromDisk(string fileName)
+        public void LoadModelFromDisk()
         {
-            m_Model.LoadModelFromDisk(this.name + this.id + fileName);
+            m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id);
             // We update the node learning type to match the one from the loaded model
             switch (m_Model.TypeOfModel)
             {

@@ -544,8 +544,18 @@ namespace InteractML
 
         public void SaveDataToDisk()
         {
-            IMLDataSerialization.SaveTrainingSetToDisk(TrainingExamplesVector, GetJSONFileNameExamples());
-            IMLDataSerialization.SaveTrainingSeriesCollectionToDisk(TrainingSeriesCollection, GetJSONFileNameSeries());
+            if (ModeOfCollection == CollectionMode.SingleExample)
+            {
+                IMLDataSerialization.SaveTrainingSetToDisk(TrainingExamplesVector, GetJSONFileNameExamples());
+            } else if (ModeOfCollection == CollectionMode.Series)
+            {
+                IMLDataSerialization.SaveTrainingSeriesCollectionToDisk(TrainingSeriesCollection, GetJSONFileNameSeries());
+            }else
+            {
+                Debug.LogWarning("No data collection set");
+            }
+            
+            
         }
 
         public void LoadDataFromDisk()
@@ -573,8 +583,7 @@ namespace InteractML
         public string GetJSONFileNameExamples ()
         {
             string graphName = this.graph.name;
-            string nodeIndex = this.graph.nodes.FindIndex(a => a == this).ToString();
-            string fileName = graphName + "_node_" + nodeIndex + "_" + "TrainingExamplesNode";
+            string fileName = graphName + "TrainingExamplesNode" + this.id;
             return fileName;
         }
 
@@ -585,8 +594,7 @@ namespace InteractML
         public string GetJSONFileNameSeries ()
         {
             string graphName = this.graph.name;
-            string nodeIndex = this.graph.nodes.FindIndex(a => a == this).ToString();
-            string fileName = graphName + "_node_" + nodeIndex + "_" + "_SERIES_" + "TrainingExamplesNode";
+            string fileName = graphName +"TrainingExamplesNode" + this.id;
             return fileName;
         }
 
