@@ -17,8 +17,13 @@ namespace InteractML
         private bool m_ShowIMLControllerOutputsDropdown = true;
         private bool[] m_ShowSubIMLCtrlrOutputs;
 
+        private static GUIStyle editorLabelStyle;
+
         public override void OnInspectorGUI()
         {
+            if (editorLabelStyle == null) editorLabelStyle = new GUIStyle(EditorStyles.label);
+            EditorStyles.label.normal.textColor = Color.black;
+
             base.OnInspectorGUI();
 
             imlComponent = target as IMLComponent;
@@ -32,6 +37,9 @@ namespace InteractML
                 imlComponent.UpdateGameObjectsInIMLController();
                 imlComponent.GetAllNodes();
             }
+
+            EditorStyles.label.normal = editorLabelStyle.normal;
+
         }
 
         private void ShowIMLControllerOutputs()

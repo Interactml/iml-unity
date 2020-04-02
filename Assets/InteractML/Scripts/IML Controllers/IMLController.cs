@@ -20,6 +20,8 @@ namespace InteractML
         /// Flag that tells us if the graph is supposed to currently run
         /// </summary>
         public bool IsGraphRunning { get { return (SceneComponent != null); } }
+
+
     }
 }
 

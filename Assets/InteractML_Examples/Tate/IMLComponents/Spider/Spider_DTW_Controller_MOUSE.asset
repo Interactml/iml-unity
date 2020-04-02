@@ -108,35 +108,29 @@ MonoBehaviour:
   position: {x: 1305.5952, y: -116.417}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: -2270491664601779057}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: -2270491664601779057}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: FeatureToInput
-        node: {fileID: 7622910286740064642}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: -2270491664601779057}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
@@ -290,10 +284,7 @@ MonoBehaviour:
     - _fieldName: FeatureToInput
       _node: {fileID: 7622910286740064642}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: positionExtracted
-        node: {fileID: -2270491664601779057}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -315,7 +306,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  FeatureToInput: {fileID: -2270491664601779057}
+  FeatureToInput: {fileID: 0}
   VelocityExtracted: {fileID: 0}
   m_VelocityExtracted:
     m_Values:

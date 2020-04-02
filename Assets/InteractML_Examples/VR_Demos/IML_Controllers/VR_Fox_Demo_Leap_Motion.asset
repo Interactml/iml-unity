@@ -214,35 +214,29 @@ MonoBehaviour:
   position: {x: -264, y: -504}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 114035907775032882}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 114035907775032882}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: FeatureToInput
-        node: {fileID: 114762007122857022}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 114035907775032882}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
@@ -331,35 +325,29 @@ MonoBehaviour:
   position: {x: -184, y: -4328}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 114072254274634466}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 114072254274634466}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: FeaturesToMeasureDistanceToFirst
-        node: {fileID: 114290916878826764}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 114072254274634466}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
@@ -595,10 +583,7 @@ MonoBehaviour:
     - _fieldName: FeatureToInput
       _node: {fileID: 114198625317458438}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: positionExtracted
-        node: {fileID: 114605592322287672}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -608,10 +593,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: positionExtracted
-        node: {fileID: 114313809726534684}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -633,9 +615,8 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  FeatureToInput: {fileID: 114605592322287672}
-  FeaturesToMeasureDistanceToFirst:
-  - {fileID: 114313809726534684}
+  FeatureToInput: {fileID: 0}
+  FeaturesToMeasureDistanceToFirst: []
   DistanceExtracted: {fileID: 0}
   m_DistancesExtracted:
     m_Values:
@@ -797,35 +778,29 @@ MonoBehaviour:
   position: {x: -264, y: 456}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 114255138219269668}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 114255138219269668}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: FeaturesToMeasureDistanceToFirst
-        node: {fileID: 114762007122857022}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 114255138219269668}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
@@ -971,10 +946,7 @@ MonoBehaviour:
     - _fieldName: FeatureToInput
       _node: {fileID: 114290916878826764}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: positionExtracted
-        node: {fileID: 114313809726534684}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -984,22 +956,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: positionExtracted
-        node: {fileID: 114072254274634466}
-        reroutePoints: []
-      - fieldName: positionExtracted
-        node: {fileID: 114293193503366146}
-        reroutePoints: []
-      - fieldName: positionExtracted
-        node: {fileID: 114832926824065512}
-        reroutePoints: []
-      - fieldName: positionExtracted
-        node: {fileID: 114583057323706096}
-        reroutePoints: []
-      - fieldName: positionExtracted
-        node: {fileID: 114733314451815770}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -1021,13 +978,8 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  FeatureToInput: {fileID: 114313809726534684}
-  FeaturesToMeasureDistanceToFirst:
-  - {fileID: 114072254274634466}
-  - {fileID: 114293193503366146}
-  - {fileID: 114832926824065512}
-  - {fileID: 114583057323706096}
-  - {fileID: 114733314451815770}
+  FeatureToInput: {fileID: 0}
+  FeaturesToMeasureDistanceToFirst: []
   DistanceExtracted: {fileID: 0}
   m_DistancesExtracted:
     m_Values:
@@ -1052,35 +1004,29 @@ MonoBehaviour:
   position: {x: -184, y: -4136}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 114293193503366146}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 114293193503366146}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: FeaturesToMeasureDistanceToFirst
-        node: {fileID: 114290916878826764}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 114293193503366146}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
@@ -1103,46 +1049,29 @@ MonoBehaviour:
   position: {x: -232, y: -2920}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 114313809726534684}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 114313809726534684}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: FeatureToInput
-        node: {fileID: 114585773044923226}
-        reroutePoints: []
-      - fieldName: FeatureToInput
-        node: {fileID: 114290916878826764}
-        reroutePoints:
-        - {x: 114.407234, y: -3356.3394}
-      - fieldName: FeaturesToMeasureDistanceToFirst
-        node: {fileID: 114198625317458438}
-        reroutePoints:
-        - {x: 14.36047, y: -2632.3992}
-        - {x: -753.82935, y: -1482.3953}
-        - {x: -839.96796, y: -705.1891}
-        - {x: -23.022305, y: -711.84894}
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 114313809726534684}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
@@ -1196,10 +1125,7 @@ MonoBehaviour:
     - _fieldName: FeatureToInput
       _node: {fileID: 114356934883696634}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: positionExtracted
-        node: {fileID: 114605592322287672}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -1209,10 +1135,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: positionExtracted
-        node: {fileID: 114811611838066988}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -1235,9 +1158,8 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  FeatureToInput: {fileID: 114605592322287672}
-  FeaturesToMeasureDistanceToFirst:
-  - {fileID: 114811611838066988}
+  FeatureToInput: {fileID: 0}
+  FeaturesToMeasureDistanceToFirst: []
   DistanceExtracted: {fileID: 0}
   m_DistancesExtracted:
     m_Values:
@@ -1258,35 +1180,29 @@ MonoBehaviour:
   position: {x: -264, y: -312}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 114378620732791270}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 114378620732791270}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: FeaturesToMeasureDistanceToFirst
-        node: {fileID: 114762007122857022}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 114378620732791270}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
@@ -1346,10 +1262,7 @@ MonoBehaviour:
     - _fieldName: FeatureToInput
       _node: {fileID: 114387068067455594}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: positionExtracted
-        node: {fileID: 114811611838066988}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -1374,7 +1287,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  FeatureToInput: {fileID: 114811611838066988}
+  FeatureToInput: {fileID: 0}
   VelocityExtracted: {fileID: 0}
   m_VelocityExtracted:
     m_Values:
@@ -1726,35 +1639,29 @@ MonoBehaviour:
   position: {x: -184, y: -3752}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 114583057323706096}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 114583057323706096}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: FeaturesToMeasureDistanceToFirst
-        node: {fileID: 114290916878826764}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 114583057323706096}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
@@ -1783,10 +1690,7 @@ MonoBehaviour:
     - _fieldName: FeatureToInput
       _node: {fileID: 114585773044923226}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: positionExtracted
-        node: {fileID: 114313809726534684}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -1811,7 +1715,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  FeatureToInput: {fileID: 114313809726534684}
+  FeatureToInput: {fileID: 0}
   VelocityExtracted: {fileID: 0}
   m_VelocityExtracted:
     m_Values:
@@ -1838,38 +1742,29 @@ MonoBehaviour:
   position: {x: -200, y: -1000}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 114605592322287672}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 114605592322287672}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: FeatureToInput
-        node: {fileID: 114356934883696634}
-        reroutePoints: []
-      - fieldName: FeatureToInput
-        node: {fileID: 114198625317458438}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 114605592322287672}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
@@ -1943,35 +1838,29 @@ MonoBehaviour:
   position: {x: -264, y: 72}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 114663350036161056}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 114663350036161056}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: FeaturesToMeasureDistanceToFirst
-        node: {fileID: 114762007122857022}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 114663350036161056}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
@@ -1994,35 +1883,29 @@ MonoBehaviour:
   position: {x: -264, y: 264}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 114681883242046384}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 114681883242046384}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: FeaturesToMeasureDistanceToFirst
-        node: {fileID: 114762007122857022}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 114681883242046384}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
@@ -2104,35 +1987,29 @@ MonoBehaviour:
   position: {x: -184, y: -3560}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 114733314451815770}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 114733314451815770}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: FeaturesToMeasureDistanceToFirst
-        node: {fileID: 114290916878826764}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 114733314451815770}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
@@ -2162,10 +2039,7 @@ MonoBehaviour:
     - _fieldName: FeatureToInput
       _node: {fileID: 114762007122857022}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: positionExtracted
-        node: {fileID: 114035907775032882}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -2175,22 +2049,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: positionExtracted
-        node: {fileID: 114378620732791270}
-        reroutePoints: []
-      - fieldName: positionExtracted
-        node: {fileID: 114849844208104980}
-        reroutePoints: []
-      - fieldName: positionExtracted
-        node: {fileID: 114663350036161056}
-        reroutePoints: []
-      - fieldName: positionExtracted
-        node: {fileID: 114681883242046384}
-        reroutePoints: []
-      - fieldName: positionExtracted
-        node: {fileID: 114255138219269668}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -2212,13 +2071,8 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  FeatureToInput: {fileID: 114035907775032882}
-  FeaturesToMeasureDistanceToFirst:
-  - {fileID: 114378620732791270}
-  - {fileID: 114849844208104980}
-  - {fileID: 114663350036161056}
-  - {fileID: 114681883242046384}
-  - {fileID: 114255138219269668}
+  FeatureToInput: {fileID: 0}
+  FeaturesToMeasureDistanceToFirst: []
   DistanceExtracted: {fileID: 0}
   m_DistancesExtracted:
     m_Values:
@@ -2243,38 +2097,29 @@ MonoBehaviour:
   position: {x: -200, y: -1336}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 114811611838066988}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 114811611838066988}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: FeatureToInput
-        node: {fileID: 114387068067455594}
-        reroutePoints: []
-      - fieldName: FeaturesToMeasureDistanceToFirst
-        node: {fileID: 114356934883696634}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 114811611838066988}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
@@ -2297,35 +2142,29 @@ MonoBehaviour:
   position: {x: -184, y: -3944}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 114832926824065512}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 114832926824065512}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: FeaturesToMeasureDistanceToFirst
-        node: {fileID: 114290916878826764}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 114832926824065512}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
@@ -2408,35 +2247,29 @@ MonoBehaviour:
   position: {x: -264, y: -120}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 114849844208104980}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 114849844208104980}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: FeaturesToMeasureDistanceToFirst
-        node: {fileID: 114762007122857022}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 114849844208104980}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:

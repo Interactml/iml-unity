@@ -16,17 +16,18 @@ namespace InteractML.FeatureExtractors
         /// GameObject from which we extract a feature
         /// </summary>
         [Input]
-        public GameObject gameObjectIntoNode;
+        public GameObject GameObjectDataIn;
 
         /// <summary>
         /// Node data sent outside of this node onwards
         /// </summary>
         [Output]
-        public Node positionExtracted;
+        public Node LiveDataOut;
 
         /// <summary>
         /// Controls whether to use local space or not
         /// </summary>
+        [HideInInspector]
         public bool LocalSpace;
 
         /// <summary>
@@ -37,8 +38,11 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// The private feature values extracted in a more specific data type
         /// </summary>
-        [SerializeField]
+        [SerializeField, HideInInspector]
         private IMLVector3 m_PositionExtracted;
+        /// <summary>
+        /// Lets external classes see position data
+        /// </summary> 
 
         /// <summary>
         /// Lets external classes known if they should call UpdateFeature
@@ -98,7 +102,7 @@ namespace InteractML.FeatureExtractors
             }
 
 
-            var gameObjRef = GetInputValue<GameObject>("gameObjectIntoNode", this.gameObjectIntoNode);
+            var gameObjRef = GetInputValue<GameObject>("Game Object Into Node", this.GameObjectDataIn);
 
             if (gameObjRef == null)
             {
@@ -107,12 +111,16 @@ namespace InteractML.FeatureExtractors
             }
             else
             {
-                
+
                 // Set values of our feature extracted
                 if (LocalSpace)
+                { 
                     m_PositionExtracted.SetValues(gameObjRef.transform.localPosition);
+                }
                 else
+                { 
                     m_PositionExtracted.SetValues(gameObjRef.transform.position);
+                }
 
             }
 

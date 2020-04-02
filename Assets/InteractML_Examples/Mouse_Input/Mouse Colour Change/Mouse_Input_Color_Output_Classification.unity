@@ -259,7 +259,7 @@ MonoBehaviour:
   MLController: {fileID: 11400000, guid: 2594d0b219b963048bec5f6d15fbf34e, type: 2}
   GameObjectsToUse:
   - {fileID: 77529449}
-  FeaturesUpdated: 0
+  FeaturesUpdated: 1
 --- !u!4 &266555835
 Transform:
   m_ObjectHideFlags: 0
