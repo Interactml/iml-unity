@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: BASE DATA TYPE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1336, y: -408}
+  position: {x: -1336, y: -440}
   ports:
     keys: []
     values: []
@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Name: LIVE VELOCITY DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -568, y: 24}
+  position: {x: -552, y: -56}
   ports:
     keys:
     - FeatureToInput
@@ -352,13 +352,13 @@ MonoBehaviour:
   m_Name: LIVE ROTATION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -840, y: 40}
+  position: {x: -568, y: 136}
   ports:
     keys:
-    - gameObjectIntoNode
-    - rotationExtracted
+    - GameObjectDataIn
+    - LiveDataOut
     values:
-    - _fieldName: gameObjectIntoNode
+    - _fieldName: GameObjectDataIn
       _node: {fileID: -488254567263074503}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -367,7 +367,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: rotationExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: -488254567263074503}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections: []
@@ -376,8 +376,8 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  rotationExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_RotationExtracted:
     m_Values:
@@ -711,25 +711,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 842a83d23f8374e41b4f966b7c1548a3, type: 3}
-  m_Name: LIVE DISTANCE BETWEEN INPUTS DATA
+  m_Name: LIVE DISTANCE DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -616, y: -136}
+  position: {x: -584, y: -296}
   ports:
     keys:
-    - FeatureToInput
-    - FeaturesToMeasureDistanceToFirst
-    - DistanceExtracted
+    - DistanceBetweenInputs
+    - SecondInput
+    - FirstInput
     values:
-    - _fieldName: FeatureToInput
+    - _fieldName: DistanceBetweenInputs
       _node: {fileID: 5795202556902148962}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections: []
-      _direction: 0
+      _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: FeaturesToMeasureDistanceToFirst
+    - _fieldName: SecondInput
       _node: {fileID: 5795202556902148962}
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
@@ -739,18 +739,18 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: DistanceExtracted
+    - _fieldName: FirstInput
       _node: {fileID: 5795202556902148962}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections: []
-      _direction: 1
+      _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  FeatureToInput: {fileID: 0}
-  FeaturesToMeasureDistanceToFirst: []
-  DistanceExtracted: {fileID: 0}
+  FirstInput: {fileID: 0}
+  SecondInput: []
+  DistanceBetweenInputs: {fileID: 0}
   m_DistancesExtracted:
     m_Values: []
 --- !u!114 &5943066821297405025
@@ -841,7 +841,7 @@ MonoBehaviour:
   m_Name: LIVE SERIAL VECTOR DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -840, y: 168}
+  position: {x: -808, y: 152}
   ports:
     keys:
     - inputSerialVector

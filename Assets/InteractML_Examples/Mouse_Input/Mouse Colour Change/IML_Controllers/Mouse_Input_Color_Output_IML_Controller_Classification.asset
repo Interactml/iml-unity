@@ -246,10 +246,7 @@ MonoBehaviour:
       _node: {fileID: 6620900826782712363}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataOut
-        node: {fileID: 6944117512479845570}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -344,10 +341,7 @@ MonoBehaviour:
       _node: {fileID: 6944117512479845570}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataIn
-        node: {fileID: 6620900826782712363}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -355,4 +349,4 @@ MonoBehaviour:
   DevMode: 0
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
-  state: 0
+  state: 1

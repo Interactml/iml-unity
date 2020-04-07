@@ -230,10 +230,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: DistanceExtracted
-        node: {fileID: 114762007122857022}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -341,43 +338,29 @@ MonoBehaviour:
   position: {x: -200, y: -1144}
   ports:
     keys:
-    - gameObjectIntoNode
-    - rotationExtracted
+    - GameObjectDataIn
+    - LiveDataOut
     values:
-    - _fieldName: gameObjectIntoNode
+    - _fieldName: GameObjectDataIn
       _node: {fileID: 114247239337280674}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: rotationExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 114247239337280674}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: InputFeatures
-        node: {fileID: 114929005190181280}
-        reroutePoints: []
-      - fieldName: InputFeatures
-        node: {fileID: 114948667100810690}
-        reroutePoints:
-        - {x: 583, y: -1137}
-        - {x: 1068, y: -1106}
-      - fieldName: FeatureToInput
-        node: {fileID: 114833012837605150}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  rotationExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_RotationExtracted:
     m_Values:
@@ -1187,25 +1170,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 842a83d23f8374e41b4f966b7c1548a3, type: 3}
-  m_Name: LIVE DISTANCE BETWEEN INPUTS DATA
+  m_Name: LIVE DISTANCE DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: 120, y: 40}
   ports:
     keys:
-    - FeatureToInput
-    - FeaturesToMeasureDistanceToFirst
-    - DistanceExtracted
+    - DistanceBetweenInputs
+    - SecondInput
+    - FirstInput
     values:
-    - _fieldName: FeatureToInput
+    - _fieldName: DistanceBetweenInputs
       _node: {fileID: 114762007122857022}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections: []
-      _direction: 0
+      _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: FeaturesToMeasureDistanceToFirst
+    - _fieldName: SecondInput
       _node: {fileID: 114762007122857022}
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
@@ -1215,26 +1198,18 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: DistanceExtracted
+    - _fieldName: FirstInput
       _node: {fileID: 114762007122857022}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: InputFeatures
-        node: {fileID: 114870395820478542}
-        reroutePoints: []
-      - fieldName: InputFeatures
-        node: {fileID: 114108558201034724}
-        reroutePoints:
-        - {x: 512, y: 432}
-        - {x: 960, y: 432}
-      _direction: 1
+      connections: []
+      _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  FeatureToInput: {fileID: 0}
-  FeaturesToMeasureDistanceToFirst: []
-  DistanceExtracted: {fileID: 0}
+  FirstInput: {fileID: 0}
+  SecondInput: []
+  DistanceBetweenInputs: {fileID: 0}
   m_DistancesExtracted:
     m_Values:
     - 0.17390522
@@ -1309,10 +1284,7 @@ MonoBehaviour:
     - _fieldName: FeatureToInput
       _node: {fileID: 114833012837605150}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: rotationExtracted
-        node: {fileID: 114247239337280674}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -1334,7 +1306,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  FeatureToInput: {fileID: 114247239337280674}
+  FeatureToInput: {fileID: 0}
   VelocityExtracted: {fileID: 0}
   m_VelocityExtracted:
     m_Values:
@@ -1416,10 +1388,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: DistanceExtracted
-        node: {fileID: 114762007122857022}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -1558,10 +1527,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: rotationExtracted
-        node: {fileID: 114247239337280674}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -1712,10 +1678,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: rotationExtracted
-        node: {fileID: 114247239337280674}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0

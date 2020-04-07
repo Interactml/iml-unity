@@ -11,6 +11,10 @@ namespace InteractML.FeatureExtractors
     [CustomNodeEditor(typeof(ExtractSerialVector))]
     public class ExtractSerialVectorNodeEditor : NodeEditor
     {
+        /// <summary>
+        /// Reference to the node itself
+        /// </summary>
+        private ExtractSerialVector m_ExtractSerialVector;
 
         private static GUIStyle editorLabelStyle;
 

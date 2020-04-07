@@ -86,25 +86,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 842a83d23f8374e41b4f966b7c1548a3, type: 3}
-  m_Name: LIVE DISTANCE BETWEEN INPUTS DATA
+  m_Name: LIVE DISTANCE DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
   position: {x: -8, y: -8}
   ports:
     keys:
-    - FeatureToInput
-    - FeaturesToMeasureDistanceToFirst
-    - DistanceExtracted
+    - DistanceBetweenInputs
+    - SecondInput
+    - FirstInput
     values:
-    - _fieldName: FeatureToInput
+    - _fieldName: DistanceBetweenInputs
       _node: {fileID: -4022671191024951195}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections: []
-      _direction: 0
+      _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: FeaturesToMeasureDistanceToFirst
+    - _fieldName: SecondInput
       _node: {fileID: -4022671191024951195}
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
@@ -114,26 +114,18 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: DistanceExtracted
+    - _fieldName: FirstInput
       _node: {fileID: -4022671191024951195}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: InputFeatures
-        node: {fileID: 6032120658990344281}
-        reroutePoints: []
-      - fieldName: InputFeatures
-        node: {fileID: 5090747925507930192}
-        reroutePoints:
-        - {x: 339.6388, y: -194.65912}
-        - {x: 834.6388, y: -185.65912}
-      _direction: 1
+      connections: []
+      _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  FeatureToInput: {fileID: 0}
-  FeaturesToMeasureDistanceToFirst: []
-  DistanceExtracted: {fileID: 0}
+  FirstInput: {fileID: 0}
+  SecondInput: []
+  DistanceBetweenInputs: {fileID: 0}
   m_DistancesExtracted:
     m_Values:
     - 0
@@ -306,10 +298,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: DistanceExtracted
-        node: {fileID: -4022671191024951195}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -368,10 +357,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: DistanceExtracted
-        node: {fileID: -4022671191024951195}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0

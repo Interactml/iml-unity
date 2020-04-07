@@ -11,6 +11,10 @@ namespace InteractML.FeatureExtractors
     [CustomNodeEditor(typeof(ExtractVector2))]
     public class ExtractVector2NodeEditor : NodeEditor
     {
+        /// <summary>
+        /// Reference to the node itself
+        /// </summary>
+        private ExtractVector2 m_ExtractVector2;
 
         private static GUIStyle editorLabelStyle;
 

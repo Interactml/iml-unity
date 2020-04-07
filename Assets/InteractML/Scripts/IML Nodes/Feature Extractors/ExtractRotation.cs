@@ -10,19 +10,20 @@ namespace InteractML.FeatureExtractors
     /// Feature extractor for rotations
     /// </summary>
     [NodeTint("#3A3B5B")]
+    [NodeWidth(250)]
     public class ExtractRotation : Node, IFeatureIML
     {
         /// <summary>
         /// GameObject from which we extract a feature
         /// </summary>
         [Input]
-        public GameObject gameObjectIntoNode;
+        public GameObject GameObjectDataIn;
 
         /// <summary>
         /// Node data sent outside of this node onwards
         /// </summary>
         [Output]
-        public Node rotationExtracted;
+        public Node LiveDataOut;
 
         /// <summary>
         /// Controls whether to use local space or not
@@ -68,7 +69,7 @@ namespace InteractML.FeatureExtractors
                 m_RotationExtracted = new IMLVector4();
 
             }
-            name = "LIVE ROTATION DATA";
+            
         }
 
         // Return the correct value of an output port when requested
@@ -97,7 +98,7 @@ namespace InteractML.FeatureExtractors
 
             }
 
-            var gameObjRef = GetInputValue<GameObject>("gameObjectIntoNode", this.gameObjectIntoNode);
+            var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
 
             if (gameObjRef == null)
             {

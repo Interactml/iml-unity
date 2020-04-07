@@ -9,6 +9,7 @@ namespace InteractML.FeatureExtractors
     /// <summary>
     /// Feature extractor for positions
     /// </summary>
+    [NodeWidth(220)]
     [NodeTint("#3A3B5B")]
     public class ExtractPosition : Node, IFeatureIML
     {
@@ -27,7 +28,6 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Controls whether to use local space or not
         /// </summary>
-        [HideInInspector]
         public bool LocalSpace;
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// The private feature values extracted in a more specific data type
         /// </summary>
-        [SerializeField, HideInInspector]
+        [SerializeField]
         private IMLVector3 m_PositionExtracted;
         /// <summary>
         /// Lets external classes see position data
@@ -102,7 +102,7 @@ namespace InteractML.FeatureExtractors
             }
 
 
-            var gameObjRef = GetInputValue<GameObject>("Game Object Into Node", this.GameObjectDataIn);
+            var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
 
             if (gameObjRef == null)
             {

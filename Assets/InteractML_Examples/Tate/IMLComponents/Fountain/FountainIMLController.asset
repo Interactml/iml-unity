@@ -35,41 +35,29 @@ MonoBehaviour:
   position: {x: -232, y: 360}
   ports:
     keys:
-    - gameObjectIntoNode
-    - rotationExtracted
+    - GameObjectDataIn
+    - LiveDataOut
     values:
-    - _fieldName: gameObjectIntoNode
+    - _fieldName: GameObjectDataIn
       _node: {fileID: -8610128303692843015}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: rotationExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: -8610128303692843015}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: InputFeatures
-        node: {fileID: 68818987050540433}
-        reroutePoints: []
-      - fieldName: InputFeatures
-        node: {fileID: -7263173863358045852}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  rotationExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_RotationExtracted:
     m_Values:
@@ -121,10 +109,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: rotationExtracted
-        node: {fileID: -8610128303692843015}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -354,10 +339,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: rotationExtracted
-        node: {fileID: -625260014091351030}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -439,38 +421,29 @@ MonoBehaviour:
   position: {x: -232, y: 968}
   ports:
     keys:
-    - gameObjectIntoNode
-    - rotationExtracted
+    - GameObjectDataIn
+    - LiveDataOut
     values:
-    - _fieldName: gameObjectIntoNode
+    - _fieldName: GameObjectDataIn
       _node: {fileID: -625260014091351030}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 0}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: rotationExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: -625260014091351030}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: InputFeatures
-        node: {fileID: -2098037620983611261}
-        reroutePoints: []
-      - fieldName: InputFeatures
-        node: {fileID: 7789766593072727397}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  rotationExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_RotationExtracted:
     m_Values:
@@ -557,10 +530,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: rotationExtracted
-        node: {fileID: -8610128303692843015}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -1022,10 +992,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: rotationExtracted
-        node: {fileID: -625260014091351030}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0

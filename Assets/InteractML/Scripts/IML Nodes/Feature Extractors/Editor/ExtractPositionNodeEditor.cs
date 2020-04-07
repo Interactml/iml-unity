@@ -14,18 +14,18 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Reference to the node itself
         /// </summary>
-        private ExtractPosition m_ExtractPositionNode;
+        private ExtractPosition m_ExtractPosition;
 
         private static GUIStyle editorLabelStyle;
 
         public override void OnBodyGUI()
         {
             // Get reference to the current node
-            m_ExtractPositionNode = (target as ExtractPosition);
+            m_ExtractPosition = (target as ExtractPosition);
 
             if (editorLabelStyle == null) editorLabelStyle = new GUIStyle(EditorStyles.label);
             EditorStyles.label.normal.textColor = Color.white;
-
+            EditorStyles.label.wordWrap = true;
 
             //base.OnBodyGUI();
 
@@ -40,8 +40,9 @@ namespace InteractML.FeatureExtractors
             EditorGUILayout.Space();
             ShowLocalSpaceToggle();
 
-            EditorStyles.label.normal = editorLabelStyle.normal;
 
+            EditorStyles.label.normal = editorLabelStyle.normal;
+            EditorStyles.label.wordWrap = false;
 
 
         }
@@ -50,21 +51,23 @@ namespace InteractML.FeatureExtractors
 
         private void ShowExtractPositionNodePorts()
         {
-            NodeEditorGUILayout.PortPair(m_ExtractPositionNode.GetInputPort("GameObjectDataIn"), m_ExtractPositionNode.GetOutputPort("LiveDataOut")); 
+            
+            NodeEditorGUILayout.PortPair(m_ExtractPosition.GetInputPort("GameObjectDataIn"), m_ExtractPosition.GetOutputPort("LiveDataOut"));
+            
         }
 
         private void ShowExtractedPositionValues()
         {
 
-            EditorGUILayout.LabelField(" x: " + m_ExtractPositionNode.FeatureValues.Values[0].ToString());
-            EditorGUILayout.LabelField(" y: " + m_ExtractPositionNode.FeatureValues.Values[1].ToString());
-            EditorGUILayout.LabelField(" z: " + m_ExtractPositionNode.FeatureValues.Values[2].ToString());
+            EditorGUILayout.LabelField(" x: " + m_ExtractPosition.FeatureValues.Values[0].ToString());
+            EditorGUILayout.LabelField(" y: " + m_ExtractPosition.FeatureValues.Values[1].ToString());
+            EditorGUILayout.LabelField(" z: " + m_ExtractPosition.FeatureValues.Values[2].ToString());
            
         }
 
         private void ShowLocalSpaceToggle()
         {
-            m_ExtractPositionNode.LocalSpace = EditorGUILayout.ToggleLeft("Use local space for transform", m_ExtractPositionNode.LocalSpace);
+            m_ExtractPosition.LocalSpace = EditorGUILayout.ToggleLeft("Use local space for transform", m_ExtractPosition.LocalSpace);
         }
 
         #endregion
