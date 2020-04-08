@@ -301,10 +301,12 @@ namespace InteractML
 
             // Perform running logic (it will account for DTW and Classification/Regression) only if there is a predicted output            
             RunningLogic();
-            
+
             // Update feature selection matrix
             // TO DO
-
+            /*Debug.Log("expected output" + m_ExpectedOutputList.Count);
+            Debug.Log("predicted rap lib output" + PredictedRapidlibOutput.Length);
+            Debug.Log("predicted output" + PredictedOutput.Count);*/
 
         }
 
@@ -321,6 +323,7 @@ namespace InteractML
                 if (m_RapidlibTrainingSeriesCollection == null)
                     m_RapidlibTrainingSeriesCollection = new List<RapidlibTrainingSerie>();
 
+                //TD Turn into two methods to be overriden in subclass 
                 // If we have a dtw model...
                 if (m_LearningType == IMLSpecifications.LearningType.DTW)
                 {
@@ -491,6 +494,8 @@ namespace InteractML
 
                     if (i + pointerRawOutputVector >= PredictedRapidlibOutput.Length)
                     {
+                        Debug.Log("pointer " + (i+pointerRawOutputVector));
+                        Debug.Log("predicted " + DelayedPredictedOutput.Length);
                         Debug.LogError("The predicted rapidlib output vector is too small when transforming to interactml types!");
                         break;
                     }
@@ -522,6 +527,7 @@ namespace InteractML
                         DelayedPredictedOutput = new double[PredictedRapidlibOutput.Length];
                     }
                     PredictedRapidlibOutput.CopyTo(DelayedPredictedOutput, 0);
+                    Debug.Log(DelayedPredictedOutput.Length + " delayed");
 
                     // Run model
                     m_Model.Run(m_RapidlibInputVector, ref m_RapidlibOutputVector);
@@ -647,8 +653,10 @@ namespace InteractML
                 // Adjust the desired outputs list based on configuration selected
                 PredictedOutput.Clear();
                 // Calculate required space for outputs
+                Debug.Log(m_ExpectedOutputList.Count);
                 for (int i = 0; i < m_ExpectedOutputList.Count; i++)
                 {
+                    Debug.Log(i);
                     switch (m_ExpectedOutputList[i])
                     {
                         case IMLSpecifications.OutputsEnum.Float:
@@ -729,12 +737,44 @@ namespace InteractML
                 if (trainingExamplesNode.DesiredOutputsConfig != null && trainingExamplesNode.DesiredOutputsConfig.Count > 0)
                 {
                     // Populate expected type from the trainin examples node connected
-                    foreach (var desiredOutputConfigType in trainingExamplesNode.DesiredOutputsConfig)
+                    // dirty code needs rewriting 
+                    if (m_ExpectedOutputList.Count == 0)
                     {
-                        m_ExpectedOutputList.Add(desiredOutputConfigType);
+                        for (int i = m_ExpectedOutputList.Count; i < trainingExamplesNode.DesiredOutputsConfig.Count; i++)
+                        {
+                            m_ExpectedOutputList.Add(trainingExamplesNode.DesiredOutputsConfig[i]);
+                        }
+                    }
+                     else if (trainingExamplesNode.DesiredOutputsConfig.Count > m_ExpectedOutputList.Count)
+                    {
+                        for (int i = m_ExpectedOutputList.Count-1; i < trainingExamplesNode.DesiredOutputsConfig.Count-1; i++)
+                        {
+                            m_ExpectedOutputList.Add(trainingExamplesNode.DesiredOutputsConfig[i]);
+                        }
+                    }
+
+                    if (m_ExpectedOutputList.Count <= trainingExamplesNode.DesiredOutputsConfig.Count)
+                    {
+                        for (int i = 0; i < m_ExpectedOutputList.Count; i++)
+                        {
+                            if (m_ExpectedOutputList[i] != trainingExamplesNode.DesiredOutputsConfig[i])
+                            {
+                                m_ExpectedOutputList.Add(trainingExamplesNode.DesiredOutputsConfig[i]);
+                            }
+                        }
+                    } else
+                    {
+                        for (int i = 0; i < trainingExamplesNode.DesiredOutputsConfig.Count; i++)
+                        {
+                            if (m_ExpectedOutputList[i] != trainingExamplesNode.DesiredOutputsConfig[i])
+                            {
+                                m_ExpectedOutputList.Add(trainingExamplesNode.DesiredOutputsConfig[i]);
+                            }
+                        }
                     }
                 }
-            }            
+            }
+        
 
         }
 

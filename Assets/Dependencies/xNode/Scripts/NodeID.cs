@@ -12,7 +12,6 @@ using System;
     { 
         public static string CheckNodeID(string id, Node node)
         {
-            Debug.Log(id);
             if (id == null)
             {
                 id = Guid.NewGuid().ToString();
