@@ -43,19 +43,30 @@ public class BoxForces : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Update oculus input system
-        OVRInput.Update();
+        if (UnityEngine.XR.XRSettings.enabled)
+            // Update oculus input system
+            OVRInput.Update();
 
     }
 
     // Called at a constant rate
     void FixedUpdate()
     {
-        // Update oculus input system
-        OVRInput.FixedUpdate();
+        // If we are in VR...
+        if (UnityEngine.XR.XRSettings.enabled)
+        {
+            // Update oculus input system
+            OVRInput.FixedUpdate();
 
-        // Get any button
-        m_CanPush = OVRInput.Get(OVRInput.Button.Any);
+            // Get any button
+            m_CanPush = OVRInput.Get(OVRInput.Button.Any);
+
+        }
+        // If we are on standalone...
+        else
+        {
+            m_CanPush = Input.GetMouseButtonDown(0);
+        }
 
         // Emulate GetDown (only allow one true per frame)
         if (m_LastKnownCanPush && m_CanPush)
