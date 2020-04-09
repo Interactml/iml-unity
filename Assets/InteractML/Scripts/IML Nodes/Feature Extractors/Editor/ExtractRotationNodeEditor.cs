@@ -172,21 +172,17 @@ namespace InteractML.FeatureExtractors
         {
             GUILayout.BeginArea(bodySection);
 
-            Quaternion quaternion = new Quaternion(m_ExtractRotation.FeatureValues.Values[0], m_ExtractRotation.FeatureValues.Values[1], m_ExtractRotation.FeatureValues.Values[2], m_ExtractRotation.FeatureValues.Values[3]);
-            Vector3 euler = new Vector3();
-            quaternion.eulerAngles = euler;
-
             EditorGUILayout.Space();
             EditorGUILayout.Space();
             EditorGUILayout.Space();
 
-            EditorGUILayout.LabelField(" x: " + euler.x, skin.GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField(" x: " + System.Math.Round(new Quaternion(m_ExtractRotation.FeatureValues.Values[0], m_ExtractRotation.FeatureValues.Values[1], m_ExtractRotation.FeatureValues.Values[2], m_ExtractRotation.FeatureValues.Values[3]).eulerAngles.x, 3).ToString(), skin.GetStyle("Node Body Label"));
             EditorGUILayout.Space();
 
-            EditorGUILayout.LabelField(" y: " + euler.y, skin.GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField(" y: " + System.Math.Round(new Quaternion(m_ExtractRotation.FeatureValues.Values[0], m_ExtractRotation.FeatureValues.Values[1], m_ExtractRotation.FeatureValues.Values[2], m_ExtractRotation.FeatureValues.Values[3]).eulerAngles.y, 3).ToString(), skin.GetStyle("Node Body Label"));
             EditorGUILayout.Space();
 
-            EditorGUILayout.LabelField(" z: " + euler.z, skin.GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField(" z: " + System.Math.Round(new Quaternion(m_ExtractRotation.FeatureValues.Values[0], m_ExtractRotation.FeatureValues.Values[1], m_ExtractRotation.FeatureValues.Values[2], m_ExtractRotation.FeatureValues.Values[3]).eulerAngles.z, 3).ToString(), skin.GetStyle("Node Body Label"));
             EditorGUILayout.Space();
 
             GUILayout.EndArea();

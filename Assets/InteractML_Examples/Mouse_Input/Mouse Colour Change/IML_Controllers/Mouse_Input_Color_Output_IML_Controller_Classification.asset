@@ -185,7 +185,10 @@ MonoBehaviour:
       _node: {fileID: 23255658134690522}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: GameObjectDataOut
+        node: {fileID: 6944117512479845570}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -204,11 +207,11 @@ MonoBehaviour:
   LocalSpace: 0
   m_RotationExtracted:
     m_Values:
-    - 0
-    - 0
-    - 0
-    - 0
-  GameObjInputMissing: 1
+    - 0.70458376
+    - -0.080454595
+    - 0.16586284
+    - 0.68525785
+  GameObjInputMissing: 0
 --- !u!114 &3413682967297781931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,7 +279,7 @@ MonoBehaviour:
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
-    - -7.36
+    - -16.6
     - 2.07
     - 3.9
 --- !u!114 &6732151304541360272
@@ -364,6 +367,9 @@ MonoBehaviour:
       - fieldName: GameObjectDataIn
         node: {fileID: 6620900826782712363}
         reroutePoints: []
+      - fieldName: GameObjectDataIn
+        node: {fileID: 23255658134690522}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -371,4 +377,4 @@ MonoBehaviour:
   DevMode: 0
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
-  state: 1
+  state: 0

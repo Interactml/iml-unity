@@ -171,13 +171,13 @@ namespace InteractML.FeatureExtractors
             EditorGUILayout.Space();
             EditorGUILayout.Space();
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField(" x: " + m_ExtractPosition.FeatureValues.Values[0].ToString(), skin.GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField(" x: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[0], 3).ToString(), skin.GetStyle("Node Body Label"));
             EditorGUILayout.Space();
 
-            EditorGUILayout.LabelField(" y: " + m_ExtractPosition.FeatureValues.Values[1].ToString(), skin.GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField(" y: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[1], 3).ToString(), skin.GetStyle("Node Body Label"));
             EditorGUILayout.Space();
 
-            EditorGUILayout.LabelField(" z: " + m_ExtractPosition.FeatureValues.Values[2].ToString(), skin.GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField(" z: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[2], 3).ToString(), skin.GetStyle("Node Body Label"));
             EditorGUILayout.Space();
             GUILayout.EndArea();
 
