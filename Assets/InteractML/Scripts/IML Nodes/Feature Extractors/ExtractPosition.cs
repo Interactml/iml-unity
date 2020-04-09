@@ -9,7 +9,7 @@ namespace InteractML.FeatureExtractors
     /// <summary>
     /// Feature extractor for positions
     /// </summary>
-    [NodeWidth(220)]
+    [NodeWidth(250)]
     [NodeTint("#3A3B5B")]
     public class ExtractPosition : Node, IFeatureIML
     {
@@ -70,10 +70,8 @@ namespace InteractML.FeatureExtractors
 
             }
 
-            name = "LIVE POSITION DATA";
-
-
         }
+
         public void OnDestroy()
         {
             // Remove reference of this node in the IMLComponent controlling this node (if any)
@@ -100,7 +98,6 @@ namespace InteractML.FeatureExtractors
                 m_PositionExtracted = new IMLVector3();
 
             }
-
 
             var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
 

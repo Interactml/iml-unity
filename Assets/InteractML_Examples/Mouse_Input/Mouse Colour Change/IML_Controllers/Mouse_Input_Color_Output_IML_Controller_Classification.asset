@@ -160,9 +160,9 @@ MonoBehaviour:
   - {fileID: -4927585982608454069}
   - {fileID: 3413682967297781931}
   - {fileID: 6944117512479845570}
-  - {fileID: 1922949049238584494}
+  - {fileID: 23255658134690522}
   SceneComponent: {fileID: 0}
---- !u!114 &1922949049238584494
+--- !u!114 &23255658134690522
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,28 +171,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: GAME OBJECT INPUT
+  m_Script: {fileID: 11500000, guid: f5e8312b300ccdb4784b431dbd6ddf11, type: 3}
+  m_Name: Extract Rotation
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -722, y: 0}
+  position: {x: -440, y: -40}
   ports:
     keys:
-    - GameObjectDataOut
+    - GameObjectDataIn
+    - LiveDataOut
     values:
-    - _fieldName: GameObjectDataOut
-      _node: {fileID: 1922949049238584494}
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 23255658134690522}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: LiveDataOut
+      _node: {fileID: 23255658134690522}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  GameObjectDataOut: {fileID: 0}
-  GameObjMissing: 1
-  state: 1
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
+  LocalSpace: 0
+  m_RotationExtracted:
+    m_Values:
+    - 0
+    - 0
+    - 0
+    - 0
+  GameObjInputMissing: 1
 --- !u!114 &3413682967297781931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -225,7 +241,7 @@ MonoBehaviour:
   m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -392, y: -360}
+  position: {x: -440, y: -328}
   ports:
     keys:
     - LiveDataOut
@@ -246,7 +262,10 @@ MonoBehaviour:
       _node: {fileID: 6620900826782712363}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: GameObjectDataOut
+        node: {fileID: 6944117512479845570}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -341,7 +360,10 @@ MonoBehaviour:
       _node: {fileID: 6944117512479845570}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: GameObjectDataIn
+        node: {fileID: 6620900826782712363}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0

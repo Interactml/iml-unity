@@ -30,11 +30,10 @@ namespace InteractML.FeatureExtractors
         private Rect subBodySection;
 
         private float nodeWidth;
+        private float lineWeight;
 
-        public override void OnCreate()
+        public override void OnHeaderGUI()
         {
-            base.OnCreate();
-
             // Get reference to the current node
             m_ExtractRotation = (target as ExtractRotation);
 
@@ -46,10 +45,10 @@ namespace InteractML.FeatureExtractors
 
             //Set node dimensions
             nodeWidth = 250;
-        }
 
-        public override void OnHeaderGUI()
-        {
+            //Set line width
+            lineWeight = 2;
+
             //Draw header texture
             DrawHeaderLayout();
 
@@ -59,11 +58,12 @@ namespace InteractML.FeatureExtractors
         
         public override void OnBodyGUI()
         {
-            EditorGUI.indentLevel++;
+            
             // Draw the ports
             DrawPortLayout();
             ShowExtractRotationNodePorts();
 
+            EditorGUI.indentLevel++;
             // Draw the body
             DrawBodyLayout();
             ShowExtractedRotationValues();
@@ -109,10 +109,10 @@ namespace InteractML.FeatureExtractors
             GUI.DrawTexture(portSection, nodeTexture);
 
             // Draw line at top of body
-            GUI.DrawTexture(new Rect(portSection.x, portSection.y, portSection.width, 1), lineTexture);
+            GUI.DrawTexture(new Rect(portSection.x, portSection.y - lineWeight, portSection.width, lineWeight), lineTexture);
 
             // Draw line below ports
-            GUI.DrawTexture(new Rect(portSection.x, headerSection.height + portSection.height - 1, portSection.width, 1), lineTexture);
+            GUI.DrawTexture(new Rect(portSection.x, headerSection.height + portSection.height - lineWeight, portSection.width, lineWeight), lineTexture);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace InteractML.FeatureExtractors
             GUI.DrawTexture(bodySection, nodeTexture);
 
             // Draw line above local space toggle
-            GUI.DrawTexture(new Rect(bodySection.x, bodySection.y + bodySection.height - 1, bodySection.width, 1), lineTexture);
+            GUI.DrawTexture(new Rect(bodySection.x, bodySection.y + bodySection.height - lineWeight, bodySection.width, lineWeight), lineTexture);
 
         }
 
@@ -153,6 +153,7 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         private void ShowExtractRotationNodePorts()
         {
+            EditorGUILayout.Space();
             GUILayout.BeginHorizontal();
 
             GUIContent inputPortLabel = new GUIContent("GameObject \nData In");
@@ -176,6 +177,8 @@ namespace InteractML.FeatureExtractors
             quaternion.eulerAngles = euler;
 
             EditorGUILayout.Space();
+            EditorGUILayout.Space();
+            EditorGUILayout.Space();
 
             EditorGUILayout.LabelField(" x: " + euler.x, skin.GetStyle("Node Body Label"));
             EditorGUILayout.Space();
@@ -186,7 +189,6 @@ namespace InteractML.FeatureExtractors
             EditorGUILayout.LabelField(" z: " + euler.z, skin.GetStyle("Node Body Label"));
             EditorGUILayout.Space();
 
-
             GUILayout.EndArea();
 
         }
@@ -195,13 +197,10 @@ namespace InteractML.FeatureExtractors
         /// Show the local space toggle 
         /// </summary>
         private void ShowLocalSpaceToggle()
-        {
-            
+        {    
             GUILayout.BeginArea(subBodySection);
             EditorGUILayout.Space();
-
             m_ExtractRotation.LocalSpace = EditorGUILayout.ToggleLeft("Use local space for transform", m_ExtractRotation.LocalSpace, skin.GetStyle("Node Sub Label"));
-
             GUILayout.EndArea();
         }
 

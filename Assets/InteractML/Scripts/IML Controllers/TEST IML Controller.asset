@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -824, y: -280}
+  position: {x: -1272, y: -232}
   ports:
     keys:
     - LiveDataOut
@@ -187,7 +187,10 @@ MonoBehaviour:
       _node: {fileID: -7433884681184319376}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: GameObjectDataOut
+        node: {fileID: 218526402762353012}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -272,7 +275,7 @@ MonoBehaviour:
   m_Name: LIVE ROTATION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1128, y: -488}
+  position: {x: -1256, y: -568}
   ports:
     keys:
     - GameObjectDataIn
@@ -282,7 +285,10 @@ MonoBehaviour:
       _node: {fileID: -488254567263074503}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: GameObjectDataOut
+        node: {fileID: 218526402762353012}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -419,7 +425,7 @@ MonoBehaviour:
   m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1096, y: -8}
+  position: {x: -1576, y: -248}
   ports:
     keys:
     - GameObjectDataOut
@@ -428,7 +434,13 @@ MonoBehaviour:
       _node: {fileID: 218526402762353012}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: GameObjectDataIn
+        node: {fileID: -488254567263074503}
+        reroutePoints: []
+      - fieldName: GameObjectDataIn
+        node: {fileID: -7433884681184319376}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -534,7 +546,7 @@ MonoBehaviour:
   m_Name: LIVE DISTANCE DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -584, y: -296}
+  position: {x: -520, y: -344}
   ports:
     keys:
     - DistanceBetweenInputs
