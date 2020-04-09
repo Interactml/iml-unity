@@ -7,11 +7,14 @@ namespace InteractML.DataTypeNodes
 {
     public class FloatNode : Node
     {
+        [Input]
+        public float In;
+
         [SerializeField]
         public float Value;
 
         [Output]
-        public float FloatToOutput;
+        public float Out;
 
         public string ValueName;
 
@@ -25,8 +28,8 @@ namespace InteractML.DataTypeNodes
         // Return the correct value of an output port when requested
         public override object GetValue(NodePort port)
         {
-            FloatToOutput = Value;
-            return FloatToOutput; 
+            Out = Value;
+            return Out; 
         }
     }
 }
