@@ -4,14 +4,10 @@ using UnityEngine;
 using XNode;
 
 namespace InteractML.DataTypeNodes
-{
-    [NodeTint("#3A3B5B")]
+{  
     public class BaseDataTypeNode : Node
     {
-        protected override void Init()
-        {
-            name = "BASE DATA TYPE";
-        }
+        
     }
 }
 

@@ -115,24 +115,6 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 0
---- !u!114 &-8308910294052974059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7adbbb5eb0634f49932781bf9de50a0, type: 3}
-  m_Name: BASE DATA TYPE
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1336, y: -440}
-  ports:
-    keys: []
-    values: []
-  DevMode: 0
 --- !u!114 &-7627466622353308577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,7 +128,7 @@ MonoBehaviour:
   m_Name: LIVE VELOCITY DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -552, y: -56}
+  position: {x: -568, y: -104}
   ports:
     keys:
     - FeatureToInput
@@ -187,7 +169,7 @@ MonoBehaviour:
   m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -840, y: -280}
+  position: {x: -824, y: -280}
   ports:
     keys:
     - LiveDataOut
@@ -277,68 +259,6 @@ MonoBehaviour:
   DevMode: 0
   inputInteger: 0
   integerFeatureExtracted: {fileID: 0}
---- !u!114 &-2059058732853385205
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 857ffa76de7626a4e99d3b0511c682b4, type: 3}
-  m_Name: SERIAL VECTOR
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1336, y: -120}
-  ports:
-    keys:
-    - arrayToOutput
-    values:
-    - _fieldName: arrayToOutput
-      _node: {fileID: -2059058732853385205}
-      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  Value: []
-  arrayToOutput: []
-  ValueName: 
---- !u!114 &-541181558766639096
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ef4cb3371f9e4a47a6d68726e6c8f83, type: 3}
-  m_Name: VECTOR3
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1336, y: 120}
-  ports:
-    keys:
-    - Vector3ToOutput
-    values:
-    - _fieldName: Vector3ToOutput
-      _node: {fileID: -541181558766639096}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  Value: {x: 0, y: 0, z: 0}
-  Vector3ToOutput: {x: 0, y: 0, z: 0}
-  ValueName: 
 --- !u!114 &-488254567263074503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,7 +272,7 @@ MonoBehaviour:
   m_Name: LIVE ROTATION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -568, y: 136}
+  position: {x: -1128, y: -488}
   ports:
     keys:
     - GameObjectDataIn
@@ -485,13 +405,6 @@ MonoBehaviour:
   - {fileID: 6576170830802847369}
   - {fileID: 2116220390130247491}
   - {fileID: -7627466622353308577}
-  - {fileID: -8308910294052974059}
-  - {fileID: 1804760628769615605}
-  - {fileID: 5943066821297405025}
-  - {fileID: -2059058732853385205}
-  - {fileID: 4529573766743193843}
-  - {fileID: -541181558766639096}
-  - {fileID: 4337080359435348117}
   SceneComponent: {fileID: 0}
 --- !u!114 &218526402762353012
 MonoBehaviour:
@@ -506,7 +419,7 @@ MonoBehaviour:
   m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1096, y: -72}
+  position: {x: -1096, y: -8}
   ports:
     keys:
     - GameObjectDataOut
@@ -522,39 +435,8 @@ MonoBehaviour:
       _dynamic: 0
   DevMode: 0
   GameObjectDataOut: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
   state: 0
---- !u!114 &1804760628769615605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00534a0ab197c4d4580b7dc43b85d166, type: 3}
-  m_Name: FLOAT
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1336, y: -344}
-  ports:
-    keys:
-    - FloatToOutput
-    values:
-    - _fieldName: FloatToOutput
-      _node: {fileID: 1804760628769615605}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  Value: 0
-  FloatToOutput: 0
-  ValueName: 
 --- !u!114 &2116220390130247491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -639,68 +521,6 @@ MonoBehaviour:
   DevMode: 0
   inputVector2: {x: 0, y: 0}
   vector2FeatureExtracted: {fileID: 0}
---- !u!114 &4337080359435348117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 259c466d9c6c3b942b232f923e5d0c17, type: 3}
-  m_Name: VECTOR4
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1336, y: 248}
-  ports:
-    keys:
-    - Vector4ToOutput
-    values:
-    - _fieldName: Vector4ToOutput
-      _node: {fileID: 4337080359435348117}
-      _typeQualifiedName: UnityEngine.Vector4, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  Value: {x: 0, y: 0, z: 0, w: 0}
-  Vector4ToOutput: {x: 0, y: 0, z: 0, w: 0}
-  ValueName: 
---- !u!114 &4529573766743193843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4ce357579833a349823c2b8eb63e23a, type: 3}
-  m_Name: VECTOR2
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1336, y: -8}
-  ports:
-    keys:
-    - Vector2ToOutput
-    values:
-    - _fieldName: Vector2ToOutput
-      _node: {fileID: 4529573766743193843}
-      _typeQualifiedName: UnityEngine.Vector2, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  Value: {x: 0, y: 0}
-  Vector2ToOutput: {x: 0, y: 0}
-  ValueName: 
 --- !u!114 &5795202556902148962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -753,37 +573,6 @@ MonoBehaviour:
   DistanceBetweenInputs: {fileID: 0}
   m_DistancesExtracted:
     m_Values: []
---- !u!114 &5943066821297405025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeb2c13cdf3f76540a07154b6ab66241, type: 3}
-  m_Name: INTEGER
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1336, y: -232}
-  ports:
-    keys:
-    - IntToOutput
-    values:
-    - _fieldName: IntToOutput
-      _node: {fileID: 5943066821297405025}
-      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  Value: 0
-  IntToOutput: 0
-  ValueName: 
 --- !u!114 &6576170830802847369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -841,7 +630,7 @@ MonoBehaviour:
   m_Name: LIVE SERIAL VECTOR DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -808, y: 152}
+  position: {x: -840, y: 8}
   ports:
     keys:
     - inputSerialVector

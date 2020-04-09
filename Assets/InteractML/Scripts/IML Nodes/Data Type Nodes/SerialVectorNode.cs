@@ -5,7 +5,6 @@ using XNode;
 
 namespace InteractML.DataTypeNodes
 {
-    [NodeTint("#3A3B5B")]
     public class SerialVectorNode : Node
     {
         [SerializeField]
@@ -20,8 +19,6 @@ namespace InteractML.DataTypeNodes
         protected override void Init()
         {
             base.Init();
-            name = "SERIAL VECTOR";
-
         }
 
         // Return the correct value of an output port when requested

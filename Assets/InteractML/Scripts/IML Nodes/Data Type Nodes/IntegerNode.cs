@@ -4,7 +4,6 @@ using UnityEngine;
 using XNode;
 namespace InteractML.DataTypeNodes
 {
-    [NodeTint("#3A3B5B")]
     public class IntegerNode : Node
     {
 
@@ -20,8 +19,6 @@ namespace InteractML.DataTypeNodes
         protected override void Init()
         {
             base.Init();
-            name = "INTEGER";
-
         }
 
         // Return the correct value of an output port when requested
