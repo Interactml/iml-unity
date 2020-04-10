@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -344, y: -456}
+  position: {x: -328, y: -584}
   ports:
     keys: []
     values: []
@@ -507,7 +507,7 @@ MonoBehaviour:
   m_Name: LIVE VECTOR2 DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -840, y: 280}
+  position: {x: -1256, y: 40}
   ports:
     keys:
     - inputVector2

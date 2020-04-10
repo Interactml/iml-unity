@@ -62,8 +62,8 @@ namespace InteractML.FeatureExtractors
             DrawPortLayout();
             ShowExtractPositionNodePorts();
 
-            EditorGUI.indentLevel++;
             // Draw the body
+            EditorGUI.indentLevel++;
             DrawBodyLayout();
             ShowExtractedPositionValues();
 
@@ -162,7 +162,7 @@ namespace InteractML.FeatureExtractors
         }
 
         /// <summary>
-        /// Show the rotation value fields 
+        /// Show the position value fields 
         /// </summary>
         private void ShowExtractedPositionValues()
         {
