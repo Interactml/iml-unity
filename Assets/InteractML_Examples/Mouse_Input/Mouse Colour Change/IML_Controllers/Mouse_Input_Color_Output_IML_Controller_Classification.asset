@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 264, y: -376}
+  position: {x: -1112, y: -184}
   ports:
     keys: []
     values: []
