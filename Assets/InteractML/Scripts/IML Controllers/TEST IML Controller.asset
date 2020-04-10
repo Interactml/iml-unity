@@ -462,7 +462,7 @@ MonoBehaviour:
   m_Name: LIVE VECTOR4 DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -904, y: 296}
+  position: {x: -1256, y: 536}
   ports:
     keys:
     - inputVector4

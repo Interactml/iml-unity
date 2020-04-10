@@ -10,6 +10,7 @@ namespace InteractML.FeatureExtractors
     /// Gets a Vector4 and converts it to a IMLVector4 Feature
     /// </summary>
     [NodeTint("#3A3B5B")]
+    [NodeWidth(250)]
     public class ExtractVector4 : Node, IFeatureIML
     {
         /// <summary>
@@ -60,8 +61,6 @@ namespace InteractML.FeatureExtractors
                 m_v4Extracted = new IMLVector4();
 
             }
-
-            name = "LIVE VECTOR4 DATA";
 
         }
 
