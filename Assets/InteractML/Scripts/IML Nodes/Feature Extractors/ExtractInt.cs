@@ -11,6 +11,7 @@ namespace InteractML.FeatureExtractors
     /// Gets an int and converts it to a IMLInteger Feature
     /// </summary>
     [NodeTint("#3A3B5B")]
+    [NodeWidth(250)]
     public class ExtractInt : Node, IFeatureIML
     {
         /// <summary>
@@ -62,8 +63,6 @@ namespace InteractML.FeatureExtractors
                 m_IntExtracted = new IMLInteger();
 
             }
-            name = "LIVE INT DATA";
-
 
         }
         public void OnDestroy()

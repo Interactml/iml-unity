@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Name: LIVE INT DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -808, y: -440}
+  position: {x: -1256, y: -952}
   ports:
     keys:
     - inputInteger
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Name: LIVE FLOAT DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -840, y: -584}
+  position: {x: -1256, y: -760}
   ports:
     keys:
     - inputFloat
@@ -642,7 +642,7 @@ MonoBehaviour:
   m_Name: LIVE SERIAL VECTOR DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -840, y: 8}
+  position: {x: -456, y: 200}
   ports:
     keys:
     - inputSerialVector

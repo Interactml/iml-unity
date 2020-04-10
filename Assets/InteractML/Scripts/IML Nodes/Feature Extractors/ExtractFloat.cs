@@ -10,6 +10,7 @@ namespace InteractML.FeatureExtractors
     /// Gets a float and converts it to a IMLFloat Feature
     /// </summary>
     [NodeTint("#3A3B5B")]
+    [NodeWidth(250)]
     public class ExtractFloat : Node, IFeatureIML
     {
         /// <summary>
@@ -60,8 +61,6 @@ namespace InteractML.FeatureExtractors
                 m_FloatExtracted = new IMLFloat();
 
             }
-
-            name = "LIVE FLOAT DATA";
 
 
         }
