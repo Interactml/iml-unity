@@ -10,6 +10,7 @@ namespace InteractML.FeatureExtractors
     /// Gets a Vector3 and converts it to a IMLVector3 FEature
     /// </summary>
     [NodeTint("#3A3B5B")]
+    [NodeWidth(250)]
     public class ExtractVector3 : Node, IFeatureIML
     {
         /// <summary>
@@ -60,8 +61,6 @@ namespace InteractML.FeatureExtractors
                 m_v3Extracted = new IMLVector3();
 
             }
-
-            name = "LIVE VECTOR3 DATA";
 
         }
 
