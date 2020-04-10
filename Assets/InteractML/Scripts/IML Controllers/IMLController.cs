@@ -22,6 +22,7 @@ namespace InteractML
         public bool IsGraphRunning { get { return (SceneComponent != null); } }
 
 
+
     }
 }
 

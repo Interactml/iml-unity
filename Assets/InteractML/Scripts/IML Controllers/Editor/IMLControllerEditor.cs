@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -26,6 +27,24 @@ namespace InteractML
                 gridLineColor = Color.white
             };
         }
+
+        /// <summary> 
+        /// Overriding GetNodeMenuName lets you control if and how nodes are categorized.
+        /// In this example we are sorting out all node types that are not in the XNode.Examples namespace.
+        /// </summary>
+        public override string GetNodeMenuName(System.Type type)
+        {
+            if (type.Namespace == "InteractML")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.Namespace == "InteractML.FeatureExtractors")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            else return null;
+        }
+
     }
 
 }

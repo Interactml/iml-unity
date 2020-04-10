@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -712, y: -296}
+  position: {x: -808, y: -120}
   ports:
     keys:
     - GameObjectDataOut

@@ -21,9 +21,6 @@ namespace InteractML
 
         public override void OnInspectorGUI()
         {
-            if (editorLabelStyle == null) editorLabelStyle = new GUIStyle(EditorStyles.label);
-            EditorStyles.label.normal.textColor = Color.black;
-
             base.OnInspectorGUI();
 
             imlComponent = target as IMLComponent;
@@ -31,14 +28,12 @@ namespace InteractML
             // LIST OF IML CONTROLLER OUTPUTS
             ShowIMLControllerOutputs();
 
-            // BUTTON GOBJECTS UPDATE
+            // BUTTON OBJECTS UPDATE
             if (GUILayout.Button("Update IML Controller"))
             {
                 imlComponent.UpdateGameObjectsInIMLController();
                 imlComponent.GetAllNodes();
             }
-
-            EditorStyles.label.normal = editorLabelStyle.normal;
 
         }
 
