@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1272, y: -232}
+  position: {x: -1256, y: -264}
   ports:
     keys:
     - LiveDataOut
@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1576, y: -248}
+  position: {x: -1608, y: -296}
   ports:
     keys:
     - GameObjectDataOut

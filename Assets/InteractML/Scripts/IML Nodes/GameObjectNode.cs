@@ -6,6 +6,7 @@ using XNode;
 namespace InteractML
 {
     [NodeTint("#3A3B5B")]
+    [NodeWidth(250)]
     public class GameObjectNode : Node
     {
         /// <summary>
@@ -30,8 +31,6 @@ namespace InteractML
                 MLController.SceneComponent.GetAllNodes();
                
             }
-            name = "GAME OBJECT INPUT";
-
         }
 
         void Start()
