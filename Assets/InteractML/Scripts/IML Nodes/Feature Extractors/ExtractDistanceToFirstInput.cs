@@ -70,8 +70,6 @@ namespace InteractML.FeatureExtractors
             FirstInput = GetInputValue<Node>("FirstInput");
             SecondInput = GetInputValues<Node>("SecondInput").ToList();
 
-            name = "LIVE DISTANCE DATA";
-
         }
 
         public void OnDestroy()

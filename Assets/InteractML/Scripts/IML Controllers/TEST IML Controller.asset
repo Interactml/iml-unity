@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: LIVE VELOCITY DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -856, y: 24}
+  position: {x: -872, y: -24}
   ports:
     keys:
     - FeatureToInput
@@ -154,7 +154,8 @@ MonoBehaviour:
   FeatureToInput: {fileID: 0}
   VelocityExtracted: {fileID: 0}
   m_VelocityExtracted:
-    m_Values: []
+    m_Values:
+    - 0
   m_LastFrameFeatureValue: []
 --- !u!114 &-7433884681184319376
 MonoBehaviour:
@@ -187,10 +188,7 @@ MonoBehaviour:
       _node: {fileID: -7433884681184319376}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataOut
-        node: {fileID: 218526402762353012}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -285,10 +283,7 @@ MonoBehaviour:
       _node: {fileID: -488254567263074503}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataOut
-        node: {fileID: 218526402762353012}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -434,13 +429,7 @@ MonoBehaviour:
       _node: {fileID: 218526402762353012}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataIn
-        node: {fileID: -488254567263074503}
-        reroutePoints: []
-      - fieldName: GameObjectDataIn
-        node: {fileID: -7433884681184319376}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -546,7 +535,7 @@ MonoBehaviour:
   m_Name: LIVE DISTANCE DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -856, y: -216}
+  position: {x: -904, y: -280}
   ports:
     keys:
     - DistanceBetweenInputs
