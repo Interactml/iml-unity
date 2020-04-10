@@ -62,7 +62,7 @@ namespace InteractML
         public override void OnBodyGUI()
         {
             DrawBodyLayout();
-            dynamic size = 30;
+            dynamicSize = 30;
             ShowTextNote();
         }
 

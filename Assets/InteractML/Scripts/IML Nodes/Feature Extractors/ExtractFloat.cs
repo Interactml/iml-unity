@@ -62,7 +62,6 @@ namespace InteractML.FeatureExtractors
 
             }
 
-
         }
         public void OnDestroy()
         {

@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: LIVE VELOCITY DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -568, y: -104}
+  position: {x: -856, y: 24}
   ports:
     keys:
     - FeatureToInput
@@ -217,7 +217,7 @@ MonoBehaviour:
   m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -328, y: -584}
+  position: {x: -504, y: -760}
   ports:
     keys: []
     values: []
@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Name: LIVE INT DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1256, y: -952}
+  position: {x: -1256, y: -968}
   ports:
     keys:
     - inputInteger
@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1608, y: -296}
+  position: {x: -1576, y: -440}
   ports:
     keys:
     - GameObjectDataOut
@@ -546,7 +546,7 @@ MonoBehaviour:
   m_Name: LIVE DISTANCE DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -520, y: -344}
+  position: {x: -856, y: -216}
   ports:
     keys:
     - DistanceBetweenInputs
@@ -642,7 +642,7 @@ MonoBehaviour:
   m_Name: LIVE SERIAL VECTOR DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -456, y: 200}
+  position: {x: -1256, y: 792}
   ports:
     keys:
     - inputSerialVector

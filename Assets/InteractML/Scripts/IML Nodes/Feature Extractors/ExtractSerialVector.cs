@@ -10,6 +10,7 @@ namespace InteractML.FeatureExtractors
     /// Extracts a serialVector array into a Feature for a ml model
     /// </summary>
     [NodeTint("#3A3B5B")]
+    [NodeWidth(250)]
     public class ExtractSerialVector : Node, IFeatureIML
     {
         /// <summary>
@@ -60,8 +61,6 @@ namespace InteractML.FeatureExtractors
                 m_arrayExtracted = new IMLSerialVector();
 
             }
-
-            name = "LIVE SERIAL VECTOR DATA";
 
         }
         public void OnDestroy()
