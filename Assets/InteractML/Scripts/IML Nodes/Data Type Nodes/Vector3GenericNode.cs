@@ -20,5 +20,20 @@ namespace InteractML.DataTypeNodes
         [Output, SerializeField]
         private Vector3 m_Out;
 
+        // IML Feature
+        public override IMLBaseDataType FeatureValues
+        {
+            get
+            {
+                // Update local IML Data copy
+                m_FeatureValues.SetValues(m_Value);
+                return m_FeatureValues;
+            }
+        }
+        /// <summary>
+        /// Local specific IML data type
+        /// </summary>
+        private IMLVector3 m_FeatureValues;
+
     }
 }

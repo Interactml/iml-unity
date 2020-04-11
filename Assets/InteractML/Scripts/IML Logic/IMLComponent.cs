@@ -328,6 +328,7 @@ namespace InteractML
 
                     // Export output node
                     CheckTypeAddNodeToList(node, ref RealtimeIMLOutputNodesList);
+
                 }
 
             }
@@ -555,7 +556,7 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Gets the data marked with the "SendToIMLController" and "PullFromIMLController" attributes
+        /// Gets and sets the data marked with the "SendToIMLController" and "PullFromIMLController" attributes in Monobehaviours subscribed
         /// </summary>
         private void FetchDataFromMonobehavioursSubscribed()
         {
@@ -959,9 +960,9 @@ namespace InteractML
             }
         }
 
-#endregion
+        #endregion
 
-#region Public Methods
+        #region Public Methods
 
         [ContextMenu("Clear Lists (Use in Case of null ref errors)")]
         public void ClearLists()
@@ -1029,7 +1030,7 @@ namespace InteractML
 
             if (MLController != null)
             {
-                // Fetch data from the Monobehaviours we have subscribed
+                // Fetch data from the Monobehaviours we have subscribed into and out of the IML Controller
                 FetchDataFromMonobehavioursSubscribed();
 
                 // Run logic for all feature nodes
