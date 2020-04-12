@@ -21,29 +21,29 @@ public class TestInOutDataIML : MonoBehaviour
     [PullFromIMLController]
     public int ValueToPullInt;
 
-    //[Header("Vector 2")]
-    //[SendToIMLController]
-    //public Vector2 ValueToSendV2;
-    //[PullFromIMLController]
-    //public Vector2 ValueToPullV2;
+    [Header("Vector 2")]
+    [SendToIMLController]
+    public Vector2 ValueToSendV2;
+    [PullFromIMLController]
+    public Vector2 ValueToPullV2;
 
-    //[Header("Vector 3")]
-    //[SendToIMLController]
-    //public Vector3 ValueToSendV3;
-    //[PullFromIMLController]
-    //public Vector3 ValueToPullV3;
+    [Header("Vector 3")]
+    [SendToIMLController]
+    public Vector3 ValueToSendV3;
+    [PullFromIMLController]
+    public Vector3 ValueToPullV3;
 
-    //[Header("Vector 4")]
-    //[SendToIMLController]
-    //public Vector4 ValueToSendV4;
-    //[PullFromIMLController]
-    //public Vector4 ValueToPullV4;
+    [Header("Vector 4")]
+    [SendToIMLController]
+    public Vector4 ValueToSendV4;
+    [PullFromIMLController]
+    public Vector4 ValueToPullV4;
 
-    //[Header("Arrays")]
-    //[SendToIMLController]
-    //public float[] ValueToSendArray;
-    //[PullFromIMLController]
-    //public float[] ValueToPullArray;
+    [Header("Arrays")]
+    [SendToIMLController]
+    public float[] ValueToSendArray;
+    [PullFromIMLController]
+    public float[] ValueToPullArray;
 
 
     // Start is called before the first frame update

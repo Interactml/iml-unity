@@ -4,22 +4,16 @@ namespace InteractML.DataTypeNodes
 {
     public class SerialVectorNode : BaseDataTypeNode<float[]>
     {
-        /*
+        // Override set behaviour to avoid passing data by reference because of arrays
         // Input
-        public override float[] In { get { return m_In; } set { m_In = value; } }
-        [Input, SerializeField]
-        private float[] m_In;
+        public override float[] In { get => base.In; set => base.In = CopyTo(value, base.In); }
 
         // Value itself contained in the node
-        public override float[] Value { get { return m_Value; } set { m_Value = value; } }
-        [SerializeField]
-        private float[] m_Value;
+        public override float[] Value { get => base.Value; set => base.Value = CopyTo(value, base.Value); }
 
         // Output
-        public override float[] Out { get { return m_Out; } set { m_Out = value; } }
-        [Output, SerializeField]
-        private float[] m_Out;
-        */
+        public override float[] Out { get => base.Out; set => base.Out = CopyTo(value, base.Out); }
+
         // IML Feature
         public override IMLBaseDataType FeatureValues
         {
@@ -35,6 +29,26 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private IMLSerialVector m_FeatureValues;
 
+        /// <summary>
+        /// Copies data from incoming array to our array
+        /// </summary>
+        /// <param name="arrayIn"></param>
+        /// <param name="arrayOut"></param>
+        private float[] CopyTo(float[] arrayIn, float[] arrayOut)
+        {
+            // Null checks
+            if (arrayIn == null)
+                throw new System.Exception("Array In is null when attempting to copy in SerialVector node.");
+            if (arrayOut == null)
+                throw new System.Exception("Array out is null when attempting to copy in SerialVector node.");
+            // Length check
+            if (arrayIn.Length != arrayOut.Length)
+                arrayOut = new float[arrayIn.Length];
+            // Copy contents to array out
+            arrayIn.CopyTo(arrayOut, 0);
+            // return arrayout
+            return arrayOut;
+        }
 
     }
 }

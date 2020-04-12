@@ -61,14 +61,11 @@ namespace InteractML.DataTypeNodes
         {
             // Read input (if it returns default(T) there is no connection )
             var inputReceived = GetInputValue<T>("m_In");
-            Debug.Log("Attempting to read input pin...");
             // Check if we have something connected to the input port
-            if (!inputReceived.Equals(default(T)))
+            if (inputReceived != null && !inputReceived.Equals(default(T)))
             {
                 // Update the value of this data node
                 Value = inputReceived;
-                Debug.Log("Managed to read input pin...");
-
             }
             // Return entire node to satisfy IFeatureIML requirements
             return this;
