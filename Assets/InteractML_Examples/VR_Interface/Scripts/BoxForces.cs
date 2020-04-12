@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using VRTK;
 using OVR;
+using InteractML;
 
 /// <summary>
 /// Handles behaviour of pushing boxes with telekinesis
@@ -10,8 +11,13 @@ using OVR;
 [RequireComponent(typeof(Rigidbody))]
 public class BoxForces : MonoBehaviour
 {
+    // IML 
+    [Header("IML Setup")]
+    public IMLComponent IMLSystem;
+    
     // Force vars
     public float PushStrength;
+    [PullFromIMLController]
     public Vector3 PushDirection;
     
     // Memory on when can push
@@ -38,6 +44,9 @@ public class BoxForces : MonoBehaviour
         }
 
         m_OriginalMat = this.GetComponent<Renderer>().material;
+
+        if (IMLSystem)
+            IMLSystem.SubscribeToIMLController(this);
     }
 
     // Update is called once per frame
@@ -85,7 +94,7 @@ public class BoxForces : MonoBehaviour
             // Add a bit of noise to the direction
             Vector3 pushRandom = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 1), Random.Range(-1, 1));
             // Push box 
-            m_Rigidbody.AddForce(pushRandom * PushStrength, ForceMode.Impulse);
+            m_Rigidbody.AddForce(PushDirection * PushStrength, ForceMode.Impulse);
 
             Debug.Log("Force applied");
 

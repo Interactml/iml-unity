@@ -2,7 +2,7 @@
 
 namespace InteractML.DataTypeNodes
 {
-    public class Vector3Node : BaseDataTypeNode<Vector3>
+    public class Vector3Node : BaseDataTypeNode<Vector3>, IFeatureIML
     {
         // IML Feature
         public override IMLBaseDataType FeatureValues
