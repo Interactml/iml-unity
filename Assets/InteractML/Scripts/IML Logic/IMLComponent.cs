@@ -905,7 +905,7 @@ namespace InteractML
                                     if (isInputData)
                                         (dataContainer.nodeForField as DataTypeNodes.FloatNode).Value = (float)fieldToUse.GetValue(gameComponent);
                                     // If it is output...
-                                    else
+                                    if (isOutputData)
                                         fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.FloatNode).Value);
                                     break;
                                 // INTEGER
@@ -914,7 +914,7 @@ namespace InteractML
                                     if (isInputData)
                                         (dataContainer.nodeForField as DataTypeNodes.IntegerNode).Value = (int)fieldToUse.GetValue(gameComponent);
                                     // If it is output...
-                                    else
+                                    if (isOutputData)
                                         fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.IntegerNode).Value);
                                     break;
                                 // VECTOR 2
@@ -923,7 +923,7 @@ namespace InteractML
                                     if (isInputData)
                                         (dataContainer.nodeForField as DataTypeNodes.Vector2Node).Value = (Vector2)fieldToUse.GetValue(gameComponent);
                                     // If it is output...
-                                    else
+                                    if (isOutputData)
                                         fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.Vector2Node).Value);
                                     break;
                                 // VECTOR 3
@@ -932,7 +932,7 @@ namespace InteractML
                                     if (isInputData)
                                         (dataContainer.nodeForField as DataTypeNodes.Vector3Node).Value = (Vector3)fieldToUse.GetValue(gameComponent);
                                     // If it is output...
-                                    else
+                                    if (isOutputData)
                                         fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.Vector3Node).Value);
                                     break;
                                 // VECTOR 4
@@ -941,7 +941,7 @@ namespace InteractML
                                     if (isInputData)
                                         (dataContainer.nodeForField as DataTypeNodes.Vector4Node).Value = (Vector4)fieldToUse.GetValue(gameComponent);
                                     // If it is output...
-                                    else
+                                    if (isOutputData)
                                         fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.Vector4Node).Value);
                                     break;
                                 // SERIAL VECTOR
@@ -950,7 +950,7 @@ namespace InteractML
                                     if (isInputData)
                                         (dataContainer.nodeForField as DataTypeNodes.SerialVectorNode).Value = (float[])fieldToUse.GetValue(gameComponent);
                                     // If it is output...
-                                    else
+                                    if (isOutputData)
                                         fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.SerialVectorNode).Value);
                                     break;
                                 // DEFAULT SWITCH
