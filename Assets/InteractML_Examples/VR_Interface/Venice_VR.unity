@@ -1300,7 +1300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c477b3f40f547843930edfdcbde5951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MLController: {fileID: 0}
+  MLController: {fileID: 11400000, guid: 97ba4d902e126034b9b70455467a46e2, type: 2}
   GameObjectsToUse: []
   FeaturesUpdated: 0
 --- !u!4 &138508039
@@ -5707,8 +5707,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MLComponent: {fileID: 138508038}
-  ValueToSend: 0
+  ValueToSend: 4.08
   ValueToPull: 0
+  ValueToSendInt: 18
+  ValueToPullInt: 32
 --- !u!4 &589655437
 Transform:
   m_ObjectHideFlags: 0

@@ -1,33 +1,40 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using XNode;
+﻿using UnityEngine;
 
 namespace InteractML.DataTypeNodes
 {
-    public class SerialVectorNode : Node
+    public class SerialVectorNode : BaseDataTypeNode<float[]>
     {
+        /*
+        // Input
+        public override float[] In { get { return m_In; } set { m_In = value; } }
+        [Input, SerializeField]
+        private float[] m_In;
+
+        // Value itself contained in the node
+        public override float[] Value { get { return m_Value; } set { m_Value = value; } }
         [SerializeField]
-        public float[] Value;
+        private float[] m_Value;
 
-        [Output]
-        public float[] arrayToOutput;
-
-        public string ValueName;
-
-        // Use this for initialization
-        protected override void Init()
+        // Output
+        public override float[] Out { get { return m_Out; } set { m_Out = value; } }
+        [Output, SerializeField]
+        private float[] m_Out;
+        */
+        // IML Feature
+        public override IMLBaseDataType FeatureValues
         {
-            base.Init();
-
+            get
+            {
+                // Update local IML Data copy
+                m_FeatureValues.SetValues(Value);
+                return m_FeatureValues;
+            }
         }
+        /// <summary>
+        /// Local specific IML data type
+        /// </summary>
+        private IMLSerialVector m_FeatureValues;
 
-        // Return the correct value of an output port when requested
-        public override object GetValue(NodePort port)
-        {
-            arrayToOutput = Value;
-            return arrayToOutput;
-        }
 
     }
 }

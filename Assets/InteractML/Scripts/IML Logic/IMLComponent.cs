@@ -420,6 +420,10 @@ namespace InteractML
         /// </summary>
         private void RunTraininExamplesLogic()
         {
+            // Only run if we have the list of training examples
+            if (TrainingExamplesNodesList == null)
+                return;
+
             for (int i = 0; i < TrainingExamplesNodesList.Count; i++)
             {
                 // Call the update logic per node

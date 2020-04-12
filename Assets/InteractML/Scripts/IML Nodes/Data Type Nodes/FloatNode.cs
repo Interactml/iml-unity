@@ -1,35 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using XNode;
+﻿using UnityEngine;
 
 namespace InteractML.DataTypeNodes
 {
-    public class FloatNode : Node
+    public class FloatNode : BaseDataTypeNode<float>
     {
-        [Input]
-        public float In;
-
-        [SerializeField]
-        public float Value;
-
-        [Output]
-        public float Out;
-
-        public string ValueName;
-
-        // Use this for initialization
-        protected override void Init()
+        // IML Feature
+        public override IMLBaseDataType FeatureValues
         {
-            base.Init();
-
+            get
+            {
+                // Update local IML Data copy
+                m_FeatureValues.SetValue(Value);
+                return m_FeatureValues;
+            }
         }
+        /// <summary>
+        /// Local specific IML data type
+        /// </summary>
+        private IMLFloat m_FeatureValues;
 
-        // Return the correct value of an output port when requested
-        public override object GetValue(NodePort port)
-        {
-            Out = Value;
-            return Out; 
-        }
     }
 }

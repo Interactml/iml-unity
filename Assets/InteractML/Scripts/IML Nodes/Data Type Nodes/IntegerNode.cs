@@ -1,33 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using XNode;
+﻿using UnityEngine;
+
 namespace InteractML.DataTypeNodes
 {
-    public class IntegerNode : Node
-    {
-
-        [SerializeField]
-        public int Value;
-
-        [Output]
-        public int IntToOutput;
-
-        public string ValueName;
-
-        // Use this for initialization
-        protected override void Init()
+    public class IntegerNode : BaseDataTypeNode<int>
+    {                
+        // IML Feature
+        public override IMLBaseDataType FeatureValues
         {
-            base.Init();
-
+            get
+            {
+                // Update local IML Data copy
+                m_FeatureValues.SetValue(Value);
+                return m_FeatureValues;
+            }
         }
 
-        // Return the correct value of an output port when requested
-        public override object GetValue(NodePort port)
-        {
-            IntToOutput = Value;
-            return IntToOutput;
-        }
+        /// <summary>
+        /// Local specific IML data type
+        /// </summary>
+        private IMLInteger m_FeatureValues;
 
     }
 }

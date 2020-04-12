@@ -8,12 +8,23 @@ namespace InteractML.DataTypeNodes
 {
     public abstract class BaseDataTypeNode<T> : Node, IFeatureIML
     {
+        public string ValueName;
+
         // Data variables
-        public abstract T In { get; set; }
+        // Input
+        public virtual T In { get { return m_In; } set { m_In = value; } }
+        [Input, SerializeField]
+        private T m_In;
 
-        public abstract T Value { get; set; }
+        // Value itself contained in the node
+        public virtual T Value { get { return m_Value; } set { m_Value = value; } }
+        [SerializeField]
+        private T m_Value;
 
-        public abstract T Out { get; set; }
+        // Output
+        public virtual T Out { get { return m_Out; } set { m_Out = value; } }
+        [Output, SerializeField]
+        private T m_Out;
 
         // IMLFeature variables
         public abstract IMLBaseDataType FeatureValues { get; }
@@ -27,8 +38,6 @@ namespace InteractML.DataTypeNodes
         /// Was tge featyre already updated?
         /// </summary>
         bool IFeatureIML.isUpdated { get ; set; }
-
-        public string ValueName;
 
         // Use this for initialization
         protected override void Init()
@@ -50,7 +59,18 @@ namespace InteractML.DataTypeNodes
         /// <returns></returns>
         object IFeatureIML.UpdateFeature()
         {
-            Value = GetInputValue<T>("In");
+            // Read input (if it returns default(T) there is no connection )
+            var inputReceived = GetInputValue<T>("m_In");
+            Debug.Log("Attempting to read input pin...");
+            // Check if we have something connected to the input port
+            if (!inputReceived.Equals(default(T)))
+            {
+                // Update the value of this data node
+                Value = inputReceived;
+                Debug.Log("Managed to read input pin...");
+
+            }
+            // Return entire node to satisfy IFeatureIML requirements
             return this;
         }
     }
