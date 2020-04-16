@@ -124,7 +124,6 @@ namespace InteractML.FeatureExtractors
 
         }
 
-
         /// <summary>
         /// Show the input/output port fields 
         /// </summary>
@@ -134,10 +133,10 @@ namespace InteractML.FeatureExtractors
             GUILayout.BeginHorizontal();
 
             GUIContent inputPortLabel = new GUIContent("GameObject \nData In");
-            PortField(inputPortLabel, m_ExtractFloat.GetInputPort("inputFloat"), skin.GetStyle("Port Label"), GUILayout.MinWidth(0));
+            IMLNodeEditor.PortField(inputPortLabel, m_ExtractFloat.GetInputPort("inputFloat"), skin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUIContent outputPortLabel = new GUIContent("Live Data\n Out");
-            PortField(outputPortLabel, m_ExtractFloat.GetOutputPort("floatExtracted"), skin.GetStyle("Port Label"), GUILayout.MinWidth(0));
+            IMLNodeEditor.PortField(outputPortLabel, m_ExtractFloat.GetOutputPort("floatExtracted"), skin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUILayout.EndHorizontal();
         }
@@ -160,7 +159,6 @@ namespace InteractML.FeatureExtractors
 
         }
 
-
         /// <summary>
         /// Initatialize node textures
         /// </summary>
@@ -177,34 +175,6 @@ namespace InteractML.FeatureExtractors
             lineTexture.Apply();
         }
 
-        /// <summary> Make a simple port field **** overriden from XNodeEditorGUILayout to edit GUIStyle of port label *****</summary>
-        private static void PortField(GUIContent label, XNode.NodePort port, GUIStyle style, params GUILayoutOption[] options)
-        {
-            if (port == null) return;
-            if (options == null) options = new GUILayoutOption[] { GUILayout.MinWidth(30) };
-            Vector2 position = Vector3.zero;
-            GUIContent content = label != null ? label : new GUIContent(ObjectNames.NicifyVariableName(port.fieldName));
-
-            // If property is an input, display a regular property field and put a port handle on the left side
-            if (port.direction == XNode.NodePort.IO.Input)
-            {
-                // Display a label
-                EditorGUILayout.LabelField(content, style, options);
-
-                Rect rect = GUILayoutUtility.GetLastRect();
-                position = rect.position - new Vector2(16, 0);
-            }
-            // If property is an output, display a text label and put a port handle on the right side
-            else if (port.direction == XNode.NodePort.IO.Output)
-            {
-                // Display a label
-                EditorGUILayout.LabelField(content, new GUIStyle(style) { alignment = TextAnchor.UpperRight }, options);
-
-                Rect rect = GUILayoutUtility.GetLastRect();
-                position = rect.position + new Vector2(rect.width, 0);
-            }
-            NodeEditorGUILayout.PortField(position, port);
-        }
         #endregion
     }
 

@@ -5,7 +5,6 @@ using XNode;
 
 namespace InteractML
 {
-    [NodeTint("#3A3B5B")]
     public class TextNote : Node
     {
         public string note;
@@ -14,9 +13,6 @@ namespace InteractML
         protected override void Init()
         {
             base.Init();
-            name = "TEXT NOTE";
-
-
         }
 
         // Return the correct value of an output port when requested

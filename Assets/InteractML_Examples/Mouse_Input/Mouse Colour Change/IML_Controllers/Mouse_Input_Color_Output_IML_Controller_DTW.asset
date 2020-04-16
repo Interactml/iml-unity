@@ -22,14 +22,17 @@ MonoBehaviour:
       _node: {fileID: -8289835343818596042}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: GameObjectDataIn
+        node: {fileID: -7769149576494201274}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
   GameObjectDataOut: {fileID: 0}
-  GameObjMissing: 0
+  GameObjMissing: 1
   state: 0
 --- !u!114 &-7769149576494201274
 MonoBehaviour:
@@ -53,7 +56,10 @@ MonoBehaviour:
     - _fieldName: LiveDataOut
       _node: {fileID: -7769149576494201274}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: InputFeatures
+        node: {fileID: 5402000221558968246}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -62,7 +68,10 @@ MonoBehaviour:
       _node: {fileID: -7769149576494201274}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: GameObjectDataOut
+        node: {fileID: -8289835343818596042}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -261,7 +270,10 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: LiveDataOut
+        node: {fileID: -7769149576494201274}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0

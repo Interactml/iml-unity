@@ -23,7 +23,7 @@ namespace ReusableMethods
         /// </summary>
         /// <param name="probVal"> The probability float value in the range [0, 1]</param>
         /// <returns> Returns more often True the higher probVal is </returns>
-        public static bool GetResultProbability (float probVal)
+        public static bool GetResultProbability(float probVal)
         {
             // We check that probVal is between [0, 1]
             if (probVal > 1f || probVal < 0f)
@@ -32,9 +32,9 @@ namespace ReusableMethods
                 return false;
 
             }
-            
+
             // We generate a value between the range [0, 1]
-            float valueToCompare = UnityEngine.Random.Range(0f, 1f);            
+            float valueToCompare = UnityEngine.Random.Range(0f, 1f);
 
             // If valueToCompare is below probVal, we return true. 
             // The higher probVal, the most likely to return true we will have
@@ -46,7 +46,7 @@ namespace ReusableMethods
             {
                 return false;
             }
-            
+
         }
     }
 
@@ -63,7 +63,7 @@ namespace ReusableMethods
         {
             return 4;
         }
-    }    
+    }
 
     /// <summary>
     /// Class containing methods and tools for enums
@@ -85,7 +85,7 @@ namespace ReusableMethods
             {
                 throw new ArgumentException("T must be an enumerated type (Enum)");
             }
-            
+
             // We define a local integer
             int taskToChoose;
             // We calculate a random value, based on the Enum length
@@ -123,7 +123,7 @@ namespace ReusableMethods
         /// <param name="objectPosition"> The position of the object we want to check</param>
         /// <param name="points"> The array of points to get the furthest one</param>
         /// <returns> The furthest away point</returns>
-        public static Vector3 CalculateFurthestPoint (Vector3 objectPosition, Vector3[] points)
+        public static Vector3 CalculateFurthestPoint(Vector3 objectPosition, Vector3[] points)
         {
             // If there are any points...
             if (points.Length > 0)
@@ -147,7 +147,7 @@ namespace ReusableMethods
                 //// We debug the distance in the inspector
                 //Debug.Log("Furthest point calculates is " + furthestDistance.ToString() + " units far away.");
                 // We return the furthest point
-                return pointToReturn;               
+                return pointToReturn;
             }
             // If there are no points passed in...
             else
@@ -181,7 +181,7 @@ namespace ReusableMethods
         }
 
     }
-    
+
     /// <summary>
     /// Class containing tools and methods for performing mathematical statistical conversions
     /// </summary>
@@ -194,7 +194,7 @@ namespace ReusableMethods
         /// <param name="min"> The min of that value </param>
         /// <param name="max"> The max of that value </param>
         /// <returns> The normalized value calculated </returns>
-        public static float Normalize (float value, float min, float max)
+        public static float Normalize(float value, float min, float max)
         {
             // We calculate the normalize value of the value passed in
             return (value - min) / (max - min);
@@ -207,10 +207,10 @@ namespace ReusableMethods
         /// <param name="min"> The min of that value </param>
         /// <param name="max"> The max of that value </param>
         /// <returns> The denormalized value calculated </returns>
-        public static float Denormalize (float valueNormalized, float min, float max)
+        public static float Denormalize(float valueNormalized, float min, float max)
         {
             // We calculate the denormalized value of the value passed in
-            return ( valueNormalized * (max - min) + min );
+            return (valueNormalized * (max - min) + min);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace ReusableMethods
         /// <param name="fromPos"> The origin position</param>
         /// <param name="toPos"> The destination position</param>
         /// <returns> The non-normalized vector direction</returns>
-        public static Vector3 CalculateDirection (Vector3 fromPos, Vector3 toPos)
+        public static Vector3 CalculateDirection(Vector3 fromPos, Vector3 toPos)
         {
             // We calculate the direction to the vector toPos
             return (toPos - fromPos);
@@ -249,7 +249,7 @@ namespace ReusableMethods
         /// <param name="direction"> The non-normalized direction vector</param>
         /// <param name="maxRange"> The maximumDistance (radius) to check</param>
         /// <returns> True if the direction is below the maxRange</returns>
-        public static bool CheckDistance (Vector3 direction, float maxRange)
+        public static bool CheckDistance(Vector3 direction, float maxRange)
         {
             // If the sqrMagnitude of the direction is lower than the squares distance ...
             // The sqrMagnitude property gives the square of the magnitude value, and is calculated like the magnitude but without the time-consuming square root operation
@@ -271,8 +271,8 @@ namespace ReusableMethods
         /// <param name="radius"> The radius of the search</param>
         /// <param name="tagToSearch"> The tag of the object to find</param>
         /// <returns></returns>
-        public static GameObject SearchClosestObjectWihTag (Vector3 origin, float radius, string tagToSearch)
-        {            
+        public static GameObject SearchClosestObjectWihTag(Vector3 origin, float radius, string tagToSearch)
+        {
             // We create the helper array that will contain all the close colliders
             Collider[] allCollidersArray = null;
 
@@ -286,7 +286,7 @@ namespace ReusableMethods
             //int aux = Physics.OverlapSphereNonAlloc(origin, radius, allCollidersArray);
             allCollidersArray = Physics.OverlapSphere(origin, radius);
             aux = allCollidersArray.Length;
-            
+
             // We only run this part if there is any object found
             if (aux > 0 && allCollidersArray != null)
             {
@@ -323,8 +323,8 @@ namespace ReusableMethods
             // Debug the amount of colliders found
             //Debug.Log(aux.ToString() + "Colliders found");
 
-           
-            
+
+
             // We return the objects
             return result;
         }
@@ -334,7 +334,7 @@ namespace ReusableMethods
         /// </summary>
         /// <param name="vectorToAbs"> The vector to get the absolute from</param>
         /// <returns> The absolute vector</returns>
-        public static Vector3 Abs (Vector3 vectorToAbs)
+        public static Vector3 Abs(Vector3 vectorToAbs)
         {
             vectorToAbs.x = Mathf.Abs(vectorToAbs.x);
             vectorToAbs.y = Mathf.Abs(vectorToAbs.y);
@@ -372,13 +372,14 @@ namespace ReusableMethods
         /// <param name="valueToSet"> The value we want to set in every position of the array </param>
         public static void SetActiveAllArray<T>(ref T[] arrayToSet, bool valueToSet)
         {
-            
-			// We don't execute if the array is 0
-			if (arrayToSet.Length == 0) {
-				return;
-			}
 
-			//Debug.Log("Setting array " + arrayToSet.ToString() + " to " + valueToSet.ToString());
+            // We don't execute if the array is 0
+            if (arrayToSet.Length == 0)
+            {
+                return;
+            }
+
+            //Debug.Log("Setting array " + arrayToSet.ToString() + " to " + valueToSet.ToString());
             // We evaluate the first component to see what type the array is
             // If it is a Behaviour (almost every component)...
             if (arrayToSet[0] is Behaviour)
@@ -387,7 +388,7 @@ namespace ReusableMethods
                 for (int i = 0; i < arrayToSet.Length; i++)
                 {
                     // We set each position of the array to the value we want                
-                    (arrayToSet[i] as Behaviour).enabled = valueToSet;                   
+                    (arrayToSet[i] as Behaviour).enabled = valueToSet;
                 }
 
             }
@@ -421,7 +422,7 @@ namespace ReusableMethods
                     (arrayToSet[i] as Renderer).enabled = valueToSet;
                 }
             }
-                           
+
         }
 
         /// <summary>
@@ -452,7 +453,7 @@ namespace ReusableMethods
                     {
                         // ... We set result false and return it, stopping the method call
                         result = false;
-                        return result;                        
+                        return result;
                     }
                 }
 
@@ -462,7 +463,7 @@ namespace ReusableMethods
             {
                 // ... we go through all the array
                 for (int i = 0; i < arrayToGet.Length; i++)
-                {                    
+                {
                     // We get each position of the array and compare it to the value we want   
                     // If the value matches...                                 
                     if ((arrayToGet[i] as GameObject).activeSelf == valueToGet)
@@ -484,7 +485,7 @@ namespace ReusableMethods
             {
                 // ... we go through all the array
                 for (int i = 0; i < arrayToGet.Length; i++)
-                {                   
+                {
                     // We get each position of the array and compare it to the value we want   
                     // If the value matches...                                 
                     if ((arrayToGet[i] as Collider).enabled == valueToGet)
@@ -506,7 +507,7 @@ namespace ReusableMethods
             {
                 // ... we go through all the array
                 for (int i = 0; i < arrayToGet.Length; i++)
-                {                   
+                {
                     // We get each position of the array and compare it to the value we want   
                     // If the value matches...                                 
                     if ((arrayToGet[i] as Renderer).enabled == valueToGet)
@@ -586,7 +587,7 @@ namespace ReusableMethods
             // We initialize a new temporary list of components
             List<T> componentList = new List<T>();
             // We fill the list from the children of the current object
-            parent.GetComponentsInChildren<T>(true, componentList);                       
+            parent.GetComponentsInChildren<T>(true, componentList);
             // If we found any...
             if (componentList.Count > 0)
             {
@@ -599,12 +600,12 @@ namespace ReusableMethods
                 // We copy each result as a gameObject to the component array
                 for (int i = 0; i < componentList.Count; i++)
                 {
-                    arrayToPopulate[i] = componentList[i];                                       
-                }                
+                    arrayToPopulate[i] = componentList[i];
+                }
             }
         }
     }
-   
+
     /// <summary>
     /// Class containing tools and methods for dealing with Arrays
     /// </summary>
@@ -619,7 +620,7 @@ namespace ReusableMethods
         public static bool IsNullOrEmpty<T>(ref List<T> listToCheck)
         {
             // If the list is not empty or does have any elements return false
-            if ( (listToCheck != null) && (listToCheck.Count != 0) )
+            if ((listToCheck != null) && (listToCheck.Count != 0))
             {
                 return false;
             }
@@ -659,7 +660,7 @@ namespace ReusableMethods
         /// <param name="objectToSearch"></param>
         /// <param name="componentToFind"></param>
         /// <returns></returns>
-        public static object FindComponent (GameObject objectToSearch, Component componentToFind)
+        public static object FindComponent(GameObject objectToSearch, Component componentToFind)
         {
             object componentFound = null;
             Type componentType = componentToFind.GetType();
@@ -674,12 +675,12 @@ namespace ReusableMethods
         /// </summary>
         /// <param name="objectToSearch"></param>
         /// <param name="componentToCheck"></param>
-        public static void CreateIfNull (GameObject objectToSearch, Component componentToCheck)
+        public static void CreateIfNull(GameObject objectToSearch, Component componentToCheck)
         {
             if (componentToCheck == null)
             {
                 // Try and find the component in the game object
-                componentToCheck = (Component) FindComponent(objectToSearch, componentToCheck);
+                componentToCheck = (Component)FindComponent(objectToSearch, componentToCheck);
 
                 // If it is still null, we didn't find it, so we go and create it
                 if (componentToCheck == null)
@@ -717,5 +718,4 @@ namespace ReusableMethods
         }
 
     }
-
 }

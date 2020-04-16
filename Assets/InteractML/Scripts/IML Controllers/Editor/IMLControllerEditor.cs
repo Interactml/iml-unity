@@ -15,9 +15,11 @@ namespace InteractML
         public override void OnOpen()
         {
             base.OnOpen();
-            base.GetDefaultPreferences();
+           
             window.titleContent.text = "InteractML";
+            
         }
+
 
         public override NodeEditorPreferences.Settings GetDefaultPreferences()
         {

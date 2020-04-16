@@ -87,7 +87,10 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: VelocityExtracted
+        node: {fileID: -7627466622353308577}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -128,7 +131,7 @@ MonoBehaviour:
   m_Name: LIVE VELOCITY DATA
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -872, y: -24}
+  position: {x: -840, y: -40}
   ports:
     keys:
     - FeatureToInput
@@ -137,7 +140,10 @@ MonoBehaviour:
     - _fieldName: FeatureToInput
       _node: {fileID: -7627466622353308577}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: LiveDataOut
+        node: {fileID: -7433884681184319376}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -145,18 +151,26 @@ MonoBehaviour:
     - _fieldName: VelocityExtracted
       _node: {fileID: -7627466622353308577}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: InputFeatures
+        node: {fileID: -8318071887418390099}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  FeatureToInput: {fileID: 0}
+  FeatureToInput: {fileID: -7433884681184319376}
   VelocityExtracted: {fileID: 0}
   m_VelocityExtracted:
     m_Values:
-    - 0
-  m_LastFrameFeatureValue: []
+    - -342.0487
+    - 96.201195
+    - 181.24864
+  m_LastFrameFeatureValue:
+  - 0
+  - 0
+  - 0
 --- !u!114 &-7433884681184319376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,7 +193,10 @@ MonoBehaviour:
     - _fieldName: LiveDataOut
       _node: {fileID: -7433884681184319376}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: FeatureToInput
+        node: {fileID: -7627466622353308577}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -188,7 +205,10 @@ MonoBehaviour:
       _node: {fileID: -7433884681184319376}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: GameObjectDataOut
+        node: {fileID: 218526402762353012}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -429,7 +449,10 @@ MonoBehaviour:
       _node: {fileID: 218526402762353012}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: GameObjectDataIn
+        node: {fileID: -7433884681184319376}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
