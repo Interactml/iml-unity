@@ -153,6 +153,7 @@ namespace InteractML
             if (Lists.IsNullOrEmpty<TrainingExamplesNode>(ref TrainingExamplesNodesList))
                 TrainingExamplesNodesList = new List<TrainingExamplesNode>();
 
+
             if (Lists.IsNullOrEmpty<IMLConfiguration>(ref IMLConfigurationNodesList))
                 IMLConfigurationNodesList = new List<IMLConfiguration>();
 
@@ -321,7 +322,7 @@ namespace InteractML
                     CheckTypeAddNodeToList(node, ref vectorNodesList);
 
                     // Training Examples nodes
-                    CheckTypeAddNodeToList(node, ref TrainingExamplesNodesList);
+                    CheckNodeIsTraining(node, ref TrainingExamplesNodesList);
 
                     // IML Config Node
                     CheckTypeAddNodeToList(node, ref IMLConfigurationNodesList);
@@ -347,7 +348,7 @@ namespace InteractML
             {
                 return;
             }
-            
+            Type p = nodeToAdd.GetType();
             // We first check that the node matches the type we want
             if (nodeToAdd.GetType() == typeof(T))
             {
@@ -362,6 +363,30 @@ namespace InteractML
                     listToAddTo.Add(nodeToAddTyped);
                 }
             }
+        }
+
+        private void CheckNodeIsTraining(XNode.Node nodeToAdd, ref List<TrainingExamplesNode> listToAddTo)
+        {
+            // We first check that the node ref is not null
+            if (nodeToAdd != null)
+            {
+                // Then check that the node is a feature
+                var trainingNode = nodeToAdd as TrainingExamplesNode;
+                if (trainingNode != null)
+                {
+                    // Make sure the list is init
+                    if (listToAddTo == null)
+                        listToAddTo = new List<TrainingExamplesNode>();
+
+                    // If we got a feature, we add it to the list (if it is not there already)
+                    if (!listToAddTo.Contains(trainingNode))
+                    {
+                        listToAddTo.Add(trainingNode);
+                    }
+
+                }
+            }
+
         }
 
         /// <summary>

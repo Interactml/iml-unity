@@ -558,7 +558,6 @@ namespace InteractML
                 // Run dtw
                 result = m_Model.Run(new RapidlibTrainingSerie(seriesToRun.GetSeriesFeatures(), seriesToRun.LabelSeries));
             }
-            Debug.Log("DTW Result: " + result);
             return result;
         }
 
@@ -653,10 +652,8 @@ namespace InteractML
                 // Adjust the desired outputs list based on configuration selected
                 PredictedOutput.Clear();
                 // Calculate required space for outputs
-                Debug.Log(m_ExpectedOutputList.Count);
                 for (int i = 0; i < m_ExpectedOutputList.Count; i++)
                 {
-                    Debug.Log(i);
                     switch (m_ExpectedOutputList[i])
                     {
                         case IMLSpecifications.OutputsEnum.Float:
