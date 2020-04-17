@@ -153,7 +153,6 @@ namespace InteractML
             if (Lists.IsNullOrEmpty<TrainingExamplesNode>(ref TrainingExamplesNodesList))
                 TrainingExamplesNodesList = new List<TrainingExamplesNode>();
 
-
             if (Lists.IsNullOrEmpty<IMLConfiguration>(ref IMLConfigurationNodesList))
                 IMLConfigurationNodesList = new List<IMLConfiguration>();
 
@@ -325,7 +324,7 @@ namespace InteractML
                     CheckNodeIsTraining(node, ref TrainingExamplesNodesList);
 
                     // IML Config Node
-                    CheckTypeAddNodeToList(node, ref IMLConfigurationNodesList);
+                    CheckNodeIsConfiguration(node, ref IMLConfigurationNodesList);
 
                     // Export output node
                     CheckTypeAddNodeToList(node, ref RealtimeIMLOutputNodesList);
@@ -370,7 +369,7 @@ namespace InteractML
             // We first check that the node ref is not null
             if (nodeToAdd != null)
             {
-                // Then check that the node is a feature
+                // Then check that the node is a training examples node
                 var trainingNode = nodeToAdd as TrainingExamplesNode;
                 if (trainingNode != null)
                 {
@@ -382,6 +381,30 @@ namespace InteractML
                     if (!listToAddTo.Contains(trainingNode))
                     {
                         listToAddTo.Add(trainingNode);
+                    }
+
+                }
+            }
+
+        }
+
+        private void CheckNodeIsConfiguration(XNode.Node nodeToAdd, ref List<IMLConfiguration> listToAddTo)
+        {
+            // We first check that the node ref is not null
+            if (nodeToAdd != null)
+            {
+                // Then check that the node is a configuratiton
+                var configNode = nodeToAdd as IMLConfiguration;
+                if (configNode != null)
+                {
+                    // Make sure the list is init
+                    if (listToAddTo == null)
+                        listToAddTo = new List<IMLConfiguration>();
+
+                    // If we got a feature, we add it to the list (if it is not there already)
+                    if (!listToAddTo.Contains(configNode))
+                    {
+                        listToAddTo.Add(configNode);
                     }
 
                 }

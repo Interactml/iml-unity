@@ -470,7 +470,6 @@ namespace InteractML
             // Add all the output features to the training example being recorded
             for (int i = 0; i < m_DesiredOutputFeatures.Count; i++)
             {
-                Debug.Log(newExample);
                 newExample.AddOutputExample(m_DesiredOutputFeatures[i]);
             }
             
