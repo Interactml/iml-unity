@@ -37,21 +37,21 @@ namespace InteractML
         /// <summary>
         /// Total updated number of training examples connected to this IML Configuration Node
         /// </summary>
-        private int m_TotalNumTrainingData;
+        protected int m_TotalNumTrainingData;
         public int TotalNumTrainingData { get { return m_TotalNumTrainingData; } }
 
         /// <summary>
         /// List of expected inputs
         /// </summary>
         [SerializeField, HideInInspector]
-        private List<IMLSpecifications.InputsEnum> m_ExpectedInputList;
+        protected List<IMLSpecifications.InputsEnum> m_ExpectedInputList;
         public List<IMLSpecifications.InputsEnum> ExpectedInputList { get { return m_ExpectedInputList; } }
 
         /// <summary>
         /// List of expected outputs
         /// </summary>
         [SerializeField, HideInInspector]
-        private List<IMLSpecifications.OutputsEnum> m_ExpectedOutputList;
+        protected List<IMLSpecifications.OutputsEnum> m_ExpectedOutputList;
         public List<IMLSpecifications.OutputsEnum> ExpectedOutputList { get { return m_ExpectedOutputList; } }
 
 
@@ -59,7 +59,8 @@ namespace InteractML
         /// The learning type of this model
         /// </summary>
         [SerializeField]
-        private IMLSpecifications.LearningType m_LearningType;
+        protected IMLSpecifications.LearningType m_LearningType;
+        
         public IMLSpecifications.LearningType LearningType { get => m_LearningType; }
 
         /// <summary>
@@ -71,7 +72,7 @@ namespace InteractML
         [HideInInspector]
         public KeyCode RunningKey;
 
-        private IMLSpecifications.ModelStatus m_ModelStatus { get { return m_Model != null ? m_Model.ModelStatus : IMLSpecifications.ModelStatus.Untrained; } }
+        protected IMLSpecifications.ModelStatus m_ModelStatus { get { return m_Model != null ? m_Model.ModelStatus : IMLSpecifications.ModelStatus.Untrained; } }
         /// <summary>
         /// The current status of the model
         /// </summary>
@@ -79,7 +80,7 @@ namespace InteractML
         /// <summary>
         /// Flags that controls if the model should run or not
         /// </summary>
-        private bool m_Running;
+        protected bool m_Running;
         public bool Running { get { return m_Running; } }
         public bool Training { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Training); } }
         public bool Trained { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Trained); } }
@@ -89,7 +90,7 @@ namespace InteractML
         /// <summary>
         /// Reference to the rapidlib model this node is holding
         /// </summary>
-        private RapidlibModel m_Model;
+        protected RapidlibModel m_Model;
         /// <summary>
         /// Public reference to the rapidlib model this node is holding
         /// </summary>
@@ -98,27 +99,27 @@ namespace InteractML
         /// <summary>
         /// The list of training examples that we will pass to rapidlib in the correct format
         /// </summary>
-        private List<RapidlibTrainingExample> m_RapidlibTrainingExamples;
+        protected List<RapidlibTrainingExample> m_RapidlibTrainingExamples;
         /// <summary>
-        /// Private list of rapidlib training series collection (for dtw)
+        /// protected list of rapidlib training series collection (for dtw)
         /// </summary>
-        private List<RapidlibTrainingSerie> m_RapidlibTrainingSeriesCollection;
+        protected List<RapidlibTrainingSerie> m_RapidlibTrainingSeriesCollection;
         /// <summary>
         /// Series to run DTW on
         /// </summary>
-        private IMLTrainingSeries m_RunningSeries;
+        protected IMLTrainingSeries m_RunningSeries;
 
         /// <summary>
         /// Vector used to compute the realtime predictions in rapidlib based on the training data
         /// </summary>
-        private double[] m_RapidlibInputVector;
+        protected double[] m_RapidlibInputVector;
         /// <summary>
         /// Vector used to output the realtime predictions from rapidlib
         /// </summary>
-        private double[] m_RapidlibOutputVector;
+        protected double[] m_RapidlibOutputVector;
 
-        private bool m_NodeConnectionChanged;
-        private int m_LastKnownRapidlibOutputVectorSize;
+        protected bool m_NodeConnectionChanged;
+        protected int m_LastKnownRapidlibOutputVectorSize;
 
         /// <summary>
         /// Flag that controls if the iml model should be trained when entering/leaving playmode
@@ -262,7 +263,7 @@ namespace InteractML
         /// Instantiates a rapidlibmodel
         /// </summary>
         /// <param name="learningType"></param>
-        public RapidlibModel InstantiateRapidlibModel(IMLSpecifications.LearningType learningType)
+        public virtual RapidlibModel InstantiateRapidlibModel(IMLSpecifications.LearningType learningType)
         {
             RapidlibModel model = new RapidlibModel();
             switch (learningType)
@@ -284,6 +285,9 @@ namespace InteractML
 
         public void UpdateLogic()
         {
+            //Set Learning Type 
+            SetLearningType();
+
             // Handle Input
             KeyboardInput();
             
@@ -301,14 +305,16 @@ namespace InteractML
 
             // Perform running logic (it will account for DTW and Classification/Regression) only if there is a predicted output            
             RunningLogic();
-            
+
             // Update feature selection matrix
             // TO DO
-
+            /*Debug.Log("expected output" + m_ExpectedOutputList.Count);
+            Debug.Log("predicted rap lib output" + PredictedRapidlibOutput.Length);
+            Debug.Log("predicted output" + PredictedOutput.Count);*/
 
         }
 
-        public void TrainModel()
+        public virtual void TrainModel()
         {
             RunningLogic();
             // if there are no training examples in connected training nodes do not train 
@@ -321,6 +327,8 @@ namespace InteractML
                 if (m_RapidlibTrainingSeriesCollection == null)
                     m_RapidlibTrainingSeriesCollection = new List<RapidlibTrainingSerie>();
 
+                
+                //TD Turn into two methods to be overriden in subclass 
                 // If we have a dtw model...
                 if (m_LearningType == IMLSpecifications.LearningType.DTW)
                 {
@@ -409,18 +417,18 @@ namespace InteractML
         /// Saves current model to disk (dataPath specified in IMLDataSerialization)
         /// </summary>
         /// <param name="fileName"></param>
-        public void SaveModelToDisk(string fileName)
+        public void SaveModelToDisk()
         {
-            m_Model.SaveModelToDisk(this.name + this.position + fileName);
+            m_Model.SaveModelToDisk(this.graph.name + "_IMLConfiguration" + this.id);
         }
 
         /// <summary>
         /// Loads the current model from disk (dataPath specified in IMLDataSerialization)
         /// </summary>
         /// <param name="fileName"></param>
-        public void LoadModelFromDisk(string fileName)
+        public virtual void LoadModelFromDisk()
         {
-            m_Model.LoadModelFromDisk(this.name + this.position + fileName);
+            m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id);
             // We update the node learning type to match the one from the loaded model
             switch (m_Model.TypeOfModel)
             {
@@ -454,9 +462,14 @@ namespace InteractML
 
         #endregion
 
-        #region Private Methods
+        #region protected Methods
 
-        private void KeyboardInput()
+        protected virtual void SetLearningType()
+        {
+            
+        }
+
+        protected void KeyboardInput()
         {
             if (EnableKeyboardControl)
             {
@@ -491,6 +504,8 @@ namespace InteractML
 
                     if (i + pointerRawOutputVector >= PredictedRapidlibOutput.Length)
                     {
+                        Debug.Log("pointer " + (i+pointerRawOutputVector));
+                        Debug.Log("predicted " + DelayedPredictedOutput.Length);
                         Debug.LogError("The predicted rapidlib output vector is too small when transforming to interactml types!");
                         break;
                     }
@@ -505,7 +520,7 @@ namespace InteractML
         /// <summary>
         /// Runs the model and updates the predicted output from the rapidlib predictions by 
         /// </summary>
-        private double[] RunModel()
+        protected double[] RunModel()
         {            
             // Only do calculations if running flag is true (useful for UI)
             if (m_Running)
@@ -537,7 +552,7 @@ namespace InteractML
         /// </summary>
         /// <param name="seriesToRun"></param>
         /// <returns></returns>
-        private string RunModelDTW(IMLTrainingSeries seriesToRun)
+        protected string RunModelDTW(IMLTrainingSeries seriesToRun)
         {
             string result = "";
             // If the seriesToRun is null or empty we don't allow to run DTW
@@ -552,7 +567,6 @@ namespace InteractML
                 // Run dtw
                 result = m_Model.Run(new RapidlibTrainingSerie(seriesToRun.GetSeriesFeatures(), seriesToRun.LabelSeries));
             }
-            Debug.Log("DTW Result: " + result);
             return result;
         }
 
@@ -561,7 +575,7 @@ namespace InteractML
         /// </summary>
         /// <param name="inputFeatures"></param>
         /// <param name="runningSeries"></param>
-        private void CollectFeaturesInRunningSeries(List<Node> inputFeatures, ref IMLTrainingSeries runningSeries)
+        protected void CollectFeaturesInRunningSeries(List<Node> inputFeatures, ref IMLTrainingSeries runningSeries)
         {
             // Only allow collection is model is marked as 'running' (althoug we will run the model only when toggleRunning is called again)
             if (m_Running)
@@ -582,7 +596,7 @@ namespace InteractML
 
         }
 
-        private void RunningLogic()
+        protected virtual void RunningLogic()
         {
             // Account for all learning types now
             switch (m_LearningType)
@@ -606,26 +620,21 @@ namespace InteractML
             }
 
         }
-
         /// <summary>
-        /// Checks what is the output configuration and creates a predicted output list in the correct format
+        /// Checks what is the output configuration 
         /// </summary>
-        private void UpdateOutputFormat()
+        protected virtual bool CheckOutputConfiguration()
         {
-            // Make sure that the list is not null
-            if (PredictedOutput ==  null)
-                PredictedOutput = new List<IMLBaseDataType>();
-
-            bool updateOutFormat = false;
+            bool output = false;
             // In DTW, only update format if there is a node connection change or the predicted output is not correctly formatted
             if (m_LearningType == IMLSpecifications.LearningType.DTW)
             {
                 if (m_NodeConnectionChanged
-                || PredictedOutput.Any((i => (i == null || ( i.Values == null || i.Values.Length == 0 ) ))))
+                || PredictedOutput.Any((i => (i == null || (i.Values == null || i.Values.Length == 0)))))
                 {
-                    updateOutFormat = true;
+                    output = true;
                 }
-                    
+
             }
             // In classification and regression, only changed format when there is a change in nodes or formats don't match
             else
@@ -634,8 +643,20 @@ namespace InteractML
                 || m_LastKnownRapidlibOutputVectorSize != PredictedRapidlibOutput.Length
                 || m_NodeConnectionChanged
                 || (m_LastKnownRapidlibOutputVectorSize > 0 && PredictedOutput.Count == 0))
-                    updateOutFormat = true;
+                    output = true;
             }
+            return true;
+        }
+        /// <summary>
+        /// Checks what is the output configuration and creates a predicted output list in the correct format
+        /// </summary>
+        protected void UpdateOutputFormat()
+        {
+            // Make sure that the list is not null
+            if (PredictedOutput ==  null)
+                PredictedOutput = new List<IMLBaseDataType>();
+
+            bool updateOutFormat = CheckOutputConfiguration();
 
             // If we are meant to update format...
             if (updateOutFormat)
@@ -681,7 +702,7 @@ namespace InteractML
         /// <summary>
         /// Updates the configuration list of inputs
         /// </summary>
-        private void UpdateInputConfigList()
+        protected void UpdateInputConfigList()
         {
             // Get values from the input list
             InputFeatures = GetInputValues<Node>("InputFeatures").ToList();
@@ -710,7 +731,7 @@ namespace InteractML
         /// <summary>
         /// Updates the configuration list of outputs
         /// </summary>
-        private void UpdateOutputConfigList()
+        protected void UpdateOutputConfigList()
         {
             // Get values from the training example node
             IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
@@ -729,17 +750,49 @@ namespace InteractML
                 if (trainingExamplesNode.DesiredOutputsConfig != null && trainingExamplesNode.DesiredOutputsConfig.Count > 0)
                 {
                     // Populate expected type from the trainin examples node connected
-                    foreach (var desiredOutputConfigType in trainingExamplesNode.DesiredOutputsConfig)
+                    // dirty code needs rewriting 
+                    if (m_ExpectedOutputList.Count == 0)
                     {
-                        m_ExpectedOutputList.Add(desiredOutputConfigType);
+                        for (int i = m_ExpectedOutputList.Count; i < trainingExamplesNode.DesiredOutputsConfig.Count; i++)
+                        {
+                            m_ExpectedOutputList.Add(trainingExamplesNode.DesiredOutputsConfig[i]);
+                        }
+                    }
+                     else if (trainingExamplesNode.DesiredOutputsConfig.Count > m_ExpectedOutputList.Count)
+                    {
+                        for (int i = m_ExpectedOutputList.Count-1; i < trainingExamplesNode.DesiredOutputsConfig.Count-1; i++)
+                        {
+                            m_ExpectedOutputList.Add(trainingExamplesNode.DesiredOutputsConfig[i]);
+                        }
+                    }
+
+                    if (m_ExpectedOutputList.Count <= trainingExamplesNode.DesiredOutputsConfig.Count)
+                    {
+                        for (int i = 0; i < m_ExpectedOutputList.Count; i++)
+                        {
+                            if (m_ExpectedOutputList[i] != trainingExamplesNode.DesiredOutputsConfig[i])
+                            {
+                                m_ExpectedOutputList.Add(trainingExamplesNode.DesiredOutputsConfig[i]);
+                            }
+                        }
+                    } else
+                    {
+                        for (int i = 0; i < trainingExamplesNode.DesiredOutputsConfig.Count; i++)
+                        {
+                            if (m_ExpectedOutputList[i] != trainingExamplesNode.DesiredOutputsConfig[i])
+                            {
+                                m_ExpectedOutputList.Add(trainingExamplesNode.DesiredOutputsConfig[i]);
+                            }
+                        }
                     }
                 }
-            }            
+            }
+        
 
         }
 
 
-        private void OverrideModel(IMLSpecifications.LearningType learningType)
+        protected virtual void OverrideModel(IMLSpecifications.LearningType learningType)
         {
             switch (learningType)
             {
@@ -757,7 +810,7 @@ namespace InteractML
             }
         }
 
-        private void UpdateTotalNumberTrainingExamples()
+        protected void UpdateTotalNumberTrainingExamples()
         {
             // Get training examples from the connected examples nodes
             IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
@@ -788,7 +841,7 @@ namespace InteractML
         /// <summary>
         /// Create the rapidlib training examples list in the required format
         /// </summary>
-        private List<RapidlibTrainingExample> TransformIMLDataToRapidlib(List<TrainingExamplesNode> trainingNodesIML)
+        protected List<RapidlibTrainingExample> TransformIMLDataToRapidlib(List<TrainingExamplesNode> trainingNodesIML)
         {
             // Create list to return
             List<RapidlibTrainingExample> rapidlibExamples = new List<RapidlibTrainingExample>();
@@ -835,7 +888,7 @@ namespace InteractML
         /// </summary>
         /// <param name="trainingSeriesIML"></param>
         /// <returns></returns>
-        private List<RapidlibTrainingSerie> TransformIMLSeriesToRapidlib(List<TrainingExamplesNode> trainingNodesIML)
+        protected List<RapidlibTrainingSerie> TransformIMLSeriesToRapidlib(List<TrainingExamplesNode> trainingNodesIML)
         {
             List<RapidlibTrainingSerie> seriesToReturn = new List<RapidlibTrainingSerie>();
 
@@ -863,7 +916,7 @@ namespace InteractML
         /// <summary>
         /// Creates the rapidlib input vector (input for the realtime predictions)
         /// </summary>
-        private void CreateRapidlibInputVector()
+        protected void CreateRapidlibInputVector()
         {
             // If we have some input connected...
             if (!Lists.IsNullOrEmpty(ref InputFeatures))
@@ -895,7 +948,7 @@ namespace InteractML
         /// <summary>
         /// Creates the rapidlib output vector (output from the realtime predictions)
         /// </summary>
-        private void CreateRapidLibOutputVector()
+        protected void CreateRapidLibOutputVector()
         {
             // If we have some expected output...
             if (!Lists.IsNullOrEmpty(ref PredictedOutput))
@@ -922,7 +975,7 @@ namespace InteractML
         /// <summary>
         /// Updates the input vector to send to rapidlib with the input features in the IML Config node
         /// </summary>
-        private void UpdateInputVector()
+        protected void UpdateInputVector()
         {
             // If we have some input connected...
             if (!Lists.IsNullOrEmpty(ref InputFeatures))

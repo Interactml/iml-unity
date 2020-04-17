@@ -24,6 +24,9 @@ namespace XNode {
     /// </example>
     [Serializable]
     public abstract class Node : ScriptableObject {
+        //ID for all nodes - may need to change how this is implemented to stop issues with Xnode update 
+        [HideInInspector]
+        public string id; 
         /// <summary> Used by <see cref="InputAttribute"/> and <see cref="OutputAttribute"/> to determine when to display the field value associated with a <see cref="NodePort"/> </summary>
         public enum ShowBackingValue {
             /// <summary> Never show the backing value </summary>
@@ -147,6 +150,7 @@ namespace XNode {
             {
                 m_customColor = Color.white;
             }
+            id = NodeID.CheckNodeID(id, this);
 	}
 
         /// <summary> Checks all connections for invalid references, and removes them. </summary>
