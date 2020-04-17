@@ -321,10 +321,10 @@ namespace InteractML
                     CheckTypeAddNodeToList(node, ref vectorNodesList);
 
                     // Training Examples nodes
-                    CheckTypeAddNodeToList(node, ref TrainingExamplesNodesList);
+                    CheckNodeIsTraining(node, ref TrainingExamplesNodesList);
 
                     // IML Config Node
-                    CheckTypeAddNodeToList(node, ref IMLConfigurationNodesList);
+                    CheckNodeIsConfiguration(node, ref IMLConfigurationNodesList);
 
                     // Export output node
                     CheckTypeAddNodeToList(node, ref RealtimeIMLOutputNodesList);
@@ -347,7 +347,7 @@ namespace InteractML
             {
                 return;
             }
-            
+            Type p = nodeToAdd.GetType();
             // We first check that the node matches the type we want
             if (nodeToAdd.GetType() == typeof(T))
             {
@@ -362,6 +362,54 @@ namespace InteractML
                     listToAddTo.Add(nodeToAddTyped);
                 }
             }
+        }
+
+        private void CheckNodeIsTraining(XNode.Node nodeToAdd, ref List<TrainingExamplesNode> listToAddTo)
+        {
+            // We first check that the node ref is not null
+            if (nodeToAdd != null)
+            {
+                // Then check that the node is a training examples node
+                var trainingNode = nodeToAdd as TrainingExamplesNode;
+                if (trainingNode != null)
+                {
+                    // Make sure the list is init
+                    if (listToAddTo == null)
+                        listToAddTo = new List<TrainingExamplesNode>();
+
+                    // If we got a feature, we add it to the list (if it is not there already)
+                    if (!listToAddTo.Contains(trainingNode))
+                    {
+                        listToAddTo.Add(trainingNode);
+                    }
+
+                }
+            }
+
+        }
+
+        private void CheckNodeIsConfiguration(XNode.Node nodeToAdd, ref List<IMLConfiguration> listToAddTo)
+        {
+            // We first check that the node ref is not null
+            if (nodeToAdd != null)
+            {
+                // Then check that the node is a configuratiton
+                var configNode = nodeToAdd as IMLConfiguration;
+                if (configNode != null)
+                {
+                    // Make sure the list is init
+                    if (listToAddTo == null)
+                        listToAddTo = new List<IMLConfiguration>();
+
+                    // If we got a feature, we add it to the list (if it is not there already)
+                    if (!listToAddTo.Contains(configNode))
+                    {
+                        listToAddTo.Add(configNode);
+                    }
+
+                }
+            }
+
         }
 
         /// <summary>
@@ -1028,7 +1076,7 @@ namespace InteractML
             foreach (var IMLConfigNode in IMLConfigurationNodesList)
             {
                 // Loads the model in the IMLConfigNode
-                IMLConfigNode.LoadModelFromDisk(MLController.name);
+                IMLConfigNode.LoadModelFromDisk();
             }
             
         }
@@ -1041,7 +1089,7 @@ namespace InteractML
             foreach (var IMLConfigNode in IMLConfigurationNodesList)
             {
                 // Save model to disk
-                IMLConfigNode.SaveModelToDisk(MLController.name);
+                IMLConfigNode.SaveModelToDisk();
             }
 
         }

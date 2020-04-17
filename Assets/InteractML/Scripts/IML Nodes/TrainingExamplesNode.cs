@@ -28,7 +28,9 @@ namespace InteractML
         [Output, SerializeField]
         public TrainingExamplesNode TrainingExamplesNodeToOutput;
 
+        
         public enum CollectionMode { SingleExample, Series }
+        
         public CollectionMode ModeOfCollection;
 
         /// <summary>
@@ -47,7 +49,7 @@ namespace InteractML
         /// Series use to add information while we collect data. 
         /// It will be later added to the training series collection
         /// </summary>
-        private IMLTrainingSeries m_SingleSeries;
+        protected IMLTrainingSeries m_SingleSeries;
 
         public List<IMLBaseDataType> testList;
 
@@ -57,31 +59,31 @@ namespace InteractML
         /// Configuration of desired inputs for the Training Examples node 
         /// </summary>
         [SerializeField, HideInInspector]
-        private List<IMLSpecifications.InputsEnum> m_DesiredInputsConfig;
+        protected List<IMLSpecifications.InputsEnum> m_DesiredInputsConfig;
         public List<IMLSpecifications.InputsEnum> DesiredInputsConfig { get { return m_DesiredInputsConfig; } set { this.m_DesiredInputsConfig = value; } }
 
         /// <summary>
         /// Configuration of desired outputs for a specific Training Set
         /// </summary>
         [SerializeField, HideInInspector]
-        private List<IMLSpecifications.OutputsEnum> m_DesiredOutputsConfig;
+        protected List<IMLSpecifications.OutputsEnum> m_DesiredOutputsConfig;
         public List<IMLSpecifications.OutputsEnum> DesiredOutputsConfig { get { return m_DesiredOutputsConfig; } set { this.m_DesiredOutputsConfig = value; } }
         /// <summary>
         /// This one is kept to compare if the structure of the outputs has changed
         /// </summary>
-        private List<IMLSpecifications.OutputsEnum> m_LastKnownDesireOutputsConfig;
+        protected List<IMLSpecifications.OutputsEnum> m_LastKnownDesireOutputsConfig;
 
 
-        private List<IMLBaseDataType> m_DesiredOutputFeatures;
+        protected List<IMLBaseDataType> m_DesiredOutputFeatures;
         /// <summary>
         /// List of desired outputs for this training set
         /// </summary>
         public List<IMLBaseDataType> DesiredOutputFeatures { get { return m_DesiredOutputFeatures; } }
 
         /// <summary>
-        /// Private member, returns total number of training examples from vector (if reference not null)
+        /// protected member, returns total number of training examples from vector (if reference not null)
         /// </summary>
-        private int m_TotalNumberOfTrainingExamples { get { return (TrainingExamplesVector != null ? TrainingExamplesVector.Count : 0); } }
+        protected int m_TotalNumberOfTrainingExamples { get { return (TrainingExamplesVector != null ? TrainingExamplesVector.Count : 0); } }
         /// <summary>
         /// Total number of training examples
         /// </summary>
@@ -90,7 +92,7 @@ namespace InteractML
         /// <summary>
         /// Used to store the different lengths of features during feature extraction
         /// </summary>
-        private int[] m_LengthsFeatureVector;
+        protected int[] m_LengthsFeatureVector;
 
         /// <summary>
         /// The list of IML Config nodes connected
@@ -105,10 +107,10 @@ namespace InteractML
         public float CaptureRate = 10.0f;
         [HideInInspector]
         public float RecordTime = -1.0f;
-        float m_TimeToNextCapture = 0.0f;
-        float m_TimeToStopCapture = 0.0f;
+        protected float m_TimeToNextCapture = 0.0f;
+        protected float m_TimeToStopCapture = 0.0f;
 
-        private bool m_CollectData;
+        protected bool m_CollectData;
         /// <summary>
         /// Is the Node Collecting Data?
         /// </summary>
@@ -151,8 +153,8 @@ namespace InteractML
         //    //UpdateOutputsList();
 
         //}
-
-        private void OnDestroy()
+        //check 
+        protected void OnDestroy()
         {
             // Remove this node from IML Component controlling it (if any)
             var MLController = graph as IMLController;
@@ -171,6 +173,7 @@ namespace InteractML
         /// </summary>
         public void Initialize()
         {
+            SetDataCollection();
             // Make sure internal feature lists are initialized
             if (m_DesiredInputsConfig == null)
                 m_DesiredInputsConfig = new List<IMLSpecifications.InputsEnum>();
@@ -193,21 +196,21 @@ namespace InteractML
             // Load training data from disk
             LoadDataFromDisk();
         }
-
         /// <summary>
         /// Starts/Stops collecting examples when called
         /// </summary>
         public void ToggleCollectExamples()
         {
-            ToggleCollectingDataPrivate();
+            ToggleCollectingDataprotected();
         }
 
+        // check move to single training examples node
         /// <summary>
         /// Adds a single training example to the node's list
         /// </summary>
         public void AddSingleTrainingExample()
         {
-            AddTrainingExamplePrivate();
+            AddTrainingExampleprotected();
         }
 
         /// <summary>
@@ -241,7 +244,7 @@ namespace InteractML
         /// <summary>
         /// Clears all the training examples stored in the node
         /// </summary>
-        public void ClearTrainingExamples()
+        public virtual void ClearTrainingExamples()
         {
 
             // Account for mode
@@ -278,12 +281,20 @@ namespace InteractML
 
         #endregion
 
-        #region Private Methods
+        #region protected Methods
+
+        /// <summary>
+        /// Sets Data Collection Type 
+        /// </summary>
+        protected virtual void SetDataCollection()
+        {
+
+        }
 
         /// <summary>
         /// Updates the configuration list of inputs
         /// </summary>
-        private void UpdateInputConfigList()
+        protected void UpdateInputConfigList()
         {
             // Get values from the input list
             InputFeatures = GetInputValues<Node>("InputFeatures").ToList();
@@ -312,7 +323,7 @@ namespace InteractML
         /// <summary>
         /// Makes sure the list of outputs is properly configured
         /// </summary>
-        private void UpdateOutputsList()
+        protected void UpdateOutputsList()
         {
             // Check if we actually need to rebuild the desired output features
             // If we have no record of the structure OR current and last known structures doesn't match
@@ -372,7 +383,7 @@ namespace InteractML
         /// <summary>
         /// Clears the output features and rebuilds them from the configuration specified
         /// </summary>
-        private void BuildOutputFeaturesFromOutputConfig()
+        protected void BuildOutputFeaturesFromOutputConfig()
         {
             // Adjust the desired outputs list based on configuration selected
             m_DesiredOutputFeatures.Clear();
@@ -406,7 +417,7 @@ namespace InteractML
         /// <summary>
         /// Logic to collect examples. Needs to be called in an Update loop
         /// </summary>
-        private void CollectExamplesLogic()
+        protected virtual void CollectExamplesLogic()
         {
             if (m_CollectData)
             {
@@ -417,11 +428,12 @@ namespace InteractML
                 }
                 else if (!Application.isPlaying || Time.time >= m_TimeToNextCapture)
                 {
+                    //check 
                     // We check which modality of collection is selected
                     switch (ModeOfCollection)
                     {
                         case CollectionMode.SingleExample:
-                            AddTrainingExamplePrivate();
+                            AddTrainingExampleprotected();
                             break;
                         case CollectionMode.Series:
                             AddInputsToSeries(InputFeatures, 
@@ -443,7 +455,7 @@ namespace InteractML
         /// <summary>
         /// Adds a single training example 
         /// </summary>
-        private void AddTrainingExamplePrivate()
+        protected void AddTrainingExampleprotected()
         {
             // Declare new example to add to vector
             IMLTrainingExample newExample = new IMLTrainingExample();
@@ -459,13 +471,13 @@ namespace InteractML
             {
                 newExample.AddOutputExample(m_DesiredOutputFeatures[i]);
             }
-
+            
             // Add the training example to the vector
             TrainingExamplesVector.Add(newExample);
 
         }
 
-        private void AddInputsToSeries(List<Node> inputs, string label, ref IMLTrainingSeries series)
+        protected void AddInputsToSeries(List<Node> inputs, string label, ref IMLTrainingSeries series)
         {
             // Only add if inputs are not null or empty (the series can be empty)
             if (!Lists.IsNullOrEmpty(ref inputs))
@@ -476,7 +488,10 @@ namespace InteractML
                 for (int i = 0; i < inputs.Count; i++)
                 {
                     if (inputs[i] is IFeatureIML feature)
-                        featuresInput.Add(new IMLInput(feature.FeatureValues));
+                    {
+                       featuresInput.Add(new IMLInput(feature.FeatureValues));
+                    }
+                        
                 }
 
                 // Add features to series
@@ -487,7 +502,7 @@ namespace InteractML
         /// <summary>
         /// Starts/Stops Collecting data
         /// </summary>
-        private void ToggleCollectingDataPrivate()
+        protected void ToggleCollectingDataprotected()
         {
             if (m_CollectData)
             {
@@ -503,7 +518,7 @@ namespace InteractML
         /// <summary>
         /// Sets the collecting data flag to true and configures the class to collect data
         /// </summary>
-        private void StartCollectingData()
+        protected void StartCollectingData()
         {
 
             m_CollectData = true;
@@ -523,7 +538,7 @@ namespace InteractML
         /// <summary>
         /// Sets the collect data flag to false to stop collecting data
         /// </summary>
-        private void StopCollectingData()
+        protected virtual void StopCollectingData()
         {
             m_CollectData = false;
 
@@ -541,16 +556,26 @@ namespace InteractML
         }
 
 
-        public void SaveDataToDisk()
+        public virtual void SaveDataToDisk()
         {
-            IMLDataSerialization.SaveTrainingSetToDisk(TrainingExamplesVector, GetJSONFileNameExamples());
-            IMLDataSerialization.SaveTrainingSeriesCollectionToDisk(TrainingSeriesCollection, GetJSONFileNameSeries());
+            if (ModeOfCollection == CollectionMode.SingleExample)
+            {
+                IMLDataSerialization.SaveTrainingSetToDisk(TrainingExamplesVector, GetJSONFileName());
+            } else if (ModeOfCollection == CollectionMode.Series)
+            {
+                IMLDataSerialization.SaveTrainingSeriesCollectionToDisk(TrainingSeriesCollection, GetJSONFileName());
+            }else
+            {
+                Debug.LogWarning("No data collection set");
+            }
+            
+            
         }
 
-        public void LoadDataFromDisk()
+        public virtual void LoadDataFromDisk()
         {
             //Load training data from disk
-            var auxTrainingExamplesVector = IMLDataSerialization.LoadTrainingSetFromDisk(GetJSONFileNameExamples());
+            var auxTrainingExamplesVector = IMLDataSerialization.LoadTrainingSetFromDisk(GetJSONFileName());
             if (!Lists.IsNullOrEmpty(ref auxTrainingExamplesVector))
             {
                 TrainingExamplesVector = auxTrainingExamplesVector;
@@ -558,7 +583,7 @@ namespace InteractML
             }
 
             // Load IML Series Collection from disk
-            var auxTrainingSeriesCollection = IMLDataSerialization.LoadTrainingSeriesCollectionFromDisk(GetJSONFileNameSeries());
+            var auxTrainingSeriesCollection = IMLDataSerialization.LoadTrainingSeriesCollectionFromDisk(GetJSONFileName());
             if (!Lists.IsNullOrEmpty(ref auxTrainingSeriesCollection))
             {
                 TrainingSeriesCollection = auxTrainingSeriesCollection;
@@ -569,27 +594,14 @@ namespace InteractML
         /// Returns the file name we want for the regular training examples list in JSON format, both for read and write
         /// </summary>
         /// <returns></returns>
-        public string GetJSONFileNameExamples ()
+        public virtual string GetJSONFileName ()
         {
             string graphName = this.graph.name;
-            string nodeIndex = this.graph.nodes.FindIndex(a => a == this).ToString();
-            string fileName = graphName + "_node_" + nodeIndex + "_" + "TrainingExamplesNode";
+            string fileName = graphName + "TrainingExamplesNode" + this.id;
             return fileName;
         }
 
-        /// <summary>
-        /// Returns the file name we want for training SERIES in JSON format, both for read and write
-        /// </summary>
-        /// <returns></returns>
-        public string GetJSONFileNameSeries ()
-        {
-            string graphName = this.graph.name;
-            string nodeIndex = this.graph.nodes.FindIndex(a => a == this).ToString();
-            string fileName = graphName + "_node_" + nodeIndex + "_" + "_SERIES_" + "TrainingExamplesNode";
-            return fileName;
-        }
-
-        private void KeyboardInput()
+        protected void KeyboardInput()
         {
             if (EnableKeyboardControl)
             {
