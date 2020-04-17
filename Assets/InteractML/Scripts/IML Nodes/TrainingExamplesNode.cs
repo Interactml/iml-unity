@@ -28,9 +28,9 @@ namespace InteractML
         [Output, SerializeField]
         public TrainingExamplesNode TrainingExamplesNodeToOutput;
 
-        [HideInInspector]
+        
         public enum CollectionMode { SingleExample, Series }
-        [HideInInspector]
+        
         public CollectionMode ModeOfCollection;
 
         /// <summary>
