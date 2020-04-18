@@ -22,26 +22,9 @@ namespace InteractML
             NodeEditorPreferences.GetSettings().highlightColor = hexToColor("21203B");
             NodeEditorPreferences.GetSettings().gridLineColor = hexToColor("21203B");
             NodeEditorPreferences.GetSettings().gridBgColor = hexToColor("21203B");
-            
-            //Clone keys so we can enumerate the dictionary and make changes.
-            var typeColorKeys = new List<Type>(typeColors.Keys);
+            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(GameObject))] = hexToColor("#888EF7");
 
-            //Display type colors. Save them if they are edited by the user
-            foreach (var type in typeColorKeys) {
-                string typeColorKey = NodeEditorUtilities.PrettyName(type);
-                Color col = typeColors[type];
-                EditorGUI.BeginChangeCheck();
-                EditorGUILayout.BeginHorizontal();
-                col = EditorGUILayout.ColorField(typeColorKey, col);
-                EditorGUILayout.EndHorizontal();
-                if (EditorGUI.EndChangeCheck()) {
-                    typeColors[type] = col;
-                    if (settings.typeColors.ContainsKey(typeColorKey)) settings.typeColors[typeColorKey] = col;
-                    else settings.typeColors.Add(typeColorKey, col);
-                    SavePrefs(key, settings);
-                    NodeEditorWindow.RepaintAll();
-                }
-            
+
         }
 
 
@@ -52,7 +35,7 @@ namespace InteractML
                 gridBgColor = hexToColor("21203B"),
                 gridLineColor = hexToColor("21203B"),
                 highlightColor = hexToColor("21203B"),
-                typeColors = 
+
             };
         }
 

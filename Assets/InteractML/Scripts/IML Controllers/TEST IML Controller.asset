@@ -243,7 +243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2f91c2b0-373d-43f2-80e4-f0a35ea796c6
   graph: {fileID: 11400000}
-  position: {x: -504, y: -760}
+  position: {x: -2120, y: -168}
   ports:
     keys: []
     values: []
@@ -456,7 +456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: fd364e25-1b3b-4864-a1d2-21751044d8cb
   graph: {fileID: 11400000}
-  position: {x: -1576, y: -440}
+  position: {x: -1864, y: -168}
   ports:
     keys:
     - GameObjectDataOut

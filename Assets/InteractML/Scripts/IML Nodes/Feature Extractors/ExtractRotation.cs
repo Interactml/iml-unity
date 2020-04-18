@@ -9,7 +9,6 @@ namespace InteractML.FeatureExtractors
     /// <summary>
     /// Feature extractor for rotations
     /// </summary>
-    [NodeTint("#3A3B5B")]
     [NodeWidth(250)]
     public class ExtractRotation : Node, IFeatureIML
     {

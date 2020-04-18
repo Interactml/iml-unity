@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
   m_Name: OUTPUT
   m_EditorClassIdentifier: 
-  id: d636a681-b7de-4987-b1d9-bd9c2624eeb2
+  id: 70077180-1320-48dc-b48b-a2ef15a32d0c
   graph: {fileID: 11400000}
-  position: {x: 984, y: -184}
+  position: {x: 1032, y: -56}
   ports:
     keys:
     - IMLModelOutputs
@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
   m_Name: MACHINE LEARNING SYSTEM
   m_EditorClassIdentifier: 
-  id: 3956734b-1af8-4847-89a5-a21ce60a79e4
+  id: 691c25d9-8a0d-4078-85da-0ca102d0eff5
   graph: {fileID: 11400000}
   position: {x: 520, y: -216}
   ports:
@@ -176,9 +176,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e8312b300ccdb4784b431dbd6ddf11, type: 3}
   m_Name: Extract Rotation
   m_EditorClassIdentifier: 
-  id: af036725-636a-4cee-9e1d-a99c2c966958
+  id: 262df59d-588f-48e2-95c4-6f8e50da3e0f
   graph: {fileID: 11400000}
-  position: {x: -472, y: 8}
+  position: {x: -424, y: -24}
   ports:
     keys:
     - GameObjectDataIn
@@ -199,7 +199,10 @@ MonoBehaviour:
     - _fieldName: LiveDataOut
       _node: {fileID: 23255658134690522}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: InputFeatures
+        node: {fileID: 6732151304541360272}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -227,9 +230,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
   m_Name: Text Note
   m_EditorClassIdentifier: 
-  id: 3dac4e56-92d6-4153-a0de-d274ee0d36d6
+  id: f3f4c87d-0c73-45c0-9a85-d5fbb077e352
   graph: {fileID: 11400000}
-  position: {x: -1240, y: -200}
+  position: {x: -1192, y: -264}
   ports:
     keys: []
     values: []
@@ -247,9 +250,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
   m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
-  id: d91d017b-2959-4112-87b6-9caf2bc4ad6f
+  id: 210424bf-c481-4157-9f0f-8157aaab0dc5
   graph: {fileID: 11400000}
-  position: {x: -408, y: -312}
+  position: {x: -472, y: -360}
   ports:
     keys:
     - LiveDataOut
@@ -299,7 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
   m_Name: TEACH THE MACHINE
   m_EditorClassIdentifier: 
-  id: 96007e64-c9a2-4461-8bb8-b5e2a9e8dcbd
+  id: f6b6628d-6e0f-4a69-bb53-abea6a07556d
   graph: {fileID: 11400000}
   position: {x: -88, y: -264}
   ports:
@@ -315,6 +318,9 @@ MonoBehaviour:
       connections:
       - fieldName: LiveDataOut
         node: {fileID: 6620900826782712363}
+        reroutePoints: []
+      - fieldName: LiveDataOut
+        node: {fileID: 23255658134690522}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -335,11 +341,12 @@ MonoBehaviour:
   DevMode: 0
   InputFeatures:
   - {fileID: 6620900826782712363}
+  - {fileID: 23255658134690522}
   TrainingExamplesNodeToOutput: {fileID: 6732151304541360272}
   ModeOfCollection: 0
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
-  m_DesiredInputsConfig: 03000000
+  m_DesiredInputsConfig: 0300000004000000
   m_DesiredOutputsConfig: 01000000
   IMLConfigurationNodesConnected: []
   StartDelay: 0
@@ -359,9 +366,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
   m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
-  id: 23660e2a-f57b-491a-b4b0-3594cdff4e3f
+  id: e34c769e-ac3d-4f04-b34b-3ff3501fc846
   graph: {fileID: 11400000}
-  position: {x: -712, y: -296}
+  position: {x: -920, y: -264}
   ports:
     keys:
     - GameObjectDataOut

@@ -29,12 +29,13 @@ namespace InteractML
 
         private static void Init()
         {
-            Debug.Log("load");
+            Debug.Log("load");   
         }
 
 
         public override void OnHeaderGUI()
         {
+            Debug.Log(NodeWidth);
             // Get reference to the current node
             m_GameObjectNode = (target as GameObjectNode);
 
@@ -45,11 +46,10 @@ namespace InteractML
             GUI.DrawTexture(HeaderRect, NodeColor);
 
             // Draw line below header
-            GUI.DrawTexture(LineBelowHeader, SectionTopColor);
+            GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#E24680"));
 
             //Display Node name
-            GUILayout.Label("  GAME OBJECT INPUT", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"));
-
+            GUILayout.Label("GAME OBJECT INPUT", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(60));
         }
 
         public override void OnBodyGUI()
@@ -78,7 +78,7 @@ namespace InteractML
             GUI.DrawTexture(m_PortRect, NodeColor);
 
             // Draw line below ports
-            GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), SectionTopColor);
+            GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), GetColorTextureFromHexString("#E24680"));
         }
 
         /// <summary>
@@ -104,6 +104,8 @@ namespace InteractML
             EditorGUILayout.Space();
             GUIContent outputPortLabel = new GUIContent("GameObject\n Data Out");
             PortField(outputPortLabel, m_GameObjectNode.GetOutputPort("GameObjectDataOut"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            
+
         }
 
         /// <summary>

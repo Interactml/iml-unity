@@ -31,7 +31,6 @@ namespace InteractML
         public override void OnHeaderGUI()
         {
 
-
             // Get reference to the current node
             m_TextNote = (target as TextNote);
 
@@ -42,10 +41,10 @@ namespace InteractML
             GUI.DrawTexture(HeaderRect, NodeColor);
 
             // Draw line below header
-            GUI.DrawTexture(LineBelowHeader, SectionTopColor);
+            GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#F6C46F"));
 
             //Display Node name
-            GUILayout.Label("  TEXT NOTE", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"));
+            GUILayout.Label("TEXT NOTE", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"));
         }
 
         public override void OnBodyGUI()

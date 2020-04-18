@@ -5,6 +5,7 @@ using XNode;
 
 namespace InteractML
 {
+    [NodeWidth(250)]
     public class GameObjectNode : Node
     {
         /// <summary>
