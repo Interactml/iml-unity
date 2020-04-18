@@ -30,6 +30,8 @@ namespace InteractML
 
         public override void OnHeaderGUI()
         {
+
+
             // Get reference to the current node
             m_TextNote = (target as TextNote);
 

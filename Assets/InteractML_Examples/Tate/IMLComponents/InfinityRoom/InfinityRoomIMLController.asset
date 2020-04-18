@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
   m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
+  id: 8c9b51e4-dac4-4a45-9f03-4db8a40103d5
   graph: {fileID: 11400000}
   position: {x: -632, y: -184}
   ports:
@@ -43,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
   m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
+  id: 4a58decc-4819-401b-9afe-632e81218c6d
   graph: {fileID: 11400000}
   position: {x: -335.3612, y: 136.34088}
   ports:
@@ -88,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842a83d23f8374e41b4f966b7c1548a3, type: 3}
   m_Name: LIVE DISTANCE DATA
   m_EditorClassIdentifier: 
+  id: 12940f8c-b8cd-417b-8582-bb8aea3b4a2d
   graph: {fileID: 11400000}
   position: {x: -8, y: -8}
   ports:
@@ -141,6 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
   m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
+  id: fe522792-c80b-4759-96f3-7b8974b3f22c
   graph: {fileID: 11400000}
   position: {x: -328, y: -168}
   ports:
@@ -186,6 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
   m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
+  id: f42dfd38-b853-4bd8-a129-39ceb14b2f73
   graph: {fileID: 11400000}
   position: {x: -664, y: 120}
   ports:
@@ -239,6 +244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
   m_Name: OUTPUT
   m_EditorClassIdentifier: 
+  id: ac60f94f-11c4-49a2-bca1-021cd378855a
   graph: {fileID: 11400000}
   position: {x: 1448, y: 56}
   ports:
@@ -272,6 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
   m_Name: MACHINE LEARNING SYSTEM
   m_EditorClassIdentifier: 
+  id: 44e4a0ff-4a15-4f64-9d32-bd5e03f46969
   graph: {fileID: 11400000}
   position: {x: 936, y: -8}
   ports:
@@ -345,6 +352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
   m_Name: TEACH THE MACHINE
   m_EditorClassIdentifier: 
+  id: 74f35d93-f8a0-487e-9198-4f12d8fa5f35
   graph: {fileID: 11400000}
   position: {x: 328, y: -72}
   ports:

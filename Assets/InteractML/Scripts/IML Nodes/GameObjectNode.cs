@@ -5,8 +5,6 @@ using XNode;
 
 namespace InteractML
 {
-    [NodeTint("#3A3B5B")]
-    [NodeWidth(250)]
     public class GameObjectNode : Node
     {
         /// <summary>
@@ -31,11 +29,6 @@ namespace InteractML
                 MLController.SceneComponent.GetAllNodes();
                
             }
-        }
-
-        void Start()
-        {
-           
         }
 
         public void OnDestroy()
@@ -66,5 +59,7 @@ namespace InteractML
                 return null;
             }
         }
+
+        
     }
 }

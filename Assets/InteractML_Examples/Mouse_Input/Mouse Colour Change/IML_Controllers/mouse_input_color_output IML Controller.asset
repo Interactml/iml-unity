@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
   m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
+  id: e5b5b127-07a8-4691-9ec4-925f01901004
   graph: {fileID: 11400000}
   position: {x: -664, y: -296}
   ports:
@@ -43,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
   m_Name: OUTPUT
   m_EditorClassIdentifier: 
+  id: 8c6cf4c3-d3f1-4501-bdc8-e57508a4b8c1
   graph: {fileID: 11400000}
   position: {x: 1304, y: -280}
   ports:
@@ -76,6 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
   m_Name: MACHINE LEARNING SYSTEM
   m_EditorClassIdentifier: 
+  id: ef9a7a4b-1fea-4f5c-8a17-7c4f07b1fe34
   graph: {fileID: 11400000}
   position: {x: 680, y: -296}
   ports:
@@ -168,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
   m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
+  id: 3b9817e2-2bd0-4607-966e-e45b570aafe3
   graph: {fileID: 11400000}
   position: {x: -360, y: -360}
   ports:
@@ -213,6 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
   m_Name: TEACH THE MACHINE
   m_EditorClassIdentifier: 
+  id: e0a72965-9237-43d1-920e-7dea516d0342
   graph: {fileID: 11400000}
   position: {x: 49.894787, y: -338.80487}
   ports:

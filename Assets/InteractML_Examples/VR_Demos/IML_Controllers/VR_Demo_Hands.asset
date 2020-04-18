@@ -35,6 +35,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
   m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
+  id: 487d462e-8aaf-4b92-b1d4-3baa7b783b14
   graph: {fileID: 11400000}
   position: {x: -952, y: -40}
   ports:
@@ -80,6 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
   m_Name: OUTPUT
   m_EditorClassIdentifier: 
+  id: faa37595-2e79-4ce9-b806-b117ac98374f
   graph: {fileID: 11400000}
   position: {x: 1160, y: -200}
   ports:
@@ -113,6 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
   m_Name: MACHINE LEARNING SYSTEM
   m_EditorClassIdentifier: 
+  id: 97555252-861f-43d5-91ae-a77673125691
   graph: {fileID: 11400000}
   position: {x: 488, y: -216}
   ports:
@@ -189,6 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 051a7e150efca304da37d460de663b87, type: 3}
   m_Name: LIVE VELOCITY DATA
   m_EditorClassIdentifier: 
+  id: 60b2c12d-8a7f-4ea4-8d94-556f20abee01
   graph: {fileID: 11400000}
   position: {x: -712, y: 232}
   ports:
@@ -244,6 +248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
   m_Name: TEACH THE MACHINE
   m_EditorClassIdentifier: 
+  id: 1dadd56b-fbe7-4b4a-88a7-a64aa8051a98
   graph: {fileID: 11400000}
   position: {x: -360, y: -344}
   ports:
@@ -297,6 +302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
   m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
+  id: f92d96a8-e697-4706-ac98-f25568ac09a4
   graph: {fileID: 11400000}
   position: {x: -1272, y: -40}
   ports:
@@ -328,6 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
   m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
+  id: 64f8c216-5c64-432d-9cb9-6bf58b340b47
   graph: {fileID: 11400000}
   position: {x: -184, y: -488}
   ports:
@@ -352,6 +359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
   m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
+  id: fa57a31f-0d3a-4b40-86ad-f68ea20139ab
   graph: {fileID: 11400000}
   position: {x: -184, y: 184}
   ports:
@@ -371,6 +379,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
   m_Name: TEACH THE MACHINE
   m_EditorClassIdentifier: 
+  id: cf687b6c-03f2-415d-be56-10378e7bb7c0
   graph: {fileID: 11400000}
   position: {x: -344, y: 328}
   ports:

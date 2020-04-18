@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
   m_Name: MACHINE LEARNING SYSTEM
   m_EditorClassIdentifier: 
+  id: d3d7de15-9b38-44f2-86ff-49eb7b5cf0d7
   graph: {fileID: 11400000}
-  position: {x: 216, y: -200}
+  position: {x: 200, y: -200}
   ports:
     keys:
     - IMLTrainingExamplesNodes
@@ -44,7 +45,10 @@ MonoBehaviour:
       _node: {fileID: -8938667438107283702}
       _typeQualifiedName: InteractML.IMLConfiguration, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: IMLModelOutputs
+        node: {fileID: -335438980410410229}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -75,6 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
   m_Name: TEACH THE MACHINE
   m_EditorClassIdentifier: 
+  id: cbad96f0-f322-45e4-8392-f03d2f851766
   graph: {fileID: 11400000}
   position: {x: -312, y: -184}
   ports:
@@ -130,6 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 051a7e150efca304da37d460de663b87, type: 3}
   m_Name: LIVE VELOCITY DATA
   m_EditorClassIdentifier: 
+  id: 96cf1abf-fa72-4c3c-8cfe-6e37d4b72aff
   graph: {fileID: 11400000}
   position: {x: -840, y: -40}
   ports:
@@ -183,6 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
   m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
+  id: cdde1f5b-af2a-4f50-81fb-08f20d2c2f63
   graph: {fileID: 11400000}
   position: {x: -1256, y: -264}
   ports:
@@ -234,6 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
   m_Name: TEXT NOTE
   m_EditorClassIdentifier: 
+  id: 2f91c2b0-373d-43f2-80e4-f0a35ea796c6
   graph: {fileID: 11400000}
   position: {x: -504, y: -760}
   ports:
@@ -253,6 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aac2c9734bc7f9c4bba814ad6ad827d2, type: 3}
   m_Name: LIVE INT DATA
   m_EditorClassIdentifier: 
+  id: fabc9ac9-78ac-44dd-934a-01265d4fa609
   graph: {fileID: 11400000}
   position: {x: -1256, y: -968}
   ports:
@@ -292,6 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e8312b300ccdb4784b431dbd6ddf11, type: 3}
   m_Name: LIVE ROTATION DATA
   m_EditorClassIdentifier: 
+  id: 283331f9-d3f8-4a4f-9fc5-7bdaf373cc11
   graph: {fileID: 11400000}
   position: {x: -1256, y: -568}
   ports:
@@ -339,6 +349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
   m_Name: OUTPUT
   m_EditorClassIdentifier: 
+  id: 25d4d252-d850-439d-b209-f25662f89259
   graph: {fileID: 11400000}
   position: {x: 664, y: -168}
   ports:
@@ -348,7 +359,10 @@ MonoBehaviour:
     - _fieldName: IMLModelOutputs
       _node: {fileID: -335438980410410229}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: ModelOutput
+        node: {fileID: -8938667438107283702}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -368,6 +382,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bffaa18ed98b0d942b9f429eb8ca06fb, type: 3}
   m_Name: LIVE FLOAT DATA
   m_EditorClassIdentifier: 
+  id: 0872d1a1-b96c-400d-94df-8db8c141e1aa
   graph: {fileID: 11400000}
   position: {x: -1256, y: -760}
   ports:
@@ -439,6 +454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
   m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
+  id: fd364e25-1b3b-4864-a1d2-21751044d8cb
   graph: {fileID: 11400000}
   position: {x: -1576, y: -440}
   ports:
@@ -473,6 +489,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00b690a08c1f254a94f7a277199f27a, type: 3}
   m_Name: LIVE VECTOR4 DATA
   m_EditorClassIdentifier: 
+  id: 0f170e4d-c1f9-43d2-a18d-19cef00d6a13
   graph: {fileID: 11400000}
   position: {x: -1256, y: 536}
   ports:
@@ -518,6 +535,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ad8b84fa1e1ffb4fb4145f15376e710, type: 3}
   m_Name: LIVE VECTOR2 DATA
   m_EditorClassIdentifier: 
+  id: 77474cb2-76d4-4f5f-a829-31b81a85f12d
   graph: {fileID: 11400000}
   position: {x: -1256, y: 40}
   ports:
@@ -557,6 +575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842a83d23f8374e41b4f966b7c1548a3, type: 3}
   m_Name: LIVE DISTANCE DATA
   m_EditorClassIdentifier: 
+  id: 33df87a5-390b-4be8-84b9-066515c8c8e2
   graph: {fileID: 11400000}
   position: {x: -904, y: -280}
   ports:
@@ -609,6 +628,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91d5b2c98ef7df34f8a142d223be5aa6, type: 3}
   m_Name: LIVE VECTOR3 DATA
   m_EditorClassIdentifier: 
+  id: eb880431-46b8-4499-bf48-071d1d3f4f4c
   graph: {fileID: 11400000}
   position: {x: -1256, y: 280}
   ports:
@@ -653,6 +673,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a7fb39dae2da8543b63abe66d03fe1f, type: 3}
   m_Name: LIVE SERIAL VECTOR DATA
   m_EditorClassIdentifier: 
+  id: f05a6b20-144a-4ac7-be5e-b2e680e41ee1
   graph: {fileID: 11400000}
   position: {x: -1256, y: 792}
   ports:

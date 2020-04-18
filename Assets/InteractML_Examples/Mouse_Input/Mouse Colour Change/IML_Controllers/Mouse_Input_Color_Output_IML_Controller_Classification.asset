@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
   m_Name: OUTPUT
   m_EditorClassIdentifier: 
+  id: d636a681-b7de-4987-b1d9-bd9c2624eeb2
   graph: {fileID: 11400000}
   position: {x: 984, y: -184}
   ports:
@@ -81,6 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
   m_Name: MACHINE LEARNING SYSTEM
   m_EditorClassIdentifier: 
+  id: 3956734b-1af8-4847-89a5-a21ce60a79e4
   graph: {fileID: 11400000}
   position: {x: 520, y: -216}
   ports:
@@ -174,8 +176,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5e8312b300ccdb4784b431dbd6ddf11, type: 3}
   m_Name: Extract Rotation
   m_EditorClassIdentifier: 
+  id: af036725-636a-4cee-9e1d-a99c2c966958
   graph: {fileID: 11400000}
-  position: {x: -520, y: -40}
+  position: {x: -472, y: 8}
   ports:
     keys:
     - GameObjectDataIn
@@ -224,6 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
   m_Name: Text Note
   m_EditorClassIdentifier: 
+  id: 3dac4e56-92d6-4153-a0de-d274ee0d36d6
   graph: {fileID: 11400000}
   position: {x: -1240, y: -200}
   ports:
@@ -243,8 +247,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
   m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
+  id: d91d017b-2959-4112-87b6-9caf2bc4ad6f
   graph: {fileID: 11400000}
-  position: {x: -440, y: -328}
+  position: {x: -408, y: -312}
   ports:
     keys:
     - LiveDataOut
@@ -294,6 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
   m_Name: TEACH THE MACHINE
   m_EditorClassIdentifier: 
+  id: 96007e64-c9a2-4461-8bb8-b5e2a9e8dcbd
   graph: {fileID: 11400000}
   position: {x: -88, y: -264}
   ports:
@@ -353,8 +359,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
   m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
+  id: 23660e2a-f57b-491a-b4b0-3594cdff4e3f
   graph: {fileID: 11400000}
-  position: {x: -856, y: -264}
+  position: {x: -712, y: -296}
   ports:
     keys:
     - GameObjectDataOut

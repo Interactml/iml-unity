@@ -17,6 +17,30 @@ namespace InteractML
             base.OnOpen();
            
             window.titleContent.text = "InteractML";
+
+            // Set the background color and highlight color
+            NodeEditorPreferences.GetSettings().highlightColor = hexToColor("21203B");
+            NodeEditorPreferences.GetSettings().gridLineColor = hexToColor("21203B");
+            NodeEditorPreferences.GetSettings().gridBgColor = hexToColor("21203B");
+            
+            //Clone keys so we can enumerate the dictionary and make changes.
+            var typeColorKeys = new List<Type>(typeColors.Keys);
+
+            //Display type colors. Save them if they are edited by the user
+            foreach (var type in typeColorKeys) {
+                string typeColorKey = NodeEditorUtilities.PrettyName(type);
+                Color col = typeColors[type];
+                EditorGUI.BeginChangeCheck();
+                EditorGUILayout.BeginHorizontal();
+                col = EditorGUILayout.ColorField(typeColorKey, col);
+                EditorGUILayout.EndHorizontal();
+                if (EditorGUI.EndChangeCheck()) {
+                    typeColors[type] = col;
+                    if (settings.typeColors.ContainsKey(typeColorKey)) settings.typeColors[typeColorKey] = col;
+                    else settings.typeColors.Add(typeColorKey, col);
+                    SavePrefs(key, settings);
+                    NodeEditorWindow.RepaintAll();
+                }
             
         }
 
@@ -25,9 +49,27 @@ namespace InteractML
         {
             return new NodeEditorPreferences.Settings()
             {
-                gridBgColor = Color.white,
-                gridLineColor = Color.white
+                gridBgColor = hexToColor("21203B"),
+                gridLineColor = hexToColor("21203B"),
+                highlightColor = hexToColor("21203B"),
+                typeColors = 
             };
+        }
+
+        public static Color hexToColor(string hex)
+        {
+            hex = hex.Replace("0x", "");//in case the string is formatted 0xFFFFFF
+            hex = hex.Replace("#", "");//in case the string is formatted #FFFFFF
+            byte a = 255;//assume fully visible unless specified in hex
+            byte r = byte.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+            byte g = byte.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+            byte b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+            //Only use alpha if the string has enough characters
+            if (hex.Length == 8)
+            {
+                a = byte.Parse(hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
+            }
+            return new Color32(r, g, b, a);
         }
 
         /// <summary> 
