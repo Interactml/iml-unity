@@ -5686,7 +5686,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 589655437}
-  - component: {fileID: 589655436}
   m_Layer: 0
   m_Name: IML Bridge
   m_TagString: Untagged
@@ -5694,23 +5693,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &589655436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 589655435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dc44e5a7e518c8428667ab348958906, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MLComponent: {fileID: 138508038}
-  ValueToSend: 4.08
-  ValueToPull: 0
-  ValueToSendInt: 18
-  ValueToPullInt: 32
 --- !u!4 &589655437
 Transform:
   m_ObjectHideFlags: 0
@@ -9964,6 +9946,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d5f4cf9fda152478a82c01bff7653a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1025327144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1025327142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61cbf392e9d77d94c9ce25cb01b9a2b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IMLSystem: {fileID: 138508038}
+  HeadRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &1029798595
 GameObject:
   m_ObjectHideFlags: 0
@@ -20607,6 +20603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51141e9e1b75bb6479d15699da98e222, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IMLSystem: {fileID: 138508038}
   PushStrength: 30
   PushDirection: {x: 0, y: 0, z: 1}
   IsBoxInSight: 0
