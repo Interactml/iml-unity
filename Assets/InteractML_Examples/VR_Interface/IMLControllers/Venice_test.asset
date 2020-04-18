@@ -39,7 +39,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: IMLTrainingExamplesNodes
-        node: {fileID: 3841766963541852053}
+        node: {fileID: 6044388257640685099}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -98,10 +98,10 @@ MonoBehaviour:
         node: {fileID: -8545169889257079770}
         reroutePoints: []
       - fieldName: InputFeatures
-        node: {fileID: 3841766963541852053}
+        node: {fileID: 6044388257640685099}
         reroutePoints:
-        - {x: -111.65911, y: 308.71518}
-        - {x: 377.24802, y: 323.3406}
+        - {x: -21.045166, y: 469.17612}
+        - {x: 612.3497, y: 428.07797}
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
   ValueName: HeadRotation
   m_In: {x: 0, y: 0, z: 0}
   m_Value: {x: 0, y: 272.99997, z: 0}
-  m_Out: {x: -0, y: 54.499992, z: 0}
+  m_Out: {x: 0, y: 272.99997, z: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,11 +125,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: -8545169889257079770}
-  - {fileID: 3841766963541852053}
   - {fileID: -4193609153758654436}
   - {fileID: 8999848260519867326}
+  - {fileID: 6044388257640685099}
   SceneComponent: {fileID: 0}
---- !u!114 &3841766963541852053
+--- !u!114 &6044388257640685099
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,20 +138,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: faa3d240afe66244598eab89bc05b66b, type: 3}
-  m_Name: CRIML Configuration
+  m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
+  m_Name: IML Configuration
   m_EditorClassIdentifier: 
-  id: b2ecf161-d1ae-4aee-b048-62b3552890b7
+  id: 5d20741d-177f-4436-815e-9b94369f2433
   graph: {fileID: 11400000}
-  position: {x: 568, y: -184}
+  position: {x: 696, y: -248}
   ports:
     keys:
     - IMLTrainingExamplesNodes
     - InputFeatures
     - ModelOutput
+    - Output 0
     values:
     - _fieldName: IMLTrainingExamplesNodes
-      _node: {fileID: 3841766963541852053}
+      _node: {fileID: 6044388257640685099}
       _typeQualifiedName: System.Collections.Generic.List`1[[InteractML.TrainingExamplesNode,
         Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
         mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -164,7 +165,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: InputFeatures
-      _node: {fileID: 3841766963541852053}
+      _node: {fileID: 6044388257640685099}
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
@@ -177,7 +178,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: ModelOutput
-      _node: {fileID: 3841766963541852053}
+      _node: {fileID: 6044388257640685099}
       _typeQualifiedName: InteractML.IMLConfiguration, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections: []
@@ -185,6 +186,15 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: Output 0
+      _node: {fileID: 6044388257640685099}
+      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   DevMode: 0
   IMLTrainingExamplesNodes:
   - {fileID: -8545169889257079770}
@@ -195,19 +205,15 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  DelayedPredictedOutput:
-  - -0.3414782184826781
-  - 1.2255715857278557
-  - -0.3414782184826781
+  DelayedPredictedOutput: []
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 03000000
   m_LearningType: 0
-  EnableKeyboardControl: 1
-  TrainingKey: 116
-  RunningKey: 114
+  EnableKeyboardControl: 0
+  TrainingKey: 0
+  RunningKey: 0
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
-  learningChoice: 0
 --- !u!114 &8999848260519867326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,7 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: f39777b9-157b-4297-9ff7-0e7eaa8c85e3
   graph: {fileID: 11400000}
-  position: {x: 1224, y: 40}
+  position: {x: 1256, y: -40}
   ports:
     keys:
     - m_In

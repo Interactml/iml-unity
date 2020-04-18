@@ -421,6 +421,7 @@ namespace InteractML
                     {
                         case IMLSpecifications.DataTypes.Float:
                             EditorGUILayout.FloatField("Output " + (i+1) + ": ", outputFeature.Values[0]);
+                            NodeEditorGUILayout.PortField(IMLConfigNode.GetOutputPort("PredictedOutput"));
                             break;
                         case IMLSpecifications.DataTypes.Integer:
                             EditorGUILayout.IntField("Output " + (i + 1) + ": ", (int) outputFeature.Values[0]);
@@ -432,6 +433,8 @@ namespace InteractML
                         case IMLSpecifications.DataTypes.Vector3:
                             Vector3 valuesV3 = new Vector3(outputFeature.Values[0], outputFeature.Values[1], outputFeature.Values[2]);
                             EditorGUILayout.Vector3Field("Output " + (i + 1) + ": ", valuesV3);
+                            NodeEditorGUILayout.PortField(IMLConfigNode.GetOutputPort("PredictedOutput"));
+                            NodeEditorGUILayout.PortField(IMLConfigNode.GetOutputPort("Output " + i));
                             break;
                         case IMLSpecifications.DataTypes.Vector4:
                             Vector4 valuesV4 = new Vector4(outputFeature.Values[0], outputFeature.Values[1], outputFeature.Values[2], outputFeature.Values[3]);

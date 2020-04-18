@@ -53,6 +53,7 @@ namespace InteractML
         [SerializeField, HideInInspector]
         protected List<IMLSpecifications.OutputsEnum> m_ExpectedOutputList;
         public List<IMLSpecifications.OutputsEnum> ExpectedOutputList { get { return m_ExpectedOutputList; } }
+        private List<NodePort> m_DynamicOutputPorts;
 
 
         /// <summary>
@@ -157,6 +158,8 @@ namespace InteractML
             base.OnCreateConnection(from, to);
 
             m_NodeConnectionChanged = true;
+
+            Debug.Log("Connection to port " + to.node.name + " created!");
 
             // We call logic for adapting arrays and inputs/outputs for ML models
             // Create input feature vector for realtime rapidlib predictions
@@ -739,9 +742,20 @@ namespace InteractML
             // Make sure that the output list is initialised
             if (m_ExpectedOutputList == null)
                 m_ExpectedOutputList = new List<IMLSpecifications.OutputsEnum>();
+            // Make sure the dynamic port list is initialised
+            if (m_DynamicOutputPorts == null)
+                m_DynamicOutputPorts = new List<NodePort>();
 
             // Adjust the expected outputs list based on training node connected
             m_ExpectedOutputList.Clear();
+            // Clear the content of the dynamic output node list for a fresh start
+            foreach (var outputPort in m_DynamicOutputPorts)
+            {
+                //m_DynamicOutputPorts.Remove(outputPort);
+                this.RemoveDynamicPort(outputPort);
+            }
+            m_DynamicOutputPorts.Clear();
+
 
             // Loop through all training examples nodes connected
             foreach (var trainingExamplesNode in IMLTrainingExamplesNodes)
@@ -787,7 +801,43 @@ namespace InteractML
                     }
                 }
             }
-        
+
+            // Add as many output ports as we have expected outputs. It will be drawn in the Editor class
+            for (int i = 0; i < m_ExpectedOutputList.Count; i++)
+            {
+                var expectedOutput = m_ExpectedOutputList[i];
+                NodePort dynamicOutputPort;
+                // Add a specific kind of type for the output node depending on the expected type
+                switch (expectedOutput)
+                {
+                    case IMLSpecifications.OutputsEnum.Float:
+                        dynamicOutputPort = AddDynamicOutput(typeof(float), fieldName: "Output " + i);
+                        break;
+                    case IMLSpecifications.OutputsEnum.Integer:
+                        dynamicOutputPort = AddDynamicOutput(typeof(int), fieldName: "Output " + i);
+                        break;
+                    case IMLSpecifications.OutputsEnum.Vector2:
+                        dynamicOutputPort = AddDynamicOutput(typeof(Vector2), fieldName: "Output " + i);
+                        break;
+                    case IMLSpecifications.OutputsEnum.Vector3:
+                        dynamicOutputPort = AddDynamicOutput(typeof(Vector3), fieldName: "Output " + i);
+                        break;
+                    case IMLSpecifications.OutputsEnum.Vector4:
+                        dynamicOutputPort = AddDynamicOutput(typeof(Vector4), fieldName: "Output " + i);
+                        break;
+                    case IMLSpecifications.OutputsEnum.SerialVector:
+                        dynamicOutputPort = AddDynamicOutput(typeof(float[]), fieldName: "Output " + i);
+                        break;
+                    default:
+                        dynamicOutputPort = null;
+                        break;
+                }
+                // If we got one to add, we add it
+                if (dynamicOutputPort != null)
+                    m_DynamicOutputPorts.Add(dynamicOutputPort);
+
+            }
+
 
         }
 
