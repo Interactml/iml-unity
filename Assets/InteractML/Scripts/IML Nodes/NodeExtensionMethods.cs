@@ -24,7 +24,6 @@ namespace InteractML
                 List<Node> nodesConnected = new List<Node>();
                 foreach (var connection in portsConnected)
                 {
-                    Debug.Log(connection.node.name + " is connected");
                     nodesConnected.Add(connection.node);
                 }
                 // Return the nodes from all the connections
