@@ -705,7 +705,7 @@ namespace InteractML
         protected void UpdateInputConfigList()
         {
             // Get values from the input list
-            InputFeatures = GetInputValues<Node>("InputFeatures").ToList();
+            InputFeatures = this.GetInputNodesConnected("InputFeatures");
 
             // Make sure that the list is initialised
             if (m_ExpectedInputList == null)
