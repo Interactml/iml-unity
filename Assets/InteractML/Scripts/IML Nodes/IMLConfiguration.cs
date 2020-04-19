@@ -134,6 +134,9 @@ namespace InteractML
         [HideInInspector]
         public bool RunOnAwake;
 
+        /* ERROR FLAGS */
+        private bool m_ErrorWrongInputTrainingExamplesPort;
+
         #endregion
 
         #region XNode Messages
@@ -159,6 +162,25 @@ namespace InteractML
 
             m_NodeConnectionChanged = true;
 
+            // If it was a connection to this node and the field is the training examples input port...
+            if (to.node is IMLConfiguration && to.fieldName == "IMLTrainingExamplesNodes")
+            {
+                TrainingExamplesNode examplesNode = from.node as TrainingExamplesNode;
+                // We check that the connection is from a training examples node
+                if (examplesNode != null)
+                {
+                    // Update dynamic ports for output
+                    AddDynamicOutputPorts(examplesNode, ref m_DynamicOutputPorts);
+                }
+                // If not, we break connection
+                else
+                {
+                    from.Disconnect(to);
+                    // Prepare flag to 
+                    m_ErrorWrongInputTrainingExamplesPort = true;
+                }
+            }
+
             Debug.Log("Connection to port " + to.node.name + " created!");
 
             // We call logic for adapting arrays and inputs/outputs for ML models
@@ -175,6 +197,15 @@ namespace InteractML
             base.OnRemoveConnection(port);
 
             m_NodeConnectionChanged = true;
+
+            UpdateOutputConfigList();
+
+            // IF expected outputs don't match with dynamic output ports, a training examples node was disconnected
+            if (m_ExpectedOutputList.Count != m_DynamicOutputPorts.Count)
+            {
+                // Refresh all dynamic output ports to the right size
+                UpdateDynamicOutputPorts(IMLTrainingExamplesNodes, ref m_DynamicOutputPorts);
+            }
 
             // We call logic for adapting arrays and inputs/outputs for ML models
             // Create input feature vector for realtime rapidlib predictions
@@ -211,6 +242,8 @@ namespace InteractML
             // Create rapidlib predicted output vector
             CreateRapidLibOutputVector();
 
+            // Set error flags to false
+            SetErrorFlags(false);
         }
 
         public void OnDestroy()
@@ -742,20 +775,9 @@ namespace InteractML
             // Make sure that the output list is initialised
             if (m_ExpectedOutputList == null)
                 m_ExpectedOutputList = new List<IMLSpecifications.OutputsEnum>();
-            // Make sure the dynamic port list is initialised
-            if (m_DynamicOutputPorts == null)
-                m_DynamicOutputPorts = new List<NodePort>();
 
             // Adjust the expected outputs list based on training node connected
             m_ExpectedOutputList.Clear();
-            // Clear the content of the dynamic output node list for a fresh start
-            foreach (var outputPort in m_DynamicOutputPorts)
-            {
-                //m_DynamicOutputPorts.Remove(outputPort);
-                this.RemoveDynamicPort(outputPort);
-            }
-            m_DynamicOutputPorts.Clear();
-
 
             // Loop through all training examples nodes connected
             foreach (var trainingExamplesNode in IMLTrainingExamplesNodes)
@@ -800,47 +822,121 @@ namespace InteractML
                         }
                     }
                 }
-            }
+            }          
 
-            // Add as many output ports as we have expected outputs. It will be drawn in the Editor class
-            for (int i = 0; i < m_ExpectedOutputList.Count; i++)
+        }
+
+        /// <summary>
+        /// Adds output ports to the list of dynamic output ports (drawn in the editor class)
+        /// </summary>
+        /// <param name="trainingExamples"></param>
+        /// <param name="outputPorts"></param>
+        protected void AddDynamicOutputPorts(TrainingExamplesNode trainingExamples, ref List<NodePort> outputPorts)
+        {
+            // Make sure the dynamic port list is initialised
+            if (outputPorts == null)
+                outputPorts = new List<NodePort>();
+
+            // Add as many output ports as we have output types in the training examples node. It will be drawn in the Editor class
+            for (int i = 0; i < trainingExamples.DesiredOutputsConfig.Count; i++)
             {
-                var expectedOutput = m_ExpectedOutputList[i];
+                // Get reference to current expected output
+                var expectedOutput = trainingExamples.DesiredOutputsConfig[i];
+                // Prepare output port
                 NodePort dynamicOutputPort;
-                // Add a specific kind of type for the output node depending on the expected type
+                // Add a specific kind of type for the output node depending on the expected type. The index will be the current length of the outputPorts list (since we are adding new ones, it will constantly increase)
                 switch (expectedOutput)
                 {
                     case IMLSpecifications.OutputsEnum.Float:
-                        dynamicOutputPort = AddDynamicOutput(typeof(float), fieldName: "Output " + i);
+                        dynamicOutputPort = AddDynamicOutput(typeof(float), fieldName: "Output " + outputPorts.Count);
                         break;
                     case IMLSpecifications.OutputsEnum.Integer:
-                        dynamicOutputPort = AddDynamicOutput(typeof(int), fieldName: "Output " + i);
+                        dynamicOutputPort = AddDynamicOutput(typeof(int), fieldName: "Output " + outputPorts.Count);
                         break;
                     case IMLSpecifications.OutputsEnum.Vector2:
-                        dynamicOutputPort = AddDynamicOutput(typeof(Vector2), fieldName: "Output " + i);
+                        dynamicOutputPort = AddDynamicOutput(typeof(Vector2), fieldName: "Output " + outputPorts.Count);
                         break;
                     case IMLSpecifications.OutputsEnum.Vector3:
-                        dynamicOutputPort = AddDynamicOutput(typeof(Vector3), fieldName: "Output " + i);
+                        dynamicOutputPort = AddDynamicOutput(typeof(Vector3), fieldName: "Output " + outputPorts.Count);
                         break;
                     case IMLSpecifications.OutputsEnum.Vector4:
-                        dynamicOutputPort = AddDynamicOutput(typeof(Vector4), fieldName: "Output " + i);
+                        dynamicOutputPort = AddDynamicOutput(typeof(Vector4), fieldName: "Output " + outputPorts.Count);
                         break;
                     case IMLSpecifications.OutputsEnum.SerialVector:
-                        dynamicOutputPort = AddDynamicOutput(typeof(float[]), fieldName: "Output " + i);
+                        dynamicOutputPort = AddDynamicOutput(typeof(float[]), fieldName: "Output " + outputPorts.Count);
                         break;
                     default:
                         dynamicOutputPort = null;
                         break;
                 }
-                // If we got one to add, we add it
+
+                // If we got one output port to add, we add it
                 if (dynamicOutputPort != null)
-                    m_DynamicOutputPorts.Add(dynamicOutputPort);
+                    outputPorts.Add(dynamicOutputPort);
+
+            }
+        }
+        
+        /// <summary>
+        /// Removes output ports from the list of dynamic output ports (the last batch added)
+        /// </summary>
+        /// <param name="traininingExamples"></param>
+        /// <param name="outputPorts"></param>
+        protected void RemoveDynamicOutputPorts(TrainingExamplesNode trainingExamples, ref List<NodePort> outputPorts)
+        {
+            // Make sure the dynamic port list is initialised
+            if (outputPorts == null)
+            {
+                outputPorts = new List<NodePort>();
+                // If we don't have any to remove, then just exit the method
+                return;
+            }
+
+            // Select ports to remove. Assume that we will be removing the last output ports we added
+            List<NodePort> portsToRemove = new List<NodePort>(outputPorts.GetRange(outputPorts.Count - (trainingExamples.DesiredOutputsConfig.Count) - 1, trainingExamples.DesiredOutputsConfig.Count));
+            
+            // Remove those ports from local list
+            outputPorts.RemoveRange(outputPorts.Count - (trainingExamples.DesiredOutputsConfig.Count) - 1, trainingExamples.DesiredOutputsConfig.Count);
+            
+            // Remove ports from node parent class
+            for (int i = 0; i < portsToRemove.Count; i++)
+            {
+                // Get reference
+                var port = portsToRemove[i];
+                // Remove from list first
+                portsToRemove.Remove(port);
+                // Remove from node parent class
+                RemoveDynamicPort(port);
 
             }
 
-
         }
 
+        protected void UpdateDynamicOutputPorts(List<TrainingExamplesNode> trainingExamplesNodes, ref List<NodePort> outputPorts)
+        {
+            // Make sure the dynamic port list is initialised
+            if (outputPorts == null)
+                outputPorts = new List<NodePort>();
+
+            // Clear entire local list
+            outputPorts.Clear();
+            // Use local list as a copy of parent class list
+            outputPorts = DynamicOutputs.ToList();
+            // Clear all dynamic outputs for a fresh start
+            for (int i = 0; i < outputPorts.Count(); i++)
+            {
+                var outputPort = outputPorts[i];
+                RemoveDynamicPort(outputPort);
+            }
+            // Clear entire local list again for a fresh start
+            outputPorts.Clear();
+
+            // Add output ports per training examples
+            foreach (var trainingExamples in trainingExamplesNodes)
+            {
+                AddDynamicOutputPorts(trainingExamples, ref outputPorts);
+            }
+        }
 
         protected virtual void OverrideModel(IMLSpecifications.LearningType learningType)
         {
@@ -1063,6 +1159,15 @@ namespace InteractML
 
             }
 
+        }
+
+        /// <summary>
+        /// Sets all error flags to the value passed in
+        /// </summary>
+        /// <param name="value"></param>
+        protected void SetErrorFlags(bool value)
+        {
+            m_ErrorWrongInputTrainingExamplesPort = value;
         }
 
 #endregion

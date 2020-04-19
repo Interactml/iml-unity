@@ -421,20 +421,17 @@ namespace InteractML
                     {
                         case IMLSpecifications.DataTypes.Float:
                             EditorGUILayout.FloatField("Output " + (i+1) + ": ", outputFeature.Values[0]);
-                            NodeEditorGUILayout.PortField(IMLConfigNode.GetOutputPort("PredictedOutput"));
                             break;
                         case IMLSpecifications.DataTypes.Integer:
                             EditorGUILayout.IntField("Output " + (i + 1) + ": ", (int) outputFeature.Values[0]);
                             break;
                         case IMLSpecifications.DataTypes.Vector2:
                             Vector2 values = new Vector2(outputFeature.Values[0], outputFeature.Values[1]);
-                            EditorGUILayout.Vector2Field("Output " + (i + 1) + ": ", values);                       
+                            EditorGUILayout.Vector2Field("Output " + (i + 1) + ": ", values);                   
                             break;
                         case IMLSpecifications.DataTypes.Vector3:
                             Vector3 valuesV3 = new Vector3(outputFeature.Values[0], outputFeature.Values[1], outputFeature.Values[2]);
                             EditorGUILayout.Vector3Field("Output " + (i + 1) + ": ", valuesV3);
-                            NodeEditorGUILayout.PortField(IMLConfigNode.GetOutputPort("PredictedOutput"));
-                            NodeEditorGUILayout.PortField(IMLConfigNode.GetOutputPort("Output " + i));
                             break;
                         case IMLSpecifications.DataTypes.Vector4:
                             Vector4 valuesV4 = new Vector4(outputFeature.Values[0], outputFeature.Values[1], outputFeature.Values[2], outputFeature.Values[3]);
@@ -453,16 +450,8 @@ namespace InteractML
                             break;
                     }
 
-                    // DEBUG CODE
-                    //if (IMLConfigNode.Running && outputFeature.Values.Length > 0)
-                    //{
-                    //    for (int j = 0; j < outputFeature.Values.Length; j++)
-                    //    {
-                    //        Debug.Log(outputFeature.Values[j]);
-
-                    //    }
-
-                    //}
+                    // Draw corresponding port field
+                    NodeEditorGUILayout.PortField(IMLConfigNode.GetOutputPort("Output " + i));
 
                 }
             }
