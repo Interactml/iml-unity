@@ -9,6 +9,10 @@ namespace InteractML.DataTypeNodes
         {
             get
             {
+                // Make sure feature value is never null
+                if (m_FeatureValues == null)
+                    m_FeatureValues = new IMLVector2();
+
                 // Update local IML Data copy
                 m_FeatureValues.SetValues(Value);
                 return m_FeatureValues;
