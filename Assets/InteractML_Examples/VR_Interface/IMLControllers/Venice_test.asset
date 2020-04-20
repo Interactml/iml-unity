@@ -53,12 +53,12 @@ MonoBehaviour:
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
   m_DesiredInputsConfig: 03000000
-  m_DesiredOutputsConfig: 03000000
+  m_DesiredOutputsConfig: 030000000000000000000000
   IMLConfigurationNodesConnected: []
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableKeyboardControl: 1
+  EnableKeyboardControl: 0
   RecordDataKey: 99
 --- !u!114 &-4193609153758654436
 MonoBehaviour:
@@ -74,7 +74,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: dcf8fcc4-fe18-4417-b1d8-e2792b71c44a
   graph: {fileID: 11400000}
-  position: {x: -456, y: -104}
+  position: {x: -504, y: -104}
   ports:
     keys:
     - m_In
@@ -100,8 +100,8 @@ MonoBehaviour:
       - fieldName: InputFeatures
         node: {fileID: 6044388257640685099}
         reroutePoints:
-        - {x: -21.045166, y: 469.17612}
-        - {x: 612.3497, y: 428.07797}
+        - {x: -96, y: 448}
+        - {x: 464, y: 400}
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -109,7 +109,7 @@ MonoBehaviour:
   DevMode: 0
   ValueName: HeadRotation
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 0, y: 272.99997, z: 0}
+  m_Value: {x: 0, y: 237.69992, z: 0}
   m_Out: {x: 0, y: 272.99997, z: 0}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -143,13 +143,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 5d20741d-177f-4436-815e-9b94369f2433
   graph: {fileID: 11400000}
-  position: {x: 696, y: -248}
+  position: {x: 600, y: -264}
   ports:
     keys:
     - IMLTrainingExamplesNodes
     - InputFeatures
     - ModelOutput
     - Output 0
+    - Output 1
+    - Output 2
     values:
     - _fieldName: IMLTrainingExamplesNodes
       _node: {fileID: 6044388257640685099}
@@ -190,6 +192,27 @@ MonoBehaviour:
       _node: {fileID: 6044388257640685099}
       _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: m_In
+        node: {fileID: 8999848260519867326}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Output 1
+      _node: {fileID: 6044388257640685099}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Output 2
+      _node: {fileID: 6044388257640685099}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections: []
       _direction: 1
       _connectionType: 0
@@ -205,9 +228,16 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  DelayedPredictedOutput: []
+  - 0
+  - 0
+  DelayedPredictedOutput:
+  - 0
+  - 1
+  - 0
+  - 0
+  - 0
   m_ExpectedInputList: 03000000
-  m_ExpectedOutputList: 03000000
+  m_ExpectedOutputList: 030000000000000000000000
   m_LearningType: 0
   EnableKeyboardControl: 0
   TrainingKey: 0
@@ -228,7 +258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: f39777b9-157b-4297-9ff7-0e7eaa8c85e3
   graph: {fileID: 11400000}
-  position: {x: 1256, y: -40}
+  position: {x: 1144, y: -104}
   ports:
     keys:
     - m_In
@@ -238,7 +268,10 @@ MonoBehaviour:
       _node: {fileID: 8999848260519867326}
       _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: Output 0
+        node: {fileID: 6044388257640685099}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -255,5 +288,5 @@ MonoBehaviour:
   DevMode: 0
   ValueName: PushDirection
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 0, y: 0, z: 1}
-  m_Out: {x: 0, y: 0, z: 0}
+  m_Value: {x: 0, y: 1, z: 0}
+  m_Out: {x: 0, y: 0, z: 1}
