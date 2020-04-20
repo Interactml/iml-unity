@@ -1398,9 +1398,9 @@ MonoBehaviour:
       m_Top: 5
       m_Bottom: 0
     m_Padding:
-      m_Left: 0
+      m_Left: 20
       m_Right: 0
-      m_Top: 0
+      m_Top: 20
       m_Bottom: 0
     m_Overflow:
       m_Left: 0

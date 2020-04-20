@@ -63,14 +63,12 @@ namespace InteractML.FeatureExtractors
             ShowExtractPositionNodePorts();
 
             // Draw the body
-            EditorGUI.indentLevel++;
             DrawBodyLayout();
             ShowExtractedPositionValues();
 
             // Draw local space toggle
             DrawSubBodyLayout();
             ShowLocalSpaceToggle();
-            EditorGUI.indentLevel--;
         }
 
 
@@ -153,7 +151,7 @@ namespace InteractML.FeatureExtractors
             GUILayout.BeginHorizontal();
             
             GUIContent inputPortLabel = new GUIContent("GameObject \nData In");
-             IMLNodeEditor.PortField(inputPortLabel, m_ExtractPosition.GetInputPort("GameObjectDataIn"), skin.GetStyle("Port Label"), GUILayout.MinWidth(0));
+            IMLNodeEditor.PortField(inputPortLabel, m_ExtractPosition.GetInputPort("GameObjectDataIn"), skin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUIContent outputPortLabel = new GUIContent("Live Data\n Out");
             IMLNodeEditor.PortField(outputPortLabel, m_ExtractPosition.GetOutputPort("LiveDataOut"), skin.GetStyle("Port Label"), GUILayout.MinWidth(0));
@@ -168,17 +166,13 @@ namespace InteractML.FeatureExtractors
         {
             GUILayout.BeginArea(bodySection);
 
-            EditorGUILayout.Space();
-            EditorGUILayout.Space();
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField(" x: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[0], 3).ToString(), skin.GetStyle("Node Body Label"));
-            EditorGUILayout.Space();
 
-            EditorGUILayout.LabelField(" y: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[1], 3).ToString(), skin.GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField("x: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[0], 3).ToString(), skin.GetStyle("Node Body Label"));
             EditorGUILayout.Space();
+            EditorGUILayout.LabelField("y: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[1], 3).ToString(), skin.GetStyle("Node Body Label"));
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("z: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[2], 3).ToString(), skin.GetStyle("Node Body Label"));
 
-            EditorGUILayout.LabelField(" z: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[2], 3).ToString(), skin.GetStyle("Node Body Label"));
-            EditorGUILayout.Space();
             GUILayout.EndArea();
 
         }

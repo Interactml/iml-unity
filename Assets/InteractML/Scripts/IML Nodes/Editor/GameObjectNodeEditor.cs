@@ -35,7 +35,6 @@ namespace InteractML
 
         public override void OnHeaderGUI()
         {
-            Debug.Log(NodeWidth);
             // Get reference to the current node
             m_GameObjectNode = (target as GameObjectNode);
 
@@ -54,7 +53,7 @@ namespace InteractML
 
         public override void OnBodyGUI()
         {
-
+            // Draw Port Section
             DrawPortLayout();
             ShowGameObjectNodePorts();
 

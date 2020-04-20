@@ -22,7 +22,9 @@ namespace InteractML
             NodeEditorPreferences.GetSettings().highlightColor = hexToColor("21203B");
             NodeEditorPreferences.GetSettings().gridLineColor = hexToColor("21203B");
             NodeEditorPreferences.GetSettings().gridBgColor = hexToColor("21203B");
-            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(GameObject))] = hexToColor("#888EF7");
+            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(GameObject))] = hexToColor("#E24680");
+            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(List<XNode.Node>))] = hexToColor("#888EF7");
+            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(TrainingExamplesNode))] = hexToColor("#74DF84");
 
 
         }
