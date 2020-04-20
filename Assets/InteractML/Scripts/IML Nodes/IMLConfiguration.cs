@@ -27,6 +27,7 @@ namespace InteractML
         /// <summary>
         /// The list of predicted outputs
         /// </summary>
+        [SerializeField]
         public List<IMLBaseDataType> PredictedOutput;
 
         [HideInInspector]
@@ -153,6 +154,43 @@ namespace InteractML
         // Return the correct value of an output port when requested
         public override object GetValue(NodePort port)
         {
+            // If it is a dynamic output...
+            if (port.IsDynamic)
+            {
+                // Only run if both lists have been properly populated
+                if (m_DynamicOutputPorts.Count == PredictedOutput.Count)
+                {
+                    // Make sure we return the right value in the dynamic outputs
+                    for (int i = 0; i < m_DynamicOutputPorts.Count; i++)
+                    {
+                        // If we are requested the value of a dynamic port...
+                        if (port.fieldName == m_DynamicOutputPorts[i].fieldName)
+                        {
+                            // Since the dynamic port list length is the same as the predicted output, we get the corresponding predicted output
+                            switch (PredictedOutput[i].DataType)
+                            {
+                                case IMLSpecifications.DataTypes.Float:
+                                    return (PredictedOutput[i] as IMLFloat).GetValue();
+                                case IMLSpecifications.DataTypes.Integer:
+                                    return (PredictedOutput[i] as IMLInteger).GetValue();
+                                case IMLSpecifications.DataTypes.Vector2:
+                                    return (PredictedOutput[i] as IMLVector2).GetValues();
+                                case IMLSpecifications.DataTypes.Vector3:
+                                    return (PredictedOutput[i] as IMLVector3).GetValues();
+                                case IMLSpecifications.DataTypes.Vector4:
+                                    return (PredictedOutput[i] as IMLVector4).GetValues();
+                                case IMLSpecifications.DataTypes.SerialVector:
+                                    return (PredictedOutput[i] as IMLSerialVector).GetValues();
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+
+                }
+
+            }
+            // If we reach here, it is not a dynamic output. Return entire node (legacy output)
             return this; 
         }
 
