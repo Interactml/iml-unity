@@ -516,7 +516,8 @@ namespace InteractML
                     }
 
                     // Draw corresponding port field
-                    NodeEditorGUILayout.PortField(IMLConfigNode.GetOutputPort("Output " + i));
+                    var port = IMLConfigNode.GetOutputPort("Output " + i);
+                    NodeEditorGUILayout.PortField(port);
 
                 }
             }
