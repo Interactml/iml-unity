@@ -40,13 +40,27 @@ namespace InteractML
         [Tooltip("Add here all the GameObjects to use in the IML Controller")]
         public List<GameObject> GameObjectsToUse;
 
-        // Lists of nodes that we can have in the graph
+        #region Private Lists of Nodes (Fields)
+        /* Private Lists of nodes that we can have in the graph */
         private List<TextNote> m_TextNoteNodesList;
         private List<TrainingExamplesNode> m_TrainingExamplesNodesList;
         private List<IMLConfiguration> m_IMLConfigurationNodesList;
         private List<GameObjectNode> m_GameObjectNodeList;
         private List<RealtimeIMLOutputNode> m_RealtimeIMLOutputNodesList;
         public List<IFeatureIML> FeatureNodesList;
+        #endregion
+
+        #region Public Lists of Nodes (Properties)
+        /// <summary>
+        /// List of Training Example Nodes in the IML Controller
+        /// </summary>
+        public List<TrainingExamplesNode> TrainingExamplesNodesList { get => m_TrainingExamplesNodesList; }
+        /// <summary>
+        /// Lists of Model Nodes in the IML Controller
+        /// </summary>
+        public List<IMLConfiguration> IMLConfigurationNodesList { get => m_IMLConfigurationNodesList; }
+        #endregion
+
 
         /// <summary>
         /// Have all the features been updated? (useful for features that need to update only once)
@@ -67,6 +81,7 @@ namespace InteractML
         private List<MonoBehaviour> m_ComponentsWithIMLData;
         private Dictionary<FieldInfo, IMLFieldInfoContainer> m_DataContainersPerFieldInfo;
         private Dictionary<FieldInfo, MonoBehaviour> m_DataMonobehavioursPerFieldInfo;
+
 
 
         #endregion
