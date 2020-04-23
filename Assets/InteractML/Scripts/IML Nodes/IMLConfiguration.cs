@@ -1001,20 +1001,6 @@ namespace InteractML
             if (expectedOutputs == null)
                 expectedOutputs = new List<IMLSpecifications.OutputsEnum>();
 
-            Debug.Log("ports in local list: " + outputPorts.Count);
-            for (int i = 0; i < outputPorts.Count; i++)
-            {
-                Debug.Log("names: " + outputPorts[i].fieldName);
-            }
-            
-            Debug.Log("ports in base list: " + DynamicOutputs.Count());
-
-            foreach (var item in DynamicOutputs)
-            {
-                Debug.Log("names: " + item.fieldName);
-
-            }
-
             // Calculate how many output ports we need to amend
             int totalExpectedOutputs = expectedOutputs.Count;
             // If we have expected outputs, proceed as planned...
