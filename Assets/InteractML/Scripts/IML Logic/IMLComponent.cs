@@ -41,10 +41,7 @@ namespace InteractML
         public List<GameObject> GameObjectsToUse;
 
         // Lists of nodes that we can have in the graph
-        private List<string> textListToSend;
-        private List<Vector3> vector3ListToSend;
         private List<TextNote> textNoteNodesList;
-        private List<Vector> vectorNodesList;
         private List<TrainingExamplesNode> TrainingExamplesNodesList;
         private List<IMLConfiguration> IMLConfigurationNodesList;
         private List<GameObjectNode> gameObjectNodeList;
@@ -138,17 +135,8 @@ namespace InteractML
             if (Lists.IsNullOrEmpty(ref GameObjectsToUse))
                 GameObjectsToUse = new List<GameObject>();
 
-            if (Lists.IsNullOrEmpty<string>(ref textListToSend))
-                textListToSend = new List<string>();
-
-            if (Lists.IsNullOrEmpty<Vector3>(ref vector3ListToSend))
-                vector3ListToSend = new List<Vector3>();
-
             if (Lists.IsNullOrEmpty<TextNote>(ref textNoteNodesList))
                 textNoteNodesList = new List<TextNote>();
-
-            if (Lists.IsNullOrEmpty<Vector>(ref vectorNodesList))
-                vectorNodesList = new List<Vector>();
 
             if (Lists.IsNullOrEmpty<TrainingExamplesNode>(ref TrainingExamplesNodesList))
                 TrainingExamplesNodesList = new List<TrainingExamplesNode>();
@@ -316,9 +304,6 @@ namespace InteractML
                     
                     // GameObject nodes
                     CheckTypeAddNodeToList(node, ref gameObjectNodeList);
-
-                    // Vector nodes
-                    CheckTypeAddNodeToList(node, ref vectorNodesList);
 
                     // Training Examples nodes
                     CheckNodeIsTraining(node, ref TrainingExamplesNodesList);
