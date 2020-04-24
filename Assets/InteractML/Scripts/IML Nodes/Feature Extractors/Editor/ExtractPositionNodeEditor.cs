@@ -9,52 +9,38 @@ using XNodeEditor;
 namespace InteractML.FeatureExtractors
 {
     [CustomNodeEditor(typeof(ExtractPosition))]
-    public class ExtractPositionNodeEditor : NodeEditor
+    public class ExtractPositionNodeEditor : IMLNodeEditor
     {
         /// <summary>
         /// Reference to the node itself
         /// </summary>
         private ExtractPosition m_ExtractPosition;
 
-        private GUISkin skin;
-
-        private Color nodeColor;
-        private Color lineColor;
-
-        private Texture2D nodeTexture;
-        private Texture2D lineTexture;
-
-        private Rect headerSection;
-        private Rect portSection;
-        private Rect bodySection;
-        private Rect subBodySection;
-
-        private float nodeWidth;
-        private float lineWeight;
+        /// <summary>
+        /// Rects for node layout
+        /// </summary>
+        private Rect m_BodyRect;
+        private Rect m_PortRect;
+        private Rect m_BottomRect;
 
         public override void OnHeaderGUI()
         {
             // Get reference to the current node
             m_ExtractPosition = (target as ExtractPosition);
 
-            // Get reference to GUIStyle
-            skin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+            // Initialise header background Rects
+            InitHeaderRects();
 
-            // Initatialize node textures
-            InitTextures();
+            // Draw header background Rect
+            GUI.DrawTexture(HeaderRect, NodeColor);
 
-            //Set node dimensions
-            nodeWidth = 250;
-
-            //Set line width
-            lineWeight = 2;
-
-            //Draw header texture
-            DrawHeaderLayout();
+            // Draw line below header
+            GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
 
             //Display Node name
-            GUILayout.Label("   LIVE POSITION DATA", skin.GetStyle("Header"), GUILayout.Height(headerSection.height));
+            GUILayout.Label("LIVE POSITION DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(60));
         }
+    
 
         public override void OnBodyGUI()
         {
@@ -67,7 +53,7 @@ namespace InteractML.FeatureExtractors
             ShowExtractedPositionValues();
 
             // Draw local space toggle
-            DrawSubBodyLayout();
+            DrawBottomLayout();
             ShowLocalSpaceToggle();
         }
 
@@ -75,38 +61,19 @@ namespace InteractML.FeatureExtractors
         #region Methods
 
         /// <summary>
-        /// Define rect values for node header and paint texture based on rect 
-        /// </summary>
-        private void DrawHeaderLayout()
-        {
-            // Set header rect dimensions
-            headerSection.x = 5;
-            headerSection.y = 5;
-            headerSection.width = nodeWidth - 10;
-            headerSection.height = 60;
-
-            // Draw header background purple rect
-            GUI.DrawTexture(headerSection, nodeTexture);
-        }
-
-        /// <summary>
         /// Define rect values for port section and paint textures based on rects 
         /// </summary>
         private void DrawPortLayout()
         {
-            portSection.x = 5;
-            portSection.y = headerSection.height;
-            portSection.width = nodeWidth - 10;
-            portSection.height = 60;
-
             // Draw body background purple rect below header
-            GUI.DrawTexture(portSection, nodeTexture);
-
-            // Draw line at top of body
-            GUI.DrawTexture(new Rect(portSection.x, portSection.y - lineWeight, portSection.width, lineWeight), lineTexture);
+            m_PortRect.x = 5;
+            m_PortRect.y = HeaderRect.height;
+            m_PortRect.width = NodeWidth - 10;
+            m_PortRect.height = 60;
+            GUI.DrawTexture(m_PortRect, NodeColor);
 
             // Draw line below ports
-            GUI.DrawTexture(new Rect(portSection.x, headerSection.height + portSection.height - lineWeight, portSection.width, lineWeight), lineTexture);
+            GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), GetColorTextureFromHexString("#888EF7"));
         }
 
         /// <summary>
@@ -114,33 +81,32 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         private void DrawBodyLayout()
         {
-            bodySection.x = 5;
-            bodySection.y = headerSection.height + portSection.height;
-            bodySection.width = nodeWidth - 10;
-            bodySection.height = 120;
+            m_BodyRect.x = 5;
+            m_BodyRect.y = HeaderRect.height + m_PortRect.height;
+            m_BodyRect.width = NodeWidth - 10;
+            m_BodyRect.height = 120;
 
             // Draw body background purple rect below header
-            GUI.DrawTexture(bodySection, nodeTexture);
-
-            // Draw line above local space toggle
-            GUI.DrawTexture(new Rect(bodySection.x, bodySection.y + bodySection.height - lineWeight, bodySection.width, lineWeight), lineTexture);
-
+            GUI.DrawTexture(m_BodyRect, NodeColor);
         }
 
         /// <summary>
-        /// Define rect values for sub body and paint textures based on rects 
+        /// Define rect values for node body and paint textures based on rects 
         /// </summary>
-        private void DrawSubBodyLayout()
+        private void DrawBottomLayout()
         {
-            subBodySection.x = 5;
-            subBodySection.y = headerSection.height + portSection.height + bodySection.height;
-            subBodySection.width = nodeWidth - 10;
-            subBodySection.height = 40;
+            m_BottomRect.x = 5;
+            m_BottomRect.y = HeaderRect.height + m_PortRect.height + m_BodyRect.height;
+            m_BottomRect.width = NodeWidth - 10;
+            m_BottomRect.height = 50;
 
             // Draw body background purple rect below header
-            GUI.DrawTexture(subBodySection, nodeTexture);
+            GUI.DrawTexture(m_BottomRect, NodeColor);
 
+            //Draw separator line
+            GUI.DrawTexture(new Rect(m_BottomRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_BottomRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
         }
+
 
         /// <summary>
         /// Show the input/output port fields 
@@ -151,10 +117,10 @@ namespace InteractML.FeatureExtractors
             GUILayout.BeginHorizontal();
             
             GUIContent inputPortLabel = new GUIContent("GameObject \nData In");
-            IMLNodeEditor.PortField(inputPortLabel, m_ExtractPosition.GetInputPort("GameObjectDataIn"), skin.GetStyle("Port Label"), GUILayout.MinWidth(0));
+            IMLNodeEditor.PortField(inputPortLabel, m_ExtractPosition.GetInputPort("GameObjectDataIn"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUIContent outputPortLabel = new GUIContent("Live Data\n Out");
-            IMLNodeEditor.PortField(outputPortLabel, m_ExtractPosition.GetOutputPort("LiveDataOut"), skin.GetStyle("Port Label"), GUILayout.MinWidth(0));
+            IMLNodeEditor.PortField(outputPortLabel, m_ExtractPosition.GetOutputPort("LiveDataOut"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUILayout.EndHorizontal();
         }
@@ -164,14 +130,14 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         private void ShowExtractedPositionValues()
         {
-            GUILayout.BeginArea(bodySection);
-
-
-            EditorGUILayout.LabelField("x: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[0], 3).ToString(), skin.GetStyle("Node Body Label"));
+            GUILayout.BeginArea(m_BodyRect);
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField("y: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[1], 3).ToString(), skin.GetStyle("Node Body Label"));
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField("z: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[2], 3).ToString(), skin.GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField("x: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("y: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[1], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("z: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[2], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
 
             GUILayout.EndArea();
 
@@ -182,27 +148,16 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         private void ShowLocalSpaceToggle()
         {
-            GUILayout.BeginArea(subBodySection);
+            EditorGUI.indentLevel++;
+            GUILayout.BeginArea(m_BottomRect);
             EditorGUILayout.Space();
-            m_ExtractPosition.LocalSpace = EditorGUILayout.ToggleLeft("Use local space for transform", m_ExtractPosition.LocalSpace, skin.GetStyle("Node Sub Label"));
+            EditorGUILayout.Space();
+            m_ExtractPosition.LocalSpace = EditorGUILayout.ToggleLeft("Use local space for transform", m_ExtractPosition.LocalSpace, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Sub Label"));
             GUILayout.EndArea();
+            EditorGUI.indentLevel--;
         }
 
-        /// <summary>
-        /// Initatialize node textures
-        /// </summary>
-        private void InitTextures()
-        {
-            ColorUtility.TryParseHtmlString("#3A3B5B", out nodeColor);
-            nodeTexture = new Texture2D(1, 1);
-            nodeTexture.SetPixel(0, 0, nodeColor);
-            nodeTexture.Apply();
-
-            ColorUtility.TryParseHtmlString("#888EF7", out lineColor);
-            lineTexture = new Texture2D(1, 1);
-            lineTexture.SetPixel(0, 0, lineColor);
-            lineTexture.Apply();
-        }
+       
 
         #endregion
 

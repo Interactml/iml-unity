@@ -23,6 +23,13 @@ namespace InteractML
             NodeEditorPreferences.GetSettings().gridLineColor = hexToColor("21203B");
             NodeEditorPreferences.GetSettings().gridBgColor = hexToColor("21203B");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(GameObject))] = hexToColor("#E24680");
+            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(float))] = hexToColor("#888EF7");
+            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(int))] = hexToColor("#888EF7");
+            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(float[]))] = hexToColor("#888EF7");
+            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(Vector2))] = hexToColor("#888EF7");
+            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(Vector3))] = hexToColor("#888EF7");
+            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(Vector4))] = hexToColor("#888EF7");
+            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(XNode.Node))] = hexToColor("#888EF7");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(List<XNode.Node>))] = hexToColor("#888EF7");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(TrainingExamplesNode))] = hexToColor("#74DF84");
 
@@ -63,15 +70,78 @@ namespace InteractML
         /// </summary>
         public override string GetNodeMenuName(System.Type type)
         {
-            if (type.Namespace == "InteractML")
+
+            //if (type.Namespace == "InteractML")
+            //{
+            //    return base.GetNodeMenuName(type).Replace("InteractML", "");
+            //}
+           
+            
+            if (type.PrettyName() == "InteractML.CRIMLConfiguration")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.Namespace == "InteractML.FeatureExtractors")
+            if (type.PrettyName() == "InteractML.DTWIMLConfiguration")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.Namespace == "InteractML.DataTypeNodes")
+            if (type.PrettyName() == "InteractML.GameObjectNode")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.RealtimeIMLOutputNode")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.SeriesTrainingExamplesNode")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.SingleTrainingExamplesNode")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.TextNote")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.FeatureExtractors.ExtractDistanceToFirstInput")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.FeatureExtractors.ExtractPosition")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.FeatureExtractors.ExtractRotation")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.FeatureExtractors.ExtractVelocity")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.DataTypeNodes.FloatNode")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.DataTypeNodes.IntegerNode")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.DataTypeNodes.SerialVectorNode")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.DataTypeNodes.Vector2Node")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.DataTypeNodes.Vector3Node")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.DataTypeNodes.Vector4Node")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }

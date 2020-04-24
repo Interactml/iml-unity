@@ -9,7 +9,6 @@ namespace InteractML.FeatureExtractors
     /// <summary>
     /// Extract the velocity from any other Feature
     /// </summary>
-    [NodeTint("#3A3B5B")]
     [NodeWidth(250)]
     public class ExtractVelocity : Node, IFeatureIML
     {
