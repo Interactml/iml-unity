@@ -328,6 +328,7 @@ namespace InteractML
 
                     // Export output node
                     CheckTypeAddNodeToList(node, ref RealtimeIMLOutputNodesList);
+
                 }
 
             }
@@ -467,6 +468,10 @@ namespace InteractML
         /// </summary>
         private void RunTraininExamplesLogic()
         {
+            // Only run if we have the list of training examples
+            if (TrainingExamplesNodesList == null)
+                return;
+
             for (int i = 0; i < TrainingExamplesNodesList.Count; i++)
             {
                 // Call the update logic per node
@@ -603,7 +608,7 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Gets the data marked with the "SendToIMLController" attribute
+        /// Gets and sets the data marked with the "SendToIMLController" and "PullFromIMLController" attributes in Monobehaviours subscribed
         /// </summary>
         private void FetchDataFromMonobehavioursSubscribed()
         {
@@ -623,8 +628,18 @@ namespace InteractML
 
                     // Check if the field is marked with the "SendToIMLController" attribute
                     SendToIMLController dataForIMLController = Attribute.GetCustomAttribute(fieldToUse, typeof(SendToIMLController)) as SendToIMLController;
-                    // If it is...
+                    // We check now if the field is marked with the "PullFromIMLController" attribute
+                    PullFromIMLController dataFromIMLController = Attribute.GetCustomAttribute(fieldToUse, typeof(PullFromIMLController)) as PullFromIMLController;
+                    // Define flags to identify attribute behaviour
+                    bool isInputData = false, isOutputData = false;
+                    // Update flags
                     if (dataForIMLController != null)
+                        isInputData = true;
+                    if (dataFromIMLController != null)
+                        isOutputData = true;
+
+                    // If the field is marked as either input or output...
+                    if (isInputData || isOutputData)
                     {
                         // Debug type of that value in console
                         //Debug.Log(fieldToUse.Name + " Used in IMLComponent, With Type: " + fieldToUse.FieldType + ", With Value: " + fieldToUse.GetValue(gameComponent).ToString());
@@ -669,11 +684,12 @@ namespace InteractML
                                 {
                                     // Create a new Serial Vector node into the graph
                                     newNode = MLController.AddNode<DataTypeNodes.FloatNode>();
+#if UNITY_EDITOR
                                     // Save newnode to graph on disk                              
                                     AssetDatabase.AddObjectToAsset(newNode, MLController);
                                     // Reload graph into memory since we have modified it on disk
                                     AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-
+#endif                              
                                 }
 
                                 // Configure our node appropiately
@@ -714,10 +730,12 @@ namespace InteractML
                                 {
                                     // Create a new Serial Vector node into the graph
                                     newNode = MLController.AddNode<DataTypeNodes.IntegerNode>();
+#if UNITY_EDITOR
                                     // Save newnode to graph on disk                              
                                     AssetDatabase.AddObjectToAsset(newNode, MLController);
                                     // Reload graph into memory since we have modified it on disk
                                     AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+#endif
                                 }
 
                                 // Configure our node appropiately
@@ -758,10 +776,12 @@ namespace InteractML
                                 {
                                     // Create a new Serial Vector node into the graph
                                     newNode = MLController.AddNode<DataTypeNodes.Vector2Node>();
+#if UNITY_EDITOR
                                     // Save newnode to graph on disk                              
                                     AssetDatabase.AddObjectToAsset(newNode, MLController);
                                     // Reload graph into memory since we have modified it on disk
                                     AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+#endif
 
                                 }
 
@@ -803,10 +823,12 @@ namespace InteractML
                                 {
                                     // Create a new Serial Vector node into the graph
                                     newNode = MLController.AddNode<DataTypeNodes.Vector3Node>();
+#if UNITY_EDITOR
                                     // Save newnode to graph on disk                              
                                     AssetDatabase.AddObjectToAsset(newNode, MLController);
                                     // Reload graph into memory since we have modified it on disk
                                     AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+#endif
 
                                 }
 
@@ -848,10 +870,12 @@ namespace InteractML
                                 {
                                     // Create a new Serial Vector node into the graph
                                     newNode = MLController.AddNode<DataTypeNodes.Vector4Node>();
+#if UNITY_EDITOR
                                     // Save newnode to graph on disk                              
                                     AssetDatabase.AddObjectToAsset(newNode, MLController);
                                     // Reload graph into memory since we have modified it on disk
                                     AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+#endif
 
                                 }
 
@@ -893,11 +917,12 @@ namespace InteractML
                                 {
                                     // Create a new Serial Vector node into the graph
                                     newNode = MLController.AddNode<DataTypeNodes.SerialVectorNode>();
+#if UNITY_EDITOR
                                     // Save newnode to graph on disk                              
                                     AssetDatabase.AddObjectToAsset(newNode, MLController);
                                     // Reload graph into memory since we have modified it on disk
                                     AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-
+#endif
                                 }
 
                                 // Configure our node appropiately
@@ -922,24 +947,61 @@ namespace InteractML
                             // Detect the type of the node
                             switch (dataContainer.DataType)
                             {
+                                // FLOAT
                                 case IMLSpecifications.DataTypes.Float:
-                                    (dataContainer.nodeForField as DataTypeNodes.FloatNode).Value = (float)fieldToUse.GetValue(gameComponent);
+                                    // If it is input...
+                                    if (isInputData)
+                                        (dataContainer.nodeForField as DataTypeNodes.FloatNode).Value = (float)fieldToUse.GetValue(gameComponent);
+                                    // If it is output...
+                                    if (isOutputData)
+                                        fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.FloatNode).Value);
                                     break;
+                                // INTEGER
                                 case IMLSpecifications.DataTypes.Integer:
-                                    (dataContainer.nodeForField as DataTypeNodes.IntegerNode).Value = (int)fieldToUse.GetValue(gameComponent);
+                                    // If it is input...
+                                    if (isInputData)
+                                        (dataContainer.nodeForField as DataTypeNodes.IntegerNode).Value = (int)fieldToUse.GetValue(gameComponent);
+                                    // If it is output...
+                                    if (isOutputData)
+                                        fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.IntegerNode).Value);
                                     break;
+                                // VECTOR 2
                                 case IMLSpecifications.DataTypes.Vector2:
-                                    (dataContainer.nodeForField as DataTypeNodes.Vector2Node).Value = (Vector2)fieldToUse.GetValue(gameComponent);
+                                    // If it is input...
+                                    if (isInputData)
+                                        (dataContainer.nodeForField as DataTypeNodes.Vector2Node).Value = (Vector2)fieldToUse.GetValue(gameComponent);
+                                    // If it is output...
+                                    if (isOutputData)
+                                        fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.Vector2Node).Value);
                                     break;
+                                // VECTOR 3
                                 case IMLSpecifications.DataTypes.Vector3:
-                                    (dataContainer.nodeForField as DataTypeNodes.Vector3Node).Value = (Vector3)fieldToUse.GetValue(gameComponent);
+                                    // If it is input...
+                                    if (isInputData)
+                                        (dataContainer.nodeForField as DataTypeNodes.Vector3Node).Value = (Vector3)fieldToUse.GetValue(gameComponent);
+                                    // If it is output...
+                                    if (isOutputData)
+                                        fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.Vector3Node).Value);
                                     break;
+                                // VECTOR 4
                                 case IMLSpecifications.DataTypes.Vector4:
-                                    (dataContainer.nodeForField as DataTypeNodes.Vector4Node).Value = (Vector4)fieldToUse.GetValue(gameComponent);
+                                    // If it is input...
+                                    if (isInputData)
+                                        (dataContainer.nodeForField as DataTypeNodes.Vector4Node).Value = (Vector4)fieldToUse.GetValue(gameComponent);
+                                    // If it is output...
+                                    if (isOutputData)
+                                        fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.Vector4Node).Value);
                                     break;
+                                // SERIAL VECTOR
                                 case IMLSpecifications.DataTypes.SerialVector:
-                                    (dataContainer.nodeForField as DataTypeNodes.SerialVectorNode).Value = (float[])fieldToUse.GetValue(gameComponent);
+                                    // If it is input...
+                                    if (isInputData)
+                                        (dataContainer.nodeForField as DataTypeNodes.SerialVectorNode).Value = (float[])fieldToUse.GetValue(gameComponent);
+                                    // If it is output...
+                                    if (isOutputData)
+                                        fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.SerialVectorNode).Value);
                                     break;
+                                // DEFAULT SWITCH
                                 default:
                                     break;
                             }
@@ -950,9 +1012,9 @@ namespace InteractML
             }
         }
 
-#endregion
+        #endregion
 
-#region Public Methods
+        #region Public Methods
 
         [ContextMenu("Clear Lists (Use in Case of null ref errors)")]
         public void ClearLists()
@@ -1020,7 +1082,7 @@ namespace InteractML
 
             if (MLController != null)
             {
-                // Fetch data from the Monobehaviours we have subscribed
+                // Fetch data from the Monobehaviours we have subscribed into and out of the IML Controller
                 FetchDataFromMonobehavioursSubscribed();
 
                 // Run logic for all feature nodes
@@ -1176,7 +1238,7 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Pass a Monobehaviour and mark any field with "SendToIMLController" attribute to use it with the IML Component
+        /// Pass a Monobehaviour and mark any field with "SendToIMLController" or "PullFromIMLController" attribute to use it with the IML Component
         /// </summary>
         /// <param name="gameComponent"></param>
         public void SubscribeToIMLController(MonoBehaviour gameComponent)

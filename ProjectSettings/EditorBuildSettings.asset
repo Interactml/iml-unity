@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/empty_scene.unity
-    guid: c5a0b6c376bae4343b5f0c415304112e
+    path: Assets/InteractML_Examples/VR_Interface/Venice_VR.unity
+    guid: 630f61ddc47f2c44885f64b9493c042e
   m_configObjects: {}

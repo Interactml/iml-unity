@@ -28,6 +28,7 @@ namespace InteractML
         /// <summary>
         /// The list of predicted outputs
         /// </summary>
+        [SerializeField]
         public List<IMLBaseDataType> PredictedOutput;
 
         [HideInInspector]
@@ -54,6 +55,7 @@ namespace InteractML
         [SerializeField, HideInInspector]
         protected List<IMLSpecifications.OutputsEnum> m_ExpectedOutputList;
         public List<IMLSpecifications.OutputsEnum> ExpectedOutputList { get { return m_ExpectedOutputList; } }
+        private List<NodePort> m_DynamicOutputPorts;
 
 
         /// <summary>
@@ -134,6 +136,9 @@ namespace InteractML
         [HideInInspector]
         public bool RunOnAwake;
 
+        /* ERROR FLAGS */
+        private bool m_ErrorWrongInputTrainingExamplesPort;
+
         #endregion
 
         #region XNode Messages
@@ -150,6 +155,48 @@ namespace InteractML
         // Return the correct value of an output port when requested
         public override object GetValue(NodePort port)
         {
+            // If it is a dynamic output...
+            if (port.IsDynamic)
+            {
+                // Only run when both lists are not null
+                if (m_DynamicOutputPorts != null && PredictedOutput != null)
+                {
+                    // Only run if both lists have been properly populated
+                    if (m_DynamicOutputPorts.Count == PredictedOutput.Count)
+                    {
+                        // Make sure we return the right value in the dynamic outputs
+                        for (int i = 0; i < m_DynamicOutputPorts.Count; i++)
+                        {
+                            // If we are requested the value of a dynamic port...
+                            if (port.fieldName == m_DynamicOutputPorts[i].fieldName)
+                            {
+                                // Since the dynamic port list length is the same as the predicted output, we get the corresponding predicted output
+                                switch (PredictedOutput[i].DataType)
+                                {
+                                    case IMLSpecifications.DataTypes.Float:
+                                        return (PredictedOutput[i] as IMLFloat).GetValue();
+                                    case IMLSpecifications.DataTypes.Integer:
+                                        return (PredictedOutput[i] as IMLInteger).GetValue();
+                                    case IMLSpecifications.DataTypes.Vector2:
+                                        return (PredictedOutput[i] as IMLVector2).GetValues();
+                                    case IMLSpecifications.DataTypes.Vector3:
+                                        return (PredictedOutput[i] as IMLVector3).GetValues();
+                                    case IMLSpecifications.DataTypes.Vector4:
+                                        return (PredictedOutput[i] as IMLVector4).GetValues();
+                                    case IMLSpecifications.DataTypes.SerialVector:
+                                        return (PredictedOutput[i] as IMLSerialVector).GetValues();
+                                    default:
+                                        break;
+                                }
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+            // If we reach here, it is not a dynamic output. Return entire node (legacy output)
             return this; 
         }
 
@@ -158,6 +205,27 @@ namespace InteractML
             base.OnCreateConnection(from, to);
 
             m_NodeConnectionChanged = true;
+
+            // If it was a connection to this node and the field is the training examples input port...
+            if (to.node is IMLConfiguration && to.fieldName == "IMLTrainingExamplesNodes")
+            {
+                TrainingExamplesNode examplesNode = from.node as TrainingExamplesNode;
+                // We check that the connection is from a training examples node
+                if (examplesNode != null)
+                {
+                    // Update dynamic ports for output
+                    AddDynamicOutputPorts(examplesNode, ref m_DynamicOutputPorts);
+                }
+                // If not, we break connection
+                else
+                {
+                    from.Disconnect(to);
+                    // Prepare flag to 
+                    m_ErrorWrongInputTrainingExamplesPort = true;
+                }
+            }
+
+            Debug.Log("Connection to port " + to.node.name + " created!");
 
             // We call logic for adapting arrays and inputs/outputs for ML models
             // Create input feature vector for realtime rapidlib predictions
@@ -173,6 +241,15 @@ namespace InteractML
             base.OnRemoveConnection(port);
 
             m_NodeConnectionChanged = true;
+
+            UpdateOutputConfigList();
+
+            // IF expected outputs don't match with dynamic output ports, a training examples node was disconnected
+            if (m_ExpectedOutputList.Count != m_DynamicOutputPorts.Count)
+            {
+                // Refresh all dynamic output ports to the right size
+                UpdateDynamicOutputPorts(IMLTrainingExamplesNodes, m_ExpectedOutputList , ref m_DynamicOutputPorts);
+            }
 
             // We call logic for adapting arrays and inputs/outputs for ML models
             // Create input feature vector for realtime rapidlib predictions
@@ -209,6 +286,8 @@ namespace InteractML
             // Create rapidlib predicted output vector
             CreateRapidLibOutputVector();
 
+            // Set error flags to false
+            SetErrorFlags(false);
         }
 
         public void OnDestroy()
@@ -246,6 +325,9 @@ namespace InteractML
 
             if (Lists.IsNullOrEmpty(ref m_RapidlibTrainingExamples))
                 m_RapidlibTrainingExamples = new List<RapidlibTrainingExample>();
+
+            if (Lists.IsNullOrEmpty(ref m_DynamicOutputPorts))
+                m_DynamicOutputPorts = new List<NodePort>();
 
             m_NodeConnectionChanged = false;
 
@@ -303,6 +385,9 @@ namespace InteractML
 
             // Make sure that current output format matches the expected output format
             UpdateOutputFormat();
+
+            // Make sure dynamic output ports match the expected output format
+            UpdateDynamicOutputPorts(IMLTrainingExamplesNodes, m_ExpectedOutputList, ref m_DynamicOutputPorts);
 
             // Perform running logic (it will account for DTW and Classification/Regression) only if there is a predicted output            
             RunningLogic();
@@ -671,6 +756,7 @@ namespace InteractML
                 // Calculate required space for outputs
                 for (int i = 0; i < m_ExpectedOutputList.Count; i++)
                 {
+                    // Generate data type for predicted output
                     switch (m_ExpectedOutputList[i])
                     {
                         case IMLSpecifications.OutputsEnum.Float:
@@ -694,6 +780,21 @@ namespace InteractML
                         default:
                             break;
                     }
+
+                    /* DIRTY CODE */
+                    // If we can, check if we need to update the corresponding output port
+                    if (i < m_DynamicOutputPorts.Count)
+                    {
+                        var dynamicOutputPort = m_DynamicOutputPorts[i];
+                        // Check if the output port needs and update or not
+                        CheckOutputFormatMatchesDynamicPort(m_ExpectedOutputList[i], ref dynamicOutputPort);
+                    }
+                    else
+                    {
+                        // There was an unexpected change of training examples outputs, update list
+                        UpdateDynamicOutputPorts(IMLTrainingExamplesNodes, m_ExpectedOutputList, ref m_DynamicOutputPorts);
+                    }
+                    /* DIRTY CODE */
                 }
 
             }
@@ -706,7 +807,7 @@ namespace InteractML
         protected void UpdateInputConfigList()
         {
             // Get values from the input list
-            InputFeatures = GetInputValues<Node>("InputFeatures").ToList();
+            InputFeatures = this.GetInputNodesConnected("InputFeatures");
 
             // Make sure that the list is initialised
             if (m_ExpectedInputList == null)
@@ -787,11 +888,283 @@ namespace InteractML
                         }
                     }
                 }
-            }
-        
+            }          
 
         }
 
+        /// <summary>
+        /// Adds output ports to the list of dynamic output ports (drawn in the editor class)
+        /// </summary>
+        /// <param name="trainingExamples"></param>
+        /// <param name="outputPorts"></param>
+        protected void AddDynamicOutputPorts(TrainingExamplesNode trainingExamples, ref List<NodePort> outputPorts)
+        {
+            // Make sure the dynamic port list is initialised
+            if (outputPorts == null)
+                outputPorts = new List<NodePort>();
+
+            // Add as many output ports as we have output types in the training examples node. It will be drawn in the Editor class
+            for (int i = 0; i < trainingExamples.DesiredOutputsConfig.Count; i++)
+            {
+                // Get reference to current expected output
+                var expectedOutput = trainingExamples.DesiredOutputsConfig[i];
+
+                // Add output port based on the type
+                AddDynamicOutputPort(expectedOutput, ref outputPorts);
+            }
+        }
+        
+        /// <summary>
+        /// Adds one dynamic output port based on its type
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="outputPorts"></param>
+        protected void AddDynamicOutputPort(IMLSpecifications.OutputsEnum type, ref List<NodePort> outputPorts)
+        {
+            // Make sure the dynamic port list is initialised
+            if (outputPorts == null)
+                outputPorts = new List<NodePort>();
+
+            // Prepare output port
+            NodePort dynamicOutputPort;
+            // Add a specific kind of type for the output node depending on the expected type. The index will be the current length of the outputPorts list (since we are adding new ones, it will constantly increase)
+            switch (type)
+            {
+                case IMLSpecifications.OutputsEnum.Float:
+                    dynamicOutputPort = AddDynamicOutput(typeof(float), fieldName: "Output " + outputPorts.Count);
+                    break;
+                case IMLSpecifications.OutputsEnum.Integer:
+                    dynamicOutputPort = AddDynamicOutput(typeof(int), fieldName: "Output " + outputPorts.Count);
+                    break;
+                case IMLSpecifications.OutputsEnum.Vector2:
+                    dynamicOutputPort = AddDynamicOutput(typeof(Vector2), fieldName: "Output " + outputPorts.Count);
+                    break;
+                case IMLSpecifications.OutputsEnum.Vector3:
+                    dynamicOutputPort = AddDynamicOutput(typeof(Vector3), fieldName: "Output " + outputPorts.Count);
+                    break;
+                case IMLSpecifications.OutputsEnum.Vector4:
+                    dynamicOutputPort = AddDynamicOutput(typeof(Vector4), fieldName: "Output " + outputPorts.Count);
+                    break;
+                case IMLSpecifications.OutputsEnum.SerialVector:
+                    dynamicOutputPort = AddDynamicOutput(typeof(float[]), fieldName: "Output " + outputPorts.Count);
+                    break;
+                default:
+                    dynamicOutputPort = null;
+                    break;
+            }
+
+            // If we got one output port to add, we add it
+            if (dynamicOutputPort != null)
+                outputPorts.Add(dynamicOutputPort);
+
+        }
+
+        /// <summary>
+        /// Removes output ports from the list of dynamic output ports (the last batch added)
+        /// </summary>
+        /// <param name="traininingExamples"></param>
+        /// <param name="outputPorts"></param>
+        protected void RemoveDynamicOutputPorts(TrainingExamplesNode trainingExamples, ref List<NodePort> outputPorts)
+        {
+            // Make sure the dynamic port list is initialised
+            if (outputPorts == null)
+            {
+                outputPorts = new List<NodePort>();
+                // If we don't have any to remove, then just exit the method
+                return;
+            }
+
+            // Select ports to remove. Assume that we will be removing the last output ports we added
+            List<NodePort> portsToRemove = new List<NodePort>(outputPorts.GetRange(outputPorts.Count - (trainingExamples.DesiredOutputsConfig.Count) - 1, trainingExamples.DesiredOutputsConfig.Count));
+            
+            // Remove those ports from local list
+            outputPorts.RemoveRange(outputPorts.Count - (trainingExamples.DesiredOutputsConfig.Count) - 1, trainingExamples.DesiredOutputsConfig.Count);
+            
+            // Remove ports from node parent class
+            for (int i = 0; i < portsToRemove.Count; i++)
+            {
+                // Get reference
+                var port = portsToRemove[i];
+                // Remove from list first
+                portsToRemove.Remove(port);
+                // Remove from node parent class
+                RemoveDynamicPort(port);
+
+            }
+
+        }
+
+        protected void UpdateDynamicOutputPorts(List<TrainingExamplesNode> trainingExamplesNodes, List<IMLSpecifications.OutputsEnum> expectedOutputs, ref List<NodePort> outputPorts)
+        {
+            // Make sure the dynamic port list is initialised
+            if (outputPorts == null)
+                outputPorts = new List<NodePort>();
+            if (expectedOutputs == null)
+                expectedOutputs = new List<IMLSpecifications.OutputsEnum>();
+
+            // Calculate how many output ports we need to amend
+            int totalExpectedOutputs = expectedOutputs.Count;
+            // If we have expected outputs, proceed as planned...
+            if (totalExpectedOutputs > 0)
+            {
+                int diff = totalExpectedOutputs - outputPorts.Count;
+                // If we need to add more output ports...
+                if (diff > 0)
+                {
+                    // Add to the end
+                    for (int i = 0; i < diff; i++)
+                    {
+                        int index = (totalExpectedOutputs - 1) - i;
+                        AddDynamicOutputPort(expectedOutputs[index], ref outputPorts);
+                    }
+                }
+                // If we need to remove output ports...
+                else if (diff < 0)
+                {
+                    int diffAbs = Mathf.Abs(diff);
+                    // We will try to reuse as many ports as we can
+                    // start from the end
+                    int index = (outputPorts.Count - 1);
+                    // Destroy ports
+                    for (int i = 0; i < diffAbs; i++)
+                    {
+                        
+                        var port = outputPorts[index - i];
+                        // remove port from parent list
+                        RemoveDynamicPort(port);
+                    }
+                    // Now reduce size of local list
+                    outputPorts.RemoveRange((outputPorts.Count) - diffAbs, diffAbs);
+                }
+
+                // Make sure that all port types and names are matching (expectedOutputs and outputPorts are now the same size)
+                for (int i = 0; i < outputPorts.Count; i++)
+                {
+                    var port = outputPorts[i];
+                    // Format
+                    CheckOutputFormatMatchesDynamicPort(expectedOutputs[i], ref port);
+                    // fieldName index
+                    outputPorts[i] = CheckOutputIndexMatchesDynamicPort(i, port);
+                }
+
+
+            }
+            // If we don't have exptected outputs, clear ports
+            else
+            {
+                // Clear entire local list
+                outputPorts.Clear();
+                // Use local list as a copy of parent class list
+                outputPorts = DynamicOutputs.ToList();
+                // Clear all dynamic outputs for a fresh start
+                for (int i = 0; i < outputPorts.Count(); i++)
+                {
+                    var outputPort = outputPorts[i];
+                    RemoveDynamicPort(outputPort);
+                }
+                // Clear entire local list again for a fresh start
+                outputPorts.Clear();
+
+            }
+            //// Clear entire local list
+            //outputPorts.Clear();
+            //// Use local list as a copy of parent class list
+            //outputPorts = DynamicOutputs.ToList();
+            //// Clear all dynamic outputs for a fresh start
+            //for (int i = 0; i < outputPorts.Count(); i++)
+            //{
+            //    var outputPort = outputPorts[i];
+            //    RemoveDynamicPort(outputPort);
+            //}
+            //// Clear entire local list again for a fresh start
+            //outputPorts.Clear();
+
+            //// Add output ports per training examples
+            //foreach (var trainingExamples in trainingExamplesNodes)
+            //{
+            //    AddDynamicOutputPorts(trainingExamples, ref outputPorts);
+            //}
+        }
+
+        /// <summary>
+        /// Checks if the expected output type matches the port output type
+        /// </summary>
+        /// <param name="dataType"></param>
+        /// <param name="outputPort"></param>
+        protected void CheckOutputFormatMatchesDynamicPort(IMLSpecifications.OutputsEnum dataType, ref NodePort outputPort)
+        {
+            // Adjusts the value type of a nodeport
+            switch (dataType)
+            {
+                case IMLSpecifications.OutputsEnum.Float:
+                    if (outputPort.ValueType != typeof(float))
+                        outputPort.ValueType = typeof(float);
+                    break;
+                case IMLSpecifications.OutputsEnum.Integer:
+                    if (outputPort.ValueType != typeof(int))
+                        outputPort.ValueType = typeof(int);
+                    break;
+                case IMLSpecifications.OutputsEnum.Vector2:
+                    if (outputPort.ValueType != typeof(Vector2))
+                        outputPort.ValueType = typeof(Vector2);
+                    break;
+                case IMLSpecifications.OutputsEnum.Vector3:
+                    if (outputPort.ValueType != typeof(Vector3))
+                        outputPort.ValueType = typeof(Vector3);
+                    break;
+                case IMLSpecifications.OutputsEnum.Vector4:
+                    if (outputPort.ValueType != typeof(Vector4))
+                        outputPort.ValueType = typeof(Vector4);
+                    break;
+                case IMLSpecifications.OutputsEnum.SerialVector:
+                    if (outputPort.ValueType != typeof(float[]))
+                        outputPort.ValueType = typeof(float[]);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Checks if the expected output index matches the one in the port output name
+        /// </summary>
+        /// <param name="expectedIndex"></param>
+        /// <param name="outputPort"></param>
+        protected NodePort CheckOutputIndexMatchesDynamicPort(int expectedIndex, NodePort outputPort)
+        {
+            // Get port index
+            string portIndexString = new string(outputPort.fieldName.Where(char.IsDigit).ToArray());
+            int portIndex = 0;
+            // If we got the index from the field name...
+            if (int.TryParse(portIndexString, out portIndex))
+            {
+                // If indexes are not the same...
+                if (expectedIndex != portIndex)
+                {
+                    // Amend port name index, we will need to create a new port and use in place
+                    NodePort newPort = new NodePort(
+                        "Output " + expectedIndex.ToString(),
+                        outputPort.ValueType,
+                        NodePort.IO.Output,
+                        outputPort.connectionType,
+                        outputPort.typeConstraint,
+                        outputPort.node);
+                    // Return new port
+                    return newPort;
+
+                }
+                // If indexes are the same...
+                else
+                {
+                    // Return original port
+                    return outputPort;
+                }
+            }
+            else
+            {
+                throw new Exception("The output port fieldName doesn't contain an index!");
+            }
+        }
 
         protected virtual void OverrideModel(IMLSpecifications.LearningType learningType)
         {
@@ -1014,6 +1387,15 @@ namespace InteractML
 
             }
 
+        }
+
+        /// <summary>
+        /// Sets all error flags to the value passed in
+        /// </summary>
+        /// <param name="value"></param>
+        protected void SetErrorFlags(bool value)
+        {
+            m_ErrorWrongInputTrainingExamplesPort = value;
         }
 
 #endregion

@@ -186,4 +186,21 @@ public class IMLEditorManager
 
 
     }
+
+    /// <summary>
+    /// Creates an IML System GameObject in the scene
+    /// </summary>
+    [MenuItem("GameObject/InteractML/IML System", false, 10)]
+    public static void CreateIMLSystem(MenuCommand menuCommand)
+    {
+        // Create a custom IML game object
+        GameObject imlSystem = new GameObject("IML System");
+        // Add IML Component
+        imlSystem.AddComponent<IMLComponent>();
+        // Ensure it gets reparented if this was a context click (otherwise does nothing)
+        GameObjectUtility.SetParentAndAlign(imlSystem, menuCommand.context as GameObject);
+        // Register the creation in the undo system
+        Undo.RegisterCreatedObjectUndo(imlSystem, "Create " + imlSystem.name);
+        Selection.activeObject = imlSystem;
+    }
 }
