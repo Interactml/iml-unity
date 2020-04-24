@@ -71,6 +71,10 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
+            if (type.Namespace == "InteractML.DataTypeNodes")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
             else return null;
         }
 
