@@ -31,7 +31,9 @@ namespace InteractML.FeatureExtractors
 
         private float nodeWidth;
         private float lineWeight;
-
+        private int counter = 0;
+        private int count = 3;
+        private int stop = 6;
         public override void OnHeaderGUI()
         {
             // Get reference to the current node
@@ -107,6 +109,39 @@ namespace InteractML.FeatureExtractors
 
             // Draw line below ports
             GUI.DrawTexture(new Rect(portSection.x, headerSection.height + portSection.height - lineWeight, portSection.width, lineWeight), lineTexture);
+
+            
+            if (m_ExtractPosition.ReceivingData)
+            {
+                Debug.Log(counter);
+                foreach (var port in m_ExtractPosition.Ports)
+                {
+                    if (counter >= count)
+                    {
+                        if (port.IsInput)
+                        {
+                            Vector2 positionOut = IMLNodeEditor.GetPortPosition(port);
+                            Rect circle = new Rect(positionOut, new Vector2(500, 500));
+                            circle.width = 20;
+                            circle.height = 20;
+
+                            Color col = GUI.color;
+                            GUI.color = Color.white;
+                            GUI.DrawTexture(circle, NodeEditorResources.dotOuter);
+
+                            GUI.DrawTexture(circle, NodeEditorResources.dot);
+                            //IMLNodeEditor.IMLNoodleDraw(positionOut, positionIn);
+                            GUI.color = col;
+                        }
+
+                        if (counter == stop)
+                        {
+                            counter = 0;
+                        }
+                    } 
+                }
+                counter++;
+            } 
         }
 
         /// <summary>

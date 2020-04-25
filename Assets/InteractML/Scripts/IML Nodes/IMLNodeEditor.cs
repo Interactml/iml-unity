@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
+using XNodeEditor.Internal;
 #if UNITY_EDITOR
 using UnityEditor;
 using XNodeEditor;
@@ -65,6 +68,8 @@ namespace InteractML
         /// <returns></returns>
         protected Rect LineBelowHeader;
 
+        public Vector2 positionPort;
+
         #endregion
 
 
@@ -115,7 +120,7 @@ namespace InteractML
                 EditorGUILayout.LabelField(content, style, options);
 
                 Rect rect = GUILayoutUtility.GetLastRect();
-                position = rect.position - new Vector2(16, 0);
+                position = rect.position - new Vector2(2, 0);
             }
             // If property is an output, display a text label and put a port handle on the right side
             else if (port.direction == XNode.NodePort.IO.Output)
@@ -127,6 +132,62 @@ namespace InteractML
                 position = rect.position + new Vector2(rect.width, 0);
             }
             NodeEditorGUILayout.PortField(position, port);
+        }
+
+        public static void IMLNoodleDraw(Vector2 Out, Vector2 In)
+        {
+            Gradient grad = new Gradient();
+            Color a = hexToColor("#ffffff");
+            Color b = hexToColor("#000000");
+            grad.SetKeys(
+                new GradientColorKey[] { new GradientColorKey(a, 0f), new GradientColorKey(b, 1f) },
+                new GradientAlphaKey[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(1f, 1f) }
+                );
+            NoodlePath noodlePath = NodeEditorPreferences.GetSettings().noodlePath;
+            float noodleThickness = 10f;
+            NoodleStroke noodleStroke = NodeEditorPreferences.GetSettings().noodleStroke;
+            
+            List<Vector2> gridPoints = new List<Vector2>();
+            gridPoints.Add(Out);
+            gridPoints.Add(In);
+            //NodeEditorGUI.DrawNoodle(grad, noodlePath, noodleStroke, noodleThickness, gridPoints);
+        }
+
+        public static Color hexToColor(string hex)
+        {
+            hex = hex.Replace("0x", "");//in case the string is formatted 0xFFFFFF
+            hex = hex.Replace("#", "");//in case the string is formatted #FFFFFF
+            byte a = 255;//assume fully visible unless specified in hex
+            byte r = byte.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+            byte g = byte.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+            byte b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+            //Only use alpha if the string has enough characters
+            if (hex.Length == 8)
+            {
+                a = byte.Parse(hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
+            }
+            return new Color32(r, g, b, a);
+        }
+
+        public static Vector2 GetPortPosition(XNode.NodePort port)
+        {
+            Vector2 position = Vector3.zero;
+            if (port == null) return position;
+
+            // If property is an input, display a regular property field and put a port handle on the left side
+            if (port.direction == XNode.NodePort.IO.Input)
+            {
+                Rect rect = GUILayoutUtility.GetLastRect();
+                position = rect.position - new Vector2(10, - 65);
+            }
+            // If property is an output, display a text label and put a port handle on the right side
+            else if (port.direction == XNode.NodePort.IO.Output)
+            {
+                Rect rect = GUILayoutUtility.GetLastRect();
+                position = rect.position + new Vector2(rect.width, 0);
+            }
+
+            return position;
         }
 
         #endregion

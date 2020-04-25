@@ -33,6 +33,7 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Feature Values extracted (ready to be read by a different node)
         /// </summary>
+        [HideInInspector]
         public IMLBaseDataType FeatureValues { get { return m_PositionExtracted; } }
 
         /// <summary>
@@ -40,6 +41,7 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         [SerializeField]
         private IMLVector3 m_PositionExtracted;
+        private IMLVector3 old_PositionExtracted;
         /// <summary>
         /// Lets external classes see position data
         /// </summary> 
@@ -59,9 +61,17 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         public bool isUpdated { get; set; }
 
+        public bool ReceivingData;
+
+        float x, y, z;
+        int counter = 0;
+        int count = 5;
         // Use this for initialization
         protected override void Init()
         {
+            counter = 0;
+            count = 5;
+
             base.Init();
 
             if (m_PositionExtracted == null)
@@ -93,6 +103,26 @@ namespace InteractML.FeatureExtractors
         /// <returns></returns>
         public object UpdateFeature()
         {
+            //check if receiving data
+            if(counter == count)
+            {
+                counter = 0;
+                if (x == FeatureValues.Values[0] && y == FeatureValues.Values[1] && z == FeatureValues.Values[2])
+                {
+                    ReceivingData = false;
+                }
+                else
+                {
+                    ReceivingData = true; 
+
+                }
+                x = FeatureValues.Values[0];
+                y = FeatureValues.Values[1];
+                z = FeatureValues.Values[2];
+            }
+
+            counter++;
+            
             if (m_PositionExtracted == null)
             {
                 m_PositionExtracted = new IMLVector3();
