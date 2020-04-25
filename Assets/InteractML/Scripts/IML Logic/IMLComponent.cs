@@ -54,11 +54,29 @@ namespace InteractML
         /// <summary>
         /// List of Training Example Nodes in the IML Controller
         /// </summary>
-        public List<TrainingExamplesNode> TrainingExamplesNodesList { get => m_TrainingExamplesNodesList; }
+        public List<TrainingExamplesNode> TrainingExamplesNodesList
+        {
+            get
+            {
+                if (m_TrainingExamplesNodesList != null)
+                    return m_TrainingExamplesNodesList;
+                else
+                    return new List<TrainingExamplesNode>();
+            }
+        }
         /// <summary>
         /// Lists of Model Nodes in the IML Controller
         /// </summary>
-        public List<IMLConfiguration> IMLConfigurationNodesList { get => m_IMLConfigurationNodesList; }
+        public List<IMLConfiguration> IMLConfigurationNodesList
+        {
+            get
+            {
+                if (m_IMLConfigurationNodesList != null)
+                    return m_IMLConfigurationNodesList;
+                else
+                    return new List<IMLConfiguration>();
+            }
+        }
         #endregion
 
 
