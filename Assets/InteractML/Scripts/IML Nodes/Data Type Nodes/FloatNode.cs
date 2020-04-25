@@ -1,32 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using XNode;
+﻿using UnityEngine;
 
 namespace InteractML.DataTypeNodes
 {
 
-    public class FloatNode : Node
+    [NodeWidth(250)]
+    public class FloatNode : BaseDataTypeNode<float>
+
     {
-        [SerializeField]
-        public float Value;
-
-        [Output]
-        public float FloatToOutput;
-
-        public string ValueName;
-
-        // Use this for initialization
-        protected override void Init()
+        // IML Feature
+        public override IMLBaseDataType FeatureValues
         {
-            base.Init();
-        }
 
-        // Return the correct value of an output port when requested
-        public override object GetValue(NodePort port)
-        {
-            FloatToOutput = Value;
-            return FloatToOutput; 
+            get
+            {
+                // Make sure feature value is never null
+                if (m_FeatureValues == null)
+                    m_FeatureValues = new IMLFloat();
+
+                // Update local IML Data copy
+                m_FeatureValues.SetValue(Value);
+                return m_FeatureValues;
+            }
+
         }
+        /// <summary>
+        /// Local specific IML data type
+        /// </summary>
+        private IMLFloat m_FeatureValues;
+
     }
 }

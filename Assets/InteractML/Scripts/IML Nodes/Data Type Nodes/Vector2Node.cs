@@ -1,32 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using XNode;
+﻿using UnityEngine;
 
 namespace InteractML.DataTypeNodes
 {
-    public class Vector2Node : Node
+    [NodeWidth(250)]
+    public class Vector2Node : BaseDataTypeNode<Vector2>
     {
-        [SerializeField]
-        public Vector2 Value;
-
-        [Output]
-        public Vector2 Vector2ToOutput;
-
-        public string ValueName;
-
-        // Use this for initialization
-        protected override void Init()
+        // IML Feature
+        public override IMLBaseDataType FeatureValues
         {
-            base.Init();
-        }
 
-        // Return the correct value of an output port when requested
-        public override object GetValue(NodePort port)
-        {
-            Vector2ToOutput = Value;
-            return Vector2ToOutput;
+            get
+            {
+                // Make sure feature value is never null
+                if (m_FeatureValues == null)
+                    m_FeatureValues = new IMLVector2();
+
+                // Update local IML Data copy
+                m_FeatureValues.SetValues(Value);
+                return m_FeatureValues;
+            }
+
         }
+        /// <summary>
+        /// Local specific IML data type
+        /// </summary>
+        private IMLVector2 m_FeatureValues;
+
     }
 }
-

@@ -1,32 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using XNode;
+﻿using UnityEngine;
 
 namespace InteractML.DataTypeNodes
 {
-    public class Vector3Node : Node
+    [NodeWidth(250)]
+    public class Vector3Node : BaseDataTypeNode<Vector3>, IFeatureIML
     {
-        [SerializeField]
-        public Vector3 Value;
-
-        [Output]
-        public Vector3 Vector3ToOutput;
-
-        public string ValueName;
-
-        // Use this for initialization
-        protected override void Init()
+        // IML Feature
+        public override IMLBaseDataType FeatureValues
         {
-            base.Init();
- 
-        }
 
-        // Return the correct value of an output port when requested
-        public override object GetValue(NodePort port)
-        {
-            Vector3ToOutput = Value;
-            return Vector3ToOutput;
+            get
+            {
+                // Make sure the feature values are never null
+                if (m_FeatureValues == null)
+                    m_FeatureValues = new IMLVector3();
+
+                // Update local IML Data copy
+                m_FeatureValues.SetValues(Value);
+                return m_FeatureValues;
+            }
+
         }
+        /// <summary>
+        /// Local specific IML data type
+        /// </summary>
+        private IMLVector3 m_FeatureValues;
+
     }
 }

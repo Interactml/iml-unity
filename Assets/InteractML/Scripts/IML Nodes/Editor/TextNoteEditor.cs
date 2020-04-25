@@ -37,6 +37,9 @@ namespace InteractML
             // Initialise header background Rects
             InitHeaderRects();
 
+            // Set node width
+            NodeWidth = 200;
+
             // Draw header background Rect
             GUI.DrawTexture(HeaderRect, NodeColor);
 

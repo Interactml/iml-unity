@@ -439,7 +439,7 @@ namespace InteractML
 
         private void ShowDesiredOutputsConfigLogic()
         {
-            // SHOW DESIRED INPUT CONFIG AND BUILD INPUT LIST
+            // SHOW DESIRED OUTPUT CONFIG AND BUILD INPUT LIST
             EditorGUILayout.LabelField("Outputs: ");
             EditorGUI.indentLevel++;
 
@@ -452,16 +452,16 @@ namespace InteractML
             {
                 m_TrainingExamplesNode.DesiredOutputsConfig.Resize<IMLSpecifications.OutputsEnum>(newSize);
             }
-            //Go through the list of inputs and show the correct kind of config editor tool
+            //Go through the list of outptus and show the correct kind of config editor tool
             for (int i = 0; i < m_TrainingExamplesNode.DesiredOutputsConfig.Count; i++)
             {
                 int outputValueIndex = i + 1;
                 string label = "Output " + outputValueIndex;
-                if (m_TrainingExamplesNode.DesiredInputsConfig.Count > 0 && i < m_TrainingExamplesNode.DesiredInputsConfig.Count)
+                if (m_TrainingExamplesNode.DesiredOutputsConfig.Count > 0 && i < m_TrainingExamplesNode.DesiredOutputsConfig.Count)
                 {
-                    var inputFeature = m_TrainingExamplesNode.DesiredInputsConfig[i];
+                    var inputFeature = m_TrainingExamplesNode.DesiredOutputsConfig[i];
                     // We make sure that the desired output feature list captures the value inputted by the user
-                    EditorGUILayout.EnumFlagsField(label, m_TrainingExamplesNode.DesiredOutputsConfig[i]);
+                    m_TrainingExamplesNode.DesiredOutputsConfig[i] = (IMLSpecifications.OutputsEnum) EditorGUILayout.EnumPopup(label, m_TrainingExamplesNode.DesiredOutputsConfig[i]);
                 }
 
             }
