@@ -2,7 +2,6 @@
 
 namespace InteractML.DataTypeNodes
 {
-    [NodeWidth(250)]
     public class SerialVectorNode : BaseDataTypeNode<float[]>
     {
         // Override set behaviour to avoid passing data by reference because of arrays
@@ -18,7 +17,6 @@ namespace InteractML.DataTypeNodes
         // IML Feature
         public override IMLBaseDataType FeatureValues
         {
-
             get
             {
                 // Make sure feature value is never null

@@ -9,7 +9,6 @@ using System;
 namespace InteractML
 {
     [NodeWidth(420)]
-    [NodeTint("#3A3B5B")]
     public class IMLConfiguration : Node
     {
 
@@ -147,8 +146,8 @@ namespace InteractML
         protected override void Init()
         {
             base.Init();
+
             Initialize();
-            name = "MACHINE LEARNING SYSTEM";
 
         }
 
