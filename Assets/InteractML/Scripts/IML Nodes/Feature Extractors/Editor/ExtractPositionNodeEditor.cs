@@ -16,21 +16,6 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         private ExtractPosition m_ExtractPosition;
 
-        private GUISkin skin;
-
-        private Color nodeColor;
-        private Color lineColor;
-
-        private Texture2D nodeTexture;
-        private Texture2D lineTexture;
-
-        private Rect headerSection;
-        private Rect portSection;
-        private Rect bodySection;
-        private Rect subBodySection;
-
-        private float nodeWidth;
-        private float lineWeight;
         private int counter = 0;
         private int count = 3;
         private int stop = 6;
@@ -39,8 +24,10 @@ namespace InteractML.FeatureExtractors
         /// Rects for node layout
         /// </summary>
         private Rect m_BodyRect;
+        private Rect m_InnerBodyRect;
         private Rect m_PortRect;
         private Rect m_BottomRect;
+        private Rect m_InnerBottomRect;
 
         public override void OnHeaderGUI()
         {
@@ -49,6 +36,8 @@ namespace InteractML.FeatureExtractors
 
             // Initialise header background Rects
             InitHeaderRects();
+
+            NodeColor = GetColorTextureFromHexString("#3A3B5B");
 
             // Draw header background Rect
             GUI.DrawTexture(HeaderRect, NodeColor);
@@ -93,7 +82,7 @@ namespace InteractML.FeatureExtractors
 
             // Draw line below ports
 
-            GUI.DrawTexture(new Rect(portSection.x, headerSection.height + portSection.height - lineWeight, portSection.width, lineWeight), lineTexture);
+            GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSeparatorLine, m_PortRect.width, WeightOfSeparatorLine), SeparatorLineColor);
 
             
             if (m_ExtractPosition.ReceivingData)
@@ -186,14 +175,21 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         private void ShowExtractedPositionValues()
         {
-            GUILayout.BeginArea(m_BodyRect);
-            EditorGUILayout.Space();
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("x: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("y: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[1], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("z: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[2], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            m_InnerBodyRect.x = m_BodyRect.x + 20;
+            m_InnerBodyRect.y = m_BodyRect.y + 20;
+            m_InnerBodyRect.width = m_BodyRect.width - 20;
+            m_InnerBodyRect.height = m_BodyRect.height - 20;
+
+            GUILayout.BeginArea(m_InnerBodyRect);
+
+            if (m_ExtractPosition.ReceivingData)
+            {
+                DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Green Toggle"));
+            }
+            else
+            {
+                DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Red Toggle"));
+            }
 
             GUILayout.EndArea();
 
@@ -202,15 +198,44 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Show the local space toggle 
         /// </summary>
+        private void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        {
+            GUILayout.BeginHorizontal();
+            m_ExtractPosition.x_switch = EditorGUILayout.Toggle(m_ExtractPosition.x_switch, style);
+            EditorGUILayout.LabelField("x: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            GUILayout.EndHorizontal();
+
+            EditorGUILayout.Space();
+
+            GUILayout.BeginHorizontal();
+            m_ExtractPosition.y_switch = EditorGUILayout.Toggle(m_ExtractPosition.y_switch, style);
+            EditorGUILayout.LabelField("y: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[1], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            GUILayout.EndHorizontal();
+
+            EditorGUILayout.Space();
+
+            GUILayout.BeginHorizontal();
+            m_ExtractPosition.z_switch = EditorGUILayout.Toggle(m_ExtractPosition.z_switch, style);
+            EditorGUILayout.LabelField("z: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[2], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            GUILayout.EndHorizontal();
+        }
+
+        /// <summary>
+        /// Show the local space toggle 
+        /// </summary>
         private void ShowLocalSpaceToggle()
         {
-            EditorGUI.indentLevel++;
-            GUILayout.BeginArea(m_BottomRect);
-            EditorGUILayout.Space();
-            EditorGUILayout.Space();
-            m_ExtractPosition.LocalSpace = EditorGUILayout.ToggleLeft("Use local space for transform", m_ExtractPosition.LocalSpace, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Sub Label"));
+            m_InnerBottomRect.x = m_BottomRect.x + 24;
+            m_InnerBottomRect.y = m_BottomRect.y + 16;
+            m_InnerBottomRect.width = m_BottomRect.width;
+            m_InnerBottomRect.height = m_BottomRect.height;
+
+            GUILayout.BeginArea(m_InnerBottomRect);
+            GUILayout.BeginHorizontal();
+            m_ExtractPosition.LocalSpace = EditorGUILayout.Toggle(m_ExtractPosition.LocalSpace, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Local Space Toggle"));
+            EditorGUILayout.LabelField("Use local space for transform", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Local Space Label"));
+            GUILayout.EndHorizontal();
             GUILayout.EndArea();
-            EditorGUI.indentLevel--;
         }
 
        

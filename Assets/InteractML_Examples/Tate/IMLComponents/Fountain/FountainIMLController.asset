@@ -61,6 +61,9 @@ MonoBehaviour:
   GameObjectDataIn: {fileID: 0}
   LiveDataOut: {fileID: 0}
   LocalSpace: 0
+  x_switch: 0
+  y_switch: 0
+  z_switch: 0
   m_RotationExtracted:
     m_Values:
     - -0
@@ -68,6 +71,7 @@ MonoBehaviour:
     - -0
     - 1
   GameObjInputMissing: 0
+  ReceivingData: 0
 --- !u!114 &-7447131372257634198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,11 +302,15 @@ MonoBehaviour:
   GameObjectDataIn: {fileID: 0}
   LiveDataOut: {fileID: 0}
   LocalSpace: 0
+  x_switch: 0
+  y_switch: 0
+  z_switch: 0
   m_PositionExtracted:
     m_Values:
     - -28.56897
     - 2.55999
     - 12.663696
+  ReceivingData: 0
 --- !u!114 &-2138935176841273346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -456,6 +464,9 @@ MonoBehaviour:
   GameObjectDataIn: {fileID: 0}
   LiveDataOut: {fileID: 0}
   LocalSpace: 0
+  x_switch: 0
+  y_switch: 0
+  z_switch: 0
   m_RotationExtracted:
     m_Values:
     - -0
@@ -463,6 +474,7 @@ MonoBehaviour:
     - -0
     - 1
   GameObjInputMissing: 0
+  ReceivingData: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,11 +630,15 @@ MonoBehaviour:
   GameObjectDataIn: {fileID: 0}
   LiveDataOut: {fileID: 0}
   LocalSpace: 0
+  x_switch: 0
+  y_switch: 0
+  z_switch: 0
   m_PositionExtracted:
     m_Values:
     - -28.56897
     - 2.55999
     - 12.663696
+  ReceivingData: 0
 --- !u!114 &1836422697476953226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -844,11 +860,15 @@ MonoBehaviour:
   GameObjectDataIn: {fileID: 0}
   LiveDataOut: {fileID: 0}
   LocalSpace: 0
+  x_switch: 0
+  y_switch: 0
+  z_switch: 0
   m_PositionExtracted:
     m_Values:
     - -28.56897
     - 2.55999
     - 12.663696
+  ReceivingData: 0
 --- !u!114 &4672465823698622472
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -20,8 +20,10 @@ namespace InteractML.FeatureExtractors
         /// Rects for node layout
         /// </summary>
         private Rect m_BodyRect;
+        private Rect m_InnerBodyRect;
         private Rect m_PortRect;
         private Rect m_BottomRect;
+        private Rect m_InnerBottomRect;
 
         public override void OnHeaderGUI()
         {
@@ -30,6 +32,8 @@ namespace InteractML.FeatureExtractors
 
             // Initialise header background Rects
             InitHeaderRects();
+
+            NodeColor = GetColorTextureFromHexString("#3A3B5B");
 
             // Draw header background Rect
             GUI.DrawTexture(HeaderRect, NodeColor);
@@ -130,17 +134,22 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         private void ShowExtractedRotationValues()
         {
-            GUILayout.BeginArea(m_BodyRect);
-            EditorGUILayout.Space();
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField(" x: " + System.Math.Round(new Quaternion(m_ExtractRotation.FeatureValues.Values[0], m_ExtractRotation.FeatureValues.Values[1], m_ExtractRotation.FeatureValues.Values[2], m_ExtractRotation.FeatureValues.Values[3]).eulerAngles.x, 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            EditorGUILayout.Space();
+            m_InnerBodyRect.x = m_BodyRect.x + 20;
+            m_InnerBodyRect.y = m_BodyRect.y + 20;
+            m_InnerBodyRect.width = m_BodyRect.width - 20;
+            m_InnerBodyRect.height = m_BodyRect.height - 20;
 
-            EditorGUILayout.LabelField(" y: " + System.Math.Round(new Quaternion(m_ExtractRotation.FeatureValues.Values[0], m_ExtractRotation.FeatureValues.Values[1], m_ExtractRotation.FeatureValues.Values[2], m_ExtractRotation.FeatureValues.Values[3]).eulerAngles.y, 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            EditorGUILayout.Space();
+            GUILayout.BeginArea(m_InnerBodyRect);
 
-            EditorGUILayout.LabelField(" z: " + System.Math.Round(new Quaternion(m_ExtractRotation.FeatureValues.Values[0], m_ExtractRotation.FeatureValues.Values[1], m_ExtractRotation.FeatureValues.Values[2], m_ExtractRotation.FeatureValues.Values[3]).eulerAngles.z, 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            EditorGUILayout.Space();
+            if (m_ExtractRotation.ReceivingData)
+            {
+                DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Green Toggle"));
+            }
+            else
+            {
+                DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Red Toggle"));
+            }
+
             GUILayout.EndArea();
 
         }
@@ -148,15 +157,45 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Show the local space toggle 
         /// </summary>
+        private void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        {
+            GUILayout.BeginHorizontal();
+            m_ExtractRotation.x_switch = EditorGUILayout.Toggle(m_ExtractRotation.x_switch, style);
+            EditorGUILayout.LabelField("x: " + System.Math.Round(m_ExtractRotation.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            GUILayout.EndHorizontal();
+
+            EditorGUILayout.Space();
+
+            GUILayout.BeginHorizontal();
+            m_ExtractRotation.y_switch = EditorGUILayout.Toggle(m_ExtractRotation.y_switch, style);
+            EditorGUILayout.LabelField("y: " + System.Math.Round(m_ExtractRotation.FeatureValues.Values[1], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            GUILayout.EndHorizontal();
+
+            EditorGUILayout.Space();
+
+            GUILayout.BeginHorizontal();
+            m_ExtractRotation.z_switch = EditorGUILayout.Toggle(m_ExtractRotation.z_switch, style);
+            EditorGUILayout.LabelField("z: " + System.Math.Round(m_ExtractRotation.FeatureValues.Values[2], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            GUILayout.EndHorizontal();
+        }
+
+        /// <summary>
+        /// Show the local space toggle 
+        /// </summary>
         private void ShowLocalSpaceToggle()
         {
-            EditorGUI.indentLevel++;
-            GUILayout.BeginArea(m_BottomRect);
-            EditorGUILayout.Space();
-            EditorGUILayout.Space();
-            m_ExtractRotation.LocalSpace = EditorGUILayout.ToggleLeft("Use local space for transform", m_ExtractRotation.LocalSpace, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Sub Label"));
+            m_InnerBottomRect.x = m_BottomRect.x + 24;
+            m_InnerBottomRect.y = m_BottomRect.y + 16;
+            m_InnerBottomRect.width = m_BottomRect.width;
+            m_InnerBottomRect.height = m_BottomRect.height;
+
+            GUILayout.BeginArea(m_InnerBottomRect);
+            GUILayout.BeginHorizontal();
+            m_ExtractRotation.LocalSpace = EditorGUILayout.Toggle(m_ExtractRotation.LocalSpace, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Local Space Toggle"));
+            EditorGUILayout.LabelField("Use local space for transform", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Local Space Label"));
+            GUILayout.EndHorizontal();
             GUILayout.EndArea();
-            EditorGUI.indentLevel--;
+            
         }
 
 

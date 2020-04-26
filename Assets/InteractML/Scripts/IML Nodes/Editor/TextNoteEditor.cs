@@ -37,6 +37,8 @@ namespace InteractML
             // Initialise header background Rects
             InitHeaderRects();
 
+            NodeColor = GetColorTextureFromHexString("#3A3B5B");
+
             // Set node width
             NodeWidth = 200;
 

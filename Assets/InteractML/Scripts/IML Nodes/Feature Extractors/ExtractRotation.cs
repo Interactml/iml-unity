@@ -27,7 +27,14 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Controls whether to use local space or not
         /// </summary>
-        public bool LocalSpace;
+        public bool LocalSpace = false;
+
+        /// <summary>
+        /// Controls whether to use each axis values in output 
+        /// </summary>
+        public bool x_switch = true;
+        public bool y_switch = true;
+        public bool z_switch = true;
 
         /// <summary>
         /// Feature Values extracted (ready to be read by a different node)
@@ -57,6 +64,12 @@ namespace InteractML.FeatureExtractors
         /// Was the feature already updated?
         /// </summary>
         public bool isUpdated { get; set; }
+
+        public bool ReceivingData;
+
+        float x, y, z;
+        int counter = 0;
+        int count = 5;
 
         // Use this for initialization
         protected override void Init()
@@ -91,6 +104,26 @@ namespace InteractML.FeatureExtractors
         /// <returns></returns>
         public object UpdateFeature()
         {
+            //check if receiving data
+            if (counter == count)
+            {
+                counter = 0;
+                if (x == FeatureValues.Values[0] && y == FeatureValues.Values[1] && z == FeatureValues.Values[2])
+                {
+                    ReceivingData = false;
+                }
+                else
+                {
+                    ReceivingData = true;
+
+                }
+                x = FeatureValues.Values[0];
+                y = FeatureValues.Values[1];
+                z = FeatureValues.Values[2];
+            }
+
+            counter++;
+
             if (m_RotationExtracted == null)
             {
                 m_RotationExtracted = new IMLVector4();

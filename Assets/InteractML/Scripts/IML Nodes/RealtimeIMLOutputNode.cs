@@ -8,7 +8,7 @@ namespace InteractML
     /// <summary>
     /// Outputs the realtime IML Predictions from an IML Configuration node
     /// </summary>
-    [NodeTint("#3A3B5B")]
+    [NodeWidth(250)]
     public class RealtimeIMLOutputNode : Node
     {
         /// <summary>
@@ -27,7 +27,6 @@ namespace InteractML
         protected override void Init()
         {
             base.Init();
-            name = "OUTPUT";
 
         }
 

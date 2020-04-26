@@ -27,12 +27,6 @@ namespace InteractML
 
         bool state;
 
-        private static void Init()
-        {
-            Debug.Log("load");   
-        }
-
-
         public override void OnHeaderGUI()
         {
             // Get reference to the current node
@@ -40,6 +34,8 @@ namespace InteractML
 
             // Initialise header background Rects
             InitHeaderRects();
+
+            NodeColor = GetColorTextureFromHexString("#3A3B5B");
 
             // Draw header background Rect
             GUI.DrawTexture(HeaderRect, NodeColor);

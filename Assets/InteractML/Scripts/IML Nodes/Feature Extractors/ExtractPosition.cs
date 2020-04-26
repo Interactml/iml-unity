@@ -10,7 +10,6 @@ namespace InteractML.FeatureExtractors
     /// Feature extractor for positions
     /// </summary>
     [NodeWidth(250)]
-    [NodeTint("#3A3B5B")]
     public class ExtractPosition : Node, IFeatureIML
     {
         /// <summary>
@@ -28,7 +27,15 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Controls whether to use local space or not
         /// </summary>
-        public bool LocalSpace;
+        public bool LocalSpace = false;
+
+        /// <summary>
+        /// Controls whether to use each axis values in output 
+        /// </summary>
+        public bool x_switch = true;
+        public bool y_switch = true;
+        public bool z_switch = true;
+
 
         /// <summary>
         /// Feature Values extracted (ready to be read by a different node)

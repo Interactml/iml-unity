@@ -24,19 +24,19 @@ namespace InteractML
         /// Texture2D for node color
         /// </summary>
         /// <returns></returns>
-        protected Texture2D NodeColor { get; set; } = GetColorTextureFromHexString("#3A3B5B");
+        protected Texture2D NodeColor { get; set; }
 
         /// <summary>
         /// Texture2D  for line color
         /// </summary>
         /// <returns></returns>
-        protected Texture2D SeparatorLineColor { get; set; } = GetColorTextureFromHexString("#888EF7");
+        protected Texture2D SeparatorLineColor { get; set; }
 
         /// <summary>
         /// Texture2D  for line color
         /// </summary>
         /// <returns></returns>
-        protected Texture2D SectionTopColor { get; set; } = GetColorTextureFromHexString("#888EF7");
+        protected Texture2D SectionTopColor { get; set; }
 
         /// <summary>
         /// Float value for line weight

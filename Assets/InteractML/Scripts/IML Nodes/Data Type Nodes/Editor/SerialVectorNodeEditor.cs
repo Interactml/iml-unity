@@ -21,6 +21,7 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private Rect m_BodyRect;
         private Rect m_PortRect;
+        private Rect m_InnerBodyRect;
 
         public override void OnHeaderGUI()
         {
@@ -29,6 +30,8 @@ namespace InteractML.DataTypeNodes
 
             // Initialise header background Rects
             InitHeaderRects();
+
+            NodeColor = GetColorTextureFromHexString("#3A3B5B");
 
             // Draw header background Rect
             GUI.DrawTexture(HeaderRect, NodeColor);
@@ -104,7 +107,12 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private void ShowSerialVectorValues()
         {
-            GUILayout.BeginArea(m_BodyRect);
+            m_InnerBodyRect.x = m_BodyRect.x + 20;
+            m_InnerBodyRect.y = m_BodyRect.y + 20;
+            m_InnerBodyRect.width = m_BodyRect.width - 20;
+            m_InnerBodyRect.height = m_BodyRect.height - 20;
+
+            GUILayout.BeginArea(m_InnerBodyRect);
             EditorGUILayout.Space();
             EditorGUILayout.LabelField("Name: " + m_SerialVectorNode.ValueName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
             EditorGUILayout.Space();

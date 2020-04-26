@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8947810006029428897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
+  m_Name: OUTPUT
+  m_EditorClassIdentifier: 
+  id: 396e0308-6ee5-47a8-969c-62fab6cc6192
+  graph: {fileID: 11400000}
+  position: {x: 26.2257, y: -715.06384}
+  ports:
+    keys:
+    - IMLModelOutputs
+    values:
+    - _fieldName: IMLModelOutputs
+      _node: {fileID: -8947810006029428897}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  IMLModelOutputs: {fileID: 0}
+  m_IMLOutputVector: []
 --- !u!114 &-4927585982608454069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,6 +173,59 @@ MonoBehaviour:
   RunningKey: 0
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
+--- !u!114 &-114659928950384369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad17575636db785409774a862fa69f36, type: 3}
+  m_Name: Series Training Examples
+  m_EditorClassIdentifier: 
+  id: 2a17ffd2-d7b9-4c4e-849d-ed297acf9196
+  graph: {fileID: 11400000}
+  position: {x: 24, y: -584}
+  ports:
+    keys:
+    - InputFeatures
+    - TrainingExamplesNodeToOutput
+    values:
+    - _fieldName: InputFeatures
+      _node: {fileID: -114659928950384369}
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: TrainingExamplesNodeToOutput
+      _node: {fileID: -114659928950384369}
+      _typeQualifiedName: InteractML.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  InputFeatures: []
+  TrainingExamplesNodeToOutput: {fileID: -114659928950384369}
+  ModeOfCollection: 1
+  TrainingExamplesVector: []
+  TrainingSeriesCollection: []
+  m_DesiredInputsConfig: 
+  m_DesiredOutputsConfig: 
+  IMLConfigurationNodesConnected: []
+  StartDelay: 0
+  CaptureRate: 10
+  RecordTime: -1
+  EnableKeyboardControl: 0
+  RecordDataKey: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +246,8 @@ MonoBehaviour:
   - {fileID: 6944117512479845570}
   - {fileID: 23255658134690522}
   - {fileID: 4459884802637960444}
+  - {fileID: -8947810006029428897}
+  - {fileID: -114659928950384369}
   SceneComponent: {fileID: 0}
 --- !u!114 &23255658134690522
 MonoBehaviour:
@@ -178,7 +263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 262df59d-588f-48e2-95c4-6f8e50da3e0f
   graph: {fileID: 11400000}
-  position: {x: -424, y: -24}
+  position: {x: -488, y: -88}
   ports:
     keys:
     - GameObjectDataIn
@@ -211,6 +296,9 @@ MonoBehaviour:
   GameObjectDataIn: {fileID: 0}
   LiveDataOut: {fileID: 0}
   LocalSpace: 0
+  x_switch: 1
+  y_switch: 1
+  z_switch: 1
   m_RotationExtracted:
     m_Values:
     - 0.70458376
@@ -218,6 +306,7 @@ MonoBehaviour:
     - 0.16586284
     - 0.68525785
   GameObjInputMissing: 0
+  ReceivingData: 0
 --- !u!114 &4459884802637960444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,7 +321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: f3f4c87d-0c73-45c0-9a85-d5fbb077e352
   graph: {fileID: 11400000}
-  position: {x: -1192, y: -264}
+  position: {x: -1192, y: -344}
   ports:
     keys: []
     values: []
@@ -252,7 +341,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 210424bf-c481-4157-9f0f-8157aaab0dc5
   graph: {fileID: 11400000}
-  position: {x: -472, y: -360}
+  position: {x: -488, y: -440}
   ports:
     keys:
     - LiveDataOut
@@ -285,11 +374,15 @@ MonoBehaviour:
   GameObjectDataIn: {fileID: 0}
   LiveDataOut: {fileID: 0}
   LocalSpace: 0
+  x_switch: 1
+  y_switch: 1
+  z_switch: 1
   m_PositionExtracted:
     m_Values:
     - -16.6
     - 2.07
     - 3.9
+  ReceivingData: 0
 --- !u!114 &6732151304541360272
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,7 +461,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: e34c769e-ac3d-4f04-b34b-3ff3501fc846
   graph: {fileID: 11400000}
-  position: {x: -920, y: -264}
+  position: {x: -920, y: -408}
   ports:
     keys:
     - GameObjectDataOut
@@ -391,4 +484,4 @@ MonoBehaviour:
   DevMode: 0
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
-  state: 1
+  state: 0

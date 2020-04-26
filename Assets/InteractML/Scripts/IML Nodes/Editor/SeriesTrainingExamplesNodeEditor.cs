@@ -43,6 +43,8 @@ namespace InteractML
             // Initialise header background Rects
             InitHeaderRects();
 
+            NodeColor = GetColorTextureFromHexString("#3A3B5B");
+
             // Draw header background Rect
             GUI.DrawTexture(HeaderRect, NodeColor);
 
@@ -128,8 +130,8 @@ namespace InteractML
             EditorGUILayout.Space();
 
 
-            EditorGUILayout.Toggle(m_AddOutput);
-            EditorGUILayout.Toggle(m_RemoveOutput);
+            m_AddOutput = EditorGUILayout.Toggle(m_AddOutput, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Toggle"));
+            m_RemoveOutput = EditorGUILayout.Toggle(m_RemoveOutput, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Toggle"));
 
 
             GUILayout.EndHorizontal();

@@ -82,11 +82,15 @@ MonoBehaviour:
   GameObjectDataIn: {fileID: 0}
   LiveDataOut: {fileID: 0}
   LocalSpace: 0
+  x_switch: 0
+  y_switch: 0
+  z_switch: 0
   m_PositionExtracted:
     m_Values:
     - -7.36
     - 2.07
     - 3.9
+  ReceivingData: 0
 --- !u!114 &-6845527610141923183
 MonoBehaviour:
   m_ObjectHideFlags: 0
