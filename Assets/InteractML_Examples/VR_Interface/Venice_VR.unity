@@ -668,6 +668,38 @@ Transform:
   m_Father: {fileID: 723664792}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &44854763 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100002, guid: 5e9e851c0e142814dac026a256ba2ac0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1025327141}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &44854766
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44854763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d5f4cf9fda152478a82c01bff7653a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &44854767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 44854763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61cbf392e9d77d94c9ce25cb01b9a2b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IMLSystem: {fileID: 138508038}
+  HeadRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &50283389
 GameObject:
   m_ObjectHideFlags: 0
@@ -13274,6 +13306,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
+      propertyPath: m_MouseLook.lockCursor
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
 --- !u!1 &1025327142 stripped
@@ -13282,32 +13318,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1025327141}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1025327143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025327142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13d5f4cf9fda152478a82c01bff7653a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1025327144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1025327142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61cbf392e9d77d94c9ce25cb01b9a2b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IMLSystem: {fileID: 138508038}
-  HeadRotation: {x: 0, y: 0, z: 0}
 --- !u!20 &1025327145 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 2000000, guid: 5e9e851c0e142814dac026a256ba2ac0,
