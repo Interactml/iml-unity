@@ -16,7 +16,13 @@ namespace InteractML
         public TextMeshProUGUI TrainingExamplesNodeIndexText;
         public TextMeshProUGUI NoTrainingExamplesText;
         public TextMeshProUGUI NoInputsText;
+        public RectTransform InputsContentRect; // Should be a Parent for every other data type UI element for inputs
         public TextMeshProUGUI NoOutputsText;
+        public RectTransform OutputsContentRect; // Should be a Parent for every other data type UI element for outputs
+
+        [Header("Data Type UI Prefabs")]
+        [Tooltip("Populate with UI Prefabs of your data types")]
+        public List<IMLDataTypeUI> DataTypeUIPrefabs;
 
         [Header("Training Examples Node Vars")]
         [SerializeField]
