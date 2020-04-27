@@ -1,10 +1,9 @@
-﻿using System.Collections;
+﻿using ReusableMethods;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using XNode;
-using System.Linq;
-using ReusableMethods;
-using System;
 
 namespace InteractML
 {
@@ -808,25 +807,32 @@ namespace InteractML
             // Get values from the input list
             InputFeatures = this.GetInputNodesConnected("InputFeatures");
 
-            // Make sure that the list is initialised
-            if (m_ExpectedInputList == null)
-                m_ExpectedInputList = new List<IMLSpecifications.InputsEnum>();
-
-            // Adjust the desired inputs list based on nodes connected
-            m_ExpectedInputList.Clear();
-            // Go through all the nodes connected
-            for (int i = 0; i < InputFeatures.Count; i++)
+            //check features have been connected 
+            if (InputFeatures != null)
             {
-                // Cast the node checking if implements the feature interface (it is a featureExtractor)
-                IFeatureIML inputFeature = InputFeatures[i] as IFeatureIML;
+                // Make sure that the list is initialised
+                if (m_ExpectedInputList == null)
+                    m_ExpectedInputList = new List<IMLSpecifications.InputsEnum>();
 
-                // If it is a feature extractor...
-                if (inputFeature != null)
+                // Adjust the desired inputs list based on nodes connected
+                m_ExpectedInputList.Clear();
+                Debug.Log(InputFeatures.Count);
+                // Go through all the nodes connected
+                for (int i = 0; i < InputFeatures.Count; i++)
                 {
-                    // We add the feature to the desired inputs config
-                    m_ExpectedInputList.Add((IMLSpecifications.InputsEnum)inputFeature.FeatureValues.DataType);
+                    // Cast the node checking if implements the feature interface (it is a featureExtractor)
+                    IFeatureIML inputFeature = InputFeatures[i] as IFeatureIML;
+
+                    // If it is a feature extractor...
+                    if (inputFeature != null)
+                    {
+                        // We add the feature to the desired inputs config
+                        m_ExpectedInputList.Add((IMLSpecifications.InputsEnum)inputFeature.FeatureValues.DataType);
+                    }
                 }
             }
+
+            
         }
 
         /// <summary>
