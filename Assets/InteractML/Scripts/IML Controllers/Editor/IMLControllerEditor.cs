@@ -97,6 +97,10 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
+            if (type.PrettyName() == "InteractML.TrainingExamplesNode")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
             if (type.PrettyName() == "InteractML.SingleTrainingExamplesNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");

@@ -2,6 +2,7 @@
 
 namespace InteractML.DataTypeNodes
 {
+    [NodeWidth(250)]
     public class FloatNode : BaseDataTypeNode<float>
     {
         // IML Feature

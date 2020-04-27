@@ -10,7 +10,7 @@ namespace InteractML
     /// <summary>
     /// Holds the information and list of a training examples node
     /// </summary>
-    [NodeWidth(500)]
+    [NodeWidth(300)]
     public class SingleTrainingExamplesNode : TrainingExamplesNode
     {
 

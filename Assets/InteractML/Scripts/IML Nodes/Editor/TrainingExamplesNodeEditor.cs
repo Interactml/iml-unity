@@ -452,7 +452,7 @@ namespace InteractML
             {
                 m_TrainingExamplesNode.DesiredOutputsConfig.Resize<IMLSpecifications.OutputsEnum>(newSize);
             }
-            //Go through the list of outptus and show the correct kind of config editor tool
+            //Go through the list of outputs and show the correct kind of config editor tool
             for (int i = 0; i < m_TrainingExamplesNode.DesiredOutputsConfig.Count; i++)
             {
                 int outputValueIndex = i + 1;

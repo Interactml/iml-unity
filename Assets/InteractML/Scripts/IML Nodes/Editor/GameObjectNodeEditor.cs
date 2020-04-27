@@ -44,7 +44,8 @@ namespace InteractML
             GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#E24680"));
 
             //Display Node name
-            GUILayout.Label("GAME OBJECT INPUT", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(60));
+            GUILayout.Label("GAME OBJECT INPUT", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 20), GUILayout.MinHeight(60));
+
         }
 
         public override void OnBodyGUI()

@@ -2,6 +2,7 @@
 
 namespace InteractML.DataTypeNodes
 {
+    [NodeWidth(250)]
     public class Vector2Node : BaseDataTypeNode<Vector2>
     {
         // IML Feature

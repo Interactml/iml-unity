@@ -81,7 +81,7 @@ namespace InteractML
         {
             // Set header background Rect values
             HeaderRect.x = 5;
-            HeaderRect.y = 5;
+            HeaderRect.y = 0;
             HeaderRect.width = NodeWidth - 10;
             HeaderRect.height = 60;
 

@@ -40,7 +40,7 @@ namespace InteractML.DataTypeNodes
             GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
 
             //Display Node name
-            GUILayout.Label("LIVE FLOAT DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(60));
+            GUILayout.Label("LIVE FLOAT DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth), GUILayout.MinHeight(60));
         }
 
         public override void OnBodyGUI()

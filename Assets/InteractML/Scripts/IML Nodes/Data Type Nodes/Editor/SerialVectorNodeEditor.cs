@@ -40,7 +40,7 @@ namespace InteractML.DataTypeNodes
             GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
 
             //Display Node name
-            GUILayout.Label("LIVE SERIAL DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(60));
+            GUILayout.Label("LIVE SERIAL DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 20), GUILayout.MinHeight(60));
         }
 
         public override void OnBodyGUI()

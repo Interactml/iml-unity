@@ -2,6 +2,7 @@
 
 namespace InteractML.DataTypeNodes
 {
+    [NodeWidth(250)]
     public class IntegerNode : BaseDataTypeNode<int>
     {                
         // IML Feature

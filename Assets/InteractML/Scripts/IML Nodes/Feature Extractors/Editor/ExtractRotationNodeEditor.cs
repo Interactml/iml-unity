@@ -42,7 +42,7 @@ namespace InteractML.FeatureExtractors
             GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
 
             //Display Node name
-            GUILayout.Label("LIVE ROTATION DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(60));
+            GUILayout.Label("LIVE ROTATION DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth), GUILayout.MinHeight(60));
         }
 
 

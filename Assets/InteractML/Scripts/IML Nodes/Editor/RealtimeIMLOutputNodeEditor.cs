@@ -40,7 +40,7 @@ namespace InteractML
             GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#F6C46F"));
 
             //Display Node name
-            GUILayout.Label("MODEL OUTPUT", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(60));
+            GUILayout.Label("MODEL OUTPUT", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth), GUILayout.MinHeight(60));
         }
 
         public override void OnBodyGUI()
