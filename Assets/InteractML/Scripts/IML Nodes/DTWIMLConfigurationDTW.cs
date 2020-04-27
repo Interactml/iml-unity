@@ -8,7 +8,7 @@ using System;
 
 namespace InteractML
 {
-    [NodeWidth(420)]
+    [NodeWidth(300)]
     public class DTWIMLConfiguration : IMLConfiguration
     {
 
