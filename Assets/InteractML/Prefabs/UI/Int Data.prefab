@@ -411,7 +411,7 @@ GameObject:
   - component: {fileID: 3543364520414563848}
   - component: {fileID: 4115897634997339602}
   m_Layer: 0
-  m_Name: Float Data
+  m_Name: Int Data
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -451,7 +451,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rectTransform: {fileID: 6418658777992563898}
-  DataType: 0
+  DataType: 1
   Label: {fileID: 8012158675894697431}
   InputField:
   - {fileID: 2575309415611370381}

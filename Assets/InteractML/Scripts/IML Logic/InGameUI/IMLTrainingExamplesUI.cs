@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
+using ReusableMethods;
 
 namespace InteractML
 {
@@ -23,6 +25,14 @@ namespace InteractML
         [Header("Data Type UI Prefabs")]
         [Tooltip("Populate with UI Prefabs of your data types")]
         public List<IMLDataTypeUI> DataTypeUIPrefabs;
+        /// <summary>
+        /// List containing input data from the training examples node
+        /// </summary>
+        private List<IMLDataTypeUI> m_InputData;
+        /// <summary>
+        /// List containing output data from the training examples node
+        /// </summary>
+        private List<IMLDataTypeUI> m_OutputData;
 
         [Header("Training Examples Node Vars")]
         [SerializeField]
@@ -40,6 +50,13 @@ namespace InteractML
 
             if (MLComponent)
                 m_CurrentNode = GetNode(m_NodeIndex, MLComponent.TrainingExamplesNodesList);
+
+            // Init lists
+            if (m_InputData == null)
+                m_InputData = new List<IMLDataTypeUI>();
+
+            if (m_OutputData == null)
+                m_OutputData = new List<IMLDataTypeUI>();
         }
 
         // Update is called once per frame
@@ -70,6 +87,9 @@ namespace InteractML
                 {
                     UpdateUIText(CollectExamplesButtonText, "Record Examples");
                 }
+
+                // Populate outputs in List
+                //UpdateDataList(ref m_InputData, m_CurrentNode.DesiredOutputFeatures, "Output", true);
             }
 
         }
@@ -175,6 +195,102 @@ namespace InteractML
         {
             node.ToggleCollectExamples();
         }
+
+        /// <summary>
+        /// Updates a list of data in the in-game UI
+        /// </summary>
+        /// <param name="dataList"></param>
+        /// <param name="nodeDataList"></param>
+        private void UpdateDataList(ref List<IMLDataTypeUI> dataList, List<IMLBaseDataType> nodeDataList, string label, bool isOutput)
+        {
+            // Don't run the method if the external data list is null
+            if (nodeDataList == null)
+                return;
+
+            // Make sure local data list is init
+            if (dataList == null)
+                dataList = new List<IMLDataTypeUI>();
+
+            // If we need to resize the local data list...
+            if (dataList.Count != nodeDataList.Count)
+            {
+                dataList.Resize(nodeDataList.Count);
+            }
+
+            // Make sure we are both lists configurations and structures are matching
+            for (int i = 0; i < nodeDataList.Count; i++)
+            {
+                var externalData = nodeDataList[i];
+                var internalData = dataList[i];
+
+                // We break the method if external data is null or any prefabs are null
+                if (externalData == null )
+                    return;
+
+                // Flag that will trigger the reconfigure local data type event
+                bool reconfigureData = false;
+
+                // Check for null first
+                if (internalData == null)
+                {
+                    reconfigureData = true;
+                }
+                // Check for mismatch of data type
+                else if (internalData.DataType != externalData.DataType)
+                {
+                    reconfigureData = true;
+                }
+
+                // If we need to reconfigure the local data...
+                if (reconfigureData)
+                {
+                    // Create the right kind of data and update values
+                    switch (externalData.DataType)
+                    {
+                        case IMLSpecifications.DataTypes.Float:
+                            internalData = Instantiate(DataTypeUIPrefabs[0]);
+                            break;
+                        case IMLSpecifications.DataTypes.Integer:
+                            internalData = Instantiate(DataTypeUIPrefabs[1]);
+                            break;
+                        case IMLSpecifications.DataTypes.Vector2:
+                            internalData = Instantiate(DataTypeUIPrefabs[2]);
+                            break;
+                        case IMLSpecifications.DataTypes.Vector3:
+                            internalData = Instantiate(DataTypeUIPrefabs[3]);
+                            break;
+                        case IMLSpecifications.DataTypes.Vector4:
+                            internalData = Instantiate(DataTypeUIPrefabs[4]);
+                            break;
+                        case IMLSpecifications.DataTypes.SerialVector:
+                            throw new System.Exception("Serial Vector not yet supported in in-game UI!");
+                            break;
+                        default:
+                            break;
+                    }
+
+                    // Update label
+                    internalData.Label.text = label + " " + i.ToString();
+
+                    // Place element inside the right UI content
+                    if (isOutput)
+                        internalData.rectTransform.SetParent(OutputsContentRect);
+                    else
+                        internalData.rectTransform.SetParent(InputsContentRect);
+
+                    // Adjust height based on position in List (85 units seems to be the right space between two UI elements in this case)                    
+                    //internalData.rectTransform.Translate(internalData.rectTransform.up * -85f * i);
+
+                }
+
+                // Update local values
+                UpdateUIDataFields(internalData.InputField, externalData.Values);
+
+
+            }
+
+        }
+
         #endregion
     }
 

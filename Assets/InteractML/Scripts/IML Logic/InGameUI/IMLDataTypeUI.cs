@@ -9,7 +9,7 @@ namespace InteractML
     /// </summary>
     public class IMLDataTypeUI: MonoBehaviour
     {
-        public RectTransform UIPrefab;
+        public RectTransform rectTransform;
         public IMLSpecifications.DataTypes DataType;
         public TextMeshProUGUI Label;
         public TMP_InputField[] InputField;

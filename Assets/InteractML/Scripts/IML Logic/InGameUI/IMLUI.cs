@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 namespace InteractML
 {
@@ -39,6 +40,28 @@ namespace InteractML
         #endregion
 
         #region Protected Methods
+
+        /// <summary>
+        /// Updates the data fields in the UI with the IML values
+        /// </summary>
+        /// <param name="inputFields"></param>
+        /// <param name="values"></param>
+        protected void UpdateUIDataFields(TMP_InputField[] inputFields, float[] values)
+        {
+            // Break method if any data is null
+            if (inputFields == null || values == null)
+                return;
+
+            // Break method if size is different
+            if (inputFields.Length != values.Length)
+                return;
+
+            // Update each inputField
+            for (int i = 0; i < values.Length; i++)
+            {
+                inputFields[i].text = values[i].ToString();
+            }
+        }
 
         /// <summary>
         /// Updates the text of a UI Element

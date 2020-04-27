@@ -1338,7 +1338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1ea6b65ad42b714cbaa8ae7a3c06e9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIPrefab: {fileID: 7428255361510715851}
+  rectTransform: {fileID: 7428255361510715851}
   DataType: 3
   Label: {fileID: 5851646092785500326}
   InputField:

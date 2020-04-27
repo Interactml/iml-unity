@@ -11498,7 +11498,15 @@ MonoBehaviour:
   TrainingExamplesNodeIndexText: {fileID: 188883408}
   NoTrainingExamplesText: {fileID: 167957433}
   NoInputsText: {fileID: 889201228}
+  InputsContentRect: {fileID: 317197008}
   NoOutputsText: {fileID: 178957759}
+  OutputsContentRect: {fileID: 1443691842}
+  DataTypeUIPrefabs:
+  - {fileID: -549307512995694168, guid: 34608454fda16d34ea198a79b32bcbf2, type: 3}
+  - {fileID: -549307512995694168, guid: 5187fd87a8aaf80438fe100b312fcce9, type: 3}
+  - {fileID: 5072646894748697817, guid: cae43a2c0c256de4787bb01986c56492, type: 3}
+  - {fileID: 8539782411941241176, guid: ef9be42439e2ca7428f869ef43f36da9, type: 3}
+  - {fileID: 1639918923847342765, guid: ecb5c22baf4ee7d428e9625ba2034878, type: 3}
   m_NoDesiredOutputsNode: 0
 --- !u!1 &889201226
 GameObject:
