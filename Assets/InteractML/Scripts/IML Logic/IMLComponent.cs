@@ -534,7 +534,7 @@ namespace InteractML
                     // Assign each node a gameobject
                     for (int i = 0; i < m_GameObjectNodeList.Count; i++)
                     {
-                        m_GameObjectNodeList[i].GameObjectFromScene = GameObjectsToUse[i];
+                        m_GameObjectNodeList[i].GameObjectDataOut = GameObjectsToUse[i];
                        // Debug.Log("Injecting GObject " + GameObjectsToUse[i].name);
 
                     }
@@ -555,7 +555,7 @@ namespace InteractML
                     // Assign each node a gameobject
                     for (int i = 0; i < m_GameObjectNodeList.Count; i++)
                     {
-                        m_GameObjectNodeList[i].GameObjectFromScene = GameObjectsToUse[i];
+                        m_GameObjectNodeList[i].GameObjectDataOut = GameObjectsToUse[i];
                     }
 
                 }
@@ -568,7 +568,7 @@ namespace InteractML
                     // Add as many GameObjects as we can to the list
                     for (int i = 0; i < GameObjectsToUse.Count; i++)
                     {
-                        m_GameObjectNodeList[i].GameObjectFromScene = GameObjectsToUse[i];
+                        m_GameObjectNodeList[i].GameObjectDataOut = GameObjectsToUse[i];
                     }
                 }
             }
