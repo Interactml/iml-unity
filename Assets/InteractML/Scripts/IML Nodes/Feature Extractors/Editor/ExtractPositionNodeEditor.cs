@@ -92,7 +92,6 @@ namespace InteractML.FeatureExtractors
             
             if (m_ExtractPosition.ReceivingData)
             {
-                Debug.Log(counter);
                 foreach (var port in m_ExtractPosition.Ports)
                 {
                     if (counter >= count)
