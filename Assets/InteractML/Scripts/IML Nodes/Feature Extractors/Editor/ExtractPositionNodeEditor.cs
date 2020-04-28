@@ -95,16 +95,12 @@ namespace InteractML.FeatureExtractors
                         if (port.IsInput)
                         {
                             Vector2 positionOut = IMLNodeEditor.GetPortPosition(port);
-                            Rect circle = new Rect(positionOut, new Vector2(500, 500));
-                            circle.width = 20;
-                            circle.height = 20;
-
+                            positionOut = positionOut - new Vector2(2, -1);
+                            Rect circle = new Rect(positionOut, new Vector2(20, 20));
                             Color col = GUI.color;
                             GUI.color = Color.white;
                             GUI.DrawTexture(circle, NodeEditorResources.dotOuter);
 
-                            GUI.DrawTexture(circle, NodeEditorResources.dot);
-                            //IMLNodeEditor.IMLNoodleDraw(positionOut, positionIn);
                             GUI.color = col;
                         }
 

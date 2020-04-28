@@ -120,7 +120,7 @@ namespace InteractML
                 EditorGUILayout.LabelField(content, style, options);
 
                 Rect rect = GUILayoutUtility.GetLastRect();
-                position = rect.position - new Vector2(2, 0);
+                position = rect.position - new Vector2(15, 0);
             }
             // If property is an output, display a text label and put a port handle on the right side
             else if (port.direction == XNode.NodePort.IO.Output)
@@ -178,7 +178,7 @@ namespace InteractML
             if (port.direction == XNode.NodePort.IO.Input)
             {
                 Rect rect = GUILayoutUtility.GetLastRect();
-                position = rect.position - new Vector2(10, - 65);
+                position = rect.position - new Vector2(15, - 65);
             }
             // If property is an output, display a text label and put a port handle on the right side
             else if (port.direction == XNode.NodePort.IO.Output)

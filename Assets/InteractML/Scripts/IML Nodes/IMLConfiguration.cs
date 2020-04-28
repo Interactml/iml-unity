@@ -816,7 +816,6 @@ namespace InteractML
 
                 // Adjust the desired inputs list based on nodes connected
                 m_ExpectedInputList.Clear();
-                Debug.Log(InputFeatures.Count);
                 // Go through all the nodes connected
                 for (int i = 0; i < InputFeatures.Count; i++)
                 {
