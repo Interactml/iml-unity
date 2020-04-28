@@ -367,6 +367,7 @@ namespace InteractML
 
         public void UpdateLogic()
         {
+            
             //Set Learning Type 
             SetLearningType();
 
@@ -396,6 +397,7 @@ namespace InteractML
             /*Debug.Log("expected output" + m_ExpectedOutputList.Count);
             Debug.Log("predicted rap lib output" + PredictedRapidlibOutput.Length);
             Debug.Log("predicted output" + PredictedOutput.Count);*/
+            UpdateRapidLibOutputVector();
 
         }
 
@@ -586,11 +588,11 @@ namespace InteractML
                     //    Debug.Log("Output " + i + " : " + outputFeature.Values[i]);
                     //}
                     //
-
+                   /* Debug.Log("i " + i);
+                    Debug.Log("pointer " + (i + pointerRawOutputVector));
+                    Debug.Log("predicted " + PredictedRapidlibOutput.Length);*/
                     if (i + pointerRawOutputVector >= PredictedRapidlibOutput.Length)
                     {
-                        Debug.Log("pointer " + (i+pointerRawOutputVector));
-                        Debug.Log("predicted " + DelayedPredictedOutput.Length);
                         Debug.LogError("The predicted rapidlib output vector is too small when transforming to interactml types!");
                         break;
                     }
@@ -879,6 +881,7 @@ namespace InteractML
                         {
                             if (m_ExpectedOutputList[i] != trainingExamplesNode.DesiredOutputsConfig[i])
                             {
+                                Debug.Log("i");
                                 m_ExpectedOutputList.Add(trainingExamplesNode.DesiredOutputsConfig[i]);
                             }
                         }
@@ -1351,6 +1354,29 @@ namespace InteractML
             }
         }
 
+        protected void UpdateRapidLibOutputVector()
+        {
+            if (!Lists.IsNullOrEmpty(ref PredictedOutput))
+            {
+                int vectorSize = 0;
+                // Create a vector based on the amount of output features to predict
+                // Calculate vector size
+                for (int i = 0; i < PredictedOutput.Count; i++)
+                {
+                    if (PredictedOutput[i] != null)
+                    {
+                        if (PredictedOutput[i].Values != null)
+                        {
+                            vectorSize += PredictedOutput[i].Values.Length;
+                        }
+                    }
+                }
+
+                // Create vector
+                System.Array.Resize(ref m_RapidlibOutputVector, vectorSize);
+            }
+            
+        }
         /// <summary>
         /// Updates the input vector to send to rapidlib with the input features in the IML Config node
         /// </summary>
