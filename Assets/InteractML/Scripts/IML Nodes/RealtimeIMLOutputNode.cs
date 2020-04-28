@@ -68,7 +68,7 @@ namespace InteractML
                     // Assign ml model values to result array
                     for (int j = 0; j < IMLConfigNodeConnected.PredictedOutput[i].Values.Length; j++)
                     {
-                        int index = result.GetUpperBound(0) - (IMLConfigNodeConnected.PredictedOutput[i].Values.Length - 1) - (j);
+                        int index = result.GetUpperBound(0) - (IMLConfigNodeConnected.PredictedOutput[i].Values.Length - 1);
                         result[index] = IMLConfigNodeConnected.PredictedOutput[i].Values[j];
                     }
                 }

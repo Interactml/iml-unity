@@ -103,9 +103,8 @@ MonoBehaviour:
         - {x: -96, y: 448}
         - {x: 464, y: 400}
       - fieldName: InputFeatures
-        node: {fileID: 6728799171492789848}
-        reroutePoints:
-        - {x: -274.06207, y: -334.20642}
+        node: {fileID: -1899693820327701159}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -113,8 +112,65 @@ MonoBehaviour:
   DevMode: 0
   ValueName: HeadRotation
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 0, y: 237.69992, z: 0}
-  m_Out: {x: 0, y: 237.69992, z: 0}
+  m_Value: {x: 0, y: 264.29996, z: 0}
+  m_Out: {x: 0, y: 270.9, z: 0}
+--- !u!114 &-1899693820327701159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a91209fffbd444385488c8c3e7a6e2, type: 3}
+  m_Name: Single Training Examples
+  m_EditorClassIdentifier: 
+  id: 34300731-16cb-44ca-8577-28810f308bd3
+  graph: {fileID: 11400000}
+  position: {x: -72, y: 600}
+  ports:
+    keys:
+    - InputFeatures
+    - TrainingExamplesNodeToOutput
+    values:
+    - _fieldName: InputFeatures
+      _node: {fileID: -1899693820327701159}
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: -4193609153758654436}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: TrainingExamplesNodeToOutput
+      _node: {fileID: -1899693820327701159}
+      _typeQualifiedName: InteractML.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  InputFeatures:
+  - {fileID: -4193609153758654436}
+  TrainingExamplesNodeToOutput: {fileID: 0}
+  ModeOfCollection: 0
+  TrainingExamplesVector: []
+  TrainingSeriesCollection: []
+  m_DesiredInputsConfig: 03000000
+  m_DesiredOutputsConfig: 0000000000000000
+  IMLConfigurationNodesConnected: []
+  StartDelay: 0
+  CaptureRate: 10
+  RecordTime: -1
+  EnableKeyboardControl: 0
+  RecordDataKey: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,7 +188,7 @@ MonoBehaviour:
   - {fileID: -4193609153758654436}
   - {fileID: 8999848260519867326}
   - {fileID: 6044388257640685099}
-  - {fileID: 6728799171492789848}
+  - {fileID: -1899693820327701159}
   SceneComponent: {fileID: 0}
 --- !u!114 &6044388257640685099
 MonoBehaviour:
@@ -227,63 +283,6 @@ MonoBehaviour:
   RunningKey: 0
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
---- !u!114 &6728799171492789848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
-  m_Name: Training Examples
-  m_EditorClassIdentifier: 
-  id: d247f097-e065-455d-a9a4-f75c2a2ad292
-  graph: {fileID: 11400000}
-  position: {x: -72, y: -776}
-  ports:
-    keys:
-    - InputFeatures
-    - TrainingExamplesNodeToOutput
-    values:
-    - _fieldName: InputFeatures
-      _node: {fileID: 6728799171492789848}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_Out
-        node: {fileID: -4193609153758654436}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: TrainingExamplesNodeToOutput
-      _node: {fileID: 6728799171492789848}
-      _typeQualifiedName: InteractML.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  InputFeatures:
-  - {fileID: -4193609153758654436}
-  TrainingExamplesNodeToOutput: {fileID: 6728799171492789848}
-  ModeOfCollection: 0
-  TrainingExamplesVector: []
-  TrainingSeriesCollection: []
-  m_DesiredInputsConfig: 03000000
-  m_DesiredOutputsConfig: 03000000
-  IMLConfigurationNodesConnected: []
-  StartDelay: 0
-  CaptureRate: 10
-  RecordTime: -1
-  EnableKeyboardControl: 0
-  RecordDataKey: 0
 --- !u!114 &8999848260519867326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,5 +327,5 @@ MonoBehaviour:
   DevMode: 0
   ValueName: PushDirection
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 0, y: 1, z: 0}
+  m_Value: {x: 0, y: 0, z: 1}
   m_Out: {x: 0, y: 0, z: 1}

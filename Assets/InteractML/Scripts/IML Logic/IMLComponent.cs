@@ -40,16 +40,45 @@ namespace InteractML
         [Tooltip("Add here all the GameObjects to use in the IML Controller")]
         public List<GameObject> GameObjectsToUse;
 
-        // Lists of nodes that we can have in the graph
-        private List<string> textListToSend;
-        private List<Vector3> vector3ListToSend;
-        private List<TextNote> textNoteNodesList;
-        private List<Vector> vectorNodesList;
-        private List<TrainingExamplesNode> TrainingExamplesNodesList;
-        private List<IMLConfiguration> IMLConfigurationNodesList;
-        private List<GameObjectNode> gameObjectNodeList;
-        private List<RealtimeIMLOutputNode> RealtimeIMLOutputNodesList;
+        #region Private Lists of Nodes (Fields)
+        /* Private Lists of nodes that we can have in the graph */
+        private List<TextNote> m_TextNoteNodesList;
+        private List<TrainingExamplesNode> m_TrainingExamplesNodesList;
+        private List<IMLConfiguration> m_IMLConfigurationNodesList;
+        private List<GameObjectNode> m_GameObjectNodeList;
+        private List<RealtimeIMLOutputNode> m_RealtimeIMLOutputNodesList;
         public List<IFeatureIML> FeatureNodesList;
+        #endregion
+
+        #region Public Lists of Nodes (Properties)
+        /// <summary>
+        /// List of Training Example Nodes in the IML Controller
+        /// </summary>
+        public List<TrainingExamplesNode> TrainingExamplesNodesList
+        {
+            get
+            {
+                if (m_TrainingExamplesNodesList != null)
+                    return m_TrainingExamplesNodesList;
+                else
+                    return new List<TrainingExamplesNode>();
+            }
+        }
+        /// <summary>
+        /// Lists of Model Nodes in the IML Controller
+        /// </summary>
+        public List<IMLConfiguration> IMLConfigurationNodesList
+        {
+            get
+            {
+                if (m_IMLConfigurationNodesList != null)
+                    return m_IMLConfigurationNodesList;
+                else
+                    return new List<IMLConfiguration>();
+            }
+        }
+        #endregion
+
 
         /// <summary>
         /// Have all the features been updated? (useful for features that need to update only once)
@@ -70,6 +99,7 @@ namespace InteractML
         private List<MonoBehaviour> m_ComponentsWithIMLData;
         private Dictionary<FieldInfo, IMLFieldInfoContainer> m_DataContainersPerFieldInfo;
         private Dictionary<FieldInfo, MonoBehaviour> m_DataMonobehavioursPerFieldInfo;
+
 
 
         #endregion
@@ -138,26 +168,17 @@ namespace InteractML
             if (Lists.IsNullOrEmpty(ref GameObjectsToUse))
                 GameObjectsToUse = new List<GameObject>();
 
-            if (Lists.IsNullOrEmpty<string>(ref textListToSend))
-                textListToSend = new List<string>();
+            if (Lists.IsNullOrEmpty<TextNote>(ref m_TextNoteNodesList))
+                m_TextNoteNodesList = new List<TextNote>();
 
-            if (Lists.IsNullOrEmpty<Vector3>(ref vector3ListToSend))
-                vector3ListToSend = new List<Vector3>();
+            if (Lists.IsNullOrEmpty<TrainingExamplesNode>(ref m_TrainingExamplesNodesList))
+                m_TrainingExamplesNodesList = new List<TrainingExamplesNode>();
 
-            if (Lists.IsNullOrEmpty<TextNote>(ref textNoteNodesList))
-                textNoteNodesList = new List<TextNote>();
+            if (Lists.IsNullOrEmpty<IMLConfiguration>(ref m_IMLConfigurationNodesList))
+                m_IMLConfigurationNodesList = new List<IMLConfiguration>();
 
-            if (Lists.IsNullOrEmpty<Vector>(ref vectorNodesList))
-                vectorNodesList = new List<Vector>();
-
-            if (Lists.IsNullOrEmpty<TrainingExamplesNode>(ref TrainingExamplesNodesList))
-                TrainingExamplesNodesList = new List<TrainingExamplesNode>();
-
-            if (Lists.IsNullOrEmpty<IMLConfiguration>(ref IMLConfigurationNodesList))
-                IMLConfigurationNodesList = new List<IMLConfiguration>();
-
-            if (Lists.IsNullOrEmpty(ref gameObjectNodeList))
-                gameObjectNodeList = new List<GameObjectNode>();
+            if (Lists.IsNullOrEmpty(ref m_GameObjectNodeList))
+                m_GameObjectNodeList = new List<GameObjectNode>();
 
             if (Lists.IsNullOrEmpty(ref IMLControllerOutputs))
                 IMLControllerOutputs = new List<double[]>();
@@ -170,11 +191,11 @@ namespace InteractML
             GetAllNodes();
 
             // Init logic for training examples
-            if (!Lists.IsNullOrEmpty(ref TrainingExamplesNodesList))
+            if (!Lists.IsNullOrEmpty(ref m_TrainingExamplesNodesList))
             {
-                for (int i = 0; i < TrainingExamplesNodesList.Count; i++)
+                for (int i = 0; i < m_TrainingExamplesNodesList.Count; i++)
                 {
-                    var TrainingNode = TrainingExamplesNodesList[i];
+                    var TrainingNode = m_TrainingExamplesNodesList[i];
                     if (TrainingNode == null)
                     {
                         Debug.LogError("Null reference in Training Examples list in IML System. The list is not calculated properly and has some null spaces!");
@@ -182,7 +203,7 @@ namespace InteractML
                     else
                     {
                         // Initialize Training Examples Node if not already initialized
-                        TrainingExamplesNodesList[i].Initialize();
+                        m_TrainingExamplesNodesList[i].Initialize();
                     }
 
 
@@ -191,12 +212,12 @@ namespace InteractML
             }
 
             // Init logic for IML Config node
-            if (!Lists.IsNullOrEmpty(ref IMLConfigurationNodesList))
+            if (!Lists.IsNullOrEmpty(ref m_IMLConfigurationNodesList))
             {
 
-                for (int i = 0; i < IMLConfigurationNodesList.Count; i++)
+                for (int i = 0; i < m_IMLConfigurationNodesList.Count; i++)
                 {
-                    var IMLConfigNode = IMLConfigurationNodesList[i];
+                    var IMLConfigNode = m_IMLConfigurationNodesList[i];
 
                     if (IMLConfigNode == null)
                     {
@@ -315,19 +336,16 @@ namespace InteractML
                     CheckNodeIsFeature(node, ref FeatureNodesList);
                     
                     // GameObject nodes
-                    CheckTypeAddNodeToList(node, ref gameObjectNodeList);
-
-                    // Vector nodes
-                    CheckTypeAddNodeToList(node, ref vectorNodesList);
+                    CheckTypeAddNodeToList(node, ref m_GameObjectNodeList);
 
                     // Training Examples nodes
-                    CheckNodeIsTraining(node, ref TrainingExamplesNodesList);
+                    CheckNodeIsTraining(node, ref m_TrainingExamplesNodesList);
 
                     // IML Config Node
-                    CheckNodeIsConfiguration(node, ref IMLConfigurationNodesList);
+                    CheckNodeIsConfiguration(node, ref m_IMLConfigurationNodesList);
 
                     // Export output node
-                    CheckTypeAddNodeToList(node, ref RealtimeIMLOutputNodesList);
+                    CheckTypeAddNodeToList(node, ref m_RealtimeIMLOutputNodesList);
 
                 }
 
@@ -469,22 +487,22 @@ namespace InteractML
         private void RunTraininExamplesLogic()
         {
             // Only run if we have the list of training examples
-            if (TrainingExamplesNodesList == null)
+            if (m_TrainingExamplesNodesList == null)
                 return;
 
-            for (int i = 0; i < TrainingExamplesNodesList.Count; i++)
+            for (int i = 0; i < m_TrainingExamplesNodesList.Count; i++)
             {
                 // Call the update logic per node
-                TrainingExamplesNodesList[i].UpdateLogic();
+                m_TrainingExamplesNodesList[i].UpdateLogic();
             }
         }
 
         private void RunIMLConfigurationsLogic()
         {
-            for (int i = 0; i < IMLConfigurationNodesList.Count; i++)
+            for (int i = 0; i < m_IMLConfigurationNodesList.Count; i++)
             {
                 // If the node is null...
-                if (IMLConfigurationNodesList[i] == null)
+                if (m_IMLConfigurationNodesList[i] == null)
                 {
                     // We call again GetAllNodes to make sure our list is updated
                     GetAllNodes();
@@ -494,7 +512,7 @@ namespace InteractML
                 else
                 {
                     // Call the update logic per node
-                    IMLConfigurationNodesList[i].UpdateLogic();
+                    m_IMLConfigurationNodesList[i].UpdateLogic();
                 }
             }
 
@@ -506,17 +524,17 @@ namespace InteractML
         private void SendGameObjectsToIMLController()
         {
             //Debug.Log("GameObjects being injected to IML Controller");
-            if (!Lists.IsNullOrEmpty(ref gameObjectNodeList) && !Lists.IsNullOrEmpty(ref GameObjectsToUse))
+            if (!Lists.IsNullOrEmpty(ref m_GameObjectNodeList) && !Lists.IsNullOrEmpty(ref GameObjectsToUse))
             {
                 // Compare distance between both lists
-                int distanceLists = GameObjectsToUse.Count - gameObjectNodeList.Count;
+                int distanceLists = GameObjectsToUse.Count - m_GameObjectNodeList.Count;
                 // If they are the same length
                 if (distanceLists == 0)
                 {
                     // Assign each node a gameobject
-                    for (int i = 0; i < gameObjectNodeList.Count; i++)
+                    for (int i = 0; i < m_GameObjectNodeList.Count; i++)
                     {
-                        gameObjectNodeList[i].GameObjectDataOut = GameObjectsToUse[i];
+                        m_GameObjectNodeList[i].GameObjectFromScene = GameObjectsToUse[i];
                        // Debug.Log("Injecting GObject " + GameObjectsToUse[i].name);
 
                     }
@@ -535,9 +553,9 @@ namespace InteractML
                     GetAllNodes();
 
                     // Assign each node a gameobject
-                    for (int i = 0; i < gameObjectNodeList.Count; i++)
+                    for (int i = 0; i < m_GameObjectNodeList.Count; i++)
                     {
-                        gameObjectNodeList[i].GameObjectDataOut = GameObjectsToUse[i];
+                        m_GameObjectNodeList[i].GameObjectFromScene = GameObjectsToUse[i];
                     }
 
                 }
@@ -550,7 +568,7 @@ namespace InteractML
                     // Add as many GameObjects as we can to the list
                     for (int i = 0; i < GameObjectsToUse.Count; i++)
                     {
-                        gameObjectNodeList[i].GameObjectDataOut = GameObjectsToUse[i];
+                        m_GameObjectNodeList[i].GameObjectFromScene = GameObjectsToUse[i];
                     }
                 }
             }
@@ -568,15 +586,15 @@ namespace InteractML
             }
 
             // If the list is not null or empty...
-            if (!Lists.IsNullOrEmpty(ref RealtimeIMLOutputNodesList))
+            if (!Lists.IsNullOrEmpty(ref m_RealtimeIMLOutputNodesList))
             {
                 // If the size of the IML Controller outputs and the nodes found doesn't match, we make it match
-                if (IMLControllerOutputs.Count != RealtimeIMLOutputNodesList.Count)
+                if (IMLControllerOutputs.Count != m_RealtimeIMLOutputNodesList.Count)
                 {
                     // We clear all contents of the list
                     IMLControllerOutputs.Clear();
                     // We go through all the nodes exporting outputs
-                    foreach (var outputNode in RealtimeIMLOutputNodesList)
+                    foreach (var outputNode in m_RealtimeIMLOutputNodesList)
                     {
                         var output = outputNode.GetIMLControllerOutputs();
                         // If the node has an output...
@@ -591,19 +609,19 @@ namespace InteractML
                 else
                 {
                     // We go through all the nodes exporting outputs
-                    for (int i = 0; i < RealtimeIMLOutputNodesList.Count; i++)
+                    for (int i = 0; i < m_RealtimeIMLOutputNodesList.Count; i++)
                     {
-                        var outputNode = RealtimeIMLOutputNodesList[i];
+                        var outputNode = m_RealtimeIMLOutputNodesList[i];
                         IMLControllerOutputs[i] = outputNode.GetIMLControllerOutputs();
 
                     }
                 }
             }
             // If the output nodes list is null...
-            else if (RealtimeIMLOutputNodesList == null)
+            else if (m_RealtimeIMLOutputNodesList == null)
             {
                 // We create a new one
-                RealtimeIMLOutputNodesList = new List<RealtimeIMLOutputNode>();
+                m_RealtimeIMLOutputNodesList = new List<RealtimeIMLOutputNode>();
             }
         }
 
@@ -1020,22 +1038,22 @@ namespace InteractML
         public void ClearLists()
         {
             // Training Examples list
-            if (TrainingExamplesNodesList != null)
-                TrainingExamplesNodesList.Clear();
+            if (m_TrainingExamplesNodesList != null)
+                m_TrainingExamplesNodesList.Clear();
             else
-                TrainingExamplesNodesList = new List<TrainingExamplesNode>();
+                m_TrainingExamplesNodesList = new List<TrainingExamplesNode>();
 
             // IML Config node List
-            if (IMLConfigurationNodesList != null)
-                IMLConfigurationNodesList.Clear();
+            if (m_IMLConfigurationNodesList != null)
+                m_IMLConfigurationNodesList.Clear();
             else
-                IMLConfigurationNodesList = new List<IMLConfiguration>();
+                m_IMLConfigurationNodesList = new List<IMLConfiguration>();
 
             // RealtimeIMLOutPutNodes List
-            if (RealtimeIMLOutputNodesList != null)
-                RealtimeIMLOutputNodesList.Clear();
+            if (m_RealtimeIMLOutputNodesList != null)
+                m_RealtimeIMLOutputNodesList.Clear();
             else
-                RealtimeIMLOutputNodesList = new List<RealtimeIMLOutputNode>();
+                m_RealtimeIMLOutputNodesList = new List<RealtimeIMLOutputNode>();
 
         }
 
@@ -1135,7 +1153,7 @@ namespace InteractML
         /// </summary>
         public void LoadAllModelsFromDisk()
         {
-            foreach (var IMLConfigNode in IMLConfigurationNodesList)
+            foreach (var IMLConfigNode in m_IMLConfigurationNodesList)
             {
                 // Loads the model in the IMLConfigNode
                 IMLConfigNode.LoadModelFromDisk();
@@ -1148,7 +1166,7 @@ namespace InteractML
         /// </summary>
         public void SaveAllModels()
         {
-            foreach (var IMLConfigNode in IMLConfigurationNodesList)
+            foreach (var IMLConfigNode in m_IMLConfigurationNodesList)
             {
                 // Save model to disk
                 IMLConfigNode.SaveModelToDisk();
@@ -1161,7 +1179,7 @@ namespace InteractML
         /// </summary>
         public void StopAllModels()
         {
-            foreach (var IMLConfigNode in IMLConfigurationNodesList)
+            foreach (var IMLConfigNode in m_IMLConfigurationNodesList)
             {
                 // Stop model if they are running
                 if (IMLConfigNode.Running)
@@ -1205,7 +1223,7 @@ namespace InteractML
         /// </summary>
         public void RunAllModels()
         {
-            foreach (var imlConfigNode in IMLConfigurationNodesList)
+            foreach (var imlConfigNode in m_IMLConfigurationNodesList)
             {
                 if (imlConfigNode)
                 {
@@ -1224,7 +1242,7 @@ namespace InteractML
         IEnumerator ReTrainAllModelsCoroutine()
         {
             yield return new WaitForSeconds(0.05f);
-            foreach (var imlConfigNode in IMLConfigurationNodesList)
+            foreach (var imlConfigNode in m_IMLConfigurationNodesList)
             {
                 if (imlConfigNode)
                 {
@@ -1320,8 +1338,8 @@ namespace InteractML
         /// <param name="nodeToDelete"></param>
         public void DeleteGameObjectNode(GameObjectNode nodeToDelete)
         {
-            if (gameObjectNodeList.Contains(nodeToDelete))
-                gameObjectNodeList.Remove(nodeToDelete);
+            if (m_GameObjectNodeList.Contains(nodeToDelete))
+                m_GameObjectNodeList.Remove(nodeToDelete);
 
         }
         /// <summary>
@@ -1330,8 +1348,8 @@ namespace InteractML
         /// <param name="nodeToDelete"></param>
         public void DeleteIMLConfigurationNode(IMLConfiguration nodeToDelete)
         {
-            if (IMLConfigurationNodesList.Contains(nodeToDelete))
-                IMLConfigurationNodesList.Remove(nodeToDelete);
+            if (m_IMLConfigurationNodesList.Contains(nodeToDelete))
+                m_IMLConfigurationNodesList.Remove(nodeToDelete);
         }
         /// <summary>
         /// Removes RealtimeOutputNode From RealtimeOutputNodeList 
@@ -1339,8 +1357,8 @@ namespace InteractML
         /// <param name="nodeToDelete"></param>
         public void DeleteRealtimeIMLOutputNode(RealtimeIMLOutputNode nodeToDelete)
         {
-            if (RealtimeIMLOutputNodesList.Contains(nodeToDelete))
-                RealtimeIMLOutputNodesList.Remove(nodeToDelete);
+            if (m_RealtimeIMLOutputNodesList.Contains(nodeToDelete))
+                m_RealtimeIMLOutputNodesList.Remove(nodeToDelete);
         }
         /// <summary>
         /// Removes TrainingExamplesNode From TrainingExamplesNodeList 
@@ -1348,8 +1366,8 @@ namespace InteractML
         /// <param name="nodeToDelete"></param>
         public void DeleteTrainingExamplesNode(TrainingExamplesNode nodeToDelete)
         {
-            if (TrainingExamplesNodesList.Contains(nodeToDelete))
-                TrainingExamplesNodesList.Remove(nodeToDelete);
+            if (m_TrainingExamplesNodesList.Contains(nodeToDelete))
+                m_TrainingExamplesNodesList.Remove(nodeToDelete);
         }
         /// <summary>
         /// Removes TextNoteNode From TextNoteNodeList 
@@ -1357,8 +1375,8 @@ namespace InteractML
         /// <param name="nodeToDelete"></param>
         public void DeleteTextNoteNode(TextNote nodeToDelete)
         {
-            if (textNoteNodesList.Contains(nodeToDelete))
-                textNoteNodesList.Remove(nodeToDelete);
+            if (m_TextNoteNodesList.Contains(nodeToDelete))
+                m_TextNoteNodesList.Remove(nodeToDelete);
         }
         /// <summary>
         /// Removes TextNoteNode From TextNoteNodeList 
@@ -1373,7 +1391,7 @@ namespace InteractML
         public void updateGameObjectImage()
         {
             
-            foreach (GameObjectNode GONode in gameObjectNodeList)
+            foreach (GameObjectNode GONode in m_GameObjectNodeList)
             {
                 GONode.state = true;
             }
