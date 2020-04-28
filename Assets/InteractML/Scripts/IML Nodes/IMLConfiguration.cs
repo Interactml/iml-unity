@@ -397,6 +397,7 @@ namespace InteractML
             /*Debug.Log("expected output" + m_ExpectedOutputList.Count);
             Debug.Log("predicted rap lib output" + PredictedRapidlibOutput.Length);
             Debug.Log("predicted output" + PredictedOutput.Count);*/
+            // TO DO add some logic
             UpdateRapidLibOutputVector();
 
         }
