@@ -44,7 +44,12 @@ namespace InteractML
             GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#E24680"));
 
             //Display Node name
-            GUILayout.Label("GAME OBJECT INPUT", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 20), GUILayout.MinHeight(60));
+            GUILayout.BeginArea(HeaderRect);
+            GUILayout.Space(10);
+            GUILayout.Label("GAME OBJECT INPUT", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+            GUILayout.EndArea();
+
+            GUILayout.Label("", GUILayout.MinHeight(60));
 
         }
 
@@ -97,7 +102,7 @@ namespace InteractML
         /// </summary>
         private void ShowGameObjectNodePorts()
         {
-            EditorGUILayout.Space();
+            GUILayout.Space(5);
             GUIContent outputPortLabel = new GUIContent("GameObject\n Data Out");
             PortField(outputPortLabel, m_GameObjectNode.GetOutputPort("GameObjectDataOut"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
             

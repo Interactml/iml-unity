@@ -25,6 +25,7 @@ namespace InteractML
         /// </summary>
         private Rect m_BodyRect;
         private Rect m_BodyRectButtons;
+        private Rect m_MiddleButton;
         private Rect m_BodyRectBigButtons;
         private Rect m_BodyRectBottom;
         private Rect m_PortRect;
@@ -35,6 +36,7 @@ namespace InteractML
         /// </summary>
         private bool m_AddOutput;
         private bool m_RemoveOutput;
+        private bool m_DTWSwitch; 
 
         #endregion
 
@@ -58,6 +60,7 @@ namespace InteractML
 
             //Display Node name
             GUILayout.BeginArea(HeaderRect);
+            GUILayout.Space(5);
             GUILayout.Label("MACHINE LEARNING SYSTEM", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
             GUILayout.Label("Dynamic Time Warping", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
             GUILayout.EndArea();
@@ -106,7 +109,7 @@ namespace InteractML
             m_BodyRectButtons.x = 5;
             m_BodyRectButtons.y = HeaderRect.height + m_PortRect.height;
             m_BodyRectButtons.width = NodeWidth - 10;
-            m_BodyRectButtons.height = 120;
+            m_BodyRectButtons.height = 140;
 
             // Draw body background purple rect below ports
             GUI.DrawTexture(m_BodyRectButtons, NodeColor);
@@ -151,7 +154,7 @@ namespace InteractML
         /// </summary>
         private void ShowSystemNodePorts()
         {
-            EditorGUILayout.Space();
+            GUILayout.Space(5);
             GUILayout.BeginHorizontal();
 
             GUIContent inputPortLabel = new GUIContent("Live Data In");
@@ -171,25 +174,21 @@ namespace InteractML
         /// </summary>
         private void ShowButtons()
         {
-            m_BodyRectButtons.x = m_BodyRectButtons.x + 30;
-            m_BodyRectButtons.y = m_BodyRectButtons.y + 20;
-            m_BodyRectButtons.width = m_BodyRectButtons.width - 70;
+            m_MiddleButton.x = (m_BodyRectButtons.width/2) - 45;
+            m_MiddleButton.y = m_BodyRectButtons.y + 20;
+            m_MiddleButton.width = m_BodyRectButtons.width;
+            m_MiddleButton.height = m_BodyRectButtons.height - 20;
 
-            GUILayout.BeginArea(m_BodyRectButtons);
-            GUILayout.BeginHorizontal();
-
-            GUILayout.Button("Dynamic Time Warping", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("DTW Button"));
-            GUILayout.Label("");
-
-            GUILayout.EndHorizontal();
+            GUILayout.BeginArea(m_MiddleButton);
+            m_DTWSwitch = EditorGUILayout.Toggle(m_DTWSwitch, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("DTW Button"));
             GUILayout.EndArea();
 
-            GUILayout.Label("", GUILayout.MinHeight(100));
-
-            GUILayout.BeginHorizontal();
- 
+            m_MiddleButton.x = m_MiddleButton.x - 15;
+            GUILayout.BeginArea(m_MiddleButton);
+            GUILayout.Label("", GUILayout.MinHeight(90));
             GUILayout.Label("Dynamic Time Warping", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Purple DTW Button"));
-            GUILayout.EndHorizontal();
+            GUILayout.EndArea();
+
         }
 
         private void ShowBigButtons()

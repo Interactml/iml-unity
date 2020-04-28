@@ -40,8 +40,12 @@ namespace InteractML.FeatureExtractors
             GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
 
             //Display Node name
-            GUILayout.Label("LIVE DISTANCE DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth), GUILayout.MinHeight(60));
+            GUILayout.BeginArea(HeaderRect);
+            GUILayout.Space(10);
+            GUILayout.Label("LIVE DISTANCE DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+            GUILayout.EndArea();
 
+            GUILayout.Label("", GUILayout.MinHeight(60));
         }
 
         public override void OnBodyGUI()
@@ -94,7 +98,7 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         private void ShowDistanceBetweenInputsNodePorts()
         {
-            EditorGUILayout.Space();
+            GUILayout.Space(5);
             GUILayout.BeginHorizontal();
 
             GUIContent inputPortLabel = new GUIContent("First Input");

@@ -38,9 +38,14 @@ namespace InteractML.DataTypeNodes
 
             // Draw line below header
             GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
-
+            
             //Display Node name
-            GUILayout.Label("LIVE INTEGER DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 20), GUILayout.MinHeight(60));
+            GUILayout.BeginArea(HeaderRect);
+            GUILayout.Space(10);
+            GUILayout.Label("LIVE INTEGER DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+            GUILayout.EndArea();
+
+            GUILayout.Label("", GUILayout.MinHeight(60));
         }
 
         public override void OnBodyGUI()
@@ -90,7 +95,7 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private void ShowIntegerNodePorts()
         {
-            EditorGUILayout.Space();
+            GUILayout.Space(5);
             GUILayout.BeginHorizontal();
 
             GUIContent inputPortLabel = new GUIContent("Integer\nData In");

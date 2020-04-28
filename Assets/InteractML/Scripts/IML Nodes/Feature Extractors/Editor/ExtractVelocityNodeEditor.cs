@@ -40,7 +40,12 @@ namespace InteractML.FeatureExtractors
             GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
 
             //Display Node name
-            GUILayout.Label("LIVE VELOCITY DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth), GUILayout.MinHeight(60));
+            GUILayout.BeginArea(HeaderRect);
+            GUILayout.Space(10);
+            GUILayout.Label("LIVE VELOCITY DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+            GUILayout.EndArea();
+
+            GUILayout.Label("", GUILayout.MinHeight(60));
         }
 
         public override void OnBodyGUI()
@@ -92,7 +97,7 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         private void ShowExtractVelocityNodePorts()
         {
-            EditorGUILayout.Space();
+            GUILayout.Space(5);
             GUILayout.BeginHorizontal();
 
             GUIContent inputPortLabel = new GUIContent("Live\nData In");
@@ -115,7 +120,24 @@ namespace InteractML.FeatureExtractors
             m_InnerBodyRect.height = m_BodyRect.height - 20;
 
             GUILayout.BeginArea(m_InnerBodyRect);
-            EditorGUILayout.LabelField(" velocity: " + System.Math.Round(m_ExtractVelocity.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            if (m_ExtractVelocity.FeatureValues != null)
+            { 
+                if (m_ExtractVelocity.FeatureValues.Values.Length > 0)
+                {
+                    EditorGUILayout.LabelField(" velocity: " + System.Math.Round(m_ExtractVelocity.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+
+                }
+                else
+                {
+                    EditorGUILayout.LabelField(" velocity: 0", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+
+                }
+            }   
+            else
+            {
+                EditorGUILayout.LabelField(" no input", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+
+            }
             GUILayout.EndArea();
 
         }

@@ -38,9 +38,15 @@ namespace InteractML
 
             // Draw line below header
             GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#F6C46F"));
-
+            
             //Display Node name
-            GUILayout.Label("MODEL OUTPUT", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth), GUILayout.MinHeight(60));
+            GUILayout.BeginArea(HeaderRect);
+            GUILayout.Space(10);
+            GUILayout.Label("MODEL OUTPUT", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+            GUILayout.EndArea();
+
+            GUILayout.Label("", GUILayout.MinHeight(60));
+   
         }
 
         public override void OnBodyGUI()
@@ -90,7 +96,7 @@ namespace InteractML
         /// </summary>
         private void ShowOutputNodePorts()
         {
-            EditorGUILayout.Space();
+            GUILayout.Space(5);
             GUIContent inputPortLabel = new GUIContent("Model\n Output");
             PortField(inputPortLabel, m_RealtimeIMLOutputNode.GetInputPort("IMLModelOutputs"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
         }

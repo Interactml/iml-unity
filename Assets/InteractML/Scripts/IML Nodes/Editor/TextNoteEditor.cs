@@ -49,8 +49,13 @@ namespace InteractML
             GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#F6C46F"));
 
             //Display Node name
-            GUILayout.Label("TEXT NOTE", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth-20), GUILayout.MinHeight(60));
+            GUILayout.BeginArea(HeaderRect);
+            GUILayout.Space(10);
+            GUILayout.Label("TEXT NOTE", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+            GUILayout.EndArea();
 
+            GUILayout.Label("", GUILayout.MinHeight(60));
+     
         }
 
         public override void OnBodyGUI()

@@ -25,16 +25,21 @@ namespace InteractML
         /// </summary>
         private Rect m_BodyRect;
         private Rect m_BodyRectButtons;
+        private Rect m_LeftButton;
+        private Rect m_RightButton;
         private Rect m_BodyRectBigButtons;
         private Rect m_BodyRectBottom;
         private Rect m_PortRect;
-
+        
 
         /// <summary>
         /// Bool for add/remove output
         /// </summary>
         private bool m_AddOutput;
         private bool m_RemoveOutput;
+
+        private bool m_ClassificationSwitch;
+        private bool m_RegressionSwitch;
 
         #endregion
 
@@ -58,6 +63,7 @@ namespace InteractML
 
             //Display Node name
             GUILayout.BeginArea(HeaderRect);
+            GUILayout.Space(5);
             GUILayout.Label("MACHINE LEARNING SYSTEM", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
             GUILayout.Label("Classification and Regression", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
             GUILayout.EndArea();
@@ -106,7 +112,7 @@ namespace InteractML
             m_BodyRectButtons.x = 5;
             m_BodyRectButtons.y = HeaderRect.height + m_PortRect.height;
             m_BodyRectButtons.width = NodeWidth - 10;
-            m_BodyRectButtons.height = 120;
+            m_BodyRectButtons.height = 140;
 
             // Draw body background purple rect below ports
             GUI.DrawTexture(m_BodyRectButtons, NodeColor);
@@ -151,7 +157,7 @@ namespace InteractML
         /// </summary>
         private void ShowSystemNodePorts()
         {
-            EditorGUILayout.Space();
+            GUILayout.Space(5);
             GUILayout.BeginHorizontal();
 
             GUIContent inputPortLabel = new GUIContent("Live Data In");
@@ -171,27 +177,37 @@ namespace InteractML
         /// </summary>
         private void ShowButtons()
         {
-            m_BodyRectButtons.x = m_BodyRectButtons.x + 30;
-            m_BodyRectButtons.y = m_BodyRectButtons.y + 20;
-            m_BodyRectButtons.width = m_BodyRectButtons.width - 70;
-
-            GUILayout.BeginArea(m_BodyRectButtons);
-            GUILayout.BeginHorizontal();
-
-            GUILayout.Button("Classification", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Classification Button"));
-            GUILayout.Label("");
-            GUILayout.Button("Regression", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Regression Button"));
             
-            GUILayout.EndHorizontal();
+            m_LeftButton.x = m_BodyRectButtons.x + 40;
+            m_LeftButton.y = m_BodyRectButtons.y + 20;
+            m_LeftButton.width = m_BodyRectButtons.width / 2;
+            m_LeftButton.height = m_BodyRectButtons.height;
+
+            m_RightButton.x = (m_BodyRectButtons.width / 2) + 30;
+            m_RightButton.y = m_BodyRectButtons.y + 20;
+            m_RightButton.width = m_BodyRectButtons.width;
+            m_RightButton.height = m_BodyRectButtons.height;
+
+            GUILayout.BeginArea(m_LeftButton);
+            m_ClassificationSwitch = EditorGUILayout.Toggle(m_ClassificationSwitch, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Classification Button"));
             GUILayout.EndArea();
 
-            GUILayout.Label("", GUILayout.MinHeight(100));
+            GUILayout.BeginArea(m_RightButton);
+            m_RegressionSwitch = EditorGUILayout.Toggle(m_RegressionSwitch, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Regression Button"));
+            GUILayout.EndArea();
 
-            GUILayout.BeginHorizontal();
+            m_LeftButton.x = m_LeftButton.x + 5;
+            GUILayout.BeginArea(m_LeftButton);
+            GUILayout.Label("", GUILayout.MinHeight(80));
             GUILayout.Label("Classification", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Blue Classification Button"));
-            EditorGUILayout.Space();
+            GUILayout.EndArea();
+
+            m_RightButton.x = m_RightButton.x + 10;
+            GUILayout.BeginArea(m_RightButton);
+            GUILayout.Label("", GUILayout.MinHeight(80));
             GUILayout.Label("Regression", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button Yellow"));
-            GUILayout.EndHorizontal();
+            GUILayout.EndArea();
+
         }
 
         private void ShowBigButtons()

@@ -58,6 +58,7 @@ namespace InteractML
 
             //Display Node name
             GUILayout.BeginArea(HeaderRect);
+            GUILayout.Space(5);
             GUILayout.Label("TEACH THE MACHINE", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth-10));
             GUILayout.Label("Dynamic Time Warping", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth-10));
             GUILayout.EndArea();
@@ -130,7 +131,7 @@ namespace InteractML
             m_BodyRectOutputs.x = 5;
             m_BodyRectOutputs.y = HeaderRect.height + m_PortRect.height + m_BodyRectOutputAddRemove.height;
             m_BodyRectOutputs.width = NodeWidth - 10;
-            m_BodyRectOutputs.height = 60 + (m_SeriesTrainingExamplesNode.DesiredOutputsConfig.Count * 18);
+            m_BodyRectOutputs.height = 60 + (m_SeriesTrainingExamplesNode.DesiredOutputsConfig.Count * 36);
 
             // Draw body background purple rect below ports
             GUI.DrawTexture(m_BodyRectOutputs, NodeColor);
@@ -175,7 +176,7 @@ namespace InteractML
         /// </summary>
         private void ShowSeriesTrainingExamplesNodePorts()
         {
-            
+            GUILayout.Space(5);
             GUILayout.BeginHorizontal();
 
             GUIContent inputPortLabel = new GUIContent("Live Data\nIn");
