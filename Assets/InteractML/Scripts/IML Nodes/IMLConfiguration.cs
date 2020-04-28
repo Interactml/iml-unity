@@ -62,7 +62,7 @@ namespace InteractML
         /// </summary>
         [SerializeField]
         protected IMLSpecifications.LearningType m_LearningType;
-        
+        [HideInInspector]
         public IMLSpecifications.LearningType LearningType { get => m_LearningType; }
 
         /// <summary>

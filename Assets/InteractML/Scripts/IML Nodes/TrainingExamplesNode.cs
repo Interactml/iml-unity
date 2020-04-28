@@ -30,7 +30,7 @@ namespace InteractML
 
         
         public enum CollectionMode { SingleExample, Series }
-        
+        [HideInInspector]
         public CollectionMode ModeOfCollection;
 
         /// <summary>
