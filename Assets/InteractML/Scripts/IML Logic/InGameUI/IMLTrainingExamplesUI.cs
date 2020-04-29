@@ -291,9 +291,6 @@ namespace InteractML
                     // Update label
                     internalData.Label.text = label + " " + i.ToString();
 
-                    // Adjust height based on position in List (85 units seems to be the right space between two UI elements in this case)                    
-                    internalData.rectTransform.Translate(internalData.rectTransform.up * -85f * i);
-
                     // Replace element in local list
                     dataList[i] = internalData;
                 }
