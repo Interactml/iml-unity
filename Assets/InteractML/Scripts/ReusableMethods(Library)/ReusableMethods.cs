@@ -637,13 +637,37 @@ namespace ReusableMethods
         /// <param name="list"></param>
         /// <param name="sz"></param>
         /// <param name="c"></param>
-        public static void Resize<T>(this List<T> list, int sz, T c = default(T))
+        /// <param name="destroyItems">Destroy items on removal</param>
+        public static void Resize<T>(this List<T> list, int sz, T c = default(T), bool destroyItems = false)
         {
             int cur = list.Count;
             if (sz < cur)
+            {
+                // Will attempt to destroy the objects during removal
+                if (destroyItems)
+                {
+                    var itemsToDestroy = list.GetRange(sz, cur - sz);
+                    // Loop all the objects. 
+                    for (int i = 0; i < itemsToDestroy.Count; i++)
+                    {
+                        var unityObject = itemsToDestroy[i] as UnityEngine.Object;
+                        // If it is an unity object, we call unity's destroy function
+                        if (unityObject)
+                            UnityEngine.Object.Destroy(unityObject);
+
+                        // If not, we set to default value
+                        else
+                            itemsToDestroy[i] = default(T);
+
+                    }
+                }               
+                // Remove the range now
                 list.RemoveRange(sz, cur - sz);
+            }
             else if (sz > cur)
+            {
                 list.AddRange(Enumerable.Repeat(c, sz - cur));
+            }
         }
     }
 

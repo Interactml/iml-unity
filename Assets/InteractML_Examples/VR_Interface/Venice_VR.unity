@@ -11492,7 +11492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb4e274efd672db4ba6a3211df5653bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MLComponent: {fileID: 0}
+  MLComponent: {fileID: 138508038}
   m_NodeIndex: 0
   CollectExamplesButtonText: {fileID: 1724626706}
   TrainingExamplesNodeIndexText: {fileID: 188883408}
@@ -11502,11 +11502,11 @@ MonoBehaviour:
   NoOutputsText: {fileID: 178957759}
   OutputsContentRect: {fileID: 1443691842}
   DataTypeUIPrefabs:
-  - {fileID: -549307512995694168, guid: 34608454fda16d34ea198a79b32bcbf2, type: 3}
-  - {fileID: -549307512995694168, guid: 5187fd87a8aaf80438fe100b312fcce9, type: 3}
-  - {fileID: 5072646894748697817, guid: cae43a2c0c256de4787bb01986c56492, type: 3}
-  - {fileID: 8539782411941241176, guid: ef9be42439e2ca7428f869ef43f36da9, type: 3}
-  - {fileID: 1639918923847342765, guid: ecb5c22baf4ee7d428e9625ba2034878, type: 3}
+  - {fileID: 5420864429859419971, guid: 34608454fda16d34ea198a79b32bcbf2, type: 3}
+  - {fileID: 5420864429859419971, guid: 5187fd87a8aaf80438fe100b312fcce9, type: 3}
+  - {fileID: 8448499712530450994, guid: cae43a2c0c256de4787bb01986c56492, type: 3}
+  - {fileID: 5033289473518006195, guid: ef9be42439e2ca7428f869ef43f36da9, type: 3}
+  - {fileID: 2709083757196776518, guid: ecb5c22baf4ee7d428e9625ba2034878, type: 3}
   m_NoDesiredOutputsNode: 0
 --- !u!1 &889201226
 GameObject:

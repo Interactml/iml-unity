@@ -1339,7 +1339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rectTransform: {fileID: 7428255361510715851}
-  DataType: 3
+  DataType: 2
   Label: {fileID: 5851646092785500326}
   InputField:
   - {fileID: 2141611738350499580}

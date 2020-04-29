@@ -24,7 +24,7 @@ namespace InteractML
 
         [Header("Data Type UI Prefabs")]
         [Tooltip("Populate with UI Prefabs of your data types")]
-        public List<IMLDataTypeUI> DataTypeUIPrefabs;
+        public List<GameObject> DataTypeUIPrefabs;
         /// <summary>
         /// List containing input data from the training examples node
         /// </summary>
@@ -89,7 +89,7 @@ namespace InteractML
                 }
 
                 // Populate outputs in List
-                //UpdateDataList(ref m_InputData, m_CurrentNode.DesiredOutputFeatures, "Output", true);
+                UpdateDataList(ref m_InputData, m_CurrentNode.DesiredOutputFeatures, "Output", true);
             }
 
         }
@@ -214,14 +214,14 @@ namespace InteractML
             // If we need to resize the local data list...
             if (dataList.Count != nodeDataList.Count)
             {
-                dataList.Resize(nodeDataList.Count);
+                dataList.Resize(nodeDataList.Count, destroyItems: true);
             }
 
             // Make sure we are both lists configurations and structures are matching
             for (int i = 0; i < nodeDataList.Count; i++)
             {
                 var externalData = nodeDataList[i];
-                var internalData = dataList[i];
+                var internalData = dataList[i];                
 
                 // We break the method if external data is null or any prefabs are null
                 if (externalData == null )
@@ -244,23 +244,25 @@ namespace InteractML
                 // If we need to reconfigure the local data...
                 if (reconfigureData)
                 {
+
+                    GameObject prefabClone = null;
                     // Create the right kind of data and update values
                     switch (externalData.DataType)
                     {
                         case IMLSpecifications.DataTypes.Float:
-                            internalData = Instantiate(DataTypeUIPrefabs[0]);
+                            prefabClone = Instantiate(DataTypeUIPrefabs[0], (isOutput ? OutputsContentRect : InputsContentRect));
                             break;
                         case IMLSpecifications.DataTypes.Integer:
-                            internalData = Instantiate(DataTypeUIPrefabs[1]);
+                            prefabClone = Instantiate(DataTypeUIPrefabs[1], (isOutput ? OutputsContentRect : InputsContentRect));
                             break;
                         case IMLSpecifications.DataTypes.Vector2:
-                            internalData = Instantiate(DataTypeUIPrefabs[2]);
+                            prefabClone = Instantiate(DataTypeUIPrefabs[2], (isOutput ? OutputsContentRect : InputsContentRect));
                             break;
                         case IMLSpecifications.DataTypes.Vector3:
-                            internalData = Instantiate(DataTypeUIPrefabs[3]);
+                            prefabClone = Instantiate(DataTypeUIPrefabs[3], (isOutput ? OutputsContentRect : InputsContentRect));
                             break;
                         case IMLSpecifications.DataTypes.Vector4:
-                            internalData = Instantiate(DataTypeUIPrefabs[4]);
+                            prefabClone = Instantiate(DataTypeUIPrefabs[4], (isOutput ? OutputsContentRect : InputsContentRect));
                             break;
                         case IMLSpecifications.DataTypes.SerialVector:
                             throw new System.Exception("Serial Vector not yet supported in in-game UI!");
@@ -269,18 +271,21 @@ namespace InteractML
                             break;
                     }
 
+                    // If we managed to clone the prefab correctly, get internal data from prefab clone
+                    if (prefabClone)
+                        internalData = prefabClone.GetComponent<IMLDataTypeUI>();
+                    // If not, abort method
+                    else
+                        return;
+
                     // Update label
                     internalData.Label.text = label + " " + i.ToString();
 
-                    // Place element inside the right UI content
-                    if (isOutput)
-                        internalData.rectTransform.SetParent(OutputsContentRect);
-                    else
-                        internalData.rectTransform.SetParent(InputsContentRect);
-
                     // Adjust height based on position in List (85 units seems to be the right space between two UI elements in this case)                    
-                    //internalData.rectTransform.Translate(internalData.rectTransform.up * -85f * i);
+                    internalData.rectTransform.Translate(internalData.rectTransform.up * -85f * i);
 
+                    // Replace element in local list
+                    dataList[i] = internalData;
                 }
 
                 // Update local values
