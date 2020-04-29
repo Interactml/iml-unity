@@ -680,6 +680,29 @@ namespace ReusableMethods
                 list.AddRange(Enumerable.Repeat(c, sz - cur));
             }
         }
+
+        /// <summary>
+        /// Casts a list of type T to another of type U
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="U"></typeparam>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static List<U> CastNewList<T, U>(this List<T> list) where U: class
+        {
+            List<U> newList = new List<U>();
+            foreach (var item in list)
+            {
+                // Attempt to cast item
+                var newItem = item as U;
+                // If cast failed, throw an exception
+                if (newItem == null)
+                    throw new Exception("List cast is invalid. " + typeof(T).ToString() + " can't be casted to " + typeof(U).ToString() );
+                // If cast didn't fail, add item to list
+                newList.Add(newItem);
+            }
+            return newList;
+        }
     }
 
     /// <summary>

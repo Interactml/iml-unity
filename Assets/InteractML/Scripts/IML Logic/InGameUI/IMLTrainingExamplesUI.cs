@@ -34,6 +34,16 @@ namespace InteractML
         /// </summary>
         private List<IMLDataTypeUI> m_OutputData;
 
+        /// <summary>
+        /// Cache of input data from the training examples node
+        /// </summary>
+        private List<IMLBaseDataType> m_NodeInputData;
+        /// <summary>
+        /// Cache of the output data from the training examples node
+        /// </summary>
+        private List<IMLBaseDataType> m_NodeOutputData;
+
+
         [Header("Training Examples Node Vars")]
         [SerializeField]
         private int m_NoDesiredOutputsNode;
@@ -88,8 +98,11 @@ namespace InteractML
                     UpdateUIText(CollectExamplesButtonText, "Record Examples");
                 }
 
+                // Populate inputs in List
+                UpdateDataList(ref m_InputData, m_CurrentNode.InputFeatures, ref m_NodeInputData, DataTypeUIPrefabs, "Input", InputsContentRect);
+
                 // Populate outputs in List
-                UpdateDataList(ref m_InputData, m_CurrentNode.DesiredOutputFeatures, DataTypeUIPrefabs, "Output", OutputsContentRect);
+                UpdateDataList(ref m_OutputData, m_CurrentNode.DesiredOutputFeatures, ref m_NodeOutputData, DataTypeUIPrefabs, "Output", OutputsContentRect);
             }
 
         }
@@ -201,26 +214,57 @@ namespace InteractML
         /// </summary>
         /// <param name="dataList"></param>
         /// <param name="nodeDataList"></param>
-        private void UpdateDataList(ref List<IMLDataTypeUI> dataList, List<IMLBaseDataType> nodeDataList, List<GameObject> dataUIPrefabs, string label, Transform parent)
+        private void UpdateDataList<T>(ref List<IMLDataTypeUI> dataList, List<T> externalDataList, ref List<IMLBaseDataType> nodeDataListCache, List<GameObject> dataUIPrefabs, string label, Transform parent)
         {
             // Don't run the method if the external data list is null
-            if (nodeDataList == null)
+            if (externalDataList == null)
                 return;
+
+            // Do we need to update the nodeDataListCache?
+            if (nodeDataListCache == null || nodeDataListCache.Count != externalDataList.Count)
+            {
+                // Clear previous node list
+                nodeDataListCache = new List<IMLBaseDataType>();
+
+                // Check what type the external data list is, to cast a new list of the right type we need            
+                // IMLBaseDataType
+                if (externalDataList is List<IMLBaseDataType>)
+                {
+                    nodeDataListCache = externalDataList.CastNewList<T, IMLBaseDataType>();
+                }
+                // XNode.Node
+                else if (externalDataList is List<XNode.Node>)
+                {
+                    List<XNode.Node> xnodeList = externalDataList.CastNewList<T, XNode.Node>();
+                    List<IFeatureIML> featureDataList = xnodeList.CastNewList<XNode.Node, IFeatureIML>();
+                    // Loop through features to get the right information
+                    foreach (var item in featureDataList)
+                    {
+                        nodeDataListCache.Add(item.FeatureValues);
+                    }
+                }
+                // Anything else
+                else
+                {
+                    throw new System.Exception("Class " + typeof(T).ToString() + " is not yet supported in the UI!");
+                }
+            }
+
 
             // Make sure local data list is init
             if (dataList == null)
                 dataList = new List<IMLDataTypeUI>();
 
             // If we need to resize the local data list...
-            if (dataList.Count != nodeDataList.Count)
+            if (dataList.Count != nodeDataListCache.Count)
             {
-                dataList.Resize(nodeDataList.Count, destroyItems: true);
+                dataList.Resize(nodeDataListCache.Count, destroyItems: true);
             }
 
             // Make sure we are both lists configurations and structures are matching
-            for (int i = 0; i < nodeDataList.Count; i++)
+            for (int i = 0; i < nodeDataListCache.Count; i++)
             {
-                var externalData = nodeDataList[i];
+                var externalData = nodeDataListCache[i];
                 var internalData = dataList[i];                
 
                 // We break the method if external data is null or any prefabs are null
