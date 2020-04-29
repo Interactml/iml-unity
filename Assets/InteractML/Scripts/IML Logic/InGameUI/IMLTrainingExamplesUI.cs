@@ -89,7 +89,7 @@ namespace InteractML
                 }
 
                 // Populate outputs in List
-                UpdateDataList(ref m_InputData, m_CurrentNode.DesiredOutputFeatures, "Output", true);
+                UpdateDataList(ref m_InputData, m_CurrentNode.DesiredOutputFeatures, DataTypeUIPrefabs, "Output", OutputsContentRect);
             }
 
         }
@@ -201,7 +201,7 @@ namespace InteractML
         /// </summary>
         /// <param name="dataList"></param>
         /// <param name="nodeDataList"></param>
-        private void UpdateDataList(ref List<IMLDataTypeUI> dataList, List<IMLBaseDataType> nodeDataList, string label, bool isOutput)
+        private void UpdateDataList(ref List<IMLDataTypeUI> dataList, List<IMLBaseDataType> nodeDataList, List<GameObject> dataUIPrefabs, string label, Transform parent)
         {
             // Don't run the method if the external data list is null
             if (nodeDataList == null)
@@ -250,19 +250,19 @@ namespace InteractML
                     switch (externalData.DataType)
                     {
                         case IMLSpecifications.DataTypes.Float:
-                            prefabClone = Instantiate(DataTypeUIPrefabs[0], (isOutput ? OutputsContentRect : InputsContentRect));
+                            prefabClone = Instantiate(dataUIPrefabs[0], parent);
                             break;
                         case IMLSpecifications.DataTypes.Integer:
-                            prefabClone = Instantiate(DataTypeUIPrefabs[1], (isOutput ? OutputsContentRect : InputsContentRect));
+                            prefabClone = Instantiate(dataUIPrefabs[1], parent);
                             break;
                         case IMLSpecifications.DataTypes.Vector2:
-                            prefabClone = Instantiate(DataTypeUIPrefabs[2], (isOutput ? OutputsContentRect : InputsContentRect));
+                            prefabClone = Instantiate(dataUIPrefabs[2], parent);
                             break;
                         case IMLSpecifications.DataTypes.Vector3:
-                            prefabClone = Instantiate(DataTypeUIPrefabs[3], (isOutput ? OutputsContentRect : InputsContentRect));
+                            prefabClone = Instantiate(dataUIPrefabs[3], parent);
                             break;
                         case IMLSpecifications.DataTypes.Vector4:
-                            prefabClone = Instantiate(DataTypeUIPrefabs[4], (isOutput ? OutputsContentRect : InputsContentRect));
+                            prefabClone = Instantiate(dataUIPrefabs[4], parent);
                             break;
                         case IMLSpecifications.DataTypes.SerialVector:
                             throw new System.Exception("Serial Vector not yet supported in in-game UI!");
