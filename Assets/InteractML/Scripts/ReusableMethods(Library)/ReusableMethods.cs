@@ -653,7 +653,18 @@ namespace ReusableMethods
                         var unityObject = itemsToDestroy[i] as UnityEngine.Object;
                         // If it is an unity object, we call unity's destroy function
                         if (unityObject)
-                            UnityEngine.Object.Destroy(unityObject);
+                        {
+                            // If it is a component, we attempt to destroy the gameObject containing it
+                            if (unityObject is Component)
+                            {
+                                UnityEngine.Object.Destroy((unityObject as Component).gameObject);
+                            }
+                            // If it is not, we just destroy whatever it is
+                            else
+                            {
+                                UnityEngine.Object.Destroy(unityObject);
+                            }
+                        }
 
                         // If not, we set to default value
                         else

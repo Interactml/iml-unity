@@ -112,7 +112,7 @@ MonoBehaviour:
   DevMode: 0
   ValueName: HeadRotation
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 31.800098, y: 116.900055, z: 0.0000010045674}
+  m_Value: {x: 335.3, y: 106.90004, z: 0}
   m_Out: {x: 0, y: 270.9, z: 0}
 --- !u!114 &-1899693820327701159
 MonoBehaviour:

@@ -273,10 +273,20 @@ namespace InteractML
 
                     // If we managed to clone the prefab correctly, get internal data from prefab clone
                     if (prefabClone)
+                    {
+                        // If there is anything in the internalData slot, we destroy it
+                        if (internalData)
+                            Destroy(internalData.gameObject);
+                        // Override the internal data slot with the new prefab clone
                         internalData = prefabClone.GetComponent<IMLDataTypeUI>();
+
+                    }
                     // If not, abort method
                     else
+                    {
+                        throw new System.Exception("Error when reconfiguring data type on UI, a prefab was null!");
                         return;
+                    }
 
                     // Update label
                     internalData.Label.text = label + " " + i.ToString();
