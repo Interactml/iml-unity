@@ -22,6 +22,8 @@ namespace InteractML
             NodeEditorPreferences.GetSettings().highlightColor = hexToColor("21203B");
             NodeEditorPreferences.GetSettings().gridLineColor = hexToColor("21203B");
             NodeEditorPreferences.GetSettings().gridBgColor = hexToColor("21203B");
+
+            // Set port colours based on type
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(GameObject))] = hexToColor("#E24680");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(float))] = hexToColor("#888EF7");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(int))] = hexToColor("#888EF7");
@@ -32,7 +34,8 @@ namespace InteractML
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(XNode.Node))] = hexToColor("#888EF7");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(List<XNode.Node>))] = hexToColor("#888EF7");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(TrainingExamplesNode))] = hexToColor("#74DF84");
-
+            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(List<TrainingExamplesNode>))] = hexToColor("#74DF84");
+            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(IMLConfiguration))] = hexToColor("#5EB3F9");
 
         }
 
@@ -79,11 +82,11 @@ namespace InteractML
             
             if (type.PrettyName() == "InteractML.CRIMLConfiguration")
             {
-                return base.GetNodeMenuName(type).Replace("InteractML", "");
+                return base.GetNodeMenuName(type).Replace("InteractML.CRIMLConfiguration", "Machine Learning System - Classification or Regression");
             }
             if (type.PrettyName() == "InteractML.DTWIMLConfiguration")
             {
-                return base.GetNodeMenuName(type).Replace("InteractML", "");
+                return base.GetNodeMenuName(type);
             }
             if (type.PrettyName() == "InteractML.GameObjectNode")
             {
@@ -94,10 +97,6 @@ namespace InteractML
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
             if (type.PrettyName() == "InteractML.SeriesTrainingExamplesNode")
-            {
-                return base.GetNodeMenuName(type).Replace("InteractML", "");
-            }
-            if (type.PrettyName() == "InteractML.TrainingExamplesNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }

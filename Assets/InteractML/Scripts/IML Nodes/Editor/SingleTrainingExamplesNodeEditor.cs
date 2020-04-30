@@ -306,8 +306,10 @@ namespace InteractML
                 }
                 GUILayout.Space(10);
             }
-            EditorStyles.label.normal = editorLabelStyle.normal;
             
+            EditorStyles.label.font = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").font;
+            EditorStyles.label.normal = editorLabelStyle.normal;
+
         }
 
         /// <summary>
