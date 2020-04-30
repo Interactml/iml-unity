@@ -112,7 +112,7 @@ MonoBehaviour:
   DevMode: 0
   ValueName: HeadRotation
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 26.80003, y: 22.600008, z: -0.0000004782587}
+  m_Value: {x: 41.70016, y: 87.19994, z: 0}
   m_Out: {x: 0, y: 270.9, z: 0}
 --- !u!114 &-1899693820327701159
 MonoBehaviour:
@@ -164,7 +164,7 @@ MonoBehaviour:
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
   m_DesiredInputsConfig: 03000000
-  m_DesiredOutputsConfig: 040000000400000004000000040000000000000000000000
+  m_DesiredOutputsConfig: 0400000004000000040000000400000000000000
   IMLConfigurationNodesConnected: []
   StartDelay: 0
   CaptureRate: 10
@@ -266,15 +266,13 @@ MonoBehaviour:
   - {fileID: -4193609153758654436}
   ModelOutput: {fileID: 0}
   PredictedRapidlibOutput:
-  - 0
-  - 0
-  - 0
-  DelayedPredictedOutput:
-  - 0
   - 1
   - 0
+  - 1
+  DelayedPredictedOutput:
+  - 1
   - 0
-  - 0
+  - 1
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 03000000
   m_LearningType: 0
@@ -327,5 +325,5 @@ MonoBehaviour:
   DevMode: 0
   ValueName: PushDirection
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 0, y: 0, z: 1}
+  m_Value: {x: 1, y: 0, z: 1}
   m_Out: {x: 0, y: 0, z: 1}

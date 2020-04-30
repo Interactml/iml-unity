@@ -368,11 +368,15 @@ MonoBehaviour:
   rectTransform: {fileID: 4013259283349909439}
   DataType: 4
   Label: {fileID: 113357403292491474}
-  InputField:
-  - {fileID: 5557169726810007688}
-  - {fileID: 2650204146222195961}
-  - {fileID: 2342679751224338079}
-  - {fileID: 8497840647561880098}
+  InputFields:
+  - localInputField: {fileID: 5557169726810007688}
+    CanSet: 0
+  - localInputField: {fileID: 2650204146222195961}
+    CanSet: 0
+  - localInputField: {fileID: 2342679751224338079}
+    CanSet: 0
+  - localInputField: {fileID: 8497840647561880098}
+    CanSet: 0
 --- !u!222 &6885671130374663437
 CanvasRenderer:
   m_ObjectHideFlags: 0

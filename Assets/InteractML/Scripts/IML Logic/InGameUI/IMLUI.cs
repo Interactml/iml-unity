@@ -49,7 +49,7 @@ namespace InteractML
         /// </summary>
         /// <param name="inputFields"></param>
         /// <param name="values"></param>
-        protected void UpdateUIDataFields(TMP_InputField[] inputFields, float[] values)
+        protected void UpdateUIDataFields(IMLInputField[] inputFields, float[] values)
         {
             // Break method if any data is null
             if (inputFields == null || values == null)
@@ -62,7 +62,7 @@ namespace InteractML
             // Update each inputField
             for (int i = 0; i < values.Length; i++)
             {
-                inputFields[i].text = values[i].ToString();
+                inputFields[i].SetInputField(values[i].ToString());
             }
         }
 

@@ -121,10 +121,10 @@ namespace InteractML
                 }
 
                 // Populate inputs in List
-                UpdateDataList(ref m_InputData, m_CurrentNode.InputFeatures, ref m_NodeInputData, DataTypeUIPrefabs, "Input", InputsContentRect);
+                UpdateDataList(ref m_InputData, m_CurrentNode.InputFeatures, ref m_NodeInputData, true, DataTypeUIPrefabs, "Input", InputsContentRect);
 
                 // Populate outputs in List
-                UpdateDataList(ref m_OutputData, m_CurrentNode.DesiredOutputFeatures, ref m_NodeOutputData, DataTypeUIPrefabs, "Output", OutputsContentRect);
+                UpdateDataList(ref m_OutputData, m_CurrentNode.DesiredOutputFeatures, ref m_NodeOutputData, false, DataTypeUIPrefabs, "Output", OutputsContentRect);
             }
 
         }
@@ -222,6 +222,44 @@ namespace InteractML
             }
         }
 
+        /// <summary>
+        /// Sets the value for a specific output
+        /// </summary>
+        /// <param name="newValue"></param>
+        /// <param name="whichOutput"></param>
+        public void SetOutputValue(TrainingExamplesNode tExamplesNode , string newValue, int whichOutput, int whichDimension)
+        {
+            // Make sure all parameters are not null
+            if (newValue != null)
+            {
+                if (tExamplesNode && tExamplesNode.DesiredOutputFeatures != null)
+                {
+                    // Update the individual dimension of the output
+                    var outputFeature = tExamplesNode.DesiredOutputFeatures[whichOutput];
+                    outputFeature.Values[whichDimension] = float.Parse(newValue);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates flag to allow setting values in an input field
+        /// </summary>
+        /// <param name="dataType"></param>
+        /// <param name="which"></param>
+        /// <param name="option"></param>
+        public void ProtectInputField(IMLDataTypeUI dataType, int which, bool option)
+        {
+            if (dataType)
+            {
+                var inputField = dataType.InputFields[which];
+                if (inputField != null)
+                {
+                    // We change the protection to Set a value flag
+                    inputField.isProtected = option;
+                }
+            }
+        }
+
         #endregion
 
         #region Private Methods
@@ -266,7 +304,7 @@ namespace InteractML
         /// </summary>
         /// <param name="dataList"></param>
         /// <param name="nodeDataList"></param>
-        private void UpdateDataList<T>(ref List<IMLDataTypeUI> dataList, List<T> externalDataList, ref List<IMLBaseDataType> nodeDataListCache, List<GameObject> dataUIPrefabs, string label, Transform parent)
+        private void UpdateDataList<T>(ref List<IMLDataTypeUI> dataList, List<T> externalDataList, ref List<IMLBaseDataType> nodeDataListCache, bool protectDataOption, List<GameObject> dataUIPrefabs, string label, Transform parent)
         {
             // Don't run the method if the external data list is null
             if (externalDataList == null)
@@ -375,13 +413,44 @@ namespace InteractML
                             Destroy(internalData.gameObject);
                         // Override the internal data slot with the new prefab clone
                         internalData = prefabClone.GetComponent<IMLDataTypeUI>();
-
                     }
                     // If not, abort method
                     else
                     {
                         throw new System.Exception("Error when reconfiguring data type on UI, a prefab was null!");
                         return;
+                    }
+
+                    // Assign a listener to each input field if we are not protecting the data
+                    if (!protectDataOption)
+                    {
+                        var inputFields = internalData.InputFields;
+                        for (int j = 0; j < inputFields.Count(); j++)
+                        {
+                            var inputField = inputFields[j].GetInputField();
+                            if (inputField != null)
+                            {
+                                // Create memory for a new int, seems to give problems if not
+                                int outputDimensionIndex = new int();
+                                outputDimensionIndex = j;
+                                int outputIndex = new int();
+                                outputIndex = i;
+
+                                // If selected, we don't update that value
+                                inputField.onSelect.AddListener((string s) =>
+                                {
+                                    ProtectInputField(internalData, outputDimensionIndex, true);
+                                });
+
+                                // On End edit, update output value selected
+                                inputField.onEndEdit.AddListener((string s) =>
+                                {
+                                    SetOutputValue(m_CurrentNode, inputField.text, outputIndex, outputDimensionIndex);
+                                    ProtectInputField(internalData, outputDimensionIndex, false);
+                                });
+                            }
+                        }
+
                     }
 
                     // Update label
@@ -392,7 +461,7 @@ namespace InteractML
                 }
 
                 // Update local values
-                UpdateUIDataFields(internalData.InputField, externalData.Values);
+                UpdateUIDataFields(internalData.InputFields, externalData.Values);
 
 
             }

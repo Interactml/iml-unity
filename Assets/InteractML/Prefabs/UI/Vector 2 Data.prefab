@@ -1341,9 +1341,11 @@ MonoBehaviour:
   rectTransform: {fileID: 7428255361510715851}
   DataType: 2
   Label: {fileID: 5851646092785500326}
-  InputField:
-  - {fileID: 2141611738350499580}
-  - {fileID: 8385960110550678157}
+  InputFields:
+  - localInputField: {fileID: 2141611738350499580}
+    CanSet: 0
+  - localInputField: {fileID: 8385960110550678157}
+    CanSet: 0
 --- !u!222 &1092494004911895417
 CanvasRenderer:
   m_ObjectHideFlags: 0
