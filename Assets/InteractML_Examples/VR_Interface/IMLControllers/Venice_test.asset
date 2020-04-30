@@ -112,7 +112,7 @@ MonoBehaviour:
   DevMode: 0
   ValueName: HeadRotation
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 9.500081, y: 30.400002, z: 0.00000021641141}
+  m_Value: {x: 26.80003, y: 22.600008, z: -0.0000004782587}
   m_Out: {x: 0, y: 270.9, z: 0}
 --- !u!114 &-1899693820327701159
 MonoBehaviour:
@@ -164,7 +164,7 @@ MonoBehaviour:
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
   m_DesiredInputsConfig: 03000000
-  m_DesiredOutputsConfig: 04000000040000000400000004000000
+  m_DesiredOutputsConfig: 040000000400000004000000040000000000000000000000
   IMLConfigurationNodesConnected: []
   StartDelay: 0
   CaptureRate: 10

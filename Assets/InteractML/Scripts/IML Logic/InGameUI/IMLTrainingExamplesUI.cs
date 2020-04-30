@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 using ReusableMethods;
@@ -21,6 +22,12 @@ namespace InteractML
         public RectTransform InputsContentRect; // Should be a Parent for every other data type UI element for inputs
         public TextMeshProUGUI NoOutputsText;
         public RectTransform OutputsContentRect; // Should be a Parent for every other data type UI element for outputs
+
+        [Header("Button Setup")]
+        public Button MoveNextNodeButton;
+        public Button MovePrevNodeButton;
+        public Button RemoveOneOutputButton;
+        public Button AddOneOutputButton;
 
         [Header("Data Type UI Prefabs")]
         [Tooltip("Populate with UI Prefabs of your data types")]
@@ -67,6 +74,21 @@ namespace InteractML
 
             if (m_OutputData == null)
                 m_OutputData = new List<IMLDataTypeUI>();
+
+            // Setup Buttons
+            // Next node
+            if (MoveNextNodeButton)
+                AddOnClickButtonCall(MoveNextNodeButton, delegate { MoveToNextNode(); }, true);
+            // Previous node
+            if (MovePrevNodeButton)
+                AddOnClickButtonCall(MovePrevNodeButton, delegate { MoveToPreviousNode(); }, true);
+            // Add output
+            if (AddOneOutputButton)
+                AddOnClickButtonCall(AddOneOutputButton, delegate { AddOneOutput(); }, true);
+            // Remove output
+            if (RemoveOneOutputButton)
+                AddOnClickButtonCall(RemoveOneOutputButton, delegate { RemoveOneOutput(); }, true);
+
         }
 
         // Update is called once per frame
@@ -168,6 +190,36 @@ namespace InteractML
         public void MoveToPreviousNode()
         {
             MoveToPreviousNode(MLComponent.TrainingExamplesNodesList);
+        }
+
+        /// <summary>
+        /// Adds one item to the outputs list
+        /// </summary>
+        public void AddOneOutput()
+        {
+            if (m_CurrentNode)
+            {
+                if (m_CurrentNode.DesiredOutputsConfig != null)
+                {
+                    // Adds a new desired output (for the moment a float)
+                    IMLSpecifications.OutputsEnum newOutput = new IMLSpecifications.OutputsEnum();
+                    newOutput = IMLSpecifications.OutputsEnum.Float;
+                    m_CurrentNode.DesiredOutputsConfig.Add(newOutput);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes last item in the desired output list
+        /// </summary>
+        public void RemoveOneOutput()
+        {
+            if (m_CurrentNode)
+            {
+                if (m_CurrentNode.DesiredOutputsConfig != null && m_CurrentNode.DesiredOutputsConfig.Count > 0)
+                    // Removes last item added to the desired outputs list
+                    m_CurrentNode.DesiredOutputsConfig.RemoveAt(m_CurrentNode.DesiredOutputsConfig.Count - 1);
+            }
         }
 
         #endregion

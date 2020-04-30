@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Events;
 using TMPro;
 using System.Linq;
+using System;
 
 namespace InteractML
 {
@@ -73,6 +76,24 @@ namespace InteractML
             if (UIText)
             {
                 UIText.text = text;
+            }
+        }
+
+        /// <summary>
+        /// Adds actions to a UI button on click call
+        /// </summary>
+        /// <param name="UIButton"></param>
+        /// <param name="action"></param>
+        /// <param name="removePreviousActions"></param>
+        protected void AddOnClickButtonCall(Button UIButton, UnityAction action, bool removePreviousActions)
+        {
+            if (UIButton != null)
+            {
+                if (removePreviousActions)
+                    UIButton.onClick.RemoveAllListeners();
+
+                if (action != null)
+                    UIButton.onClick.AddListener(action);
             }
         }
 
