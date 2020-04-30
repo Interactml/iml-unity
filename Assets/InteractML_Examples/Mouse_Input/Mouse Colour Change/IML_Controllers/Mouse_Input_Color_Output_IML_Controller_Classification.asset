@@ -1,5 +1,100 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8552652658062889886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a91209fffbd444385488c8c3e7a6e2, type: 3}
+  m_Name: Single Training Examples
+  m_EditorClassIdentifier: 
+  id: cfe7c6f3-64ff-4141-9e3b-ee5cddc9d03c
+  graph: {fileID: 11400000}
+  position: {x: 408, y: 8}
+  ports:
+    keys:
+    - InputFeatures
+    - TrainingExamplesNodeToOutput
+    values:
+    - _fieldName: InputFeatures
+      _node: {fileID: -8552652658062889886}
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: TrainingExamplesNodeToOutput
+      _node: {fileID: -8552652658062889886}
+      _typeQualifiedName: InteractML.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  InputFeatures: []
+  TrainingExamplesNodeToOutput: {fileID: -8552652658062889886}
+  ModeOfCollection: 0
+  TrainingExamplesVector: []
+  TrainingSeriesCollection: []
+  m_DesiredInputsConfig: 
+  m_DesiredOutputsConfig: 00000000
+  IMLConfigurationNodesConnected: []
+  StartDelay: 0
+  CaptureRate: 10
+  RecordTime: -1
+  EnableKeyboardControl: 0
+  RecordDataKey: 0
+--- !u!114 &-6048617712226267193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051a7e150efca304da37d460de663b87, type: 3}
+  m_Name: Extract Velocity
+  m_EditorClassIdentifier: 
+  id: 8ed89685-f1ca-4c44-847b-8ae21e3ca3fa
+  graph: {fileID: 11400000}
+  position: {x: -104.4204, y: -934.60205}
+  ports:
+    keys:
+    - FeatureToInput
+    - VelocityExtracted
+    values:
+    - _fieldName: FeatureToInput
+      _node: {fileID: -6048617712226267193}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: VelocityExtracted
+      _node: {fileID: -6048617712226267193}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  FeatureToInput: {fileID: 0}
+  VelocityExtracted: {fileID: 0}
+  m_VelocityExtracted:
+    m_Values: []
+  m_LastFrameFeatureValue: []
 --- !u!114 &-4927585982608454069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33,6 +128,11 @@ MonoBehaviour:
   DevMode: 0
   IMLModelOutputs: {fileID: 0}
   m_IMLOutputVector:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   - 0
   - 0
 --- !u!114 &-4254207809817223698
@@ -128,7 +228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 5a73ad08-4a17-4e2e-9242-8548395536a9
   graph: {fileID: 11400000}
-  position: {x: 88, y: -408}
+  position: {x: 56, y: -424}
   ports:
     keys:
     - InputFeatures
@@ -167,7 +267,7 @@ MonoBehaviour:
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
   m_DesiredInputsConfig: 03000000
-  m_DesiredOutputsConfig: 0100000000000000
+  m_DesiredOutputsConfig: 00000000
   IMLConfigurationNodesConnected: []
   StartDelay: 0
   CaptureRate: 10
@@ -188,7 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 872e2a26-eb7f-44f7-ba34-d72388b3bbec
   graph: {fileID: 11400000}
-  position: {x: -191.07684, y: -678.4997}
+  position: {x: -136, y: -712}
   ports:
     keys:
     - m_In
@@ -295,6 +395,8 @@ MonoBehaviour:
   - {fileID: -1556153132357067187}
   - {fileID: 8863177466215629981}
   - {fileID: 3870851315361709692}
+  - {fileID: -6048617712226267193}
+  - {fileID: -8552652658062889886}
   SceneComponent: {fileID: 0}
 --- !u!114 &23255658134690522
 MonoBehaviour:
@@ -310,7 +412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 262df59d-588f-48e2-95c4-6f8e50da3e0f
   graph: {fileID: 11400000}
-  position: {x: -488, y: -120}
+  position: {x: -504, y: -168}
   ports:
     keys:
     - GameObjectDataIn
@@ -365,7 +467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: af4b2147-3e10-40a4-b124-f23dea49da31
   graph: {fileID: 11400000}
-  position: {x: -181, y: -66.5}
+  position: {x: -216, y: 56}
   ports:
     keys:
     - m_In
@@ -428,14 +530,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 617045c8-fb26-4e71-9601-43b522df3516
   graph: {fileID: 11400000}
-  position: {x: 472, y: -424}
+  position: {x: 424, y: -472}
   ports:
     keys:
     - IMLTrainingExamplesNodes
     - InputFeatures
     - ModelOutput
     - Output 0
-    - Output 1
     values:
     - _fieldName: IMLTrainingExamplesNodes
       _node: {fileID: 4515349059867044687}
@@ -484,15 +585,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-    - _fieldName: Output 1
-      _node: {fileID: 4515349059867044687}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
   DevMode: 0
   IMLTrainingExamplesNodes:
   - {fileID: -1959803103576171372}
@@ -502,9 +594,14 @@ MonoBehaviour:
   PredictedRapidlibOutput:
   - 0
   - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   DelayedPredictedOutput: []
   m_ExpectedInputList: 03000000
-  m_ExpectedOutputList: 0100000000000000
+  m_ExpectedOutputList: 00000000
   m_LearningType: 0
   EnableKeyboardControl: 0
   TrainingKey: 0
@@ -526,7 +623,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 210424bf-c481-4157-9f0f-8157aaab0dc5
   graph: {fileID: 11400000}
-  position: {x: -488, y: -440}
+  position: {x: -536, y: -504}
   ports:
     keys:
     - LiveDataOut
@@ -666,7 +763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: f3ae7229-9875-4ef4-b804-1037dab881c6
   graph: {fileID: 11400000}
-  position: {x: -263.71246, y: -865.79034}
+  position: {x: -664, y: -904}
   ports:
     keys:
     - m_In

@@ -36,6 +36,8 @@ namespace InteractML
         private bool m_AddOutput;
         private bool m_RemoveOutput;
 
+        private static GUIStyle editorLabelStyle;
+
         #endregion
 
         public override void OnHeaderGUI()
@@ -72,17 +74,17 @@ namespace InteractML
         {
             DrawPortLayout();
             ShowSingleTrainingExamplesNodePorts();
-            GUILayout.Label("", GUILayout.MinHeight(50));
+            GUILayout.Space(50);
 
             DrawBodyLayoutOutputAddRemove();
             ShowOutputAddRemove();
 
             DrawBodyLayoutOutputs();
-            GUILayout.Label("", GUILayout.MinHeight(50));
+            GUILayout.Space(50);
             ShowOutputList();
 
             DrawBodyLayoutButtons();
-            GUILayout.Label("", GUILayout.MinHeight(50));
+            GUILayout.Space(60);
             ShowButtons();
 
             DrawBodyLayoutBottom();
@@ -131,7 +133,7 @@ namespace InteractML
             m_BodyRectOutputs.x = 5;
             m_BodyRectOutputs.y = HeaderRect.height + m_PortRect.height + m_BodyRectOutputAddRemove.height;
             m_BodyRectOutputs.width = NodeWidth - 10;
-            m_BodyRectOutputs.height = 60 + (m_SingleTrainingExamplesNode.DesiredOutputsConfig.Count * 36);
+            m_BodyRectOutputs.height = 60 + (m_SingleTrainingExamplesNode.DesiredOutputsConfig.Count * 62);
 
             // Draw body background purple rect below ports
             GUI.DrawTexture(m_BodyRectOutputs, NodeColor);
@@ -148,7 +150,7 @@ namespace InteractML
             m_BodyRectButtons.x = 5;
             m_BodyRectButtons.y = HeaderRect.height + m_PortRect.height + m_BodyRectOutputAddRemove.height + m_BodyRectOutputs.height;
             m_BodyRectButtons.width = NodeWidth - 10;
-            m_BodyRectButtons.height = 80;
+            m_BodyRectButtons.height = 95;
 
             // Draw body background purple rect below ports
             GUI.DrawTexture(m_BodyRectButtons, NodeColor);
@@ -245,6 +247,10 @@ namespace InteractML
         /// </summary>
         private void ShowOutputList()
         {
+            if (editorLabelStyle == null) editorLabelStyle = new GUIStyle(EditorStyles.label);
+            EditorStyles.label.normal.textColor = Color.white;
+            EditorStyles.label.font = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label").font;
+
             //Go through the list of outputs and show the correct kind of config editor tool
             for (int i = 0; i < m_SingleTrainingExamplesNode.DesiredOutputsConfig.Count; i++)
             {
@@ -266,9 +272,11 @@ namespace InteractML
                     {
                         case (IMLSpecifications.DataTypes)IMLSpecifications.OutputsEnum.Float:
                             (m_SingleTrainingExamplesNode.DesiredOutputFeatures[i] as IMLFloat).SetValue(EditorGUILayout.FloatField(labelOutput, m_SingleTrainingExamplesNode.DesiredOutputFeatures[i].Values[0]));
+                            GUILayout.Space(15);
                             break;
                         case (IMLSpecifications.DataTypes)IMLSpecifications.OutputsEnum.Integer:
                             (m_SingleTrainingExamplesNode.DesiredOutputFeatures[i] as IMLInteger).SetValue(EditorGUILayout.IntField(labelOutput, (int)m_SingleTrainingExamplesNode.DesiredOutputFeatures[i].Values[0]));
+                            GUILayout.Space(15);
                             break;
                         case (IMLSpecifications.DataTypes)IMLSpecifications.OutputsEnum.Vector2:
                             var vector2ToShow = new Vector2(m_SingleTrainingExamplesNode.DesiredOutputFeatures[i].Values[0],
@@ -296,8 +304,9 @@ namespace InteractML
                     }
 
                 }
-
+                GUILayout.Space(10);
             }
+            EditorStyles.label.normal = editorLabelStyle.normal;
         }
 
         /// <summary>
@@ -325,8 +334,11 @@ namespace InteractML
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
 
-            GUILayout.Label("", GUILayout.MinHeight(20));
-
+            m_BodyRectButtons.x = m_BodyRectButtons.x - 10;
+            m_BodyRectButtons.y = m_BodyRectButtons.y + 35;
+            m_BodyRectButtons.width = m_BodyRectButtons.width + 40;
+            GUILayout.BeginArea(m_BodyRectButtons);
+            
             GUILayout.BeginHorizontal();
             GUILayout.Label("Load Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button Yellow"));
             GUILayout.Label("");
@@ -334,6 +346,7 @@ namespace InteractML
             GUILayout.Label("");
             GUILayout.Label(recordNameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
             GUILayout.EndHorizontal();
+            GUILayout.EndArea();
         }
 
         private string ShowRecordExamplesButton()
@@ -345,11 +358,11 @@ namespace InteractML
             //{
             if (m_SingleTrainingExamplesNode.CollectingData)
             {
-                nameButton = "STOP";
+                nameButton = "    STOP          ";
             }
             else
             {
-                nameButton = "Record Data";
+                nameButton = "Record Data   ";
             }
 
             bool disableButton = false;
