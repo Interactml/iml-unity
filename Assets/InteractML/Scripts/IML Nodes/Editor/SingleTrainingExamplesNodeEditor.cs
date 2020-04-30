@@ -307,6 +307,7 @@ namespace InteractML
                 GUILayout.Space(10);
             }
             EditorStyles.label.normal = editorLabelStyle.normal;
+            
         }
 
         /// <summary>

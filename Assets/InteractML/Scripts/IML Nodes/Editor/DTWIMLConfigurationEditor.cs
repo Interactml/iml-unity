@@ -126,7 +126,7 @@ namespace InteractML
             m_BodyRectBigButtons.x = 5;
             m_BodyRectBigButtons.y = HeaderRect.height + m_PortRect.height + m_BodyRectButtons.height;
             m_BodyRectBigButtons.width = NodeWidth - 10;
-            m_BodyRectBigButtons.height = 120;
+            m_BodyRectBigButtons.height = 155;
 
             // Draw body background purple rect below ports
             GUI.DrawTexture(m_BodyRectBigButtons, NodeColor);
@@ -141,6 +141,7 @@ namespace InteractML
         private void DrawBodyLayoutBottom()
         {
             m_BodyRectBottom.x = 5;
+            m_BodyRectBigButtons.height = m_BodyRectBigButtons.height + 15;
             m_BodyRectBottom.y = HeaderRect.height + m_PortRect.height + m_BodyRectButtons.height + m_BodyRectBigButtons.height;
             m_BodyRectBottom.width = NodeWidth - 10;
             m_BodyRectBottom.height = 40;
@@ -193,13 +194,20 @@ namespace InteractML
 
         private void ShowBigButtons()
         {
+            m_BodyRectBigButtons.x = m_BodyRectBigButtons.x + 15;
+            m_BodyRectBigButtons.y = m_BodyRectBigButtons.y + 15;
+            m_BodyRectBigButtons.width = m_BodyRectBigButtons.width - 30;
+            m_BodyRectBigButtons.height = m_BodyRectBigButtons.height - 15;
+
             GUILayout.BeginArea(m_BodyRectBigButtons);
             // Init model button (to debug the model not working)
-            if (GUILayout.Button("Reset Model"))
+            if (GUILayout.Button("Reset Model", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Reset")))
             {
                 m_DTWIMLConfiguration.ResetModel();
             }
+            GUILayout.Space(15);
             ShowTrainModelButton();
+            GUILayout.Space(15);
             ShowRunModelButton();
             GUILayout.EndArea();
         }
@@ -220,7 +228,7 @@ namespace InteractML
                 // Disable button if model is Running OR Trainig 
                 if (m_DTWIMLConfiguration.Running || m_DTWIMLConfiguration.Training)
                     GUI.enabled = false;
-                if (GUILayout.Button(nameButton))
+                if (GUILayout.Button(nameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Train")))
                 {
                     m_DTWIMLConfiguration.TrainModel();
                 }
@@ -235,9 +243,9 @@ namespace InteractML
                 GUI.enabled = false;
                 if (m_DTWIMLConfiguration.TotalNumTrainingData == 0)
                 {
-                    EditorGUILayout.HelpBox("There are no training examples", MessageType.Error);
+                    //EditorGUILayout.HelpBox("There are no training examples", MessageType.Error);
                 }
-                if (GUILayout.Button("Train Model"))
+                if (GUILayout.Button("Train Model", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Train")))
                 {
                     //m_TrainingExamplesNode.ToggleCollectExamples();
                 }
@@ -265,7 +273,7 @@ namespace InteractML
                 // Disable button if model is Trainig OR Untrained
                 if (m_DTWIMLConfiguration.Training || m_DTWIMLConfiguration.Untrained)
                     GUI.enabled = false;
-                if (GUILayout.Button(nameButton))
+                if (GUILayout.Button(nameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Run")))
                 {
                     m_DTWIMLConfiguration.ToggleRunning();
                 }
@@ -277,7 +285,7 @@ namespace InteractML
             else
             {
                 GUI.enabled = false;
-                if (GUILayout.Button("Run"))
+                if (GUILayout.Button("Run", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Run")))
                 {
                     //m_TrainingExamplesNode.ToggleCollectExamples();
                 }
