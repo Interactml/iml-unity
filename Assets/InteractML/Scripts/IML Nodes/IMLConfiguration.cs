@@ -62,7 +62,7 @@ namespace InteractML
         /// </summary>
         [SerializeField]
         protected IMLSpecifications.LearningType m_LearningType;
-        
+        [HideInInspector]
         public IMLSpecifications.LearningType LearningType { get => m_LearningType; }
 
         /// <summary>
@@ -367,6 +367,7 @@ namespace InteractML
 
         public void UpdateLogic()
         {
+            
             //Set Learning Type 
             SetLearningType();
 
@@ -396,6 +397,8 @@ namespace InteractML
             /*Debug.Log("expected output" + m_ExpectedOutputList.Count);
             Debug.Log("predicted rap lib output" + PredictedRapidlibOutput.Length);
             Debug.Log("predicted output" + PredictedOutput.Count);*/
+            // TO DO add some logic
+            UpdateRapidLibOutputVector();
 
         }
 
@@ -586,11 +589,11 @@ namespace InteractML
                     //    Debug.Log("Output " + i + " : " + outputFeature.Values[i]);
                     //}
                     //
-
+                   /* Debug.Log("i " + i);
+                    Debug.Log("pointer " + (i + pointerRawOutputVector));
+                    Debug.Log("predicted " + PredictedRapidlibOutput.Length);*/
                     if (i + pointerRawOutputVector >= PredictedRapidlibOutput.Length)
                     {
-                        Debug.Log("pointer " + (i+pointerRawOutputVector));
-                        Debug.Log("predicted " + DelayedPredictedOutput.Length);
                         Debug.LogError("The predicted rapidlib output vector is too small when transforming to interactml types!");
                         break;
                     }
@@ -808,25 +811,31 @@ namespace InteractML
             // Get values from the input list
             InputFeatures = this.GetInputNodesConnected("InputFeatures");
 
-            // Make sure that the list is initialised
-            if (m_ExpectedInputList == null)
-                m_ExpectedInputList = new List<IMLSpecifications.InputsEnum>();
-
-            // Adjust the desired inputs list based on nodes connected
-            m_ExpectedInputList.Clear();
-            // Go through all the nodes connected
-            for (int i = 0; i < InputFeatures.Count; i++)
+            //check features have been connected 
+            if (InputFeatures != null)
             {
-                // Cast the node checking if implements the feature interface (it is a featureExtractor)
-                IFeatureIML inputFeature = InputFeatures[i] as IFeatureIML;
+                // Make sure that the list is initialised
+                if (m_ExpectedInputList == null)
+                    m_ExpectedInputList = new List<IMLSpecifications.InputsEnum>();
 
-                // If it is a feature extractor...
-                if (inputFeature != null)
+                // Adjust the desired inputs list based on nodes connected
+                m_ExpectedInputList.Clear();
+                // Go through all the nodes connected
+                for (int i = 0; i < InputFeatures.Count; i++)
                 {
-                    // We add the feature to the desired inputs config
-                    m_ExpectedInputList.Add((IMLSpecifications.InputsEnum)inputFeature.FeatureValues.DataType);
+                    // Cast the node checking if implements the feature interface (it is a featureExtractor)
+                    IFeatureIML inputFeature = InputFeatures[i] as IFeatureIML;
+
+                    // If it is a feature extractor...
+                    if (inputFeature != null)
+                    {
+                        // We add the feature to the desired inputs config
+                        m_ExpectedInputList.Add((IMLSpecifications.InputsEnum)inputFeature.FeatureValues.DataType);
+                    }
                 }
             }
+
+
         }
 
         /// <summary>
@@ -869,10 +878,11 @@ namespace InteractML
 
                     if (m_ExpectedOutputList.Count <= trainingExamplesNode.DesiredOutputsConfig.Count)
                     {
-                        for (int i = 0; i < m_ExpectedOutputList.Count; i++)
+                        for (int i = 0; i < m_ExpectedOutputList.Count-1; i++)
                         {
                             if (m_ExpectedOutputList[i] != trainingExamplesNode.DesiredOutputsConfig[i])
                             {
+                                Debug.Log("i");
                                 m_ExpectedOutputList.Add(trainingExamplesNode.DesiredOutputsConfig[i]);
                             }
                         }
@@ -1345,6 +1355,29 @@ namespace InteractML
             }
         }
 
+        protected void UpdateRapidLibOutputVector()
+        {
+            if (!Lists.IsNullOrEmpty(ref PredictedOutput))
+            {
+                int vectorSize = 0;
+                // Create a vector based on the amount of output features to predict
+                // Calculate vector size
+                for (int i = 0; i < PredictedOutput.Count; i++)
+                {
+                    if (PredictedOutput[i] != null)
+                    {
+                        if (PredictedOutput[i].Values != null)
+                        {
+                            vectorSize += PredictedOutput[i].Values.Length;
+                        }
+                    }
+                }
+
+                // Create vector
+                System.Array.Resize(ref m_RapidlibOutputVector, vectorSize);
+            }
+            
+        }
         /// <summary>
         /// Updates the input vector to send to rapidlib with the input features in the IML Config node
         /// </summary>

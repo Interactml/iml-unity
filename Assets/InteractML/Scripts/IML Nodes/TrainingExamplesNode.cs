@@ -30,7 +30,7 @@ namespace InteractML
 
         
         public enum CollectionMode { SingleExample, Series }
-        
+        [HideInInspector]
         public CollectionMode ModeOfCollection;
 
         /// <summary>
@@ -299,26 +299,31 @@ namespace InteractML
         {
             // Get values from the input list
             InputFeatures = this.GetInputNodesConnected("InputFeatures");
-
-            // Make sure that the list is initialised
-            if (m_DesiredInputsConfig == null)
-                m_DesiredInputsConfig = new List<IMLSpecifications.InputsEnum>();
-
-            // Adjust the desired inputs list based on nodes connected
-            m_DesiredInputsConfig.Clear();
-            // Go through all the nodes connected
-            for (int i = 0; i < InputFeatures.Count; i++)
+            // if there are inputfestures connected 
+             if (InputFeatures != null)
             {
-                // Cast the node checking if implements the feature interface (it is a featureExtractor)
-                IFeatureIML inputFeature = InputFeatures[i] as IFeatureIML;
+                // Make sure that the list is initialised
+                if (m_DesiredInputsConfig == null)
+                    m_DesiredInputsConfig = new List<IMLSpecifications.InputsEnum>();
 
-                // If it is a feature extractor...
-                if (inputFeature != null)
+                // Adjust the desired inputs list based on nodes connected
+                m_DesiredInputsConfig.Clear();
+                // Go through all the nodes connected
+                for (int i = 0; i < InputFeatures.Count; i++)
                 {
-                    // We add the feature to the desired inputs config
-                    DesiredInputsConfig.Add((IMLSpecifications.InputsEnum)inputFeature.FeatureValues.DataType);
+                    // Cast the node checking if implements the feature interface (it is a featureExtractor)
+                    IFeatureIML inputFeature = InputFeatures[i] as IFeatureIML;
+
+                    // If it is a feature extractor...
+                    if (inputFeature != null)
+                    {
+                        // We add the feature to the desired inputs config
+                        DesiredInputsConfig.Add((IMLSpecifications.InputsEnum)inputFeature.FeatureValues.DataType);
+                    }
                 }
+
             }
+            
         }
 
         /// <summary>
