@@ -152,6 +152,15 @@ namespace InteractML.FeatureExtractors
                 GameObjInputMissing = false;
             }
 
+            if (!x_switch)
+                FeatureValues.Values[0] = 0;
+
+            if (!y_switch)
+                FeatureValues.Values[1] = 0;
+
+            if (!z_switch)
+                FeatureValues.Values[2] = 0;
+
             return this;
 
         }

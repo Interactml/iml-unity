@@ -110,7 +110,6 @@ namespace InteractML.FeatureExtractors
         /// <returns></returns>
         public object UpdateFeature()
         {
-            Debug.Log(x_switch);
             //check if receiving data
             if(counter == count)
             {
@@ -161,19 +160,13 @@ namespace InteractML.FeatureExtractors
             }
 
             if (!x_switch)
-            {
                 FeatureValues.Values[0] = 0;
-            }
 
-            if(!y_switch)
-            {
+            if (!y_switch)
                 FeatureValues.Values[1] = 0;
-            }
 
             if (!z_switch)
-            {
                 FeatureValues.Values[2] = 0;
-            }
 
             return this;
 
