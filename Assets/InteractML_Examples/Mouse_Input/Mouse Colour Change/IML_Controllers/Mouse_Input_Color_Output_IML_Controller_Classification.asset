@@ -93,11 +93,17 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  FeatureToInput: {fileID: 0}
+  FeatureToInput: {fileID: 6620900826782712363}
   VelocityExtracted: {fileID: 0}
   m_VelocityExtracted:
-    m_Values: []
-  m_LastFrameFeatureValue: []
+    m_Values:
+    - 0
+    - 0
+    - 0
+  m_LastFrameFeatureValue:
+  - -16.6
+  - 2.07
+  - 3.9
 --- !u!114 &-4927585982608454069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -461,7 +467,6 @@ MonoBehaviour:
   - {fileID: 3870851315361709692}
   - {fileID: -6048617712226267193}
   - {fileID: -8552652658062889886}
-  - {fileID: -4546279632251561477}
   SceneComponent: {fileID: 0}
 --- !u!114 &23255658134690522
 MonoBehaviour:
@@ -532,7 +537,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: af4b2147-3e10-40a4-b124-f23dea49da31
   graph: {fileID: 11400000}
-  position: {x: -216, y: 56}
+  position: {x: -232, y: -40}
   ports:
     keys:
     - m_In
@@ -595,7 +600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 617045c8-fb26-4e71-9601-43b522df3516
   graph: {fileID: 11400000}
-  position: {x: 424, y: -472}
+  position: {x: 456, y: -488}
   ports:
     keys:
     - IMLTrainingExamplesNodes
