@@ -21,6 +21,7 @@ namespace InteractML
         /// </summary>
         private Rect m_BodyRect;
         private Rect m_PortRect;
+        private Rect m_HelpRect;
 
         Editor gameObjectEditor;
         GUIStyle stylePreview;
@@ -64,6 +65,9 @@ namespace InteractML
             ShowGameObjectPreview();
             EditorGUI.indentLevel--;
 
+            // Draw help button
+            DrawHelpButtonLayout();
+            ShowHelpButton();
         }
 
         /// <summary>
@@ -96,6 +100,22 @@ namespace InteractML
             GUI.DrawTexture(m_BodyRect, NodeColor);
         }
 
+        /// <summary>
+        /// Define rect values for node body and paint textures based on rects 
+        /// </summary>
+        private void DrawHelpButtonLayout()
+        {
+            m_HelpRect.x = 5;
+            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_BodyRect.height;
+            m_HelpRect.width = NodeWidth - 10;
+            m_HelpRect.height = 40;
+
+            // Draw body background purple rect below header
+            GUI.DrawTexture(m_HelpRect, NodeColor);
+
+            //Draw separator line
+            GUI.DrawTexture(new Rect(m_HelpRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_HelpRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+        }
 
         /// <summary>
         /// Show the input/output port fields 
@@ -190,6 +210,24 @@ namespace InteractML
 
             GUILayout.EndArea();
 
+        }
+
+        /// <summary>
+        /// Display help button
+        /// </summary>
+        private void ShowHelpButton()
+        {
+            m_HelpRect.x = m_HelpRect.x + 20;
+            m_HelpRect.y = m_HelpRect.y + 10;
+            m_HelpRect.width = m_HelpRect.width - 40;
+
+            GUILayout.BeginArea(m_HelpRect);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("");
+
+            GUILayout.Button("Help", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
+            GUILayout.EndHorizontal();
+            GUILayout.EndArea();
         }
     }
 

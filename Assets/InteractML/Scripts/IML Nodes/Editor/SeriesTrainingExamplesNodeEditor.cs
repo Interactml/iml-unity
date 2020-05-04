@@ -322,7 +322,7 @@ namespace InteractML
 
             GUILayout.BeginArea(m_BodyRectButtons);
             GUILayout.BeginHorizontal();
-            
+
             if (GUILayout.Button("Load Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button")))
             {
                 m_SeriesTrainingExamplesNode.LoadDataFromDisk();

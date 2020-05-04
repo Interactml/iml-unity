@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 12001, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: InteractMLGUISkin
   m_EditorClassIdentifier: 
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Font: {fileID: 12800000, guid: e3265ab4bf004d28a9537516768c1c75, type: 3}
   m_box:
     m_Name: box
     m_Normal:
@@ -170,7 +170,7 @@ MonoBehaviour:
       - {fileID: 2800000, guid: 9cca1422e47e12a46a07434791ba6ac1, type: 3}
       m_TextColor: {r: 1, g: 1, b: 1, a: 1}
     m_OnNormal:
-      m_Background: {fileID: 2800000, guid: 255d66dca05a7a54190965cffba928be, type: 3}
+      m_Background: {fileID: 0}
       m_ScaledBackgrounds:
       - {fileID: 2800000, guid: 255d66dca05a7a54190965cffba928be, type: 3}
       m_TextColor: {r: 0.8901961, g: 0.8901961, b: 0.8901961, a: 1}
@@ -179,7 +179,7 @@ MonoBehaviour:
       m_ScaledBackgrounds: []
       m_TextColor: {r: 1, g: 1, b: 1, a: 1}
     m_OnActive:
-      m_Background: {fileID: 2800000, guid: 255d66dca05a7a54190965cffba928be, type: 3}
+      m_Background: {fileID: 0}
       m_ScaledBackgrounds:
       - {fileID: 2800000, guid: 255d66dca05a7a54190965cffba928be, type: 3}
       m_TextColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1603,8 +1603,8 @@ MonoBehaviour:
       m_Top: 0
       m_Bottom: 0
     m_Padding:
-      m_Left: 0
-      m_Right: 0
+      m_Left: 10
+      m_Right: 10
       m_Top: 0
       m_Bottom: 0
     m_Overflow:
