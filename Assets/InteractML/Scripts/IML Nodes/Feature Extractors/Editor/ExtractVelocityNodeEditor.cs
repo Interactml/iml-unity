@@ -121,9 +121,18 @@ namespace InteractML.FeatureExtractors
 
             GUILayout.BeginArea(m_InnerBodyRect);
 
-            if(m_ExtractVelocity.FeatureValues.Values.Length != 0)
+            double[] velocity1 = new double[m_ExtractVelocity.FeatureValues.Values.Length];
+
+            for (int i = 0; i < m_ExtractVelocity.FeatureValues.Values.Length; i++)
             {
-                EditorGUILayout.LabelField(" velocity: " + System.Math.Round(m_ExtractVelocity.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+
+                velocity1[i] = System.Math.Round(m_ExtractVelocity.FeatureValues.Values[i], 3);
+            }
+
+            if (m_ExtractVelocity.FeatureValues.Values.Length != 0)
+            {
+                //EditorGUILayout.LabelField(" velocity: " + System.Math.Round(m_ExtractVelocity.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+                EditorGUILayout.LabelField(" velocity: " + string.Join(",", velocity1), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
             } else
             {
                 EditorGUILayout.LabelField("Please connect feature extractor", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
