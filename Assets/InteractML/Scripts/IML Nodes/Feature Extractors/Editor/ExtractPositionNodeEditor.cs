@@ -202,6 +202,7 @@ namespace InteractML.FeatureExtractors
         {
             GUILayout.BeginHorizontal();
             m_ExtractPosition.x_switch = EditorGUILayout.Toggle(m_ExtractPosition.x_switch, style);
+            
             EditorGUILayout.LabelField("x: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
             GUILayout.EndHorizontal();
 
