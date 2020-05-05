@@ -172,7 +172,6 @@ namespace InteractML.FeatureExtractors
                 // If we couldn't get an input (at all), we return null
                 else
                 {
-                    Debug.LogError("Could not get any input when measuring distance!");
                     return null;
                 }
 

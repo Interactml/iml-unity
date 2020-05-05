@@ -64,7 +64,8 @@ namespace InteractML.FeatureExtractors
 
             // Draw the body
             DrawBodyLayout();
-            ShowExtractedPositionValues();
+            //ShowExtractedPositionValues();
+            DataInToggle(m_ExtractPosition.ReceivingData, m_InnerBodyRect, m_BodyRect);
 
             // Draw local space toggle
             DrawLocalSpaceLayout();
@@ -206,11 +207,11 @@ namespace InteractML.FeatureExtractors
 
             if (m_ExtractPosition.ReceivingData)
             {
-                ShowPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Green Toggle"));
+                DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Green Toggle"));
             }
             else
             {
-                ShowPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Red Toggle"));
+                DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Red Toggle"));
             }
 
             GUILayout.EndArea();
@@ -220,7 +221,8 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Show the local space toggle 
         /// </summary>
-        private void ShowPositionValueTogglesAndLabels(GUIStyle style)
+
+        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
         {
             GUILayout.BeginHorizontal();
             m_ExtractPosition.x_switch = EditorGUILayout.Toggle(m_ExtractPosition.x_switch, style);

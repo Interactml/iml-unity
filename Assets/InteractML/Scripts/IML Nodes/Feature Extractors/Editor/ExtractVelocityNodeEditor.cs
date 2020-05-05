@@ -57,7 +57,8 @@ namespace InteractML.FeatureExtractors
 
             // Draw the body
             DrawBodyLayout();
-            ShowExtractedVelocityValues();
+            //ShowExtractedVelocityValues();
+           DataInToggle(m_ExtractVelocity.ReceivingData, m_InnerBodyRect, m_BodyRect);
 
             // Draw help button
             DrawHelpButtonLayout();
@@ -91,7 +92,7 @@ namespace InteractML.FeatureExtractors
             m_BodyRect.x = 5;
             m_BodyRect.y = HeaderRect.height + m_PortRect.height;
             m_BodyRect.width = NodeWidth - 10;
-            m_BodyRect.height = 70;
+            m_BodyRect.height = 120;
 
             // Draw body background purple rect below header
             GUI.DrawTexture(m_BodyRect, NodeColor);
@@ -162,6 +163,30 @@ namespace InteractML.FeatureExtractors
             
             GUILayout.EndArea();
 
+        }
+
+        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        {
+                GUILayout.BeginHorizontal();
+                m_ExtractVelocity.x_switch = EditorGUILayout.Toggle(m_ExtractVelocity.x_switch, style);
+                EditorGUILayout.LabelField("x: " + System.Math.Round(m_ExtractVelocity.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+                GUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                GUILayout.BeginHorizontal();
+                m_ExtractVelocity.y_switch = EditorGUILayout.Toggle(m_ExtractVelocity.y_switch, style);
+                EditorGUILayout.LabelField("y: " + System.Math.Round(m_ExtractVelocity.FeatureValues.Values[1], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+                GUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                GUILayout.BeginHorizontal();
+                m_ExtractVelocity.z_switch = EditorGUILayout.Toggle(m_ExtractVelocity.z_switch, style);
+                EditorGUILayout.LabelField("z: " + System.Math.Round(m_ExtractVelocity.FeatureValues.Values[2], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+                GUILayout.EndHorizontal();
+           
+            
         }
 
         /// <summary>
