@@ -119,7 +119,7 @@ namespace InteractML
         private void ShowOutputNodePorts()
         {
             GUILayout.Space(5);
-            GUIContent inputPortLabel = new GUIContent("Model\n Output");
+            GUIContent inputPortLabel = new GUIContent("Model\nOutput");
             PortField(inputPortLabel, m_RealtimeIMLOutputNode.GetInputPort("IMLModelOutputs"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
         }
 
