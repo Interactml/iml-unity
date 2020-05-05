@@ -324,7 +324,7 @@ namespace InteractML
             GUILayout.BeginArea(m_BodyRectButtons);
             GUILayout.BeginHorizontal();
 
-            if (GUILayout.Button("Load Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button")))
+            if (GUILayout.Button(new GUIContent("Load Data", "This is a tooltip"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button")))
             {
                 m_SingleTrainingExamplesNode.LoadDataFromDisk();
             }

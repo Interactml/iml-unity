@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: cfe7c6f3-64ff-4141-9e3b-ee5cddc9d03c
   graph: {fileID: 11400000}
-  position: {x: 408, y: 8}
+  position: {x: 200, y: -200}
   ports:
     keys:
     - InputFeatures
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 8ed89685-f1ca-4c44-847b-8ae21e3ca3fa
   graph: {fileID: 11400000}
-  position: {x: -104.4204, y: -934.60205}
+  position: {x: 88, y: -1048}
   ports:
     keys:
     - FeatureToInput
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 70077180-1320-48dc-b48b-a2ef15a32d0c
   graph: {fileID: 11400000}
-  position: {x: 872, y: -408}
+  position: {x: 952, y: -536}
   ports:
     keys:
     - IMLModelOutputs
@@ -155,7 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:InteractML:DTWIMLConfiguration
   id: 64b9a859-731a-4418-b3e2-78518b6a4398
   graph: {fileID: 11400000}
-  position: {x: 808, y: -40}
+  position: {x: 520, y: -360}
   ports:
     keys:
     - IMLTrainingExamplesNodes
@@ -241,7 +241,7 @@ MonoBehaviour:
   GameObjectData: {fileID: 0}
   GameObjMissing: 0
   state: 0
---- !u!114 &-3442897478532645650
+--- !u!114 &-2801991038622799945
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -250,40 +250,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4afe6cfb87464749811235353854221, type: 3}
-  m_Name: Vector 2
+  m_Script: {fileID: 11500000, guid: 137e83599788d424eb27a7264acd4b03, type: 3}
+  m_Name: Text Note
   m_EditorClassIdentifier: 
-  id: f88e1068-dded-488d-8703-205891abb4b4
+  id: 2fdf3242-b661-4507-8c88-a662e50fc1a4
   graph: {fileID: 11400000}
-  position: {x: 907.9997, y: -869.474}
+  position: {x: -152, y: -1112}
   ports:
-    keys:
-    - m_In
-    - m_Out
-    values:
-    - _fieldName: m_In
-      _node: {fileID: -3442897478532645650}
-      _typeQualifiedName: UnityEngine.Vector2, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: m_Out
-      _node: {fileID: -3442897478532645650}
-      _typeQualifiedName: UnityEngine.Vector2, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
+    keys: []
+    values: []
   DevMode: 0
-  ValueName: 
-  m_In: {x: 0, y: 0}
-  m_Value: {x: 0, y: 0}
-  m_Out: {x: 0, y: 0}
+  note: Feature extractor nodes
 --- !u!114 &-1959803103576171372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,7 +275,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 5a73ad08-4a17-4e2e-9242-8548395536a9
   graph: {fileID: 11400000}
-  position: {x: 56, y: -424}
+  position: {x: 200, y: -728}
   ports:
     keys:
     - InputFeatures
@@ -358,7 +335,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 872e2a26-eb7f-44f7-ba34-d72388b3bbec
   graph: {fileID: 11400000}
-  position: {x: -136, y: -712}
+  position: {x: -920, y: -1048}
   ports:
     keys:
     - m_In
@@ -460,13 +437,16 @@ MonoBehaviour:
   - {fileID: 4459884802637960444}
   - {fileID: -1959803103576171372}
   - {fileID: 4515349059867044687}
-  - {fileID: 7735293242076662827}
-  - {fileID: -3442897478532645650}
   - {fileID: -1556153132357067187}
   - {fileID: 8863177466215629981}
   - {fileID: 3870851315361709692}
   - {fileID: -6048617712226267193}
   - {fileID: -8552652658062889886}
+  - {fileID: -4546279632251561477}
+  - {fileID: 8230237609910242813}
+  - {fileID: 1144772234490417198}
+  - {fileID: 2086817567719854183}
+  - {fileID: -2801991038622799945}
   SceneComponent: {fileID: 0}
 --- !u!114 &23255658134690522
 MonoBehaviour:
@@ -482,7 +462,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 262df59d-588f-48e2-95c4-6f8e50da3e0f
   graph: {fileID: 11400000}
-  position: {x: -504, y: -168}
+  position: {x: -456, y: -360}
   ports:
     keys:
     - GameObjectDataIn
@@ -518,11 +498,97 @@ MonoBehaviour:
   m_RotationExtracted:
     m_Values:
     - 0.70458376
-    - -0.080454595
+    - 0
     - 0.16586284
     - 0.68525785
   GameObjInputMissing: 0
   ReceivingData: 0
+--- !u!114 &1144772234490417198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a19e741e423c3c4abced594a9e6f303, type: 3}
+  m_Name: Float
+  m_EditorClassIdentifier: 
+  id: 622d6320-851c-450a-8fab-8b756115611c
+  graph: {fileID: 11400000}
+  position: {x: -1192, y: -712}
+  ports:
+    keys:
+    - m_In
+    - m_Out
+    values:
+    - _fieldName: m_In
+      _node: {fileID: 1144772234490417198}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: m_Out
+      _node: {fileID: 1144772234490417198}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  ValueName: 
+  m_In: 0
+  m_Value: 0
+  m_Out: 0
+--- !u!114 &2086817567719854183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d534d44a87f50e4f80bf8cd2142328f, type: 3}
+  m_Name: Integer
+  m_EditorClassIdentifier: 
+  id: 51f5b5bc-d8e7-41d4-a31b-31b95e792635
+  graph: {fileID: 11400000}
+  position: {x: -920, y: -712}
+  ports:
+    keys:
+    - m_In
+    - m_Out
+    values:
+    - _fieldName: m_In
+      _node: {fileID: 2086817567719854183}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: m_Out
+      _node: {fileID: 2086817567719854183}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  ValueName: 
+  m_In: 0
+  m_Value: 0
+  m_Out: 0
 --- !u!114 &3870851315361709692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,7 +603,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: af4b2147-3e10-40a4-b124-f23dea49da31
   graph: {fileID: 11400000}
-  position: {x: -232, y: -40}
+  position: {x: -648, y: -1048}
   ports:
     keys:
     - m_In
@@ -580,12 +646,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: f3f4c87d-0c73-45c0-9a85-d5fbb077e352
   graph: {fileID: 11400000}
-  position: {x: -1192, y: -344}
+  position: {x: -664, y: -680}
   ports:
     keys: []
     values: []
   DevMode: 0
-  note: jgfjhxtrjhyrxjhdggnfxdnvbxbvxvbxnvbxnbvhjfkck jhgkhjfkhfghjhgfhjgfhjgfjhgfjhgfhjgfhjgfghfhjgfhjg
+  note: Data type nodes
 --- !u!114 &4515349059867044687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -600,7 +666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 617045c8-fb26-4e71-9601-43b522df3516
   graph: {fileID: 11400000}
-  position: {x: 456, y: -488}
+  position: {x: 520, y: -840}
   ports:
     keys:
     - IMLTrainingExamplesNodes
@@ -700,7 +766,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 210424bf-c481-4157-9f0f-8157aaab0dc5
   graph: {fileID: 11400000}
-  position: {x: -536, y: -504}
+  position: {x: -216, y: -744}
   ports:
     keys:
     - LiveDataOut
@@ -762,7 +828,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: e34c769e-ac3d-4f04-b34b-3ff3501fc846
   graph: {fileID: 11400000}
-  position: {x: -920, y: -408}
+  position: {x: -1000, y: -344}
   ports:
     keys:
     - GameObjectDataOut
@@ -786,7 +852,7 @@ MonoBehaviour:
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 0
---- !u!114 &7735293242076662827
+--- !u!114 &8230237609910242813
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -795,40 +861,50 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 351ff2cba85462e48acea45efdae4312, type: 3}
-  m_Name: Serial Vector
+  m_Script: {fileID: 11500000, guid: 842a83d23f8374e41b4f966b7c1548a3, type: 3}
+  m_Name: Extract Distance To First Input
   m_EditorClassIdentifier: 
-  id: 09e8cafb-2e08-45bb-9516-056ded8f13fa
+  id: 5497b3a9-a12c-43cc-b96a-786d8181fd3b
   graph: {fileID: 11400000}
-  position: {x: 518.2563, y: -785.67914}
+  position: {x: -232, y: -984}
   ports:
     keys:
-    - m_In
-    - m_Out
+    - FirstInput
+    - SecondInput
+    - DistanceBetweenInputs
     values:
-    - _fieldName: m_In
-      _node: {fileID: 7735293242076662827}
-      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
+    - _fieldName: FirstInput
+      _node: {fileID: 8230237609910242813}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: SecondInput
+      _node: {fileID: 8230237609910242813}
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: m_Out
-      _node: {fileID: 7735293242076662827}
-      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
+    - _fieldName: DistanceBetweenInputs
+      _node: {fileID: 8230237609910242813}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  ValueName: 
-  m_In: []
-  m_Value: []
-  m_Out: []
+  FirstInput: {fileID: 0}
+  SecondInput: []
+  DistanceBetweenInputs: {fileID: 0}
+  m_DistancesExtracted:
+    m_Values: []
 --- !u!114 &8863177466215629981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -843,7 +919,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: f3ae7229-9875-4ef4-b804-1037dab881c6
   graph: {fileID: 11400000}
-  position: {x: -664, y: -904}
+  position: {x: -1192, y: -1048}
   ports:
     keys:
     - m_In

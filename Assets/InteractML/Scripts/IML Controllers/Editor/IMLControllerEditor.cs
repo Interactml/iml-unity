@@ -36,7 +36,7 @@ namespace InteractML
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(TrainingExamplesNode))] = hexToColor("#74DF84");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(List<TrainingExamplesNode>))] = hexToColor("#74DF84");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(IMLConfiguration))] = hexToColor("#5EB3F9");
-
+            NodeEditorPreferences.GetSettings().portTooltips = false;
         }
 
 

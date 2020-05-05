@@ -22,8 +22,9 @@ namespace InteractML.FeatureExtractors
         private Rect m_BodyRect;
         private Rect m_InnerBodyRect;
         private Rect m_PortRect;
-        private Rect m_BottomRect;
-        private Rect m_InnerBottomRect;
+        private Rect m_LocalSpaceRect;
+        private Rect m_InnerLocalSpaceRect;
+        private Rect m_HelpRect;
 
         public override void OnHeaderGUI()
         {
@@ -66,6 +67,10 @@ namespace InteractML.FeatureExtractors
             // Draw local space toggle
             DrawBottomLayout();
             ShowLocalSpaceToggle();
+
+            // Draw help button
+            DrawHelpButtonLayout();
+            ShowHelpButton();
         }
 
 
@@ -106,18 +111,34 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         private void DrawBottomLayout()
         {
-            m_BottomRect.x = 5;
-            m_BottomRect.y = HeaderRect.height + m_PortRect.height + m_BodyRect.height;
-            m_BottomRect.width = NodeWidth - 10;
-            m_BottomRect.height = 50;
+            m_LocalSpaceRect.x = 5;
+            m_LocalSpaceRect.y = HeaderRect.height + m_PortRect.height + m_BodyRect.height;
+            m_LocalSpaceRect.width = NodeWidth - 10;
+            m_LocalSpaceRect.height = 50;
 
             // Draw body background purple rect below header
-            GUI.DrawTexture(m_BottomRect, NodeColor);
+            GUI.DrawTexture(m_LocalSpaceRect, NodeColor);
 
             //Draw separator line
-            GUI.DrawTexture(new Rect(m_BottomRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_BottomRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+            GUI.DrawTexture(new Rect(m_LocalSpaceRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_LocalSpaceRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
         }
 
+        /// <summary>
+        /// Define rect values for node body and paint textures based on rects 
+        /// </summary>
+        private void DrawHelpButtonLayout()
+        {
+            m_HelpRect.x = 5;
+            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_BodyRect.height + m_LocalSpaceRect.height;
+            m_HelpRect.width = NodeWidth - 10;
+            m_HelpRect.height = 40;
+
+            // Draw body background purple rect below header
+            GUI.DrawTexture(m_HelpRect, NodeColor);
+
+            //Draw separator line
+            GUI.DrawTexture(new Rect(m_HelpRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height + m_LocalSpaceRect.height - WeightOfSeparatorLine, m_HelpRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+        }
 
         /// <summary>
         /// Show the input/output port fields 
@@ -191,12 +212,12 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         private void ShowLocalSpaceToggle()
         {
-            m_InnerBottomRect.x = m_BottomRect.x + 24;
-            m_InnerBottomRect.y = m_BottomRect.y + 16;
-            m_InnerBottomRect.width = m_BottomRect.width;
-            m_InnerBottomRect.height = m_BottomRect.height;
+            m_InnerLocalSpaceRect.x = m_LocalSpaceRect.x + 24;
+            m_InnerLocalSpaceRect.y = m_LocalSpaceRect.y + 16;
+            m_InnerLocalSpaceRect.width = m_LocalSpaceRect.width;
+            m_InnerLocalSpaceRect.height = m_LocalSpaceRect.height;
 
-            GUILayout.BeginArea(m_InnerBottomRect);
+            GUILayout.BeginArea(m_InnerLocalSpaceRect);
             GUILayout.BeginHorizontal();
             m_ExtractRotation.LocalSpace = EditorGUILayout.Toggle(m_ExtractRotation.LocalSpace, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Local Space Toggle"));
             EditorGUILayout.LabelField("Use local space for transform", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Local Space Label"));
@@ -205,7 +226,22 @@ namespace InteractML.FeatureExtractors
             
         }
 
+        /// <summary>
+        /// Display help button
+        /// </summary>
+        private void ShowHelpButton()
+        {
+            m_HelpRect.x = m_HelpRect.x + 20;
+            m_HelpRect.y = m_HelpRect.y + 10;
+            m_HelpRect.width = m_HelpRect.width - 30;
 
+            GUILayout.BeginArea(m_HelpRect);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("");
+            GUILayout.Button("Help", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
+            GUILayout.EndHorizontal();
+            GUILayout.EndArea();
+        }
 
         #endregion
 
