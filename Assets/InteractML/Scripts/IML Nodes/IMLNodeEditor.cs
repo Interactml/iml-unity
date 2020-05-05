@@ -190,6 +190,32 @@ namespace InteractML
             return position;
         }
 
+        public void DataInToggle(Boolean dataIn, Rect m_InnerBodyRect, Rect m_BodyRect)
+        {
+            m_InnerBodyRect.x = m_BodyRect.x + 20;
+            m_InnerBodyRect.y = m_BodyRect.y + 20;
+            m_InnerBodyRect.width = m_BodyRect.width - 20;
+            m_InnerBodyRect.height = m_BodyRect.height - 20;
+
+            GUILayout.BeginArea(m_InnerBodyRect);
+
+            if (dataIn)
+            {
+                DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Green Toggle"));
+            }
+            else
+            {
+                DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Red Toggle"));
+            }
+
+            GUILayout.EndArea();
+        }
+
+        protected virtual void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        {
+
+        }
+
         #endregion
 
     }

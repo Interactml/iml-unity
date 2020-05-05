@@ -60,7 +60,8 @@ namespace InteractML.FeatureExtractors
 
             // Draw the body
             DrawBodyLayout();
-            ShowExtractedRotationValues();
+            //ShowExtractedRotationValues();
+            DataInToggle(m_ExtractRotation.ReceivingData, m_InnerBodyRect, m_BodyRect);
 
             // Draw local space toggle
             DrawBottomLayout();
@@ -163,7 +164,7 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Show the local space toggle 
         /// </summary>
-        private void DrawPositionValueTogglesAndLabels(GUIStyle style)
+       protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
         {
             GUILayout.BeginHorizontal();
             m_ExtractRotation.x_switch = EditorGUILayout.Toggle(m_ExtractRotation.x_switch, style);

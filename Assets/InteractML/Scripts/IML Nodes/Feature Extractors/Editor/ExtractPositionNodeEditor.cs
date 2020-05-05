@@ -63,7 +63,8 @@ namespace InteractML.FeatureExtractors
 
             // Draw the body
             DrawBodyLayout();
-            ShowExtractedPositionValues();
+            //ShowExtractedPositionValues();
+            DataInToggle(m_ExtractPosition.ReceivingData, m_InnerBodyRect, m_BodyRect);
 
             // Draw local space toggle
             DrawBottomLayout();
@@ -87,7 +88,7 @@ namespace InteractML.FeatureExtractors
 
             // Draw line below ports
 
-            GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSeparatorLine, m_PortRect.width, WeightOfSeparatorLine), SeparatorLineColor);
+            //GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSeparatorLine, m_PortRect.width, WeightOfSeparatorLine), SeparatorLineColor);
 
             
             if (m_ExtractPosition.ReceivingData)
@@ -198,7 +199,7 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Show the local space toggle 
         /// </summary>
-        private void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
         {
             GUILayout.BeginHorizontal();
             m_ExtractPosition.x_switch = EditorGUILayout.Toggle(m_ExtractPosition.x_switch, style);
