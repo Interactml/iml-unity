@@ -207,11 +207,11 @@ namespace InteractML.FeatureExtractors
 
             if (m_ExtractPosition.ReceivingData)
             {
-                ShowPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Green Toggle"));
+                DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Green Toggle"));
             }
             else
             {
-                ShowPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Red Toggle"));
+                DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Red Toggle"));
             }
 
             GUILayout.EndArea();
@@ -221,11 +221,8 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Show the local space toggle 
         /// </summary>
-<<<<<<< HEAD
+
         protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
-=======
-        private void ShowPositionValueTogglesAndLabels(GUIStyle style)
->>>>>>> 7e659c2e89748f34661b215b7c53f013103db204
         {
             GUILayout.BeginHorizontal();
             m_ExtractPosition.x_switch = EditorGUILayout.Toggle(m_ExtractPosition.x_switch, style);
