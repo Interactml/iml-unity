@@ -8,6 +8,7 @@ namespace InteractML
     /// <summary>
     /// Outputs the realtime IML Predictions from an IML Configuration node
     /// </summary>
+    [CreateNodeMenuAttribute("Output")]
     [NodeWidth(250)]
     public class RealtimeIMLOutputNode : Node
     {

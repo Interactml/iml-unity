@@ -10,6 +10,7 @@ namespace InteractML
     /// <summary>
     /// Holds the information and list of a training examples node
     /// </summary>
+    [CreateNodeMenuAttribute("Interact ML/Teach The Machine/TTM Classification Regression")]
     [NodeWidth(300)]
     public class SingleTrainingExamplesNode : TrainingExamplesNode
     {
