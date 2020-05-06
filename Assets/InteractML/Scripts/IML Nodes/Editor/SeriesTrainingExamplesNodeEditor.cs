@@ -38,6 +38,9 @@ namespace InteractML
 
         private static GUIStyle editorLabelStyle;
 
+        bool help = false;
+  
+
         #endregion
 
         public override void OnHeaderGUI()
@@ -458,14 +461,18 @@ namespace InteractML
             m_BodyRectBottom.x = m_BodyRectBottom.x + 20;
             m_BodyRectBottom.y = m_BodyRectBottom.y + 10;
             m_BodyRectBottom.width = m_BodyRectBottom.width - 40;
+            m_BodyRectBottom.height = 5000;
 
             GUILayout.BeginArea(m_BodyRectBottom);
             GUILayout.BeginHorizontal();
             GUILayout.Label("advanced options", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"));
             GUILayout.Label("");
-            GUILayout.Button("Help", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
+            HelpButton();
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }
+
+        
+
     }
 }

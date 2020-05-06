@@ -93,7 +93,7 @@ namespace InteractML.FeatureExtractors
 
             // Draw line below ports
 
-            GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSeparatorLine, m_PortRect.width, WeightOfSeparatorLine), SeparatorLineColor);
+            //GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSeparatorLine, m_PortRect.width, WeightOfSeparatorLine), SeparatorLineColor);
 
             
             if (m_ExtractPosition.ReceivingData)
