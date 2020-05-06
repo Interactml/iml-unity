@@ -9,6 +9,7 @@ using System;
 namespace InteractML
 {
     [NodeWidth(300)]
+    [CreateNodeMenuAttribute("Interact ML/Machine Learning System/MLS DTW")]
     public class DTWIMLConfiguration : IMLConfiguration
     {
 
