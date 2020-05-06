@@ -4,6 +4,7 @@ using System.Reflection;
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 using ReusableMethods;
 using XNode.Examples.MathNodes;
 using UnityEngine.SceneManagement;
@@ -37,7 +38,9 @@ namespace InteractML
         /// <summary>
         /// Collection of GameObjects that will be sent to the IML Controller
         /// </summary>
-        [Tooltip("Add here all the GameObjects to use in the IML Controller")]
+        [Header("GameObjects to Track")]
+        [Tooltip("Add number of GameObjects to use in the IML Controller and what they are here")]
+        [Rename("GameObject")]
         public List<GameObject> GameObjectsToUse;
 
         #region Private Lists of Nodes (Fields)
@@ -83,6 +86,7 @@ namespace InteractML
         /// <summary>
         /// Have all the features been updated? (useful for features that need to update only once)
         /// </summary>
+       [HideInInspector]
         public bool FeaturesUpdated;
 
         /// <summary>
