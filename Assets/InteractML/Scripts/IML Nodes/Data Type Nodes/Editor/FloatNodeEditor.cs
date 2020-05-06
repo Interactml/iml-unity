@@ -120,10 +120,10 @@ namespace InteractML.DataTypeNodes
             GUILayout.Space(5);
             GUILayout.BeginHorizontal();
 
-            GUIContent inputPortLabel = new GUIContent("Float\nData In");
+            GUIContent inputPortLabel = new GUIContent("Float\nData In", "Input float");
             IMLNodeEditor.PortField(inputPortLabel, m_FloatNode.GetInputPort("m_In"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
 
-            GUIContent outputPortLabel = new GUIContent("Float\nData Out");
+            GUIContent outputPortLabel = new GUIContent("Float\nData Out", "Output float");
             IMLNodeEditor.PortField(outputPortLabel, m_FloatNode.GetOutputPort("m_Out"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUILayout.EndHorizontal();
@@ -141,9 +141,9 @@ namespace InteractML.DataTypeNodes
 
             GUILayout.BeginArea(m_InnerBodyRect);
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Name: " + m_FloatNode.ValueName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField(new GUIContent("Name: " + m_FloatNode.ValueName, "Attribute name"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Float: " + System.Math.Round(m_FloatNode.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField(new GUIContent("Float: " + System.Math.Round(m_FloatNode.FeatureValues.Values[0], 3).ToString(), "Float Value"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
             GUILayout.EndArea();
 
         }
@@ -160,7 +160,7 @@ namespace InteractML.DataTypeNodes
             GUILayout.BeginArea(m_HelpRect);
             GUILayout.BeginHorizontal();
             GUILayout.Label("");
-            GUILayout.Button("Help", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
+            GUILayout.Button(new GUIContent("Help", "What does this node do?"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }
