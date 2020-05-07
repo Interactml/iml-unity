@@ -323,7 +323,7 @@ namespace InteractML
             GUILayout.BeginHorizontal();
             //GUILayout.Label("advanced options", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"));
             GUILayout.Label("");
-            //HelpButton();
+            HelpButton(this.GetType().ToString());
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }
