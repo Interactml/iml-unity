@@ -326,11 +326,11 @@ namespace InteractML
                 else if (externalDataList is List<XNode.Node>)
                 {
                     List<XNode.Node> xnodeList = externalDataList.CastNewList<T, XNode.Node>();
-                    List<IFeatureIML> featureDataList = xnodeList.CastNewList<XNode.Node, IFeatureIML>();
+                    List<IFeatureIML> featureDataList = xnodeList.CastNewList<XNode.Node, IFeatureIML>(true);
                     // Loop through features to get the right information
-                    foreach (var item in featureDataList)
+                    for (int i = 0; i < featureDataList.Count; i++)
                     {
-                        nodeDataListCache.Add(item.FeatureValues);
+                        nodeDataListCache.Add(featureDataList[i].FeatureValues);
                     }
                 }
                 // Anything else
@@ -351,14 +351,14 @@ namespace InteractML
                 dataList.Resize(nodeDataListCache.Count, destroyItems: true);
             }
 
-            // Make sure we are both lists configurations and structures are matching
+            // Make sure that all lists configurations and structures are matching
             for (int i = 0; i < nodeDataListCache.Count; i++)
             {
-                var externalData = nodeDataListCache[i];
+                var externalDataCache = nodeDataListCache[i];
                 var internalData = dataList[i];                
 
                 // We break the method if external data is null or any prefabs are null
-                if (externalData == null )
+                if (externalDataCache == null )
                     return;
 
                 // Flag that will trigger the reconfigure local data type event
@@ -370,7 +370,7 @@ namespace InteractML
                     reconfigureData = true;
                 }
                 // Check for mismatch of data type
-                else if (internalData.DataType != externalData.DataType)
+                else if (internalData.DataType != externalDataCache.DataType)
                 {
                     reconfigureData = true;
                 }
@@ -381,7 +381,7 @@ namespace InteractML
 
                     GameObject prefabClone = null;
                     // Create the right kind of data and update values
-                    switch (externalData.DataType)
+                    switch (externalDataCache.DataType)
                     {
                         case IMLSpecifications.DataTypes.Float:
                             prefabClone = Instantiate(dataUIPrefabs[0], parent);
@@ -461,7 +461,7 @@ namespace InteractML
                 }
 
                 // Update local values
-                UpdateUIDataFields(internalData.InputFields, externalData.Values);
+                UpdateUIDataFields(internalData.InputFields, externalDataCache.Values);
 
 
             }

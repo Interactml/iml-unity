@@ -687,20 +687,39 @@ namespace ReusableMethods
         /// <typeparam name="T"></typeparam>
         /// <typeparam name="U"></typeparam>
         /// <param name="list"></param>
+        /// <param name="createNewInstance">Do we create a new instance based on the previous list? Warning, will lose references!</param>
         /// <returns></returns>
-        public static List<U> CastNewList<T, U>(this List<T> list) where U: class
+        public static List<U> CastNewList<T, U>(this List<T> list, bool createNewInstance = false) where U: class
         {
-            List<U> newList = new List<U>();
-            foreach (var item in list)
+            List<U> newList;
+            // If we want to create a new instance...
+            if (createNewInstance)
             {
-                // Attempt to cast item
-                var newItem = item as U;
-                // If cast failed, throw an exception
-                if (newItem == null)
-                    throw new Exception("List cast is invalid. " + typeof(T).ToString() + " can't be casted to " + typeof(U).ToString() );
-                // If cast didn't fail, add item to list
-                newList.Add(newItem);
+                newList = new List<U>();
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    // Attempt to cast item
+                    var newItem = list[i] as U;
+                    // If cast failed, throw an exception
+                    if (newItem == null)
+                        throw new Exception("List cast is invalid. " + typeof(T).ToString() + " can't be casted to " + typeof(U).ToString());
+                    // If cast didn't fail, add item to list
+                    newList.Add(list[i] as U);
+                }
+
+
             }
+            // If we want to do a cast to keep references to original list...
+            else
+            {
+                newList = list as List<U>;
+                if (newList == null)
+                {
+                    throw new Exception("List cast is invalid. " + typeof(T).ToString() + " can't be casted to " + typeof(U).ToString());
+                }
+            }
+
             return newList;
         }
     }
