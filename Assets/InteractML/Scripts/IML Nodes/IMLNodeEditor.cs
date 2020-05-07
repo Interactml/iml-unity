@@ -219,7 +219,6 @@ namespace InteractML
         }
         protected void HelpButton(string name)
         {
-            Debug.Log("1");
             DescriptionFinder(name);
             GUILayout.Button(new GUIContent("Help", description), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
             GUI.Label(new Rect(10, 40, 100, 40), GUI.tooltip);
@@ -227,13 +226,11 @@ namespace InteractML
 
         public void DescriptionFinder(string name)
         {
-            Debug.Log("2");
             if (name == "InteractML.CRIMLConfigurationEditor")
             {
                 description = "Teach the Machine node is where you record examples of the movement that you want to be recognised, where you record the training data. It is through this node you set the number of outputs, their format and record examples of movement. This node is connected to one or more extractors through its input port. It is attached to IML Configuration through its output port. ";
             } else if(name == "InteractML.SeriesTrainingExamplesNodeEditor")
             {
-                Debug.Log("3");
                 description = "Teach the Machine node is where you record examples of the movement that you want to be recognised, where you record the training data. It is through this node you set the number of outputs, their format and record examples of movement. This node is connected to one or more extractors through its input port. It is attached to IML Configuration through its output port. ";
             }
         }

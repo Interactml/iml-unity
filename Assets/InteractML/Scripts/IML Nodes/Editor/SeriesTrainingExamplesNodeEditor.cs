@@ -467,7 +467,6 @@ namespace InteractML
             GUILayout.BeginHorizontal();
             GUILayout.Label("advanced options", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"));
             GUILayout.Label("");
-            Debug.Log(this.GetType().ToString());
             HelpButton(this.GetType().ToString());
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
