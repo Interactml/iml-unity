@@ -55,6 +55,8 @@ namespace InteractML
         { 
             var IMLConfigNodeConnected = GetInputValue<Node>("IMLModelOutputs") as IMLConfiguration;
 
+            Debug.Log(IMLConfigNodeConnected);
+            Debug.Log(m_IMLOutputVector.Length);
             // If there is an IML node connected...
             if (IMLConfigNodeConnected)
             {

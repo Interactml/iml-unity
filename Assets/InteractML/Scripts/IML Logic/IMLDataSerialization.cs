@@ -597,6 +597,7 @@ namespace InteractML
                     File.Delete(auxFilePath);
                 }
                 // Generate JSON string from the entire list
+                //COMEBACK
                 var jsonTrainingeExamplesList = JsonConvert.SerializeObject(listToSave, Formatting.Indented);
                 Debug.Log(jsonTrainingeExamplesList);
                 // Write on the path
