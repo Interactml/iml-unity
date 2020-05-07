@@ -141,7 +141,7 @@ namespace InteractML
                 {
                     for (int i = 0; i < m_RealtimeIMLOutputNode.GetIMLControllerOutputs().Length; i++)
                     {
-                        EditorGUILayout.LabelField("Output Value: " + System.Math.Round(m_RealtimeIMLOutputNode.GetIMLControllerOutputs()[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+                        EditorGUILayout.LabelField("Output Value: " + System.Math.Round(m_RealtimeIMLOutputNode.GetIMLControllerOutputs()[i], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
                     }
                 }
             }
