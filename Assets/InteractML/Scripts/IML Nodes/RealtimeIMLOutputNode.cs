@@ -52,13 +52,10 @@ namespace InteractML
         /// </summary>
         /// <returns></returns>
         public double[] GetIMLControllerOutputs()
-        { 
+        {
             var IMLConfigNodeConnected = GetInputValue<Node>("IMLModelOutputs") as IMLConfiguration;
-
-            Debug.Log(IMLConfigNodeConnected);
-            Debug.Log(m_IMLOutputVector.Length);
             // If there is an IML node connected...
-            if (IMLConfigNodeConnected)
+            if (IMLConfigNodeConnected != null)
             {
                 //m_IMLOutputVector = IMLConfigNodeConnected.DelayedPredictedOutput;
 
@@ -75,7 +72,6 @@ namespace InteractML
                         result[index] = IMLConfigNodeConnected.PredictedOutput[i].Values[j];
                     }
                 }
-
                 m_IMLOutputVector = result;
 
                 //for (int i = 0; i < m_IMLOutputVector.Length; i++)

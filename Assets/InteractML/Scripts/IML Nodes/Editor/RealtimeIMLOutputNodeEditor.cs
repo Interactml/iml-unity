@@ -137,7 +137,6 @@ namespace InteractML
             
             if (m_RealtimeIMLOutputNode.GetIMLControllerOutputs() != null)
             {
-                Debug.Log(m_RealtimeIMLOutputNode.GetIMLControllerOutputs().Length);
                 if (m_RealtimeIMLOutputNode.GetIMLControllerOutputs().Length != 0)
                 {
                     for (int i = 0; i < m_RealtimeIMLOutputNode.GetIMLControllerOutputs().Length; i++)
