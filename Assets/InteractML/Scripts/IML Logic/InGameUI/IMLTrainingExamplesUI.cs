@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 using ReusableMethods;
@@ -22,9 +23,15 @@ namespace InteractML
         public TextMeshProUGUI NoOutputsText;
         public RectTransform OutputsContentRect; // Should be a Parent for every other data type UI element for outputs
 
+        [Header("Button Setup")]
+        public Button MoveNextNodeButton;
+        public Button MovePrevNodeButton;
+        public Button RemoveOneOutputButton;
+        public Button AddOneOutputButton;
+
         [Header("Data Type UI Prefabs")]
         [Tooltip("Populate with UI Prefabs of your data types")]
-        public List<IMLDataTypeUI> DataTypeUIPrefabs;
+        public List<GameObject> DataTypeUIPrefabs;
         /// <summary>
         /// List containing input data from the training examples node
         /// </summary>
@@ -33,6 +40,16 @@ namespace InteractML
         /// List containing output data from the training examples node
         /// </summary>
         private List<IMLDataTypeUI> m_OutputData;
+
+        /// <summary>
+        /// Cache of input data from the training examples node
+        /// </summary>
+        private List<IMLBaseDataType> m_NodeInputData;
+        /// <summary>
+        /// Cache of the output data from the training examples node
+        /// </summary>
+        private List<IMLBaseDataType> m_NodeOutputData;
+
 
         [Header("Training Examples Node Vars")]
         [SerializeField]
@@ -57,6 +74,21 @@ namespace InteractML
 
             if (m_OutputData == null)
                 m_OutputData = new List<IMLDataTypeUI>();
+
+            // Setup Buttons
+            // Next node
+            if (MoveNextNodeButton)
+                AddOnClickButtonCall(MoveNextNodeButton, delegate { MoveToNextNode(); }, true);
+            // Previous node
+            if (MovePrevNodeButton)
+                AddOnClickButtonCall(MovePrevNodeButton, delegate { MoveToPreviousNode(); }, true);
+            // Add output
+            if (AddOneOutputButton)
+                AddOnClickButtonCall(AddOneOutputButton, delegate { AddOneOutput(); }, true);
+            // Remove output
+            if (RemoveOneOutputButton)
+                AddOnClickButtonCall(RemoveOneOutputButton, delegate { RemoveOneOutput(); }, true);
+
         }
 
         // Update is called once per frame
@@ -88,8 +120,11 @@ namespace InteractML
                     UpdateUIText(CollectExamplesButtonText, "Record Examples");
                 }
 
+                // Populate inputs in List
+                UpdateDataList(ref m_InputData, m_CurrentNode.InputFeatures, ref m_NodeInputData, true, DataTypeUIPrefabs, "Input", InputsContentRect);
+
                 // Populate outputs in List
-                //UpdateDataList(ref m_InputData, m_CurrentNode.DesiredOutputFeatures, "Output", true);
+                UpdateDataList(ref m_OutputData, m_CurrentNode.DesiredOutputFeatures, ref m_NodeOutputData, false, DataTypeUIPrefabs, "Output", OutputsContentRect);
             }
 
         }
@@ -157,6 +192,74 @@ namespace InteractML
             MoveToPreviousNode(MLComponent.TrainingExamplesNodesList);
         }
 
+        /// <summary>
+        /// Adds one item to the outputs list
+        /// </summary>
+        public void AddOneOutput()
+        {
+            if (m_CurrentNode)
+            {
+                if (m_CurrentNode.DesiredOutputsConfig != null)
+                {
+                    // Adds a new desired output (for the moment a float)
+                    IMLSpecifications.OutputsEnum newOutput = new IMLSpecifications.OutputsEnum();
+                    newOutput = IMLSpecifications.OutputsEnum.Float;
+                    m_CurrentNode.DesiredOutputsConfig.Add(newOutput);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes last item in the desired output list
+        /// </summary>
+        public void RemoveOneOutput()
+        {
+            if (m_CurrentNode)
+            {
+                if (m_CurrentNode.DesiredOutputsConfig != null && m_CurrentNode.DesiredOutputsConfig.Count > 0)
+                    // Removes last item added to the desired outputs list
+                    m_CurrentNode.DesiredOutputsConfig.RemoveAt(m_CurrentNode.DesiredOutputsConfig.Count - 1);
+            }
+        }
+
+        /// <summary>
+        /// Sets the value for a specific output
+        /// </summary>
+        /// <param name="newValue"></param>
+        /// <param name="whichOutput"></param>
+        public void SetOutputValue(TrainingExamplesNode tExamplesNode , string newValue, int whichOutput, int whichDimension)
+        {
+            // Make sure all parameters are not null
+            if (newValue != null)
+            {
+                if (tExamplesNode && tExamplesNode.DesiredOutputFeatures != null)
+                {
+                    // Update the individual dimension of the output
+                    var outputFeature = tExamplesNode.DesiredOutputFeatures[whichOutput];
+                    outputFeature.Values[whichDimension] = float.Parse(newValue);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates flag to allow setting values in an input field
+        /// </summary>
+        /// <param name="dataType"></param>
+        /// <param name="which"></param>
+        /// <param name="option"></param>
+        public void ProtectInputField(IMLDataTypeUI dataType, int which, bool option)
+        {
+            if (dataType)
+            {
+                var inputField = dataType.InputFields[which];
+                if (inputField != null)
+                {
+                    // We change the protection to Set a value flag
+                    inputField.isProtected = option;
+                }
+            }
+        }
+
         #endregion
 
         #region Private Methods
@@ -201,27 +304,58 @@ namespace InteractML
         /// </summary>
         /// <param name="dataList"></param>
         /// <param name="nodeDataList"></param>
-        private void UpdateDataList(ref List<IMLDataTypeUI> dataList, List<IMLBaseDataType> nodeDataList, string label, bool isOutput)
+        private void UpdateDataList<T>(ref List<IMLDataTypeUI> dataList, List<T> externalDataList, ref List<IMLBaseDataType> nodeDataListCache, bool protectDataOption, List<GameObject> dataUIPrefabs, string label, Transform parent)
         {
             // Don't run the method if the external data list is null
-            if (nodeDataList == null)
+            if (externalDataList == null)
                 return;
+
+            // Do we need to update the nodeDataListCache?
+            if (nodeDataListCache == null || nodeDataListCache.Count != externalDataList.Count)
+            {
+                // Clear previous node list
+                nodeDataListCache = new List<IMLBaseDataType>();
+
+                // Check what type the external data list is, to cast a new list of the right type we need            
+                // IMLBaseDataType
+                if (externalDataList is List<IMLBaseDataType>)
+                {
+                    nodeDataListCache = externalDataList.CastNewList<T, IMLBaseDataType>();
+                }
+                // XNode.Node
+                else if (externalDataList is List<XNode.Node>)
+                {
+                    List<XNode.Node> xnodeList = externalDataList.CastNewList<T, XNode.Node>();
+                    List<IFeatureIML> featureDataList = xnodeList.CastNewList<XNode.Node, IFeatureIML>();
+                    // Loop through features to get the right information
+                    foreach (var item in featureDataList)
+                    {
+                        nodeDataListCache.Add(item.FeatureValues);
+                    }
+                }
+                // Anything else
+                else
+                {
+                    throw new System.Exception("Class " + typeof(T).ToString() + " is not yet supported in the UI!");
+                }
+            }
+
 
             // Make sure local data list is init
             if (dataList == null)
                 dataList = new List<IMLDataTypeUI>();
 
             // If we need to resize the local data list...
-            if (dataList.Count != nodeDataList.Count)
+            if (dataList.Count != nodeDataListCache.Count)
             {
-                dataList.Resize(nodeDataList.Count);
+                dataList.Resize(nodeDataListCache.Count, destroyItems: true);
             }
 
             // Make sure we are both lists configurations and structures are matching
-            for (int i = 0; i < nodeDataList.Count; i++)
+            for (int i = 0; i < nodeDataListCache.Count; i++)
             {
-                var externalData = nodeDataList[i];
-                var internalData = dataList[i];
+                var externalData = nodeDataListCache[i];
+                var internalData = dataList[i];                
 
                 // We break the method if external data is null or any prefabs are null
                 if (externalData == null )
@@ -244,23 +378,25 @@ namespace InteractML
                 // If we need to reconfigure the local data...
                 if (reconfigureData)
                 {
+
+                    GameObject prefabClone = null;
                     // Create the right kind of data and update values
                     switch (externalData.DataType)
                     {
                         case IMLSpecifications.DataTypes.Float:
-                            internalData = Instantiate(DataTypeUIPrefabs[0]);
+                            prefabClone = Instantiate(dataUIPrefabs[0], parent);
                             break;
                         case IMLSpecifications.DataTypes.Integer:
-                            internalData = Instantiate(DataTypeUIPrefabs[1]);
+                            prefabClone = Instantiate(dataUIPrefabs[1], parent);
                             break;
                         case IMLSpecifications.DataTypes.Vector2:
-                            internalData = Instantiate(DataTypeUIPrefabs[2]);
+                            prefabClone = Instantiate(dataUIPrefabs[2], parent);
                             break;
                         case IMLSpecifications.DataTypes.Vector3:
-                            internalData = Instantiate(DataTypeUIPrefabs[3]);
+                            prefabClone = Instantiate(dataUIPrefabs[3], parent);
                             break;
                         case IMLSpecifications.DataTypes.Vector4:
-                            internalData = Instantiate(DataTypeUIPrefabs[4]);
+                            prefabClone = Instantiate(dataUIPrefabs[4], parent);
                             break;
                         case IMLSpecifications.DataTypes.SerialVector:
                             throw new System.Exception("Serial Vector not yet supported in in-game UI!");
@@ -269,22 +405,63 @@ namespace InteractML
                             break;
                     }
 
+                    // If we managed to clone the prefab correctly, get internal data from prefab clone
+                    if (prefabClone)
+                    {
+                        // If there is anything in the internalData slot, we destroy it
+                        if (internalData)
+                            Destroy(internalData.gameObject);
+                        // Override the internal data slot with the new prefab clone
+                        internalData = prefabClone.GetComponent<IMLDataTypeUI>();
+                    }
+                    // If not, abort method
+                    else
+                    {
+                        throw new System.Exception("Error when reconfiguring data type on UI, a prefab was null!");
+                        return;
+                    }
+
+                    // Assign a listener to each input field if we are not protecting the data
+                    if (!protectDataOption)
+                    {
+                        var inputFields = internalData.InputFields;
+                        for (int j = 0; j < inputFields.Count(); j++)
+                        {
+                            var inputField = inputFields[j].GetInputField();
+                            if (inputField != null)
+                            {
+                                // Create memory for a new int, seems to give problems if not
+                                int outputDimensionIndex = new int();
+                                outputDimensionIndex = j;
+                                int outputIndex = new int();
+                                outputIndex = i;
+
+                                // If selected, we don't update that value
+                                inputField.onSelect.AddListener((string s) =>
+                                {
+                                    ProtectInputField(internalData, outputDimensionIndex, true);
+                                });
+
+                                // On End edit, update output value selected
+                                inputField.onEndEdit.AddListener((string s) =>
+                                {
+                                    SetOutputValue(m_CurrentNode, inputField.text, outputIndex, outputDimensionIndex);
+                                    ProtectInputField(internalData, outputDimensionIndex, false);
+                                });
+                            }
+                        }
+
+                    }
+
                     // Update label
                     internalData.Label.text = label + " " + i.ToString();
 
-                    // Place element inside the right UI content
-                    if (isOutput)
-                        internalData.rectTransform.SetParent(OutputsContentRect);
-                    else
-                        internalData.rectTransform.SetParent(InputsContentRect);
-
-                    // Adjust height based on position in List (85 units seems to be the right space between two UI elements in this case)                    
-                    //internalData.rectTransform.Translate(internalData.rectTransform.up * -85f * i);
-
+                    // Replace element in local list
+                    dataList[i] = internalData;
                 }
 
                 // Update local values
-                UpdateUIDataFields(internalData.InputField, externalData.Values);
+                UpdateUIDataFields(internalData.InputFields, externalData.Values);
 
 
             }

@@ -638,13 +638,71 @@ namespace ReusableMethods
         /// <param name="list"></param>
         /// <param name="sz"></param>
         /// <param name="c"></param>
-        public static void Resize<T>(this List<T> list, int sz, T c = default(T))
+        /// <param name="destroyItems">Destroy items on removal</param>
+        public static void Resize<T>(this List<T> list, int sz, T c = default(T), bool destroyItems = false)
         {
             int cur = list.Count;
             if (sz < cur)
+            {
+                // Will attempt to destroy the objects during removal
+                if (destroyItems)
+                {
+                    var itemsToDestroy = list.GetRange(sz, cur - sz);
+                    // Loop all the objects. 
+                    for (int i = 0; i < itemsToDestroy.Count; i++)
+                    {
+                        var unityObject = itemsToDestroy[i] as UnityEngine.Object;
+                        // If it is an unity object, we call unity's destroy function
+                        if (unityObject)
+                        {
+                            // If it is a component, we attempt to destroy the gameObject containing it
+                            if (unityObject is Component)
+                            {
+                                UnityEngine.Object.Destroy((unityObject as Component).gameObject);
+                            }
+                            // If it is not, we just destroy whatever it is
+                            else
+                            {
+                                UnityEngine.Object.Destroy(unityObject);
+                            }
+                        }
+
+                        // If not, we set to default value
+                        else
+                            itemsToDestroy[i] = default(T);
+
+                    }
+                }               
+                // Remove the range now
                 list.RemoveRange(sz, cur - sz);
+            }
             else if (sz > cur)
+            {
                 list.AddRange(Enumerable.Repeat(c, sz - cur));
+            }
+        }
+
+        /// <summary>
+        /// Casts a list of type T to another of type U
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="U"></typeparam>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public static List<U> CastNewList<T, U>(this List<T> list) where U: class
+        {
+            List<U> newList = new List<U>();
+            foreach (var item in list)
+            {
+                // Attempt to cast item
+                var newItem = item as U;
+                // If cast failed, throw an exception
+                if (newItem == null)
+                    throw new Exception("List cast is invalid. " + typeof(T).ToString() + " can't be casted to " + typeof(U).ToString() );
+                // If cast didn't fail, add item to list
+                newList.Add(newItem);
+            }
+            return newList;
         }
     }
 
