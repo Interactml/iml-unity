@@ -84,3 +84,4 @@ Assets/SteamVR_Resources.meta
 *.ide-wal
 *.lock
 *.ide-shm
+*.vs/
