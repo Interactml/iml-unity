@@ -167,6 +167,8 @@ namespace InteractML.FeatureExtractors
 
         protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
         {
+            if (m_ExtractVelocity.FeatureValues.Values.Length != 0)
+            {
                 GUILayout.BeginHorizontal();
                 m_ExtractVelocity.x_switch = EditorGUILayout.Toggle(m_ExtractVelocity.x_switch, style);
                 EditorGUILayout.LabelField("x: " + System.Math.Round(m_ExtractVelocity.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
@@ -185,6 +187,12 @@ namespace InteractML.FeatureExtractors
                 m_ExtractVelocity.z_switch = EditorGUILayout.Toggle(m_ExtractVelocity.z_switch, style);
                 EditorGUILayout.LabelField("z: " + System.Math.Round(m_ExtractVelocity.FeatureValues.Values[2], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
                 GUILayout.EndHorizontal();
+            }
+            else
+            {
+                EditorGUILayout.LabelField("Please connect feature extractor", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            }
+            
            
             
         }
