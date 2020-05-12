@@ -28,6 +28,13 @@ namespace InteractML
 
         bool state;
 
+        /// <summary>
+        /// The texture displayed when the gameObject doesn't have a Mesh Renderer
+        /// </summary>
+        Texture2D m_NoMeshTexture;
+        float m_TexHeightMultiplier = 0.45f;
+
+
         public override void OnHeaderGUI()
         {
             // Get reference to the current node
@@ -150,57 +157,72 @@ namespace InteractML
                 EditorGUILayout.Space();
                 EditorGUILayout.Space();
 
-                // Code to create a preview of the gObj in the node
-                if (gameObjectEditor == null || m_GameObjectNode.state)
+                // If the gameObject has a mesh filter... 
+                var has3DMesh = gObj.GetComponentInChildren<MeshFilter>() == null ? false : true;
+                if (has3DMesh)
                 {
-                    gameObjectEditor = Editor.CreateEditor(gObj);
-                    m_GameObjectNode.state = false;
-                }
+                    // Preview the 3d model in the node editor
+                    // Code to create a preview of the gObj in the node
+                    if (gameObjectEditor == null || m_GameObjectNode.state)
+                    {
+                        gameObjectEditor = Editor.CreateEditor(gObj);
+                        m_GameObjectNode.state = false;
+                    }
 
-                // Defines the style for the gameObject preview
-                if (stylePreview == null)
-                {
-                    // Base our style from the helpBox one (other styles might throw null reference in texture field)
-                    stylePreview = new GUIStyle(EditorStyles.textArea);
-                    // Change color of background texture (NOT WORKING CURRENTLY) (Even when creating a totally new style, it throws null error)
-                    //if (stylePreview.normal.background.isReadable)
-                    //{
-                    //    Texture2D textureStyle = new Texture2D(32, 32);
-                    //    Color[] styleBgTextureColors = textureStyle.GetPixels();
-                    //    // Define the color of the preview background texture 
-                    //    for (int i = 0; i < styleBgTextureColors.Length; i++)
-                    //    {
-                    //        // We want a black color texture
-                    //        styleBgTextureColors[i] = Color.black;
-                    //    }
-                    //    textureStyle.SetPixels(styleBgTextureColors);
-                    //    textureStyle.Apply();
-                    //    // Apply changes to style
-                    //    // Normal Style
-                    //    stylePreview.normal.background = textureStyle;
-                    //    stylePreview.onNormal.background = textureStyle;
-                    //    // Hover
-                    //    stylePreview.hover.background = textureStyle;
-                    //    stylePreview.onHover.background = textureStyle;
-                    //    // Active
-                    //    stylePreview.active.background = textureStyle;
-                    //    stylePreview.onActive.background = textureStyle;
-                    //    // Focused
-                    //    stylePreview.focused.background = textureStyle;
-                    //    stylePreview.onFocused.background = textureStyle;
-                    //}
-                    //else
-                    //{
-                    //    //Debug.Log("Style texture is not readable!");
-                    //}
+                    // Defines the style for the gameObject preview
+                    if (stylePreview == null)
+                    {
+                        // Base our style from the helpBox one (other styles might throw null reference in texture field)
+                        stylePreview = new GUIStyle(EditorStyles.textArea);
+                    }
+
+                    // Draw preview of Game Object
+                    if (stylePreview != null && gameObjectEditor != null)
+                        gameObjectEditor.OnPreviewGUI(GUILayoutUtility.GetRect(100, 100), stylePreview);
+                    else
+                        Debug.LogError("Null reference in the preview style of the GameObjectNode");
 
                 }
-
-                // Draw preview of Game Object
-                if (stylePreview != null)
-                    gameObjectEditor.OnPreviewGUI(GUILayoutUtility.GetRect(100, 100), stylePreview);
+                // If the gameObject doesn't have a mesh filter...
                 else
-                    Debug.LogError("Null reference in the preview style of the GameObjectNode");
+                {
+                    bool createNewTexture = false;
+                    if (createNewTexture)
+                    {
+                        // Create new red texture for testing
+                        m_NoMeshTexture = new Texture2D((int)NodeWidth, (int)(NodeWidth * m_TexHeightMultiplier));
+                        var colors = new Color[m_NoMeshTexture.width * m_NoMeshTexture.height];
+                        if (colors.Length > 0)
+                        {
+                            for (int i = 0; i < colors.Length; i++)
+                            {
+                                colors[i] = Color.yellow;
+                            }
+                        }
+                        // Set red colour on all mipmaps
+                        for (int m = 0; m < m_NoMeshTexture.mipmapCount; m++)
+                            m_NoMeshTexture.SetPixels(colors, m);
+                        m_NoMeshTexture.Apply();
+
+                    }
+                    // If we want to use a texture from assets...
+                    else
+                    {
+                        // Only load once
+                        if (m_NoMeshTexture == null)
+                        {
+                            // Create new empty texture
+                            m_NoMeshTexture = new Texture2D(1,1);
+                            // Read texture from memory
+                            m_NoMeshTexture.LoadImage(System.IO.File.ReadAllBytes(Application.dataPath + "/InteractML/Resources/Icons/gameobject_transform_img.png"));
+                            // Resize it
+                            m_NoMeshTexture = TextureTools.ResampleAndCrop(m_NoMeshTexture, (int)NodeWidth, (int)(NodeWidth* m_TexHeightMultiplier));
+                        }
+                    }
+
+                    // Draw texture
+                    EditorGUI.DrawPreviewTexture(new Rect(0f, 35f, m_NoMeshTexture.width, m_NoMeshTexture.height), m_NoMeshTexture);
+                }
             }
             // If it is null, we warn it
             else

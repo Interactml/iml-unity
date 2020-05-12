@@ -348,10 +348,10 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 127.01}
-  m_SizeDelta: {x: 0, y: -254.01}
+  m_AnchoredPosition: {x: 0, y: -56}
+  m_SizeDelta: {x: 0, y: 111.899994}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1639918923847342765
 MonoBehaviour:
@@ -366,13 +366,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rectTransform: {fileID: 4013259283349909439}
-  DataType: 3
+  DataType: 4
   Label: {fileID: 113357403292491474}
-  InputField:
-  - {fileID: 5557169726810007688}
-  - {fileID: 2650204146222195961}
-  - {fileID: 2342679751224338079}
-  - {fileID: 8497840647561880098}
+  InputFields:
+  - localInputField: {fileID: 5557169726810007688}
+    CanSet: 0
+  - localInputField: {fileID: 2650204146222195961}
+    CanSet: 0
+  - localInputField: {fileID: 2342679751224338079}
+    CanSet: 0
+  - localInputField: {fileID: 8497840647561880098}
+    CanSet: 0
 --- !u!222 &6885671130374663437
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -811,9 +815,9 @@ RectTransform:
   m_Father: {fileID: 4013259283349909439}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -52.5, y: 9.4}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -20}
   m_SizeDelta: {x: 80.49, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1394147808079227411

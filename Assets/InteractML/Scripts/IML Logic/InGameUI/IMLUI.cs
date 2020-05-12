@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Events;
 using TMPro;
 using System.Linq;
+using System;
 
 namespace InteractML
 {
@@ -46,7 +49,7 @@ namespace InteractML
         /// </summary>
         /// <param name="inputFields"></param>
         /// <param name="values"></param>
-        protected void UpdateUIDataFields(TMP_InputField[] inputFields, float[] values)
+        protected void UpdateUIDataFields(IMLInputField[] inputFields, float[] values)
         {
             // Break method if any data is null
             if (inputFields == null || values == null)
@@ -59,7 +62,7 @@ namespace InteractML
             // Update each inputField
             for (int i = 0; i < values.Length; i++)
             {
-                inputFields[i].text = values[i].ToString();
+                inputFields[i].SetInputField(values[i].ToString());
             }
         }
 
@@ -73,6 +76,24 @@ namespace InteractML
             if (UIText)
             {
                 UIText.text = text;
+            }
+        }
+
+        /// <summary>
+        /// Adds actions to a UI button on click call
+        /// </summary>
+        /// <param name="UIButton"></param>
+        /// <param name="action"></param>
+        /// <param name="removePreviousActions"></param>
+        protected void AddOnClickButtonCall(Button UIButton, UnityAction action, bool removePreviousActions)
+        {
+            if (UIButton != null)
+            {
+                if (removePreviousActions)
+                    UIButton.onClick.RemoveAllListeners();
+
+                if (action != null)
+                    UIButton.onClick.AddListener(action);
             }
         }
 
