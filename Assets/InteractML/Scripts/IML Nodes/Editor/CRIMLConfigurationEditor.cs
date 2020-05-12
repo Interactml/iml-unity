@@ -23,20 +23,21 @@ namespace InteractML
         /// <summary>
         /// Rects for node layout
         /// </summary>
-        private Rect m_BodyRect;
-        private Rect m_BodyRectButtons;
-        private Rect m_LeftButton;
-        private Rect m_RightButton;
-        private Rect m_BodyRectBigButtons;
-        private Rect m_BodyRectBottom;
         private Rect m_PortRect;
+        private Rect m_BodyRect;
+        private Rect m_IconsRect;
+        private Rect m_LeftIconRect;
+        private Rect m_RightIconRect;
+        private Rect m_ButtonsRect;
+        private Rect m_HelpRect;
+
         
 
         /// <summary>
         /// Bool for add/remove output
         /// </summary>
         private bool m_AddOutput;
-        private bool m_RemoveOutput;
+        private bool m_MinusOutput;
 
         private bool m_ClassificationSwitch;
         private bool m_RegressionSwitch;
@@ -75,16 +76,16 @@ namespace InteractML
         {
             DrawPortLayout();
             ShowSystemNodePorts();
-            //GUILayout.Label("", GUILayout.MinHeight(50));
+
+            DrawBodyLayoutIcons();
+            ShowIcon();
 
             DrawBodyLayoutButtons();
             ShowButtons();
 
-            DrawBodyLayoutBigButtons();
-            ShowBigButtons();
-
-            DrawBodyLayoutBottom();
-            ShowBottomSection();
+            // Draw help button
+            DrawHelpButtonLayout();
+            ShowHelpButton();
 
         }
 
@@ -107,50 +108,50 @@ namespace InteractML
         /// <summary>
         /// Define rect values for node body and paint textures based on rects 
         /// </summary>
+        private void DrawBodyLayoutIcons()
+        {
+            m_IconsRect.x = 5;
+            m_IconsRect.y = HeaderRect.height + m_PortRect.height;
+            m_IconsRect.width = NodeWidth - 10;
+            m_IconsRect.height = 140;
+
+            // Draw body background purple rect below ports
+            GUI.DrawTexture(m_IconsRect, NodeColor);
+
+            // Draw line below add/remove buttons
+            GUI.DrawTexture(new Rect(m_IconsRect.x, (HeaderRect.height + m_PortRect.height + m_IconsRect.height) - WeightOfSeparatorLine, m_IconsRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+        }
+
+        /// <summary>
+        /// Define rect values for node body and paint textures based on rects 
+        /// </summary>
         private void DrawBodyLayoutButtons()
         {
-            m_BodyRectButtons.x = 5;
-            m_BodyRectButtons.y = HeaderRect.height + m_PortRect.height;
-            m_BodyRectButtons.width = NodeWidth - 10;
-            m_BodyRectButtons.height = 140;
+            m_ButtonsRect.x = 5;
+            m_ButtonsRect.y = HeaderRect.height + m_PortRect.height + m_IconsRect.height;
+            m_ButtonsRect.width = NodeWidth - 10;
+            m_ButtonsRect.height = 155;
 
             // Draw body background purple rect below ports
-            GUI.DrawTexture(m_BodyRectButtons, NodeColor);
+            GUI.DrawTexture(m_ButtonsRect, NodeColor);
 
             // Draw line below add/remove buttons
-            GUI.DrawTexture(new Rect(m_BodyRectButtons.x, (HeaderRect.height + m_PortRect.height + m_BodyRectButtons.height) - WeightOfSeparatorLine, m_BodyRectButtons.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+            GUI.DrawTexture(new Rect(m_ButtonsRect.x, (HeaderRect.height + m_PortRect.height + m_IconsRect.height + m_ButtonsRect.height) - WeightOfSeparatorLine, m_ButtonsRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
         }
 
         /// <summary>
         /// Define rect values for node body and paint textures based on rects 
         /// </summary>
-        private void DrawBodyLayoutBigButtons()
+        private void DrawHelpButtonLayout()
         {
-            m_BodyRectBigButtons.x = 5;
-            m_BodyRectBigButtons.y = HeaderRect.height + m_PortRect.height + m_BodyRectButtons.height;
-            m_BodyRectBigButtons.width = NodeWidth - 10;
-            m_BodyRectBigButtons.height = 155;
+            m_HelpRect.x = 5;
+            m_ButtonsRect.height = m_ButtonsRect.height + 15;
+            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_IconsRect.height + m_ButtonsRect.height;
+            m_HelpRect.width = NodeWidth - 10;
+            m_HelpRect.height = 40;
 
             // Draw body background purple rect below ports
-            GUI.DrawTexture(m_BodyRectBigButtons, NodeColor);
-
-            // Draw line below add/remove buttons
-            GUI.DrawTexture(new Rect(m_BodyRectBigButtons.x, (HeaderRect.height + m_PortRect.height + m_BodyRectButtons.height + m_BodyRectBigButtons.height) - WeightOfSeparatorLine, m_BodyRectBigButtons.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
-        }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawBodyLayoutBottom()
-        {
-            m_BodyRectBottom.x = 5;
-            m_BodyRectBigButtons.height = m_BodyRectBigButtons.height + 15;
-            m_BodyRectBottom.y = HeaderRect.height + m_PortRect.height + m_BodyRectButtons.height + m_BodyRectBigButtons.height;
-            m_BodyRectBottom.width = NodeWidth - 10;
-            m_BodyRectBottom.height = 40;
-
-            // Draw body background purple rect below ports
-            GUI.DrawTexture(m_BodyRectBottom, NodeColor);
+            GUI.DrawTexture(m_HelpRect, NodeColor);
         }
 
         /// <summary>
@@ -173,65 +174,66 @@ namespace InteractML
             IMLNodeEditor.PortField(secondInputPortLabel, m_CRIMLConfiguration.GetInputPort("IMLTrainingExamplesNodes"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
         }
 
-        /// <summary>
-        /// Show the load, delete and record buttons
-        /// </summary>
-        private void ShowButtons()
+
+        private void ShowIcon()
         {
             
-            m_LeftButton.x = m_BodyRectButtons.x + 40;
-            m_LeftButton.y = m_BodyRectButtons.y + 20;
-            m_LeftButton.width = m_BodyRectButtons.width / 2;
-            m_LeftButton.height = m_BodyRectButtons.height;
+            m_LeftIconRect.x = m_IconsRect.x + 40;
+            m_LeftIconRect.y = m_IconsRect.y + 20;
+            m_LeftIconRect.width = m_IconsRect.width / 2;
+            m_LeftIconRect.height = m_IconsRect.height;
 
-            m_RightButton.x = (m_BodyRectButtons.width / 2) + 30;
-            m_RightButton.y = m_BodyRectButtons.y + 20;
-            m_RightButton.width = m_BodyRectButtons.width;
-            m_RightButton.height = m_BodyRectButtons.height;
+            m_RightIconRect.x = (m_IconsRect.width / 2) + 30;
+            m_RightIconRect.y = m_IconsRect.y + 20;
+            m_RightIconRect.width = m_IconsRect.width;
+            m_RightIconRect.height = m_IconsRect.height;
 
-            GUILayout.BeginArea(m_LeftButton);
+            GUILayout.BeginArea(m_LeftIconRect);
             m_ClassificationSwitch = EditorGUILayout.Toggle(m_ClassificationSwitch, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Classification Button"));
             GUILayout.EndArea();
 
-            GUILayout.BeginArea(m_RightButton);
+            GUILayout.BeginArea(m_RightIconRect);
             m_RegressionSwitch = EditorGUILayout.Toggle(m_RegressionSwitch, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Regression Button"));
             GUILayout.EndArea();
 
-            m_LeftButton.x = m_LeftButton.x + 5;
-            GUILayout.BeginArea(m_LeftButton);
+            m_LeftIconRect.x = m_LeftIconRect.x + 5;
+            GUILayout.BeginArea(m_LeftIconRect);
             GUILayout.Label("", GUILayout.MinHeight(80));
             GUILayout.Label("Classification", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Blue Classification Button"));
             GUILayout.EndArea();
 
-            m_RightButton.x = m_RightButton.x + 10;
-            GUILayout.BeginArea(m_RightButton);
+            m_RightIconRect.x = m_RightIconRect.x + 10;
+            GUILayout.BeginArea(m_RightIconRect);
             GUILayout.Label("", GUILayout.MinHeight(80));
             GUILayout.Label("Regression", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button Yellow"));
             GUILayout.EndArea();
 
         }
 
-        private void ShowBigButtons()
+        /// <summary>
+        /// Show the load, delete and record buttons
+        /// </summary>
+        private void ShowButtons()
         {
-            m_BodyRectBigButtons.x = m_BodyRectBigButtons.x + 15;
-            m_BodyRectBigButtons.y = m_BodyRectBigButtons.y + 15;
-            m_BodyRectBigButtons.width = m_BodyRectBigButtons.width - 30;
-            m_BodyRectBigButtons.height = m_BodyRectBigButtons.height - 15;
+            m_ButtonsRect.x = m_ButtonsRect.x + 15;
+            m_ButtonsRect.y = m_ButtonsRect.y + 15;
+            m_ButtonsRect.width = m_ButtonsRect.width - 30;
+            m_ButtonsRect.height = m_ButtonsRect.height - 15;
 
-            GUILayout.BeginArea(m_BodyRectBigButtons);
+            GUILayout.BeginArea(m_ButtonsRect);
             // Init model button (to debug the model not working)
             if (GUILayout.Button("Reset Model", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Reset")))
             {
                 m_CRIMLConfiguration.ResetModel();
             }
             GUILayout.Space(15);
-            ShowTrainModelButton();
+            TrainModelButton();
             GUILayout.Space(15);
-            ShowRunModelButton();
+            RunModelButton();
             GUILayout.EndArea();
         }
 
-        private void ShowTrainModelButton()
+        private void TrainModelButton()
         {
             // Only run button logic when rapidlib reference not null and training examples are not null
             if (m_CRIMLConfiguration.Model != null && m_CRIMLConfiguration.TotalNumTrainingData > 0)
@@ -274,7 +276,7 @@ namespace InteractML
 
         }
 
-        private void ShowRunModelButton()
+        private void RunModelButton()
         {
             if (m_CRIMLConfiguration.Model != null)
             {
@@ -313,13 +315,13 @@ namespace InteractML
 
         }
 
-        private void ShowBottomSection()
+        private void ShowHelpButton()
         {
-            m_BodyRectBottom.x = m_BodyRectBottom.x + 20;
-            m_BodyRectBottom.y = m_BodyRectBottom.y + 10;
-            m_BodyRectBottom.width = m_BodyRectBottom.width - 40;
+            m_HelpRect.x = m_HelpRect.x + 20;
+            m_HelpRect.y = m_HelpRect.y + 10;
+            m_HelpRect.width = m_HelpRect.width - 40;
 
-            GUILayout.BeginArea(m_BodyRectBottom);
+            GUILayout.BeginArea(m_HelpRect);
             GUILayout.BeginHorizontal();
             //GUILayout.Label("advanced options", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"));
             GUILayout.Label("");
