@@ -122,7 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp:InteractML:DTWIMLConfiguration
   id: de64f5dc-5b67-4e0d-ab30-f7b4d9c8e8f4
   graph: {fileID: 11400000}
-  position: {x: 536, y: -568}
+  position: {x: 520, y: -536}
   ports:
     keys:
     - IMLTrainingExamplesNodes

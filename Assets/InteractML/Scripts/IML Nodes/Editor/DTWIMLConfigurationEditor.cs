@@ -23,13 +23,15 @@ namespace InteractML
         /// <summary>
         /// Rects for node layout
         /// </summary>
-        private Rect m_BodyRect;
-        private Rect m_BodyRectButtons;
-        private Rect m_MiddleButton;
-        private Rect m_BodyRectBigButtons;
-        private Rect m_BodyRectBottom;
         private Rect m_PortRect;
-
+        private Rect m_BodyRect;
+        private Rect m_IconsRect;
+        private Rect m_MiddleButton;
+        private Rect m_ButtonsRect;
+        private Rect m_HelpRect;
+        private Rect m_WarningRect;
+        private Rect m_InnerWarningRect;
+        private Rect m_InnerInnerWarningRect;
 
         /// <summary>
         /// Bool for add/remove output
@@ -72,17 +74,18 @@ namespace InteractML
         {
             DrawPortLayout();
             ShowSystemNodePorts();
-            //GUILayout.Label("", GUILayout.MinHeight(50));
+
+            DrawBodyLayoutIcons();
+            ShowIcons();
 
             DrawBodyLayoutButtons();
             ShowButtons();
 
-            DrawBodyLayoutBigButtons();
-            ShowBigButtons();
+            DrawHelpButtonLayout();
+            ShowHelpButton();
 
-            DrawBodyLayoutBottom();
-            ShowBottomSection();
-
+            DrawWarningLayout();
+            ShowWarning();
         }
 
         /// <summary>
@@ -104,50 +107,64 @@ namespace InteractML
         /// <summary>
         /// Define rect values for node body and paint textures based on rects 
         /// </summary>
+        private void DrawBodyLayoutIcons()
+        {
+            m_IconsRect.x = 5;
+            m_IconsRect.y = HeaderRect.height + m_PortRect.height;
+            m_IconsRect.width = NodeWidth - 10;
+            m_IconsRect.height = 140;
+
+            // Draw body background purple rect below ports
+            GUI.DrawTexture(m_IconsRect, NodeColor);
+
+            // Draw line below add/remove buttons
+            GUI.DrawTexture(new Rect(m_IconsRect.x, (HeaderRect.height + m_PortRect.height + m_IconsRect.height) - WeightOfSeparatorLine, m_IconsRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+        }
+
+        /// <summary>
+        /// Define rect values for node body and paint textures based on rects 
+        /// </summary>
         private void DrawBodyLayoutButtons()
         {
-            m_BodyRectButtons.x = 5;
-            m_BodyRectButtons.y = HeaderRect.height + m_PortRect.height;
-            m_BodyRectButtons.width = NodeWidth - 10;
-            m_BodyRectButtons.height = 140;
+            m_ButtonsRect.x = 5;
+            m_ButtonsRect.y = HeaderRect.height + m_PortRect.height + m_IconsRect.height;
+            m_ButtonsRect.width = NodeWidth - 10;
+            m_ButtonsRect.height = 155;
 
-            // Draw body background purple rect below ports
-            GUI.DrawTexture(m_BodyRectButtons, NodeColor);
+            // Draw body background purple rect
+            GUI.DrawTexture(m_ButtonsRect, NodeColor);
 
-            // Draw line below add/remove buttons
-            GUI.DrawTexture(new Rect(m_BodyRectButtons.x, (HeaderRect.height + m_PortRect.height + m_BodyRectButtons.height) - WeightOfSeparatorLine, m_BodyRectButtons.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+            // Draw line below buttons
+            GUI.DrawTexture(new Rect(m_ButtonsRect.x, (HeaderRect.height + m_PortRect.height + m_IconsRect.height + m_ButtonsRect.height) - WeightOfSeparatorLine, m_ButtonsRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
         }
 
         /// <summary>
         /// Define rect values for node body and paint textures based on rects 
         /// </summary>
-        private void DrawBodyLayoutBigButtons()
+        private void DrawHelpButtonLayout()
         {
-            m_BodyRectBigButtons.x = 5;
-            m_BodyRectBigButtons.y = HeaderRect.height + m_PortRect.height + m_BodyRectButtons.height;
-            m_BodyRectBigButtons.width = NodeWidth - 10;
-            m_BodyRectBigButtons.height = 155;
+            m_HelpRect.x = 5;
+            //m_ButtonsRect.height = m_ButtonsRect.height + 15;
+            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_IconsRect.height + m_ButtonsRect.height;
+            m_HelpRect.width = NodeWidth - 10;
+            m_HelpRect.height = 40;
 
-            // Draw body background purple rect below ports
-            GUI.DrawTexture(m_BodyRectBigButtons, NodeColor);
-
-            // Draw line below add/remove buttons
-            GUI.DrawTexture(new Rect(m_BodyRectBigButtons.x, (HeaderRect.height + m_PortRect.height + m_BodyRectButtons.height + m_BodyRectBigButtons.height) - WeightOfSeparatorLine, m_BodyRectBigButtons.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+            // Draw body background purple rect
+            GUI.DrawTexture(m_HelpRect, NodeColor);
         }
 
         /// <summary>
         /// Define rect values for node body and paint textures based on rects 
         /// </summary>
-        private void DrawBodyLayoutBottom()
+        private void DrawWarningLayout()
         {
-            m_BodyRectBottom.x = 5;
-            m_BodyRectBigButtons.height = m_BodyRectBigButtons.height + 15;
-            m_BodyRectBottom.y = HeaderRect.height + m_PortRect.height + m_BodyRectButtons.height + m_BodyRectBigButtons.height;
-            m_BodyRectBottom.width = NodeWidth - 10;
-            m_BodyRectBottom.height = 40;
+            m_WarningRect.x = 5;
+            m_WarningRect.y = HeaderRect.height + m_PortRect.height + m_IconsRect.height + m_ButtonsRect.height + m_HelpRect.height;
+            m_WarningRect.width = NodeWidth - 10;
+            m_WarningRect.height = 120;
 
             // Draw body background purple rect below ports
-            GUI.DrawTexture(m_BodyRectBottom, NodeColor);
+            GUI.DrawTexture(m_WarningRect, NodeColor);
         }
 
         /// <summary>
@@ -173,12 +190,12 @@ namespace InteractML
         /// <summary>
         /// Show the load, delete and record buttons
         /// </summary>
-        private void ShowButtons()
+        private void ShowIcons()
         {
-            m_MiddleButton.x = (m_BodyRectButtons.width/2) - 45;
-            m_MiddleButton.y = m_BodyRectButtons.y + 20;
-            m_MiddleButton.width = m_BodyRectButtons.width;
-            m_MiddleButton.height = m_BodyRectButtons.height - 20;
+            m_MiddleButton.x = (m_IconsRect.width/2) - 45;
+            m_MiddleButton.y = m_IconsRect.y + 20;
+            m_MiddleButton.width = m_IconsRect.width;
+            m_MiddleButton.height = m_IconsRect.height - 20;
 
             GUILayout.BeginArea(m_MiddleButton);
             m_DTWSwitch = EditorGUILayout.Toggle(m_DTWSwitch, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("DTW Button"));
@@ -192,14 +209,14 @@ namespace InteractML
 
         }
 
-        private void ShowBigButtons()
+        private void ShowButtons()
         {
-            m_BodyRectBigButtons.x = m_BodyRectBigButtons.x + 15;
-            m_BodyRectBigButtons.y = m_BodyRectBigButtons.y + 15;
-            m_BodyRectBigButtons.width = m_BodyRectBigButtons.width - 30;
-            m_BodyRectBigButtons.height = m_BodyRectBigButtons.height - 15;
+            m_ButtonsRect.x = m_ButtonsRect.x + 15;
+            m_ButtonsRect.y = m_ButtonsRect.y + 15;
+            m_ButtonsRect.width = m_ButtonsRect.width - 30;
+            m_ButtonsRect.height = m_ButtonsRect.height - 15;
 
-            GUILayout.BeginArea(m_BodyRectBigButtons);
+            GUILayout.BeginArea(m_ButtonsRect);
             // Init model button (to debug the model not working)
             if (GUILayout.Button("Reset Model", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Reset")))
             {
@@ -294,19 +311,47 @@ namespace InteractML
 
         }
 
-        private void ShowBottomSection()
+        private void ShowHelpButton()
         {
-            m_BodyRectBottom.x = m_BodyRectBottom.x + 20;
-            m_BodyRectBottom.y = m_BodyRectBottom.y + 10;
-            m_BodyRectBottom.width = m_BodyRectBottom.width - 40;
+            m_HelpRect.x = m_HelpRect.x + 20;
+            m_HelpRect.y = m_HelpRect.y + 10;
+            m_HelpRect.width = m_HelpRect.width - 40;
 
-            GUILayout.BeginArea(m_BodyRectBottom);
+            GUILayout.BeginArea(m_HelpRect);
             GUILayout.BeginHorizontal();
             //GUILayout.Label("advanced options", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"));
             GUILayout.Label("");
-            GUILayout.Button("Help", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
+            HelpButton(this.GetType().ToString());
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
+        }
+
+        private void ShowWarning()
+        {
+            m_InnerWarningRect.x = m_WarningRect.x + 20;
+            m_InnerWarningRect.y = m_WarningRect.y + 20;
+            m_InnerWarningRect.width = m_WarningRect.width - 40;
+            m_InnerWarningRect.height = m_WarningRect.height - 40;
+
+            // Draw darker purple rect
+            GUI.DrawTexture(m_InnerWarningRect, GetColorTextureFromHexString("#1C1D2E"));
+
+            m_InnerInnerWarningRect.x = m_InnerWarningRect.x + 10;
+            m_InnerInnerWarningRect.y = m_InnerWarningRect.y + 10;
+            m_InnerInnerWarningRect.width = m_InnerWarningRect.width - 20;
+            m_InnerInnerWarningRect.height = m_InnerWarningRect.height - 20;
+
+            GUILayout.BeginArea(m_InnerInnerWarningRect);
+            GUILayout.BeginHorizontal();
+            GUILayout.Button("", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Warning"));
+            GUILayout.Space(5);
+            GUILayout.Label("Danger Will Robinson", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Warning Header"));
+            GUILayout.EndHorizontal();
+            GUILayout.Space(5);
+            GUILayout.Label("What the heck do you think you're doing to your nodes partner?", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Warning Label"));
+
+            GUILayout.EndArea();
+
         }
     }
 }
