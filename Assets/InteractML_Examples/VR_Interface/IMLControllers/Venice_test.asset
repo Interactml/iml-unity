@@ -1,41 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8635698432317608912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
-  m_Name: Realtime IML Output
-  m_EditorClassIdentifier: 
-  id: 1193107a-90e5-4fb5-ad0a-750513a2ee89
-  graph: {fileID: 11400000}
-  position: {x: 1208, y: -296}
-  ports:
-    keys:
-    - IMLModelOutputs
-    values:
-    - _fieldName: IMLModelOutputs
-      _node: {fileID: -8635698432317608912}
-      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: ModelOutput
-        node: {fileID: 6842280125663993215}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  IMLModelOutputs: {fileID: 0}
-  m_IMLOutputVector:
-  - 0
-  - 0
-  - 0
 --- !u!114 &-8545169889257079770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,7 +39,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: IMLTrainingExamplesNodes
-        node: {fileID: 6842280125663993215}
+        node: {fileID: 6044388257640685099}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -134,12 +98,13 @@ MonoBehaviour:
         node: {fileID: -8545169889257079770}
         reroutePoints: []
       - fieldName: InputFeatures
+        node: {fileID: 6044388257640685099}
+        reroutePoints:
+        - {x: -96, y: 448}
+        - {x: 464, y: 400}
+      - fieldName: InputFeatures
         node: {fileID: -1899693820327701159}
         reroutePoints: []
-      - fieldName: InputFeatures
-        node: {fileID: 6842280125663993215}
-        reroutePoints:
-        - {x: -180.80855, y: -340.54727}
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -147,8 +112,12 @@ MonoBehaviour:
   DevMode: 0
   ValueName: HeadRotation
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 39.00002, y: 24.399994, z: 0}
+  m_Value: {x: 301.49994, y: 57.200043, z: 0}
   m_Out: {x: 0, y: 270.9, z: 0}
+  ReceivingData: 1
+  x_switch: 1
+  y_switch: 1
+  z_switch: 1
 --- !u!114 &-1899693820327701159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,13 +191,10 @@ MonoBehaviour:
   - {fileID: -8545169889257079770}
   - {fileID: -4193609153758654436}
   - {fileID: 8999848260519867326}
+  - {fileID: 6044388257640685099}
   - {fileID: -1899693820327701159}
-  - {fileID: 6842280125663993215}
-  - {fileID: -8635698432317608912}
-  - {fileID: 5267536902925323740}
-  - {fileID: 3397338440169871641}
   SceneComponent: {fileID: 0}
---- !u!114 &3397338440169871641
+--- !u!114 &6044388257640685099
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -237,76 +203,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Game Object
+  m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
+  m_Name: IML Configuration
   m_EditorClassIdentifier: 
-  id: a8b873aa-5869-4447-a396-ee94c5b39a56
+  id: 5d20741d-177f-4436-815e-9b94369f2433
   graph: {fileID: 11400000}
-  position: {x: -792, y: 264}
-  ports:
-    keys:
-    - GameObjectDataOut
-    values:
-    - _fieldName: GameObjectDataOut
-      _node: {fileID: 3397338440169871641}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  GameObjectDataOut: {fileID: 0}
-  GameObjMissing: 0
-  state: 0
---- !u!114 &5267536902925323740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Game Object
-  m_EditorClassIdentifier: 
-  id: 5fdf8f2a-6915-4340-b1ca-e5fd598efe18
-  graph: {fileID: 11400000}
-  position: {x: -1016, y: -184}
-  ports:
-    keys:
-    - GameObjectDataOut
-    values:
-    - _fieldName: GameObjectDataOut
-      _node: {fileID: 5267536902925323740}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  GameObjectDataOut: {fileID: 0}
-  GameObjMissing: 0
-  state: 0
---- !u!114 &6842280125663993215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4234c62ffaf06d14c8af371b82d39a14, type: 3}
-  m_Name: CRIML Configuration
-  m_EditorClassIdentifier: 
-  id: 943334cd-cfd7-42ee-8bad-01c9095d24b5
-  graph: {fileID: 11400000}
-  position: {x: 696, y: -248}
+  position: {x: 600, y: -264}
   ports:
     keys:
     - IMLTrainingExamplesNodes
@@ -315,7 +217,7 @@ MonoBehaviour:
     - Output 0
     values:
     - _fieldName: IMLTrainingExamplesNodes
-      _node: {fileID: 6842280125663993215}
+      _node: {fileID: 6044388257640685099}
       _typeQualifiedName: System.Collections.Generic.List`1[[InteractML.TrainingExamplesNode,
         Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
         mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
@@ -328,7 +230,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: InputFeatures
-      _node: {fileID: 6842280125663993215}
+      _node: {fileID: 6044388257640685099}
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
@@ -341,22 +243,22 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: ModelOutput
-      _node: {fileID: 6842280125663993215}
+      _node: {fileID: 6044388257640685099}
       _typeQualifiedName: InteractML.IMLConfiguration, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: IMLModelOutputs
-        node: {fileID: -8635698432317608912}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: Output 0
-      _node: {fileID: 6842280125663993215}
+      _node: {fileID: 6044388257640685099}
       _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: m_In
+        node: {fileID: 8999848260519867326}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -372,9 +274,9 @@ MonoBehaviour:
   - 0
   - 0
   DelayedPredictedOutput:
-  - 0
   - 1
   - 0
+  - 1
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 03000000
   m_LearningType: 0
@@ -383,7 +285,6 @@ MonoBehaviour:
   RunningKey: 0
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
-  learningChoice: 0
 --- !u!114 &8999848260519867326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,7 +299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: f39777b9-157b-4297-9ff7-0e7eaa8c85e3
   graph: {fileID: 11400000}
-  position: {x: 1224, y: 40}
+  position: {x: 1144, y: -104}
   ports:
     keys:
     - m_In
@@ -408,7 +309,10 @@ MonoBehaviour:
       _node: {fileID: 8999848260519867326}
       _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: Output 0
+        node: {fileID: 6044388257640685099}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -427,3 +331,7 @@ MonoBehaviour:
   m_In: {x: 0, y: 0, z: 0}
   m_Value: {x: 0, y: 0, z: 1}
   m_Out: {x: 0, y: 0, z: 1}
+  ReceivingData: 0
+  x_switch: 1
+  y_switch: 1
+  z_switch: 1

@@ -35,7 +35,7 @@ namespace InteractML.DataTypeNodes
         bool IFeatureIML.isExternallyUpdatable { get { return true; } }
 
         /// <summary>
-        /// Was tge featyre already updated?
+        /// Was the feature already updated?
         /// </summary>
         bool IFeatureIML.isUpdated { get ; set; }
 
@@ -43,7 +43,6 @@ namespace InteractML.DataTypeNodes
         protected override void Init()
         {
             base.Init();
-
         }
 
         // Return the correct value of an output port when requested
@@ -59,6 +58,11 @@ namespace InteractML.DataTypeNodes
         /// <returns></returns>
         object IFeatureIML.UpdateFeature()
         {
+            return this.Update();
+        }
+
+        protected virtual object Update()
+        {
             // Read input (if it returns default(T) there is no connection )
             var inputReceived = GetInputValue<T>("m_In");
             // Check if we have something connected to the input port
@@ -66,6 +70,7 @@ namespace InteractML.DataTypeNodes
             {
                 // Update the value of this data node
                 Value = inputReceived;
+
             }
             // Return entire node to satisfy IFeatureIML requirements
             return this;

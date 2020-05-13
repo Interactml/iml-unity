@@ -16,6 +16,10 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private FloatNode m_FloatNode;
 
+        private int counter = 0;
+        private int count = 3;
+        private int stop = 6;
+
         /// <summary>
         /// Rects for node layout
         /// </summary>
@@ -58,7 +62,8 @@ namespace InteractML.DataTypeNodes
 
             // Draw Body Section
             DrawBodyLayout();
-            ShowFloatValue();
+            DataInToggle(m_FloatNode.ReceivingData, m_InnerBodyRect, m_BodyRect);
+            //ShowFloatValue();
 
             // Draw help button
             DrawHelpButtonLayout();
@@ -89,7 +94,7 @@ namespace InteractML.DataTypeNodes
             m_BodyRect.x = 5;
             m_BodyRect.y = HeaderRect.height + m_PortRect.height;
             m_BodyRect.width = NodeWidth - 10;
-            m_BodyRect.height = 90;
+            m_BodyRect.height = 100;
 
             // Draw body background purple rect below header
             GUI.DrawTexture(m_BodyRect, NodeColor);
@@ -132,20 +137,31 @@ namespace InteractML.DataTypeNodes
         /// <summary>
         /// Show the float value fields with attribute name
         /// </summary>
-        private void ShowFloatValue()
+        //private void ShowFloatValue()
+        //{
+        //    m_InnerBodyRect.x = m_BodyRect.x + 20;
+        //    m_InnerBodyRect.y = m_BodyRect.y + 20;
+        //    m_InnerBodyRect.width = m_BodyRect.width - 20;
+        //    m_InnerBodyRect.height = m_BodyRect.height - 20;
+
+        //    GUILayout.BeginArea(m_InnerBodyRect);
+        //    EditorGUILayout.Space();
+        //    EditorGUILayout.LabelField(new GUIContent("Name: " + m_FloatNode.ValueName, "Attribute name"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+        //    EditorGUILayout.Space();
+        //    EditorGUILayout.LabelField(new GUIContent("Float: " + System.Math.Round(m_FloatNode.FeatureValues.Values[0], 3).ToString(), "Float Value"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+        //    GUILayout.EndArea();
+
+        //}
+
+        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
         {
-            m_InnerBodyRect.x = m_BodyRect.x + 20;
-            m_InnerBodyRect.y = m_BodyRect.y + 20;
-            m_InnerBodyRect.width = m_BodyRect.width - 20;
-            m_InnerBodyRect.height = m_BodyRect.height - 20;
-
-            GUILayout.BeginArea(m_InnerBodyRect);
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField(new GUIContent("Name: " + m_FloatNode.ValueName, "Attribute name"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Name: " + m_FloatNode.ValueName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            GUILayout.Space(10);
+            GUILayout.BeginHorizontal(); 
+            m_FloatNode.float_switch = EditorGUILayout.Toggle(m_FloatNode.float_switch, style);
             EditorGUILayout.LabelField(new GUIContent("Float: " + System.Math.Round(m_FloatNode.FeatureValues.Values[0], 3).ToString(), "Float Value"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            GUILayout.EndArea();
-
+            GUILayout.EndHorizontal(); 
         }
 
         /// <summary>

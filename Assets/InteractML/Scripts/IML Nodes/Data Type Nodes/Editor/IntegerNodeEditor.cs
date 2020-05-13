@@ -57,7 +57,8 @@ namespace InteractML.DataTypeNodes
 
             // Draw Body Section
             DrawBodyLayout();
-            ShowIntegerValue();
+            DataInToggle(m_IntegerNode.ReceivingData, m_InnerBodyRect, m_BodyRect);
+            //ShowIntegerValue();
 
             // Draw help button
             DrawHelpButtonLayout();
@@ -88,7 +89,7 @@ namespace InteractML.DataTypeNodes
             m_BodyRect.x = 5;
             m_BodyRect.y = HeaderRect.height + m_PortRect.height;
             m_BodyRect.width = NodeWidth - 10;
-            m_BodyRect.height = 90;
+            m_BodyRect.height = 100;
 
             // Draw body background purple rect below header
             GUI.DrawTexture(m_BodyRect, NodeColor);
@@ -127,25 +128,34 @@ namespace InteractML.DataTypeNodes
 
             GUILayout.EndHorizontal();
         }
-
+        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        {
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Name: " + m_IntegerNode.ValueName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            GUILayout.Space(10);
+            GUILayout.BeginHorizontal();
+            m_IntegerNode.integer_switch = EditorGUILayout.Toggle(m_IntegerNode.integer_switch, style);
+            EditorGUILayout.LabelField(new GUIContent("Integer: " + System.Math.Round(m_IntegerNode.FeatureValues.Values[0], 0).ToString(), "Float Value"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            GUILayout.EndHorizontal();
+        }
         /// <summary>
         /// Show the integer value fields with attribute name
         /// </summary>
-        private void ShowIntegerValue()
-        {
-            m_InnerBodyRect.x = m_BodyRect.x + 20;
-            m_InnerBodyRect.y = m_BodyRect.y + 20;
-            m_InnerBodyRect.width = m_BodyRect.width - 20;
-            m_InnerBodyRect.height = m_BodyRect.height - 20;
+        //private void ShowIntegerValue()
+        //{
+        //    m_InnerBodyRect.x = m_BodyRect.x + 20;
+        //    m_InnerBodyRect.y = m_BodyRect.y + 20;
+        //    m_InnerBodyRect.width = m_BodyRect.width - 20;
+        //    m_InnerBodyRect.height = m_BodyRect.height - 20;
 
-            GUILayout.BeginArea(m_InnerBodyRect);
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Name: " + m_IntegerNode.ValueName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Integer: " + System.Math.Round(m_IntegerNode.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            GUILayout.EndArea();
+        //    GUILayout.BeginArea(m_InnerBodyRect);
+        //    EditorGUILayout.Space();
+        //    EditorGUILayout.LabelField("Name: " + m_IntegerNode.ValueName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+        //    EditorGUILayout.Space();
+        //    EditorGUILayout.LabelField("Integer: " + System.Math.Round(m_IntegerNode.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+        //    GUILayout.EndArea();
 
-        }
+        //}
 
         /// <summary>
         /// Display help button
