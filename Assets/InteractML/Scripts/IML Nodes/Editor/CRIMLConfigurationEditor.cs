@@ -140,7 +140,7 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
+        /// Define rect values for error message and paint textures based on rects 
         /// </summary>
         private void DrawHelpButtonLayout()
         {
@@ -154,6 +154,10 @@ namespace InteractML
             GUI.DrawTexture(m_HelpRect, NodeColor);
         }
 
+        /// <summary>
+        /// Define rect values for node body and paint textures based on rects 
+        /// </summary>
+        
         /// <summary>
         /// Show the input/output port fields 
         /// </summary>

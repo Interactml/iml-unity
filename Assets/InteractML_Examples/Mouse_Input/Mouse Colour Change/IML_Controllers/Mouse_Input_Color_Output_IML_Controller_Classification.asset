@@ -104,6 +104,10 @@ MonoBehaviour:
   - -16.6
   - 2.07
   - 3.9
+  ReceivingData: 0
+  x_switch: 1
+  y_switch: 1
+  z_switch: 1
 --- !u!114 &-5784961427764742029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,6 +247,12 @@ MonoBehaviour:
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: ModelOutput
+        node: {fileID: 0}
+        reroutePoints: []
+      - fieldName: ModelOutput
+        node: {fileID: 0}
+        reroutePoints: []
+      - fieldName: ModelOutput
         node: {fileID: -5784961427764742029}
         reroutePoints: []
       _direction: 0
@@ -348,10 +358,7 @@ MonoBehaviour:
       _node: {fileID: -1959803103576171372}
       _typeQualifiedName: InteractML.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: IMLTrainingExamplesNodes
-        node: {fileID: -5784961427764742029}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -414,6 +421,10 @@ MonoBehaviour:
   m_In: {x: 0, y: 0, z: 0}
   m_Value: {x: 0, y: 0, z: 0}
   m_Out: {x: 0, y: 0, z: 0}
+  ReceivingData: 0
+  x_switch: 1
+  y_switch: 1
+  z_switch: 1
 --- !u!114 &-114659928950384369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,8 +507,8 @@ MonoBehaviour:
   - {fileID: 1144772234490417198}
   - {fileID: 2086817567719854183}
   - {fileID: -2801991038622799945}
-  - {fileID: -5784961427764742029}
   - {fileID: 145292718253542123}
+  - {fileID: -5784961427764742029}
   SceneComponent: {fileID: 0}
 --- !u!114 &23255658134690522
 MonoBehaviour:
@@ -650,6 +661,8 @@ MonoBehaviour:
   m_In: 0
   m_Value: 0
   m_Out: 0
+  ReceivingData: 0
+  float_switch: 1
 --- !u!114 &2086817567719854183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -693,6 +706,8 @@ MonoBehaviour:
   m_In: 0
   m_Value: 0
   m_Out: 0
+  ReceivingData: 0
+  integer_switch: 1
 --- !u!114 &3870851315361709692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -707,7 +722,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: af4b2147-3e10-40a4-b124-f23dea49da31
   graph: {fileID: 11400000}
-  position: {x: -648, y: -1048}
+  position: {x: -584, y: -1192}
   ports:
     keys:
     - m_In
@@ -736,6 +751,11 @@ MonoBehaviour:
   m_In: {x: 0, y: 0, z: 0, w: 0}
   m_Value: {x: 0, y: 0, z: 0, w: 0}
   m_Out: {x: 0, y: 0, z: 0, w: 0}
+  ReceivingData: 0
+  x_switch: 1
+  y_switch: 1
+  z_switch: 1
+  w_switch: 1
 --- !u!114 &4459884802637960444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -810,10 +830,7 @@ MonoBehaviour:
   IMLTrainingExamplesNodes: []
   InputFeatures: []
   ModelOutput: {fileID: 0}
-  PredictedRapidlibOutput:
-  - 0
-  - 0
-  - 0
+  PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 
@@ -838,7 +855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 210424bf-c481-4157-9f0f-8157aaab0dc5
   graph: {fileID: 11400000}
-  position: {x: -248, y: -744}
+  position: {x: -392, y: -712}
   ports:
     keys:
     - LiveDataOut
@@ -853,9 +870,6 @@ MonoBehaviour:
         reroutePoints: []
       - fieldName: FeatureToInput
         node: {fileID: -6048617712226267193}
-        reroutePoints: []
-      - fieldName: InputFeatures
-        node: {fileID: -5784961427764742029}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -900,7 +914,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: e34c769e-ac3d-4f04-b34b-3ff3501fc846
   graph: {fileID: 11400000}
-  position: {x: -1032, y: -360}
+  position: {x: -1064, y: -360}
   ports:
     keys:
     - GameObjectDataOut
@@ -1020,3 +1034,6 @@ MonoBehaviour:
   m_In: {x: 0, y: 0}
   m_Value: {x: 0, y: 0}
   m_Out: {x: 0, y: 0}
+  ReceivingData: 0
+  x_switch: 1
+  y_switch: 1

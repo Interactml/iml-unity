@@ -196,37 +196,33 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Show the position value fields 
         /// </summary>
-        private void ShowExtractedPositionValues()
-        {
-            m_InnerBodyRect.x = m_BodyRect.x + 20;
-            m_InnerBodyRect.y = m_BodyRect.y + 20;
-            m_InnerBodyRect.width = m_BodyRect.width - 20;
-            m_InnerBodyRect.height = m_BodyRect.height - 20;
+        //private void ShowExtractedPositionValues()
+        //{
+        //    m_InnerBodyRect.x = m_BodyRect.x + 20;
+        //    m_InnerBodyRect.y = m_BodyRect.y + 20;
+        //    m_InnerBodyRect.width = m_BodyRect.width - 20;
+        //    m_InnerBodyRect.height = m_BodyRect.height - 20;
 
-            GUILayout.BeginArea(m_InnerBodyRect);
+        //    GUILayout.BeginArea(m_InnerBodyRect);
 
-            if (m_ExtractPosition.ReceivingData)
-            {
-                DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Green Toggle"));
-            }
-            else
-            {
-                DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Red Toggle"));
-            }
+        //    if (m_ExtractPosition.ReceivingData)
+        //    {
+        //        DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Green Toggle"));
+        //    }
+        //    else
+        //    {
+        //        DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Red Toggle"));
+        //    }
 
-            GUILayout.EndArea();
+        //    GUILayout.EndArea();
 
-        }
-
-        /// <summary>
-        /// Show the local space toggle 
-        /// </summary>
+        //}
 
         protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
         {
             GUILayout.BeginHorizontal();
             m_ExtractPosition.x_switch = EditorGUILayout.Toggle(m_ExtractPosition.x_switch, style);
-            EditorGUILayout.LabelField(new GUIContent("x: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[0], 3).ToString(), "TOOLTIP"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField("x: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
             GUILayout.EndHorizontal();
 
             EditorGUILayout.Space();

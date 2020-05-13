@@ -112,8 +112,12 @@ MonoBehaviour:
   DevMode: 0
   ValueName: HeadRotation
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 20.800116, y: 3.099976, z: -0.00000005708111}
+  m_Value: {x: 301.49994, y: 57.200043, z: 0}
   m_Out: {x: 0, y: 270.9, z: 0}
+  ReceivingData: 1
+  x_switch: 1
+  y_switch: 1
+  z_switch: 1
 --- !u!114 &-1899693820327701159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,3 +331,7 @@ MonoBehaviour:
   m_In: {x: 0, y: 0, z: 0}
   m_Value: {x: 0, y: 0, z: 1}
   m_Out: {x: 0, y: 0, z: 1}
+  ReceivingData: 0
+  x_switch: 1
+  y_switch: 1
+  z_switch: 1

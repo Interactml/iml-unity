@@ -59,7 +59,8 @@ namespace InteractML.DataTypeNodes
 
             // Draw Body Section
             DrawBodyLayout();
-            ShowVector2Values();
+            //ShowVector2Values();
+            DataInToggle(m_Vector2Node.ReceivingData, m_InnerBodyRect, m_BodyRect);
 
             // Draw help button
             DrawHelpButtonLayout();
@@ -130,26 +131,45 @@ namespace InteractML.DataTypeNodes
             GUILayout.EndHorizontal();
         }
 
+        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        {
+            EditorGUILayout.LabelField("Name: " + m_Vector2Node.ValueName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+
+            GUILayout.BeginHorizontal();
+            m_Vector2Node.x_switch = EditorGUILayout.Toggle(m_Vector2Node.x_switch, style);
+            EditorGUILayout.LabelField("x: " + System.Math.Round(m_Vector2Node.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            GUILayout.EndHorizontal();
+
+            EditorGUILayout.Space();
+
+            GUILayout.BeginHorizontal();
+            m_Vector2Node.y_switch = EditorGUILayout.Toggle(m_Vector2Node.y_switch, style);
+            EditorGUILayout.LabelField("y: " + System.Math.Round(m_Vector2Node.FeatureValues.Values[1], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            GUILayout.EndHorizontal();
+
+            
+        }
+
         /// <summary>
         /// Show the serial value fields with attribute name
         /// </summary>
-        private void ShowVector2Values()
-        {
-            m_InnerBodyRect.x = m_BodyRect.x + 20;
-            m_InnerBodyRect.y = m_BodyRect.y + 20;
-            m_InnerBodyRect.width = m_BodyRect.width - 20;
-            m_InnerBodyRect.height = m_BodyRect.height - 20;
+        //private void ShowVector2Values()
+        //{
+        //    m_InnerBodyRect.x = m_BodyRect.x + 20;
+        //    m_InnerBodyRect.y = m_BodyRect.y + 20;
+        //    m_InnerBodyRect.width = m_BodyRect.width - 20;
+        //    m_InnerBodyRect.height = m_BodyRect.height - 20;
 
-            GUILayout.BeginArea(m_InnerBodyRect);
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Name: " + m_Vector2Node.ValueName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("x: " + System.Math.Round(m_Vector2Node.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("y: " + System.Math.Round(m_Vector2Node.FeatureValues.Values[1], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            GUILayout.EndArea();
+        //    GUILayout.BeginArea(m_InnerBodyRect);
+        //    EditorGUILayout.Space();
+        //    EditorGUILayout.LabelField("Name: " + m_Vector2Node.ValueName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+        //    EditorGUILayout.Space();
+        //    EditorGUILayout.LabelField("x: " + System.Math.Round(m_Vector2Node.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+        //    EditorGUILayout.Space();
+        //    EditorGUILayout.LabelField("y: " + System.Math.Round(m_Vector2Node.FeatureValues.Values[1], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+        //    GUILayout.EndArea();
 
-        }
+        //}
 
 
         /// <summary>
