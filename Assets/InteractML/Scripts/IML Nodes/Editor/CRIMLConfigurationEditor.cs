@@ -318,7 +318,7 @@ namespace InteractML
             }
 
         }
-
+        
         private void ShowHelpButton()
         {
             m_HelpRect.x = m_HelpRect.x + 20;
@@ -327,9 +327,8 @@ namespace InteractML
 
             GUILayout.BeginArea(m_HelpRect);
             GUILayout.BeginHorizontal();
-            //GUILayout.Label("advanced options", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"));
             GUILayout.Label("");
-            HelpButton(this.GetType().ToString());
+            HelpButton(m_CRIMLConfiguration.tips.HelpTooltip);
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }

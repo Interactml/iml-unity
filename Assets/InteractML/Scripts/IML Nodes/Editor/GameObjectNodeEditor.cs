@@ -130,7 +130,7 @@ namespace InteractML
         private void ShowGameObjectNodePorts()
         {
             GUILayout.Space(5);
-            GUIContent outputPortLabel = new GUIContent("GameObject\n Data Out");
+            GUIContent outputPortLabel = new GUIContent("GameObject\n Data Out", m_GameObjectNode.tips.PortTooltip[0]);
             PortField(outputPortLabel, m_GameObjectNode.GetOutputPort("GameObjectDataOut"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
             
 
@@ -246,8 +246,10 @@ namespace InteractML
             GUILayout.BeginArea(m_HelpRect);
             GUILayout.BeginHorizontal();
             GUILayout.Label("");
+            Vector3 mouse = Input.mousePosition;
+            GUILayout.Button(new GUIContent("Help", m_GameObjectNode.tips.HelpTooltip), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
+            Rect rect = new Rect(mouse.x, mouse.y, 100, 100);
 
-            GUILayout.Button("Help", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }

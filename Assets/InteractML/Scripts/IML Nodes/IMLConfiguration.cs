@@ -87,7 +87,9 @@ namespace InteractML
         public bool Training { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Training); } }
         public bool Trained { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Trained); } }
         public bool Untrained { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Untrained); } }
-
+        
+        [HideInInspector]
+        public IMLNodeTooltips tips;
 
         /// <summary>
         /// Reference to the rapidlib model this node is holding
@@ -148,6 +150,8 @@ namespace InteractML
             base.Init();
 
             Initialize();
+
+            tips = IMLTooltipsSerialization.LoadTooltip("Classification_MLS");
 
         }
 

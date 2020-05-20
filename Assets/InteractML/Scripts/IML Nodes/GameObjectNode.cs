@@ -18,7 +18,10 @@ namespace InteractML
         [HideInInspector]
         public bool GameObjMissing;
         [HideInInspector]
-        public bool state; 
+        public bool state;
+
+        [HideInInspector]
+        public IMLNodeTooltips tips;
 
         // Use this for initialization
         protected override void Init()
@@ -31,6 +34,8 @@ namespace InteractML
                 MLController.SceneComponent.GetAllNodes();
                
             }
+
+            tips = IMLTooltipsSerialization.LoadTooltip("GameObject");
         }
 
         public void OnDestroy()

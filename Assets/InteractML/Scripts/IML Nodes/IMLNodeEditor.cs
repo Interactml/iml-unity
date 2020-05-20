@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using XNodeEditor.Internal;
+using InteractML;
 #if UNITY_EDITOR
 using UnityEditor;
 using XNodeEditor;
@@ -71,6 +72,8 @@ namespace InteractML
         public Vector2 positionPort;
 
         string description;
+
+        private Rect m_HelpRect;
 
         #endregion
 
@@ -217,23 +220,40 @@ namespace InteractML
         {
             Debug.Log("need to implement in node editor file");
         }
-        protected void HelpButton(string name)
+        protected void HelpButton(string description)
         {
-            DescriptionFinder(name);
-            GUILayout.Button(new GUIContent("Help", description), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
-            GUI.Label(new Rect(10, 40, 100, 40), GUI.tooltip);
+            
         }
 
-        public void DescriptionFinder(string name)
+       /* public void DrawHelpButtonLayout(Rect m_ButtonsRect, Rect m_PortRect, Rect m_IconsRect)
         {
-            if (name == "InteractML.CRIMLConfigurationEditor")
-            {
-                description = "Teach the Machine node is where you record examples of the movement that you want to be recognised, where you record the training data. It is through this node you set the number of outputs, their format and record examples of movement. This node is connected to one or more extractors through its input port. It is attached to IML Configuration through its output port. ";
-            } else if(name == "InteractML.SeriesTrainingExamplesNodeEditor")
-            {
-                description = "Teach the Machine node is where you record examples of the movement that you want to be recognised, where you record the training data. It is through this node you set the number of outputs, their format and record examples of movement. This node is connected to one or more extractors through its input port. It is attached to IML Configuration through its output port. ";
-            }
+            m_HelpRect.x = 5;
+            m_ButtonsRect.height = m_ButtonsRect.height + 15;
+            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_IconsRect.height + m_ButtonsRect.height;
+            m_HelpRect.width = NodeWidth - 10;
+            m_HelpRect.height = 40;
+
+            // Draw body background purple rect below ports
+            GUI.DrawTexture(m_HelpRect, NodeColor);
         }
+
+        public void ShowHelpButton(string name)
+        {
+            m_HelpRect.x = m_HelpRect.x + 20;
+            m_HelpRect.y = m_HelpRect.y + 10;
+            m_HelpRect.width = m_HelpRect.width - 40;
+
+            GUILayout.BeginArea(m_HelpRect);
+            GUILayout.BeginHorizontal();
+            //GUILayout.Label("advanced options", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"));
+            GUILayout.Label("");
+            IMLNodeTooltips tip = IMLTooltipsSerialization.LoadTooltip(name);
+            HelpButton(tip.HelpTooltip);
+            GUILayout.EndHorizontal();
+            GUILayout.EndArea();
+        }*/
+
+
         #endregion
 
     }
