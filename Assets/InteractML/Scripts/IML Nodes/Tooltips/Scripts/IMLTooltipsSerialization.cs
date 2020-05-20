@@ -8,7 +8,7 @@ using System;
 
 namespace InteractML
 {
-    public class IMLTooltipsSerialization : MonoBehaviour
+    public static class IMLTooltipsSerialization
     {
         private static string m_FolderPath = "InteractML/Data/Tooltips/";
         private static string m_DataPath;
