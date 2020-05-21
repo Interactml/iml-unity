@@ -22,6 +22,7 @@ namespace InteractML
         private Rect m_BodyRect;
         private Rect m_PortRect;
         private Rect m_HelpRect;
+        private Rect m_ToolRect;
 
         Editor gameObjectEditor;
         GUIStyle stylePreview;
@@ -34,6 +35,10 @@ namespace InteractML
         Texture2D m_NoMeshTexture;
         float m_TexHeightMultiplier = 0.45f;
 
+        string tooltip = "";
+        //bool tooltipOn = true;
+        int counter = 0;
+        int count = 2;
 
         public override void OnHeaderGUI()
         {
@@ -63,6 +68,11 @@ namespace InteractML
 
         public override void OnBodyGUI()
         {
+            if (toolTipOn)
+            {
+                ShowTooltip(m_ToolRect, m_HelpRect, m_GameObjectNode.tips.HelpTooltip);
+                Debug.Log(toolTipOn);
+            }
             // Draw Port Section
             DrawPortLayout();
             ShowGameObjectNodePorts();
@@ -74,7 +84,10 @@ namespace InteractML
 
             // Draw help button
             DrawHelpButtonLayout();
-            ShowHelpButton();
+            ShowHelpButton(m_HelpRect);
+            
+                
+            
         }
 
         /// <summary>
@@ -153,6 +166,7 @@ namespace InteractML
             // Only draw the label if the object is not null
             if (gObj != null)
             {
+
                 EditorGUILayout.LabelField(gObj.name, new GUIStyle(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label")) { alignment = TextAnchor.MiddleLeft });
                 EditorGUILayout.Space();
                 EditorGUILayout.Space();
@@ -234,25 +248,10 @@ namespace InteractML
 
         }
 
-        /// <summary>
-        /// Display help button
-        /// </summary>
-        private void ShowHelpButton()
-        {
-            m_HelpRect.x = m_HelpRect.x + 20;
-            m_HelpRect.y = m_HelpRect.y + 10;
-            m_HelpRect.width = m_HelpRect.width - 40;
 
-            GUILayout.BeginArea(m_HelpRect);
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("");
-            Vector3 mouse = Input.mousePosition;
-            GUILayout.Button(new GUIContent("Help", m_GameObjectNode.tips.HelpTooltip), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
-            Rect rect = new Rect(mouse.x, mouse.y, 100, 100);
 
-            GUILayout.EndHorizontal();
-            GUILayout.EndArea();
-        }
+ 
+
     }
 
 }

@@ -30,6 +30,7 @@ namespace InteractML
         private Rect m_RightIconRect;
         private Rect m_ButtonsRect;
         private Rect m_HelpRect;
+        private Rect m_ToolRect;
 
         
 
@@ -74,6 +75,12 @@ namespace InteractML
 
         public override void OnBodyGUI()
         {
+            if (toolTipOn)
+            {
+                ShowTooltip(m_ToolRect, m_HelpRect, m_CRIMLConfiguration.tips.HelpTooltip);
+                Debug.Log(toolTipOn);
+            }
+
             DrawPortLayout();
             ShowSystemNodePorts();
 
@@ -85,7 +92,7 @@ namespace InteractML
 
             // Draw help button
             DrawHelpButtonLayout();
-            ShowHelpButton();
+            ShowHelpButton(m_HelpRect);
 
         }
 
@@ -318,20 +325,7 @@ namespace InteractML
             }
 
         }
-        
-        private void ShowHelpButton()
-        {
-            m_HelpRect.x = m_HelpRect.x + 20;
-            m_HelpRect.y = m_HelpRect.y + 10;
-            m_HelpRect.width = m_HelpRect.width - 40;
-
-            GUILayout.BeginArea(m_HelpRect);
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("");
-            HelpButton(m_CRIMLConfiguration.tips.HelpTooltip);
-            GUILayout.EndHorizontal();
-            GUILayout.EndArea();
-        }
+    
     }
 }
 

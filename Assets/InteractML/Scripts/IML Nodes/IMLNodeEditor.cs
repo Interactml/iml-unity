@@ -73,7 +73,8 @@ namespace InteractML
 
         string description;
 
-        private Rect m_HelpRect;
+
+        public bool toolTipOn;
 
         #endregion
 
@@ -225,33 +226,62 @@ namespace InteractML
             
         }
 
-       /* public void DrawHelpButtonLayout(Rect m_ButtonsRect, Rect m_PortRect, Rect m_IconsRect)
-        {
-            m_HelpRect.x = 5;
-            m_ButtonsRect.height = m_ButtonsRect.height + 15;
-            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_IconsRect.height + m_ButtonsRect.height;
-            m_HelpRect.width = NodeWidth - 10;
-            m_HelpRect.height = 40;
+        /* public void DrawHelpButtonLayout(Rect m_ButtonsRect, Rect m_PortRect, Rect m_IconsRect)
+         {
+             m_HelpRect.x = 5;
+             m_ButtonsRect.height = m_ButtonsRect.height + 15;
+             m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_IconsRect.height + m_ButtonsRect.height;
+             m_HelpRect.width = NodeWidth - 10;
+             m_HelpRect.height = 40;
 
-            // Draw body background purple rect below ports
-            GUI.DrawTexture(m_HelpRect, NodeColor);
-        }
+             // Draw body background purple rect below ports
+             GUI.DrawTexture(m_HelpRect, NodeColor);
+         }*/
 
-        public void ShowHelpButton(string name)
+        public void ShowHelpButton(Rect m_HelpRect)
         {
             m_HelpRect.x = m_HelpRect.x + 20;
             m_HelpRect.y = m_HelpRect.y + 10;
             m_HelpRect.width = m_HelpRect.width - 40;
 
+            Vector3 mouse = Input.mousePosition;
+
+
             GUILayout.BeginArea(m_HelpRect);
             GUILayout.BeginHorizontal();
-            //GUILayout.Label("advanced options", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"));
             GUILayout.Label("");
-            IMLNodeTooltips tip = IMLTooltipsSerialization.LoadTooltip(name);
-            HelpButton(tip.HelpTooltip);
+            GUILayout.Button(new GUIContent("Help"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
+            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition) && Event.current.type == EventType.Repaint)
+            {
+                toolTipOn = true;
+            }
+            else if (Event.current.type == EventType.Repaint && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                toolTipOn = false;
+
+            }
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
-        }*/
+        }
+
+        public void ShowTooltip(Rect m_ToolRect, Rect m_HelpRect, string tip)
+        {
+            m_ToolRect.x = m_HelpRect.x;
+            m_ToolRect.y = m_HelpRect.y + m_HelpRect.height;
+            m_ToolRect.width = m_HelpRect.width - 40;
+            m_ToolRect.height = m_HelpRect.height;
+            Debug.Log("here");
+            Vector3 mouse = Input.mousePosition;
+
+
+            GUILayout.BeginArea(m_ToolRect);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(tip);
+
+            GUILayout.EndHorizontal();
+            GUILayout.EndArea();
+
+        }
 
 
         #endregion
