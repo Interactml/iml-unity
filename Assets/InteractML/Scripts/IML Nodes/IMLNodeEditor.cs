@@ -266,12 +266,12 @@ namespace InteractML
 
         public void ShowTooltip(Rect m_ToolRect, Rect m_HelpRect, string tip)
         {
-            m_ToolRect.x = m_HelpRect.x;
-            m_ToolRect.y = m_HelpRect.y + m_HelpRect.height;
+            Vector3 mouse = Input.mousePosition;
+            m_ToolRect.x = mouse.x + 10;
+            m_ToolRect.y = mouse.y + 10;
             m_ToolRect.width = m_HelpRect.width - 40;
             m_ToolRect.height = m_HelpRect.height;
-            Debug.Log("here");
-            Vector3 mouse = Input.mousePosition;
+            
 
 
             GUILayout.BeginArea(m_ToolRect);

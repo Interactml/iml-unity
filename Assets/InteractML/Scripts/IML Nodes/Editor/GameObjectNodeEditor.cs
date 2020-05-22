@@ -71,7 +71,6 @@ namespace InteractML
             if (toolTipOn)
             {
                 ShowTooltip(m_ToolRect, m_HelpRect, m_GameObjectNode.tips.HelpTooltip);
-                Debug.Log(toolTipOn);
             }
             // Draw Port Section
             DrawPortLayout();
