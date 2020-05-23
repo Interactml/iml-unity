@@ -135,6 +135,11 @@ namespace InteractML
             Initialize();   
         }
 
+        public override void OnCreateConnection(NodePort from, NodePort to)
+        {
+            this.DisconnectIfNotType<TrainingExamplesNode, IFeatureIML>(from, to);
+        }
+
         // Return the correct value of an output port when requested
         public override object GetValue(NodePort port)
         {
