@@ -17,7 +17,7 @@ namespace InteractML
         
         public enum CR_LearningChoice { Classification, Regression};
         public CR_LearningChoice learningChoice;
-        
+
         #endregion
 
         #region XNode Messages
@@ -164,7 +164,44 @@ namespace InteractML
             }
         }
 
-#endregion
+        /// <summary>
+        /// Override training Examples to only check for the single training examples type
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="portName"></param>
+        protected override void CheckTrainingExamplesConnections(NodePort from, NodePort to, string portName)
+        {
+            // Evaluate the nodeport for training examples
+            if (to.fieldName == portName)
+            {
+                // Check if the node connected was a training examples node
+                bool isNotTrainingExamplesNode = this.DisconnectIfNotType<CRIMLConfiguration, SingleTrainingExamplesNode>(from, to);
+
+                // If we broke the connection...
+                if (isNotTrainingExamplesNode)
+                {
+                    // Prepare flag to show error regarding training examples
+                    m_ErrorWrongInputTrainingExamplesPort = true;
+                }
+                // If we accept the connection...
+                else
+                {
+                    SingleTrainingExamplesNode examplesNode = from.node as SingleTrainingExamplesNode;
+                    // We check that the connection is from a training examples node
+                    if (examplesNode != null)
+                    {
+                        // Update dynamic ports for output
+                        AddDynamicOutputPorts(examplesNode, ref m_DynamicOutputPorts);
+                    }
+
+                }
+
+            }
+
+        }
+
+        #endregion
 
     }
 }

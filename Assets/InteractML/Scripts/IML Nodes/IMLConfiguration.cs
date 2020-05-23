@@ -54,7 +54,7 @@ namespace InteractML
         [SerializeField, HideInInspector]
         protected List<IMLSpecifications.OutputsEnum> m_ExpectedOutputList;
         public List<IMLSpecifications.OutputsEnum> ExpectedOutputList { get { return m_ExpectedOutputList; } }
-        private List<NodePort> m_DynamicOutputPorts;
+        protected List<NodePort> m_DynamicOutputPorts;
 
 
         /// <summary>
@@ -137,8 +137,12 @@ namespace InteractML
         [HideInInspector]
         public bool RunOnAwake;
 
+        /* NODEPORT NAMES */
+        protected string m_TrainingExamplesNodeportName;
+        protected string m_LiveFeaturesNodeportName;
+
         /* ERROR FLAGS */
-        private bool m_ErrorWrongInputTrainingExamplesPort;
+        protected bool m_ErrorWrongInputTrainingExamplesPort;
 
         #endregion
 
@@ -209,26 +213,11 @@ namespace InteractML
 
             m_NodeConnectionChanged = true;
 
-            // If it was a connection to this node and the field is the training examples input port...
-            if (to.node is IMLConfiguration && to.fieldName == "IMLTrainingExamplesNodes")
-            {
-                TrainingExamplesNode examplesNode = from.node as TrainingExamplesNode;
-                // We check that the connection is from a training examples node
-                if (examplesNode != null)
-                {
-                    // Update dynamic ports for output
-                    AddDynamicOutputPorts(examplesNode, ref m_DynamicOutputPorts);
-                }
-                // If not, we break connection
-                else
-                {
-                    from.Disconnect(to);
-                    // Prepare flag to 
-                    m_ErrorWrongInputTrainingExamplesPort = true;
-                }
-            }
+            // Evaluate the nodeport for training examples
+            CheckTrainingExamplesConnections(from, to, m_TrainingExamplesNodeportName);
 
-            Debug.Log("Connection to port " + to.node.name + " created!");
+            // Evaluate nodeport for real-time features
+            CheckInputFeaturesConnections(from, to, m_LiveFeaturesNodeportName);
 
             // We call logic for adapting arrays and inputs/outputs for ML models
             // Create input feature vector for realtime rapidlib predictions
@@ -343,6 +332,9 @@ namespace InteractML
             // Create rapidlib predicted output vector
             CreateRapidLibOutputVector();
 
+            // Specify the names for the nodeports
+            m_TrainingExamplesNodeportName = "IMLTrainingExamplesNodes";
+            m_LiveFeaturesNodeportName = "InputFeatures";
         }
 
         /// <summary>
@@ -1434,7 +1426,51 @@ namespace InteractML
             m_ErrorWrongInputTrainingExamplesPort = value;
         }
 
-#endregion
+        protected virtual void CheckTrainingExamplesConnections(NodePort from, NodePort to, string portName)
+        {            
+            // Evaluate the nodeport for training examples
+            if (to.fieldName == portName)
+            {
+                // Check if the node connected was a training examples node
+                bool isNotTrainingExamplesNode = this.DisconnectIfNotType<IMLConfiguration, TrainingExamplesNode>(from, to);
+
+                // If we broke the connection...
+                if (isNotTrainingExamplesNode)
+                {
+                    // Prepare flag to show error regarding training examples
+                    m_ErrorWrongInputTrainingExamplesPort = true;
+                }
+                // If we accept the connection...
+                else
+                {
+                    TrainingExamplesNode examplesNode = from.node as TrainingExamplesNode;
+                    // We check that the connection is from a training examples node
+                    if (examplesNode != null)
+                    {
+                        // Update dynamic ports for output
+                        AddDynamicOutputPorts(examplesNode, ref m_DynamicOutputPorts);
+                    }
+                }
+            }
+        }
+
+        protected virtual void CheckInputFeaturesConnections(NodePort from, NodePort to, string portName)
+        {
+            // Evaluate nodeport for real-time features
+            if (to.fieldName == portName)
+            {
+                // Only accept IFeaturesIML
+                bool connectionBroken = this.DisconnectIfNotType<IMLConfiguration, IFeatureIML>(from, to);
+
+                if (connectionBroken)
+                {
+                    // TO DO
+                    // DISPLAY ERROR, not a feature connected
+                }
+            }
+        }
+
+        #endregion
 
     }
 }
