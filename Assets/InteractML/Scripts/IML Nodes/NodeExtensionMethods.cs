@@ -94,7 +94,15 @@ namespace InteractML
             return disconnect;
         }
 
-        public static bool DisconnectIfNotSameDataType<T> (this BaseDataTypeNode<T> node, NodePort from, NodePort to)
+        /// <summary>
+        /// Disconnects two nodes if two Data Type Nodes are not exactly the same
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="node"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
+        public static bool DisconnectIfNotSameDataTypeNode<T> (this BaseDataTypeNode<T> node, NodePort from, NodePort to)
         {
             bool disconnect = false;
             // Check if types are matching
@@ -113,6 +121,40 @@ namespace InteractML
                     from.Disconnect(to);
                     disconnect = true;
                 }
+            }
+
+            return disconnect;
+        }
+
+        /// <summary>
+        /// Disconnect a Feature Extractor from a Data Type Node if the feature extracted doesn't match our expected type
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="node"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="expectedType"></param>
+        /// <returns></returns>
+        public static bool DisconnectIfNotSameIMLDataType<T>(this BaseDataTypeNode<T> node, NodePort from, NodePort to, IMLSpecifications.DataTypes expectedType)
+        {
+            // Make sure that the IFeatureIML connected is matching our type
+            bool disconnect = false;
+            var featureConnected = from.node as IFeatureIML;
+            // If it is a feature...
+            if (featureConnected != null)
+            {
+                // Check that dataType is the same as the expected one
+                if (featureConnected.FeatureValues.DataType != expectedType)
+                {
+                    from.Disconnect(to);
+                    disconnect = true;
+                }
+            }
+            // Not a feature
+            else
+            {
+                from.Disconnect(to);
+                disconnect = true;
             }
 
             return disconnect;

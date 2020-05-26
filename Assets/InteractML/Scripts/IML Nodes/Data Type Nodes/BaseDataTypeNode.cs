@@ -67,7 +67,7 @@ namespace InteractML.DataTypeNodes
             {
 
                 // Disconnect if it is a feature data type but not the same data type...
-                this.DisconnectIfNotSameDataType(from, to);
+                this.DisconnectIfNotSameDataTypeNode(from, to);
             }
 
         }

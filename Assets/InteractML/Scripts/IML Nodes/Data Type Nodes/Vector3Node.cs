@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using XNode;
 
 namespace InteractML.DataTypeNodes
 {
@@ -40,6 +41,15 @@ namespace InteractML.DataTypeNodes
             base.Init();
         }
 
+        // Check that a feature connected is of the right type
+        public override void OnCreateConnection(NodePort from, NodePort to)
+        {
+            base.OnCreateConnection(from, to);
+
+            // Make sure that the IFeatureIML connected is matching our type
+            this.DisconnectIfNotSameIMLDataType(from, to, IMLSpecifications.DataTypes.Vector3);
+
+        }
 
         /// <summary>
         /// Updates Feature values
