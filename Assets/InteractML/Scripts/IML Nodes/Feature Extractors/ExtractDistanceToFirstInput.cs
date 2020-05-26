@@ -11,7 +11,7 @@ namespace InteractML.FeatureExtractors
     /// Extracts the distance from one or several features to another one (i.e. fingers to the palm of the hand)
     /// </summary>
     [NodeWidth(250)]
-    public class ExtractDistanceToFirstInput : Node, IFeatureIML
+    public class ExtractDistanceToFirstInput : BaseExtractorNode, IFeatureIML
     {
         /// <summary>
         /// The feature that has been previously extracted and from which we are calculating the distance from (i.e. position, rotation, etc)
@@ -85,6 +85,11 @@ namespace InteractML.FeatureExtractors
         public override object GetValue(NodePort port)
         {
             return UpdateFeature();
+        }
+
+        public override void OnCreateConnection(NodePort from, NodePort to)
+        {
+            base.OnCreateConnection(from, to);
         }
 
         public object UpdateFeature()

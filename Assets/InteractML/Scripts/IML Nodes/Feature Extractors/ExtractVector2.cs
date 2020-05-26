@@ -11,7 +11,7 @@ namespace InteractML.FeatureExtractors
     /// </summary>
     [NodeTint("#3A3B5B")]
     [NodeWidth(250)]
-    public class ExtractVector2 : Node, IFeatureIML
+    public class ExtractVector2 : BaseExtractorNode, IFeatureIML
     {
 
 

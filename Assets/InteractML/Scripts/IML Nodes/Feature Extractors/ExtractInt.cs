@@ -12,7 +12,7 @@ namespace InteractML.FeatureExtractors
     /// </summary>
     [NodeTint("#3A3B5B")]
     [NodeWidth(250)]
-    public class ExtractInt : Node, IFeatureIML
+    public class ExtractInt : BaseExtractorNode, IFeatureIML
     {
         /// <summary>
         /// Dummy float from which we extract a feature

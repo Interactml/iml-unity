@@ -10,7 +10,7 @@ namespace InteractML.FeatureExtractors
     /// Feature extractor for rotations
     /// </summary>
     [NodeWidth(250)]
-    public class ExtractRotation : Node, IFeatureIML
+    public class ExtractRotation : BaseExtractorNode, IFeatureIML
     {
         /// <summary>
         /// GameObject from which we extract a feature

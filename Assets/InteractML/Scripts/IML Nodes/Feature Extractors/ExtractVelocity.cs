@@ -10,7 +10,7 @@ namespace InteractML.FeatureExtractors
     /// Extract the velocity from any other Feature
     /// </summary>
     [NodeWidth(250)]
-    public class ExtractVelocity : Node, IFeatureIML
+    public class ExtractVelocity : BaseExtractorNode, IFeatureIML
     {
         /// <summary>
         /// The feature that has been previously extracted and from which we are calculating the velocity (i.e. position, rotation, etc)

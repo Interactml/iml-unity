@@ -10,7 +10,7 @@ namespace InteractML.FeatureExtractors
     /// Feature extractor for positions
     /// </summary>
     [NodeWidth(250)]
-    public class ExtractPosition : Node, IFeatureIML
+    public class ExtractPosition : BaseExtractorNode, IFeatureIML
     {
         /// <summary>
         /// GameObject from which we extract a feature
