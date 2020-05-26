@@ -121,7 +121,42 @@ namespace InteractML
             m_Model = new RapidlibModel(RapidlibModel.ModelType.DTW);
         }
 
-#endregion
+        /// <summary>
+        /// Override training Examples to only check for the single training examples type
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="portName"></param>
+        protected override void CheckTrainingExamplesConnections(NodePort from, NodePort to, string portName)
+        {
+            // Evaluate the nodeport for training examples
+            if (to.fieldName == portName)
+            {
+                // Check if the node connected was a training examples node
+                bool isNotTrainingExamplesNode = this.DisconnectIfNotType<DTWIMLConfiguration, SeriesTrainingExamplesNode>(from, to);
+
+                // If we broke the connection...
+                if (isNotTrainingExamplesNode)
+                {
+                    // Prepare flag to show error regarding training examples
+                    m_ErrorWrongInputTrainingExamplesPort = true;
+                }
+                // If we accept the connection...
+                else
+                {
+                    SeriesTrainingExamplesNode examplesNode = from.node as SeriesTrainingExamplesNode;
+                    // We check that the connection is from a training examples node
+                    if (examplesNode != null)
+                    {
+                        // Update dynamic ports for output
+                        AddDynamicOutputPorts(examplesNode, ref m_DynamicOutputPorts);
+                    }
+                }
+            }
+        }
+
+
+        #endregion
 
     }
 }
