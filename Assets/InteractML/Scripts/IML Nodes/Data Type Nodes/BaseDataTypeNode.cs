@@ -8,6 +8,8 @@ namespace InteractML.DataTypeNodes
 {
     public abstract class BaseDataTypeNode<T> : Node, IFeatureIML
     {
+        #region Variables
+
         public string ValueName;
 
         // Data variables
@@ -39,6 +41,10 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         bool IFeatureIML.isUpdated { get ; set; }
 
+        #endregion
+
+        #region XNode Messages
+
         // Use this for initialization
         protected override void Init()
         {
@@ -51,6 +57,24 @@ namespace InteractML.DataTypeNodes
             Out = Value;
             return Out;
         }
+
+        public override void OnCreateConnection(NodePort from, NodePort to)
+        {
+            // Only allow other features and same data type
+            bool disconnected = this.DisconnectIfNotType<BaseDataTypeNode<T>, IFeatureIML>(from, to);
+            // If it is a feature...
+            if (!disconnected)
+            {
+
+                // Disconnect if it is a feature data type but not the same data type...
+                this.DisconnectIfNotSameDataType(from, to);
+            }
+
+        }
+
+        #endregion
+
+        #region IFeature Methods
 
         /// <summary>
         /// This update fetches the input value connected to this data type node
@@ -75,5 +99,8 @@ namespace InteractML.DataTypeNodes
             // Return entire node to satisfy IFeatureIML requirements
             return this;
         }
+
+        #endregion
+
     }
 }
