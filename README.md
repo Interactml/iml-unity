@@ -16,6 +16,15 @@ InteractML is an Unity3d Plugin that enables developers to configure, train, and
 
 ### Limitations
 * Alpha stage
+* Anything not Windows/Mac not tested or currently supported
+* No Documentation (but working on it)
 
 ### Installation
 Download the master branch and open with Unity. The unitypackages released are heavily outdated and buggy!
+
+### Dependencies
+InteractML is built with 
+* [xNode] (https://github.com/Siccity/xNode) - xNode is visual node framework that lets you view and edit node graphs inside Unity.
+* [JsonNetForUnity] (https://assetstore.unity.com/packages/tools/input-management/json-net-for-unity-11347) - brings the power of Json and Bson serialization to Unity with support for 4.7.2 and up and is compatible with both .NET and IL2CPP backends.
+
+
