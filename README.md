@@ -24,7 +24,7 @@ Download the master branch and open with Unity. The unitypackages released are h
 
 ### Dependencies
 InteractML is built with 
-* [xNode] (https://github.com/Siccity/xNode) - xNode is visual node framework that lets you view and edit node graphs inside Unity.
-* [JsonNetForUnity] (https://assetstore.unity.com/packages/tools/input-management/json-net-for-unity-11347) - brings the power of Json and Bson serialization to Unity with support for 4.7.2 and up and is compatible with both .NET and IL2CPP backends.
+* [xNode](https://github.com/Siccity/xNode) - xNode is visual node framework that lets you view and edit node graphs inside Unity.
+* [JsonNetForUnity](https://assetstore.unity.com/packages/tools/input-management/json-net-for-unity-11347) - brings the power of Json and Bson serialization to Unity with support for 4.7.2 and up and is compatible with both .NET and IL2CPP backends.
 
 
