@@ -142,7 +142,7 @@ namespace InteractML.FeatureExtractors
             if (gameObjRef == null)
             {
                 // If the gameobject is null, we throw an error on the editor console
-                Debug.LogWarning("GameObject missing in Extract Position Node!");
+                //Debug.LogWarning("GameObject missing in Extract Position Node!");
             }
             else
             {
