@@ -16,6 +16,7 @@ namespace InteractML
     /// <summary>
     /// Super class to deal with node drawing
     /// </summary>
+    [CustomNodeEditor(typeof(IMLNode))]
     public class IMLNodeEditor : NodeEditor
     {
 
@@ -73,15 +74,113 @@ namespace InteractML
 
         string description;
 
-
         public bool toolTipOn;
+
+        /// <summary>
+        /// Controls whether or not the reskinning of the node is automatically handled in the base IMLNodeEditor class (false to have default xNode skin, true for new IML skin)
+        /// </summary>
+        public bool UIReskinAuto = true;
+
+        /// <summary>
+        /// Reference to this iml node
+        /// </summary>
+        private IMLNode m_IMLNode;
+
+        /// <summary>
+        /// The serialized representation of this IML Node
+        /// </summary>
+        private SerializedObject m_IMLNodeSerialized;
+
+        /// <summary>
+        /// The name for this node
+        /// </summary>
+        public string NodeName;
+
+        /// <summary>
+        /// Rects for node layout
+        /// </summary>
+        private Rect m_BodyRect;
+        private Rect m_PortRect;
+        private Rect m_InnerBodyRect;
+        private Rect m_HelpRect;
+
 
         #endregion
 
+        #region XNode Messages
 
+        public override void OnHeaderGUI()
+        {
+            // If we want to reskin the node
+            if (UIReskinAuto)
+            {
+                // Get references
+                m_IMLNode = target as IMLNode;
+                m_IMLNodeSerialized = new SerializedObject(m_IMLNode);
+                
+                // Initialise header background Rects
+                InitHeaderRects();
+
+                NodeColor = GetColorTextureFromHexString("#3A3B5B");
+
+                // Draw header background Rect
+                GUI.DrawTexture(HeaderRect, NodeColor);
+
+                // Draw line below header
+                GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
+
+                //Display Node name
+                if (String.IsNullOrEmpty(NodeName))
+                    NodeName = typeof(IMLNode).Name + "(Script)";
+                GUILayout.BeginArea(HeaderRect);
+                GUILayout.Space(10);
+                GUILayout.Label(NodeName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+                GUILayout.EndArea();
+
+                GUILayout.Label("", GUILayout.MinHeight(60));
+
+            }
+            // If we want to keep xNode's default skin
+            else
+            {
+                base.OnHeaderGUI();
+            }
+        }
+
+        public override void OnBodyGUI()
+        {
+            // If we want to reskin the node
+            if (UIReskinAuto)
+            {
+                // Unity specifically requires this to save/update any serial object.
+                // serializedObject.Update(); must go at the start of an inspector gui, and
+                // serializedObject.ApplyModifiedProperties(); goes at the end.
+                serializedObject.Update();
+
+                // Draw Port Section
+                DrawPortLayout();
+                ShowNodePorts();
+
+                // Draw Body Section
+                DrawBodyLayout();
+                ShowBodyFields();
+
+                // Draw help button
+                DrawHelpButtonLayout();
+                ShowHelpButton(m_HelpRect);
+
+                serializedObject.ApplyModifiedProperties();
+            }
+            // If we want to keep xNode's default skin
+            else
+            {
+                base.OnBodyGUI();
+            }
+        }
+
+        #endregion
 
         #region Methods
-
 
         public void InitHeaderRects()
         {
@@ -221,12 +320,13 @@ namespace InteractML
         {
             Debug.Log("need to implement in node editor file");
         }
+
         protected void HelpButton(string description)
         {
             
         }
 
-        /* public void DrawHelpButtonLayout(Rect m_ButtonsRect, Rect m_PortRect, Rect m_IconsRect)
+        public void DrawHelpButtonLayout(Rect m_ButtonsRect, Rect m_PortRect, Rect m_IconsRect)
          {
              m_HelpRect.x = 5;
              m_ButtonsRect.height = m_ButtonsRect.height + 15;
@@ -236,7 +336,7 @@ namespace InteractML
 
              // Draw body background purple rect below ports
              GUI.DrawTexture(m_HelpRect, NodeColor);
-         }*/
+         }
 
         public void ShowHelpButton(Rect m_HelpRect)
         {
@@ -280,6 +380,114 @@ namespace InteractML
 
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
+
+        }
+
+        /// <summary>
+        /// Define rect values for port section and paint textures based on rects 
+        /// </summary>
+        private void DrawPortLayout()
+        {
+            // Add x units to height per extra port
+            int numPorts = m_IMLNode.Ports.Count();
+            int extraHeight = numPorts * 3; 
+            
+            // Draw body background purple rect below header
+            m_PortRect.x = 5;
+            m_PortRect.y = HeaderRect.height;
+            m_PortRect.width = NodeWidth - 10;
+            m_PortRect.height = 60 + extraHeight;
+            GUI.DrawTexture(m_PortRect, NodeColor);
+
+            // Draw line below ports
+            GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), GetColorTextureFromHexString("#888EF7"));
+        }
+
+        /// <summary>
+        /// Define rect values for node body and paint textures based on rects 
+        /// </summary>
+        private void DrawBodyLayout()
+        {
+            m_BodyRect.x = 5;
+            m_BodyRect.y = HeaderRect.height + m_PortRect.height;
+            m_BodyRect.width = NodeWidth - 10;
+            m_BodyRect.height = 150;
+
+            // Draw body background purple rect below header
+            GUI.DrawTexture(m_BodyRect, NodeColor);
+        }
+
+        /// <summary>
+        /// Define rect values for node body and paint textures based on rects 
+        /// </summary>
+        private void DrawHelpButtonLayout()
+        {
+            m_HelpRect.x = 5;
+            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_BodyRect.height;
+            m_HelpRect.width = NodeWidth - 10;
+            m_HelpRect.height = 40;
+
+            // Draw body background purple rect below header
+            GUI.DrawTexture(m_HelpRect, NodeColor);
+
+            //Draw separator line
+            GUI.DrawTexture(new Rect(m_HelpRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_HelpRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+        }
+
+        /// <summary>
+        /// Show the input/output port fields 
+        /// </summary>
+        private void ShowNodePorts()
+        {
+            GUILayout.Space(5);
+
+            // Iterate through dynamic ports and draw them in the order in which they are serialized
+            GUIContent inputPortLabel;
+            GUIContent outputPortLabel;
+            foreach (XNode.NodePort dynamicPort in target.DynamicPorts)
+            {
+                if (NodeEditorGUILayout.IsDynamicPortListPort(dynamicPort)) continue;
+
+                GUILayout.BeginHorizontal();
+
+                if (dynamicPort.IsInput)
+                {
+                    inputPortLabel = new GUIContent(dynamicPort.fieldName);
+                    IMLNodeEditor.PortField(inputPortLabel, m_IMLNode.GetInputPort(dynamicPort.fieldName), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+
+                }
+                else if (dynamicPort.IsOutput)
+                {
+                    outputPortLabel = new GUIContent(dynamicPort.fieldName);
+                    IMLNodeEditor.PortField(outputPortLabel, m_IMLNode.GetOutputPort(dynamicPort.fieldName), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+
+                }          
+
+                GUILayout.EndHorizontal();
+
+            }
+
+            serializedObject.ApplyModifiedProperties();
+
+        }
+
+        /// <summary>
+        /// Shows all the property fields from the node
+        /// </summary>
+        private void ShowBodyFields()
+        {
+            string[] excludes = { "m_Script", "graph", "position", "ports" };
+
+            // Iterate through serialized properties and draw them like the Inspector (But with ports)
+            SerializedProperty iterator = serializedObject.GetIterator();
+            bool enterChildren = true;
+            EditorGUIUtility.labelWidth = LabelWidth;
+            while (iterator.NextVisible(enterChildren))
+            {
+                enterChildren = false;
+                if (excludes.Contains(iterator.name)) continue;
+                NodeEditorGUILayout.PropertyField(iterator, true);
+            }
 
         }
 

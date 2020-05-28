@@ -9,9 +9,19 @@ namespace InteractML
     /// <summary>
     /// Node that will show information about a script subscribed to an IML Controller (MonoBehaviour)
     /// </summary>
-    public class ScriptNode : Node
+    public class ScriptNode : IMLNode
     {
         #region Variables
+
+        [Input]
+        public float testIn;
+
+        [Input]
+        public float testIn2;
+
+        [Output]
+        public float testOut;
+
 
         /// <summary>
         /// The script we are referencing

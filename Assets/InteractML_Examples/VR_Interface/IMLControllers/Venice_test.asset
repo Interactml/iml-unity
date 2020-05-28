@@ -197,7 +197,7 @@ MonoBehaviour:
   DevMode: 0
   ValueName: HeadRotation
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 354.4, y: 11.9, z: 0}
+  m_Value: {x: 27.000002, y: 22.100002, z: 0.0000004791063}
   m_Out: {x: 0, y: 270.9, z: 0}
   ReceivingData: 0
   x_switch: 1
@@ -612,11 +612,44 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0b164965-1495-4b66-8888-8616eb78cdeb
   graph: {fileID: 11400000}
-  position: {x: -1096, y: -168}
+  position: {x: -968, y: -56}
   ports:
-    keys: []
-    values: []
+    keys:
+    - testIn
+    - testOut
+    - testIn2
+    values:
+    - _fieldName: testIn
+      _node: {fileID: 1513089919426697460}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: testOut
+      _node: {fileID: 1513089919426697460}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: testIn2
+      _node: {fileID: 1513089919426697460}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
+  testIn: 0
+  testIn2: 0
+  testOut: 0
   Script: {fileID: 0}
 --- !u!114 &2425597489889818063
 MonoBehaviour:
