@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using XNodeEditor.Internal;
 using InteractML;
+using XNode;
 #if UNITY_EDITOR
 using UnityEditor;
 using XNodeEditor;
@@ -82,6 +83,11 @@ namespace InteractML
         public bool UIReskinAuto = true;
 
         /// <summary>
+        /// The skin to use on the node
+        /// </summary>
+        private GUISkin m_NodeSkin;
+
+        /// <summary>
         /// Reference to this iml node
         /// </summary>
         private IMLNode m_IMLNode;
@@ -104,6 +110,19 @@ namespace InteractML
         private Rect m_InnerBodyRect;
         private Rect m_HelpRect;
 
+        /// <summary>
+        /// Number of input ports
+        /// </summary>
+        private int m_NumInputs;
+        /// <summary>
+        /// Number of output ports
+        /// </summary>
+        private int m_NumOutputs;
+
+        /// <summary>
+        /// List of port pairs to draw
+        /// </summary>
+        private List<IMLNodePortPair> m_PortPairs;
 
         #endregion
 
@@ -111,13 +130,17 @@ namespace InteractML
 
         public override void OnHeaderGUI()
         {
+            // Load node skin
+            if (m_NodeSkin == null)
+                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+
             // If we want to reskin the node
             if (UIReskinAuto)
             {
                 // Get references
                 m_IMLNode = target as IMLNode;
                 m_IMLNodeSerialized = new SerializedObject(m_IMLNode);
-                
+
                 // Initialise header background Rects
                 InitHeaderRects();
 
@@ -134,7 +157,7 @@ namespace InteractML
                     NodeName = typeof(IMLNode).Name + "(Script)";
                 GUILayout.BeginArea(HeaderRect);
                 GUILayout.Space(10);
-                GUILayout.Label(NodeName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+                GUILayout.Label(NodeName, m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
                 GUILayout.EndArea();
 
                 GUILayout.Label("", GUILayout.MinHeight(60));
@@ -297,6 +320,10 @@ namespace InteractML
 
         public void DataInToggle(Boolean dataIn, Rect m_InnerBodyRect, Rect m_BodyRect)
         {
+            // Load node skin
+            if (m_NodeSkin == null)
+                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+
             m_InnerBodyRect.x = m_BodyRect.x + 20;
             m_InnerBodyRect.y = m_BodyRect.y + 20;
             m_InnerBodyRect.width = m_BodyRect.width - 20;
@@ -306,11 +333,11 @@ namespace InteractML
 
             if (dataIn)
             {
-                DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Green Toggle"));
+                DrawPositionValueTogglesAndLabels(m_NodeSkin.GetStyle("Green Toggle"));
             }
             else
             {
-                DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Red Toggle"));
+                DrawPositionValueTogglesAndLabels(m_NodeSkin.GetStyle("Red Toggle"));
             }
 
             GUILayout.EndArea();
@@ -340,6 +367,10 @@ namespace InteractML
 
         public void ShowHelpButton(Rect m_HelpRect)
         {
+            // Load node skin
+            if (m_NodeSkin == null)
+                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+
             m_HelpRect.x = m_HelpRect.x + 20;
             m_HelpRect.y = m_HelpRect.y + 10;
             m_HelpRect.width = m_HelpRect.width - 40;
@@ -350,7 +381,7 @@ namespace InteractML
             GUILayout.BeginArea(m_HelpRect);
             GUILayout.BeginHorizontal();
             GUILayout.Label("");
-            GUILayout.Button(new GUIContent("Help"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
+            GUILayout.Button(new GUIContent("Help"), m_NodeSkin.GetStyle("Help Button"));
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition) && Event.current.type == EventType.Repaint)
             {
                 toolTipOn = true;
@@ -442,26 +473,76 @@ namespace InteractML
             GUILayout.Space(5);
 
             // Iterate through dynamic ports and draw them in the order in which they are serialized
+            // Init variables
             GUIContent inputPortLabel;
             GUIContent outputPortLabel;
-            foreach (XNode.NodePort dynamicPort in target.DynamicPorts)
+            IMLNodePortPair portPair = new IMLNodePortPair();
+            // Make sure port pair list is init
+            if (m_PortPairs == null)
+                m_PortPairs = new List<IMLNodePortPair>();
+            // Get number of ports to avoid reserving memory twice
+            if (m_NumInputs != target.Inputs.Count() || m_NumOutputs != target.Outputs.Count())
             {
-                if (NodeEditorGUILayout.IsDynamicPortListPort(dynamicPort)) continue;
+                // Update known number of ports
+                m_NumInputs = target.Inputs.Count();
+                m_NumOutputs = target.Outputs.Count();
+                // Get inputs and outputs ports
+                IEnumerator<NodePort> inputs = target.Inputs.GetEnumerator();
+                IEnumerator<NodePort> outputs = target.Outputs.GetEnumerator();
 
+                // while there are inputs...
+                while (inputs.MoveNext())
+                {
+                    // Add input to pair
+                    portPair.input = inputs.Current;
+                    // If there is an output...
+                    if (outputs.MoveNext())
+                    {
+                        // Add output to pair
+                        portPair.output = outputs.Current;
+                    }
+                    // Add pair to list
+                    m_PortPairs.Add(new IMLNodePortPair(portPair.input, portPair.output));
+                    // Reset pair for next use
+                    portPair.Reset();
+                }
+
+                // Check if there any outputs left (in case we have more outputs than inputs)
+                while (outputs.MoveNext())
+                {
+                    // Add output to pair
+                    portPair.output = outputs.Current;
+                    // Add pair to list (input will be null)
+                    m_PortPairs.Add(new IMLNodePortPair(portPair.input, portPair.output));
+                    // Reset pair for next use
+                    portPair.Reset();
+                }
+            }
+
+
+            // Go through port pairs to draw them together
+            foreach (var pair in m_PortPairs)
+            {
+
+                // Will draw them in a horizontal pair
                 GUILayout.BeginHorizontal();
 
-                if (dynamicPort.IsInput)
+                // Draw input (if any)
+                if (pair.input != null)
                 {
-                    inputPortLabel = new GUIContent(dynamicPort.fieldName);
-                    IMLNodeEditor.PortField(inputPortLabel, m_IMLNode.GetInputPort(dynamicPort.fieldName), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+                    if (NodeEditorGUILayout.IsDynamicPortListPort(pair.input)) continue;
+                    inputPortLabel = new GUIContent(pair.input.fieldName);
+                    IMLNodeEditor.PortField(inputPortLabel, m_IMLNode.GetInputPort(pair.input.fieldName), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
                 }
-                else if (dynamicPort.IsOutput)
+                // Draw output (if any)
+                if (pair.output != null)
                 {
-                    outputPortLabel = new GUIContent(dynamicPort.fieldName);
-                    IMLNodeEditor.PortField(outputPortLabel, m_IMLNode.GetOutputPort(dynamicPort.fieldName), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+                    if (NodeEditorGUILayout.IsDynamicPortListPort(pair.output)) continue;
+                    outputPortLabel = new GUIContent(pair.output.fieldName);
+                    IMLNodeEditor.PortField(outputPortLabel, m_IMLNode.GetOutputPort(pair.output.fieldName), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
-                }          
+                }
 
                 GUILayout.EndHorizontal();
 
@@ -485,8 +566,16 @@ namespace InteractML
             while (iterator.NextVisible(enterChildren))
             {
                 enterChildren = false;
+
                 if (excludes.Contains(iterator.name)) continue;
-                NodeEditorGUILayout.PropertyField(iterator, true);
+
+                XNode.Node node = iterator.serializedObject.targetObject as XNode.Node;
+                XNode.NodePort port = node.GetPort(iterator.name);
+
+                // Don't allow to draw ports (// TO DO, add ports to the list now?)
+                if (port != null) continue;
+
+                NodeEditorGUILayout.PropertyField(iterator, (NodePort) null, true );
             }
 
         }
