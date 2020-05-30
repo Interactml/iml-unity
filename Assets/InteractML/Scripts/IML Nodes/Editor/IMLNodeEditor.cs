@@ -574,8 +574,25 @@ namespace InteractML
 
                 // Don't allow to draw ports (// TO DO, add ports to the list now?)
                 if (port != null) continue;
+                
+                // Save original editorStyle 
+                Color originalContentColor = GUI.contentColor;
+                Color originalColor = EditorStyles.label.normal.textColor;
+                Font originalFont = EditorStyles.label.font;
+                int origianlFontSize = EditorStyles.label.fontSize;
+                
+                // Replace skin for entire editorStyle with custom
+                EditorStyles.label.normal.textColor = Color.white;
+                EditorStyles.label.font = m_NodeSkin.label.font;
+                EditorStyles.label.fontSize = 13;
 
+                // Draw property
                 NodeEditorGUILayout.PropertyField(iterator, (NodePort) null, true );
+
+                // Place original skin back to not mess other nodes
+                EditorStyles.label.normal.textColor = originalColor;
+                EditorStyles.label.font = originalFont;
+                EditorStyles.label.fontSize = origianlFontSize;
             }
 
         }
