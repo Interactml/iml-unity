@@ -420,14 +420,16 @@ namespace InteractML
         private void DrawPortLayout()
         {
             // Add x units to height per extra port
-            int numPorts = m_IMLNode.Ports.Count();
-            int extraHeight = numPorts * 3; 
+            if (m_PortPairs == null)
+                m_PortPairs = new List<IMLNodePortPair>();
+            int numPortPairs = m_PortPairs.Count; ;
+            int extraHeight = (numPortPairs * 5);
             
             // Draw body background purple rect below header
             m_PortRect.x = 5;
             m_PortRect.y = HeaderRect.height;
             m_PortRect.width = NodeWidth - 10;
-            m_PortRect.height = 60 + extraHeight;
+            m_PortRect.height = 50 + extraHeight;
             GUI.DrawTexture(m_PortRect, NodeColor);
 
             // Draw line below ports
@@ -563,6 +565,7 @@ namespace InteractML
             SerializedProperty iterator = serializedObject.GetIterator();
             bool enterChildren = true;
             EditorGUIUtility.labelWidth = LabelWidth;
+            GUILayout.Space(m_PortRect.height * 0.5f);
             while (iterator.NextVisible(enterChildren))
             {
                 enterChildren = false;
