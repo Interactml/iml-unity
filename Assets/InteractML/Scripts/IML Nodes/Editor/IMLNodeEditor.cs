@@ -157,7 +157,7 @@ namespace InteractML
                     NodeName = typeof(IMLNode).Name + "(Script)";
                 GUILayout.BeginArea(HeaderRect);
                 GUILayout.Space(10);
-                GUILayout.Label(NodeName, m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+                GUILayout.Label(NodeName, m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 50));
                 GUILayout.EndArea();
 
                 GUILayout.Label("", GUILayout.MinHeight(60));
