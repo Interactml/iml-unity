@@ -19,7 +19,7 @@ namespace InteractML
 
         public string[] PortTooltip { get; set; }
 
-        //public DoubleTooltip BodyTooltip { get; set; }
+        public DoubleTooltip BodyTooltip { get; set; }
 
         public string[] BottomError { get; set; }
 
