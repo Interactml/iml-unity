@@ -197,7 +197,7 @@ MonoBehaviour:
   DevMode: 0
   ValueName: HeadRotation
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 301, y: 346.1, z: 0}
+  m_Value: {x: 27.000002, y: 22.100002, z: 0.0000004791063}
   m_Out: {x: 0, y: 270.9, z: 0}
   ReceivingData: 0
   x_switch: 1
@@ -448,6 +448,7 @@ MonoBehaviour:
   - {fileID: -6337441871369638323}
   - {fileID: 2425597489889818063}
   - {fileID: -3047446936460491774}
+  - {fileID: 1513089919426697460}
   - {fileID: 0}
   SceneComponent: {fileID: 0}
 --- !u!114 &1128550350766650831
@@ -597,6 +598,59 @@ MonoBehaviour:
     - 1
   GameObjInputMissing: 0
   ReceivingData: 0
+--- !u!114 &1513089919426697460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
+  m_Name: Supply_Box(Clone)(Script)
+  m_EditorClassIdentifier: 
+  id: 0b164965-1495-4b66-8888-8616eb78cdeb
+  graph: {fileID: 11400000}
+  position: {x: -872, y: -40}
+  ports:
+    keys:
+    - testIn
+    - testOut
+    - testIn2
+    values:
+    - _fieldName: testIn
+      _node: {fileID: 1513089919426697460}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: testOut
+      _node: {fileID: 1513089919426697460}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: testIn2
+      _node: {fileID: 1513089919426697460}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  testIn: 0
+  testIn2: 0
+  testOut: 0
+  Script: {fileID: 0}
 --- !u!114 &2425597489889818063
 MonoBehaviour:
   m_ObjectHideFlags: 0

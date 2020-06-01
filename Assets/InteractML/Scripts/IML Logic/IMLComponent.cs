@@ -101,6 +101,7 @@ namespace InteractML
         /// </summary>
         //[Header("Components with IML Data to Fetch"), SerializeField]
         private List<MonoBehaviour> m_ComponentsWithIMLData;
+        private Dictionary<MonoBehaviour, ScriptNode> m_MonoBehavioursPerScriptNode;
         private Dictionary<FieldInfo, IMLFieldInfoContainer> m_DataContainersPerFieldInfo;
         private Dictionary<FieldInfo, MonoBehaviour> m_DataMonobehavioursPerFieldInfo;
 
@@ -640,6 +641,57 @@ namespace InteractML
             }
             foreach (var gameComponent in m_ComponentsWithIMLData)
             {
+                /* ADD SCRIPT NODE */
+                if (m_MonoBehavioursPerScriptNode == null)
+                    m_MonoBehavioursPerScriptNode = new Dictionary<MonoBehaviour, ScriptNode>();
+
+                // Check if the dictionary DOESN'T contain a fieldInfo for this reflected value, and then create nodes and dictionary values
+                if (!m_MonoBehavioursPerScriptNode.ContainsKey(gameComponent))
+                {
+                    ScriptNode scriptNode = null;
+
+                    // First, we try and see if the graph already contains a node we can use
+                    foreach (var node in MLController.nodes)
+                    {
+                        // We see if this node is of the right type
+                        if (node.GetType() == typeof(ScriptNode))
+                        {
+                            // We check if the node is available to use
+                            var isTaken = m_MonoBehavioursPerScriptNode.Values.Any(container => container.Script == gameComponent);
+                            // If the node is not taken...
+                            if (!isTaken)
+                            {
+                                // This will be our node!
+                                scriptNode = (ScriptNode)node;
+                                // Stop searching for nodes
+                                break;
+                            }
+                        }
+                    }
+
+                    // If we didn't find a suitable existing node...
+                    if (scriptNode == null)
+                    {
+                        // Create a new script node into the graph
+                        scriptNode = MLController.AddNode<ScriptNode>();
+#if UNITY_EDITOR
+                        // Save newnode to graph on disk                              
+                        AssetDatabase.AddObjectToAsset(scriptNode, MLController);
+                        // Reload graph into memory since we have modified it on disk
+                        AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+#endif
+                    }
+
+                    // Configure our node appropiately
+                    scriptNode.Script = gameComponent;
+                    scriptNode.name = gameComponent.name + "(Script)";
+
+
+                    // Add that to the dictionary            
+                    m_MonoBehavioursPerScriptNode.Add(gameComponent, scriptNode);
+
+                }
+
                 // Gets all fields information from the game component (using System.Reflection)
                 FieldInfo[] objectFields = gameComponent.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
 
