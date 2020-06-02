@@ -645,11 +645,11 @@ namespace InteractML
                 if (m_MonoBehavioursPerScriptNode == null)
                     m_MonoBehavioursPerScriptNode = new Dictionary<MonoBehaviour, ScriptNode>();
 
+                ScriptNode scriptNode = null;
+
                 // Check if the dictionary DOESN'T contain a fieldInfo for this reflected value, and then create nodes and dictionary values
                 if (!m_MonoBehavioursPerScriptNode.ContainsKey(gameComponent))
                 {
-                    ScriptNode scriptNode = null;
-
                     // First, we try and see if the graph already contains a node we can use
                     foreach (var node in MLController.nodes)
                     {
@@ -692,6 +692,16 @@ namespace InteractML
 
                 }
 
+                // Update ports if required
+                if (scriptNode)
+                {
+                    // Gets all fields information from the game component (using System.Reflection)
+                    FieldInfo[] serializedFields = gameComponent.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
+
+                    scriptNode.UpdatePortFields(serializedFields);
+                }
+
+                /* OLD FETCHING LOGIC */
                 // Gets all fields information from the game component (using System.Reflection)
                 FieldInfo[] objectFields = gameComponent.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
 

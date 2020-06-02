@@ -423,7 +423,7 @@ namespace InteractML
             if (m_PortPairs == null)
                 m_PortPairs = new List<IMLNodePortPair>();
             int numPortPairs = m_PortPairs.Count; ;
-            int extraHeight = (numPortPairs * 5);
+            int extraHeight = (numPortPairs * 10);
             
             // Draw body background purple rect below header
             m_PortRect.x = 5;
@@ -478,7 +478,6 @@ namespace InteractML
             // Init variables
             GUIContent inputPortLabel;
             GUIContent outputPortLabel;
-            IMLNodePortPair portPair = new IMLNodePortPair();
             // Make sure port pair list is init
             if (m_PortPairs == null)
                 m_PortPairs = new List<IMLNodePortPair>();
@@ -489,36 +488,10 @@ namespace InteractML
                 m_NumInputs = target.Inputs.Count();
                 m_NumOutputs = target.Outputs.Count();
                 // Get inputs and outputs ports
-                IEnumerator<NodePort> inputs = target.Inputs.GetEnumerator();
+                IEnumerator<NodePort> inputs = target.Inputs.GetEnumerator();                
                 IEnumerator<NodePort> outputs = target.Outputs.GetEnumerator();
-
-                // while there are inputs...
-                while (inputs.MoveNext())
-                {
-                    // Add input to pair
-                    portPair.input = inputs.Current;
-                    // If there is an output...
-                    if (outputs.MoveNext())
-                    {
-                        // Add output to pair
-                        portPair.output = outputs.Current;
-                    }
-                    // Add pair to list
-                    m_PortPairs.Add(new IMLNodePortPair(portPair.input, portPair.output));
-                    // Reset pair for next use
-                    portPair.Reset();
-                }
-
-                // Check if there any outputs left (in case we have more outputs than inputs)
-                while (outputs.MoveNext())
-                {
-                    // Add output to pair
-                    portPair.output = outputs.Current;
-                    // Add pair to list (input will be null)
-                    m_PortPairs.Add(new IMLNodePortPair(portPair.input, portPair.output));
-                    // Reset pair for next use
-                    portPair.Reset();
-                }
+                // Add them to the list
+                AddPairsToList(inputs, outputs, ref m_PortPairs);
             }
 
 
@@ -600,7 +573,44 @@ namespace InteractML
 
         }
 
+        /// <summary>
+        /// Add portPairs to a list passed in
+        /// </summary>
+        /// <param name="inputs"></param>
+        /// <param name="outputs"></param>
+        /// <param name="pairs"></param>
+        private void AddPairsToList(IEnumerator<NodePort> inputs, IEnumerator<NodePort> outputs, ref List<IMLNodePortPair> pairs)
+        {
+            IMLNodePortPair portPair = new IMLNodePortPair();
 
+            // while there are inputs...
+            while (inputs.MoveNext())
+            {
+                // Add input to pair
+                portPair.input = inputs.Current;
+                // If there is an output...
+                if (outputs.MoveNext())
+                {
+                    // Add output to pair
+                    portPair.output = outputs.Current;
+                }
+                // Add pair to list
+                pairs.Add(new IMLNodePortPair(portPair.input, portPair.output));
+                // Reset pair for next use
+                portPair.Reset();
+            }
+
+            // Check if there any outputs left (in case we have more outputs than inputs)
+            while (outputs.MoveNext())
+            {
+                // Add output to pair
+                portPair.output = outputs.Current;
+                // Add pair to list (input will be null)
+                pairs.Add(new IMLNodePortPair(portPair.input, portPair.output));
+                // Reset pair for next use
+                portPair.Reset();
+            }
+        }
         #endregion
 
     }
