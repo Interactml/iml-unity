@@ -99,8 +99,10 @@ namespace InteractML
         /// Add a Monobehaviour to this list and the IML Component will
         /// search for values marked with the "SendToIMLController" attribute
         /// </summary>
-        //[Header("Components with IML Data to Fetch"), SerializeField]
-        private List<MonoBehaviour> m_ComponentsWithIMLData;
+        [Header("Scripts to Track")]
+        [Tooltip("Add number of Scripts to use in the IML Controller and what they are here")]
+        [Rename("Script")]
+        public List<MonoBehaviour> ComponentsWithIMLData;
         private Dictionary<MonoBehaviour, ScriptNode> m_MonoBehavioursPerScriptNode;
         private Dictionary<FieldInfo, IMLFieldInfoContainer> m_DataContainersPerFieldInfo;
         private Dictionary<FieldInfo, MonoBehaviour> m_DataMonobehavioursPerFieldInfo;
@@ -635,17 +637,26 @@ namespace InteractML
         /// </summary>
         private void FetchDataFromMonobehavioursSubscribed()
         {
-            if (m_ComponentsWithIMLData == null || m_ComponentsWithIMLData.Count == 0)
+            if (ComponentsWithIMLData == null || ComponentsWithIMLData.Count == 0)
             {
                 return;
             }
-            foreach (var gameComponent in m_ComponentsWithIMLData)
+            for (int i = 0; i < ComponentsWithIMLData.Count; i++)
             {
+                var gameComponent = ComponentsWithIMLData[i];
+
                 /* ADD SCRIPT NODE */
                 if (m_MonoBehavioursPerScriptNode == null)
                     m_MonoBehavioursPerScriptNode = new Dictionary<MonoBehaviour, ScriptNode>();
 
                 ScriptNode scriptNode = null;
+
+                // If the gameComponent is null, then we remove it and continue to the next one
+                if (gameComponent == null)
+                {
+                    ComponentsWithIMLData.Remove(gameComponent);
+                    continue;
+                }
 
                 // Check if the dictionary DOESN'T contain a fieldInfo for this reflected value, and then create nodes and dictionary values
                 if (!m_MonoBehavioursPerScriptNode.ContainsKey(gameComponent))
@@ -706,9 +717,9 @@ namespace InteractML
                 FieldInfo[] objectFields = gameComponent.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
 
                 // Go through all the fields
-                for (int i = 0; i < objectFields.Length; i++)
+                for (int j = 0; j < objectFields.Length; j++)
                 {
-                    var fieldToUse = objectFields[i];
+                    var fieldToUse = objectFields[j];
 
                     // Check if the field is marked with the "SendToIMLController" attribute
                     SendToIMLController dataForIMLController = Attribute.GetCustomAttribute(fieldToUse, typeof(SendToIMLController)) as SendToIMLController;
@@ -1334,12 +1345,12 @@ namespace InteractML
             }
             else
             {
-                if (m_ComponentsWithIMLData == null)
-                    m_ComponentsWithIMLData = new List<MonoBehaviour>();
+                if (ComponentsWithIMLData == null)
+                    ComponentsWithIMLData = new List<MonoBehaviour>();
 
-                if (!m_ComponentsWithIMLData.Contains(gameComponent))
+                if (!ComponentsWithIMLData.Contains(gameComponent))
                 {
-                    m_ComponentsWithIMLData.Add(gameComponent);
+                    ComponentsWithIMLData.Add(gameComponent);
                 }
             }
         }
@@ -1357,10 +1368,10 @@ namespace InteractML
             }
             else
             {
-                if (m_ComponentsWithIMLData == null)
-                    m_ComponentsWithIMLData = new List<MonoBehaviour>();
+                if (ComponentsWithIMLData == null)
+                    ComponentsWithIMLData = new List<MonoBehaviour>();
 
-                if (m_ComponentsWithIMLData.Contains(gameComponent))
+                if (ComponentsWithIMLData.Contains(gameComponent))
                 {
                     // Before removing, make sure that the dictionaries and the IML Controller are updated with the changes
                     if (m_DataMonobehavioursPerFieldInfo.ContainsValue(gameComponent))
@@ -1392,7 +1403,7 @@ namespace InteractML
                     }
                     
                     // After all dictionaries are updated (and the ML grpah as well), remove gameComponent from list
-                    m_ComponentsWithIMLData.Remove(gameComponent);
+                    ComponentsWithIMLData.Remove(gameComponent);
                 }
             }
 
