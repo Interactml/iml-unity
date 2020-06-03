@@ -102,8 +102,8 @@ namespace InteractML
         [Header("Scripts to Track")]
         [Tooltip("Add number of Scripts to use in the IML Controller and what they are here")]
         [Rename("Script")]
-        public List<MonoBehaviour> ComponentsWithIMLData;
-        private Dictionary<MonoBehaviour, ScriptNode> m_MonoBehavioursPerScriptNode;
+        public List<IMLMonoBehaviourContainer> ComponentsWithIMLData;
+        private Dictionary<IMLMonoBehaviourContainer, ScriptNode> m_MonoBehavioursPerScriptNode;
         private Dictionary<FieldInfo, IMLFieldInfoContainer> m_DataContainersPerFieldInfo;
         private Dictionary<FieldInfo, MonoBehaviour> m_DataMonobehavioursPerFieldInfo;
 
@@ -643,23 +643,26 @@ namespace InteractML
             }
             for (int i = 0; i < ComponentsWithIMLData.Count; i++)
             {
-                var gameComponent = ComponentsWithIMLData[i];
+
+                var IMLGameComponentContainer = ComponentsWithIMLData[i];
+                var gameComponent = ComponentsWithIMLData[i].GameComponent;
 
                 /* ADD SCRIPT NODE */
                 if (m_MonoBehavioursPerScriptNode == null)
-                    m_MonoBehavioursPerScriptNode = new Dictionary<MonoBehaviour, ScriptNode>();
+                    m_MonoBehavioursPerScriptNode = new Dictionary<IMLMonoBehaviourContainer, ScriptNode>();
 
                 ScriptNode scriptNode = null;
 
                 // If the gameComponent is null, then we remove it and continue to the next one
                 if (gameComponent == null)
                 {
-                    ComponentsWithIMLData.Remove(gameComponent);
+                    m_MonoBehavioursPerScriptNode.Remove(IMLGameComponentContainer);
+                    ComponentsWithIMLData.Remove(IMLGameComponentContainer);
                     continue;
                 }
 
                 // Check if the dictionary DOESN'T contain a fieldInfo for this reflected value, and then create nodes and dictionary values
-                if (!m_MonoBehavioursPerScriptNode.ContainsKey(gameComponent))
+                if (!m_MonoBehavioursPerScriptNode.ContainsKey(IMLGameComponentContainer))
                 {
                     // First, we try and see if the graph already contains a node we can use
                     foreach (var node in MLController.nodes)
@@ -668,12 +671,26 @@ namespace InteractML
                         if (node.GetType() == typeof(ScriptNode))
                         {
                             // We check if the node is available to use
-                            var isTaken = m_MonoBehavioursPerScriptNode.Values.Any(container => container.Script == gameComponent);
+                            //var isTaken = m_MonoBehavioursPerScriptNode.Values.Any(container => container.Script == gameComponent);
+                            var foundScriptNode = (node as ScriptNode);
+                            bool isTaken = false;
+                            if (foundScriptNode.Script != null)
+                            {
+                                isTaken = !foundScriptNode.Script.Equals(gameComponent);
+                                // If the node is taken but we expect to control clones...
+                                if (isTaken && IMLGameComponentContainer.ControlClones)
+                                {
+                                    // We check if the script is attached to a clone
+                                    foundScriptNode.Script.gameObject.name.Contains("(Clone)");
+                                    // We take this as our node, since it is a clone of our original gameObject
+                                    isTaken = false;
+                                }
+                            }
                             // If the node is not taken...
                             if (!isTaken)
                             {
                                 // This will be our node!
-                                scriptNode = (ScriptNode)node;
+                                scriptNode = foundScriptNode;
                                 // Stop searching for nodes
                                 break;
                             }
@@ -699,7 +716,7 @@ namespace InteractML
 
 
                     // Add that to the dictionary            
-                    m_MonoBehavioursPerScriptNode.Add(gameComponent, scriptNode);
+                    m_MonoBehavioursPerScriptNode.Add(IMLGameComponentContainer, scriptNode);
 
                 }
 
@@ -1336,7 +1353,7 @@ namespace InteractML
         /// Pass a Monobehaviour and mark any field with "SendToIMLController" or "PullFromIMLController" attribute to use it with the IML Component
         /// </summary>
         /// <param name="gameComponent"></param>
-        public void SubscribeToIMLController(MonoBehaviour gameComponent)
+        public void SubscribeToIMLController(MonoBehaviour gameComponent, bool controlClones = false)
         {
             if (gameComponent == null)
             {
@@ -1346,11 +1363,12 @@ namespace InteractML
             else
             {
                 if (ComponentsWithIMLData == null)
-                    ComponentsWithIMLData = new List<MonoBehaviour>();
+                    ComponentsWithIMLData = new List<IMLMonoBehaviourContainer>();
 
-                if (!ComponentsWithIMLData.Contains(gameComponent))
+                var container = new IMLMonoBehaviourContainer(gameComponent, controlClones);
+                if (!ComponentsWithIMLData.Contains(container))
                 {
-                    ComponentsWithIMLData.Add(gameComponent);
+                    ComponentsWithIMLData.Add(container);
                 }
             }
         }
@@ -1359,7 +1377,7 @@ namespace InteractML
         /// Unsubscribes Monobehaviour from the list to use with the IMLController
         /// </summary>
         /// <param name="gameComponent"></param>
-        public void UnsubscribeFromIMLController(MonoBehaviour gameComponent)
+        public void UnsubscribeFromIMLController(MonoBehaviour gameComponent, bool controlClones = false)
         {
             if (gameComponent == null)
             {
@@ -1369,9 +1387,10 @@ namespace InteractML
             else
             {
                 if (ComponentsWithIMLData == null)
-                    ComponentsWithIMLData = new List<MonoBehaviour>();
+                    ComponentsWithIMLData = new List<IMLMonoBehaviourContainer>();
 
-                if (ComponentsWithIMLData.Contains(gameComponent))
+                var container = new IMLMonoBehaviourContainer(gameComponent, controlClones);
+                if (ComponentsWithIMLData.Contains(container))
                 {
                     // Before removing, make sure that the dictionaries and the IML Controller are updated with the changes
                     if (m_DataMonobehavioursPerFieldInfo.ContainsValue(gameComponent))
@@ -1403,11 +1422,13 @@ namespace InteractML
                     }
                     
                     // After all dictionaries are updated (and the ML grpah as well), remove gameComponent from list
-                    ComponentsWithIMLData.Remove(gameComponent);
+                    ComponentsWithIMLData.Remove(container);
                 }
             }
 
         }
+
+        #region Deletion of Nodes
 
         /// <summary>
         /// Removes GameObjectNode From GameObjectNodeList 
@@ -1464,6 +1485,22 @@ namespace InteractML
             if (FeatureNodesList.Contains(nodeToDelete))
                 FeatureNodesList.Remove(nodeToDelete);
         }
+
+        /// <summary>
+        /// Removes a script node from the IML Component
+        /// </summary>
+        /// <param name="node"></param>
+        public void DeleteScriptNode(ScriptNode node)
+        {
+            var container = new IMLMonoBehaviourContainer(node.Script);
+            if (ComponentsWithIMLData.Contains(container))
+                ComponentsWithIMLData.Remove(container);
+            if (m_MonoBehavioursPerScriptNode.ContainsKey(container))
+                m_MonoBehavioursPerScriptNode.Remove(container);
+        }
+
+        #endregion
+
         //Very dirty code need to sort it out in a better way - updates the node pointer when exiting or entering play mode 
         public void updateGameObjectImage()
         {

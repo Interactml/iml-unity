@@ -15,16 +15,6 @@ namespace InteractML
     {
         #region Variables
 
-        [Input]
-        public float testIn;
-
-        [Input]
-        public float testIn2;
-
-        [Output]
-        public float testOut;
-
-
         /// <summary>
         /// The script we are referencing
         /// </summary>
@@ -103,9 +93,9 @@ namespace InteractML
                         NodePort newPort = null;
                         // Add port to node
                         if (isInputData)
-                            newPort = AddDynamicInput(fieldToUse.FieldType, fieldName: fieldToUse.Name);
-                        else if (isOutputData)
                             newPort = AddDynamicOutput(fieldToUse.FieldType, fieldName: fieldToUse.Name);
+                        else if (isOutputData)
+                            newPort = AddDynamicInput(fieldToUse.FieldType, fieldName: fieldToUse.Name);
 
                         // Add that to the dictionary
                         m_PortsPerFieldInfo.Add(newPort, fieldToUse);

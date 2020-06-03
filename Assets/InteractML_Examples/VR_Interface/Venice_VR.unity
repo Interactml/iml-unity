@@ -1448,6 +1448,7 @@ MonoBehaviour:
   - {fileID: 1264141060}
   - {fileID: 6271278580769787271}
   FeaturesUpdated: 0
+  ComponentsWithIMLData: []
 --- !u!4 &138508039
 Transform:
   m_ObjectHideFlags: 0
@@ -4788,7 +4789,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &407313046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14902,7 +14903,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1153191667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24966,7 +24967,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2023318282
 MonoBehaviour:
   m_ObjectHideFlags: 0
