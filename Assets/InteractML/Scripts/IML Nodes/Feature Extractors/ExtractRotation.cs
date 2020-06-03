@@ -137,7 +137,7 @@ namespace InteractML.FeatureExtractors
                 if ((graph as IMLController).IsGraphRunning)
                 {
                     // If the gameobject is null, we throw an error on the editor console
-                    Debug.LogWarning("GameObject missing in Extract Rotation Node!");
+                    //Debug.LogWarning("GameObject missing in Extract Rotation Node!");
                 }
                 GameObjInputMissing = true;
             }
