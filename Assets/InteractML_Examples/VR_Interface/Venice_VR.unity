@@ -1448,7 +1448,11 @@ MonoBehaviour:
   - {fileID: 1264141060}
   - {fileID: 6271278580769787271}
   FeaturesUpdated: 0
-  ComponentsWithIMLData: []
+  ComponentsWithIMLData:
+  - GameComponent: {fileID: 44854767}
+    ControlClones: 0
+  - GameComponent: {fileID: 6271278580769787272}
+    ControlClones: 1
 --- !u!4 &138508039
 Transform:
   m_ObjectHideFlags: 0

@@ -102,7 +102,7 @@ namespace InteractML
         [Header("Scripts to Track")]
         [Tooltip("Add number of Scripts to use in the IML Controller and what they are here")]
         public List<IMLMonoBehaviourContainer> ComponentsWithIMLData;
-        private Dictionary<MonoBehaviour, ScriptNode> m_MonoBehavioursPerScriptNode;
+        private MonobehaviourScriptNodeDictionary m_MonoBehavioursPerScriptNode;
         private Dictionary<FieldInfo, IMLFieldInfoContainer> m_DataContainersPerFieldInfo;
         private Dictionary<FieldInfo, MonoBehaviour> m_DataMonobehavioursPerFieldInfo;
 
@@ -648,15 +648,13 @@ namespace InteractML
 
                 /* ADD SCRIPT NODE */
                 if (m_MonoBehavioursPerScriptNode == null)
-                    m_MonoBehavioursPerScriptNode = new Dictionary<MonoBehaviour, ScriptNode>();
+                    m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
 
                 ScriptNode scriptNode = null;
 
-                // If the gameComponent is null, then we remove it and continue to the next one
+                // If the gameComponent is null, we continue to the next one
                 if (gameComponent == null)
                 {
-                    m_MonoBehavioursPerScriptNode.Remove(IMLGameComponentContainer.GameComponent);
-                    ComponentsWithIMLData.Remove(IMLGameComponentContainer);
                     continue;
                 }
 
@@ -1149,6 +1147,14 @@ namespace InteractML
             else
                 m_RealtimeIMLOutputNodesList = new List<RealtimeIMLOutputNode>();
 
+        }
+
+        [ContextMenu("ClearScriptNodes")]
+        public void ClearScriptNodes()
+        {
+            if (m_MonoBehavioursPerScriptNode == null)
+                m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
+            m_MonoBehavioursPerScriptNode.Clear();
         }
 
         /// <summary>
