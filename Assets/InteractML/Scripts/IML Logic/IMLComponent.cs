@@ -101,9 +101,8 @@ namespace InteractML
         /// </summary>
         [Header("Scripts to Track")]
         [Tooltip("Add number of Scripts to use in the IML Controller and what they are here")]
-        [Rename("Script")]
         public List<IMLMonoBehaviourContainer> ComponentsWithIMLData;
-        private Dictionary<IMLMonoBehaviourContainer, ScriptNode> m_MonoBehavioursPerScriptNode;
+        private Dictionary<MonoBehaviour, ScriptNode> m_MonoBehavioursPerScriptNode;
         private Dictionary<FieldInfo, IMLFieldInfoContainer> m_DataContainersPerFieldInfo;
         private Dictionary<FieldInfo, MonoBehaviour> m_DataMonobehavioursPerFieldInfo;
 
@@ -649,20 +648,20 @@ namespace InteractML
 
                 /* ADD SCRIPT NODE */
                 if (m_MonoBehavioursPerScriptNode == null)
-                    m_MonoBehavioursPerScriptNode = new Dictionary<IMLMonoBehaviourContainer, ScriptNode>();
+                    m_MonoBehavioursPerScriptNode = new Dictionary<MonoBehaviour, ScriptNode>();
 
                 ScriptNode scriptNode = null;
 
                 // If the gameComponent is null, then we remove it and continue to the next one
                 if (gameComponent == null)
                 {
-                    m_MonoBehavioursPerScriptNode.Remove(IMLGameComponentContainer);
+                    m_MonoBehavioursPerScriptNode.Remove(IMLGameComponentContainer.GameComponent);
                     ComponentsWithIMLData.Remove(IMLGameComponentContainer);
                     continue;
                 }
 
                 // Check if the dictionary DOESN'T contain a fieldInfo for this reflected value, and then create nodes and dictionary values
-                if (!m_MonoBehavioursPerScriptNode.ContainsKey(IMLGameComponentContainer))
+                if (!m_MonoBehavioursPerScriptNode.ContainsKey(IMLGameComponentContainer.GameComponent))
                 {
                     // First, we try and see if the graph already contains a node we can use
                     foreach (var node in MLController.nodes)
@@ -676,14 +675,15 @@ namespace InteractML
                             bool isTaken = false;
                             if (foundScriptNode.Script != null)
                             {
-                                isTaken = !foundScriptNode.Script.Equals(gameComponent);
-                                // If the node is taken but we expect to control clones...
-                                if (isTaken && IMLGameComponentContainer.ControlClones)
+                                isTaken = true;
+                                bool isSameType = foundScriptNode.Script.GetType() == gameComponent.GetType();
+                                // If the node is of the same type but we expect to control clones...
+                                if (isSameType && IMLGameComponentContainer.ControlClones)
                                 {
                                     // We check if the script is attached to a clone
-                                    foundScriptNode.Script.gameObject.name.Contains("(Clone)");
-                                    // We take this as our node, since it is a clone of our original gameObject
-                                    isTaken = false;
+                                    if (foundScriptNode.Script.gameObject.name.Contains("(Clone)") )
+                                        // If it is a clone we consider it not taken
+                                        isTaken = false;
                                 }
                             }
                             // If the node is not taken...
@@ -716,7 +716,7 @@ namespace InteractML
 
 
                     // Add that to the dictionary            
-                    m_MonoBehavioursPerScriptNode.Add(IMLGameComponentContainer, scriptNode);
+                    m_MonoBehavioursPerScriptNode.Add(IMLGameComponentContainer.GameComponent, scriptNode);
 
                 }
 
@@ -1495,8 +1495,8 @@ namespace InteractML
             var container = new IMLMonoBehaviourContainer(node.Script);
             if (ComponentsWithIMLData.Contains(container))
                 ComponentsWithIMLData.Remove(container);
-            if (m_MonoBehavioursPerScriptNode.ContainsKey(container))
-                m_MonoBehavioursPerScriptNode.Remove(container);
+            if (m_MonoBehavioursPerScriptNode.ContainsKey(container.GameComponent))
+                m_MonoBehavioursPerScriptNode.Remove(container.GameComponent);
         }
 
         #endregion
