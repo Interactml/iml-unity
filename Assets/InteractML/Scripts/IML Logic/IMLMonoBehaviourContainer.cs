@@ -62,7 +62,7 @@ namespace InteractML
         private bool Equals(IMLMonoBehaviourContainer otherContainer)
         {
             if (otherContainer.GameComponent == null) return false;
-            return otherContainer.GameComponent.Equals(otherContainer);
+            return otherContainer.GameComponent.Equals(otherContainer.GameComponent);
         }
 
         // override object.GetHashCode

@@ -74,7 +74,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: ce49c674-abb7-4c25-bc58-f81cb856f802
   graph: {fileID: 11400000}
-  position: {x: -440, y: 936}
+  position: {x: -312, y: 888}
   ports:
     keys:
     - PushDirection
@@ -83,7 +83,10 @@ MonoBehaviour:
       _node: {fileID: -8275559839228124121}
       _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: m_Out
+        node: {fileID: 3732566680617633936}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -234,9 +237,9 @@ MonoBehaviour:
   DevMode: 0
   ValueName: HeadRotation
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 356.5, y: 5.200006, z: -0.000000013365141}
+  m_Value: {x: 49.10009, y: 49.89999, z: 0.0000026079792}
   m_Out: {x: 0, y: 270.9, z: 0}
-  ReceivingData: 1
+  ReceivingData: 0
   x_switch: 1
   y_switch: 1
   z_switch: 1
@@ -543,6 +546,7 @@ MonoBehaviour:
   - {fileID: 9010047069897992756}
   - {fileID: -8275559839228124121}
   - {fileID: 0}
+  - {fileID: 3732566680617633936}
   SceneComponent: {fileID: 0}
 --- !u!114 &1128550350766650831
 MonoBehaviour:
@@ -733,6 +737,56 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   float_switch: 1
+--- !u!114 &3732566680617633936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21d3e0c0b793d4c49809eebb28c24457, type: 3}
+  m_Name: Vector 3
+  m_EditorClassIdentifier: 
+  id: eec92372-7e15-4c84-a1dd-79a6634bb6c9
+  graph: {fileID: 11400000}
+  position: {x: -680, y: 856}
+  ports:
+    keys:
+    - m_In
+    - m_Out
+    values:
+    - _fieldName: m_In
+      _node: {fileID: 3732566680617633936}
+      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: m_Out
+      _node: {fileID: 3732566680617633936}
+      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: PushDirection
+        node: {fileID: -8275559839228124121}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  ValueName: 
+  m_In: {x: 0, y: 0, z: 0}
+  m_Value: {x: 0, y: 0, z: 0}
+  m_Out: {x: 0, y: 0, z: 0}
+  ReceivingData: 0
+  x_switch: 1
+  y_switch: 1
+  z_switch: 1
 --- !u!114 &4171497210022189394
 MonoBehaviour:
   m_ObjectHideFlags: 0
