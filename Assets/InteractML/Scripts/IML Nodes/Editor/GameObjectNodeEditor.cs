@@ -68,6 +68,7 @@ namespace InteractML
 
         public override void OnBodyGUI()
         {
+
             if (toolTipOn)
             {
                 ShowTooltip(m_ToolRect, m_HelpRect, m_GameObjectNode.tips.HelpTooltip);

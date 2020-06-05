@@ -28,6 +28,7 @@ namespace InteractML
         /// </summary>
         /// <returns></returns>
         protected Texture2D NodeColor { get; set; }
+        protected Texture2D NodeTooltipColor { get; set; }
 
         /// <summary>
         /// Texture2D  for line color
@@ -145,6 +146,7 @@ namespace InteractML
                 InitHeaderRects();
 
                 NodeColor = GetColorTextureFromHexString("#3A3B5B");
+                NodeTooltipColor = GetColorTextureFromHexString("#888EF7");
 
                 // Draw header background Rect
                 GUI.DrawTexture(HeaderRect, NodeColor);
@@ -241,6 +243,8 @@ namespace InteractML
             Vector2 position = Vector3.zero;
             GUIContent content = label != null ? label : new GUIContent(ObjectNames.NicifyVariableName(port.fieldName));
 
+
+
             // If property is an input, display a regular property field and put a port handle on the left side
             if (port.direction == XNode.NodePort.IO.Input)
             {
@@ -260,25 +264,6 @@ namespace InteractML
                 position = rect.position + new Vector2(rect.width, 0);
             }
             NodeEditorGUILayout.PortField(position, port);
-        }
-
-        public static void IMLNoodleDraw(Vector2 Out, Vector2 In)
-        {
-            Gradient grad = new Gradient();
-            Color a = hexToColor("#ffffff");
-            Color b = hexToColor("#000000");
-            grad.SetKeys(
-                new GradientColorKey[] { new GradientColorKey(a, 0f), new GradientColorKey(b, 1f) },
-                new GradientAlphaKey[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(1f, 1f) }
-                );
-            NoodlePath noodlePath = NodeEditorPreferences.GetSettings().noodlePath;
-            float noodleThickness = 10f;
-            NoodleStroke noodleStroke = NodeEditorPreferences.GetSettings().noodleStroke;
-            
-            List<Vector2> gridPoints = new List<Vector2>();
-            gridPoints.Add(Out);
-            gridPoints.Add(In);
-            //NodeEditorGUI.DrawNoodle(grad, noodlePath, noodleStroke, noodleThickness, gridPoints);
         }
 
         public static Color hexToColor(string hex)
@@ -397,17 +382,17 @@ namespace InteractML
 
         public void ShowTooltip(Rect m_ToolRect, Rect m_HelpRect, string tip)
         {
-            Vector3 mouse = Input.mousePosition;
-            m_ToolRect.x = mouse.x + 10;
-            m_ToolRect.y = mouse.y + 10;
-            m_ToolRect.width = m_HelpRect.width - 40;
-            m_ToolRect.height = m_HelpRect.height;
-            
-
+         
+            m_ToolRect.x = m_HelpRect.x;
+            m_ToolRect.y = m_HelpRect.y + m_HelpRect.height;
+            m_ToolRect.width = m_HelpRect.width;
+            m_ToolRect.height = m_HelpRect.height + 1000;
+            GUI.DrawTexture(m_ToolRect, NodeTooltipColor);
 
             GUILayout.BeginArea(m_ToolRect);
             GUILayout.BeginHorizontal();
-            GUILayout.Label(tip);
+            GUILayoutOption[] options = new GUILayoutOption[] { GUILayout.MinWidth(30) };
+            GUILayout.TextArea(tip, m_NodeSkin.GetStyle("Tooltip"), options);
 
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
@@ -434,6 +419,7 @@ namespace InteractML
 
             // Draw line below ports
             GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), GetColorTextureFromHexString("#888EF7"));
+            
         }
 
         /// <summary>
