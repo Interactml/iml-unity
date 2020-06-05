@@ -78,8 +78,15 @@ namespace InteractML
 
         string description;
 
-        public bool toolTipOn;
+        /// <summary>
+        /// Controls whether you see help tooltip
+        /// </summary>
+        public bool showHelp;
+        /// <summary>
+        /// Controls whether you see a port tooltip
+        /// </summary>
         public bool showPort = false;
+        
 
         /// <summary>
         /// Controls whether or not the reskinning of the node is automatically handled in the base IMLNodeEditor class (false to have default xNode skin, true for new IML skin)
@@ -372,11 +379,11 @@ namespace InteractML
             GUILayout.Button(new GUIContent("Help"), m_NodeSkin.GetStyle("Help Button"));
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
-                toolTipOn = true;
+                showHelp = true;
             }
             else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
-                toolTipOn = false;
+                showHelp = false;
 
             }
             GUILayout.EndHorizontal();
@@ -387,7 +394,6 @@ namespace InteractML
         {
             GUIStyle style = m_NodeSkin.GetStyle("Tooltip");
             var x = style.CalcHeight(new GUIContent(tip), m_HelpRect.width);
-            Debug.Log(x);
             //Debug.Log(m_HelpRect.width);
             m_ToolRect.x = m_HelpRect.x;
             m_ToolRect.y = m_HelpRect.y + m_HelpRect.height;
@@ -449,6 +455,11 @@ namespace InteractML
             }
 
             return test;
+        }
+
+        public bool IsThisButtonHovered()
+        {
+            return true;
         }
 
         /// <summary>

@@ -85,7 +85,7 @@ namespace InteractML
                 ShowTooltip(m_PortRect, TooltipText);
             }
             //if hovering over help show tooltip 
-            if (toolTipOn)
+            if (showHelp)
             {
                 ShowTooltip(m_HelpRect, m_GameObjectNode.tips.HelpTooltip);
             }
