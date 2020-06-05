@@ -385,17 +385,20 @@ namespace InteractML
 
         public void ShowTooltip(Rect m_HelpRect, string tip)
         {
-         
+            GUIStyle style = m_NodeSkin.GetStyle("Tooltip");
+            var x = style.CalcHeight(new GUIContent(tip), m_HelpRect.width);
+            Debug.Log(x);
+            //Debug.Log(m_HelpRect.width);
             m_ToolRect.x = m_HelpRect.x;
             m_ToolRect.y = m_HelpRect.y + m_HelpRect.height;
             m_ToolRect.width = m_HelpRect.width;
-            m_ToolRect.height = m_HelpRect.height + 1000;
+            m_ToolRect.height = x;
 
             GUILayout.BeginArea(m_ToolRect);
             GUILayout.BeginHorizontal();
-            GUILayoutOption[] options = new GUILayoutOption[] { GUILayout.MinWidth(30) };
-            GUILayout.TextArea(tip, m_NodeSkin.GetStyle("Tooltip"), options);
-
+            
+            GUILayoutOption[] options = new GUILayoutOption[] { GUILayout.MinWidth(m_HelpRect.width), GUILayout.MaxHeight(x)};
+            GUILayout.TextArea(tip, style, options);
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
 

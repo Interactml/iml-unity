@@ -78,7 +78,6 @@ namespace InteractML
             if (toolTipOn)
             {
                 ShowTooltip(m_HelpRect, m_CRIMLConfiguration.tips.HelpTooltip);
-                Debug.Log(toolTipOn);
             }
 
             DrawPortLayout();
