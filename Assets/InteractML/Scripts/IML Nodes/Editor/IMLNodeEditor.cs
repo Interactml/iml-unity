@@ -120,6 +120,9 @@ namespace InteractML
         private Rect m_PortRect;
         private Rect m_InnerBodyRect;
         private Rect m_HelpRect;
+        private Rect m_WarningRect;
+        private Rect m_InnerWarningRect;
+        private Rect m_InnerInnerWarningRect;
 
         /// <summary>
         /// Number of input ports
@@ -361,7 +364,9 @@ namespace InteractML
              // Draw body background purple rect below ports
              GUI.DrawTexture(m_HelpRect, NodeColor);
          }
-
+        // <summary>
+        /// Draws help button and tells whether mouse is over the tooltip
+        /// </summary>
         public void ShowHelpButton(Rect m_HelpRect)
         {
             // Load node skin
@@ -389,11 +394,14 @@ namespace InteractML
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }
-
+        // <summary>
+        /// Takes in rect and a string. Rect is the rect which the hovered GUI element is in. String is the tip for this element. Draws a tooltip below the element.
+        /// </summary>
         public void ShowTooltip(Rect m_HelpRect, string tip)
         {
             GUIStyle style = m_NodeSkin.GetStyle("Tooltip");
             var x = style.CalcHeight(new GUIContent(tip), m_HelpRect.width);
+            Debug.Log(x);
             //Debug.Log(m_HelpRect.width);
             m_ToolRect.x = m_HelpRect.x;
             m_ToolRect.y = m_HelpRect.y + m_HelpRect.height;
@@ -409,7 +417,10 @@ namespace InteractML
             GUILayout.EndArea();
 
         }
-
+        // <summary>
+        /// Takes in string goes through ports in that node to check if the mouse is over them. If the mouse is over one then it makes showport true and sets tooltip 
+        /// string to the string of json for that port tip 
+        /// </summary>
         public void PortTooltip(String[] portTips)
         {
             
@@ -439,7 +450,10 @@ namespace InteractML
                     
             }
         }
-
+        // <summary>
+        /// Takes in rect and returns true if mouse is currently in that rect
+        /// </summary>
+        /// <returns>boolean </returns>
         public bool IsThisRectHovered(Rect rect)
         {
             bool test = false;
@@ -456,12 +470,44 @@ namespace InteractML
 
             return test;
         }
-
-        public bool IsThisButtonHovered()
+        public void DrawWarningLayout(Rect help)
         {
-            return true;
+            m_WarningRect.x = 5;
+            m_WarningRect.y = help.y + help.height;
+            m_WarningRect.width = NodeWidth - 10;
+            m_WarningRect.height = 120;
+
+            // Draw body background purple rect below ports
+            GUI.DrawTexture(m_WarningRect, NodeColor);
         }
 
+        public void ShowWarning(string tip)
+        {
+            m_InnerWarningRect.x = m_WarningRect.x + 20;
+            m_InnerWarningRect.y = m_WarningRect.y + 20;
+            m_InnerWarningRect.width = m_WarningRect.width - 40;
+            m_InnerWarningRect.height = m_WarningRect.height - 40;
+
+            // Draw darker purple rect
+            GUI.DrawTexture(m_InnerWarningRect, GetColorTextureFromHexString("#1C1D2E"));
+
+            m_InnerInnerWarningRect.x = m_InnerWarningRect.x + 10;
+            m_InnerInnerWarningRect.y = m_InnerWarningRect.y + 10;
+            m_InnerInnerWarningRect.width = m_InnerWarningRect.width - 20;
+            m_InnerInnerWarningRect.height = m_InnerWarningRect.height - 20;
+
+            GUILayout.BeginArea(m_InnerInnerWarningRect);
+            GUILayout.BeginHorizontal();
+            GUILayout.Button("", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Warning"));
+            GUILayout.Space(5);
+            GUILayout.Label("Danger Will Robinson", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Warning Header"));
+            GUILayout.EndHorizontal();
+            GUILayout.Space(5);
+            GUILayout.Label(tip, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Warning Label"));
+
+            GUILayout.EndArea();
+
+        }
         /// <summary>
         /// Define rect values for port section and paint textures based on rects 
         /// </summary>

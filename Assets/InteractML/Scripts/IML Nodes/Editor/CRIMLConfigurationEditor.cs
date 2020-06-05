@@ -79,10 +79,7 @@ namespace InteractML
 
         public override void OnBodyGUI()
         {
-            if (showHelp)
-            {
-                ShowTooltip(m_HelpRect, m_CRIMLConfiguration.tips.HelpTooltip);
-            }
+            
 
             DrawPortLayout();
             ShowSystemNodePorts();
@@ -98,7 +95,18 @@ namespace InteractML
             // Draw help button
             DrawHelpButtonLayout();
             ShowHelpButton(m_HelpRect);
+            
+            if (m_CRIMLConfiguration.Model == null || m_CRIMLConfiguration.TotalNumTrainingData < 1)
+            {
+                DrawWarningLayout(m_HelpRect);
+                ShowWarning(m_CRIMLConfiguration.tips.BottomError[0]);
+            }
 
+
+            if (showHelp)
+            {
+                ShowTooltip(m_HelpRect, m_CRIMLConfiguration.tips.HelpTooltip);
+            }
             if (showPort)
             {
                 ShowTooltip(m_PortRect, TooltipText);
@@ -107,7 +115,6 @@ namespace InteractML
             if (reset || run)
             {
                 ShowTooltip(m_ButtonsRect, TooltipText);
-                Debug.Log(reset + " " + train + " " + run);
             }
         }
 
