@@ -104,7 +104,7 @@ namespace InteractML
                 ShowTooltip(m_PortRect, TooltipText);
             }
 
-            if (reset || run || train)
+            if (reset || run)
             {
                 ShowTooltip(m_ButtonsRect, TooltipText);
                 Debug.Log(reset + " " + train + " " + run);
@@ -311,7 +311,7 @@ namespace InteractML
             }
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
-                train = true;
+                reset = true;
                 if (GUI.enabled)
                 {
                     TooltipText = m_CRIMLConfiguration.tips.BodyTooltip.Tips[1];
@@ -322,7 +322,7 @@ namespace InteractML
             }
             else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
-                train = false;
+                reset = false;
 
             }
 
