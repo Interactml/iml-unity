@@ -77,7 +77,7 @@ namespace InteractML
         {
             if (toolTipOn)
             {
-                ShowTooltip(m_ToolRect, m_HelpRect, m_CRIMLConfiguration.tips.HelpTooltip);
+                ShowTooltip(m_HelpRect, m_CRIMLConfiguration.tips.HelpTooltip);
                 Debug.Log(toolTipOn);
             }
 

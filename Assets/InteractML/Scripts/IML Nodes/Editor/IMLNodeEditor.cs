@@ -72,11 +72,14 @@ namespace InteractML
         /// <returns></returns>
         protected Rect LineBelowHeader;
 
+        protected Rect m_ToolRect;
+
         public Vector2 positionPort;
 
         string description;
 
         public bool toolTipOn;
+        public bool showPort = false;
 
         /// <summary>
         /// Controls whether or not the reskinning of the node is automatically handled in the base IMLNodeEditor class (false to have default xNode skin, true for new IML skin)
@@ -125,6 +128,9 @@ namespace InteractML
         /// </summary>
         private List<IMLNodePortPair> m_PortPairs;
 
+        public string TooltipText = "";
+        public Rect ToolTipRect;
+
         #endregion
 
         #region XNode Messages
@@ -146,7 +152,6 @@ namespace InteractML
                 InitHeaderRects();
 
                 NodeColor = GetColorTextureFromHexString("#3A3B5B");
-                NodeTooltipColor = GetColorTextureFromHexString("#888EF7");
 
                 // Draw header background Rect
                 GUI.DrawTexture(HeaderRect, NodeColor);
@@ -360,18 +365,16 @@ namespace InteractML
             m_HelpRect.y = m_HelpRect.y + 10;
             m_HelpRect.width = m_HelpRect.width - 40;
 
-            Vector3 mouse = Input.mousePosition;
-
 
             GUILayout.BeginArea(m_HelpRect);
             GUILayout.BeginHorizontal();
             GUILayout.Label("");
             GUILayout.Button(new GUIContent("Help"), m_NodeSkin.GetStyle("Help Button"));
-            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition) && Event.current.type == EventType.Repaint)
+            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
                 toolTipOn = true;
             }
-            else if (Event.current.type == EventType.Repaint && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
                 toolTipOn = false;
 
@@ -380,14 +383,13 @@ namespace InteractML
             GUILayout.EndArea();
         }
 
-        public void ShowTooltip(Rect m_ToolRect, Rect m_HelpRect, string tip)
+        public void ShowTooltip(Rect m_HelpRect, string tip)
         {
          
             m_ToolRect.x = m_HelpRect.x;
             m_ToolRect.y = m_HelpRect.y + m_HelpRect.height;
             m_ToolRect.width = m_HelpRect.width;
             m_ToolRect.height = m_HelpRect.height + 1000;
-            GUI.DrawTexture(m_ToolRect, NodeTooltipColor);
 
             GUILayout.BeginArea(m_ToolRect);
             GUILayout.BeginHorizontal();
@@ -397,6 +399,53 @@ namespace InteractML
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
 
+        }
+
+        public void PortTooltip(String[] portTips)
+        {
+            
+            List<NodePort> ports = target.Ports.ToList();
+           
+
+            if (ports.Contains(window.hoveredPort))
+            {
+                showPort = true;
+                for (int i = 0; i < ports.Count; i++)
+                {
+                    if (window.hoveredPort == ports[i])
+                    {
+                        TooltipText = portTips[i];
+                        Debug.Log("1");
+
+                    }
+
+                }
+            }
+            else
+            {
+                if (Event.current.type == EventType.MouseMove)
+                {
+                    showPort = false;
+                }
+                    
+            }
+        }
+
+        public bool IsThisRectHovered(Rect rect)
+        {
+            bool test = false;
+
+            if (rect.Contains(Event.current.mousePosition))
+            {
+                test = true;
+            }
+            else if (Event.current.type == EventType.MouseMove && !rect.Contains(Event.current.mousePosition))
+            {
+                test = false;
+
+            }
+
+            return test;
         }
 
         /// <summary>
@@ -510,6 +559,7 @@ namespace InteractML
             }
 
             serializedObject.ApplyModifiedProperties();
+
 
         }
 
