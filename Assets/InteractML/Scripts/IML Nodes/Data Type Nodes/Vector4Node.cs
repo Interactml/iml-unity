@@ -48,7 +48,7 @@ namespace InteractML.DataTypeNodes
             base.OnCreateConnection(from, to);
 
             // Make sure that the IFeatureIML connected is matching our type
-            this.DisconnectIfNotSameIMLDataType(from, to, IMLSpecifications.DataTypes.Vector4);
+            this.DisconnectFeatureNotSameIMLDataType(from, to, IMLSpecifications.DataTypes.Vector4);
 
         }
 

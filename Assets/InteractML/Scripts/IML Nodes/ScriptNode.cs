@@ -48,7 +48,8 @@ namespace InteractML
             {
                 FieldInfo info;
                 m_PortsPerFieldInfo.TryGetValue(port, out info);
-                return info.GetValue(Script);
+                if (info != null)
+                    return info.GetValue(Script);
             }
             return null;
         }

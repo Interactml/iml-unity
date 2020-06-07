@@ -60,15 +60,9 @@ namespace InteractML.DataTypeNodes
 
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
-            // Only allow other features and same data type
-            bool disconnected = this.DisconnectIfNotType<BaseDataTypeNode<T>, IFeatureIML>(from, to);
-            // If it is a feature...
-            if (!disconnected)
-            {
-
-                // Disconnect if it is a feature data type but not the same data type...
-                this.DisconnectIfNotSameDataTypeNode(from, to);
-            }
+            System.Type[] portTypesAccept = new System.Type[] { typeof(T) };
+            System.Type[] nodeTypesAccept = new System.Type[] { this.GetType(), typeof(IFeatureIML) };
+            this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
 
         }
 

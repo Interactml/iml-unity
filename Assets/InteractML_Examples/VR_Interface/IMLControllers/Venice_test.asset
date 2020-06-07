@@ -74,7 +74,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: ce49c674-abb7-4c25-bc58-f81cb856f802
   graph: {fileID: 11400000}
-  position: {x: -312, y: 888}
+  position: {x: 1160, y: -472}
   ports:
     keys:
     - PushDirection
@@ -83,10 +83,7 @@ MonoBehaviour:
       _node: {fileID: -8275559839228124121}
       _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: m_Out
-        node: {fileID: 3732566680617633936}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -193,6 +190,51 @@ MonoBehaviour:
   x_switch: 1
   y_switch: 1
   z_switch: 1
+--- !u!114 &-4416748674015418172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a19e741e423c3c4abced594a9e6f303, type: 3}
+  m_Name: Float
+  m_EditorClassIdentifier: 
+  id: 9a816c65-09af-405b-a80c-19fc5412a91f
+  graph: {fileID: 11400000}
+  position: {x: 536, y: -1384}
+  ports:
+    keys:
+    - m_In
+    - m_Out
+    values:
+    - _fieldName: m_In
+      _node: {fileID: -4416748674015418172}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: m_Out
+      _node: {fileID: -4416748674015418172}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  ValueName: 
+  m_In: 0
+  m_Value: 0
+  m_Out: 0
+  ReceivingData: 0
+  float_switch: 1
 --- !u!114 &-4193609153758654436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,7 +279,7 @@ MonoBehaviour:
   DevMode: 0
   ValueName: HeadRotation
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 49.10009, y: 49.89999, z: 0.0000026079792}
+  m_Value: {x: 0, y: 0, z: 0}
   m_Out: {x: 0, y: 270.9, z: 0}
   ReceivingData: 0
   x_switch: 1
@@ -290,6 +332,56 @@ MonoBehaviour:
   x_switch: 1
   y_switch: 1
   z_switch: 1
+--- !u!114 &-2866121994374041752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
+  m_Name: Extract Position
+  m_EditorClassIdentifier: 
+  id: 1d0d454e-a011-4c4e-b84b-24a1e82b2e93
+  graph: {fileID: 11400000}
+  position: {x: 1000, y: -1480}
+  ports:
+    keys:
+    - GameObjectDataIn
+    - LiveDataOut
+    values:
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: -2866121994374041752}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: LiveDataOut
+      _node: {fileID: -2866121994374041752}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
+  LocalSpace: 0
+  x_switch: 1
+  y_switch: 1
+  z_switch: 1
+  m_PositionExtracted:
+    m_Values:
+    - 0
+    - 0
+    - 0
+  ReceivingData: 0
 --- !u!114 &-2105371587825644611
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,8 +637,10 @@ MonoBehaviour:
   - {fileID: 6618381318413552733}
   - {fileID: 9010047069897992756}
   - {fileID: -8275559839228124121}
-  - {fileID: 0}
   - {fileID: 3732566680617633936}
+  - {fileID: 0}
+  - {fileID: -4416748674015418172}
+  - {fileID: -2866121994374041752}
   SceneComponent: {fileID: 0}
 --- !u!114 &1128550350766650831
 MonoBehaviour:
@@ -651,7 +745,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: a2d0ce9e-6918-4550-bafc-457df347f440
   graph: {fileID: 11400000}
-  position: {x: -680, y: 424}
+  position: {x: -824, y: 376}
   ports:
     keys:
     - GameObjectDataIn
@@ -751,7 +845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: eec92372-7e15-4c84-a1dd-79a6634bb6c9
   graph: {fileID: 11400000}
-  position: {x: -680, y: 856}
+  position: {x: -520, y: 568}
   ports:
     keys:
     - m_In
@@ -770,10 +864,7 @@ MonoBehaviour:
       _node: {fileID: 3732566680617633936}
       _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: PushDirection
-        node: {fileID: -8275559839228124121}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -893,7 +984,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: cbb5b5d1-41d4-4549-8088-aa1a2a3d7035
   graph: {fileID: 11400000}
-  position: {x: -456, y: -24}
+  position: {x: 1352, y: -1096}
   ports:
     keys:
     - m_In
@@ -920,7 +1011,7 @@ MonoBehaviour:
   DevMode: 0
   ValueName: 
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 0, y: 0, z: 0}
+  m_Value: {x: 0, y: 0, z: 1}
   m_Out: {x: 0, y: 0, z: 0}
   ReceivingData: 0
   x_switch: 1
@@ -1043,7 +1134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 7326ec37-6229-43fb-84da-cb94e567d086
   graph: {fileID: 11400000}
-  position: {x: -1128, y: 776}
+  position: {x: 696, y: -632}
   ports:
     keys:
     - HeadRotation
