@@ -28,6 +28,7 @@ namespace InteractML
         /// </summary>
         /// <returns></returns>
         protected Texture2D NodeColor { get; set; }
+        protected Texture2D NodeTooltipColor { get; set; }
 
         /// <summary>
         /// Texture2D  for line color
@@ -71,11 +72,21 @@ namespace InteractML
         /// <returns></returns>
         protected Rect LineBelowHeader;
 
+        protected Rect m_ToolRect;
+
         public Vector2 positionPort;
 
         string description;
 
-        public bool toolTipOn;
+        /// <summary>
+        /// Controls whether you see help tooltip
+        /// </summary>
+        public bool showHelp;
+        /// <summary>
+        /// Controls whether you see a port tooltip
+        /// </summary>
+        public bool showPort = false;
+        
 
         /// <summary>
         /// Controls whether or not the reskinning of the node is automatically handled in the base IMLNodeEditor class (false to have default xNode skin, true for new IML skin)
@@ -109,6 +120,9 @@ namespace InteractML
         private Rect m_PortRect;
         private Rect m_InnerBodyRect;
         private Rect m_HelpRect;
+        private Rect m_WarningRect;
+        private Rect m_InnerWarningRect;
+        private Rect m_InnerInnerWarningRect;
 
         /// <summary>
         /// Number of input ports
@@ -123,6 +137,9 @@ namespace InteractML
         /// List of port pairs to draw
         /// </summary>
         private List<IMLNodePortPair> m_PortPairs;
+
+        public string TooltipText = "";
+        public Rect ToolTipRect;
 
         #endregion
 
@@ -241,6 +258,8 @@ namespace InteractML
             Vector2 position = Vector3.zero;
             GUIContent content = label != null ? label : new GUIContent(ObjectNames.NicifyVariableName(port.fieldName));
 
+
+
             // If property is an input, display a regular property field and put a port handle on the left side
             if (port.direction == XNode.NodePort.IO.Input)
             {
@@ -260,25 +279,6 @@ namespace InteractML
                 position = rect.position + new Vector2(rect.width, 0);
             }
             NodeEditorGUILayout.PortField(position, port);
-        }
-
-        public static void IMLNoodleDraw(Vector2 Out, Vector2 In)
-        {
-            Gradient grad = new Gradient();
-            Color a = hexToColor("#ffffff");
-            Color b = hexToColor("#000000");
-            grad.SetKeys(
-                new GradientColorKey[] { new GradientColorKey(a, 0f), new GradientColorKey(b, 1f) },
-                new GradientAlphaKey[] { new GradientAlphaKey(1f, 0f), new GradientAlphaKey(1f, 1f) }
-                );
-            NoodlePath noodlePath = NodeEditorPreferences.GetSettings().noodlePath;
-            float noodleThickness = 10f;
-            NoodleStroke noodleStroke = NodeEditorPreferences.GetSettings().noodleStroke;
-            
-            List<Vector2> gridPoints = new List<Vector2>();
-            gridPoints.Add(Out);
-            gridPoints.Add(In);
-            //NodeEditorGUI.DrawNoodle(grad, noodlePath, noodleStroke, noodleThickness, gridPoints);
         }
 
         public static Color hexToColor(string hex)
@@ -364,7 +364,9 @@ namespace InteractML
              // Draw body background purple rect below ports
              GUI.DrawTexture(m_HelpRect, NodeColor);
          }
-
+        // <summary>
+        /// Draws help button and tells whether mouse is over the tooltip
+        /// </summary>
         public void ShowHelpButton(Rect m_HelpRect)
         {
             // Load node skin
@@ -375,45 +377,137 @@ namespace InteractML
             m_HelpRect.y = m_HelpRect.y + 10;
             m_HelpRect.width = m_HelpRect.width - 40;
 
-            Vector3 mouse = Input.mousePosition;
-
 
             GUILayout.BeginArea(m_HelpRect);
             GUILayout.BeginHorizontal();
             GUILayout.Label("");
             GUILayout.Button(new GUIContent("Help"), m_NodeSkin.GetStyle("Help Button"));
-            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition) && Event.current.type == EventType.Repaint)
+            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
-                toolTipOn = true;
+                showHelp = true;
             }
-            else if (Event.current.type == EventType.Repaint && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
-                toolTipOn = false;
+                showHelp = false;
 
             }
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }
-
-        public void ShowTooltip(Rect m_ToolRect, Rect m_HelpRect, string tip)
+        // <summary>
+        /// Takes in rect and a string. Rect is the rect which the hovered GUI element is in. String is the tip for this element. Draws a tooltip below the element.
+        /// </summary>
+        public void ShowTooltip(Rect m_HelpRect, string tip)
         {
-            Vector3 mouse = Input.mousePosition;
-            m_ToolRect.x = mouse.x + 10;
-            m_ToolRect.y = mouse.y + 10;
-            m_ToolRect.width = m_HelpRect.width - 40;
-            m_ToolRect.height = m_HelpRect.height;
-            
-
+            GUIStyle style = m_NodeSkin.GetStyle("Tooltip");
+            var x = style.CalcHeight(new GUIContent(tip), m_HelpRect.width);
+            Debug.Log(x);
+            //Debug.Log(m_HelpRect.width);
+            m_ToolRect.x = m_HelpRect.x;
+            m_ToolRect.y = m_HelpRect.y + m_HelpRect.height;
+            m_ToolRect.width = m_HelpRect.width;
+            m_ToolRect.height = x;
 
             GUILayout.BeginArea(m_ToolRect);
             GUILayout.BeginHorizontal();
-            GUILayout.Label(tip);
-
+            
+            GUILayoutOption[] options = new GUILayoutOption[] { GUILayout.MinWidth(m_HelpRect.width), GUILayout.MaxHeight(x)};
+            GUILayout.TextArea(tip, style, options);
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
 
         }
+        // <summary>
+        /// Takes in string goes through ports in that node to check if the mouse is over them. If the mouse is over one then it makes showport true and sets tooltip 
+        /// string to the string of json for that port tip 
+        /// </summary>
+        public void PortTooltip(String[] portTips)
+        {
+            
+            List<NodePort> ports = target.Ports.ToList();
+           
 
+            if (ports.Contains(window.hoveredPort))
+            {
+                showPort = true;
+                for (int i = 0; i < ports.Count; i++)
+                {
+                    if (window.hoveredPort == ports[i])
+                    {
+                        TooltipText = portTips[i];
+                        Debug.Log("1");
+
+                    }
+
+                }
+            }
+            else
+            {
+                if (Event.current.type == EventType.MouseMove)
+                {
+                    showPort = false;
+                }
+                    
+            }
+        }
+        // <summary>
+        /// Takes in rect and returns true if mouse is currently in that rect
+        /// </summary>
+        /// <returns>boolean </returns>
+        public bool IsThisRectHovered(Rect rect)
+        {
+            bool test = false;
+
+            if (rect.Contains(Event.current.mousePosition))
+            {
+                test = true;
+            }
+            else if (Event.current.type == EventType.MouseMove && !rect.Contains(Event.current.mousePosition))
+            {
+                test = false;
+
+            }
+
+            return test;
+        }
+        public void DrawWarningLayout(Rect help)
+        {
+            m_WarningRect.x = 5;
+            m_WarningRect.y = help.y + help.height;
+            m_WarningRect.width = NodeWidth - 10;
+            m_WarningRect.height = 120;
+
+            // Draw body background purple rect below ports
+            GUI.DrawTexture(m_WarningRect, NodeColor);
+        }
+
+        public void ShowWarning(string tip)
+        {
+            m_InnerWarningRect.x = m_WarningRect.x + 20;
+            m_InnerWarningRect.y = m_WarningRect.y + 20;
+            m_InnerWarningRect.width = m_WarningRect.width - 40;
+            m_InnerWarningRect.height = m_WarningRect.height - 40;
+
+            // Draw darker purple rect
+            GUI.DrawTexture(m_InnerWarningRect, GetColorTextureFromHexString("#1C1D2E"));
+
+            m_InnerInnerWarningRect.x = m_InnerWarningRect.x + 10;
+            m_InnerInnerWarningRect.y = m_InnerWarningRect.y + 10;
+            m_InnerInnerWarningRect.width = m_InnerWarningRect.width - 20;
+            m_InnerInnerWarningRect.height = m_InnerWarningRect.height - 20;
+
+            GUILayout.BeginArea(m_InnerInnerWarningRect);
+            GUILayout.BeginHorizontal();
+            GUILayout.Button("", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Warning"));
+            GUILayout.Space(5);
+            GUILayout.Label("Danger Will Robinson", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Warning Header"));
+            GUILayout.EndHorizontal();
+            GUILayout.Space(5);
+            GUILayout.Label(tip, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Warning Label"));
+
+            GUILayout.EndArea();
+
+        }
         /// <summary>
         /// Define rect values for port section and paint textures based on rects 
         /// </summary>
@@ -434,6 +528,7 @@ namespace InteractML
 
             // Draw line below ports
             GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), GetColorTextureFromHexString("#888EF7"));
+            
         }
 
         /// <summary>
@@ -524,6 +619,7 @@ namespace InteractML
             }
 
             serializedObject.ApplyModifiedProperties();
+
 
         }
 

@@ -43,6 +43,10 @@ namespace InteractML
         private bool m_ClassificationSwitch;
         private bool m_RegressionSwitch;
 
+        private bool reset;
+        private bool train;
+        private bool run;
+
         #endregion
 
         public override void OnHeaderGUI()
@@ -75,14 +79,12 @@ namespace InteractML
 
         public override void OnBodyGUI()
         {
-            if (toolTipOn)
-            {
-                ShowTooltip(m_ToolRect, m_HelpRect, m_CRIMLConfiguration.tips.HelpTooltip);
-                Debug.Log(toolTipOn);
-            }
+            
 
             DrawPortLayout();
             ShowSystemNodePorts();
+            //check if port is hovered over 
+            PortTooltip(m_CRIMLConfiguration.tips.PortTooltip);
 
             DrawBodyLayoutIcons();
             ShowIcon();
@@ -93,7 +95,27 @@ namespace InteractML
             // Draw help button
             DrawHelpButtonLayout();
             ShowHelpButton(m_HelpRect);
+            
+            if (m_CRIMLConfiguration.Model == null || m_CRIMLConfiguration.TotalNumTrainingData < 1)
+            {
+                DrawWarningLayout(m_HelpRect);
+                ShowWarning(m_CRIMLConfiguration.tips.BottomError[0]);
+            }
 
+
+            if (showHelp)
+            {
+                ShowTooltip(m_HelpRect, m_CRIMLConfiguration.tips.HelpTooltip);
+            }
+            if (showPort)
+            {
+                ShowTooltip(m_PortRect, TooltipText);
+            }
+
+            if (reset || run)
+            {
+                ShowTooltip(m_ButtonsRect, TooltipText);
+            }
         }
 
         /// <summary>
@@ -237,6 +259,16 @@ namespace InteractML
             {
                 m_CRIMLConfiguration.ResetModel();
             }
+            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                reset = true;
+                TooltipText = m_CRIMLConfiguration.tips.BodyTooltip.Tips[0];
+            }
+            else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                reset = false;
+
+            }
             GUILayout.Space(15);
             TrainModelButton();
             GUILayout.Space(15);
@@ -284,11 +316,28 @@ namespace InteractML
                 //GUI.enabled = true;
 
             }
+            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                reset = true;
+                if (GUI.enabled)
+                {
+                    TooltipText = m_CRIMLConfiguration.tips.BodyTooltip.Tips[1];
+                } else
+                {
+                    TooltipText = m_CRIMLConfiguration.tips.BodyTooltip.Error[0];
+                }
+            }
+            else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                reset = false;
+
+            }
 
         }
 
         private void RunModelButton()
         {
+            bool enabled = false;
             if (m_CRIMLConfiguration.Model != null)
             {
                 string nameButton = "";
@@ -304,7 +353,14 @@ namespace InteractML
 
                 // Disable button if model is Trainig OR Untrained
                 if (m_CRIMLConfiguration.Training || m_CRIMLConfiguration.Untrained)
+                {
                     GUI.enabled = false;
+                    enabled = false;
+                } else
+                {
+                    enabled = true;
+                }
+                    
                 if (GUILayout.Button(nameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Run")))
                 {
                     m_CRIMLConfiguration.ToggleRunning();
@@ -322,6 +378,24 @@ namespace InteractML
                     //m_TrainingExamplesNode.ToggleCollectExamples();
                 }
                 GUI.enabled = true;
+            }
+
+            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                run = true;
+                if (enabled)
+                {
+                    TooltipText = m_CRIMLConfiguration.tips.BodyTooltip.Tips[2];
+                }
+                else
+                {
+                    TooltipText = m_CRIMLConfiguration.tips.BodyTooltip.Error[1];
+                }
+            }
+            else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                run = false;
+
             }
 
         }

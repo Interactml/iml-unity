@@ -22,7 +22,6 @@ namespace InteractML
         private Rect m_BodyRect;
         private Rect m_PortRect;
         private Rect m_HelpRect;
-        private Rect m_ToolRect;
 
         Editor gameObjectEditor;
         GUIStyle stylePreview;
@@ -35,10 +34,7 @@ namespace InteractML
         Texture2D m_NoMeshTexture;
         float m_TexHeightMultiplier = 0.45f;
 
-        string tooltip = "";
-        //bool tooltipOn = true;
-        int counter = 0;
-        int count = 2;
+
 
         public override void OnHeaderGUI()
         {
@@ -68,13 +64,11 @@ namespace InteractML
 
         public override void OnBodyGUI()
         {
-            if (toolTipOn)
-            {
-                ShowTooltip(m_ToolRect, m_HelpRect, m_GameObjectNode.tips.HelpTooltip);
-            }
             // Draw Port Section
             DrawPortLayout();
             ShowGameObjectNodePorts();
+            //check if port is hovered over 
+            PortTooltip(m_GameObjectNode.tips.PortTooltip);
 
             DrawBodyLayout();
             EditorGUI.indentLevel++;
@@ -84,9 +78,20 @@ namespace InteractML
             // Draw help button
             DrawHelpButtonLayout();
             ShowHelpButton(m_HelpRect);
-            
-                
-            
+            // to do when refactor make all tips one bool
+            // if hovering port show port tooltip
+            if (showPort)
+            {
+                ShowTooltip(m_PortRect, TooltipText);
+            }
+            //if hovering over help show tooltip 
+            if (showHelp)
+            {
+                ShowTooltip(m_HelpRect, m_GameObjectNode.tips.HelpTooltip);
+            }
+            // if hovering over body rect
+            if (IsThisRectHovered(m_BodyRect))
+                ShowTooltip(m_BodyRect, m_GameObjectNode.tips.BodyTooltip.Tips[0]);
         }
 
         /// <summary>
@@ -145,7 +150,6 @@ namespace InteractML
             GUIContent outputPortLabel = new GUIContent("GameObject\n Data Out", m_GameObjectNode.tips.PortTooltip[0]);
             PortField(outputPortLabel, m_GameObjectNode.GetOutputPort("GameObjectDataOut"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
             
-
         }
 
         /// <summary>
@@ -158,7 +162,7 @@ namespace InteractML
 
             EditorGUILayout.Space();
             EditorGUILayout.Space();
-
+            
             // Show label of which object is being fed to the node
             GameObject gObj = m_GameObjectNode.GameObjectDataOut;
 
