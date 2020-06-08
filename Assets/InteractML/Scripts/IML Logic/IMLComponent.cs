@@ -710,7 +710,7 @@ namespace InteractML
 
                     // Configure our node appropiately
                     scriptNode.Script = gameComponent;
-                    scriptNode.name = gameComponent.name + "(Script)";
+                    scriptNode.name = gameComponent.GetType().Name + " (Script)";
 
 
                     // Add that to the dictionary            

@@ -170,8 +170,11 @@ namespace InteractML
                 GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
 
                 //Display Node name
-                if (String.IsNullOrEmpty(NodeName))
-                    NodeName = typeof(IMLNode).Name + "(Script)";
+                if (String.IsNullOrEmpty(m_IMLNode.name))
+                    NodeName = typeof(IMLNode).Name + " (Script)";
+                else
+                    NodeName = m_IMLNode.name;
+
                 GUILayout.BeginArea(HeaderRect);
                 GUILayout.Space(10);
                 GUILayout.Label(NodeName, m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 50));

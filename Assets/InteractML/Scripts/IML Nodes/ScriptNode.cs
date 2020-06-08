@@ -68,6 +68,9 @@ namespace InteractML
             {
                 // Update the script present in the node (although this might return null if it is a clone and gets destroyed?)
                 Script = gameComponent;
+                // Update name of node
+                name = Script.GetType().Name + " (Script)";
+
             }
 
             // Gets all fields information from the game component (using System.Reflection)
