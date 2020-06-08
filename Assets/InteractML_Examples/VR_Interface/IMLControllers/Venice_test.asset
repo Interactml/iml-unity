@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21d3e0c0b793d4c49809eebb28c24457, type: 3}
-  m_Name: Vector 3
+  m_Name: PushDirection (Vector3 Node)
   m_EditorClassIdentifier: 
   id: b737c641-182e-427f-88c6-b12c2d67dbaa
   graph: {fileID: 11400000}
@@ -132,9 +132,9 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  ValueName: 
+  ValueName: PushDirection
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 0, y: 0, z: 0}
+  m_Value: {x: 0, y: 0, z: 1}
   m_Out: {x: 0, y: 0, z: 0}
   ReceivingData: 0
   x_switch: 1
@@ -621,7 +621,6 @@ MonoBehaviour:
   nodes:
   - {fileID: -8545169889257079770}
   - {fileID: -4193609153758654436}
-  - {fileID: 8999848260519867326}
   - {fileID: -1899693820327701159}
   - {fileID: 4886170156940270540}
   - {fileID: -1415829153963631823}
@@ -638,9 +637,9 @@ MonoBehaviour:
   - {fileID: 9010047069897992756}
   - {fileID: -8275559839228124121}
   - {fileID: 3732566680617633936}
-  - {fileID: 0}
   - {fileID: -4416748674015418172}
   - {fileID: -2866121994374041752}
+  - {fileID: 0}
   SceneComponent: {fileID: 0}
 --- !u!114 &1128550350766650831
 MonoBehaviour:
@@ -694,10 +693,7 @@ MonoBehaviour:
       _node: {fileID: 1128550350766650831}
       _typeQualifiedName: InteractML.IMLConfiguration, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: m_In
-        node: {fileID: 8999848260519867326}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -994,7 +990,10 @@ MonoBehaviour:
       _node: {fileID: 6618381318413552733}
       _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: HeadRotation
+        node: {fileID: 9010047069897992756}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -1011,7 +1010,7 @@ MonoBehaviour:
   DevMode: 0
   ValueName: 
   m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 0, y: 0, z: 1}
+  m_Value: {x: 44.20019, y: 270.30005, z: -0.0000023818209}
   m_Out: {x: 0, y: 0, z: 0}
   ReceivingData: 0
   x_switch: 1
@@ -1070,56 +1069,6 @@ MonoBehaviour:
     - 3.56
     - -1.24
   ReceivingData: 0
---- !u!114 &8999848260519867326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21d3e0c0b793d4c49809eebb28c24457, type: 3}
-  m_Name: PushDirection (Vector3 Node)
-  m_EditorClassIdentifier: 
-  id: f39777b9-157b-4297-9ff7-0e7eaa8c85e3
-  graph: {fileID: 11400000}
-  position: {x: 664, y: -1016}
-  ports:
-    keys:
-    - m_In
-    - m_Out
-    values:
-    - _fieldName: m_In
-      _node: {fileID: 8999848260519867326}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: ModelOutput
-        node: {fileID: 1128550350766650831}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: m_Out
-      _node: {fileID: 8999848260519867326}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  ValueName: PushDirection
-  m_In: {x: 0, y: 0, z: 0}
-  m_Value: {x: 0, y: 0, z: 1}
-  m_Out: {x: 0, y: 0, z: 1}
-  ReceivingData: 0
-  x_switch: 1
-  y_switch: 1
-  z_switch: 1
 --- !u!114 &9010047069897992756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1134,7 +1083,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 7326ec37-6229-43fb-84da-cb94e567d086
   graph: {fileID: 11400000}
-  position: {x: 696, y: -632}
+  position: {x: 776, y: -904}
   ports:
     keys:
     - HeadRotation
@@ -1143,7 +1092,10 @@ MonoBehaviour:
       _node: {fileID: 9010047069897992756}
       _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: m_In
+        node: {fileID: 6618381318413552733}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0

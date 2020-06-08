@@ -23,7 +23,7 @@ namespace InteractML
         /// <summary>
         /// Dictionary 
         /// </summary>
-        private Dictionary<NodePort, FieldInfo> m_PortsPerFieldInfo;
+        private NodePortFieldInfoDictionary m_PortsPerFieldInfo;
 
         #endregion
 
@@ -36,7 +36,7 @@ namespace InteractML
 
             // Init data containers dictionary
             if (m_PortsPerFieldInfo == null)
-                m_PortsPerFieldInfo = new Dictionary<NodePort, FieldInfo>();
+                m_PortsPerFieldInfo = new NodePortFieldInfoDictionary();
 
         }
 
@@ -44,12 +44,14 @@ namespace InteractML
         public override object GetValue(NodePort port)
         {
             // Only return a value if we have a dictionary and a script
-            if ((m_PortsPerFieldInfo != null || m_PortsPerFieldInfo.Count > 0) && Script != null)
+            if ((m_PortsPerFieldInfo != null && m_PortsPerFieldInfo.Count > 0) && Script != null)
             {
                 FieldInfo info;
                 m_PortsPerFieldInfo.TryGetValue(port, out info);
                 if (info != null)
                     return info.GetValue(Script);
+                else
+                    Debug.LogError("The field info is null!");
             }
             return null;
         }
@@ -85,7 +87,7 @@ namespace InteractML
 
                     // Make sure that the dictionaries are initialised
                     if (m_PortsPerFieldInfo == null)
-                        m_PortsPerFieldInfo = new Dictionary<NodePort, FieldInfo>();
+                        m_PortsPerFieldInfo = new NodePortFieldInfoDictionary();
 
                     // Check if the dictionary DOESN'T contain a fieldInfo for this reflected value, and then create nodes and dictionary values
                     if (!m_PortsPerFieldInfo.ContainsValue(fieldToUse))

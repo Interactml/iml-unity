@@ -717,6 +717,11 @@ namespace InteractML
                     m_MonoBehavioursPerScriptNode.Add(IMLGameComponentContainer.GameComponent, scriptNode);
 
                 }
+                // If it contains a fieldInfo for this reflected value, access node
+                else
+                {
+                    m_MonoBehavioursPerScriptNode.TryGetValue(IMLGameComponentContainer.GameComponent, out scriptNode);
+                }
 
                 // Update ports if required
                 if (scriptNode)
