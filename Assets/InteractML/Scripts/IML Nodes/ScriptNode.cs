@@ -59,9 +59,20 @@ namespace InteractML
         /// <summary>
         /// Updates the ports fields displayed in the editor
         /// </summary>
-        /// <param name="serializedFields"></param>
-        internal void UpdatePortFields(FieldInfo[] serializedFields)
+        internal void UpdatePortFields(MonoBehaviour gameComponent, bool overrideScript = false)
         {
+            if (gameComponent == null)
+                return;
+
+            if (overrideScript)
+            {
+                // Update the script present in the node (although this might return null if it is a clone and gets destroyed?)
+                Script = gameComponent;
+            }
+
+            // Gets all fields information from the game component (using System.Reflection)
+            FieldInfo[] serializedFields = Script.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
+
             // Go through all the fields
             for (int i = 0; i < serializedFields.Length; i++)
             {
@@ -104,75 +115,19 @@ namespace InteractML
                         m_PortsPerFieldInfo.Add(newPort, fieldToUse);
 
                     }
-                    // If the dictionary already contains a fieldInfo, update it
-                    //else if (true)
-                    //{
-                    //    // Get the port linked to that field info
-                    //    var port = m_PortsPerFieldInfo;
+                    // If the dictionary already contains a fieldInfo (and it is output), update it
+                    else if (isOutputData)
+                    {
+                        // Get the port linked to that field info
+                        var port = m_PortsPerFieldInfo.GetKey(fieldToUse);
 
-                    //    // Detect the type of the node
-                    //    switch (port.DataType)
-                    //    {
-                    //        // FLOAT
-                    //        case IMLSpecifications.DataTypes.Float:
-                    //            // If it is input...
-                    //            if (isInputData)
-                    //                (port.nodeForField as DataTypeNodes.FloatNode).Value = (float)fieldToUse.GetValue(gameComponent);
-                    //            // If it is output...
-                    //            if (isOutputData)
-                    //                fieldToUse.SetValue(gameComponent, (port.nodeForField as DataTypeNodes.FloatNode).Value);
-                    //            break;
-                    //        // INTEGER
-                    //        case IMLSpecifications.DataTypes.Integer:
-                    //            // If it is input...
-                    //            if (isInputData)
-                    //                (port.nodeForField as DataTypeNodes.IntegerNode).Value = (int)fieldToUse.GetValue(gameComponent);
-                    //            // If it is output...
-                    //            if (isOutputData)
-                    //                fieldToUse.SetValue(gameComponent, (port.nodeForField as DataTypeNodes.IntegerNode).Value);
-                    //            break;
-                    //        // VECTOR 2
-                    //        case IMLSpecifications.DataTypes.Vector2:
-                    //            // If it is input...
-                    //            if (isInputData)
-                    //                (port.nodeForField as DataTypeNodes.Vector2Node).Value = (Vector2)fieldToUse.GetValue(gameComponent);
-                    //            // If it is output...
-                    //            if (isOutputData)
-                    //                fieldToUse.SetValue(gameComponent, (port.nodeForField as DataTypeNodes.Vector2Node).Value);
-                    //            break;
-                    //        // VECTOR 3
-                    //        case IMLSpecifications.DataTypes.Vector3:
-                    //            // If it is input...
-                    //            if (isInputData)
-                    //                (port.nodeForField as DataTypeNodes.Vector3Node).Value = (Vector3)fieldToUse.GetValue(gameComponent);
-                    //            // If it is output...
-                    //            if (isOutputData)
-                    //                fieldToUse.SetValue(gameComponent, (port.nodeForField as DataTypeNodes.Vector3Node).Value);
-                    //            break;
-                    //        // VECTOR 4
-                    //        case IMLSpecifications.DataTypes.Vector4:
-                    //            // If it is input...
-                    //            if (isInputData)
-                    //                (port.nodeForField as DataTypeNodes.Vector4Node).Value = (Vector4)fieldToUse.GetValue(gameComponent);
-                    //            // If it is output...
-                    //            if (isOutputData)
-                    //                fieldToUse.SetValue(gameComponent, (port.nodeForField as DataTypeNodes.Vector4Node).Value);
-                    //            break;
-                    //        // SERIAL VECTOR
-                    //        case IMLSpecifications.DataTypes.SerialVector:
-                    //            // If it is input...
-                    //            if (isInputData)
-                    //                (port.nodeForField as DataTypeNodes.SerialVectorNode).Value = (float[])fieldToUse.GetValue(gameComponent);
-                    //            // If it is output...
-                    //            if (isOutputData)
-                    //                fieldToUse.SetValue(gameComponent, (port.nodeForField as DataTypeNodes.SerialVectorNode).Value);
-                    //            break;
-                    //        // DEFAULT SWITCH
-                    //        default:
-                    //            break;
-                    //    }
-                    //}
+                        FieldInfo field;
+                        m_PortsPerFieldInfo.TryGetValue(port, out field);
 
+                        
+                        // Set value by reflection
+                        field.SetValue(Script, port.GetInputValue());
+                    }
                 }
             }
 

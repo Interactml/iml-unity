@@ -18,6 +18,28 @@ namespace InteractML
             // If reached here, something is wrong
             return false;
         }
+
+        /// <summary>
+        /// Return a value by key. Not very performance friendly
+        /// </summary>
+        /// <typeparam name="TKey"></typeparam>
+        /// <typeparam name="TValue"></typeparam>
+        /// <param name="dict"></param>
+        /// <param name="val"></param>
+        /// <returns></returns>
+        public static TKey GetKey<TKey, TValue>(this SerializableDictionary<TKey, TValue> dict, TValue val)
+        {
+            TKey key = default;
+            foreach (KeyValuePair<TKey, TValue> pair in dict)
+            {
+                if (EqualityComparer<TValue>.Default.Equals(pair.Value, val))
+                {
+                    key = pair.Key;
+                    break;
+                }
+            }
+            return key;
+        }
     }
 
 }
