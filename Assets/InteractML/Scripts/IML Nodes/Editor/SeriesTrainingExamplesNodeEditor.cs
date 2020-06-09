@@ -192,8 +192,8 @@ namespace InteractML
 
             GUILayout.EndHorizontal();
 
-            GUIContent secondInputPortLabel = new GUIContent("Outputs");
-            IMLNodeEditor.PortField(secondInputPortLabel, m_SeriesTrainingExamplesNode.GetInputPort("OutputFeatures"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            GUIContent secondInputPortLabel = new GUIContent("Target Values");
+            IMLNodeEditor.PortField(secondInputPortLabel, m_SeriesTrainingExamplesNode.GetInputPort("TargetValues"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
 
         }
 

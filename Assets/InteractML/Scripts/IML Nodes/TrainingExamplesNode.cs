@@ -22,7 +22,7 @@ namespace InteractML
         [Input]
         public List<Node> InputFeatures;
         [Input]
-        public List<Node> OutputFeatures;
+        public List<Node> TargetValues;
 
         /// <summary>
         /// The training examples node that we are sending as output 
