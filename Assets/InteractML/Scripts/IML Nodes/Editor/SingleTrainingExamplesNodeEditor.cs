@@ -181,13 +181,17 @@ namespace InteractML
             GUILayout.Space(5);
             GUILayout.BeginHorizontal();
 
-            GUIContent inputPortLabel = new GUIContent("Live Data\nIn");
+            GUIContent inputPortLabel = new GUIContent("Live Data In");
             IMLNodeEditor.PortField(inputPortLabel, m_SingleTrainingExamplesNode.GetInputPort("InputFeatures"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUIContent outputPortLabel = new GUIContent("Recorded\nData Out");
             IMLNodeEditor.PortField(outputPortLabel, m_SingleTrainingExamplesNode.GetOutputPort("TrainingExamplesNodeToOutput"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUILayout.EndHorizontal();
+
+            GUIContent secondInputPortLabel = new GUIContent("Outputs");
+            IMLNodeEditor.PortField(secondInputPortLabel, m_SingleTrainingExamplesNode.GetInputPort("OutputFeatures"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+
         }
 
         /// <summary>

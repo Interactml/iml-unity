@@ -21,6 +21,8 @@ namespace InteractML
         /// </summary>
         [Input]
         public List<Node> InputFeatures;
+        [Input]
+        public List<Node> OutputFeatures;
 
         /// <summary>
         /// The training examples node that we are sending as output 
@@ -123,6 +125,8 @@ namespace InteractML
         [HideInInspector]
         public KeyCode RecordDataKey;
 
+        public IMLNodeTooltips tips;
+
         #endregion
 
         #region XNode Messages
@@ -132,7 +136,9 @@ namespace InteractML
         {
             base.Init();
 
-            Initialize();   
+            Initialize();
+
+            tips = IMLTooltipsSerialization.LoadTooltip("TrainingExamples");
         }
 
         public override void OnCreateConnection(NodePort from, NodePort to)
