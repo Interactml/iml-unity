@@ -96,17 +96,17 @@ namespace InteractML
         /// <summary>
         /// The skin to use on the node
         /// </summary>
-        private GUISkin m_NodeSkin;
+        protected GUISkin m_NodeSkin;
 
         /// <summary>
         /// Reference to this iml node
         /// </summary>
-        private IMLNode m_IMLNode;
+        protected IMLNode m_IMLNode;
 
         /// <summary>
         /// The serialized representation of this IML Node
         /// </summary>
-        private SerializedObject m_IMLNodeSerialized;
+        protected SerializedObject m_IMLNodeSerialized;
 
         /// <summary>
         /// The name for this node
@@ -117,7 +117,7 @@ namespace InteractML
         /// Rects for node layout
         /// </summary>
         private Rect m_BodyRect;
-        private Rect m_PortRect;
+        protected Rect m_PortRect;
         private Rect m_InnerBodyRect;
         private Rect m_HelpRect;
         private Rect m_WarningRect;
@@ -127,16 +127,16 @@ namespace InteractML
         /// <summary>
         /// Number of input ports
         /// </summary>
-        private int m_NumInputs;
+        protected int m_NumInputs;
         /// <summary>
         /// Number of output ports
         /// </summary>
-        private int m_NumOutputs;
+        protected int m_NumOutputs;
 
         /// <summary>
         /// List of port pairs to draw
         /// </summary>
-        private List<IMLNodePortPair> m_PortPairs;
+        protected List<IMLNodePortPair> m_PortPairs;
 
         public string TooltipText = "";
         public Rect ToolTipRect;
@@ -514,7 +514,7 @@ namespace InteractML
         /// <summary>
         /// Define rect values for port section and paint textures based on rects 
         /// </summary>
-        private void DrawPortLayout()
+        protected void DrawPortLayout()
         {
             // Add x units to height per extra port
             if (m_PortPairs == null)
@@ -568,7 +568,7 @@ namespace InteractML
         /// <summary>
         /// Show the input/output port fields 
         /// </summary>
-        private void ShowNodePorts()
+        protected void ShowNodePorts()
         {
             GUILayout.Space(5);
 
@@ -678,7 +678,7 @@ namespace InteractML
         /// <param name="inputs"></param>
         /// <param name="outputs"></param>
         /// <param name="pairs"></param>
-        private void AddPairsToList(IEnumerator<NodePort> inputs, IEnumerator<NodePort> outputs, ref List<IMLNodePortPair> pairs)
+        protected void AddPairsToList(IEnumerator<NodePort> inputs, IEnumerator<NodePort> outputs, ref List<IMLNodePortPair> pairs)
         {
             IMLNodePortPair portPair = new IMLNodePortPair();
 
@@ -709,6 +709,17 @@ namespace InteractML
                 // Reset pair for next use
                 portPair.Reset();
             }
+        }
+
+        /// <summary>
+        /// Returns the loaded IMLGUISkin
+        /// </summary>
+        /// <returns></returns>
+        protected GUISkin LoadIMLGUISkin()
+        {
+            // Load node skin
+            return Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+
         }
         #endregion
 

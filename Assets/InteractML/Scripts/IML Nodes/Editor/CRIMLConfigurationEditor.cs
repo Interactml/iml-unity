@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ReusableMethods;
+using System.Linq;
+using XNode;
 #if UNITY_EDITOR
 using UnityEditor;
 using XNodeEditor;
@@ -51,6 +53,14 @@ namespace InteractML
 
         public override void OnHeaderGUI()
         {
+            // Load node skin
+            if (m_NodeSkin == null)
+                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+
+            // Get references
+            m_IMLNode = target as IMLNode;
+            m_IMLNodeSerialized = new SerializedObject(m_IMLNode);
+
             // Get reference to the current node
             m_CRIMLConfiguration = (target as CRIMLConfiguration);
 
@@ -79,16 +89,23 @@ namespace InteractML
 
         public override void OnBodyGUI()
         {
-            
+            // Unity specifically requires this to save/update any serial object.
+            // serializedObject.Update(); must go at the start of an inspector gui, and
+            // serializedObject.ApplyModifiedProperties(); goes at the end.
+            serializedObject.Update();
 
+            // Draw ports
             DrawPortLayout();
-            ShowSystemNodePorts();
+            //ShowSystemNodePorts();
+            base.ShowNodePorts();
             //check if port is hovered over 
             PortTooltip(m_CRIMLConfiguration.tips.PortTooltip);
 
+            // Draw body Icons
             DrawBodyLayoutIcons();
             ShowIcon();
 
+            // Draw body buttons
             DrawBodyLayoutButtons();
             ShowButtons();
 
@@ -116,6 +133,9 @@ namespace InteractML
             {
                 ShowTooltip(m_ButtonsRect, TooltipText);
             }
+
+            serializedObject.ApplyModifiedProperties();
+
         }
 
         /// <summary>
@@ -123,11 +143,17 @@ namespace InteractML
         /// </summary>
         private void DrawPortLayout()
         {
+            // Add x units to height per extra port
+            if (m_PortPairs == null)
+                m_PortPairs = new List<IMLNodePortPair>();
+            int numPortPairs = m_PortPairs.Count; ;
+            int extraHeight = (numPortPairs * 10);
+
             // Draw body background purple rect below header
             m_PortRect.x = 5;
             m_PortRect.y = HeaderRect.height;
             m_PortRect.width = NodeWidth - 10;
-            m_PortRect.height = 60;
+            m_PortRect.height = 60 + extraHeight;
             GUI.DrawTexture(m_PortRect, NodeColor);
 
             // Draw line below ports
@@ -205,6 +231,7 @@ namespace InteractML
 
             GUIContent secondInputPortLabel = new GUIContent("Recorded Data In");
             IMLNodeEditor.PortField(secondInputPortLabel, m_CRIMLConfiguration.GetInputPort("IMLTrainingExamplesNodes"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+
         }
 
 
