@@ -9,7 +9,7 @@ using System;
 namespace InteractML
 {
     [NodeWidth(420)]
-    public class IMLConfiguration : Node
+    public class IMLConfiguration : IMLNode
     {
 
         #region Variables

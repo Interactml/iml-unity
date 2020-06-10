@@ -18,6 +18,7 @@ namespace InteractML
         /// <summary>
         /// The script we are referencing
         /// </summary>
+        [IMLMonobehaviourAttribute]
         public MonoBehaviour Script;
 
         /// <summary>
