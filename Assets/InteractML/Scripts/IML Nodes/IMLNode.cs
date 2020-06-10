@@ -7,7 +7,7 @@ namespace InteractML
 {
     public class IMLNode : Node
     {
-        public IMLNodeTooltips tips;
+        public IMLNodeTooltips tooltips;
         // Use this for initialization
         protected override void Init()
         {
