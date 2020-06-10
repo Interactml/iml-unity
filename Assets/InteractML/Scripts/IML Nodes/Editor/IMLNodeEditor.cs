@@ -82,10 +82,12 @@ namespace InteractML
         /// Controls whether you see help tooltip
         /// </summary>
         public bool showHelp;
+        bool showhelphelper;
         /// <summary>
         /// Controls whether you see a port tooltip
         /// </summary>
         public bool showPort = false;
+        bool showporthelper;
         
 
         /// <summary>
@@ -140,6 +142,9 @@ namespace InteractML
 
         public string TooltipText = "";
         public Rect ToolTipRect;
+
+        int count = 3;
+        int counter = 0;
 
         #endregion
 
@@ -387,12 +392,19 @@ namespace InteractML
             GUILayout.Button(new GUIContent("Help"), m_NodeSkin.GetStyle("Help Button"));
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
-                showHelp = true;
+                
+                showhelphelper = true;
             }
-            else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            else if (Event.current.type == EventType.Layout && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
-                showHelp = false;
-
+               showHelp = false;
+               counter = 0;
+                
+            }
+            if (showhelphelper && Event.current.type == EventType.Layout)
+            {
+                showHelp = true;
+                showhelphelper = false;
             }
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
@@ -404,8 +416,6 @@ namespace InteractML
         {
             GUIStyle style = m_NodeSkin.GetStyle("Tooltip");
             var x = style.CalcHeight(new GUIContent(tip), m_HelpRect.width);
-            Debug.Log(x);
-            //Debug.Log(m_HelpRect.width);
             m_ToolRect.x = m_HelpRect.x;
             m_ToolRect.y = m_HelpRect.y + m_HelpRect.height;
             m_ToolRect.width = m_HelpRect.width;
@@ -432,13 +442,12 @@ namespace InteractML
 
             if (ports.Contains(window.hoveredPort))
             {
-                showPort = true;
+                showporthelper = true;
                 for (int i = 0; i < ports.Count; i++)
                 {
                     if (window.hoveredPort == ports[i])
                     {
                         TooltipText = portTips[i];
-                        Debug.Log("1");
 
                     }
 
@@ -446,11 +455,17 @@ namespace InteractML
             }
             else
             {
-                if (Event.current.type == EventType.MouseMove)
+                if (Event.current.type == EventType.Layout)
                 {
                     showPort = false;
                 }
                     
+            }
+
+            if(showporthelper && Event.current.type == EventType.Layout)
+            {
+                showPort = true;
+                showporthelper = false;
             }
         }
         // <summary>

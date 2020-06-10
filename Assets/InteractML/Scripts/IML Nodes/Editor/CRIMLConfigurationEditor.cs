@@ -44,6 +44,7 @@ namespace InteractML
         private bool m_RegressionSwitch;
 
         private bool reset;
+        private bool resetHelper;
         private bool train;
         private bool run;
 
@@ -112,7 +113,7 @@ namespace InteractML
                 ShowTooltip(m_PortRect, TooltipText);
             }
 
-            if (reset || run)
+            if (reset)
             {
                 ShowTooltip(m_ButtonsRect, TooltipText);
             }
@@ -261,14 +262,21 @@ namespace InteractML
             }
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
-                reset = true;
+                resetHelper = true;
                 TooltipText = m_CRIMLConfiguration.tips.BodyTooltip.Tips[0];
             }
-            else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            else if (Event.current.type == EventType.Layout && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
                 reset = false;
 
             }
+            
+            if (Event.current.type == EventType.Layout && resetHelper)
+            {
+                reset = true;
+                resetHelper = false;
+            }
+
             GUILayout.Space(15);
             TrainModelButton();
             GUILayout.Space(15);
@@ -318,7 +326,7 @@ namespace InteractML
             }
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
-                reset = true;
+                resetHelper = true;
                 if (GUI.enabled)
                 {
                     TooltipText = m_CRIMLConfiguration.tips.BodyTooltip.Tips[1];
@@ -331,6 +339,12 @@ namespace InteractML
             {
                 reset = false;
 
+            }
+
+            if (Event.current.type == EventType.Layout && resetHelper)
+            {
+                reset = true;
+                resetHelper = false;
             }
 
         }
@@ -382,7 +396,7 @@ namespace InteractML
 
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
-                run = true;
+                resetHelper = true;
                 if (enabled)
                 {
                     TooltipText = m_CRIMLConfiguration.tips.BodyTooltip.Tips[2];
@@ -394,8 +408,14 @@ namespace InteractML
             }
             else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
-                run = false;
+                reset = false;
 
+            }
+
+            if (Event.current.type == EventType.Layout && resetHelper)
+            {
+                reset = true;
+                resetHelper = false;
             }
 
         }
