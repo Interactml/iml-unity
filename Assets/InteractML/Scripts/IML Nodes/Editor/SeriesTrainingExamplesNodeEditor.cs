@@ -380,7 +380,7 @@ namespace InteractML
             bool disableButton = false;
 
             // If there are any models connected we check some conditions
-            if (!Lists.IsNullOrEmpty(ref m_SeriesTrainingExamplesNode.IMLConfigurationNodesConnected))
+            /*if (!Lists.IsNullOrEmpty(ref m_SeriesTrainingExamplesNode.IMLConfigurationNodesConnected))
             {
                 for (int i = 0; i < m_SeriesTrainingExamplesNode.IMLConfigurationNodesConnected.Count; i++)
                 {
@@ -393,7 +393,7 @@ namespace InteractML
                     }
 
                 }
-            }
+            }*/
 
             // Draw button
             if (disableButton)
@@ -422,7 +422,7 @@ namespace InteractML
             if (!disableButton)
             {
                 // If there are any models connected we check some conditions
-                if (!Lists.IsNullOrEmpty(ref m_SeriesTrainingExamplesNode.IMLConfigurationNodesConnected))
+                /*if (!Lists.IsNullOrEmpty(ref m_SeriesTrainingExamplesNode.IMLConfigurationNodesConnected))
                 {
                     foreach (var IMLConfigNode in m_SeriesTrainingExamplesNode.IMLConfigurationNodesConnected)
                     {
@@ -433,7 +433,7 @@ namespace InteractML
                             break;
                         }
                     }
-                }
+                }*/
 
                 // Draw button
                 if (disableButton)

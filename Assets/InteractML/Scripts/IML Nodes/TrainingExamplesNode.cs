@@ -127,6 +127,8 @@ namespace InteractML
 
         public IMLNodeTooltips tips;
 
+        private bool MLSClassification = false;
+
         #endregion
 
         #region XNode Messages
@@ -144,6 +146,18 @@ namespace InteractML
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
             this.DisconnectIfNotType<TrainingExamplesNode, IFeatureIML>(from, to);
+            Debug.Log(IMLConfigurationNodesConnected.Count);
+            
+            foreach(IMLConfiguration MLS in IMLConfigurationNodesConnected)
+            {
+                if (MLS.LearningType == IMLSpecifications.LearningType.Classification)
+                {
+                    MLSClassification = true;
+                }
+                    
+            }
+            
+            
         }
 
         // Return the correct value of an output port when requested
@@ -204,6 +218,7 @@ namespace InteractML
             if (IMLConfigurationNodesConnected == null)
                 IMLConfigurationNodesConnected = new List<IMLConfiguration>();
 
+            
             // Load training data from disk
             LoadDataFromDisk();
         }
@@ -351,7 +366,7 @@ namespace InteractML
                 m_LastKnownDesireOutputsConfig = m_DesiredOutputsConfig;
             }
 
-            // If the size of the output configuration doesn't match the output features size, something is wrong
+            // If the size of the output configuration doesn't match the output features size, something is wrong[
             if (m_DesiredOutputsConfig.Count != m_DesiredOutputFeatures.Count)
             {
                 // Re-Build Output List

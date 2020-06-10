@@ -144,6 +144,8 @@ namespace InteractML
         /* ERROR FLAGS */
         protected bool m_ErrorWrongInputTrainingExamplesPort;
 
+        private List<TrainingExamplesNode> oldTrainingExamplesNodes;
+
         #endregion
 
         #region XNode Messages
@@ -225,7 +227,14 @@ namespace InteractML
 
             // Create rapidlib predicted output vector
             CreateRapidLibOutputVector();
-
+            // if adding a training examples node connection add MLS system to that training nodes list of connected MLS systems
+            // TO DO check if this still happens if connection broken 
+            if(from.fieldName == "TrainingExamplesNodeToOutput")
+            {
+                TrainingExamplesNode temp = from.node as TrainingExamplesNode;
+                temp.IMLConfigurationNodesConnected.Add(this);
+            }
+            
         }
 
         public override void OnRemoveConnection(NodePort port)
@@ -249,7 +258,6 @@ namespace InteractML
 
             // Create rapidlib predicted output vector
             CreateRapidLibOutputVector();
-
         }
 
         #endregion
@@ -839,8 +847,18 @@ namespace InteractML
         /// </summary>
         protected void UpdateOutputConfigList()
         {
+            oldTrainingExamplesNodes = IMLTrainingExamplesNodes;
             // Get values from the training example node
             IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
+
+            if (IMLTrainingExamplesNodes.Count < oldTrainingExamplesNodes.Count)
+            {
+                List<TrainingExamplesNode> list3 = oldTrainingExamplesNodes.Except(IMLTrainingExamplesNodes).ToList();
+                foreach (TrainingExamplesNode node in list3)
+                {
+                    node.IMLConfigurationNodesConnected.Remove(this);
+                }
+            }
 
             // Make sure that the output list is initialised
             if (m_ExpectedOutputList == null)

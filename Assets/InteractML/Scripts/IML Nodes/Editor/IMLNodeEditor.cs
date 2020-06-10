@@ -412,19 +412,20 @@ namespace InteractML
         // <summary>
         /// Takes in rect and a string. Rect is the rect which the hovered GUI element is in. String is the tip for this element. Draws a tooltip below the element.
         /// </summary>
-        public void ShowTooltip(Rect m_HelpRect, string tip)
+        public void ShowTooltip(Rect hoveredRect, string tip)
         {
             GUIStyle style = m_NodeSkin.GetStyle("Tooltip");
-            var x = style.CalcHeight(new GUIContent(tip), m_HelpRect.width);
-            m_ToolRect.x = m_HelpRect.x;
-            m_ToolRect.y = m_HelpRect.y + m_HelpRect.height;
-            m_ToolRect.width = m_HelpRect.width;
+            // calculates the height of the tooltip 
+            var x = style.CalcHeight(new GUIContent(tip), hoveredRect.width);
+            m_ToolRect.x = hoveredRect.x;
+            m_ToolRect.y = hoveredRect.y + hoveredRect.height;
+            m_ToolRect.width = hoveredRect.width;
             m_ToolRect.height = x;
 
             GUILayout.BeginArea(m_ToolRect);
             GUILayout.BeginHorizontal();
             
-            GUILayoutOption[] options = new GUILayoutOption[] { GUILayout.MinWidth(m_HelpRect.width), GUILayout.MaxHeight(x)};
+            GUILayoutOption[] options = new GUILayoutOption[] { GUILayout.MinWidth(hoveredRect.width), GUILayout.MaxHeight(x)};
             GUILayout.TextArea(tip, style, options);
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
