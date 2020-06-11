@@ -709,8 +709,12 @@ namespace InteractML
                     // Add output to pair
                     portPair.output = outputs.Current;
                 }
-                // Add pair to list
-                pairs.Add(new IMLNodePortPair(portPair.input, portPair.output));
+                // If the list doesn't a pair with our input...
+                if (!pairs.Any(x => x.input == portPair.input))
+                {
+                    // Add pair to list
+                    pairs.Add(new IMLNodePortPair(portPair.input, portPair.output));
+                }
                 // Reset pair for next use
                 portPair.Reset();
             }
@@ -720,8 +724,10 @@ namespace InteractML
             {
                 // Add output to pair
                 portPair.output = outputs.Current;
-                // Add pair to list (input will be null)
-                pairs.Add(new IMLNodePortPair(portPair.input, portPair.output));
+                // If the list doesn't contain a pair with our output...
+                if (!pairs.Any(x => x.output == portPair.output))
+                    // Add pair to list (input will be null)
+                    pairs.Add(new IMLNodePortPair(portPair.input, portPair.output));
                 // Reset pair for next use
                 portPair.Reset();
             }
