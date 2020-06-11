@@ -61,7 +61,7 @@ namespace InteractML.DataTypeNodes
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
             System.Type[] portTypesAccept = new System.Type[] { typeof(T) };
-            System.Type[] nodeTypesAccept = new System.Type[] { this.GetType(), typeof(IFeatureIML) };
+            System.Type[] nodeTypesAccept = new System.Type[] { this.GetType(), typeof(IFeatureIML), typeof(IMLConfiguration) };
             this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
 
         }
