@@ -43,7 +43,8 @@ namespace InteractML
             TrainingExamplesVector.Clear();
 
             // Make sure the outputs are populated properly after clearing them out
-            UpdateOutputsList();
+            //UpdateOutputsList();
+            //UpdateTargeValues();
         }
 
         #endregion

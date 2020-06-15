@@ -38,7 +38,8 @@ namespace InteractML
         {
             // Clear series in node
             TrainingSeriesCollection.Clear();
-            UpdateOutputsList();
+            //UpdateOutputsList();
+            //UpdateTargeValues();
         }
 
         #endregion

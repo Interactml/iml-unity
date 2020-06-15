@@ -69,7 +69,7 @@ namespace InteractML
         /// </summary>
         [SerializeField, HideInInspector]
         protected List<IMLSpecifications.OutputsEnum> m_DesiredOutputsConfig;
-        public List<IMLSpecifications.OutputsEnum> DesiredOutputsConfig { get { return m_DesiredOutputsConfig; } set { this.m_DesiredOutputsConfig = value; } }
+        public List<IMLSpecifications.OutputsEnum> DesiredOutputsConfig { get { return m_DesiredOutputsConfig; }}
         /// <summary>
         /// This one is kept to compare if the structure of the outputs has changed
         /// </summary>
@@ -146,19 +146,39 @@ namespace InteractML
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
             this.DisconnectIfNotType<TrainingExamplesNode, IFeatureIML>(from, to);
-            Debug.Log(IMLConfigurationNodesConnected.Count);
-            
-            foreach(IMLConfiguration MLS in IMLConfigurationNodesConnected)
+            //if connected to target values 
+            if(to.fieldName == "TargetValues")
             {
-                if (MLS.LearningType == IMLSpecifications.LearningType.Classification)
+                // Go through MLS systems connected if any MLS are classification or DTW set MLSclassification to true
+                foreach (IMLConfiguration MLS in IMLConfigurationNodesConnected)
                 {
-                    MLSClassification = true;
+                    if (MLS.LearningType == IMLSpecifications.LearningType.DTW || MLS.LearningType == IMLSpecifications.LearningType.Classification)
+                    {
+                        MLSClassification = true;
+                    }
                 }
-                    
+                // if there is a mls classification connected and there is one or more target values break connection otherwise update list of connected wtarget values 
+                if (MLSClassification && TargetValues.Count >= 1 )
+                {
+                    from.Disconnect(to);
+                }
+                else
+                {
+                    UpdateTargetValueInput();
+                }
+                MLSClassification = false;
             }
-            
+
+           
             
         }
+
+        public override void OnRemoveConnection(NodePort port)
+        {
+            base.OnRemoveConnection(port);
+            UpdateTargetValueInput();
+        }
+
 
         // Return the correct value of an output port when requested
         public override object GetValue(NodePort port)
@@ -218,7 +238,10 @@ namespace InteractML
             if (IMLConfigurationNodesConnected == null)
                 IMLConfigurationNodesConnected = new List<IMLConfiguration>();
 
-            
+            // set target value input list 
+            UpdateTargetValueInput();
+            //set up target values configuration list 
+            UpdateTargetValuesConfig();
             // Load training data from disk
             LoadDataFromDisk();
         }
@@ -249,10 +272,6 @@ namespace InteractML
 
             // Keep input config list updated
             UpdateInputConfigList();
-
-            // Make sure the output list is properly update 
-            // TO DO: Potentially makes sense to move this to OnValidate to avoid calling it all the time
-            UpdateOutputsList();
 
             // Run examples logic in case we need to start/stop collecting examples
             CollectExamplesLogic();
@@ -295,8 +314,6 @@ namespace InteractML
             // Clear list of desired outputs (which is also fed to the training examples vector when adding a single training example)
             //DesiredOutputFeatures.Clear();
 
-            // Make sure the outputs are populated properly after clearing them out
-            UpdateOutputsList();
         }
 
         public void Terminate()
@@ -350,100 +367,47 @@ namespace InteractML
             }
             
         }
-
         /// <summary>
-        /// Makes sure the list of outputs is properly configured
+        /// Updates the list of Feature Extractprs / Data type nodes connected to the Target Value port 
         /// </summary>
-        protected void UpdateOutputsList()
+        protected void UpdateTargetValueInput()
         {
-            // Check if we actually need to rebuild the desired output features
-            // If we have no record of the structure OR current and last known structures doesn't match
-            if ( m_LastKnownDesireOutputsConfig == null || ! m_LastKnownDesireOutputsConfig.SequenceEqual(m_DesiredOutputsConfig) )
+            // if the list exists get nodes connected 
+            if (this.GetInputNodesConnected("TargetValues") != null)
             {
-                //Debug.Log("[UPDATE] REBUILDING OUTPUT LIST");
-                // Build Output List
-                BuildOutputFeaturesFromOutputConfig();
-                m_LastKnownDesireOutputsConfig = m_DesiredOutputsConfig;
+                TargetValues = this.GetInputNodesConnected("TargetValues");
             }
-
-            // If the size of the output configuration doesn't match the output features size, something is wrong[
-            if (m_DesiredOutputsConfig.Count != m_DesiredOutputFeatures.Count)
-            {
-                // Re-Build Output List
-                BuildOutputFeaturesFromOutputConfig();
-            }
-            // If both lists are the same size...
             else
             {
-                // Double making sure that each of the outputs specified in the configuration matches the required type
-                for (int i = 0; i < m_DesiredOutputFeatures.Count; i++)
-                {
-                    // If the data type doesn't match the one specified in the configuration...
-                    if (m_DesiredOutputFeatures[i].DataType != (IMLSpecifications.DataTypes) m_DesiredOutputsConfig[i])
-                    {
-                        //Debug.LogError("DataType not equal!");
-                        // Correct that output feature with the right type
-                        switch (m_DesiredOutputsConfig[i])
-                        {
-                            case IMLSpecifications.OutputsEnum.Float:
-                                m_DesiredOutputFeatures[i] = new IMLFloat();
-                                break;
-                            case IMLSpecifications.OutputsEnum.Integer:
-                                m_DesiredOutputFeatures[i] = new IMLInteger();
-                                break;
-                            case IMLSpecifications.OutputsEnum.Vector2:
-                                m_DesiredOutputFeatures[i] = new IMLVector2();
-                                break;
-                            case IMLSpecifications.OutputsEnum.Vector3:
-                                m_DesiredOutputFeatures[i] = new IMLVector3();
-                                break;
-                            case IMLSpecifications.OutputsEnum.Vector4:
-                                m_DesiredOutputFeatures[i] = new IMLVector4();
-                                break;
-                            default:
-                                break;
-                        }
-                        
-                    }
-                }
-
+                TargetValues = new List<Node>();
             }
-
         }
 
         /// <summary>
-        /// Clears the output features and rebuilds them from the configuration specified
+        /// Updates the configuration list of target values 
         /// </summary>
-        protected void BuildOutputFeaturesFromOutputConfig()
+        protected void UpdateTargetValuesConfig()
         {
-            // Adjust the desired outputs list based on configuration selected
-            m_DesiredOutputFeatures.Clear();
-            // Calculate required space for outputs
-            for (int i = 0; i < m_DesiredOutputsConfig.Count; i++)
+            DesiredOutputsConfig.Clear();
+            if (DesiredOutputsConfig.Count != TargetValues.Count)
             {
-                switch (m_DesiredOutputsConfig[i])
+                for (int i = 0; i < TargetValues.Count; i++)
                 {
-                    case IMLSpecifications.OutputsEnum.Float:
-                        m_DesiredOutputFeatures.Add(new IMLFloat());
-                        break;
-                    case IMLSpecifications.OutputsEnum.Integer:
-                        m_DesiredOutputFeatures.Add(new IMLInteger());
-                        break;
-                    case IMLSpecifications.OutputsEnum.Vector2:
-                        m_DesiredOutputFeatures.Add(new IMLVector2());
-                        break;
-                    case IMLSpecifications.OutputsEnum.Vector3:
-                        m_DesiredOutputFeatures.Add(new IMLVector3());
-                        break;
-                    case IMLSpecifications.OutputsEnum.Vector4:
-                        m_DesiredOutputFeatures.Add(new IMLVector4());
-                        break;
-                    default:
-                        break;
+                    // Cast the node checking if implements the feature interface (it is a featureExtractor)
+                    IFeatureIML targetValue = TargetValues[i] as IFeatureIML;
+
+                    // If it is a feature extractor...
+                    if (targetValue != null)
+                    {
+                        // We add the feature to the desired inputs config
+                        DesiredOutputsConfig.Add((IMLSpecifications.OutputsEnum)targetValue.FeatureValues.DataType);
+                    }
                 }
             }
-
+            
         }
+
+
 
         /// <summary>
         /// Logic to collect examples. Needs to be called in an Update loop
@@ -467,9 +431,7 @@ namespace InteractML
                             AddTrainingExampleprotected();
                             break;
                         case CollectionMode.Series:
-                            AddInputsToSeries(InputFeatures, 
-                                IMLDataSerialization.ParseIMLFeatureToJSON(DesiredOutputFeatures), 
-                                ref m_SingleSeries);
+                            AddTrainingInputToSeries();
                             break;
                         default:
                             break;
@@ -498,9 +460,9 @@ namespace InteractML
             }
 
             // Add all the output features to the training example being recorded
-            for (int i = 0; i < m_DesiredOutputFeatures.Count; i++)
+            for (int i = 0; i < TargetValues.Count; i++)
             {
-                newExample.AddOutputExample(m_DesiredOutputFeatures[i]);
+                newExample.AddOutputExample((TargetValues[i] as IFeatureIML).FeatureValues);
             }
             
             // Add the training example to the vector
@@ -642,6 +604,21 @@ namespace InteractML
                 }
 
             }
+        }
+
+
+        protected void AddTrainingInputToSeries()
+        {
+            for(int i = 0; i<TargetValues.Count; i++)
+            {
+                IFeatureIML targetValue = TargetValues[i] as IFeatureIML;
+                DesiredOutputFeatures.Add(targetValue.FeatureValues);
+               
+            }
+
+            AddInputsToSeries(InputFeatures,
+                                IMLDataSerialization.ParseIMLFeatureToJSON(DesiredOutputFeatures),
+                                ref m_SingleSeries);
         }
 
         #endregion
