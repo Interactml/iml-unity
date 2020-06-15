@@ -228,8 +228,7 @@ namespace InteractML
             // Create rapidlib predicted output vector
             CreateRapidLibOutputVector();
             // if adding a training examples node connection add MLS system to that training nodes list of connected MLS systems
-            // TO DO check if this still happens if connection broken 
-            if(from.fieldName == "TrainingExamplesNodeToOutput")
+            if(from.fieldName == "TrainingExamplesNodeToOutput") 
             {
                 TrainingExamplesNode temp = from.node as TrainingExamplesNode;
                 temp.IMLConfigurationNodesConnected.Add(this);
@@ -340,6 +339,12 @@ namespace InteractML
             // Create rapidlib predicted output vector
             CreateRapidLibOutputVector();
 
+            //Add this node to list of IMLConfig nodes in all training nodes attached 
+            foreach(TrainingExamplesNode node in IMLTrainingExamplesNodes)
+            {
+                if(!node.IMLConfigurationNodesConnected.Contains(this))
+                    node.IMLConfigurationNodesConnected.Add(this);
+            }
             // Specify the names for the nodeports
             m_TrainingExamplesNodeportName = "IMLTrainingExamplesNodes";
             m_LiveFeaturesNodeportName = "InputFeatures";
@@ -371,7 +376,6 @@ namespace InteractML
 
         public void UpdateLogic()
         {
-            
             //Set Learning Type 
             SetLearningType();
 
@@ -1487,6 +1491,7 @@ namespace InteractML
                 }
             }
         }
+       
 
         #endregion
 
