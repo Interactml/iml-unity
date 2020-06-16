@@ -77,10 +77,12 @@ namespace InteractML
 
 
         protected List<IMLBaseDataType> m_DesiredOutputFeatures;
+        protected List<IMLBaseDataType> m_DesiredInputFeatures;
         /// <summary>
         /// List of desired outputs for this training set
         /// </summary>
         public List<IMLBaseDataType> DesiredOutputFeatures { get { return m_DesiredOutputFeatures; } }
+        public List<IMLBaseDataType> DesiredInputFeatures { get { return m_DesiredInputFeatures; } }
 
         /// <summary>
         /// protected member, returns total number of training examples from vector (if reference not null)
@@ -229,6 +231,9 @@ namespace InteractML
             if (m_DesiredOutputFeatures == null)
                 m_DesiredOutputFeatures = new List<IMLBaseDataType>();
 
+            if (m_DesiredInputFeatures == null)
+                m_DesiredInputFeatures = new List<IMLBaseDataType>();
+
             if (Lists.IsNullOrEmpty(ref TrainingExamplesVector))
                 TrainingExamplesVector = new List<IMLTrainingExample>();
 
@@ -272,6 +277,11 @@ namespace InteractML
 
             // Keep input config list updated
             UpdateInputConfigList();
+
+            //Update target values 
+            UpdateDesiredOutputFeatures();
+            //Update input values
+            UpdateDesiredInputFeatures();
 
             // Run examples logic in case we need to start/stop collecting examples
             CollectExamplesLogic();
@@ -431,7 +441,9 @@ namespace InteractML
                             AddTrainingExampleprotected();
                             break;
                         case CollectionMode.Series:
-                            AddTrainingInputToSeries();
+                            AddInputsToSeries(InputFeatures,
+                                                IMLDataSerialization.ParseIMLFeatureToJSON(DesiredOutputFeatures),
+                                                ref m_SingleSeries);
                             break;
                         default:
                             break;
@@ -607,8 +619,9 @@ namespace InteractML
         }
 
 
-        protected void AddTrainingInputToSeries()
+        protected void UpdateDesiredOutputFeatures()
         {
+            DesiredOutputFeatures.Clear();
             for(int i = 0; i<TargetValues.Count; i++)
             {
                 IFeatureIML targetValue = TargetValues[i] as IFeatureIML;
@@ -616,9 +629,18 @@ namespace InteractML
                
             }
 
-            AddInputsToSeries(InputFeatures,
-                                IMLDataSerialization.ParseIMLFeatureToJSON(DesiredOutputFeatures),
-                                ref m_SingleSeries);
+        }
+
+        protected void UpdateDesiredInputFeatures()
+        {
+            m_DesiredInputFeatures.Clear();
+            for (int i = 0; i < InputFeatures.Count; i++)
+            {
+                IFeatureIML inputValue = InputFeatures[i] as IFeatureIML;
+                m_DesiredInputFeatures.Add(inputValue.FeatureValues);
+
+            }
+
         }
 
         #endregion

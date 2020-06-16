@@ -23,8 +23,8 @@ namespace InteractML
         /// <summary>
         /// Rects for node layout
         /// </summary>
-        private Rect m_BodyRectOutputs;
-        private Rect m_BodyRectOutputAddRemove;
+        private Rect m_BodyRectInputs;
+        private Rect m_BodyRectTargets;
         private Rect m_BodyRectButtons;
         private Rect m_BodyRectBottom;
         private Rect m_PortRect;
@@ -79,19 +79,18 @@ namespace InteractML
             ShowSeriesTrainingExamplesNodePorts();
             GUILayout.Space(50);
 
-            DrawBodyLayoutOutputAddRemove();
-            ShowOutputAddRemove();
+            DrawBodyLayoutInputs();
+            DrawValues(m_SeriesTrainingExamplesNode.DesiredInputFeatures, "Input Values");
 
-            DrawBodyLayoutOutputs();
-            GUILayout.Space(50);
-            ShowOutputList();
+            DrawBodyLayoutTargets();
+            GUILayout.Space(80);
+            DrawValues(m_SeriesTrainingExamplesNode.DesiredOutputFeatures, "Target Values");
 
             DrawBodyLayoutButtons();
-            GUILayout.Space(60);
             ShowButtons();
 
             DrawBodyLayoutBottom();
-            ShowBottomSection();
+            ShowHelpButton(m_BodyRectBottom);
 
         }
 
@@ -108,42 +107,43 @@ namespace InteractML
             GUI.DrawTexture(m_PortRect, NodeColor);
 
             // Draw line below ports
-            GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), GetColorTextureFromHexString("#74DF84"));
+           GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), GetColorTextureFromHexString("#74DF84"));
         }
 
         /// <summary>
         /// Define rect values for node body and paint textures based on rects 
         /// </summary>
-        private void DrawBodyLayoutOutputAddRemove()
+        private void DrawBodyLayoutInputs()
         {
-            m_BodyRectOutputAddRemove.x = 5;
-            m_BodyRectOutputAddRemove.y = HeaderRect.height + m_PortRect.height;
-            m_BodyRectOutputAddRemove.width = NodeWidth - 10;
-            m_BodyRectOutputAddRemove.height = 60;
+            m_BodyRectInputs.x = 5;
+            m_BodyRectInputs.y = HeaderRect.height + m_PortRect.height;
+            m_BodyRectInputs.width = NodeWidth - 10;
+            m_BodyRectInputs.height = 80 + m_SeriesTrainingExamplesNode.DesiredInputFeatures.Count * 60;
 
             // Draw body background purple rect below ports
-            GUI.DrawTexture(m_BodyRectOutputAddRemove, NodeColor);
+            GUI.DrawTexture(m_BodyRectInputs, NodeColor);
+
 
             // Draw line below add/remove buttons
-            GUI.DrawTexture(new Rect(m_BodyRectOutputAddRemove.x, HeaderRect.height + m_PortRect.height + m_BodyRectOutputAddRemove.height - WeightOfSeparatorLine, m_BodyRectOutputAddRemove.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+            GUI.DrawTexture(new Rect(m_BodyRectInputs.x, m_BodyRectInputs.y + m_BodyRectInputs.height - WeightOfSeparatorLine, m_BodyRectInputs.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
         }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawBodyLayoutOutputs()
+        
+        private void DrawBodyLayoutTargets()
         {
-            m_BodyRectOutputs.x = 5;
-            m_BodyRectOutputs.y = HeaderRect.height + m_PortRect.height + m_BodyRectOutputAddRemove.height;
-            m_BodyRectOutputs.width = NodeWidth - 10;
-            m_BodyRectOutputs.height = 60 + (m_SeriesTrainingExamplesNode.DesiredOutputsConfig.Count * 62);
+            m_BodyRectTargets.x = 5;
+            m_BodyRectTargets.y = m_BodyRectInputs.y + m_BodyRectInputs.height + WeightOfSeparatorLine;
+            Debug.Log(m_BodyRectTargets.y);
+            m_BodyRectTargets.width = NodeWidth - 10;
+            m_BodyRectTargets.height = 80 + m_SeriesTrainingExamplesNode.DesiredOutputFeatures.Count * 60;
 
             // Draw body background purple rect below ports
-            GUI.DrawTexture(m_BodyRectOutputs, NodeColor);
+            GUI.DrawTexture(m_BodyRectTargets, NodeColor);
 
             // Draw line below add/remove buttons
-            GUI.DrawTexture(new Rect(m_BodyRectOutputs.x, HeaderRect.height + m_PortRect.height + m_BodyRectOutputAddRemove.height + m_BodyRectOutputs.height - WeightOfSeparatorLine, m_BodyRectOutputs.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+            GUI.DrawTexture(new Rect(m_BodyRectTargets.x, m_BodyRectTargets.y + m_BodyRectTargets.height  - WeightOfSeparatorLine, m_BodyRectTargets.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
         }
+
+  
 
         /// <summary>
         /// Define rect values for node body and paint textures based on rects 
@@ -151,7 +151,7 @@ namespace InteractML
         private void DrawBodyLayoutButtons()
         {
             m_BodyRectButtons.x = 5;
-            m_BodyRectButtons.y = HeaderRect.height + m_PortRect.height + m_BodyRectOutputAddRemove.height + m_BodyRectOutputs.height;
+            m_BodyRectButtons.y = m_BodyRectTargets.y + m_BodyRectTargets.height;
             m_BodyRectButtons.width = NodeWidth - 10;
             m_BodyRectButtons.height = 95;
 
@@ -159,7 +159,7 @@ namespace InteractML
             GUI.DrawTexture(m_BodyRectButtons, NodeColor);
 
             // Draw line below add/remove buttons
-            GUI.DrawTexture(new Rect(m_BodyRectButtons.x, (HeaderRect.height + m_PortRect.height + m_BodyRectOutputAddRemove.height + m_BodyRectOutputs.height + m_BodyRectButtons.height) - WeightOfSeparatorLine, m_BodyRectOutputs.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+            GUI.DrawTexture(new Rect(m_BodyRectButtons.x, (m_BodyRectButtons.y + m_BodyRectButtons.height) - WeightOfSeparatorLine, m_BodyRectButtons.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace InteractML
         private void DrawBodyLayoutBottom()
         {
             m_BodyRectBottom.x = 5;
-            m_BodyRectBottom.y = HeaderRect.height + m_PortRect.height + m_BodyRectOutputAddRemove.height + m_BodyRectOutputs.height + m_BodyRectButtons.height;
+            m_BodyRectBottom.y = m_BodyRectButtons.y + 40;
             m_BodyRectBottom.width = NodeWidth - 10;
             m_BodyRectBottom.height = 40;
 
@@ -200,51 +200,15 @@ namespace InteractML
         /// <summary>
         /// Show the Output add or remove buttons
         /// </summary>
-        private void ShowOutputAddRemove()
+        private void ShowCurrentInputs()
         {
 
             GUILayout.BeginHorizontal();
             EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Outputs", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-
+            EditorGUILayout.LabelField("Inputs", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            GUILayout.TextField("hello", 25);
+            GUILayout.TextField("hello", 25);
             GUILayout.Label("", GUILayout.MinWidth(40));
-
-            m_AddOutput = EditorGUILayout.Toggle(m_AddOutput, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Add Toggle"));
-            m_RemoveOutput = EditorGUILayout.Toggle(m_RemoveOutput, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Remove Toggle"));
-
-            if (m_AddOutput)
-            {
-                // add output slot and switch toggle back
-                //m_SeriesTrainingExamplesNode.DesiredOutputFeatures.Add();
-
-                // Check if we are changing the size of the list 
-                int originalSize = m_SeriesTrainingExamplesNode.DesiredOutputsConfig.Count;
-                int newSize = m_SeriesTrainingExamplesNode.DesiredOutputsConfig.Count + 1;
-                    //EditorGUILayout.IntField("No. of Outputs", m_TrainingExamplesNode.DesiredOutputsConfig.Count);
-                if (originalSize != newSize)
-                {
-                    m_SeriesTrainingExamplesNode.DesiredOutputsConfig.Resize<IMLSpecifications.OutputsEnum>(newSize);
-                }
-
-                m_AddOutput = false;
-            }
-            if (m_RemoveOutput)
-            {
-                //remove last item in output list and switch toggle back 
-                // is there a way to select which output to delete?
-                // Check if we are changing the size of the list 
-                if (m_SeriesTrainingExamplesNode.DesiredOutputsConfig.Count > 1)
-                {
-                    int originalSize = m_SeriesTrainingExamplesNode.DesiredOutputsConfig.Count;
-                    int newSize = m_SeriesTrainingExamplesNode.DesiredOutputsConfig.Count - 1;
-                    //EditorGUILayout.IntField("No. of Outputs", m_TrainingExamplesNode.DesiredOutputsConfig.Count);
-                    if (originalSize != newSize)
-                    {
-                        m_SeriesTrainingExamplesNode.DesiredOutputsConfig.Resize<IMLSpecifications.OutputsEnum>(newSize);
-                    }
-                }
-                m_RemoveOutput = false;
-            }
             GUILayout.EndHorizontal();
 
         }
@@ -469,7 +433,6 @@ namespace InteractML
 
             GUILayout.BeginArea(m_BodyRectBottom);
             GUILayout.BeginHorizontal();
-            GUILayout.Label("advanced options", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"));
             GUILayout.Label("");
             HelpButton(this.GetType().ToString());
             GUILayout.EndHorizontal();

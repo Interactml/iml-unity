@@ -326,6 +326,7 @@ namespace InteractML
             return position;
         }
 
+        // Draws Data Toggle and animates if data coming in 
         public void DataInToggle(Boolean dataIn, Rect m_InnerBodyRect, Rect m_BodyRect)
         {
             // Load node skin
@@ -354,6 +355,60 @@ namespace InteractML
         protected virtual void DrawPositionValueTogglesAndLabels(GUIStyle style)
         {
             Debug.Log("need to implement in node editor file");
+        }
+
+        protected void DrawValues(List<IMLBaseDataType> values, string name) {
+            if (values != null) {
+                for (int i = 0; i < values.Count; i++)
+                {
+                    if (m_NodeSkin == null)
+                        m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+                    GUIStyle style = m_NodeSkin.GetStyle("TE Text");
+                    var x = 30;
+                    GUILayoutOption[] options = new GUILayoutOption[] { GUILayout.MinHeight(x), GUILayout.MaxHeight(x) };
+                    GUILayout.BeginHorizontal();
+                    GUILayout.TextArea(name + " " +  i, style, options);
+                    GUILayout.EndHorizontal();
+                    switch (values[i].DataType)
+                    {
+                        case IMLSpecifications.DataTypes.Float:
+                            GUILayout.BeginHorizontal();
+                            GUILayout.TextArea("float: " + System.Math.Round(values[i].Values[0], 3).ToString(), style, options);
+                            GUILayout.EndHorizontal();
+                            break;
+                        case IMLSpecifications.DataTypes.Integer:
+                            GUILayout.BeginHorizontal();
+                            GUILayout.TextArea("int: " + System.Math.Round(values[i].Values[0], 3).ToString(), style, options);
+                            GUILayout.EndHorizontal();
+                            break;
+                        case IMLSpecifications.DataTypes.Vector2:
+                            GUILayout.BeginHorizontal();
+                            GUILayout.TextArea("x: " + System.Math.Round(values[i].Values[0], 3).ToString(), style, options);
+                            GUILayout.TextArea("y: " + System.Math.Round(values[i].Values[1], 3).ToString(), style, options);
+                            GUILayout.EndHorizontal();
+                            break;
+                        case IMLSpecifications.DataTypes.Vector3:
+                            GUILayout.BeginHorizontal();
+                            GUILayout.TextArea("x: " + System.Math.Round(values[i].Values[0], 3).ToString(), style, options);
+                            GUILayout.TextArea("y: " + System.Math.Round(values[i].Values[1], 3).ToString(), style, options);
+                            GUILayout.TextArea("z: " + System.Math.Round(values[i].Values[2], 3).ToString(), style, options);
+                            GUILayout.EndHorizontal();
+                            break;
+                        case IMLSpecifications.DataTypes.Vector4:
+                            GUILayout.BeginHorizontal();
+                            GUILayout.TextArea("x: " + System.Math.Round(values[i].Values[0], 3).ToString(), style, options);
+                            GUILayout.TextArea("y: " + System.Math.Round(values[i].Values[1], 3).ToString(), style, options);
+                            GUILayout.TextArea("z: " + System.Math.Round(values[i].Values[2], 3).ToString(), style, options);
+                            GUILayout.TextArea("w: " + System.Math.Round(values[i].Values[2], 3).ToString(), style, options);
+                            GUILayout.EndHorizontal();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            EditorGUILayout.Space();
+
         }
 
         protected void HelpButton(string description)
@@ -429,7 +484,7 @@ namespace InteractML
             GUILayout.TextArea(tip, style, options);
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
-
+            
         }
         // <summary>
         /// Takes in string goes through ports in that node to check if the mouse is over them. If the mouse is over one then it makes showport true and sets tooltip 
@@ -743,6 +798,8 @@ namespace InteractML
             return Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
 
         }
+
+
         #endregion
 
     }
