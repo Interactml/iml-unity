@@ -374,6 +374,9 @@ namespace InteractML
                     }
                 }
 
+            } else
+            {
+                InputFeatures = new List<Node>();
             }
             
         }
