@@ -170,9 +170,9 @@ namespace InteractML
                 }
                 MLSClassification = false;
             }
+            UpdateTargetValuesConfig();
 
-           
-            
+
         }
 
         public override void OnRemoveConnection(NodePort port)
@@ -282,6 +282,8 @@ namespace InteractML
             UpdateDesiredOutputFeatures();
             //Update input values
             UpdateDesiredInputFeatures();
+            //Update 
+            UpdateInputConfigList();
 
             // Run examples logic in case we need to start/stop collecting examples
             CollectExamplesLogic();
