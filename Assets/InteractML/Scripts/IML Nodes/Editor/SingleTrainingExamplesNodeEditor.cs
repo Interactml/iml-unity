@@ -10,7 +10,7 @@ using XNodeEditor;
 namespace InteractML
 {
     [CustomNodeEditor(typeof(SingleTrainingExamplesNode))]
-    public class SingleTrainingExamplesNodeEditor : IMLNodeEditor
+    public class SingleTrainingExamplesNodeEditor : TrainingExamplesNodeEditor
     {
 
         #region Variables 
@@ -20,14 +20,6 @@ namespace InteractML
         /// </summary>
         private SingleTrainingExamplesNode m_SingleTrainingExamplesNode;
 
-        /// <summary>
-        /// Rects for node layout
-        /// </summary>
-        private Rect m_BodyRectOutputs;
-        private Rect m_BodyRectOutputAddRemove;
-        private Rect m_BodyRectButtons;
-        private Rect m_BodyRectBottom;
-        private Rect m_PortRect;
 
 
         /// <summary>
@@ -76,102 +68,21 @@ namespace InteractML
             ShowSingleTrainingExamplesNodePorts();
             GUILayout.Space(50);
 
-            DrawBodyLayoutOutputAddRemove();
-            ShowOutputAddRemove();
+            DrawBodyLayoutInputs(m_SingleTrainingExamplesNode.DesiredInputsConfig.Count);
+            DrawValues(m_SingleTrainingExamplesNode.DesiredInputFeatures, "Input Values");
 
-            DrawBodyLayoutOutputs();
-            GUILayout.Space(50);
-            ShowOutputList();
+            DrawBodyLayoutTargets(m_SingleTrainingExamplesNode.DesiredOutputFeatures.Count);
+            GUILayout.Space(80);
+            DrawValues(m_SingleTrainingExamplesNode.DesiredOutputFeatures, "Target Values");
 
             DrawBodyLayoutButtons();
-            GUILayout.Space(60);
             ShowButtons();
 
             DrawBodyLayoutBottom();
-            ShowBottomSection();
+            ShowHelpButton(m_BodyRectBottom);
 
         }
 
-        /// <summary>
-        /// Define rect values for port section and paint textures based on rects 
-        /// </summary>
-        private void DrawPortLayout()
-        {
-            // Draw body background purple rect below header
-            m_PortRect.x = 5;
-            m_PortRect.y = HeaderRect.height;
-            m_PortRect.width = NodeWidth - 10;
-            m_PortRect.height = 60;
-            GUI.DrawTexture(m_PortRect, NodeColor);
-
-            // Draw line below ports
-            GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), GetColorTextureFromHexString("#74DF84"));
-        }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawBodyLayoutOutputAddRemove()
-        {
-            m_BodyRectOutputAddRemove.x = 5;
-            m_BodyRectOutputAddRemove.y = HeaderRect.height + m_PortRect.height;
-            m_BodyRectOutputAddRemove.width = NodeWidth - 10;
-            m_BodyRectOutputAddRemove.height = 60;
-
-            // Draw body background purple rect below ports
-            GUI.DrawTexture(m_BodyRectOutputAddRemove, NodeColor);
-
-            // Draw line below add/remove buttons
-            GUI.DrawTexture(new Rect(m_BodyRectOutputAddRemove.x, HeaderRect.height + m_PortRect.height + m_BodyRectOutputAddRemove.height - WeightOfSeparatorLine, m_BodyRectOutputAddRemove.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
-        }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawBodyLayoutOutputs()
-        {
-            m_BodyRectOutputs.x = 5;
-            m_BodyRectOutputs.y = HeaderRect.height + m_PortRect.height + m_BodyRectOutputAddRemove.height;
-            m_BodyRectOutputs.width = NodeWidth - 10;
-            m_BodyRectOutputs.height = 60 + (m_SingleTrainingExamplesNode.DesiredOutputsConfig.Count * 62);
-
-            // Draw body background purple rect below ports
-            GUI.DrawTexture(m_BodyRectOutputs, NodeColor);
-
-            // Draw line below add/remove buttons
-            GUI.DrawTexture(new Rect(m_BodyRectOutputs.x, HeaderRect.height + m_PortRect.height + m_BodyRectOutputAddRemove.height + m_BodyRectOutputs.height - WeightOfSeparatorLine, m_BodyRectOutputs.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
-        }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawBodyLayoutButtons()
-        {
-            m_BodyRectButtons.x = 5;
-            m_BodyRectButtons.y = HeaderRect.height + m_PortRect.height + m_BodyRectOutputAddRemove.height + m_BodyRectOutputs.height;
-            m_BodyRectButtons.width = NodeWidth - 10;
-            m_BodyRectButtons.height = 95;
-
-            // Draw body background purple rect below ports
-            GUI.DrawTexture(m_BodyRectButtons, NodeColor);
-
-            // Draw line below add/remove buttons
-            GUI.DrawTexture(new Rect(m_BodyRectButtons.x, (HeaderRect.height + m_PortRect.height + m_BodyRectOutputAddRemove.height + m_BodyRectOutputs.height + m_BodyRectButtons.height) - WeightOfSeparatorLine, m_BodyRectOutputs.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
-        }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawBodyLayoutBottom()
-        {
-            m_BodyRectBottom.x = 5;
-            m_BodyRectBottom.y = HeaderRect.height + m_PortRect.height + m_BodyRectOutputAddRemove.height + m_BodyRectOutputs.height + m_BodyRectButtons.height;
-            m_BodyRectBottom.width = NodeWidth - 10;
-            m_BodyRectBottom.height = 40;
-
-            // Draw body background purple rect below ports
-            GUI.DrawTexture(m_BodyRectBottom, NodeColor);
-        }
 
         /// <summary>
         /// Show the input/output port fields 
@@ -194,127 +105,6 @@ namespace InteractML
 
         }
 
-        /// <summary>
-        /// Show the Output add or remove buttons
-        /// </summary>
-        private void ShowOutputAddRemove()
-        {
-
-            GUILayout.BeginHorizontal();
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Outputs", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-
-            GUILayout.Label("", GUILayout.MinWidth(40));
-
-            m_AddOutput = EditorGUILayout.Toggle(m_AddOutput, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Add Toggle"));
-            m_RemoveOutput = EditorGUILayout.Toggle(m_RemoveOutput, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Remove Toggle"));
-
-            if (m_AddOutput)
-            {
-                // add output slot and switch toggle back
-                //m_SeriesTrainingExamplesNode.DesiredOutputFeatures.Add();
-
-                // Check if we are changing the size of the list 
-                int originalSize = m_SingleTrainingExamplesNode.DesiredOutputsConfig.Count;
-                int newSize = m_SingleTrainingExamplesNode.DesiredOutputsConfig.Count + 1;
-                //EditorGUILayout.IntField("No. of Outputs", m_TrainingExamplesNode.DesiredOutputsConfig.Count);
-                if (originalSize != newSize)
-                {
-                    m_SingleTrainingExamplesNode.DesiredOutputsConfig.Resize<IMLSpecifications.OutputsEnum>(newSize);
-                }
-
-                m_AddOutput = false;
-            }
-            if (m_RemoveOutput)
-            {
-                //remove last item in output list and switch toggle back 
-                // is there a way to select which output to delete?
-                // Check if we are changing the size of the list 
-                if (m_SingleTrainingExamplesNode.DesiredOutputsConfig.Count > 1)
-                {
-                    int originalSize = m_SingleTrainingExamplesNode.DesiredOutputsConfig.Count;
-                    int newSize = m_SingleTrainingExamplesNode.DesiredOutputsConfig.Count - 1;
-                    //EditorGUILayout.IntField("No. of Outputs", m_TrainingExamplesNode.DesiredOutputsConfig.Count);
-                    if (originalSize != newSize)
-                    {
-                        m_SingleTrainingExamplesNode.DesiredOutputsConfig.Resize<IMLSpecifications.OutputsEnum>(newSize);
-                    }
-                }
-                m_RemoveOutput = false;
-            }
-            GUILayout.EndHorizontal();
-
-        }
-
-        /// <summary>
-        /// Show the Output list
-        /// </summary>
-        private void ShowOutputList()
-        {
-            if (editorLabelStyle == null) editorLabelStyle = new GUIStyle(EditorStyles.label);
-            EditorStyles.label.normal.textColor = Color.white;
-            EditorStyles.label.font = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label").font;
-
-            //Go through the list of outputs and show the correct kind of config editor tool
-            for (int i = 0; i < m_SingleTrainingExamplesNode.DesiredOutputsConfig.Count; i++)
-            {
-
-                int outputValueIndex = i + 1;
-                string label = "Output " + outputValueIndex;
-                if (m_SingleTrainingExamplesNode.DesiredOutputsConfig.Count > 0 && i < m_SingleTrainingExamplesNode.DesiredOutputsConfig.Count)
-                {
-                    var inputFeature = m_SingleTrainingExamplesNode.DesiredOutputsConfig[i];
-                    // We make sure that the desired output feature list captures the value inputted by the user
-                    m_SingleTrainingExamplesNode.DesiredOutputsConfig[i] = (IMLSpecifications.OutputsEnum)EditorGUILayout.EnumPopup(label, m_SingleTrainingExamplesNode.DesiredOutputsConfig[i]);
-                }
-                if (m_SingleTrainingExamplesNode.DesiredOutputFeatures.Count > 0 && i < m_SingleTrainingExamplesNode.DesiredOutputFeatures.Count)
-                {
-                    string labelOutput = "Value " + outputValueIndex + ":";
-                    var outputFeature = m_SingleTrainingExamplesNode.DesiredOutputFeatures[i];
-                    // We make sure that the desired output feature list captures the value inputted by the user
-                    switch (outputFeature.DataType)
-                    {
-                        case (IMLSpecifications.DataTypes)IMLSpecifications.OutputsEnum.Float:
-                            (m_SingleTrainingExamplesNode.DesiredOutputFeatures[i] as IMLFloat).SetValue(EditorGUILayout.FloatField(labelOutput, m_SingleTrainingExamplesNode.DesiredOutputFeatures[i].Values[0]));
-                            GUILayout.Space(15);
-                            break;
-                        case (IMLSpecifications.DataTypes)IMLSpecifications.OutputsEnum.Integer:
-                            (m_SingleTrainingExamplesNode.DesiredOutputFeatures[i] as IMLInteger).SetValue(EditorGUILayout.IntField(labelOutput, (int)m_SingleTrainingExamplesNode.DesiredOutputFeatures[i].Values[0]));
-                            GUILayout.Space(15);
-                            break;
-                        case (IMLSpecifications.DataTypes)IMLSpecifications.OutputsEnum.Vector2:
-                            var vector2ToShow = new Vector2(m_SingleTrainingExamplesNode.DesiredOutputFeatures[i].Values[0],
-                                m_SingleTrainingExamplesNode.DesiredOutputFeatures[i].Values[1]);
-                            var valueVector2 = EditorGUILayout.Vector2Field(labelOutput, vector2ToShow);
-                            (m_SingleTrainingExamplesNode.DesiredOutputFeatures[i] as IMLVector2).SetValues(valueVector2);
-                            break;
-                        case (IMLSpecifications.DataTypes)IMLSpecifications.OutputsEnum.Vector3:
-                            var vector3ToShow = new Vector3(m_SingleTrainingExamplesNode.DesiredOutputFeatures[i].Values[0],
-                                m_SingleTrainingExamplesNode.DesiredOutputFeatures[i].Values[1],
-                                m_SingleTrainingExamplesNode.DesiredOutputFeatures[i].Values[2]);
-                            var valueVector3 = EditorGUILayout.Vector3Field(labelOutput, vector3ToShow);
-                            (m_SingleTrainingExamplesNode.DesiredOutputFeatures[i] as IMLVector3).SetValues(valueVector3);
-                            break;
-                        case (IMLSpecifications.DataTypes)IMLSpecifications.OutputsEnum.Vector4:
-                            var vector4ToShow = new Vector4(m_SingleTrainingExamplesNode.DesiredOutputFeatures[i].Values[0],
-                                m_SingleTrainingExamplesNode.DesiredOutputFeatures[i].Values[1],
-                                m_SingleTrainingExamplesNode.DesiredOutputFeatures[i].Values[2],
-                                m_SingleTrainingExamplesNode.DesiredOutputFeatures[i].Values[3]);
-                            var valueVector4 = EditorGUILayout.Vector4Field(labelOutput, vector4ToShow);
-                            (m_SingleTrainingExamplesNode.DesiredOutputFeatures[i] as IMLVector4).SetValues(valueVector4);
-                            break;
-                        default:
-                            break;
-                    }
-
-                }
-                GUILayout.Space(10);
-            }
-            
-            EditorStyles.label.font = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").font;
-            EditorStyles.label.normal = editorLabelStyle.normal;
-
-        }
 
         /// <summary>
         /// Show the load, delete and record buttons
@@ -455,19 +245,5 @@ namespace InteractML
             }
         }
 
-        private void ShowBottomSection()
-        {
-            m_BodyRectBottom.x = m_BodyRectBottom.x + 20;
-            m_BodyRectBottom.y = m_BodyRectBottom.y + 10;
-            m_BodyRectBottom.width = m_BodyRectBottom.width - 40;
-
-            GUILayout.BeginArea(m_BodyRectBottom);
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("advanced options", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"));
-            GUILayout.Label("");
-            GUILayout.Button("Help", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
-            GUILayout.EndHorizontal();
-            GUILayout.EndArea();
-        }
     }
 }
