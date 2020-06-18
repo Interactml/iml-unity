@@ -61,8 +61,13 @@ namespace InteractML
         /// <returns></returns>
         private bool Equals(IMLMonoBehaviourContainer otherContainer)
         {
-            if (otherContainer.GameComponent == null) return false;
-            return otherContainer.GameComponent.Equals(otherContainer.GameComponent);
+            if (otherContainer.GameComponent == null || this.GameComponent == null) return false;
+            // If we are checking whether or not is a clone, just check for type
+            if (this.ControlClones == true)
+                return this.GameComponent.GetType() == otherContainer.GameComponent.GetType();
+            // If we are not controlling clones, check if it is the same script instance
+            else
+                return this.GameComponent.Equals(otherContainer.GameComponent);
         }
 
         // override object.GetHashCode

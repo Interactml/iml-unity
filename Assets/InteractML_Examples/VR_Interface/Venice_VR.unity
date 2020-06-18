@@ -1447,6 +1447,12 @@ MonoBehaviour:
   FeaturesUpdated: 0
   ComponentsWithIMLData:
   - GameComponent: {fileID: 1442713060}
+    ControlClones: 1
+  - GameComponent: {fileID: 340810505}
+    ControlClones: 0
+  - GameComponent: {fileID: 1708007244}
+    ControlClones: 0
+  - GameComponent: {fileID: 6271278580769787272}
     ControlClones: 0
 --- !u!4 &138508039
 Transform:
@@ -3985,6 +3991,51 @@ Transform:
   - {fileID: 1309149924}
   m_Father: {fileID: 1141958972}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &340810504
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 340810506}
+  - component: {fileID: 340810505}
+  m_Layer: 0
+  m_Name: DataSender_Copy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &340810505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340810504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a9f7d7765b63554a84e28479f3f15b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  light: {fileID: 1316771338}
+  SetLightRotation: {x: 0, y: 0, z: 0}
+--- !u!4 &340810506
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340810504}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &341767497
 GameObject:
@@ -19141,7 +19192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   light: {fileID: 1316771338}
-  SetLightRotation: {x: -113.16263, y: 69.857185, z: 59.891464}
+  SetLightRotation: {x: 0, y: 0, z: 0}
 --- !u!1 &1443691841
 GameObject:
   m_ObjectHideFlags: 0
@@ -21524,6 +21575,51 @@ Transform:
   - {fileID: 1790264239}
   m_Father: {fileID: 996627807}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1708007243
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1708007245}
+  - component: {fileID: 1708007244}
+  m_Layer: 0
+  m_Name: DataSender_Copy (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1708007244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708007243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a9f7d7765b63554a84e28479f3f15b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  light: {fileID: 1316771338}
+  SetLightRotation: {x: 0, y: 0, z: 0}
+--- !u!4 &1708007245
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708007243}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1715345448
 GameObject:
@@ -25373,7 +25469,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2023318282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26315,7 +26411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IMLSystem: {fileID: 138508038}
   PushStrength: 30
-  PushDirection: {x: 1, y: 0, z: 1}
+  PushDirection: {x: 0, y: 0, z: 0}
   IsBoxInSight: 0
   m_OriginalMat: {fileID: 8892267712812814617, guid: 518fea29d99da6647b85d30121bd9078,
     type: 3}

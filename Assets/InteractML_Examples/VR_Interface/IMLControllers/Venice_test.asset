@@ -92,10 +92,7 @@ MonoBehaviour:
       _node: {fileID: -8752397562333612727}
       _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output 0
-        node: {fileID: 876695753954269374}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -104,10 +101,7 @@ MonoBehaviour:
       _node: {fileID: -8752397562333612727}
       _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: SetLightRotation
-        node: {fileID: 4339418021568813493}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -186,8 +180,9 @@ MonoBehaviour:
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
   m_DesiredInputsConfig: 03000000
-  m_DesiredOutputsConfig: 03000000
-  IMLConfigurationNodesConnected: []
+  m_DesiredOutputsConfig: 
+  IMLConfigurationNodesConnected:
+  - {fileID: 1128550350766650831}
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
@@ -295,6 +290,36 @@ MonoBehaviour:
     - 0
   GameObjInputMissing: 1
   ReceivingData: 0
+--- !u!114 &-6394511546645316662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
+  m_Name: BoxForces (Script)
+  m_EditorClassIdentifier: 
+  id: ab6d5e44-364b-430d-b870-3ed6d476e938
+  graph: {fileID: 11400000}
+  position: {x: 376, y: 680}
+  ports:
+    keys:
+    - PushDirection
+    values:
+    - _fieldName: PushDirection
+      _node: {fileID: -6394511546645316662}
+      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  DevMode: 0
+  Script: {fileID: 0}
 --- !u!114 &-3657133543843791922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,13 +383,14 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: -1060329389974368481}
   - {fileID: -6753651812753732907}
-  TargetValues: []
+  TargetValues:
+  - {fileID: 1114643770248193897}
   TrainingExamplesNodeToOutput: {fileID: -3657133543843791922}
   ModeOfCollection: 0
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
   m_DesiredInputsConfig: 0300000004000000
-  m_DesiredOutputsConfig: 00000000
+  m_DesiredOutputsConfig: 02000000
   IMLConfigurationNodesConnected: []
   StartDelay: 0
   CaptureRate: 10
@@ -497,8 +523,9 @@ MonoBehaviour:
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
   m_DesiredInputsConfig: 05000000
-  m_DesiredOutputsConfig: 040000000300000002000000
-  IMLConfigurationNodesConnected: []
+  m_DesiredOutputsConfig: 
+  IMLConfigurationNodesConnected:
+  - {fileID: -1415829153963631823}
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
@@ -551,15 +578,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 8cf542b8-d825-45ce-a769-a477818969e7
   graph: {fileID: 11400000}
-  position: {x: 952, y: 1768}
+  position: {x: 728, y: 1816}
   ports:
     keys:
     - IMLTrainingExamplesNodes
     - InputFeatures
     - ModelOutput
-    - Output 0
-    - Output 1
-    - Output 2
     values:
     - _fieldName: IMLTrainingExamplesNodes
       _node: {fileID: -1415829153963631823}
@@ -593,51 +617,15 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: Output 0
-      _node: {fileID: -1415829153963631823}
-      _typeQualifiedName: UnityEngine.Vector4, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: Output 1
-      _node: {fileID: -1415829153963631823}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: Output 2
-      _node: {fileID: -1415829153963631823}
-      _typeQualifiedName: UnityEngine.Vector2, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
   DevMode: 0
   IMLTrainingExamplesNodes:
   - {fileID: -1899693820327701159}
   InputFeatures: []
   ModelOutput: {fileID: 0}
-  PredictedRapidlibOutput:
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
-  - 0
+  PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
   m_ExpectedInputList: 
-  m_ExpectedOutputList: 040000000300000002000000
+  m_ExpectedOutputList: 
   m_LearningType: 0
   EnableKeyboardControl: 0
   TrainingKey: 0
@@ -731,11 +719,12 @@ MonoBehaviour:
   - {fileID: -1060329389974368481}
   - {fileID: -6753651812753732907}
   - {fileID: 1114643770248193897}
-  - {fileID: 4339418021568813493}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 1750529097529754073}
+  - {fileID: -6394511546645316662}
   SceneComponent: {fileID: 0}
 --- !u!114 &793193894855969638
 MonoBehaviour:
@@ -818,7 +807,6 @@ MonoBehaviour:
     - IMLTrainingExamplesNodes
     - InputFeatures
     - ModelOutput
-    - Output 0
     values:
     - _fieldName: IMLTrainingExamplesNodes
       _node: {fileID: 876695753954269374}
@@ -855,34 +843,19 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: Output 0
-      _node: {fileID: 876695753954269374}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: m_In
-        node: {fileID: -8752397562333612727}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
   DevMode: 0
   IMLTrainingExamplesNodes:
   - {fileID: 2798832785943922003}
   InputFeatures:
   - {fileID: -1968423451785350112}
   ModelOutput: {fileID: 0}
-  PredictedRapidlibOutput:
-  - 0
-  - 0
-  - 0
+  PredictedRapidlibOutput: []
   DelayedPredictedOutput:
   - 151.7817011780484
   - 70.24449516334377
   - 60.18581632414128
   m_ExpectedInputList: 03000000
-  m_ExpectedOutputList: 03000000
+  m_ExpectedOutputList: 
   m_LearningType: 1
   EnableKeyboardControl: 0
   TrainingKey: 0
@@ -959,7 +932,6 @@ MonoBehaviour:
     - IMLTrainingExamplesNodes
     - InputFeatures
     - ModelOutput
-    - Output 0
     values:
     - _fieldName: IMLTrainingExamplesNodes
       _node: {fileID: 1128550350766650831}
@@ -996,34 +968,19 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: Output 0
-      _node: {fileID: 1128550350766650831}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: m_In
-        node: {fileID: 7487231633145856826}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
   DevMode: 0
   IMLTrainingExamplesNodes:
   - {fileID: -8545169889257079770}
   InputFeatures:
   - {fileID: 793193894855969638}
   ModelOutput: {fileID: 0}
-  PredictedRapidlibOutput:
-  - 0
-  - 0
-  - 0
+  PredictedRapidlibOutput: []
   DelayedPredictedOutput:
   - 1
   - 0
   - 1
   m_ExpectedInputList: 03000000
-  m_ExpectedOutputList: 03000000
+  m_ExpectedOutputList: 
   m_LearningType: 0
   EnableKeyboardControl: 0
   TrainingKey: 0
@@ -1031,6 +988,36 @@ MonoBehaviour:
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
   learningChoice: 0
+--- !u!114 &1750529097529754073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
+  m_Name: HeadDirectionTrackerIML (Script)
+  m_EditorClassIdentifier: 
+  id: ce77cff6-0fb3-474a-84bc-27a702dc5887
+  graph: {fileID: 11400000}
+  position: {x: -248, y: 488}
+  ports:
+    keys:
+    - HeadRotation
+    values:
+    - _fieldName: HeadRotation
+      _node: {fileID: 1750529097529754073}
+      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  DevMode: 0
+  Script: {fileID: 0}
 --- !u!114 &2798832785943922003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1096,7 +1083,7 @@ MonoBehaviour:
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
   m_DesiredInputsConfig: 03000000
-  m_DesiredOutputsConfig: 03000000
+  m_DesiredOutputsConfig: 
   IMLConfigurationNodesConnected:
   - {fileID: 876695753954269374}
   StartDelay: 0
@@ -1240,39 +1227,6 @@ MonoBehaviour:
   x_switch: 1
   y_switch: 1
   z_switch: 1
---- !u!114 &4339418021568813493
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
-  m_Name: LightController (Script)
-  m_EditorClassIdentifier: 
-  id: 97c11b95-f2f7-4aaf-808b-f44afb50ec35
-  graph: {fileID: 11400000}
-  position: {x: -1656, y: -696}
-  ports:
-    keys:
-    - SetLightRotation
-    values:
-    - _fieldName: SetLightRotation
-      _node: {fileID: 4339418021568813493}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: m_Out
-        node: {fileID: -8752397562333612727}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-  DevMode: 0
-  Script: {fileID: 0}
 --- !u!114 &7487231633145856826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1297,10 +1251,7 @@ MonoBehaviour:
       _node: {fileID: 7487231633145856826}
       _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: Output 0
-        node: {fileID: 1128550350766650831}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
