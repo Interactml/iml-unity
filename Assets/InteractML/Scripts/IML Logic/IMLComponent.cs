@@ -51,6 +51,8 @@ namespace InteractML
         private List<GameObjectNode> m_GameObjectNodeList;
         private List<RealtimeIMLOutputNode> m_RealtimeIMLOutputNodesList;
         public List<IFeatureIML> FeatureNodesList;
+        [SerializeField]
+        private List<ScriptNode> m_ScriptNodesList;
         #endregion
 
         #region Public Lists of Nodes (Properties)
@@ -359,6 +361,9 @@ namespace InteractML
 
                     // Export output node
                     CheckTypeAddNodeToList(node, ref m_RealtimeIMLOutputNodesList);
+
+                    // ScriptNodes
+                    CheckTypeAddNodeToList(node, ref m_ScriptNodesList);
 
                 }
 
@@ -708,12 +713,6 @@ namespace InteractML
                     {
                         // Create a new script node into the graph
                         scriptNode = MLController.AddNode<ScriptNode>();
-#if UNITY_EDITOR
-                        // Save newnode to graph on disk                              
-                        AssetDatabase.AddObjectToAsset(scriptNode, MLController);
-                        // Reload graph into memory since we have modified it on disk
-                        AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-#endif
                     }
 
                     // Configure our node appropiately
@@ -1263,6 +1262,44 @@ namespace InteractML
             SendGameObjectsToIMLController();
         }
 
+        /// <summary>
+        /// Makes sure that there are no more scriptNodes that the ones needed
+        /// </summary>
+        public void UpdateScriptNodes(bool changingPlayMode = false)
+        {
+            if (m_ScriptNodesList == null)
+                m_ScriptNodesList = new List<ScriptNode>();
+
+            for (int i = 0; i < m_ScriptNodesList.Count; i++)
+            {
+                var scriptNode = m_ScriptNodesList[i];
+                // Remove node from list if the reference is null
+                if (scriptNode == null) m_ScriptNodesList.RemoveAt(i);
+#if UNITY_EDITOR
+                else if (changingPlayMode && scriptNode.CreatedDuringPlaymode)
+                {
+                    // Destroy node
+                    MLController.RemoveNode(scriptNode);
+                    // Remove from list
+                    m_ScriptNodesList.RemoveAt(i);
+                }
+#endif
+                // Check if we need to remove the scriptNode from the list
+                else
+                {
+                    // If this script node is not contained in the logic dictionary...
+                    if (!m_MonoBehavioursPerScriptNode.ContainsValue(scriptNode))
+                    {
+                        // Destroy node
+                        MLController.RemoveNode(scriptNode);
+                        // Remove from list
+                        m_ScriptNodesList.RemoveAt(i);
+                    }
+                }
+
+            }
+        }
+
         [ContextMenu("Delete All Models")]
         public void DeleteAllModels()
         {
@@ -1390,6 +1427,8 @@ namespace InteractML
             }
             
         }
+
+        #region SubscriptionOfMonobehaviours
 
         /// <summary>
         /// Pass a Monobehaviour and mark any field with "SendToIMLController" or "PullFromIMLController" attribute to use it with the IML Component
@@ -1521,6 +1560,35 @@ namespace InteractML
 
         }
 
+        #endregion
+
+        #region Add Nodes
+
+        /// <summary>
+        /// Adds a scriptNode internally to the list
+        /// </summary>
+        /// <param name="node"></param>
+        public void AddScriptNode(ScriptNode node)
+        {
+            if (node != null)
+            {
+                if (m_ScriptNodesList == null) m_ScriptNodesList = new List<ScriptNode>();
+                // Add node if it is not contained in list
+                if (!m_ScriptNodesList.Contains(node)) m_ScriptNodesList.Add(node);
+#if UNITY_EDITOR
+                // Mark node as created During Playmode if required
+                if (EditorApplication.isPlaying) node.CreatedDuringPlaymode = true;
+
+                // Save newnode to graph on disk                              
+                AssetDatabase.AddObjectToAsset(node, MLController);
+                // Reload graph into memory since we have modified it on disk
+                AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+#endif
+            }
+        }
+
+        #endregion
+
         #region Deletion of Nodes
 
         /// <summary>
@@ -1587,16 +1655,23 @@ namespace InteractML
         {
             var container = new IMLMonoBehaviourContainer(node.Script);
 
+            // Components with IML Data list
             if (ComponentsWithIMLData == null)
                 ComponentsWithIMLData = new List<IMLMonoBehaviourContainer>();
             else if (ComponentsWithIMLData.Contains(container))
                 ComponentsWithIMLData.Remove(container);
 
+            // Monobehaviours per scriptNode dictionary
             if (m_MonoBehavioursPerScriptNode == null)
                 m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
             else if (container.GameComponent != null && m_MonoBehavioursPerScriptNode.ContainsKey(container.GameComponent))
                 m_MonoBehavioursPerScriptNode.Remove(container.GameComponent);
 
+            // scriptNodes list
+            if (m_ScriptNodesList == null)
+                m_ScriptNodesList = new List<ScriptNode>();
+            else if (m_ScriptNodesList.Contains(node))
+                m_ScriptNodesList.Remove(node);
         }
 
         #endregion

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XNode;
@@ -20,6 +21,29 @@ namespace InteractML
         /// Flag that tells us if the graph is supposed to currently run
         /// </summary>
         public bool IsGraphRunning { get { return (SceneComponent != null); } }
+
+        /// <summary>
+        /// Override addNode to account for custom adding logic
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public override Node AddNode(Type type)
+        {
+            // TO DO: account for specific node types and add them to custom lists (to avoid pulling nodes every frame)
+            var node = base.AddNode(type);
+            if (SceneComponent != null)
+            {
+                if (node is ScriptNode)
+                {
+                    // Add scriptNode.script to all lists
+                    SceneComponent.AddScriptNode((ScriptNode)node);
+
+                }
+
+
+            }
+            return node;
+        }
 
         /// <summary>
         /// Override removeNode to account for custom removal logic

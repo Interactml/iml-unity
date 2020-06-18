@@ -26,6 +26,14 @@ namespace InteractML
         /// </summary>
         private NodePortFieldInfoDictionary m_PortsPerFieldInfo;
 
+#if UNITY_EDITOR
+        /// <summary>
+        /// Flag that marks if this node was created during playMode (useful when deleting things after leaving playmode)
+        /// </summary>
+        [HideInInspector]
+        public bool CreatedDuringPlaymode;
+#endif
+
         #endregion
 
         #region XNode Messages
