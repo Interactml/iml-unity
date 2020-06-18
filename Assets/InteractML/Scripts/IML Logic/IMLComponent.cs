@@ -684,15 +684,15 @@ namespace InteractML
                             //var isTaken = m_MonoBehavioursPerScriptNode.Values.Any(container => container.Script == gameComponent);
                             var foundScriptNode = (node as ScriptNode);
                             bool isTaken = false;
-                            if (foundScriptNode.Script != null)
+                            if (foundScriptNode.GetScript() != null)
                             {
                                 isTaken = true;
-                                bool isSameType = foundScriptNode.Script.GetType() == gameComponent.GetType();
+                                bool isSameType = foundScriptNode.GetScript().GetType() == gameComponent.GetType();
                                 // If the node is of the same type but we expect to control clones...
                                 if (isSameType && IMLGameComponentContainer.ControlClones)
                                 {
                                     // We check if the script is attached to a clone
-                                    if (foundScriptNode.Script.gameObject.name.Contains("(Clone)") )
+                                    if (foundScriptNode.GetScript().gameObject.name.Contains("(Clone)") )
                                         // If it is a clone we consider it not taken
                                         isTaken = false;
                                 }
@@ -716,9 +716,7 @@ namespace InteractML
                     }
 
                     // Configure our node appropiately
-                    scriptNode.Script = gameComponent;
-                    scriptNode.name = gameComponent.GetType().Name + " (Script)";
-
+                    scriptNode.SetScript(gameComponent);
 
                     // Add that to the dictionary            
                     m_MonoBehavioursPerScriptNode.Add(IMLGameComponentContainer.GameComponent, scriptNode);
@@ -1653,7 +1651,7 @@ namespace InteractML
         /// <param name="node"></param>
         public void DeleteScriptNode(ScriptNode node)
         {
-            var container = new IMLMonoBehaviourContainer(node.Script);
+            var container = new IMLMonoBehaviourContainer(node.GetScript());
 
             // Components with IML Data list
             if (ComponentsWithIMLData == null)

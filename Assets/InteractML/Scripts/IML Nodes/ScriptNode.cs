@@ -17,9 +17,9 @@ namespace InteractML
 
         /// <summary>
         /// The script we are referencing
-        /// </summary>
-        [IMLMonobehaviourAttribute]
-        public MonoBehaviour Script;
+        /// </summary>        
+        [IMLMonobehaviour, SerializeField]
+        private MonoBehaviour m_ScriptInternal;
 
         /// <summary>
         /// Dictionary 
@@ -53,16 +53,43 @@ namespace InteractML
         public override object GetValue(NodePort port)
         {
             // Only return a value if we have a dictionary and a script
-            if ((m_PortsPerFieldInfo != null && m_PortsPerFieldInfo.Count > 0) && Script != null)
+            if ((m_PortsPerFieldInfo != null && m_PortsPerFieldInfo.Count > 0) && m_ScriptInternal != null)
             {
                 FieldInfo info;
                 m_PortsPerFieldInfo.TryGetValue(port, out info);
                 if (info != null)
-                    return info.GetValue(Script);
+                    return info.GetValue(m_ScriptInternal);
                 else
                     Debug.LogError("The field info is null!");
             }
             return null;
+        }
+
+        #endregion
+
+        #region Methods
+
+        public MonoBehaviour GetScript()
+        {
+            return m_ScriptInternal;
+        }
+
+        public void SetScript(MonoBehaviour newScript)
+        {
+            // If we are overriding the script...
+            if (m_ScriptInternal != null && m_ScriptInternal.GetType() != newScript.GetType() || m_ScriptInternal == null && Ports.Count() > 0)
+            {
+                // Make sure to reset all dynamic ports!
+                ClearDynamicPorts();
+                // Clear dictionary
+                m_PortsPerFieldInfo.Clear();
+            }
+
+            // Set the script 
+            m_ScriptInternal = newScript;
+            // Update name
+            name = m_ScriptInternal.GetType().Name + " (Script)";
+
         }
 
         /// <summary>
@@ -76,14 +103,11 @@ namespace InteractML
             if (overrideScript)
             {
                 // Update the script present in the node (although this might return null if it is a clone and gets destroyed?)
-                Script = gameComponent;
-                // Update name of node
-                name = Script.GetType().Name + " (Script)";
-
+                SetScript(gameComponent);
             }
 
             // Gets all fields information from the game component (using System.Reflection)
-            FieldInfo[] serializedFields = Script.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
+            FieldInfo[] serializedFields = m_ScriptInternal.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
 
             // Go through all the fields
             for (int i = 0; i < serializedFields.Length; i++)
@@ -138,7 +162,7 @@ namespace InteractML
 
                         
                         // Set value by reflection
-                        field.SetValue(Script, port.GetInputValue());
+                        field.SetValue(m_ScriptInternal, port.GetInputValue());
                     }
                 }
             }
