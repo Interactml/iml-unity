@@ -78,11 +78,13 @@ namespace InteractML
             //{
             //    return base.GetNodeMenuName(type).Replace("InteractML", "");
             //}
-           
-            
-            if (type.PrettyName() == "InteractML.CRIMLConfiguration")
+            if (type.PrettyName() == "InteractML.CIMLConfiguration")
             {
-                return base.GetNodeMenuName(type).Replace("InteractML.CRIMLConfiguration", "Machine Learning System - Classification or Regression");
+                return base.GetNodeMenuName(type).Replace("InteractML.CIMLConfiguration", "Machine Learning System - Classification");
+            }
+            if (type.PrettyName() == "InteractML.RIMLConfiguration")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML.RIMLConfiguration", "Machine Learning System - Regression");
             }
             if (type.PrettyName() == "InteractML.DTWIMLConfiguration")
             {
