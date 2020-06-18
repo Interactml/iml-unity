@@ -102,7 +102,14 @@ namespace InteractML
         [Header("Scripts to Track")]
         [Tooltip("Add number of Scripts to use in the IML Controller and what they are here")]
         public List<IMLMonoBehaviourContainer> ComponentsWithIMLData;
+        /// <summary>
+        /// Dictionary to hold references of components with IML Data and which scriptNode manages them
+        /// </summary>
         private MonobehaviourScriptNodeDictionary m_MonoBehavioursPerScriptNode;
+        /// <summary>
+        /// Clones of a monobehaviour subscribed to ComponentsWithIMLData that is marked as "controlClones'
+        /// </summary>
+        private List<MonoBehaviour> m_MonobehaviourClones;
         private Dictionary<FieldInfo, IMLFieldInfoContainer> m_DataContainersPerFieldInfo;
         private Dictionary<FieldInfo, MonoBehaviour> m_DataMonobehavioursPerFieldInfo;
 
@@ -640,6 +647,7 @@ namespace InteractML
             {
                 return;
             }
+            // Fetch data from scripts added by the user
             for (int i = 0; i < ComponentsWithIMLData.Count; i++)
             {
 
@@ -1127,6 +1135,27 @@ namespace InteractML
 
                 }
             }
+
+            // Fetch data from clones if there are any
+            for (int i = 0; i < m_MonobehaviourClones.Count; i++)
+            {
+                var clone = m_MonobehaviourClones[i];
+                // If the clone is null by any chance, remove it from list
+                if (clone == null)
+                {
+                    m_MonobehaviourClones.RemoveAt(i);
+                    continue;
+                }
+                // Get corresponding scriptNode
+                if (m_MonoBehavioursPerScriptNode.Contains(clone) )
+                {
+                    ScriptNode scriptNode;
+                    m_MonoBehavioursPerScriptNode.TryGetValue(clone, out scriptNode);
+                    if (scriptNode)
+                        scriptNode.UpdatePortFields(clone);
+                }
+            }
+
         }
 
         #endregion
@@ -1377,11 +1406,62 @@ namespace InteractML
             {
                 if (ComponentsWithIMLData == null)
                     ComponentsWithIMLData = new List<IMLMonoBehaviourContainer>();
+                if (m_MonoBehavioursPerScriptNode == null)
+                    m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
+                if (m_MonobehaviourClones == null)
+                    m_MonobehaviourClones = new List<MonoBehaviour>();
 
                 var container = new IMLMonoBehaviourContainer(gameComponent, controlClones);
+                // If the list of component doesn't contain the monobehaviour to be added...
                 if (!ComponentsWithIMLData.Contains(container))
                 {
                     ComponentsWithIMLData.Add(container);
+                }
+                // If the monobehaviour is in the list, it might be a clone
+                else if (controlClones)
+                {
+                    // Check if this clone is already added
+                    if (!m_MonoBehavioursPerScriptNode.Contains(gameComponent))
+                    {
+                        // Retrieve scriptNode managing clones
+                        ScriptNode scriptNode = null;
+                        // Check if we have a matching script so that we can reuse the scriptNode
+                        var KeyValuePairs = m_MonoBehavioursPerScriptNode.GetEnumerator();
+                        while (KeyValuePairs.MoveNext())
+                        {
+                            // If we have a matching type...
+                            if (KeyValuePairs.Current.Key.GetType() == gameComponent.GetType())
+                            {
+                                // Get that scriptNode, it will control our clone
+                                scriptNode = KeyValuePairs.Current.Value;
+                            }
+                        }
+                        // If we didn't find a scriptNode for this clone...
+                        if (scriptNode == null)
+                        {
+                            // It might not be created yet, try updating scriptNodes to see if it will be created
+                            FetchDataFromMonobehavioursSubscribed();
+                            // Try again the search
+                            KeyValuePairs = m_MonoBehavioursPerScriptNode.GetEnumerator();
+                            while (KeyValuePairs.MoveNext())
+                            {
+                                // If we have a matching type...
+                                if (KeyValuePairs.Current.Key.GetType() == gameComponent.GetType())
+                                {
+                                    // Get that scriptNode, it will control our clone
+                                    scriptNode = KeyValuePairs.Current.Value;
+                                }
+                            }
+                        }
+                        // If we succesfully retrieved the scriptNode...
+                        if (scriptNode != null)
+                        {
+                            // Assign this clone to that scriptNode
+                            m_MonoBehavioursPerScriptNode.Add(gameComponent, scriptNode);
+                            // Save reference in our list of clones
+                            m_MonobehaviourClones.Add(gameComponent);
+                        }
+                    }
                 }
             }
         }
