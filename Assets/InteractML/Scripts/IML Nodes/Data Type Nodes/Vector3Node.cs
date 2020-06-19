@@ -28,13 +28,15 @@ namespace InteractML.DataTypeNodes
 
         public bool ReceivingData;
         public bool InputConnected;
+        public Vector3 m_UserInput;
+        Vector3 receivedVector3;
+
         public bool x_switch = true;
         public bool y_switch = true;
         public bool z_switch = true;
         float x, y, z;
         int counter, count;
-        public Vector3 m_UserInput;
-        Vector3 receivedVector3;
+
 
         // Use this for initialization
         protected override void Init()
