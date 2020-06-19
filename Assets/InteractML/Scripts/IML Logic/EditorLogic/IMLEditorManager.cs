@@ -112,8 +112,19 @@ public class IMLEditorManager
             foreach (var MLComponent in m_IMLComponents)
             {
                 MLComponent.updateGameObjectImage();
+                MLComponent.GetAllNodes();
+                MLComponent.UpdateScriptNodes();
             }
-        } 
+        }
+
+        // Remove any scriptNodes added during playtime when leaving playMode
+        if (playModeStatus == PlayModeStateChange.ExitingPlayMode)
+        {
+            foreach (var MLComponent in m_IMLComponents)
+            {
+                MLComponent.UpdateScriptNodes();
+            }
+        }
     }
 
 #endif

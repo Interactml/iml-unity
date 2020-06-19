@@ -34,6 +34,10 @@ namespace InteractML.DataTypeNodes
             // Get reference to the current node
             m_FloatNode = (target as FloatNode);
 
+            // Load node skin
+            if (m_NodeSkin == null)
+                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+
             // Initialise header background Rects
             InitHeaderRects();
 
@@ -48,7 +52,7 @@ namespace InteractML.DataTypeNodes
             //Display Node name
             GUILayout.BeginArea(HeaderRect);
             GUILayout.Space(10);
-            GUILayout.Label("LIVE FLOAT DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+            GUILayout.Label("LIVE FLOAT DATA", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
             GUILayout.EndArea();
 
             GUILayout.Label("", GUILayout.MinHeight(60));
@@ -126,42 +130,33 @@ namespace InteractML.DataTypeNodes
             GUILayout.BeginHorizontal();
 
             GUIContent inputPortLabel = new GUIContent("Float\nData In", "Input float");
-            IMLNodeEditor.PortField(inputPortLabel, m_FloatNode.GetInputPort("m_In"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            IMLNodeEditor.PortField(inputPortLabel, m_FloatNode.GetInputPort("m_In"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUIContent outputPortLabel = new GUIContent("Float\nData Out", "Output float");
-            IMLNodeEditor.PortField(outputPortLabel, m_FloatNode.GetOutputPort("m_Out"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            IMLNodeEditor.PortField(outputPortLabel, m_FloatNode.GetOutputPort("m_Out"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUILayout.EndHorizontal();
         }
 
-        /// <summary>
-        /// Show the float value fields with attribute name
-        /// </summary>
-        //private void ShowFloatValue()
-        //{
-        //    m_InnerBodyRect.x = m_BodyRect.x + 20;
-        //    m_InnerBodyRect.y = m_BodyRect.y + 20;
-        //    m_InnerBodyRect.width = m_BodyRect.width - 20;
-        //    m_InnerBodyRect.height = m_BodyRect.height - 20;
-
-        //    GUILayout.BeginArea(m_InnerBodyRect);
-        //    EditorGUILayout.Space();
-        //    EditorGUILayout.LabelField(new GUIContent("Name: " + m_FloatNode.ValueName, "Attribute name"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-        //    EditorGUILayout.Space();
-        //    EditorGUILayout.LabelField(new GUIContent("Float: " + System.Math.Round(m_FloatNode.FeatureValues.Values[0], 3).ToString(), "Float Value"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-        //    GUILayout.EndArea();
-
-        //}
-
         protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
         {
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Name: " + m_FloatNode.ValueName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            GUILayout.Space(10);
-            GUILayout.BeginHorizontal(); 
-            m_FloatNode.float_switch = EditorGUILayout.Toggle(m_FloatNode.float_switch, style);
-            EditorGUILayout.LabelField(new GUIContent("Float: " + System.Math.Round(m_FloatNode.FeatureValues.Values[0], 3).ToString(), "Float Value"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            GUILayout.EndHorizontal(); 
+            // If something is connected to the input port show incoming data
+            if (m_FloatNode.InputConnected)
+            {
+                GUILayout.BeginHorizontal();
+                m_FloatNode.float_switch = EditorGUILayout.Toggle(m_FloatNode.float_switch, style);
+                EditorGUILayout.LabelField("Float: " + System.Math.Round(m_FloatNode.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+                GUILayout.EndHorizontal();
+            }
+            // If there is nothing connected to the input port show editable fields
+            else
+            {
+                GUILayout.BeginHorizontal();
+                m_FloatNode.float_switch = EditorGUILayout.Toggle(m_FloatNode.float_switch, style, GUILayout.MaxWidth(40));
+                EditorGUILayout.LabelField("Float: ", m_NodeSkin.GetStyle("Node Body Label"), GUILayout.MaxWidth(40));
+                m_FloatNode.m_UserInput = EditorGUILayout.FloatField(m_FloatNode.m_UserInput, GUILayout.MaxWidth(60));
+                GUILayout.EndHorizontal();
+            }
         }
 
         /// <summary>
@@ -176,7 +171,7 @@ namespace InteractML.DataTypeNodes
             GUILayout.BeginArea(m_HelpRect);
             GUILayout.BeginHorizontal();
             GUILayout.Label("");
-            GUILayout.Button(new GUIContent("Help", "What does this node do?"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
+            GUILayout.Button("Help", m_NodeSkin.GetStyle("Help Button"));
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }

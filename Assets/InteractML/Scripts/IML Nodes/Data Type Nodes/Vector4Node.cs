@@ -33,6 +33,10 @@ namespace InteractML.DataTypeNodes
         float x, y, z, w;
         int counter, count;
 
+        public bool InputConnected;
+        public Vector4 m_UserInput;
+        Vector4 receivedVector4;
+
         // Use this for initialization
         protected override void Init()
         {
@@ -80,17 +84,28 @@ namespace InteractML.DataTypeNodes
 
             counter++;
 
-            if (!x_switch)
-                FeatureValues.Values[0] = 0;
+            //check if input connected
+            if (this.GetInputNodesConnected("m_In") == null)
+            {
+                InputConnected = false;
+                if (!x_switch) m_UserInput.x = 0;
+                if (!y_switch) m_UserInput.y = 0;
+                if (!z_switch) m_UserInput.z = 0;
+                if (!w_switch) m_UserInput.w = 0;
 
-            if (!y_switch)
-                FeatureValues.Values[1] = 0;
-
-            if (!z_switch)
-                FeatureValues.Values[2] = 0;
-
-            if (!w_switch)
-                FeatureValues.Values[3] = 0;
+                Value = m_UserInput;
+            }
+            else
+            {
+                InputConnected = true;
+                base.Update();
+                receivedVector4 = Value;
+                if (!x_switch) receivedVector4.x = 0;
+                if (!y_switch) receivedVector4.y = 0;
+                if (!z_switch) receivedVector4.z = 0;
+                if (!z_switch) receivedVector4.w = 0;
+                Value = receivedVector4;
+            }
 
             return this;
 

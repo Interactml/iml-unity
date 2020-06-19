@@ -24,6 +24,7 @@ namespace InteractML.DataTypeNodes
         private Rect m_InnerBodyRect;
         private Rect m_HelpRect;
 
+
         public override void OnHeaderGUI()
         {
             // Get reference to the current node
@@ -130,32 +131,24 @@ namespace InteractML.DataTypeNodes
         }
         protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
         {
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Name: " + m_IntegerNode.ValueName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            GUILayout.Space(10);
-            GUILayout.BeginHorizontal();
-            m_IntegerNode.integer_switch = EditorGUILayout.Toggle(m_IntegerNode.integer_switch, style);
-            EditorGUILayout.LabelField(new GUIContent("Integer: " + System.Math.Round(m_IntegerNode.FeatureValues.Values[0], 0).ToString(), "Float Value"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            GUILayout.EndHorizontal();
+            // If something is connected to the input port show incoming data
+            if (m_IntegerNode.InputConnected)
+            {
+                GUILayout.BeginHorizontal();
+                m_IntegerNode.int_switch = EditorGUILayout.Toggle(m_IntegerNode.int_switch, style);
+                EditorGUILayout.LabelField("Int: " + System.Math.Round(m_IntegerNode.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+                GUILayout.EndHorizontal();
+            }
+            // If there is nothing connected to the input port show editable fields
+            else
+            {
+                GUILayout.BeginHorizontal();
+                m_IntegerNode.int_switch = EditorGUILayout.Toggle(m_IntegerNode.int_switch, style, GUILayout.MaxWidth(40));
+                EditorGUILayout.LabelField("Int: ", m_NodeSkin.GetStyle("Node Body Label"), GUILayout.MaxWidth(30));
+                m_IntegerNode.m_UserInput = EditorGUILayout.IntField(m_IntegerNode.m_UserInput, GUILayout.MaxWidth(60));
+                GUILayout.EndHorizontal();
+            }
         }
-        /// <summary>
-        /// Show the integer value fields with attribute name
-        /// </summary>
-        //private void ShowIntegerValue()
-        //{
-        //    m_InnerBodyRect.x = m_BodyRect.x + 20;
-        //    m_InnerBodyRect.y = m_BodyRect.y + 20;
-        //    m_InnerBodyRect.width = m_BodyRect.width - 20;
-        //    m_InnerBodyRect.height = m_BodyRect.height - 20;
-
-        //    GUILayout.BeginArea(m_InnerBodyRect);
-        //    EditorGUILayout.Space();
-        //    EditorGUILayout.LabelField("Name: " + m_IntegerNode.ValueName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-        //    EditorGUILayout.Space();
-        //    EditorGUILayout.LabelField("Integer: " + System.Math.Round(m_IntegerNode.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-        //    GUILayout.EndArea();
-
-        //}
 
         /// <summary>
         /// Display help button
@@ -169,7 +162,7 @@ namespace InteractML.DataTypeNodes
             GUILayout.BeginArea(m_HelpRect);
             GUILayout.BeginHorizontal();
             GUILayout.Label("");
-            GUILayout.Button("Help", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
+            GUILayout.Button("Help", m_NodeSkin.GetStyle("Help Button"));
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }

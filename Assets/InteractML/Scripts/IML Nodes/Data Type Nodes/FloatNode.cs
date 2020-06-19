@@ -27,6 +27,9 @@ namespace InteractML.DataTypeNodes
         private IMLFloat m_FeatureValues;
 
         public bool ReceivingData;
+        public bool InputConnected;
+        public float m_UserInput;
+        float receivedFloat;
         public bool float_switch = true;
         float f;
         int counter, count;
@@ -75,8 +78,21 @@ namespace InteractML.DataTypeNodes
 
             counter++;
 
-            if (!float_switch)
-                FeatureValues.Values[0] = 0;
+            //check if input connected
+            if (this.GetInputNodesConnected("m_In") == null)
+            {
+                InputConnected = false;
+                if (!float_switch) m_UserInput = 0;
+                Value = m_UserInput;
+            }
+            else
+            {
+                InputConnected = true;
+                base.Update();
+                receivedFloat = Value;
+                if (!float_switch) receivedFloat = 0;
+                Value = receivedFloat;
+            }
 
             return this;
 
