@@ -81,6 +81,7 @@ namespace InteractML
             ShowButtons();
 
             DrawBodyLayoutBottom();
+            ShowTrainingExamplesDropdown();
             ShowHelpButton(m_BodyRectBottom);
 
         }
@@ -250,8 +251,118 @@ namespace InteractML
             }
         }
 
+        /// <summary>
+        /// Shows a dropdown with the training examples series
+        /// </summary>
+        protected override void ShowTrainingExamplesDropdown()
+        {
+            SetDropdownStyle();
 
-        
+            //m_ShowTrainingDataDropdown = EditorGUILayout.Foldout(m_ShowTrainingDataDropdown, "Inspect Training Series");
+            if (m_ShowTrainingDataDropdown)
+            {
+                EditorGUI.indentLevel++;
+
+                if (ReusableMethods.Lists.IsNullOrEmpty(ref m_SeriesTrainingExamplesNode.TrainingSeriesCollection))
+                {
+                    EditorGUILayout.LabelField("Training Series List is empty", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("foldoutempty"));
+                }
+                else
+                {
+                    // Begins Vertical Scroll
+                    int indentLevel = EditorGUI.indentLevel;
+                    EditorGUILayout.BeginVertical();
+                    m_ScrollPos = EditorGUILayout.BeginScrollView(m_ScrollPos, GUILayout.Width(GetWidth() - 25), GUILayout.Height(GetWidth() - 100));
+
+                    // Go Series by Series
+                    for (int i = 0; i < m_SeriesTrainingExamplesNode.TrainingSeriesCollection.Count; i++)
+                    {
+                        EditorGUILayout.LabelField("Training Series " + i, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+
+                        EditorGUI.indentLevel++;
+
+                        var inputFeaturesInSeries = m_SeriesTrainingExamplesNode.TrainingSeriesCollection[i].Series;
+                        var labelSeries = m_SeriesTrainingExamplesNode.TrainingSeriesCollection[i].LabelSeries;
+
+                        // If the input features are not null...
+                        if (inputFeaturesInSeries != null)
+                        {
+                            EditorGUILayout.LabelField("No. Examples: " + inputFeaturesInSeries.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+
+                            // Draw inputs
+                            for (int j = 0; j < inputFeaturesInSeries.Count; j++)
+                            {
+                                EditorGUI.indentLevel++;
+
+                                EditorGUILayout.LabelField("Input Feature " + j, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+
+                                // Are there any examples in series?
+                                if (inputFeaturesInSeries[j] == null)
+                                {
+                                    EditorGUILayout.LabelField("Inputs are null ", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+                                    break;
+                                }
+
+                                EditorGUI.indentLevel++;
+                                for (int k = 0; k < inputFeaturesInSeries[j].Count; k++)
+                                {
+                                    EditorGUILayout.LabelField("Input " + k + " (" + inputFeaturesInSeries[j][k].InputData.DataType + ")", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+
+                                    for (int w = 0; w < inputFeaturesInSeries[j][k].InputData.Values.Length; w++)
+                                    {
+                                        EditorGUI.indentLevel++;
+
+                                        EditorGUILayout.LabelField(inputFeaturesInSeries[j][k].InputData.Values[w].ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+
+                                        EditorGUI.indentLevel--;
+                                    }
+
+
+                                }
+                                EditorGUI.indentLevel--;
+                                EditorGUI.indentLevel--;
+                            }
+                            EditorGUI.indentLevel--;
+
+                        }
+                        // If the input features are null...
+                        else
+                        {
+                            EditorGUILayout.LabelField("Input Features in series are null", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+                        }
+
+                        // If the output features for the entire series are not null...
+                        if (labelSeries != null)
+                        {
+                            // Draw output
+                            EditorGUI.indentLevel++;
+
+                            EditorGUILayout.TextArea(labelSeries);
+                            //EditorGUILayout.LabelField("TEST");
+
+                            EditorGUI.indentLevel--;
+                        }
+                        else
+                        {
+                            EditorGUILayout.LabelField("Series Output is null ", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+                        }
+
+                        EditorGUI.indentLevel--;
+
+                    }
+
+                    // Ends Vertical Scroll
+                    EditorGUI.indentLevel = indentLevel;
+                    EditorGUILayout.EndScrollView();
+                    EditorGUILayout.EndVertical();
+                }
+
+                EditorGUI.indentLevel--;
+            }
+
+        }
+
+
 
     }
 }

@@ -26,6 +26,7 @@ namespace InteractML
         protected Rect m_BodyRectTargets;
         protected Rect m_BodyRectButtons;
         protected Rect m_BodyRectBottom;
+        protected Rect m_Dropdown;
 
 
         /// <summary>
@@ -38,6 +39,8 @@ namespace InteractML
 
         bool help = false;
 
+        protected bool m_ShowTrainingDataDropdown;
+        protected Vector2 m_ScrollPos;
 
         #endregion
 
@@ -335,21 +338,32 @@ namespace InteractML
                 GUI.enabled = true;
             }
         }
-
-        private void ShowBottomSection()
+        protected virtual void ShowTrainingExamplesDropdown()
         {
-            m_BodyRectBottom.x = m_BodyRectBottom.x + 20;
-            m_BodyRectBottom.y = m_BodyRectBottom.y + 10;
-            m_BodyRectBottom.width = m_BodyRectBottom.width - 40;
-            m_BodyRectBottom.height = 5000;
-
-            GUILayout.BeginArea(m_BodyRectBottom);
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("");
-            HelpButton(this.GetType().ToString());
-            GUILayout.EndHorizontal();
-            GUILayout.EndArea();
+            Debug.Log("should be implemented in single or series node editor");
         }
+
+        protected void SetDropdownStyle()
+        {
+            GUI.skin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+            GUILayout.Space(140);
+            GUIStyle myFoldoutStyle = new GUIStyle(EditorStyles.foldout);
+            Color myStyleColor = Color.white;
+            myFoldoutStyle.fontStyle = FontStyle.Bold;
+            myFoldoutStyle.normal.textColor = myStyleColor;
+            myFoldoutStyle.onNormal.textColor = myStyleColor;
+            myFoldoutStyle.hover.textColor = myStyleColor;
+            myFoldoutStyle.onHover.textColor = myStyleColor;
+            myFoldoutStyle.focused.textColor = myStyleColor;
+            myFoldoutStyle.onFocused.textColor = myStyleColor;
+            myFoldoutStyle.active.textColor = myStyleColor;
+            myFoldoutStyle.onActive.textColor = myStyleColor;
+            myFoldoutStyle.fontStyle = FontStyle.Bold;
+            myFoldoutStyle.normal.textColor = myStyleColor;
+            myFoldoutStyle.fontStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview").fontStyle;
+            m_ShowTrainingDataDropdown = EditorGUILayout.Foldout(m_ShowTrainingDataDropdown, "View Training Pairs", myFoldoutStyle);
+        }
+
 
 
 

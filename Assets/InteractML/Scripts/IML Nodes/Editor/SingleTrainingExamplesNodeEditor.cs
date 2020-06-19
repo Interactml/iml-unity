@@ -79,7 +79,9 @@ namespace InteractML
             ShowButtons();
 
             DrawBodyLayoutBottom();
+            ShowTrainingExamplesDropdown();
             ShowHelpButton(m_BodyRectBottom);
+            
 
         }
 
@@ -243,6 +245,129 @@ namespace InteractML
                 }
                 GUI.enabled = true;
             }
+        }
+
+        /// <summary>
+        /// Show single training examples on foldout arrow
+        /// </summary>
+        protected override void ShowTrainingExamplesDropdown()
+        {
+            SetDropdownStyle();
+           
+            
+            
+            EditorStyles.foldout.fontStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview").fontStyle;
+            if (m_ShowTrainingDataDropdown)
+            {
+                EditorGUI.indentLevel++;
+
+                if (ReusableMethods.Lists.IsNullOrEmpty(ref m_SingleTrainingExamplesNode.TrainingExamplesVector))
+                {
+                    EditorGUILayout.LabelField("Training Examples List is empty", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("foldoutempty"));
+                }
+                else
+                {
+                    // Begins Vertical Scroll
+                    int indentLevel = EditorGUI.indentLevel;
+                    EditorGUILayout.BeginVertical();
+                    m_ScrollPos = EditorGUILayout.BeginScrollView(m_ScrollPos, GUILayout.Width(GetWidth() - 25), GUILayout.Height(GetWidth() - 50));
+
+                    for (int i = 0; i < m_SingleTrainingExamplesNode.TrainingExamplesVector.Count; i++)
+                    {
+                        EditorGUILayout.LabelField("Training Example " + (i + 1), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+
+                        EditorGUI.indentLevel++;
+
+                        var inputFeatures = m_SingleTrainingExamplesNode.TrainingExamplesVector[i].Inputs;
+                        var outputFeatures = m_SingleTrainingExamplesNode.TrainingExamplesVector[i].Outputs;
+
+                        // If the input features are not null...
+                        if (inputFeatures != null)
+                        {
+                            // Draw inputs
+                            for (int j = 0; j < inputFeatures.Count; j++)
+                            {
+
+                                if (inputFeatures[j].InputData == null)
+                                {
+                                    EditorGUILayout.LabelField("Inputs are null ");
+                                    break;
+                                }
+
+
+                                EditorGUI.indentLevel++;
+
+                                EditorGUILayout.LabelField("Input " + (j + 1) + " (" + inputFeatures[j].InputData.DataType + ")", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+
+                                for (int k = 0; k < inputFeatures[j].InputData.Values.Length; k++)
+                                {
+                                    EditorGUI.indentLevel++;
+
+                                    EditorGUILayout.LabelField(inputFeatures[j].InputData.Values[k].ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+
+                                    EditorGUI.indentLevel--;
+                                }
+
+                                EditorGUI.indentLevel--;
+                            }
+                        }
+                        else
+                        {
+                            EditorGUILayout.LabelField("Inputs are null ", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+                        }
+
+                        // If the output features are not null...
+                        if (outputFeatures != null)
+                        {
+                            // Draw outputs
+                            for (int j = 0; j < outputFeatures.Count; j++)
+                            {
+                                if (outputFeatures[j].OutputData == null)
+                                {
+                                    EditorGUILayout.LabelField("Outputs are null ", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+                                    break;
+                                }
+
+
+                                EditorGUI.indentLevel++;
+
+                                EditorGUILayout.LabelField("Output " + (j + 1) + " (" + outputFeatures[j].OutputData.DataType + ")", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+
+
+                                for (int k = 0; k < outputFeatures[j].OutputData.Values.Length; k++)
+                                {
+
+                                    EditorGUI.indentLevel++;
+
+                                    EditorGUILayout.LabelField(outputFeatures[j].OutputData.Values[k].ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+
+                                    EditorGUI.indentLevel--;
+
+                                }
+
+                                EditorGUI.indentLevel--;
+
+                            }
+                        }
+                        else
+                        {
+                            EditorGUILayout.LabelField("Outputs are null ", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+                        }
+
+                        EditorGUI.indentLevel--;
+
+                    }
+
+                    // Ends Vertical Scroll
+                    EditorGUI.indentLevel = indentLevel;
+                    EditorGUILayout.EndScrollView();
+                    EditorGUILayout.EndVertical();
+                    
+                }
+
+                EditorGUI.indentLevel--;
+            }
+            
         }
 
     }
