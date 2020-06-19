@@ -26,6 +26,10 @@ namespace InteractML.DataTypeNodes
         private IMLVector2 m_FeatureValues;
 
         public bool ReceivingData;
+        public bool InputConnected;
+        public Vector2 m_UserInput;
+        Vector2 receivedVector2;
+
         public bool x_switch = true;
         public bool y_switch = true;
         float x, y;
@@ -76,11 +80,25 @@ namespace InteractML.DataTypeNodes
 
             counter++;
 
-            if (!x_switch)
-                FeatureValues.Values[0] = 0;
+            //check if input connected
+            if (this.GetInputNodesConnected("m_In") == null)
+            {
+                InputConnected = false;
+                if (!x_switch) m_UserInput.x = 0;
+                if (!y_switch) m_UserInput.y = 0;
 
-            if (!y_switch)
-                FeatureValues.Values[1] = 0;
+                Value = m_UserInput;
+            }
+            else
+            {
+                InputConnected = true;
+                base.Update();
+                receivedVector2 = Value;
+                if (!x_switch) receivedVector2.x = 0;
+                if (!y_switch) receivedVector2.y = 0;
+
+                Value = receivedVector2;
+            }
 
             return this;
 

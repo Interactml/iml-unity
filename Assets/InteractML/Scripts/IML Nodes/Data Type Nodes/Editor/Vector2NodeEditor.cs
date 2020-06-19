@@ -30,6 +30,10 @@ namespace InteractML.DataTypeNodes
             // Get reference to the current node
             m_Vector2Node = (target as Vector2Node);
 
+            // Load node skin
+            if (m_NodeSkin == null)
+                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+
             // Initialise header background Rects
             InitHeaderRects();
 
@@ -44,7 +48,7 @@ namespace InteractML.DataTypeNodes
             //Display Node name
             GUILayout.BeginArea(HeaderRect);
             GUILayout.Space(10);
-            GUILayout.Label("LIVE VECTOR2 DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+            GUILayout.Label("LIVE VECTOR2 DATA", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
             GUILayout.EndArea();
 
             GUILayout.Label("", GUILayout.MinHeight(60));
@@ -123,53 +127,53 @@ namespace InteractML.DataTypeNodes
             GUILayout.BeginHorizontal();
 
             GUIContent inputPortLabel = new GUIContent("Vector2\nData In");
-            IMLNodeEditor.PortField(inputPortLabel, m_Vector2Node.GetInputPort("m_In"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            IMLNodeEditor.PortField(inputPortLabel, m_Vector2Node.GetInputPort("m_In"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUIContent outputPortLabel = new GUIContent("Vector2\nData Out");
-            IMLNodeEditor.PortField(outputPortLabel, m_Vector2Node.GetOutputPort("m_Out"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            IMLNodeEditor.PortField(outputPortLabel, m_Vector2Node.GetOutputPort("m_Out"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUILayout.EndHorizontal();
         }
 
         protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
         {
-            EditorGUILayout.LabelField("Name: " + m_Vector2Node.ValueName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            // If something is connected to the input port show incoming data
+            if (m_Vector2Node.InputConnected)
+            {
+                GUILayout.BeginHorizontal();
+                m_Vector2Node.x_switch = EditorGUILayout.Toggle(m_Vector2Node.x_switch, style);
+                EditorGUILayout.LabelField("x: " + System.Math.Round(m_Vector2Node.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+                GUILayout.EndHorizontal();
 
-            GUILayout.BeginHorizontal();
-            m_Vector2Node.x_switch = EditorGUILayout.Toggle(m_Vector2Node.x_switch, style);
-            EditorGUILayout.LabelField("x: " + System.Math.Round(m_Vector2Node.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            GUILayout.EndHorizontal();
+                EditorGUILayout.Space();
 
-            EditorGUILayout.Space();
+                GUILayout.BeginHorizontal();
+                m_Vector2Node.y_switch = EditorGUILayout.Toggle(m_Vector2Node.y_switch, style);
+                EditorGUILayout.LabelField("y: " + System.Math.Round(m_Vector2Node.FeatureValues.Values[1], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+                GUILayout.EndHorizontal();
 
-            GUILayout.BeginHorizontal();
-            m_Vector2Node.y_switch = EditorGUILayout.Toggle(m_Vector2Node.y_switch, style);
-            EditorGUILayout.LabelField("y: " + System.Math.Round(m_Vector2Node.FeatureValues.Values[1], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            GUILayout.EndHorizontal();
+            }
+            // If there is nothing connected to the input port show editable fields
+            else
+            {
+                GUILayout.BeginHorizontal();
+                m_Vector2Node.x_switch = EditorGUILayout.Toggle(m_Vector2Node.x_switch, style, GUILayout.MaxWidth(40));
+                EditorGUILayout.LabelField("x: ", m_NodeSkin.GetStyle("Node Body Label"), GUILayout.MaxWidth(20));
+                m_Vector2Node.m_UserInput.x = EditorGUILayout.FloatField(m_Vector2Node.m_UserInput.x, GUILayout.MaxWidth(60));
+                GUILayout.EndHorizontal();
 
-            
+                EditorGUILayout.Space();
+
+                GUILayout.BeginHorizontal();
+                m_Vector2Node.y_switch = EditorGUILayout.Toggle(m_Vector2Node.y_switch, style, GUILayout.MaxWidth(40));
+                EditorGUILayout.LabelField("y: ", m_NodeSkin.GetStyle("Node Body Label"), GUILayout.MaxWidth(20));
+                m_Vector2Node.m_UserInput.y = EditorGUILayout.FloatField(m_Vector2Node.m_UserInput.y, GUILayout.MaxWidth(60));
+                GUILayout.EndHorizontal();
+
+            }
+
+
         }
-
-        /// <summary>
-        /// Show the serial value fields with attribute name
-        /// </summary>
-        //private void ShowVector2Values()
-        //{
-        //    m_InnerBodyRect.x = m_BodyRect.x + 20;
-        //    m_InnerBodyRect.y = m_BodyRect.y + 20;
-        //    m_InnerBodyRect.width = m_BodyRect.width - 20;
-        //    m_InnerBodyRect.height = m_BodyRect.height - 20;
-
-        //    GUILayout.BeginArea(m_InnerBodyRect);
-        //    EditorGUILayout.Space();
-        //    EditorGUILayout.LabelField("Name: " + m_Vector2Node.ValueName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-        //    EditorGUILayout.Space();
-        //    EditorGUILayout.LabelField("x: " + System.Math.Round(m_Vector2Node.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-        //    EditorGUILayout.Space();
-        //    EditorGUILayout.LabelField("y: " + System.Math.Round(m_Vector2Node.FeatureValues.Values[1], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-        //    GUILayout.EndArea();
-
-        //}
 
 
         /// <summary>
@@ -184,7 +188,7 @@ namespace InteractML.DataTypeNodes
             GUILayout.BeginArea(m_HelpRect);
             GUILayout.BeginHorizontal();
             GUILayout.Label("");
-            GUILayout.Button("Help", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
+            GUILayout.Button("Help", m_NodeSkin.GetStyle("Help Button"));
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }

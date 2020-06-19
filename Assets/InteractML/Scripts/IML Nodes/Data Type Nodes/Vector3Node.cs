@@ -43,7 +43,6 @@ namespace InteractML.DataTypeNodes
         {
             counter = 0;
             count = 5;
-            m_UserInput = new Vector3();
 
             base.Init();
         }
