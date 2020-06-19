@@ -37,6 +37,8 @@ namespace InteractML.DataTypeNodes
         float x, y, z;
         int counter, count;
 
+        [HideInInspector]
+        public IMLNodeTooltips tips;
 
         // Use this for initialization
         protected override void Init()
@@ -45,6 +47,8 @@ namespace InteractML.DataTypeNodes
             count = 5;
 
             base.Init();
+
+            tips = IMLTooltipsSerialization.LoadTooltip("Vector3");
         }
 
         // Check that a feature connected is of the right type
