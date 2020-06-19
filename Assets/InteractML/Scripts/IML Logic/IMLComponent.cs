@@ -1267,6 +1267,8 @@ namespace InteractML
         {
             if (m_ScriptNodesList == null)
                 m_ScriptNodesList = new List<ScriptNode>();
+            if (ComponentsWithIMLData == null)
+                ComponentsWithIMLData = new List<IMLMonoBehaviourContainer>();
 
             for (int i = 0; i < m_ScriptNodesList.Count; i++)
             {
@@ -1292,6 +1294,21 @@ namespace InteractML
                         MLController.RemoveNode(scriptNode);
                         // Remove from list
                         m_ScriptNodesList.RemoveAt(i);
+                    }
+                }
+
+                // Now if the node wasn't removed, make sure that there is a script that the node is controlling in componentsWithIMLData
+                if (scriptNode != null)
+                {
+                    // If we have a reference to the script the node controls...
+                    if (scriptNode.GetScript() != null)
+                    {
+                        // Make sure is managed in the list of scripts
+                        var container = new IMLMonoBehaviourContainer(scriptNode.GetScript());
+                        if (!ComponentsWithIMLData.Contains(container))
+                        {
+                            ComponentsWithIMLData.Add(container);
+                        }
                     }
                 }
 
