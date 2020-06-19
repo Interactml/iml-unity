@@ -239,6 +239,38 @@ MonoBehaviour:
   x_switch: 1
   y_switch: 1
   z_switch: 1
+--- !u!114 &-7058111348226817807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
+  m_Name: HeadDirectionTrackerIML (Script)
+  m_EditorClassIdentifier: 
+  id: 76798287-1d6b-4f03-8d84-a26f02b1d011
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys:
+    - HeadRotation
+    values:
+    - _fieldName: HeadRotation
+      _node: {fileID: -7058111348226817807}
+      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  DevMode: 0
+  m_ScriptInternal: {fileID: 0}
+  m_ScriptHashCode: 21156
+  CreatedDuringPlaymode: 1
 --- !u!114 &-6753651812753732907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,6 +326,38 @@ MonoBehaviour:
     - 0
   GameObjInputMissing: 1
   ReceivingData: 0
+--- !u!114 &-3844776838840415270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
+  m_Name: BoxForces (Script)
+  m_EditorClassIdentifier: 
+  id: 9d7f1f02-a690-4bcd-af3e-c5a56856d128
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys:
+    - PushDirection
+    values:
+    - _fieldName: PushDirection
+      _node: {fileID: -3844776838840415270}
+      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  DevMode: 0
+  m_ScriptInternal: {fileID: 0}
+  m_ScriptHashCode: 23850
+  CreatedDuringPlaymode: 1
 --- !u!114 &-3657133543843791922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -693,13 +757,11 @@ MonoBehaviour:
   - {fileID: -1060329389974368481}
   - {fileID: -6753651812753732907}
   - {fileID: 1114643770248193897}
-  - {fileID: 5926587992512919350}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 6214757109657147653}
   - {fileID: 2403977057658443480}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   SceneComponent: {fileID: 0}
 --- !u!114 &793193894855969638
 MonoBehaviour:
@@ -1225,68 +1287,6 @@ MonoBehaviour:
   x_switch: 1
   y_switch: 1
   z_switch: 1
---- !u!114 &5926587992512919350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
-  m_Name: BoxForces (Script)
-  m_EditorClassIdentifier: 
-  id: 6adf6266-8707-425a-a30f-480bec30865a
-  graph: {fileID: 11400000}
-  position: {x: -152, y: 376}
-  ports:
-    keys:
-    - PushDirection
-    values:
-    - _fieldName: PushDirection
-      _node: {fileID: 5926587992512919350}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-  DevMode: 0
-  m_ScriptInternal: {fileID: 0}
-  CreatedDuringPlaymode: 1
---- !u!114 &6214757109657147653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
-  m_Name: HeadDirectionTrackerIML (Script)
-  m_EditorClassIdentifier: 
-  id: 5ed8a670-86fc-430f-9b53-ca4b3bd54dc2
-  graph: {fileID: 11400000}
-  position: {x: 296, y: 456}
-  ports:
-    keys:
-    - HeadRotation
-    values:
-    - _fieldName: HeadRotation
-      _node: {fileID: 6214757109657147653}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-  DevMode: 0
-  m_ScriptInternal: {fileID: 0}
-  CreatedDuringPlaymode: 1
 --- !u!114 &7487231633145856826
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -113,7 +113,7 @@ public class IMLEditorManager
             {
                 MLComponent.updateGameObjectImage();
                 MLComponent.GetAllNodes();
-                MLComponent.UpdateScriptNodes();
+                MLComponent.UpdateScriptNodes(changingPlayMode: true);
             }
         }
 
@@ -122,7 +122,7 @@ public class IMLEditorManager
         {
             foreach (var MLComponent in m_IMLComponents)
             {
-                MLComponent.UpdateScriptNodes();
+                MLComponent.UpdateScriptNodes(changingPlayMode: true);
             }
         }
     }

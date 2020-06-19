@@ -1280,8 +1280,8 @@ namespace InteractML
                 {
                     // Destroy node
                     MLController.RemoveNode(scriptNode);
-                    // Remove from list
-                    m_ScriptNodesList.RemoveAt(i);
+                    // Force scriptNode reference to null
+                    scriptNode = null;
                 }
 #endif
                 // Check if we need to remove the scriptNode from the list
@@ -1292,8 +1292,8 @@ namespace InteractML
                     {
                         // Destroy node
                         MLController.RemoveNode(scriptNode);
-                        // Remove from list
-                        m_ScriptNodesList.RemoveAt(i);
+                        // Force scriptNode reference to null
+                        scriptNode = null;
                     }
                 }
 
