@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using XNode;
 
 namespace InteractML.DataTypeNodes
@@ -81,15 +81,17 @@ namespace InteractML.DataTypeNodes
 
         protected virtual object Update()
         {
-            // Read input (if it returns default(T) there is no connection )
+            // Read input (if it returns default(T) there is no connection)
             var inputReceived = GetInputValue<T>("m_In");
+            
             // Check if we have something connected to the input port
-            if (inputReceived != null && !inputReceived.Equals(default(T)))
+            // (inputReceived != null && !inputReceived.Equals(default(T)))
+            if (inputReceived != null)
             {
                 // Update the value of this data node
-                Value = inputReceived;
-
+                Value = inputReceived;   
             }
+
             // Return entire node to satisfy IFeatureIML requirements
             return this;
         }

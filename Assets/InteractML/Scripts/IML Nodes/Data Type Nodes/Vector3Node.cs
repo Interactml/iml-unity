@@ -20,23 +20,28 @@ namespace InteractML.DataTypeNodes
                 return m_FeatureValues;
             }
         }
+
         /// <summary>
         /// Local specific IML data type
         /// </summary>
         private IMLVector3 m_FeatureValues;
 
         public bool ReceivingData;
+        public bool InputConnected;
         public bool x_switch = true;
         public bool y_switch = true;
         public bool z_switch = true;
         float x, y, z;
         int counter, count;
+        public Vector3 m_UserInput;
+        Vector3 receivedVector3;
 
         // Use this for initialization
         protected override void Init()
         {
             counter = 0;
             count = 5;
+            m_UserInput = new Vector3();
 
             base.Init();
         }
@@ -58,7 +63,7 @@ namespace InteractML.DataTypeNodes
         /// <returns></returns>
         protected override object Update()
         {
-            base.Update();
+
             //check if receiving data
             if (counter == count)
             {
@@ -79,14 +84,26 @@ namespace InteractML.DataTypeNodes
 
             counter++;
 
-            if (!x_switch)
-                FeatureValues.Values[0] = 0;
-
-            if (!y_switch)
-                FeatureValues.Values[1] = 0;
-
-            if (!z_switch)
-                FeatureValues.Values[2] = 0;
+            //check if input connected
+            if (this.GetInputNodesConnected("m_In") == null)
+            {
+                InputConnected = false;
+                if (!x_switch) m_UserInput.x = 0;
+                if (!y_switch) m_UserInput.y = 0;
+                if (!z_switch) m_UserInput.z = 0;
+                
+                Value = m_UserInput;
+            }
+            else
+            {
+                InputConnected = true;
+                base.Update();
+                receivedVector3 = Value;
+                if (!x_switch) receivedVector3.x = 0;
+                if (!y_switch) receivedVector3.y = 0;
+                if (!z_switch) receivedVector3.z = 0;
+                Value = receivedVector3;
+            }
 
             return this;
 
