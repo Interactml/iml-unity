@@ -144,10 +144,10 @@ namespace InteractML.DataTypeNodes
             GUILayout.BeginHorizontal();
 
             GUIContent inputPortLabel = new GUIContent("Vector3\nData In", m_Vector3Node.tips.PortTooltip[0]);
-            IMLNodeEditor.PortField(inputPortLabel, m_Vector3Node.GetInputPort("m_In"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            IMLNodeEditor.PortField(inputPortLabel, m_Vector3Node.GetInputPort("m_In"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
-            GUIContent outputPortLabel = new GUIContent("Vector3\nData Out", m_Vector3Node.tips.PortTooltip[0]);
-            IMLNodeEditor.PortField(outputPortLabel, m_Vector3Node.GetOutputPort("m_Out"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            GUIContent outputPortLabel = new GUIContent("Vector3\nData Out", m_Vector3Node.tips.PortTooltip[1]);
+            IMLNodeEditor.PortField(outputPortLabel, m_Vector3Node.GetOutputPort("m_Out"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUILayout.EndHorizontal();
         }

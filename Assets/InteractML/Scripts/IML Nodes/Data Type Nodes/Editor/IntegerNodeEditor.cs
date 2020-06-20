@@ -30,6 +30,10 @@ namespace InteractML.DataTypeNodes
             // Get reference to the current node
             m_IntegerNode = (target as IntegerNode);
 
+            // Load node skin
+            if (m_NodeSkin == null)
+                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+
             // Initialise header background Rects
             InitHeaderRects();
 
@@ -44,7 +48,7 @@ namespace InteractML.DataTypeNodes
             //Display Node name
             GUILayout.BeginArea(HeaderRect);
             GUILayout.Space(10);
-            GUILayout.Label("LIVE INTEGER DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+            GUILayout.Label("LIVE INTEGER DATA", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
             GUILayout.EndArea();
 
             GUILayout.Label("", GUILayout.MinHeight(60));
@@ -63,7 +67,22 @@ namespace InteractML.DataTypeNodes
 
             // Draw help button
             DrawHelpButtonLayout();
-            ShowHelpButton();
+            ShowHelpButton(m_HelpRect);
+
+            // if hovering port show port tooltip
+            if (showPort)
+            {
+                ShowTooltip(m_PortRect, TooltipText);
+            }
+            //if hovering over help show tooltip 
+            if (showHelp)
+            {
+                ShowTooltip(m_HelpRect, m_IntegerNode.tips.HelpTooltip);
+            }
+            // if hovering over body rect
+            if (IsThisRectHovered(m_BodyRect))
+                ShowTooltip(m_BodyRect, m_IntegerNode.tips.BodyTooltip.Tips[0]);
+
         }
 
         /// <summary>
@@ -121,11 +140,11 @@ namespace InteractML.DataTypeNodes
             GUILayout.Space(5);
             GUILayout.BeginHorizontal();
 
-            GUIContent inputPortLabel = new GUIContent("Integer\nData In");
-            IMLNodeEditor.PortField(inputPortLabel, m_IntegerNode.GetInputPort("m_In"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            GUIContent inputPortLabel = new GUIContent("Integer\nData In", m_IntegerNode.tips.PortTooltip[0]);
+            IMLNodeEditor.PortField(inputPortLabel, m_IntegerNode.GetInputPort("m_In"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
-            GUIContent outputPortLabel = new GUIContent("Integer\nData Out");
-            IMLNodeEditor.PortField(outputPortLabel, m_IntegerNode.GetOutputPort("m_Out"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            GUIContent outputPortLabel = new GUIContent("Integer\nData Out", m_IntegerNode.tips.PortTooltip[1]);
+            IMLNodeEditor.PortField(outputPortLabel, m_IntegerNode.GetOutputPort("m_Out"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUILayout.EndHorizontal();
         }
