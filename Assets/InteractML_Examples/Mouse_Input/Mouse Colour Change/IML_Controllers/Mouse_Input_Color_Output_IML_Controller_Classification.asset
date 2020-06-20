@@ -578,10 +578,7 @@ MonoBehaviour:
       _node: {fileID: 4510701579155568946}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_Out
-        node: {fileID: 7704195512333494624}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -601,12 +598,12 @@ MonoBehaviour:
   DevMode: 0
   ValueName: 
   m_In: 0
-  m_Value: 0
+  m_Value: 22
   m_Out: 0
   ReceivingData: 0
-  InputConnected: 1
-  m_UserInput: 0
-  int_switch: 0
+  InputConnected: 0
+  m_UserInput: 22
+  int_switch: 1
 --- !u!114 &4586678295669655506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -745,9 +742,6 @@ MonoBehaviour:
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: m_In
-        node: {fileID: 4510701579155568946}
-        reroutePoints: []
       - fieldName: TargetValues
         node: {fileID: -3149179713598954090}
         reroutePoints: []
