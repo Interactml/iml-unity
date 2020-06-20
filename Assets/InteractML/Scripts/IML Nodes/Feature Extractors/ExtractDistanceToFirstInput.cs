@@ -58,13 +58,15 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         public bool isUpdated { get; set; }
 
+        [HideInInspector]
+        public IMLNodeTooltips tips;
 
 
         // Use this for initialization
         protected override void Init()
         {
             base.Init();
-
+            tips = IMLTooltipsSerialization.LoadTooltip("Distance");
             // This extractor expects any other feature extracted to make calculations
             FirstInput = GetInputValue<Node>("FirstInput");
             SecondInput = GetInputValues<Node>("SecondInput").ToList();

@@ -60,6 +60,9 @@ namespace InteractML.DataTypeNodes
             DrawPortLayout();
             ShowVector4NodePorts();
 
+            //check if port is hovered over 
+            PortTooltip(m_Vector4Node.tips.PortTooltip);
+
             // Draw Body Section
             DrawBodyLayout();
             //ShowVector4Values();

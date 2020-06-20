@@ -31,6 +31,10 @@ namespace InteractML.FeatureExtractors
             // Get reference to the current node
             m_ExtractRotation = (target as ExtractRotation);
 
+            // Load node skin
+            if (m_NodeSkin == null)
+                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+
             // Initialise header background Rects
             InitHeaderRects();
 
@@ -45,7 +49,7 @@ namespace InteractML.FeatureExtractors
             //Display Node name
             GUILayout.BeginArea(HeaderRect);
             GUILayout.Space(10);
-            GUILayout.Label("LIVE ROTATION DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+            GUILayout.Label("LIVE ROTATION DATA", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
             GUILayout.EndArea();
 
             GUILayout.Label("", GUILayout.MinHeight(60));
@@ -59,6 +63,9 @@ namespace InteractML.FeatureExtractors
             DrawPortLayout();
             ShowExtractRotationNodePorts();
 
+            //check if port is hovered over 
+            PortTooltip(m_ExtractRotation.tips.PortTooltip);
+
             // Draw the body
             DrawBodyLayout();
             //ShowExtractedRotationValues();
@@ -70,7 +77,24 @@ namespace InteractML.FeatureExtractors
 
             // Draw help button
             DrawHelpButtonLayout();
-            ShowHelpButton();
+            ShowHelpButton(m_HelpRect);
+
+            // if hovering port show port tooltip
+            if (showPort)
+            {
+                ShowTooltip(m_PortRect, TooltipText);
+            }
+            //if hovering over help show tooltip 
+            if (showHelp)
+            {
+                ShowTooltip(m_HelpRect, m_ExtractRotation.tips.HelpTooltip);
+            }
+            // if hovering over body rect
+            if (IsThisRectHovered(m_BodyRect))
+                ShowTooltip(m_BodyRect, m_ExtractRotation.tips.BodyTooltip.Tips[0]);
+            // if hovering over body rect
+            if (IsThisRectHovered(m_LocalSpaceRect))
+                ShowTooltip(m_LocalSpaceRect, m_ExtractRotation.tips.BodyTooltip.Tips[1]);
         }
 
 
@@ -148,10 +172,10 @@ namespace InteractML.FeatureExtractors
             GUILayout.Space(5);
             GUILayout.BeginHorizontal();
 
-            GUIContent inputPortLabel = new GUIContent("GameObject \nData In");
+            GUIContent inputPortLabel = new GUIContent("GameObject \nData In", m_ExtractRotation.tips.PortTooltip[0]);
             IMLNodeEditor.PortField(inputPortLabel, m_ExtractRotation.GetInputPort("GameObjectDataIn"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
 
-            GUIContent outputPortLabel = new GUIContent("Live Data\n Out");
+            GUIContent outputPortLabel = new GUIContent("Live Data\n Out", m_ExtractRotation.tips.PortTooltip[1]);
             IMLNodeEditor.PortField(outputPortLabel, m_ExtractRotation.GetOutputPort("LiveDataOut"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUILayout.EndHorizontal();
@@ -171,11 +195,11 @@ namespace InteractML.FeatureExtractors
 
             if (m_ExtractRotation.ReceivingData)
             {
-                DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Green Toggle"));
+                DrawPositionValueTogglesAndLabels(m_NodeSkin.GetStyle("Green Toggle"));
             }
             else
             {
-                DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Red Toggle"));
+                DrawPositionValueTogglesAndLabels(m_NodeSkin.GetStyle("Red Toggle"));
             }
 
             GUILayout.EndArea();
@@ -189,21 +213,21 @@ namespace InteractML.FeatureExtractors
         {
             GUILayout.BeginHorizontal();
             m_ExtractRotation.x_switch = EditorGUILayout.Toggle(m_ExtractRotation.x_switch, style);
-            EditorGUILayout.LabelField("x: " + System.Math.Round(m_ExtractRotation.FeatureValues.Values[0], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField("x: " + System.Math.Round(m_ExtractRotation.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
             GUILayout.EndHorizontal();
 
             EditorGUILayout.Space();
 
             GUILayout.BeginHorizontal();
             m_ExtractRotation.y_switch = EditorGUILayout.Toggle(m_ExtractRotation.y_switch, style);
-            EditorGUILayout.LabelField("y: " + System.Math.Round(m_ExtractRotation.FeatureValues.Values[1], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField("y: " + System.Math.Round(m_ExtractRotation.FeatureValues.Values[1], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
             GUILayout.EndHorizontal();
 
             EditorGUILayout.Space();
 
             GUILayout.BeginHorizontal();
             m_ExtractRotation.z_switch = EditorGUILayout.Toggle(m_ExtractRotation.z_switch, style);
-            EditorGUILayout.LabelField("z: " + System.Math.Round(m_ExtractRotation.FeatureValues.Values[2], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField("z: " + System.Math.Round(m_ExtractRotation.FeatureValues.Values[2], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
             GUILayout.EndHorizontal();
         }
 
@@ -219,8 +243,8 @@ namespace InteractML.FeatureExtractors
 
             GUILayout.BeginArea(m_InnerLocalSpaceRect);
             GUILayout.BeginHorizontal();
-            m_ExtractRotation.LocalSpace = EditorGUILayout.Toggle(m_ExtractRotation.LocalSpace, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Local Space Toggle"));
-            EditorGUILayout.LabelField("Use local space for transform", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Local Space Label"));
+            m_ExtractRotation.LocalSpace = EditorGUILayout.Toggle(m_ExtractRotation.LocalSpace, m_NodeSkin.GetStyle("Local Space Toggle"));
+            EditorGUILayout.LabelField("Use local space for transform", m_NodeSkin.GetStyle("Node Local Space Label"));
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
             
@@ -238,7 +262,7 @@ namespace InteractML.FeatureExtractors
             GUILayout.BeginArea(m_HelpRect);
             GUILayout.BeginHorizontal();
             GUILayout.Label("");
-            GUILayout.Button("Help", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
+            GUILayout.Button("Help", m_NodeSkin.GetStyle("Help Button"));
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }

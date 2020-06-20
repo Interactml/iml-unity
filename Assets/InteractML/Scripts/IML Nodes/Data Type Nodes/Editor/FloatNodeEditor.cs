@@ -64,6 +64,9 @@ namespace InteractML.DataTypeNodes
             DrawPortLayout();
             ShowFloatNodePorts();
 
+            //check if port is hovered over 
+            PortTooltip(m_FloatNode.tips.PortTooltip);
+
             // Draw Body Section
             DrawBodyLayout();
             DataInToggle(m_FloatNode.ReceivingData, m_InnerBodyRect, m_BodyRect);

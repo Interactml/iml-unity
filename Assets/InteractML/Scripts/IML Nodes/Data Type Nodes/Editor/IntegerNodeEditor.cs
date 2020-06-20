@@ -60,6 +60,9 @@ namespace InteractML.DataTypeNodes
             DrawPortLayout();
             ShowIntegerNodePorts();
 
+            //check if port is hovered over 
+            PortTooltip(m_IntegerNode.tips.PortTooltip);
+
             // Draw Body Section
             DrawBodyLayout();
             DataInToggle(m_IntegerNode.ReceivingData, m_InnerBodyRect, m_BodyRect);

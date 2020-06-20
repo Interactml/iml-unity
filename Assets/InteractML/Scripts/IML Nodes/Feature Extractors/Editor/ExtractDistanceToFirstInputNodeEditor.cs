@@ -29,6 +29,10 @@ namespace InteractML.FeatureExtractors
             // Get reference to the current node
             m_ExtractDistanceToFirstInput = (target as ExtractDistanceToFirstInput);
 
+            // Load node skin
+            if (m_NodeSkin == null)
+                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+
             // Initialise header background Rects
             InitHeaderRects();
 
@@ -43,7 +47,7 @@ namespace InteractML.FeatureExtractors
             //Display Node name
             GUILayout.BeginArea(HeaderRect);
             GUILayout.Space(10);
-            GUILayout.Label("LIVE DISTANCE DATA", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+            GUILayout.Label("LIVE DISTANCE DATA", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
             GUILayout.EndArea();
 
             GUILayout.Label("", GUILayout.MinHeight(60));
@@ -55,13 +59,30 @@ namespace InteractML.FeatureExtractors
             DrawPortLayout();
             ShowDistanceBetweenInputsNodePorts();
 
+            //check if port is hovered over 
+            PortTooltip(m_ExtractDistanceToFirstInput.tips.PortTooltip);
+
             // Draw the body
             DrawBodyLayout();
             ShowDistanceBetweenInputsValue();
 
             // Draw help button
             DrawHelpButtonLayout();
-            ShowHelpButton();
+            ShowHelpButton(m_HelpRect);
+
+            // if hovering port show port tooltip
+            if (showPort)
+            {
+                ShowTooltip(m_PortRect, TooltipText);
+            }
+            //if hovering over help show tooltip 
+            if (showHelp)
+            {
+                ShowTooltip(m_HelpRect, m_ExtractDistanceToFirstInput.tips.HelpTooltip);
+            }
+            // if hovering over body rect
+            if (IsThisRectHovered(m_BodyRect))
+                ShowTooltip(m_BodyRect, m_ExtractDistanceToFirstInput.tips.BodyTooltip.Tips[0]);
         }
 
         #region Methods
@@ -122,16 +143,16 @@ namespace InteractML.FeatureExtractors
             GUILayout.Space(5);
             GUILayout.BeginHorizontal();
 
-            GUIContent inputPortLabel = new GUIContent("First Input");
-            IMLNodeEditor.PortField(inputPortLabel, m_ExtractDistanceToFirstInput.GetInputPort("FirstInput"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            GUIContent inputPortLabel = new GUIContent("First Input", m_ExtractDistanceToFirstInput.tips.PortTooltip[0]);
+            IMLNodeEditor.PortField(inputPortLabel, m_ExtractDistanceToFirstInput.GetInputPort("FirstInput"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
-            GUIContent outputPortLabel = new GUIContent("Live Data\n Out");
-            IMLNodeEditor.PortField(outputPortLabel, m_ExtractDistanceToFirstInput.GetOutputPort("DistanceBetweenInputs"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            GUIContent outputPortLabel = new GUIContent("Live Data\n Out", m_ExtractDistanceToFirstInput.tips.PortTooltip[1]);
+            IMLNodeEditor.PortField(outputPortLabel, m_ExtractDistanceToFirstInput.GetOutputPort("DistanceBetweenInputs"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUILayout.EndHorizontal();
 
-            GUIContent secondInputPortLabel = new GUIContent("Second Input");
-            IMLNodeEditor.PortField(secondInputPortLabel, m_ExtractDistanceToFirstInput.GetInputPort("SecondInput"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            GUIContent secondInputPortLabel = new GUIContent("Second Input", m_ExtractDistanceToFirstInput.tips.PortTooltip[0]);
+            IMLNodeEditor.PortField(secondInputPortLabel, m_ExtractDistanceToFirstInput.GetInputPort("SecondInput"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
         }
 
         /// <summary>
@@ -149,14 +170,14 @@ namespace InteractML.FeatureExtractors
 
             if (m_ExtractDistanceToFirstInput.FeatureValues.Values == null || m_ExtractDistanceToFirstInput.FeatureValues.Values.Length == 0)
             {
-                EditorGUILayout.LabelField("distance between inputs: " + 0, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+                EditorGUILayout.LabelField("distance between inputs: " + 0, m_NodeSkin.GetStyle("Node Body Label"));
             }
             else
             {
                 // Go through the list output distances
                 for (int i = 0; i < m_ExtractDistanceToFirstInput.FeatureValues.Values.Length; i++)
                 {
-                    EditorGUILayout.LabelField("distance between inputs: " + m_ExtractDistanceToFirstInput.FeatureValues.Values[i], Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+                    EditorGUILayout.LabelField("distance between inputs: " + m_ExtractDistanceToFirstInput.FeatureValues.Values[i], m_NodeSkin.GetStyle("Node Body Label"));
                 }
             }
             GUILayout.EndArea();
@@ -175,7 +196,7 @@ namespace InteractML.FeatureExtractors
             GUILayout.BeginArea(m_HelpRect);
             GUILayout.BeginHorizontal();
             GUILayout.Label("");
-            GUILayout.Button("Help", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Help Button"));
+            GUILayout.Button("Help", m_NodeSkin.GetStyle("Help Button"));
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }

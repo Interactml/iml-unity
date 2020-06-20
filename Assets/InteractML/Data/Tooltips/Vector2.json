@@ -3,8 +3,7 @@
   "PortTooltip": [ "Connect a Vector2", "Outputs a Vector2" ],
   "BodyTooltip": {
     "tips": [
-      "x value: turn on/off using the toggle, flashes when detecting input",
-      "y value: turn on/off using the toggle, flashes when detecting input",
+      "x and y values: turn on/off using the toggle, flashes when detecting input",
     ],
     "error": [
       "error"

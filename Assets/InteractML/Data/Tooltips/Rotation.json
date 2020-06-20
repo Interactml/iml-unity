@@ -11,9 +11,7 @@ child of another object.",
   "PortTooltip": [ "Connect a GameObject node", "Connect to Data In port. Outputs a Vector3" ],
   "BodyTooltip": {
     "tips": [
-      "x rotation value: turn on/off using the toggle, flashes when detecting input",
-      "y rotation value: turn on/off using the toggle, flashes when detecting input",
-	  "z rotation value: turn on/off using the toggle, flashes when detecting input",
+      "x, y and z euler rotation values: turn on/off using the toggle, flashes when detecting input",
 	  "check the box to use local space values",
     ],
     "error": [

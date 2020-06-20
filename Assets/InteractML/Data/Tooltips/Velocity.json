@@ -10,9 +10,7 @@ nodes.",
   "PortTooltip": [ "Connect a Feature Extractor or Data Type node", "Connect to Data In port. Outputs a Vector3" ],
   "BodyTooltip": {
     "tips": [
-     "x value: turn on/off using the toggle, flashes when detecting input",
-      "y value: turn on/off using the toggle, flashes when detecting input",
-	  "z value: turn on/off using the toggle, flashes when detecting input",
+     "velocity values: turn on/off using the toggle, flashes when detecting input",
     ],
     "error": [
       "error"
