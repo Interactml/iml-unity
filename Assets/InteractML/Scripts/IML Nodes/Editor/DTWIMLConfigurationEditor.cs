@@ -28,6 +28,8 @@ namespace InteractML
         private Rect m_IconRect;
         private Rect m_IconCenter;
         private Rect m_ButtonsRect;
+        private Rect m_BottomButtonsRect;
+        private Rect m_CenterBottomButtonsRect;
         private Rect m_HelpRect;
         private Rect m_WarningRect;
         private Rect m_InnerWarningRect;
@@ -89,8 +91,12 @@ namespace InteractML
             DrawBodyLayoutButtons();
             ShowButtons();
 
+            DrawBodyLayoutBottomButtons();
+            ShowBottomButtons();
+            
+            // Draw help button
             DrawHelpButtonLayout();
-            ShowHelpButton();
+            ShowHelpButton(m_HelpRect);
 
             DrawWarningLayout();
             ShowWarning();
@@ -137,7 +143,7 @@ namespace InteractML
             m_ButtonsRect.x = 5;
             m_ButtonsRect.y = HeaderRect.height + m_PortRect.height + m_IconRect.height;
             m_ButtonsRect.width = NodeWidth - 10;
-            m_ButtonsRect.height = 155;
+            m_ButtonsRect.height = 115;
 
             // Draw body background purple rect
             GUI.DrawTexture(m_ButtonsRect, NodeColor);
@@ -149,11 +155,28 @@ namespace InteractML
         /// <summary>
         /// Define rect values for node body and paint textures based on rects 
         /// </summary>
+        private void DrawBodyLayoutBottomButtons()
+        {
+            m_BottomButtonsRect.x = 5;
+            m_ButtonsRect.height = m_ButtonsRect.height + 15;
+            m_BottomButtonsRect.y = HeaderRect.height + m_PortRect.height + m_IconRect.height + m_ButtonsRect.height;
+            m_BottomButtonsRect.width = NodeWidth - 10;
+            m_BottomButtonsRect.height = 100;
+
+            // Draw body background purple rect below ports
+            GUI.DrawTexture(m_BottomButtonsRect, NodeColor);
+
+            // Draw line below add/remove buttons
+            GUI.DrawTexture(new Rect(m_BottomButtonsRect.x, (HeaderRect.height + m_PortRect.height + m_IconRect.height + m_ButtonsRect.height + m_BottomButtonsRect.height) - WeightOfSeparatorLine, m_BottomButtonsRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+        }
+
+        /// <summary>
+        /// Define rect values for node body and paint textures based on rects 
+        /// </summary>
         private void DrawHelpButtonLayout()
         {
             m_HelpRect.x = 5;
-            //m_ButtonsRect.height = m_ButtonsRect.height + 15;
-            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_IconRect.height + m_ButtonsRect.height;
+            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_IconRect.height + m_ButtonsRect.height + m_BottomButtonsRect.height;
             m_HelpRect.width = NodeWidth - 10;
             m_HelpRect.height = 40;
 
@@ -167,7 +190,7 @@ namespace InteractML
         private void DrawWarningLayout()
         {
             m_WarningRect.x = 5;
-            m_WarningRect.y = HeaderRect.height + m_PortRect.height + m_IconRect.height + m_ButtonsRect.height + m_HelpRect.height;
+            m_WarningRect.y = HeaderRect.height + m_PortRect.height + m_IconRect.height + m_ButtonsRect.height + m_BottomButtonsRect.height + m_HelpRect.height;
             m_WarningRect.width = NodeWidth - 10;
             m_WarningRect.height = 120;
 
@@ -225,18 +248,41 @@ namespace InteractML
             m_ButtonsRect.height = m_ButtonsRect.height - 15;
 
             GUILayout.BeginArea(m_ButtonsRect);
-            // Init model button (to debug the model not working)
-            if (GUILayout.Button("Reset Model", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Reset")))
-            {
-                m_DTWIMLConfiguration.ResetModel();
-            }
-            GUILayout.Space(15);
+
             ShowTrainModelButton();
             GUILayout.Space(15);
             ShowRunModelButton();
             GUILayout.EndArea();
         }
 
+        private void ShowBottomButtons()
+        {
+            m_CenterBottomButtonsRect.x = (m_BottomButtonsRect.width / 2) - 15;
+            m_CenterBottomButtonsRect.y = m_BottomButtonsRect.y + 20;
+            m_CenterBottomButtonsRect.width = m_BottomButtonsRect.width;
+            m_CenterBottomButtonsRect.height = m_BottomButtonsRect.height - 20;
+
+            GUILayout.BeginArea(m_CenterBottomButtonsRect);
+            GUILayout.BeginHorizontal();
+            // Init model button (to debug the model not working)
+            if (GUILayout.Button("", m_NodeSkin.GetStyle("Reset")))
+            {
+                m_DTWIMLConfiguration.ResetModel();
+            }
+            GUILayout.EndHorizontal();
+            GUILayout.EndArea();
+
+            GUILayout.Space(10);
+
+            m_CenterBottomButtonsRect.x = m_CenterBottomButtonsRect.x - 15;
+            GUILayout.BeginArea(m_CenterBottomButtonsRect);
+            GUILayout.Label("", GUILayout.MinHeight(40));
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("reset model", m_NodeSkin.GetStyle("Reset Pink Label"));
+            GUILayout.EndHorizontal();
+            GUILayout.EndArea();
+
+        }
         private void ShowTrainModelButton()
         {
             // Only run button logic when rapidlib reference not null and training examples are not null

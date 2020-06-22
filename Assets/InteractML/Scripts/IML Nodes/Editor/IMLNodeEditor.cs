@@ -432,14 +432,10 @@ namespace InteractML
         /// </summary>
         public void ShowHelpButton(Rect m_HelpRect)
         {
-            // Load node skin
-            if (m_NodeSkin == null)
-                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
 
             m_HelpRect.x = m_HelpRect.x + 20;
             m_HelpRect.y = m_HelpRect.y + 10;
             m_HelpRect.width = m_HelpRect.width - 40;
-
 
             GUILayout.BeginArea(m_HelpRect);
             GUILayout.BeginHorizontal();
@@ -447,7 +443,6 @@ namespace InteractML
             GUILayout.Button(new GUIContent("Help"), m_NodeSkin.GetStyle("Help Button"));
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
-                
                 showhelphelper = true;
             }
             else if (Event.current.type == EventType.Layout && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
