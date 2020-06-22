@@ -111,41 +111,51 @@ namespace InteractML
         /// <summary>
         /// Show the load, delete and record buttons
         /// </summary>
-        private void ShowButtons()
+        protected override void ShowButtons()
         {
-            m_BodyRectButtons.x = m_BodyRectButtons.x + 30;
-            m_BodyRectButtons.y = m_BodyRectButtons.y + 20;
-            m_BodyRectButtons.width = m_BodyRectButtons.width - 70;
-
+            int spacing = 70;
             GUILayout.BeginArea(m_BodyRectButtons);
+            GUILayout.Space(20);
+            // show record examples buttons 
             GUILayout.BeginHorizontal();
-
-            if (GUILayout.Button(new GUIContent("Load Data", "This is a tooltip"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button")))
+            GUILayout.Space(spacing);
+            if (GUILayout.Button(new GUIContent("Record One \n example"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button")))
             {
-                m_SingleTrainingExamplesNode.LoadDataFromDisk();
+                m_SingleTrainingExamplesNode.AddSingleTrainingExample();
             }
 
-            GUILayout.Label("");
-            ShowClearAllExamplesButton();
-            GUILayout.Label("");
+            GUILayout.Space(spacing);
             string recordNameButton = ShowRecordExamplesButton();
 
             GUILayout.EndHorizontal();
+
+            GUILayout.Space(10);
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(spacing -5);
+            GUILayout.Label("record one \nexample", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button Yellow"));
+            GUILayout.Label("");
+            
+            GUILayout.Label(recordNameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
+            GUILayout.Space(spacing);
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(20);
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(spacing);
+            ShowClearAllExamplesButton();
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(10);
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(spacing);
+            GUILayout.Label("delete all \n recordings", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button Pink"));
+            GUILayout.Label("");
+            GUILayout.EndHorizontal();
+            
             GUILayout.EndArea();
 
-            m_BodyRectButtons.x = m_BodyRectButtons.x - 10;
-            m_BodyRectButtons.y = m_BodyRectButtons.y + 35;
-            m_BodyRectButtons.width = m_BodyRectButtons.width + 40;
-            GUILayout.BeginArea(m_BodyRectButtons);
-            
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Load Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button Yellow"));
-            GUILayout.Label("");
-            GUILayout.Label("Delete Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button Pink"));
-            GUILayout.Label("");
-            GUILayout.Label(recordNameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
-            GUILayout.EndHorizontal();
-            GUILayout.EndArea();
         }
 
         private string ShowRecordExamplesButton()
@@ -157,11 +167,11 @@ namespace InteractML
             //{
             if (m_SingleTrainingExamplesNode.CollectingData)
             {
-                nameButton = "    STOP          ";
+                nameButton = "stop \n recording";
             }
             else
             {
-                nameButton = "Record Data   ";
+                nameButton = "start \n recording";
             }
 
             bool disableButton = false;

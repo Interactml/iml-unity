@@ -108,40 +108,27 @@ namespace InteractML
         /// <summary>
         /// Show the load, delete and record buttons
         /// </summary>
-        private void ShowButtons()
+        protected override void ShowButtons()
         {
-            m_BodyRectButtons.x = m_BodyRectButtons.x + 30;
-            m_BodyRectButtons.y = m_BodyRectButtons.y + 20;
-            m_BodyRectButtons.width = m_BodyRectButtons.width - 70;
-
+            int spacing = 70;
             GUILayout.BeginArea(m_BodyRectButtons);
+            GUILayout.Space(20);
+
             GUILayout.BeginHorizontal();
-
-            if (GUILayout.Button("Load Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button")))
-            {
-                m_SeriesTrainingExamplesNode.LoadDataFromDisk();
-            }
-            GUILayout.Label("");
-
-            ShowClearAllExamplesButton();
-            GUILayout.Label("");
-
+            GUILayout.Space(spacing);
             string recordNameButton = ShowRecordExamplesButton();
-
+            GUILayout.Space(spacing);
+            ShowClearAllExamplesButton();
             GUILayout.EndHorizontal();
-            GUILayout.EndArea();
 
-            m_BodyRectButtons.x = m_BodyRectButtons.x - 10;
-            m_BodyRectButtons.y = m_BodyRectButtons.y + 35;
-            m_BodyRectButtons.width = m_BodyRectButtons.width + 40;
-            GUILayout.BeginArea(m_BodyRectButtons);
+            GUILayout.Space(20);
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Load Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button Yellow"));
-            GUILayout.Label("");
-            GUILayout.Label("Delete Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button Pink"));
-            GUILayout.Label("");
+            GUILayout.Space(spacing-5);
             GUILayout.Label(recordNameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
+            GUILayout.Space(spacing-20);
+            GUILayout.Label("delete all \n recordings", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button Pink"));
+            
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
 
@@ -157,11 +144,11 @@ namespace InteractML
             //{
             if (m_SeriesTrainingExamplesNode.CollectingData)
             {
-                nameButton = "       STOP          ";
+                nameButton = "stop \nrecording";
             }
             else
             {
-                nameButton = "Record Series   ";
+                nameButton = "start \nrecording";
             }
 
             bool disableButton = false;

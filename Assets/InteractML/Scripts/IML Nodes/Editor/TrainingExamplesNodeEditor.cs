@@ -153,7 +153,7 @@ namespace InteractML
             m_BodyRectButtons.x = 5;
             m_BodyRectButtons.y = m_BodyRectTargets.y + m_BodyRectTargets.height;
             m_BodyRectButtons.width = NodeWidth - 10;
-            m_BodyRectButtons.height = 95;
+            m_BodyRectButtons.height = 200;
 
             // Draw body background purple rect below ports
             GUI.DrawTexture(m_BodyRectButtons, NodeColor);
@@ -168,7 +168,7 @@ namespace InteractML
         protected void DrawBodyLayoutBottom()
         {
             m_BodyRectBottom.x = 5;
-            m_BodyRectBottom.y = m_BodyRectButtons.y + 40;
+            m_BodyRectBottom.y = m_BodyRectButtons.y + m_BodyRectButtons.height;
             m_BodyRectBottom.width = NodeWidth - 10;
             m_BodyRectBottom.height = 40;
 
@@ -200,7 +200,7 @@ namespace InteractML
         /// <summary>
         /// Show the load, delete and record buttons
         /// </summary>
-        private void ShowButtons()
+        protected virtual void ShowButtons()
         {
             m_BodyRectButtons.x = m_BodyRectButtons.x + 30;
             m_BodyRectButtons.y = m_BodyRectButtons.y + 20;
@@ -209,7 +209,7 @@ namespace InteractML
             GUILayout.BeginArea(m_BodyRectButtons);
             GUILayout.BeginHorizontal();
 
-            if (GUILayout.Button("Load Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button")))
+            if (GUILayout.Button("Record One /n example", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button")))
             {
                 m_TrainingExamplesNode.LoadDataFromDisk();
             }
@@ -346,7 +346,7 @@ namespace InteractML
         protected void SetDropdownStyle()
         {
             GUI.skin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
-            GUILayout.Space(140);
+            GUILayout.Space(m_BodyRectButtons.height + 45);
             GUIStyle myFoldoutStyle = new GUIStyle(EditorStyles.foldout);
             Color myStyleColor = Color.white;
             myFoldoutStyle.fontStyle = FontStyle.Bold;
