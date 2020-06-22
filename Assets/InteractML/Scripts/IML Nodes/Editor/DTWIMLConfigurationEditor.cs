@@ -25,8 +25,8 @@ namespace InteractML
         /// </summary>
         private Rect m_PortRect;
         private Rect m_BodyRect;
-        private Rect m_IconsRect;
-        private Rect m_MiddleButton;
+        private Rect m_IconRect;
+        private Rect m_IconCenter;
         private Rect m_ButtonsRect;
         private Rect m_HelpRect;
         private Rect m_WarningRect;
@@ -44,6 +44,14 @@ namespace InteractML
 
         public override void OnHeaderGUI()
         {
+            // Load node skin
+            if (m_NodeSkin == null)
+                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+
+            // Get references
+            m_IMLNode = target as IMLNode;
+            m_IMLNodeSerialized = new SerializedObject(m_IMLNode);
+
             // Get reference to the current node
             m_DTWIMLConfiguration = (target as DTWIMLConfiguration);
 
@@ -63,8 +71,8 @@ namespace InteractML
             //Display Node name
             GUILayout.BeginArea(HeaderRect);
             GUILayout.Space(5);
-            GUILayout.Label("MACHINE LEARNING SYSTEM", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
-            GUILayout.Label("Dynamic Time Warping", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
+            GUILayout.Label("MACHINE LEARNING SYSTEM", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+            GUILayout.Label("Dynamic Time Warping", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
             GUILayout.EndArea();
 
             GUILayout.Label("", GUILayout.MinHeight(60));
@@ -109,16 +117,16 @@ namespace InteractML
         /// </summary>
         private void DrawBodyLayoutIcons()
         {
-            m_IconsRect.x = 5;
-            m_IconsRect.y = HeaderRect.height + m_PortRect.height;
-            m_IconsRect.width = NodeWidth - 10;
-            m_IconsRect.height = 140;
+            m_IconRect.x = 5;
+            m_IconRect.y = HeaderRect.height + m_PortRect.height;
+            m_IconRect.width = NodeWidth - 10;
+            m_IconRect.height = 140;
 
             // Draw body background purple rect below ports
-            GUI.DrawTexture(m_IconsRect, NodeColor);
+            GUI.DrawTexture(m_IconRect, NodeColor);
 
             // Draw line below add/remove buttons
-            GUI.DrawTexture(new Rect(m_IconsRect.x, (HeaderRect.height + m_PortRect.height + m_IconsRect.height) - WeightOfSeparatorLine, m_IconsRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+            GUI.DrawTexture(new Rect(m_IconRect.x, (HeaderRect.height + m_PortRect.height + m_IconRect.height) - WeightOfSeparatorLine, m_IconRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
         }
 
         /// <summary>
@@ -127,7 +135,7 @@ namespace InteractML
         private void DrawBodyLayoutButtons()
         {
             m_ButtonsRect.x = 5;
-            m_ButtonsRect.y = HeaderRect.height + m_PortRect.height + m_IconsRect.height;
+            m_ButtonsRect.y = HeaderRect.height + m_PortRect.height + m_IconRect.height;
             m_ButtonsRect.width = NodeWidth - 10;
             m_ButtonsRect.height = 155;
 
@@ -135,7 +143,7 @@ namespace InteractML
             GUI.DrawTexture(m_ButtonsRect, NodeColor);
 
             // Draw line below buttons
-            GUI.DrawTexture(new Rect(m_ButtonsRect.x, (HeaderRect.height + m_PortRect.height + m_IconsRect.height + m_ButtonsRect.height) - WeightOfSeparatorLine, m_ButtonsRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+            GUI.DrawTexture(new Rect(m_ButtonsRect.x, (HeaderRect.height + m_PortRect.height + m_IconRect.height + m_ButtonsRect.height) - WeightOfSeparatorLine, m_ButtonsRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
         }
 
         /// <summary>
@@ -145,7 +153,7 @@ namespace InteractML
         {
             m_HelpRect.x = 5;
             //m_ButtonsRect.height = m_ButtonsRect.height + 15;
-            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_IconsRect.height + m_ButtonsRect.height;
+            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_IconRect.height + m_ButtonsRect.height;
             m_HelpRect.width = NodeWidth - 10;
             m_HelpRect.height = 40;
 
@@ -159,7 +167,7 @@ namespace InteractML
         private void DrawWarningLayout()
         {
             m_WarningRect.x = 5;
-            m_WarningRect.y = HeaderRect.height + m_PortRect.height + m_IconsRect.height + m_ButtonsRect.height + m_HelpRect.height;
+            m_WarningRect.y = HeaderRect.height + m_PortRect.height + m_IconRect.height + m_ButtonsRect.height + m_HelpRect.height;
             m_WarningRect.width = NodeWidth - 10;
             m_WarningRect.height = 120;
 
@@ -176,15 +184,15 @@ namespace InteractML
             GUILayout.BeginHorizontal();
 
             GUIContent inputPortLabel = new GUIContent("Live Data In");
-            IMLNodeEditor.PortField(inputPortLabel, m_DTWIMLConfiguration.GetInputPort("InputFeatures"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            IMLNodeEditor.PortField(inputPortLabel, m_DTWIMLConfiguration.GetInputPort("InputFeatures"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUIContent outputPortLabel = new GUIContent("ML Out");
-            IMLNodeEditor.PortField(outputPortLabel, m_DTWIMLConfiguration.GetOutputPort("ModelOutput"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            IMLNodeEditor.PortField(outputPortLabel, m_DTWIMLConfiguration.GetOutputPort("ModelOutput"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUILayout.EndHorizontal();
 
             GUIContent secondInputPortLabel = new GUIContent("Recorded Data In");
-            IMLNodeEditor.PortField(secondInputPortLabel, m_DTWIMLConfiguration.GetInputPort("IMLTrainingExamplesNodes"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            IMLNodeEditor.PortField(secondInputPortLabel, m_DTWIMLConfiguration.GetInputPort("IMLTrainingExamplesNodes"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
         }
 
         /// <summary>
@@ -192,19 +200,19 @@ namespace InteractML
         /// </summary>
         private void ShowIcons()
         {
-            m_MiddleButton.x = (m_IconsRect.width/2) - 45;
-            m_MiddleButton.y = m_IconsRect.y + 20;
-            m_MiddleButton.width = m_IconsRect.width;
-            m_MiddleButton.height = m_IconsRect.height - 20;
+            m_IconCenter.x = (m_IconRect.width/2) - 45;
+            m_IconCenter.y = m_IconRect.y + 20;
+            m_IconCenter.width = m_IconRect.width;
+            m_IconCenter.height = m_IconRect.height - 20;
 
-            GUILayout.BeginArea(m_MiddleButton);
-            m_DTWSwitch = EditorGUILayout.Toggle(m_DTWSwitch, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("DTW Button"));
+            GUILayout.BeginArea(m_IconCenter);
+            m_DTWSwitch = EditorGUILayout.Toggle(m_DTWSwitch, m_NodeSkin.GetStyle("DTW Button"));
             GUILayout.EndArea();
 
-            m_MiddleButton.x = m_MiddleButton.x - 15;
-            GUILayout.BeginArea(m_MiddleButton);
+            m_IconCenter.x = m_IconCenter.x - 15;
+            GUILayout.BeginArea(m_IconCenter);
             GUILayout.Label("", GUILayout.MinHeight(90));
-            GUILayout.Label("Dynamic Time Warping", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Purple DTW Button"));
+            GUILayout.Label("Dynamic Time Warping", m_NodeSkin.GetStyle("Purple DTW Button"));
             GUILayout.EndArea();
 
         }
@@ -343,12 +351,12 @@ namespace InteractML
 
             GUILayout.BeginArea(m_InnerInnerWarningRect);
             GUILayout.BeginHorizontal();
-            GUILayout.Button("", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Warning"));
+            GUILayout.Button("", m_NodeSkin.GetStyle("Warning"));
             GUILayout.Space(5);
-            GUILayout.Label("Danger Will Robinson", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Warning Header"));
+            GUILayout.Label("Danger Will Robinson", m_NodeSkin.GetStyle("Warning Header"));
             GUILayout.EndHorizontal();
             GUILayout.Space(5);
-            GUILayout.Label("What the heck do you think you're doing to your nodes partner?", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Warning Label"));
+            GUILayout.Label("What the heck do you think you're doing to your nodes partner?", m_NodeSkin.GetStyle("Warning Label"));
 
             GUILayout.EndArea();
 
