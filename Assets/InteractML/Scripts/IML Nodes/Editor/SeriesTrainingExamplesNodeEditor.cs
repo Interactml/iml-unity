@@ -259,6 +259,7 @@ namespace InteractML
             SetDropdownStyle();
 
             //m_ShowTrainingDataDropdown = EditorGUILayout.Foldout(m_ShowTrainingDataDropdown, "Inspect Training Series");
+            EditorStyles.foldout.fontStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview").fontStyle;
             if (m_ShowTrainingDataDropdown)
             {
                 EditorGUI.indentLevel++;
