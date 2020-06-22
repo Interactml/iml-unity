@@ -28,10 +28,6 @@ namespace InteractML
         private bool m_RemoveOutput;
 
         private static GUIStyle editorLabelStyle;
-
-        bool help = false;
-  
-
         #endregion
 
         public override void OnHeaderGUI()

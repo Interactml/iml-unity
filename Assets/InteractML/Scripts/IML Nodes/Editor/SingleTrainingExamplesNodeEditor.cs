@@ -68,7 +68,7 @@ namespace InteractML
             ShowSingleTrainingExamplesNodePorts();
             GUILayout.Space(50);
 
-            DrawBodyLayoutInputs(m_SingleTrainingExamplesNode.DesiredInputsConfig.Count);
+            DrawBodyLayoutInputs(m_SingleTrainingExamplesNode.DesiredInputFeatures.Count);
             DrawValues(m_SingleTrainingExamplesNode.DesiredInputFeatures, "Input Values");
 
             DrawBodyLayoutTargets(m_SingleTrainingExamplesNode.DesiredOutputFeatures.Count);
