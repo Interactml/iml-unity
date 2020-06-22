@@ -61,6 +61,9 @@ namespace InteractML.DataTypeNodes
             DrawPortLayout();
             ShowVector2NodePorts();
 
+            //check if port is hovered over 
+            PortTooltip(m_Vector2Node.tips.PortTooltip);
+
             // Draw Body Section
             DrawBodyLayout();
             //ShowVector2Values();
@@ -68,7 +71,21 @@ namespace InteractML.DataTypeNodes
 
             // Draw help button
             DrawHelpButtonLayout();
-            ShowHelpButton();
+            ShowHelpButton(m_HelpRect);
+
+            // if hovering port show port tooltip
+            if (showPort)
+            {
+                ShowTooltip(m_PortRect, TooltipText);
+            }
+            //if hovering over help show tooltip 
+            if (showHelp)
+            {
+                ShowTooltip(m_HelpRect, m_Vector2Node.tips.HelpTooltip);
+            }
+            // if hovering over body rect
+            if (IsThisRectHovered(m_BodyRect))
+                ShowTooltip(m_BodyRect, m_Vector2Node.tips.BodyTooltip.Tips[0]);
         }
 
         /// <summary>
@@ -126,10 +143,10 @@ namespace InteractML.DataTypeNodes
             GUILayout.Space(5);
             GUILayout.BeginHorizontal();
 
-            GUIContent inputPortLabel = new GUIContent("Vector2\nData In");
+            GUIContent inputPortLabel = new GUIContent("Vector2\nData In", m_Vector2Node.tips.PortTooltip[0]);
             IMLNodeEditor.PortField(inputPortLabel, m_Vector2Node.GetInputPort("m_In"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
-            GUIContent outputPortLabel = new GUIContent("Vector2\nData Out");
+            GUIContent outputPortLabel = new GUIContent("Vector2\nData Out", m_Vector2Node.tips.PortTooltip[1]);
             IMLNodeEditor.PortField(outputPortLabel, m_Vector2Node.GetOutputPort("m_Out"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUILayout.EndHorizontal();

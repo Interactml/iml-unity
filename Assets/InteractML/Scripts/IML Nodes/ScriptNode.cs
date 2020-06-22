@@ -20,6 +20,8 @@ namespace InteractML
         /// </summary>        
         [IMLMonobehaviour, SerializeField]
         private MonoBehaviour m_ScriptInternal;
+        [SerializeField]
+        private int m_ScriptHashCode;
 
         /// <summary>
         /// Dictionary 
@@ -89,6 +91,8 @@ namespace InteractML
             m_ScriptInternal = newScript;
             // Update name
             name = m_ScriptInternal.GetType().Name + " (Script)";
+            // Update reference of type held
+            m_ScriptHashCode = m_ScriptInternal.GetHashCode();
 
         }
 

@@ -34,12 +34,15 @@ namespace InteractML.DataTypeNodes
         float f;
         int counter, count;
 
+        [HideInInspector]
+        public IMLNodeTooltips tips;
+
         // Use this for initialization
         protected override void Init()
         {
             counter = 0;
             count = 5;
-
+            tips = IMLTooltipsSerialization.LoadTooltip("Float");
             base.Init();
         }
 

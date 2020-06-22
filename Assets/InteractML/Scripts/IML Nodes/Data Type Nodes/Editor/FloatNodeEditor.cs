@@ -64,6 +64,9 @@ namespace InteractML.DataTypeNodes
             DrawPortLayout();
             ShowFloatNodePorts();
 
+            //check if port is hovered over 
+            PortTooltip(m_FloatNode.tips.PortTooltip);
+
             // Draw Body Section
             DrawBodyLayout();
             DataInToggle(m_FloatNode.ReceivingData, m_InnerBodyRect, m_BodyRect);
@@ -71,7 +74,21 @@ namespace InteractML.DataTypeNodes
 
             // Draw help button
             DrawHelpButtonLayout();
-            ShowHelpButton();
+            ShowHelpButton(m_HelpRect);
+
+            // if hovering port show port tooltip
+            if (showPort)
+            {
+                ShowTooltip(m_PortRect, TooltipText);
+            }
+            //if hovering over help show tooltip 
+            if (showHelp)
+            {
+                ShowTooltip(m_HelpRect, m_FloatNode.tips.HelpTooltip);
+            }
+            // if hovering over body rect
+            if (IsThisRectHovered(m_BodyRect))
+                ShowTooltip(m_BodyRect, m_FloatNode.tips.BodyTooltip.Tips[0]);
         }
 
         /// <summary>
@@ -129,10 +146,10 @@ namespace InteractML.DataTypeNodes
             GUILayout.Space(5);
             GUILayout.BeginHorizontal();
 
-            GUIContent inputPortLabel = new GUIContent("Float\nData In", "Input float");
+            GUIContent inputPortLabel = new GUIContent("Float\nData In", m_FloatNode.tips.PortTooltip[0]);
             IMLNodeEditor.PortField(inputPortLabel, m_FloatNode.GetInputPort("m_In"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
-            GUIContent outputPortLabel = new GUIContent("Float\nData Out", "Output float");
+            GUIContent outputPortLabel = new GUIContent("Float\nData Out", m_FloatNode.tips.PortTooltip[1]);
             IMLNodeEditor.PortField(outputPortLabel, m_FloatNode.GetOutputPort("m_Out"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUILayout.EndHorizontal();

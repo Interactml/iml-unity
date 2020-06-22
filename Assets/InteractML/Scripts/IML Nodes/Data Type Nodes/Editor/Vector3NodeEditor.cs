@@ -60,6 +60,9 @@ namespace InteractML.DataTypeNodes
             DrawPortLayout();
             ShowVector3NodePorts();
 
+            //check if port is hovered over 
+            PortTooltip(m_Vector3Node.tips.PortTooltip);
+
             // Draw Body Section
             DrawBodyLayout();
             //ShowVector3Values();
@@ -67,7 +70,21 @@ namespace InteractML.DataTypeNodes
 
             // Draw help button
             DrawHelpButtonLayout();
-            ShowHelpButton();
+            ShowHelpButton(m_HelpRect);
+
+            // if hovering port show port tooltip
+            if (showPort)
+            {
+                ShowTooltip(m_PortRect, TooltipText);
+            }
+            //if hovering over help show tooltip 
+            if (showHelp)
+            {
+                ShowTooltip(m_HelpRect, m_Vector3Node.tips.HelpTooltip);
+            }
+            // if hovering over body rect
+            if (IsThisRectHovered(m_BodyRect))
+                ShowTooltip(m_BodyRect, m_Vector3Node.tips.BodyTooltip.Tips[0]);
 
         }
 
@@ -126,11 +143,11 @@ namespace InteractML.DataTypeNodes
             GUILayout.Space(5);
             GUILayout.BeginHorizontal();
 
-            GUIContent inputPortLabel = new GUIContent("Vector3\nData In");
-            IMLNodeEditor.PortField(inputPortLabel, m_Vector3Node.GetInputPort("m_In"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            GUIContent inputPortLabel = new GUIContent("Vector3\nData In", m_Vector3Node.tips.PortTooltip[0]);
+            IMLNodeEditor.PortField(inputPortLabel, m_Vector3Node.GetInputPort("m_In"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
-            GUIContent outputPortLabel = new GUIContent("Vector3\nData Out");
-            IMLNodeEditor.PortField(outputPortLabel, m_Vector3Node.GetOutputPort("m_Out"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
+            GUIContent outputPortLabel = new GUIContent("Vector3\nData Out", m_Vector3Node.tips.PortTooltip[1]);
+            IMLNodeEditor.PortField(outputPortLabel, m_Vector3Node.GetOutputPort("m_Out"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
             GUILayout.EndHorizontal();
         }
