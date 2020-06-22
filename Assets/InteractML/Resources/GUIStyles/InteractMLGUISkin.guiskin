@@ -1296,7 +1296,7 @@ MonoBehaviour:
   m_ScrollView:
     m_Name: scrollview
     m_Normal:
-      m_Background: {fileID: 2800000, guid: 69fdf6b2d973b5540a0696793dfa53ae, type: 3}
+      m_Background: {fileID: 2800000, guid: c4c3665142c39b4459c779bd443b9776, type: 3}
       m_ScaledBackgrounds: []
       m_TextColor: {r: 1, g: 1, b: 1, a: 1}
     m_Hover:
@@ -3426,7 +3426,7 @@ MonoBehaviour:
     m_StretchHeight: 0
   - m_Name: foldoutempty
     m_Normal:
-      m_Background: {fileID: 0}
+      m_Background: {fileID: 2800000, guid: c4c3665142c39b4459c779bd443b9776, type: 3}
       m_ScaledBackgrounds:
       - {fileID: 0}
       m_TextColor: {r: 1, g: 1, b: 1, a: 1}
@@ -3475,7 +3475,7 @@ MonoBehaviour:
       m_Top: 0
       m_Bottom: 0
     m_Overflow:
-      m_Left: 25
+      m_Left: 26
       m_Right: 11
       m_Top: 0
       m_Bottom: 11

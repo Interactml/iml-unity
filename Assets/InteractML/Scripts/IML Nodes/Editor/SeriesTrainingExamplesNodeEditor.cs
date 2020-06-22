@@ -334,14 +334,14 @@ namespace InteractML
                             // Draw output
                             EditorGUI.indentLevel++;
 
-                            EditorGUILayout.TextArea(labelSeries);
+                            EditorGUILayout.TextArea(labelSeries, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
                             //EditorGUILayout.LabelField("TEST");
 
                             EditorGUI.indentLevel--;
                         }
                         else
                         {
-                            EditorGUILayout.LabelField("Series Output is null ", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+                            EditorGUILayout.LabelField("Series Target Values are null ", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
                         }
 
                         EditorGUI.indentLevel--;
