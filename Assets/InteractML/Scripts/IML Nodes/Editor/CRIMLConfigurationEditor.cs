@@ -31,6 +31,8 @@ namespace InteractML
         protected Rect m_IconCenter;
         protected Rect m_RightIconRect;
         protected Rect m_ButtonsRect;
+        protected Rect m_BottomButtonsRect;
+        protected Rect m_CenterBottomButtonsRect;
         protected Rect m_HelpRect;
         protected Rect m_ToolRect;
 
@@ -199,8 +201,8 @@ namespace InteractML
         private void DrawHelpButtonLayout()
         {
             m_HelpRect.x = 5;
-            m_ButtonsRect.height = m_ButtonsRect.height + 15;
-            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_IconRect.height + m_ButtonsRect.height;
+            m_BottomButtonsRect.height = m_BottomButtonsRect.height + 15;
+            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_IconRect.height + m_ButtonsRect.height + m_BottomButtonsRect.height;
             m_HelpRect.width = NodeWidth - 10;
             m_HelpRect.height = 40;
 
