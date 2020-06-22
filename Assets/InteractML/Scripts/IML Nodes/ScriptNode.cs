@@ -20,8 +20,17 @@ namespace InteractML
         /// </summary>        
         [IMLMonobehaviour, SerializeField]
         private MonoBehaviour m_ScriptInternal;
-        [SerializeField]
-        private int m_ScriptHashCode;
+
+        /// <summary>
+        /// Hash value from the script. Useful to identify to which script instance this node belongs to
+        /// </summary>
+        [SerializeField, HideInInspector]
+        public int ScriptHashCode;
+
+        /// <summary>
+        /// Marks if this script is already assigned to a script
+        /// </summary>
+        public bool IsTaken { get { return (m_ScriptInternal != null); } }
 
         /// <summary>
         /// Dictionary 
@@ -92,7 +101,7 @@ namespace InteractML
             // Update name
             name = m_ScriptInternal.GetType().Name + " (Script)";
             // Update reference of type held
-            m_ScriptHashCode = m_ScriptInternal.GetHashCode();
+            ScriptHashCode = m_ScriptInternal.GetHashCode();
 
         }
 

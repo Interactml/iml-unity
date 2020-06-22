@@ -652,6 +652,44 @@ namespace InteractML
             {
                 return;
             }
+
+            if (m_MonoBehavioursPerScriptNode == null)
+                m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
+
+            // See if we already have any non-assigned scriptNodes that matches any IMLComponent
+            if (m_ScriptNodesList != null && m_ScriptNodesList.Count > 0)
+            {
+                for (int i = 0; i < m_ScriptNodesList.Count; i++)
+                {
+                    if (!m_ScriptNodesList[i].IsTaken)
+                    {
+                        // If there is a scriptHashCode from a previous script...
+                        if (!m_ScriptNodesList[i].ScriptHashCode.Equals(default))
+                        {
+                            // Check if that script is contained in the ComponentsWithIMLData list
+                            // Lambda statement, selecting the script that matches the hashcode from our scriptNode
+                            var script = ComponentsWithIMLData.Select(container => container.GameComponent).Where(gameComponent =>
+                                {
+                                    MonoBehaviour scriptToReturn = null;
+                                    if (gameComponent.GetHashCode().Equals(m_ScriptNodesList[i].ScriptHashCode))
+                                        scriptToReturn = gameComponent;
+                                    return scriptToReturn;
+                                }
+                            );
+                            var scriptToAdd = script.First(x => x != null);
+                            // If we found a matching script...
+                            if (scriptToAdd != null)
+                            {
+                                // We add that script to our scriptNode (if it is not null)                                
+                                m_ScriptNodesList[i].SetScript(scriptToAdd);
+                                // Add it to the dictionary as well    
+                                m_MonoBehavioursPerScriptNode.Add(scriptToAdd, m_ScriptNodesList[i]);
+                            }
+
+                        }
+                    }
+                }
+            }
             // Fetch data from scripts added by the user
             for (int i = 0; i < ComponentsWithIMLData.Count; i++)
             {
@@ -660,9 +698,6 @@ namespace InteractML
                 var gameComponent = ComponentsWithIMLData[i].GameComponent;
 
                 /* ADD SCRIPT NODE */
-                if (m_MonoBehavioursPerScriptNode == null)
-                    m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
-
                 ScriptNode scriptNode = null;
 
                 // If the gameComponent is null, we continue to the next one
@@ -674,7 +709,7 @@ namespace InteractML
                 // Check if the dictionary DOESN'T contain a fieldInfo for this reflected value, and then create nodes and dictionary values
                 if (!m_MonoBehavioursPerScriptNode.ContainsKey(IMLGameComponentContainer.GameComponent))
                 {
-                    // First, we try and see if the graph already contains a node we can use
+                    // First, we try and see if the graph already contains an empty node we can use
                     foreach (var node in MLController.nodes)
                     {
                         // We see if this node is of the right type
@@ -1274,12 +1309,19 @@ namespace InteractML
             {
                 var scriptNode = m_ScriptNodesList[i];
                 // Remove node from list if the reference is null
-                if (scriptNode == null) m_ScriptNodesList.RemoveAt(i);
+                if (scriptNode == null)
+                {
+                    m_ScriptNodesList.RemoveAt(i);
+                    // Decrease counter to not delete the wrong element later
+                    i--;
+                }
 #if UNITY_EDITOR
                 else if (changingPlayMode && scriptNode.CreatedDuringPlaymode)
                 {
                     // Destroy node
                     MLController.RemoveNode(scriptNode);
+                    // Decrease counter to not delete the wrong element later
+                    i--;
                     // Force scriptNode reference to null
                     scriptNode = null;
                 }
@@ -1292,6 +1334,8 @@ namespace InteractML
                     {
                         // Destroy node
                         MLController.RemoveNode(scriptNode);
+                        // Decrease counter to not delete the wrong element later
+                        i--;
                         // Force scriptNode reference to null
                         scriptNode = null;
                     }
