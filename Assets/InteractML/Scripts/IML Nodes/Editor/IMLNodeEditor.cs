@@ -827,6 +827,8 @@ namespace InteractML
             {
                 // Add input to pair
                 portPair.input = inputs.Current;
+                // If the input is null, skip to next iteration
+                if (portPair.input == null) continue;
                 // If the list doesn't have a pair with our input...
                 if (!pairs.Any(x => (x != null) && x.input.fieldName.Equals(portPair.input.fieldName)))
                 {
@@ -847,7 +849,9 @@ namespace InteractML
             while (outputs.MoveNext())
             {
                 // Add output to pair
-                portPair.output = outputs.Current;
+                portPair.output = outputs.Current;                
+                // If the output is null, skip to next iteration
+                if (portPair.output == null) continue;                
                 // If the list doesn't contain a pair with our output...
                 if (!pairs.Any(x => (x != null) && x.output.fieldName.Equals(portPair.output.fieldName)))
                 {
