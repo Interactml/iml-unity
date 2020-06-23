@@ -19,6 +19,7 @@ namespace InteractML
         /// Reference to the node itself
         /// </summary>
         private DTWIMLConfiguration m_DTWIMLConfiguration;
+        private int numberOfExamplesTrained = 0;
 
         /// <summary>
         /// Rects for node layout
@@ -125,7 +126,11 @@ namespace InteractML
                 DrawWarningLayout(m_HelpRect);
                 ShowWarning(m_DTWIMLConfiguration.tips.BottomError[0]);
             }
-
+            if (numberOfExamplesTrained != m_DTWIMLConfiguration.TotalNumTrainingData)
+            {
+                DrawWarningLayout(m_HelpRect);
+                ShowWarning(m_DTWIMLConfiguration.tips.BottomError[2]);
+            }
 
             if (showHelp)
             {
@@ -336,6 +341,8 @@ namespace InteractML
 
                 if (m_DTWIMLConfiguration.Training)
                     nameButton = "STOP Training Model";
+                if (m_DTWIMLConfiguration.Trained)
+                    nameButton = "Trained (" + numberOfExamplesTrained + " Examples)";
                 else
                     nameButton = "Train Model";
 
@@ -345,6 +352,7 @@ namespace InteractML
                 if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Train")))
                 {
                     m_DTWIMLConfiguration.TrainModel();
+                    numberOfExamplesTrained = m_DTWIMLConfiguration.TotalNumTrainingData;
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;

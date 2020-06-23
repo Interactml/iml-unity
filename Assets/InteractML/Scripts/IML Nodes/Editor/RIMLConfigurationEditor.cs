@@ -21,6 +21,7 @@ namespace InteractML
         /// Reference to the node itself
         /// </summary>
         private RIMLConfiguration m_RIMLConfiguration;
+        private int numberOfExamplesTrained = 0;
         #endregion
 
         public override void OnHeaderGUI()
@@ -104,7 +105,11 @@ namespace InteractML
                 DrawWarningLayout(m_HelpRect);
                 ShowWarning(m_RIMLConfiguration.tips.BottomError[0]);
             }
-
+            if (numberOfExamplesTrained != m_RIMLConfiguration.TotalNumTrainingData)
+            {
+                DrawWarningLayout(m_HelpRect);
+                ShowWarning(m_RIMLConfiguration.tips.BottomError[2]);
+            }
 
             if (showHelp)
             {
@@ -330,6 +335,8 @@ namespace InteractML
 
                 if (m_RIMLConfiguration.Training)
                     nameButton = "STOP Training Model";
+                if (m_RIMLConfiguration.Trained)
+                    nameButton = "Trained (" + numberOfExamplesTrained + " Examples)";
                 else
                     nameButton = "Train Model";
 
@@ -339,6 +346,7 @@ namespace InteractML
                 if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Train")))
                 {
                     m_RIMLConfiguration.TrainModel();
+                    numberOfExamplesTrained = m_RIMLConfiguration.TotalNumTrainingData;
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;

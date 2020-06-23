@@ -107,6 +107,11 @@ namespace InteractML
                 DrawWarningLayout(m_HelpRect);
                 ShowWarning(m_CIMLConfiguration.tips.BottomError[0]);
             }
+            if (numberOfExamplesTrained != m_CIMLConfiguration.TotalNumTrainingData)
+            {
+                DrawWarningLayout(m_HelpRect);
+                ShowWarning(m_CIMLConfiguration.tips.BottomError[2]);
+            }
 
 
             if (showHelp)
@@ -397,7 +402,7 @@ namespace InteractML
                 {
                     nameButton = "RUN";
                 }
-                Debug.Log(m_CIMLConfiguration.Untrained);
+
                 // Disable button if model is Training OR Untrained
                 if (m_CIMLConfiguration.Training || m_CIMLConfiguration.Untrained)
                 {
