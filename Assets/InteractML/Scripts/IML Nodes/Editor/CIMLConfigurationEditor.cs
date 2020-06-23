@@ -384,7 +384,7 @@ namespace InteractML
                     nameButton = "RUN";
                 }
 
-                // Disable button if model is Trainig OR Untrained
+                // Disable button if model is Training OR Untrained
                 if (m_CIMLConfiguration.Training || m_CIMLConfiguration.Untrained)
                 {
                     GUI.enabled = false;

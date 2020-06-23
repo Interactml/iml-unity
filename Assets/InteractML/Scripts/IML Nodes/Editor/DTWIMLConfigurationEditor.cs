@@ -40,7 +40,10 @@ namespace InteractML
         /// </summary>
         private bool m_AddOutput;
         private bool m_RemoveOutput;
-        private bool m_DTWSwitch; 
+        private bool m_DTWSwitch;
+
+        protected bool buttonTip;
+        protected bool buttonTipHelper;
 
         #endregion
 
@@ -83,7 +86,11 @@ namespace InteractML
         public override void OnBodyGUI()
         {
             DrawPortLayout();
-            ShowSystemNodePorts();
+
+            //ShowSystemNodePorts();
+            base.ShowNodePorts();
+            //check if port is hovered over 
+            PortTooltip(m_DTWIMLConfiguration.tips.PortTooltip);
 
             DrawBodyLayoutIcons();
             ShowIcons();
@@ -98,8 +105,28 @@ namespace InteractML
             DrawHelpButtonLayout();
             ShowHelpButton(m_HelpRect);
 
-            DrawWarningLayout();
-            ShowWarning();
+            if (m_DTWIMLConfiguration.Model == null || m_DTWIMLConfiguration.TotalNumTrainingData < 1)
+            {
+                DrawWarningLayout(m_HelpRect);
+                ShowWarning(m_DTWIMLConfiguration.tips.BottomError[0]);
+            }
+
+
+            if (showHelp)
+            {
+                ShowTooltip(m_HelpRect, m_DTWIMLConfiguration.tips.HelpTooltip);
+            }
+            if (showPort)
+            {
+                ShowTooltip(m_PortRect, TooltipText);
+            }
+
+            if (buttonTip)
+            {
+                ShowTooltip(m_ButtonsRect, TooltipText);
+            }
+
+            serializedObject.ApplyModifiedProperties();
         }
 
         /// <summary>
@@ -283,6 +310,7 @@ namespace InteractML
             GUILayout.EndArea();
 
         }
+
         private void ShowTrainModelButton()
         {
             // Only run button logic when rapidlib reference not null and training examples are not null
@@ -299,7 +327,7 @@ namespace InteractML
                 // Disable button if model is Running OR Trainig 
                 if (m_DTWIMLConfiguration.Running || m_DTWIMLConfiguration.Training)
                     GUI.enabled = false;
-                if (GUILayout.Button(nameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Train")))
+                if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Train")))
                 {
                     m_DTWIMLConfiguration.TrainModel();
                 }
@@ -316,7 +344,7 @@ namespace InteractML
                 {
                     //EditorGUILayout.HelpBox("There are no training examples", MessageType.Error);
                 }
-                if (GUILayout.Button("Train Model", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Train")))
+                if (GUILayout.Button("Train Model", m_NodeSkin.GetStyle("Train")))
                 {
                     //m_TrainingExamplesNode.ToggleCollectExamples();
                 }
@@ -324,10 +352,35 @@ namespace InteractML
 
             }
 
+            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                buttonTipHelper = true;
+                if (GUI.enabled)
+                {
+                    TooltipText = m_DTWIMLConfiguration.tips.BodyTooltip.Tips[1];
+                }
+                else
+                {
+                    TooltipText = m_DTWIMLConfiguration.tips.BodyTooltip.Error[0];
+                }
+            }
+            else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                buttonTip = false;
+
+            }
+
+            if (Event.current.type == EventType.Layout && buttonTipHelper)
+            {
+                buttonTip = true;
+                buttonTipHelper = false;
+            }
+
         }
 
         private void ShowRunModelButton()
         {
+            bool enabled = false;
             if (m_DTWIMLConfiguration.Model != null)
             {
                 string nameButton = "";
@@ -361,6 +414,30 @@ namespace InteractML
                     //m_TrainingExamplesNode.ToggleCollectExamples();
                 }
                 GUI.enabled = true;
+            }
+
+            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                buttonTipHelper = true;
+                if (enabled)
+                {
+                    TooltipText = m_DTWIMLConfiguration.tips.BodyTooltip.Tips[2];
+                }
+                else
+                {
+                    TooltipText = m_DTWIMLConfiguration.tips.BodyTooltip.Error[1];
+                }
+            }
+            else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                buttonTip = false;
+
+            }
+
+            if (Event.current.type == EventType.Layout && buttonTipHelper)
+            {
+                buttonTip = true;
+                buttonTipHelper = false;
             }
 
         }
