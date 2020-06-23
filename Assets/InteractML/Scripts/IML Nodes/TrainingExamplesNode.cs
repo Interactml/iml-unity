@@ -178,7 +178,7 @@ namespace InteractML
                 MLSClassification = false;
             }
             // if you have started training 
-            if(TrainingExamplesVector.Count > 0 && !badRemove)
+            if((TrainingExamplesVector.Count > 0|| TrainingSeriesCollection.Count > 0) && !badRemove)
             {
                 from.Disconnect(to);
             }
@@ -189,7 +189,7 @@ namespace InteractML
 
         public override void OnRemoveConnection(NodePort port)
         {
-            if(TrainingExamplesVector.Count  > 0)
+            if(TrainingExamplesVector.Count  > 0 || TrainingSeriesCollection.Count > 0)
             {
                 badRemove = true;
                 portName = port.fieldName;
