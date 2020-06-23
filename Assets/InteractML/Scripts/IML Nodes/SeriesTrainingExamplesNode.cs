@@ -22,7 +22,7 @@ namespace InteractML
         #region XNode Messages
 
         // Use this for initialization
-  
+
 
         #endregion
 
@@ -30,6 +30,16 @@ namespace InteractML
         #endregion
 
         #region Public Methods
+
+
+        protected override void Init()
+        {
+            base.Init();
+
+            Initialize();
+
+            TrainingTips = IMLTooltipsSerialization.LoadTooltip("SeriesTrainingExamples");
+        }
 
         /// <summary>
         /// Clears all the training examples stored in the node

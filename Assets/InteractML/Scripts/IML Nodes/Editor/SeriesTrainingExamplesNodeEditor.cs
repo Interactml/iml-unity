@@ -22,10 +22,10 @@ namespace InteractML
 
 
         /// <summary>
-        /// Bool for add/remove output
+        /// Bool for buttontooltips output
         /// </summary>
-        private bool m_AddOutput;
-        private bool m_RemoveOutput;
+        private bool buttonTip;
+        private bool buttonTipHelper;
 
         private static GUIStyle editorLabelStyle;
         #endregion
@@ -64,6 +64,7 @@ namespace InteractML
         {
             DrawPortLayout();
             ShowSeriesTrainingExamplesNodePorts();
+            PortTooltip(m_SeriesTrainingExamplesNode.TrainingTips.PortTooltip);
             GUILayout.Space(50);
 
             DrawBodyLayoutInputs(m_SeriesTrainingExamplesNode.DesiredInputFeatures.Count);
@@ -84,7 +85,19 @@ namespace InteractML
             {
                 ShowHelptip(m_HelpRect, m_SeriesTrainingExamplesNode.TrainingTips.HelpTooltip);
             }
+            if (showPort)
+            {
+                ShowTooltip(m_PortRect, TooltipText);
+            }
+            if (IsThisRectHovered(m_BodyRectInputs))
+                ShowTooltip(m_BodyRectInputs, m_SeriesTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[0]);
 
+            if (IsThisRectHovered(m_BodyRectTargets))
+                ShowTooltip(m_BodyRectTargets, m_SeriesTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[1]);
+            if (buttonTip)
+            {
+                ShowTooltip(m_BodyRectButtons, TooltipText);
+            }
         }
 
   
@@ -187,6 +200,23 @@ namespace InteractML
             {
                 m_SeriesTrainingExamplesNode.ToggleCollectExamples();
             }
+            //button tooltip code 
+            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                buttonTipHelper = true;
+                TooltipText = m_SeriesTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[2];
+            }
+            else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                buttonTip = false;
+
+            }
+            if (Event.current.type == EventType.Layout && buttonTipHelper)
+            {
+                buttonTip = true;
+                buttonTipHelper = false;
+            }
+
             // Always enable it back at the end
             GUI.enabled = true;
             return nameButton;
@@ -226,6 +256,21 @@ namespace InteractML
                 if (GUILayout.Button("Delete Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button")))
                 {
                     m_SeriesTrainingExamplesNode.ClearTrainingExamples();
+                }
+                if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+                {
+                    buttonTipHelper = true;
+                    TooltipText = m_SeriesTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[3];
+                }
+                else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+                {
+                    buttonTip = false;
+
+                }
+                if (Event.current.type == EventType.Layout && buttonTipHelper)
+                {
+                    buttonTip = true;
+                    buttonTipHelper = false;
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;

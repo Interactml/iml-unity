@@ -6,7 +6,8 @@
       "Current live Input Values",
       "Current Target Value",
       "Record one example",
-      "Record an example each frame"
+      "Record an example each frame",
+      "Delete all examples"
     ],
     "error": [
       "Connect a GameObject"

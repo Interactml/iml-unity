@@ -23,10 +23,10 @@ namespace InteractML
 
 
         /// <summary>
-        /// Bool for add/remove output
+        /// Bool for buttontooltips output
         /// </summary>
-        private bool m_AddOutput;
-        private bool m_RemoveOutput;
+        private bool buttonTip;
+        private bool buttonTipHelper;
 
         private static GUIStyle editorLabelStyle;
 
@@ -66,6 +66,7 @@ namespace InteractML
         {
             DrawPortLayout();
             ShowSingleTrainingExamplesNodePorts();
+            PortTooltip(m_SingleTrainingExamplesNode.TrainingTips.PortTooltip);
             GUILayout.Space(50);
 
             DrawBodyLayoutInputs(m_SingleTrainingExamplesNode.DesiredInputFeatures.Count);
@@ -86,7 +87,20 @@ namespace InteractML
             {
                 ShowHelptip(m_HelpRect, m_SingleTrainingExamplesNode.TrainingTips.HelpTooltip);
             }
+            if (showPort)
+            {
+                ShowTooltip(m_PortRect, TooltipText);
+            }
+            if (IsThisRectHovered(m_BodyRectInputs))
+                ShowTooltip(m_BodyRectInputs, m_SingleTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[0]);
 
+            if (IsThisRectHovered(m_BodyRectTargets))
+                ShowTooltip(m_BodyRectTargets, m_SingleTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[1]);
+
+            if (buttonTip)
+            {
+                ShowTooltip(m_BodyRectButtons, TooltipText);
+            }
 
         }
 
@@ -127,6 +141,23 @@ namespace InteractML
             if (GUILayout.Button(new GUIContent("Record One \n example"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record One Button")))
             {
                 m_SingleTrainingExamplesNode.AddSingleTrainingExample();
+            }
+            //button tooltip code 
+            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                buttonTipHelper = true;
+                TooltipText = m_SingleTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[2];
+            }
+            else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                buttonTip = false;
+
+            }
+
+            if (Event.current.type == EventType.Layout && buttonTipHelper)
+            {
+                buttonTip = true;
+                buttonTipHelper = false;
             }
 
             GUILayout.Space(spacing);
@@ -210,6 +241,23 @@ namespace InteractML
             {
                 m_SingleTrainingExamplesNode.ToggleCollectExamples();
             }
+
+            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                buttonTipHelper = true;
+                TooltipText = m_SingleTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[3];
+            }
+            else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                buttonTip = false;
+
+            }
+
+            if (Event.current.type == EventType.Layout && buttonTipHelper)
+            {
+                buttonTip = true;
+                buttonTipHelper = false;
+            }
             // Always enable it back at the end
             GUI.enabled = true;
             return nameButton;
@@ -249,6 +297,23 @@ namespace InteractML
                 if (GUILayout.Button("Delete Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button")))
                 {
                     m_SingleTrainingExamplesNode.ClearTrainingExamples();
+                }
+                //tooltipcode
+                if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+                {
+                    buttonTipHelper = true;
+                    TooltipText = m_SingleTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[3];
+                }
+                else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+                {
+                    buttonTip = false;
+
+                }
+
+                if (Event.current.type == EventType.Layout && buttonTipHelper)
+                {
+                    buttonTip = true;
+                    buttonTipHelper = false;
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;
