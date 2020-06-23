@@ -115,9 +115,9 @@ namespace InteractML
         /// </summary>
         protected override void ShowButtons()
         {
-            int spacing = 70;
+            int spacing = 75;
             GUILayout.BeginArea(m_BodyRectButtons);
-            GUILayout.Space(20);
+            GUILayout.Space(30);
 
             GUILayout.BeginHorizontal();
             GUILayout.Space(spacing);
@@ -126,19 +126,19 @@ namespace InteractML
             ShowClearAllExamplesButton();
             GUILayout.EndHorizontal();
 
-            GUILayout.Space(20);
+            GUILayout.Space(10);
 
             GUILayout.BeginHorizontal();
-            GUILayout.Space(spacing-5);
+            GUILayout.Space(spacing-10);
             GUILayout.Label(recordNameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
-            GUILayout.Space(spacing-20);
+            GUILayout.Space(spacing-23);
             GUILayout.Label("delete all \n recordings", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button Pink"));
             GUILayout.EndHorizontal();
 
-            GUILayout.Space(10);
+            GUILayout.Space(20);
             GUILayout.BeginHorizontal();
-            GUILayout.Space(spacing);
-            GUILayout.Label("No of pairs " + m_SeriesTrainingExamplesNode.TrainingSeriesCollection.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"));
+            GUILayout.Space(spacing-15);
+            GUILayout.Label("No of pairs: " + m_SeriesTrainingExamplesNode.TrainingSeriesCollection.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"));
             GUILayout.EndHorizontal();
 
             GUILayout.EndArea();

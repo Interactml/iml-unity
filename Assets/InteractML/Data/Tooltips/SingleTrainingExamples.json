@@ -1,10 +1,12 @@
 {
   "HelpTooltip": "Record and manage training examples pair to train a machine learning model. This node records a single input for every input / output pair.  This is used with Classification or Regression Machine Learning Model.  Live In port connects to one or more feature extractors or data types for recording the pose you are recording. Target Values Output port  connects to one (Classification) or more (Regression) feature extractor/ data type node to make the input, target value pair. Output Data node. Recorded Data Out port connects to the Recorded Data In port on the Machine Learning Model node. Record one example records one pair from current live input and target values. Start recording  start to records a new pair every frame with the current live input data and output values until you press it again. You can see the current pair in the centre of the node.",
-  "PortTooltip": [ "Connect to Feature Extractor or Data Type node. Outputs all information about GameObject" ],
+  "PortTooltip": [ "Connect from Feature Extractor or Data Type node. Live input data to record", "Connect from Feature Extractor or Data Type node. Target Value for input pair", "Connect to Classification or Regression Machine Learning System" ],
   "BodyTooltip": {
     "tips": [
-      "Name of GameObject Connected",
-      "Preview image of gameObject connected"
+      "Current live Input Values",
+      "Current Target Value",
+      "Record one example",
+      "Record an example each frame"
     ],
     "error": [
       "Connect a GameObject"
