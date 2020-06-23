@@ -676,14 +676,17 @@ namespace InteractML
                                     return scriptToReturn;
                                 }
                             );
-                            var scriptToAdd = script.First(x => x != null);
-                            // If we found a matching script...
-                            if (scriptToAdd != null)
+                            if (script != null && script.Any())
                             {
-                                // We add that script to our scriptNode (if it is not null)                                
-                                m_ScriptNodesList[i].SetScript(scriptToAdd);
-                                // Add it to the dictionary as well    
-                                m_MonoBehavioursPerScriptNode.Add(scriptToAdd, m_ScriptNodesList[i]);
+                                var scriptToAdd = script.First(x => x != null);
+                                // If we found a matching script...
+                                if (scriptToAdd != null)
+                                {
+                                    // We add that script to our scriptNode (if it is not null)                                
+                                    m_ScriptNodesList[i].SetScript(scriptToAdd);
+                                    // Add it to the dictionary as well    
+                                    m_MonoBehavioursPerScriptNode.Add(scriptToAdd, m_ScriptNodesList[i]);
+                                }
                             }
 
                         }
