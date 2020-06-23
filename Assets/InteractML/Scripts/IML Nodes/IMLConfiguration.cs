@@ -961,7 +961,7 @@ namespace InteractML
             // Add a specific kind of type for the output node depending on the expected type. The index will be the current length of the outputPorts list (since we are adding new ones, it will constantly increase)
             switch (type)
             {
-                case IMLSpecifications.OutputsEnum.Float:
+                case IMLSpecifications.OutputsEnum.Float:                   
                     dynamicOutputPort = AddDynamicOutput(typeof(float), fieldName: "Output " + outputPorts.Count);
                     break;
                 case IMLSpecifications.OutputsEnum.Integer:
@@ -985,7 +985,7 @@ namespace InteractML
             }
 
             // If we got one output port to add, we add it
-            if (dynamicOutputPort != null)
+            if (dynamicOutputPort != null && !outputPorts.Contains(dynamicOutputPort))
                 outputPorts.Add(dynamicOutputPort);
 
         }

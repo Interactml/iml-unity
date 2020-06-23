@@ -781,21 +781,22 @@ namespace InteractML
         protected void AddPairsToList(IEnumerator<NodePort> inputs, IEnumerator<NodePort> outputs, ref List<IMLNodePortPair> pairs)
         {
             IMLNodePortPair portPair = new IMLNodePortPair();
+            portPair.Reset();
 
             // while there are inputs...
             while (inputs.MoveNext())
             {
                 // Add input to pair
                 portPair.input = inputs.Current;
-                // If there is an output...
-                if (outputs.MoveNext())
+                // If the list doesn't have a pair with our input...
+                if (!pairs.Any(x => x.input.fieldName.Equals(portPair.input.fieldName)))
                 {
-                    // Add output to pair
-                    portPair.output = outputs.Current;
-                }
-                // If the list doesn't a pair with our input...
-                if (!pairs.Any(x => x.input == portPair.input))
-                {
+                    // If there is an output...
+                    if (outputs.MoveNext())
+                    {
+                        // Add output to pair
+                        portPair.output = outputs.Current;
+                    }
                     // Add pair to list
                     pairs.Add(new IMLNodePortPair(portPair.input, portPair.output));
                 }
@@ -809,12 +810,16 @@ namespace InteractML
                 // Add output to pair
                 portPair.output = outputs.Current;
                 // If the list doesn't contain a pair with our output...
-                if (!pairs.Any(x => x.output == portPair.output))
+                if (!pairs.Any(x => x.output.fieldName.Equals(portPair.output.fieldName)))
+                {
                     // Add pair to list (input will be null)
                     pairs.Add(new IMLNodePortPair(portPair.input, portPair.output));
+                }
                 // Reset pair for next use
                 portPair.Reset();
             }
+
+
         }
 
         /// <summary>
