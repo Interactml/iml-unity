@@ -21,7 +21,10 @@ namespace InteractML
         /// Reference to the node itself
         /// </summary>
         private CIMLConfiguration m_CIMLConfiguration;
+
+        private int numberOfExamplesTrained = 0;
         #endregion
+
 
         public override void OnHeaderGUI()
         {
@@ -170,7 +173,6 @@ namespace InteractML
             GUI.DrawTexture(new Rect(m_ButtonsRect.x, (HeaderRect.height + m_PortRect.height + m_IconRect.height + m_ButtonsRect.height) - WeightOfSeparatorLine, m_ButtonsRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
         }
 
-
         /// <summary>
         /// Define rect values for node body and paint textures based on rects 
         /// </summary>
@@ -202,10 +204,6 @@ namespace InteractML
             // Draw body background purple rect below ports
             GUI.DrawTexture(m_HelpRect, NodeColor);
         }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
         
         /// <summary>
         /// Show the input/output port fields 
@@ -227,7 +225,6 @@ namespace InteractML
             IMLNodeEditor.PortField(secondInputPortLabel, m_CIMLConfiguration.GetInputPort("IMLTrainingExamplesNodes"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
         }
-
 
         private void ShowIcon()
         {
@@ -309,22 +306,29 @@ namespace InteractML
             if (m_CIMLConfiguration.Model != null && m_CIMLConfiguration.TotalNumTrainingData > 0)
             {
 
+
                 string nameButton = "";
 
                 if (m_CIMLConfiguration.Training)
                     nameButton = "STOP Training Model";
+                if (m_CIMLConfiguration.Trained)
+                    nameButton = "Trained (" + numberOfExamplesTrained + " Examples)";
                 else
                     nameButton = "Train Model";
 
-                // Disable button if model is Running OR Trainig 
+
+                // Disable button if model is Running OR Training 
                 if (m_CIMLConfiguration.Running || m_CIMLConfiguration.Training)
                     GUI.enabled = false;
                 if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Train")))
                 {
                     m_CIMLConfiguration.TrainModel();
+                    numberOfExamplesTrained = m_CIMLConfiguration.TotalNumTrainingData;
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;
+
+                
 
             }
             // If rapidlib reference is null we draw a disabled button
@@ -383,7 +387,7 @@ namespace InteractML
                 {
                     nameButton = "RUN";
                 }
-
+                Debug.Log(m_CIMLConfiguration.Untrained);
                 // Disable button if model is Training OR Untrained
                 if (m_CIMLConfiguration.Training || m_CIMLConfiguration.Untrained)
                 {

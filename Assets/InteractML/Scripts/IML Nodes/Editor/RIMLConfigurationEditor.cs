@@ -211,10 +211,6 @@ namespace InteractML
             // Draw body background purple rect below ports
             GUI.DrawTexture(m_HelpRect, NodeColor);
         }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
         
         /// <summary>
         /// Show the input/output port fields 
