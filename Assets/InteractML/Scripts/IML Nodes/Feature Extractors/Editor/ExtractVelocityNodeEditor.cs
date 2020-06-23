@@ -179,7 +179,7 @@ namespace InteractML.FeatureExtractors
                 EditorGUILayout.LabelField(" velocity: " + string.Join(",", velocity1), m_NodeSkin.GetStyle("Node Body Label"));
             } else
             {
-                EditorGUILayout.LabelField("Please connect feature extractor", m_NodeSkin.GetStyle("Node Body Label"));
+                EditorGUILayout.LabelField("Connect feature extractor", m_NodeSkin.GetStyle("Node Body Label"));
             }
             
             GUILayout.EndArea();
@@ -211,7 +211,7 @@ namespace InteractML.FeatureExtractors
             }
             else
             {
-                EditorGUILayout.LabelField("Please connect feature extractor", m_NodeSkin.GetStyle("Node Body Label"));
+                EditorGUILayout.LabelField("Connect a feature extractor", m_NodeSkin.GetStyle("Node Body Label"));
             }
             
            
