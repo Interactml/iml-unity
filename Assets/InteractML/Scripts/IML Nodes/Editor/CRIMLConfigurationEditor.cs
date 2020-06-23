@@ -50,6 +50,9 @@ namespace InteractML
         protected bool buttonTip;
         protected bool buttonTipHelper;
 
+        protected bool bottomButtonTip;
+        protected bool bottomButtonTipHelper;
+
         #endregion
 
         public override void OnHeaderGUI()

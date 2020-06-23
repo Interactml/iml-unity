@@ -105,7 +105,7 @@ namespace InteractML
                 DrawWarningLayout(m_HelpRect);
                 ShowWarning(m_RIMLConfiguration.tips.BottomError[0]);
             }
-            if (numberOfExamplesTrained != m_RIMLConfiguration.TotalNumTrainingData)
+            if (numberOfExamplesTrained > 0 && numberOfExamplesTrained != m_RIMLConfiguration.TotalNumTrainingData)
             {
                 DrawWarningLayout(m_HelpRect);
                 ShowWarning(m_RIMLConfiguration.tips.BottomError[2]);
@@ -124,7 +124,10 @@ namespace InteractML
             {
                 ShowTooltip(m_ButtonsRect, TooltipText);
             }
-
+            if (bottomButtonTip)
+            {
+                ShowTooltip(m_BottomButtonsRect, TooltipText);
+            }
             serializedObject.ApplyModifiedProperties();
 
         }
@@ -304,11 +307,36 @@ namespace InteractML
             m_CenterBottomButtonsRect.height = m_BottomButtonsRect.height - 20;
 
             GUILayout.BeginArea(m_CenterBottomButtonsRect);
+
             GUILayout.BeginHorizontal();
             // Init model button (to debug the model not working)
             if (GUILayout.Button("", m_NodeSkin.GetStyle("Reset")))
             {
                 m_RIMLConfiguration.ResetModel();
+                numberOfExamplesTrained = 0;
+            }
+            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                bottomButtonTipHelper = true;
+                if (GUI.enabled)
+                {
+                    TooltipText = m_RIMLConfiguration.tips.BodyTooltip.Tips[0];
+                }
+                else
+                {
+                    TooltipText = m_RIMLConfiguration.tips.BodyTooltip.Error[0];
+                }
+            }
+            else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                bottomButtonTip = false;
+
+            }
+
+            if (Event.current.type == EventType.Layout && bottomButtonTipHelper)
+            {
+                bottomButtonTip = true;
+                bottomButtonTipHelper = false;
             }
             GUILayout.EndHorizontal();
             GUILayout.EndArea();

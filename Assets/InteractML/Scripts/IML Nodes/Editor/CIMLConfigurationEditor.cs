@@ -107,7 +107,7 @@ namespace InteractML
                 DrawWarningLayout(m_HelpRect);
                 ShowWarning(m_CIMLConfiguration.tips.BottomError[0]);
             }
-            if (numberOfExamplesTrained != m_CIMLConfiguration.TotalNumTrainingData)
+            if (numberOfExamplesTrained > 0 && numberOfExamplesTrained != m_CIMLConfiguration.TotalNumTrainingData)
             {
                 DrawWarningLayout(m_HelpRect);
                 ShowWarning(m_CIMLConfiguration.tips.BottomError[2]);
@@ -126,6 +126,10 @@ namespace InteractML
             if (buttonTip)
             {
                 ShowTooltip(m_ButtonsRect, TooltipText);
+            }
+            if (bottomButtonTip)
+            {
+                ShowTooltip(m_BottomButtonsRect, TooltipText);
             }
 
             serializedObject.ApplyModifiedProperties();
@@ -298,9 +302,35 @@ namespace InteractML
             // Init model button (to debug the model not working)
             if (GUILayout.Button("", m_NodeSkin.GetStyle("Reset")))
             {
+                numberOfExamplesTrained = 0;
                 m_CIMLConfiguration.ResetModel();
             }
             GUILayout.EndHorizontal();
+
+            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                bottomButtonTipHelper = true;
+                if (GUI.enabled)
+                {
+                    TooltipText = m_CIMLConfiguration.tips.BodyTooltip.Tips[0];
+                }
+                else
+                {
+                    TooltipText = m_CIMLConfiguration.tips.BodyTooltip.Error[0];
+                }
+            }
+            else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                bottomButtonTip = false;
+
+            }
+
+            if (Event.current.type == EventType.Layout && bottomButtonTipHelper)
+            {
+                bottomButtonTip = true;
+                bottomButtonTipHelper = false;
+            }
+
             GUILayout.EndArea();
 
             GUILayout.Space(10);
@@ -314,7 +344,11 @@ namespace InteractML
             GUILayout.EndArea();
                
         }
+        private void ResetModelButton()
+        {
 
+
+        }
         private void TrainModelButton()
         {
             // Only run button logic when rapidlib reference not null and training examples are not null
