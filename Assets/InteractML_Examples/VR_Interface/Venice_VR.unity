@@ -1445,8 +1445,7 @@ MonoBehaviour:
   - {fileID: 664049284}
   - {fileID: 664049283}
   m_ScriptNodesList:
-  - {fileID: -2342550442115982514, guid: 97ba4d902e126034b9b70455467a46e2, type: 2}
-  - {fileID: 7255720860951841876, guid: 97ba4d902e126034b9b70455467a46e2, type: 2}
+  - {fileID: -5846608293274506209, guid: 97ba4d902e126034b9b70455467a46e2, type: 2}
   FeaturesUpdated: 0
   ComponentsWithIMLData:
   - GameComponent: {fileID: 1442713060}

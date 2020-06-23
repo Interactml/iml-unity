@@ -828,7 +828,7 @@ namespace InteractML
                 // Add input to pair
                 portPair.input = inputs.Current;
                 // If the list doesn't have a pair with our input...
-                if (!pairs.Any(x => x.input.fieldName.Equals(portPair.input.fieldName)))
+                if (!pairs.Any(x => (x != null) && x.input.fieldName.Equals(portPair.input.fieldName)))
                 {
                     // If there is an output...
                     if (outputs.MoveNext())
@@ -849,7 +849,7 @@ namespace InteractML
                 // Add output to pair
                 portPair.output = outputs.Current;
                 // If the list doesn't contain a pair with our output...
-                if (!pairs.Any(x => x.output.fieldName.Equals(portPair.output.fieldName)))
+                if (!pairs.Any(x => (x != null) && x.output.fieldName.Equals(portPair.output.fieldName)))
                 {
                     // Add pair to list (input will be null)
                     pairs.Add(new IMLNodePortPair(portPair.input, portPair.output));
