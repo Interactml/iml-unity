@@ -664,8 +664,22 @@ namespace InteractML
             // Make sure port pair list is init
             if (m_PortPairs == null)
                 m_PortPairs = new List<IMLNodePortPair>();
+
+            bool updatePortPairs = false;
+            // DIRTY CODE
+            // If the node is an mls node, check if the output ports have been updated
+            if (target is IMLConfiguration)
+            {
+                var mlsNode = (target as IMLConfiguration);
+                updatePortPairs = mlsNode.OutputPortsChanged;
+                // Set flag to false in mls node to not redraw every frame
+                mlsNode.OutputPortsChanged = false;
+            }
+            // Generic check if the number ports changes to reduce the times we reserve memory
+            if (m_NumInputs != target.Inputs.Count() || m_NumOutputs != target.Outputs.Count()) updatePortPairs = true;
+
             // Get number of ports to avoid reserving memory twice
-            if (m_NumInputs != target.Inputs.Count() || m_NumOutputs != target.Outputs.Count())
+            if (updatePortPairs)
             {
                 // Update known number of ports
                 m_NumInputs = target.Inputs.Count();
@@ -676,6 +690,7 @@ namespace InteractML
                 // Add them to the list
                 AddPairsToList(inputs, outputs, ref m_PortPairs);
             }
+
 
 
             // Go through port pairs to draw them together

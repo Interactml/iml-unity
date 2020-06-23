@@ -54,7 +54,7 @@ public class IMLMonobehaviourDrawer : PropertyDrawer
         EditorGUI.LabelField(position, label);
 
         // Change text and icon for gameobject
-        label.text = string.Concat("GameObject: ", goClassName);
+        label.text = string.Concat("GameObject : ", goClassName);
         label.image = m_GOTexture;
         // Decrease original position height to account for extra drawing
         position.y = position.y - 20;

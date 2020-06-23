@@ -55,6 +55,7 @@ namespace InteractML
         protected List<IMLSpecifications.OutputsEnum> m_ExpectedOutputList;
         public List<IMLSpecifications.OutputsEnum> ExpectedOutputList { get { return m_ExpectedOutputList; } }
         protected List<NodePort> m_DynamicOutputPorts;
+        public bool OutputPortsChanged { get; set; }
 
 
         /// <summary>
@@ -1094,6 +1095,9 @@ namespace InteractML
                 outputPorts.Clear();
 
             }
+            // Update flag so that the editor can be drawn properly
+            OutputPortsChanged = true;
+
             //// Clear entire local list
             //outputPorts.Clear();
             //// Use local list as a copy of parent class list
