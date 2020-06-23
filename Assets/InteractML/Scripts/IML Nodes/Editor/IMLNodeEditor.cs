@@ -568,7 +568,7 @@ namespace InteractML
             m_WarningRect.x = 5;
             m_WarningRect.y = help.y + help.height;
             m_WarningRect.width = NodeWidth - 10;
-            m_WarningRect.height = 120;
+            m_WarningRect.height = 130;
 
             // Draw body background purple rect below ports
             GUI.DrawTexture(m_WarningRect, NodeColor);
@@ -591,12 +591,12 @@ namespace InteractML
 
             GUILayout.BeginArea(m_InnerInnerWarningRect);
             GUILayout.BeginHorizontal();
-            GUILayout.Button("", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Warning"));
+            GUILayout.Button("", m_NodeSkin.GetStyle("Warning"));
             GUILayout.Space(5);
-            GUILayout.Label("Danger Will Robinson", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Warning Header"));
+            GUILayout.Label("Warning", m_NodeSkin.GetStyle("Warning Header"));
             GUILayout.EndHorizontal();
             GUILayout.Space(5);
-            GUILayout.Label(tip, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Warning Label"));
+            GUILayout.Label(tip, m_NodeSkin.GetStyle("Warning Label"));
 
             GUILayout.EndArea();
 
