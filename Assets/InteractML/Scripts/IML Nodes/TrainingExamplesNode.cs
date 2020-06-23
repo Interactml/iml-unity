@@ -271,6 +271,9 @@ namespace InteractML
             UpdateTargetValuesConfig();
             // Load training data from disk
             LoadDataFromDisk();
+
+            inputPortList = this.GetInputPort("InputFeatures").GetConnections();
+            targetPortList = this.GetInputPort("TargetValues").GetConnections();
         }
         /// <summary>
         /// Starts/Stops collecting examples when called

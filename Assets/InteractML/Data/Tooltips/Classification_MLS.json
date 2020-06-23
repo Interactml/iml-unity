@@ -13,5 +13,5 @@
       "error 2"
     ]
   },
-  "BottomError": [ "No training data please connect a Recorded Data Node or Record Examples on the connected node. ", "No live data please connect Live Data In to Data Type Nodes or Feature Extractor" ]
+  "BottomError": [ "No training data please connect a Recorded Data Node or Record Examples on the connected node. ", "No live data please connect Live Data In to Data Type Nodes or Feature Extractor", "More examples recorded. Do you need to retrain?" ]
 }
