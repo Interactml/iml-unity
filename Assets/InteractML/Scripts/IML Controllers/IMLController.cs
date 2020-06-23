@@ -61,7 +61,18 @@ namespace InteractML
                     SceneComponent.DeleteScriptNode(scriptNode);
                 }
             }
-            base.RemoveNode(node);  
+            RemoveNodeImmediate(node);  
+        }
+
+        /// <summary>
+        /// Forcefully removes the node from the asset file
+        /// </summary>
+        /// <param name="node"></param>
+        private void RemoveNodeImmediate(Node node)
+        {
+            node.ClearConnections();
+            nodes.Remove(node);
+            if (Application.isPlaying) DestroyImmediate(node, true);
         }
 
     }

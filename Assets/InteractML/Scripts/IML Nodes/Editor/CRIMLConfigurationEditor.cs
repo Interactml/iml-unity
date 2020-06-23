@@ -27,10 +27,12 @@ namespace InteractML
         /// </summary>
         protected Rect m_PortRect;
         protected Rect m_BodyRect;
-        protected Rect m_IconsRect;
-        protected Rect m_LeftIconRect;
+        protected Rect m_IconRect;
+        protected Rect m_IconCenter;
         protected Rect m_RightIconRect;
         protected Rect m_ButtonsRect;
+        protected Rect m_BottomButtonsRect;
+        protected Rect m_CenterBottomButtonsRect;
         protected Rect m_HelpRect;
         protected Rect m_ToolRect;
 
@@ -79,8 +81,8 @@ namespace InteractML
             //Display Node name
             GUILayout.BeginArea(HeaderRect);
             GUILayout.Space(5);
-            GUILayout.Label("MACHINE LEARNING SYSTEM", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
-            GUILayout.Label("Classification and Regression", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
+            GUILayout.Label("MACHINE LEARNING SYSTEM", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+            GUILayout.Label("Classification and Regression", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
             GUILayout.EndArea();
 
             GUILayout.Label("", GUILayout.MinHeight(60));
@@ -164,16 +166,16 @@ namespace InteractML
         /// </summary>
         private void DrawBodyLayoutIcons()
         {
-            m_IconsRect.x = 5;
-            m_IconsRect.y = HeaderRect.height + m_PortRect.height;
-            m_IconsRect.width = NodeWidth - 10;
-            m_IconsRect.height = 140;
+            m_IconRect.x = 5;
+            m_IconRect.y = HeaderRect.height + m_PortRect.height;
+            m_IconRect.width = NodeWidth - 10;
+            m_IconRect.height = 140;
 
             // Draw body background purple rect below ports
-            GUI.DrawTexture(m_IconsRect, NodeColor);
+            GUI.DrawTexture(m_IconRect, NodeColor);
 
             // Draw line below add/remove buttons
-            GUI.DrawTexture(new Rect(m_IconsRect.x, (HeaderRect.height + m_PortRect.height + m_IconsRect.height) - WeightOfSeparatorLine, m_IconsRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+            GUI.DrawTexture(new Rect(m_IconRect.x, (HeaderRect.height + m_PortRect.height + m_IconRect.height) - WeightOfSeparatorLine, m_IconRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
         }
 
         /// <summary>
@@ -182,7 +184,7 @@ namespace InteractML
         private void DrawBodyLayoutButtons()
         {
             m_ButtonsRect.x = 5;
-            m_ButtonsRect.y = HeaderRect.height + m_PortRect.height + m_IconsRect.height;
+            m_ButtonsRect.y = HeaderRect.height + m_PortRect.height + m_IconRect.height;
             m_ButtonsRect.width = NodeWidth - 10;
             m_ButtonsRect.height = 155;
 
@@ -190,7 +192,7 @@ namespace InteractML
             GUI.DrawTexture(m_ButtonsRect, NodeColor);
 
             // Draw line below add/remove buttons
-            GUI.DrawTexture(new Rect(m_ButtonsRect.x, (HeaderRect.height + m_PortRect.height + m_IconsRect.height + m_ButtonsRect.height) - WeightOfSeparatorLine, m_ButtonsRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+            GUI.DrawTexture(new Rect(m_ButtonsRect.x, (HeaderRect.height + m_PortRect.height + m_IconRect.height + m_ButtonsRect.height) - WeightOfSeparatorLine, m_ButtonsRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
         }
 
         /// <summary>
@@ -199,8 +201,8 @@ namespace InteractML
         private void DrawHelpButtonLayout()
         {
             m_HelpRect.x = 5;
-            m_ButtonsRect.height = m_ButtonsRect.height + 15;
-            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_IconsRect.height + m_ButtonsRect.height;
+            m_BottomButtonsRect.height = m_BottomButtonsRect.height + 15;
+            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_IconRect.height + m_ButtonsRect.height + m_BottomButtonsRect.height;
             m_HelpRect.width = NodeWidth - 10;
             m_HelpRect.height = 40;
 
@@ -237,17 +239,17 @@ namespace InteractML
         private void ShowIcon()
         {
             
-            m_LeftIconRect.x = m_IconsRect.x + 40;
-            m_LeftIconRect.y = m_IconsRect.y + 20;
-            m_LeftIconRect.width = m_IconsRect.width / 2;
-            m_LeftIconRect.height = m_IconsRect.height;
+            m_IconCenter.x = m_IconRect.x + 40;
+            m_IconCenter.y = m_IconRect.y + 20;
+            m_IconCenter.width = m_IconRect.width / 2;
+            m_IconCenter.height = m_IconRect.height;
 
-            m_RightIconRect.x = (m_IconsRect.width / 2) + 30;
-            m_RightIconRect.y = m_IconsRect.y + 20;
-            m_RightIconRect.width = m_IconsRect.width;
-            m_RightIconRect.height = m_IconsRect.height;
+            m_RightIconRect.x = (m_IconRect.width / 2) + 30;
+            m_RightIconRect.y = m_IconRect.y + 20;
+            m_RightIconRect.width = m_IconRect.width;
+            m_RightIconRect.height = m_IconRect.height;
 
-            GUILayout.BeginArea(m_LeftIconRect);
+            GUILayout.BeginArea(m_IconCenter);
             m_ClassificationSwitch = EditorGUILayout.Toggle(m_ClassificationSwitch, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Classification Button"));
             GUILayout.EndArea();
 
@@ -255,8 +257,8 @@ namespace InteractML
             m_RegressionSwitch = EditorGUILayout.Toggle(m_RegressionSwitch, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Regression Button"));
             GUILayout.EndArea();
 
-            m_LeftIconRect.x = m_LeftIconRect.x + 5;
-            GUILayout.BeginArea(m_LeftIconRect);
+            m_IconCenter.x = m_IconCenter.x + 5;
+            GUILayout.BeginArea(m_IconCenter);
             GUILayout.Label("", GUILayout.MinHeight(80));
             GUILayout.Label("Classification", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Blue Classification Button"));
             GUILayout.EndArea();

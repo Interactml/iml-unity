@@ -652,6 +652,44 @@ namespace InteractML
             {
                 return;
             }
+
+            if (m_MonoBehavioursPerScriptNode == null)
+                m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
+
+            // See if we already have any non-assigned scriptNodes that matches any IMLComponent
+            if (m_ScriptNodesList != null && m_ScriptNodesList.Count > 0)
+            {
+                for (int i = 0; i < m_ScriptNodesList.Count; i++)
+                {
+                    if (!m_ScriptNodesList[i].IsTaken)
+                    {
+                        // If there is a scriptHashCode from a previous script...
+                        if (!m_ScriptNodesList[i].ScriptHashCode.Equals(default))
+                        {
+                            // Check if that script is contained in the ComponentsWithIMLData list
+                            // Lambda statement, selecting the script that matches the hashcode from our scriptNode
+                            var script = ComponentsWithIMLData.Select(container => container.GameComponent).Where(gameComponent =>
+                                {
+                                    MonoBehaviour scriptToReturn = null;
+                                    if (gameComponent.GetHashCode().Equals(m_ScriptNodesList[i].ScriptHashCode))
+                                        scriptToReturn = gameComponent;
+                                    return scriptToReturn;
+                                }
+                            );
+                            var scriptToAdd = script.First(x => x != null);
+                            // If we found a matching script...
+                            if (scriptToAdd != null)
+                            {
+                                // We add that script to our scriptNode (if it is not null)                                
+                                m_ScriptNodesList[i].SetScript(scriptToAdd);
+                                // Add it to the dictionary as well    
+                                m_MonoBehavioursPerScriptNode.Add(scriptToAdd, m_ScriptNodesList[i]);
+                            }
+
+                        }
+                    }
+                }
+            }
             // Fetch data from scripts added by the user
             for (int i = 0; i < ComponentsWithIMLData.Count; i++)
             {
@@ -660,9 +698,6 @@ namespace InteractML
                 var gameComponent = ComponentsWithIMLData[i].GameComponent;
 
                 /* ADD SCRIPT NODE */
-                if (m_MonoBehavioursPerScriptNode == null)
-                    m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
-
                 ScriptNode scriptNode = null;
 
                 // If the gameComponent is null, we continue to the next one
@@ -674,7 +709,7 @@ namespace InteractML
                 // Check if the dictionary DOESN'T contain a fieldInfo for this reflected value, and then create nodes and dictionary values
                 if (!m_MonoBehavioursPerScriptNode.ContainsKey(IMLGameComponentContainer.GameComponent))
                 {
-                    // First, we try and see if the graph already contains a node we can use
+                    // First, we try and see if the graph already contains an empty node we can use
                     foreach (var node in MLController.nodes)
                     {
                         // We see if this node is of the right type
@@ -733,406 +768,10 @@ namespace InteractML
                 {
                     scriptNode.UpdatePortFields(gameComponent);
                 }
-
-                /* OLD FETCHING LOGIC */
-                bool useOldLogic = false;
-                if (useOldLogic)
-                {
-                    // Gets all fields information from the game component (using System.Reflection)
-                    FieldInfo[] objectFields = gameComponent.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
-
-                    // Go through all the fields
-                    for (int j = 0; j < objectFields.Length; j++)
-                    {
-                        var fieldToUse = objectFields[j];
-
-                        // Check if the field is marked with the "SendToIMLController" attribute
-                        SendToIMLController dataForIMLController = Attribute.GetCustomAttribute(fieldToUse, typeof(SendToIMLController)) as SendToIMLController;
-                        // We check now if the field is marked with the "PullFromIMLController" attribute
-                        PullFromIMLController dataFromIMLController = Attribute.GetCustomAttribute(fieldToUse, typeof(PullFromIMLController)) as PullFromIMLController;
-                        // Define flags to identify attribute behaviour
-                        bool isInputData = false, isOutputData = false;
-                        // Update flags
-                        if (dataForIMLController != null)
-                            isInputData = true;
-                        if (dataFromIMLController != null)
-                            isOutputData = true;
-
-                        // If the field is marked as either input or output...
-                        if (isInputData || isOutputData)
-                        {
-                            // Debug type of that value in console
-                            //Debug.Log(fieldToUse.Name + " Used in IMLComponent, With Type: " + fieldToUse.FieldType + ", With Value: " + fieldToUse.GetValue(gameComponent).ToString());
-
-                            // Make sure that the dictionaries are initialised
-                            if (m_DataMonobehavioursPerFieldInfo == null)
-                                m_DataMonobehavioursPerFieldInfo = new Dictionary<FieldInfo, MonoBehaviour>();
-                            if (m_DataContainersPerFieldInfo == null)
-                                m_DataContainersPerFieldInfo = new Dictionary<FieldInfo, IMLFieldInfoContainer>();
-
-                            // Check if the dictionary DOESN'T contain a fieldInfo for this reflected value, and then create nodes and dictionary values
-                            if (!m_DataMonobehavioursPerFieldInfo.ContainsKey(fieldToUse))
-                            {
-                                // If it doesn't contain it, then we add it to both dictionaries
-                                // Firstly, to keep track which gamecomponent belongs to which field info
-                                m_DataMonobehavioursPerFieldInfo.Add(fieldToUse, gameComponent);
-                                // Secondly, we create a node (based on its type) for this fieldInfo and add it to the dictionary
-                                if (fieldToUse.FieldType == typeof(Single))
-                                {
-                                    DataTypeNodes.FloatNode newNode = null;
-                                    // First, we try and see if the graph already contains a node we can use
-                                    foreach (var node in MLController.nodes)
-                                    {
-                                        // We see if this node is of the right type
-                                        if (node.GetType() == typeof(DataTypeNodes.FloatNode))
-                                        {
-                                            // We check if the node is available to use
-                                            var isTaken = m_DataContainersPerFieldInfo.Values.Any(container => container.nodeForField == node);
-                                            // If the node is not taken...
-                                            if (!isTaken)
-                                            {
-                                                // This will be our node!
-                                                newNode = (DataTypeNodes.FloatNode)node;
-                                                // Stop searching for nodes
-                                                break;
-                                            }
-                                        }
-                                    }
-
-                                    // If we didn't find a suitable existing node...
-                                    if (newNode == null)
-                                    {
-                                        // Create a new Serial Vector node into the graph
-                                        newNode = MLController.AddNode<DataTypeNodes.FloatNode>();
-#if UNITY_EDITOR
-                                        // Save newnode to graph on disk                              
-                                        AssetDatabase.AddObjectToAsset(newNode, MLController);
-                                        // Reload graph into memory since we have modified it on disk
-                                        AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-#endif
-                                    }
-
-                                    // Configure our node appropiately
-                                    newNode.Value = (float)fieldToUse.GetValue(gameComponent);
-                                    newNode.ValueName = fieldToUse.Name;
-                                    newNode.name = fieldToUse.Name + " (Float Node)";
-
-                                    // Add all info to a container
-                                    IMLFieldInfoContainer infoContainer = new IMLFieldInfoContainer(fieldToUse, newNode, IMLSpecifications.DataTypes.Float, gameComponent);
-                                    // Add that to the dictionary
-                                    m_DataContainersPerFieldInfo.Add(fieldToUse, infoContainer);
-
-                                }
-                                else if (fieldToUse.FieldType == typeof(Int32))
-                                {
-                                    DataTypeNodes.IntegerNode newNode = null;
-                                    // First, we try and see if the graph already contains a node we can use
-                                    foreach (var node in MLController.nodes)
-                                    {
-                                        // We see if this node is of the right type
-                                        if (node.GetType() == typeof(DataTypeNodes.IntegerNode))
-                                        {
-                                            // We check if the node is available to use
-                                            var isTaken = m_DataContainersPerFieldInfo.Values.Any(container => container.nodeForField == node);
-                                            // If the node is not taken...
-                                            if (!isTaken)
-                                            {
-                                                // This will be our node!
-                                                newNode = (DataTypeNodes.IntegerNode)node;
-                                                // Stop searching for nodes
-                                                break;
-                                            }
-                                        }
-                                    }
-
-                                    // If we didn't find a suitable existing node...
-                                    if (newNode == null)
-                                    {
-                                        // Create a new Serial Vector node into the graph
-                                        newNode = MLController.AddNode<DataTypeNodes.IntegerNode>();
-#if UNITY_EDITOR
-                                        // Save newnode to graph on disk                              
-                                        AssetDatabase.AddObjectToAsset(newNode, MLController);
-                                        // Reload graph into memory since we have modified it on disk
-                                        AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-#endif
-                                    }
-
-                                    // Configure our node appropiately
-                                    newNode.Value = (int)fieldToUse.GetValue(gameComponent);
-                                    newNode.ValueName = fieldToUse.Name;
-                                    newNode.name = fieldToUse.Name + " (Int Node)";
-
-                                    // Add all info to a container
-                                    IMLFieldInfoContainer infoContainer = new IMLFieldInfoContainer(fieldToUse, newNode, IMLSpecifications.DataTypes.Integer, gameComponent);
-                                    // Add that to the dictionary
-                                    m_DataContainersPerFieldInfo.Add(fieldToUse, infoContainer);
-
-                                }
-                                else if (fieldToUse.FieldType == typeof(Vector2))
-                                {
-                                    DataTypeNodes.Vector2Node newNode = null;
-                                    // First, we try and see if the graph already contains a node we can use
-                                    foreach (var node in MLController.nodes)
-                                    {
-                                        // We see if this node is of the right type
-                                        if (node.GetType() == typeof(DataTypeNodes.Vector2Node))
-                                        {
-                                            // We check if the node is available to use
-                                            var isTaken = m_DataContainersPerFieldInfo.Values.Any(container => container.nodeForField == node);
-                                            // If the node is not taken...
-                                            if (!isTaken)
-                                            {
-                                                // This will be our node!
-                                                newNode = (DataTypeNodes.Vector2Node)node;
-                                                // Stop searching for nodes
-                                                break;
-                                            }
-                                        }
-                                    }
-
-                                    // If we didn't find a suitable existing node...
-                                    if (newNode == null)
-                                    {
-                                        // Create a new Serial Vector node into the graph
-                                        newNode = MLController.AddNode<DataTypeNodes.Vector2Node>();
-#if UNITY_EDITOR
-                                        // Save newnode to graph on disk                              
-                                        AssetDatabase.AddObjectToAsset(newNode, MLController);
-                                        // Reload graph into memory since we have modified it on disk
-                                        AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-#endif
-
-                                    }
-
-                                    // Configure our node appropiately
-                                    newNode.Value = (Vector2)fieldToUse.GetValue(gameComponent);
-                                    newNode.ValueName = fieldToUse.Name;
-                                    newNode.name = fieldToUse.Name + " (Vector2 Node)";
-
-                                    // Add all info to a container
-                                    IMLFieldInfoContainer infoContainer = new IMLFieldInfoContainer(fieldToUse, newNode, IMLSpecifications.DataTypes.Vector2, gameComponent);
-                                    // Add that to the dictionary
-                                    m_DataContainersPerFieldInfo.Add(fieldToUse, infoContainer);
-
-                                }
-                                else if (fieldToUse.FieldType == typeof(Vector3))
-                                {
-                                    DataTypeNodes.Vector3Node newNode = null;
-                                    // First, we try and see if the graph already contains a node we can use
-                                    foreach (var node in MLController.nodes)
-                                    {
-                                        // We see if this node is of the right type
-                                        if (node.GetType() == typeof(DataTypeNodes.Vector3Node))
-                                        {
-                                            // We check if the node is available to use
-                                            var isTaken = m_DataContainersPerFieldInfo.Values.Any(container => container.nodeForField == node);
-                                            // If the node is not taken...
-                                            if (!isTaken)
-                                            {
-                                                // This will be our node!
-                                                newNode = (DataTypeNodes.Vector3Node)node;
-                                                // Stop searching for nodes
-                                                break;
-                                            }
-                                        }
-                                    }
-
-                                    // If we didn't find a suitable existing node...
-                                    if (newNode == null)
-                                    {
-                                        // Create a new Serial Vector node into the graph
-                                        newNode = MLController.AddNode<DataTypeNodes.Vector3Node>();
-#if UNITY_EDITOR
-                                        // Save newnode to graph on disk                              
-                                        AssetDatabase.AddObjectToAsset(newNode, MLController);
-                                        // Reload graph into memory since we have modified it on disk
-                                        AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-#endif
-
-                                    }
-
-                                    // Configure our node appropiately
-                                    newNode.Value = (Vector3)fieldToUse.GetValue(gameComponent);
-                                    newNode.ValueName = fieldToUse.Name;
-                                    newNode.name = fieldToUse.Name + " (Vector3 Node)";
-
-                                    // Add all info to a container
-                                    IMLFieldInfoContainer infoContainer = new IMLFieldInfoContainer(fieldToUse, newNode, IMLSpecifications.DataTypes.Vector3, gameComponent);
-                                    // Add that to the dictionary
-                                    m_DataContainersPerFieldInfo.Add(fieldToUse, infoContainer);
-
-                                }
-                                else if (fieldToUse.FieldType == typeof(Vector4) || fieldToUse.FieldType == typeof(Quaternion))
-                                {
-                                    DataTypeNodes.Vector4Node newNode = null;
-                                    // First, we try and see if the graph already contains a node we can use
-                                    foreach (var node in MLController.nodes)
-                                    {
-                                        // We see if this node is of the right type
-                                        if (node.GetType() == typeof(DataTypeNodes.Vector4Node))
-                                        {
-                                            // We check if the node is available to use
-                                            var isTaken = m_DataContainersPerFieldInfo.Values.Any(container => container.nodeForField == node);
-                                            // If the node is not taken...
-                                            if (!isTaken)
-                                            {
-                                                // This will be our node!
-                                                newNode = (DataTypeNodes.Vector4Node)node;
-                                                // Stop searching for nodes
-                                                break;
-                                            }
-                                        }
-                                    }
-
-                                    // If we didn't find a suitable existing node...
-                                    if (newNode == null)
-                                    {
-                                        // Create a new Serial Vector node into the graph
-                                        newNode = MLController.AddNode<DataTypeNodes.Vector4Node>();
-#if UNITY_EDITOR
-                                        // Save newnode to graph on disk                              
-                                        AssetDatabase.AddObjectToAsset(newNode, MLController);
-                                        // Reload graph into memory since we have modified it on disk
-                                        AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-#endif
-
-                                    }
-
-                                    // Configure our node appropiately
-                                    newNode.Value = (Vector4)fieldToUse.GetValue(gameComponent);
-                                    newNode.ValueName = fieldToUse.Name;
-                                    newNode.name = fieldToUse.Name + " (Vector4 Node)";
-
-                                    // Add all info to a container
-                                    IMLFieldInfoContainer infoContainer = new IMLFieldInfoContainer(fieldToUse, newNode, IMLSpecifications.DataTypes.Vector4, gameComponent);
-                                    // Add that to the dictionary
-                                    m_DataContainersPerFieldInfo.Add(fieldToUse, infoContainer);
-
-                                }
-                                else if (fieldToUse.FieldType == typeof(float[]))
-                                {
-                                    DataTypeNodes.SerialVectorNode newNode = null;
-                                    // First, we try and see if the graph already contains a node we can use
-                                    foreach (var node in MLController.nodes)
-                                    {
-                                        // We see if this node is of the right type
-                                        if (node.GetType() == typeof(DataTypeNodes.SerialVectorNode))
-                                        {
-                                            // We check if the node is available to use
-                                            var isTaken = m_DataContainersPerFieldInfo.Values.Any(container => container.nodeForField == node);
-                                            // If the node is not taken...
-                                            if (!isTaken)
-                                            {
-                                                // This will be our node!
-                                                newNode = (DataTypeNodes.SerialVectorNode)node;
-                                                // Stop searching for nodes
-                                                break;
-                                            }
-                                        }
-                                    }
-
-                                    // If we didn't find a suitable existing node...
-                                    if (newNode == null)
-                                    {
-                                        // Create a new Serial Vector node into the graph
-                                        newNode = MLController.AddNode<DataTypeNodes.SerialVectorNode>();
-#if UNITY_EDITOR
-                                        // Save newnode to graph on disk                              
-                                        AssetDatabase.AddObjectToAsset(newNode, MLController);
-                                        // Reload graph into memory since we have modified it on disk
-                                        AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-#endif
-                                    }
-
-                                    // Configure our node appropiately
-                                    newNode.Value = (float[])fieldToUse.GetValue(gameComponent);
-                                    newNode.ValueName = fieldToUse.Name;
-                                    newNode.name = fieldToUse.Name + " (Serial Vector Node)";
-
-                                    // Add all info to a container
-                                    IMLFieldInfoContainer infoContainer = new IMLFieldInfoContainer(fieldToUse, newNode, IMLSpecifications.DataTypes.SerialVector, gameComponent);
-                                    // Add that to the dictionary
-                                    m_DataContainersPerFieldInfo.Add(fieldToUse, infoContainer);
-
-
-                                }
-                            }
-                            // If the dictionary already contains a fieldInfo, update it
-                            else if (true)
-                            {
-                                // Get the node linked to that field info
-                                var dataContainer = m_DataContainersPerFieldInfo[fieldToUse];
-
-                                // Detect the type of the node
-                                switch (dataContainer.DataType)
-                                {
-                                    // FLOAT
-                                    case IMLSpecifications.DataTypes.Float:
-                                        // If it is input...
-                                        if (isInputData)
-                                            (dataContainer.nodeForField as DataTypeNodes.FloatNode).Value = (float)fieldToUse.GetValue(gameComponent);
-                                        // If it is output...
-                                        if (isOutputData)
-                                            fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.FloatNode).Value);
-                                        break;
-                                    // INTEGER
-                                    case IMLSpecifications.DataTypes.Integer:
-                                        // If it is input...
-                                        if (isInputData)
-                                            (dataContainer.nodeForField as DataTypeNodes.IntegerNode).Value = (int)fieldToUse.GetValue(gameComponent);
-                                        // If it is output...
-                                        if (isOutputData)
-                                            fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.IntegerNode).Value);
-                                        break;
-                                    // VECTOR 2
-                                    case IMLSpecifications.DataTypes.Vector2:
-                                        // If it is input...
-                                        if (isInputData)
-                                            (dataContainer.nodeForField as DataTypeNodes.Vector2Node).Value = (Vector2)fieldToUse.GetValue(gameComponent);
-                                        // If it is output...
-                                        if (isOutputData)
-                                            fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.Vector2Node).Value);
-                                        break;
-                                    // VECTOR 3
-                                    case IMLSpecifications.DataTypes.Vector3:
-                                        // If it is input...
-                                        if (isInputData)
-                                            (dataContainer.nodeForField as DataTypeNodes.Vector3Node).Value = (Vector3)fieldToUse.GetValue(gameComponent);
-                                        // If it is output...
-                                        if (isOutputData)
-                                            fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.Vector3Node).Value);
-                                        break;
-                                    // VECTOR 4
-                                    case IMLSpecifications.DataTypes.Vector4:
-                                        // If it is input...
-                                        if (isInputData)
-                                            (dataContainer.nodeForField as DataTypeNodes.Vector4Node).Value = (Vector4)fieldToUse.GetValue(gameComponent);
-                                        // If it is output...
-                                        if (isOutputData)
-                                            fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.Vector4Node).Value);
-                                        break;
-                                    // SERIAL VECTOR
-                                    case IMLSpecifications.DataTypes.SerialVector:
-                                        // If it is input...
-                                        if (isInputData)
-                                            (dataContainer.nodeForField as DataTypeNodes.SerialVectorNode).Value = (float[])fieldToUse.GetValue(gameComponent);
-                                        // If it is output...
-                                        if (isOutputData)
-                                            fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.SerialVectorNode).Value);
-                                        break;
-                                    // DEFAULT SWITCH
-                                    default:
-                                        break;
-                                }
-                            }
-
-                        }
-                    }
-
-                }
             }
 
+            if (m_MonobehaviourClones == null)
+                m_MonobehaviourClones = new List<MonoBehaviour>();
             // Fetch data from clones if there are any
             for (int i = 0; i < m_MonobehaviourClones.Count; i++)
             {
@@ -1274,12 +913,19 @@ namespace InteractML
             {
                 var scriptNode = m_ScriptNodesList[i];
                 // Remove node from list if the reference is null
-                if (scriptNode == null) m_ScriptNodesList.RemoveAt(i);
+                if (scriptNode == null)
+                {
+                    m_ScriptNodesList.RemoveAt(i);
+                    // Decrease counter to not delete the wrong element later
+                    i--;
+                }
 #if UNITY_EDITOR
                 else if (changingPlayMode && scriptNode.CreatedDuringPlaymode)
                 {
                     // Destroy node
                     MLController.RemoveNode(scriptNode);
+                    // Decrease counter to not delete the wrong element later
+                    i--;
                     // Force scriptNode reference to null
                     scriptNode = null;
                 }
@@ -1292,6 +938,8 @@ namespace InteractML
                     {
                         // Destroy node
                         MLController.RemoveNode(scriptNode);
+                        // Decrease counter to not delete the wrong element later
+                        i--;
                         // Force scriptNode reference to null
                         scriptNode = null;
                     }
