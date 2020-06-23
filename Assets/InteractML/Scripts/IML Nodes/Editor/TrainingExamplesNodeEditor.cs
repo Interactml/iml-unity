@@ -153,7 +153,7 @@ namespace InteractML
             m_BodyRectButtons.x = 5;
             m_BodyRectButtons.y = m_BodyRectTargets.y + m_BodyRectTargets.height;
             m_BodyRectButtons.width = NodeWidth - 10;
-            m_BodyRectButtons.height = 200;
+            m_BodyRectButtons.height = 230;
 
             // Draw body background purple rect below ports
             GUI.DrawTexture(m_BodyRectButtons, NodeColor);
@@ -235,6 +235,7 @@ namespace InteractML
             GUILayout.Label("");
             GUILayout.Label(recordNameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
             GUILayout.EndHorizontal();
+
             GUILayout.EndArea();
 
 
