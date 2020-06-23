@@ -179,6 +179,7 @@ namespace InteractML
         {
             base.OnRemoveConnection(port);
             UpdateTargetValueInput();
+            UpdateTargetValuesConfig();
         }
 
 
@@ -403,8 +404,8 @@ namespace InteractML
         /// </summary>
         protected void UpdateTargetValuesConfig()
         {
-            DesiredOutputsConfig.Clear();
-            if (DesiredOutputsConfig.Count != TargetValues.Count)
+            m_DesiredOutputsConfig.Clear();
+            if (m_DesiredOutputsConfig.Count != TargetValues.Count)
             {
                 for (int i = 0; i < TargetValues.Count; i++)
                 {
@@ -415,7 +416,7 @@ namespace InteractML
                     if (targetValue != null)
                     {
                         // We add the feature to the desired inputs config
-                        DesiredOutputsConfig.Add((IMLSpecifications.OutputsEnum)targetValue.FeatureValues.DataType);
+                        m_DesiredOutputsConfig.Add((IMLSpecifications.OutputsEnum)targetValue.FeatureValues.DataType);
                     }
                 }
             }
