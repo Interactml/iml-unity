@@ -61,6 +61,16 @@ namespace InteractML
 
         public override void OnBodyGUI()
         {
+            // Specify any overrides to port fieldNames
+            if (OverridePortNames == false)
+            {
+                // Input ports names
+                InputPortsNamesOverride = new Dictionary<string, string>();
+                InputPortsNamesOverride.Add("IMLTrainingExamplesNodes", "Recorded Data In");
+                InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
+                OverridePortNames = true;
+            }
+
             // Unity specifically requires this to save/update any serial object.
             // serializedObject.Update(); must go at the start of an inspector gui, and
             // serializedObject.ApplyModifiedProperties(); goes at the end.
@@ -69,7 +79,7 @@ namespace InteractML
             // Draw ports
             DrawPortLayout();
             //ShowSystemNodePorts();
-            base.ShowNodePorts();
+            base.ShowNodePorts(InputPortsNamesOverride, showOutputType: true);
             //check if port is hovered over 
             PortTooltip(m_RIMLConfiguration.tips.PortTooltip);
 
