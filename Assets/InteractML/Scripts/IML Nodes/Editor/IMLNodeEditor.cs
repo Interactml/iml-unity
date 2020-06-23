@@ -830,7 +830,7 @@ namespace InteractML
                 // If the input is null, skip to next iteration
                 if (portPair.input == null) continue;
                 // If the list doesn't have a pair with our input...
-                if (!pairs.Any(x => (x != null) && x.input.fieldName.Equals(portPair.input.fieldName)))
+                if (!pairs.Any(x => (x != null && x.input != null) && x.input.fieldName.Equals(portPair.input.fieldName)))
                 {
                     // If there is an output...
                     if (outputs.MoveNext())
@@ -853,7 +853,7 @@ namespace InteractML
                 // If the output is null, skip to next iteration
                 if (portPair.output == null) continue;                
                 // If the list doesn't contain a pair with our output...
-                if (!pairs.Any(x => (x != null) && x.output.fieldName.Equals(portPair.output.fieldName)))
+                if (!pairs.Any(x => (x != null && x.output!=null) && x.output.fieldName.Equals(portPair.output.fieldName)))
                 {
                     // Add pair to list (input will be null)
                     pairs.Add(new IMLNodePortPair(portPair.input, portPair.output));
