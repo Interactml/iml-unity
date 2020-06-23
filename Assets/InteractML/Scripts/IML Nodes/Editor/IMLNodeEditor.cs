@@ -150,6 +150,11 @@ namespace InteractML
 
         bool button;
 
+        // Dictionaries to allow the override of portFields
+        protected Dictionary<string, string> InputPortsNamesOverride;
+        protected Dictionary<string, string> OutputPortsNamesOverride;
+        protected bool OverridePortNames = false;
+
         #endregion
 
         #region XNode Messages
@@ -653,7 +658,7 @@ namespace InteractML
         /// <summary>
         /// Show the input/output port fields 
         /// </summary>
-        protected void ShowNodePorts()
+        protected void ShowNodePorts(Dictionary<string, string> inputsNameOverride = null, Dictionary<string, string> outputsNameOverride = null, bool showOutputType = false)
         {
             GUILayout.Space(5);
 
@@ -705,14 +710,48 @@ namespace InteractML
                 {
                     if (NodeEditorGUILayout.IsDynamicPortListPort(pair.input)) continue;
                     inputPortLabel = new GUIContent(pair.input.fieldName);
+                    // Check if an override of the label is needed
+                    if (inputsNameOverride != null)
+                    {
+                        if (inputsNameOverride.ContainsKey(pair.input.fieldName))
+                        {
+                            string newLabel = inputPortLabel.text;
+                            inputsNameOverride.TryGetValue(pair.input.fieldName, out newLabel);
+                            inputPortLabel.text = newLabel;
+                        }                             
+                    }
+                    // Draw port
                     IMLNodeEditor.PortField(inputPortLabel, m_IMLNode.GetInputPort(pair.input.fieldName), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
-
                 }
                 // Draw output (if any)
                 if (pair.output != null)
                 {
                     if (NodeEditorGUILayout.IsDynamicPortListPort(pair.output)) continue;
                     outputPortLabel = new GUIContent(pair.output.fieldName);
+                    // Check if an override of the label is needed
+                    if (outputsNameOverride != null)
+                    {
+                        if (outputsNameOverride.ContainsKey(pair.output.fieldName))
+                        {
+                            string newLabel = outputPortLabel.text;
+                            outputsNameOverride.TryGetValue(pair.output.fieldName, out newLabel);
+                            outputPortLabel.text = newLabel;
+                        }
+                    }
+                    // Check if we require to show the data type of the output
+                    if (showOutputType == true)
+                    {
+                        string type = pair.output.ValueType.ToString();
+                        // Remove namespace from string (if any)
+                        if (type.Contains("."))
+                        {
+                            // Remove everything until "."                           
+                            type = type.Remove(0, type.IndexOf(".") + 1);
+                        }
+                        // Add type to label text
+                        outputPortLabel.text = string.Concat(outputPortLabel.text, " (", type, ")");
+                    }
+                    // Draw port
                     IMLNodeEditor.PortField(outputPortLabel, m_IMLNode.GetOutputPort(pair.output.fieldName), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
 
                 }
