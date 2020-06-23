@@ -124,7 +124,7 @@ namespace InteractML
             // show record examples buttons 
             GUILayout.BeginHorizontal();
             GUILayout.Space(spacing);
-            if (GUILayout.Button(new GUIContent("Record One \n example"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button")))
+            if (GUILayout.Button(new GUIContent("Record One \n example"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record One Button")))
             {
                 m_SingleTrainingExamplesNode.AddSingleTrainingExample();
             }
@@ -138,7 +138,7 @@ namespace InteractML
 
             GUILayout.BeginHorizontal();
             GUILayout.Space(spacing -5);
-            GUILayout.Label("record one \nexample", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button Yellow"));
+            GUILayout.Label("record one \nexample", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
             GUILayout.Label("");
             
             GUILayout.Label(recordNameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
