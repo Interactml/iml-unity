@@ -180,7 +180,6 @@ namespace InteractML
             // if you have started training 
             if(TrainingExamplesVector.Count > 0 && !badRemove)
             {
-                Debug.Log("not allowed 2");
                 from.Disconnect(to);
             }
             UpdateTargetValuesConfig();
@@ -295,6 +294,7 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
+            //Debug.Log(IMLConfigurationNodesConnected.Count);
             // Handle Input
             KeyboardInput();
             if (badRemove)

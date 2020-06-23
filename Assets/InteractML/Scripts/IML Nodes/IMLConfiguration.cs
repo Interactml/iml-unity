@@ -143,6 +143,7 @@ namespace InteractML
 
         /* ERROR FLAGS */
         protected bool m_ErrorWrongInputTrainingExamplesPort;
+        protected bool m_WrongNumberOfTargetValues = false;
 
         private List<TrainingExamplesNode> oldTrainingExamplesNodes;
 
@@ -212,6 +213,7 @@ namespace InteractML
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
             base.OnCreateConnection(from, to);
+            m_WrongNumberOfTargetValues = false;
 
             m_NodeConnectionChanged = true;
 
@@ -228,7 +230,7 @@ namespace InteractML
             // Create rapidlib predicted output vector
             CreateRapidLibOutputVector();
             // if adding a training examples node connection add MLS system to that training nodes list of connected MLS systems
-            if(from.fieldName == "TrainingExamplesNodeToOutput") 
+            if(from.fieldName == "TrainingExamplesNodeToOutput" && !m_WrongNumberOfTargetValues) 
             {
                 TrainingExamplesNode temp = from.node as TrainingExamplesNode;
                 temp.IMLConfigurationNodesConnected.Add(this);

@@ -93,8 +93,13 @@ namespace InteractML
                 else
                 {
                     SingleTrainingExamplesNode examplesNode = from.node as SingleTrainingExamplesNode;
+                    if(examplesNode.TargetValues.Count > 1)
+                    {
+                        from.Disconnect(to);
+                        m_WrongNumberOfTargetValues = true; 
+                    }
                     // We check that the connection is from a training examples node
-                    if (examplesNode != null)
+                    if (examplesNode != null && !m_WrongNumberOfTargetValues)
                     {
                         // Update dynamic ports for output
                         AddDynamicOutputPorts(examplesNode, ref m_DynamicOutputPorts);

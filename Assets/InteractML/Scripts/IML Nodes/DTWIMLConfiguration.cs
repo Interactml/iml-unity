@@ -145,6 +145,13 @@ namespace InteractML
                 else
                 {
                     SeriesTrainingExamplesNode examplesNode = from.node as SeriesTrainingExamplesNode;
+
+                    if(examplesNode.TargetValues.Count > 1)
+                    {
+                        from.Disconnect(to);
+                        m_WrongNumberOfTargetValues = true; 
+                    }
+
                     // We check that the connection is from a training examples node
                     if (examplesNode != null)
                     {

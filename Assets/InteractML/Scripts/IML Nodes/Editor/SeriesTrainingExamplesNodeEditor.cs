@@ -138,7 +138,7 @@ namespace InteractML
             GUILayout.Space(10);
             GUILayout.BeginHorizontal();
             GUILayout.Space(spacing);
-            GUILayout.Label("No of pairs " + m_SeriesTrainingExamplesNode.TrainingExamplesVector.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"));
+            GUILayout.Label("No of pairs " + m_SeriesTrainingExamplesNode.TrainingSeriesCollection.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"));
             GUILayout.EndHorizontal();
 
             GUILayout.EndArea();
