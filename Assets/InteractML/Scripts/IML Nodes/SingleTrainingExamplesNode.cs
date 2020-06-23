@@ -32,7 +32,14 @@ namespace InteractML
         #endregion
 
         #region Public Methods
+        protected override void Init()
+        {
+            base.Init();
 
+            Initialize();
+
+            TrainingTips = IMLTooltipsSerialization.LoadTooltip("SingleTrainingExamples");
+        }
 
         /// <summary>
         /// Clears all the training examples stored in the node

@@ -78,10 +78,15 @@ namespace InteractML
             DrawBodyLayoutButtons();
             ShowButtons();
 
-            DrawBodyLayoutBottom();
+            DrawHelpButtonLayout(m_BodyRectButtons.y + m_BodyRectButtons.height);
             ShowTrainingExamplesDropdown();
-            ShowHelpButton(m_BodyRectBottom);
-            
+            ShowHelpButton(m_HelpRect);
+
+            if (showHelp)
+            {
+                ShowHelptip(m_HelpRect, m_SingleTrainingExamplesNode.TrainingTips.HelpTooltip);
+            }
+
 
         }
 
@@ -262,14 +267,17 @@ namespace InteractML
         /// </summary>
         protected override void ShowTrainingExamplesDropdown()
         {
-            SetDropdownStyle();
-           
-            
-            
-            EditorStyles.foldout.fontStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview").fontStyle;
             if (m_ShowTrainingDataDropdown)
             {
+                m_Dropdown.x = m_HelpRect.x;
+                m_Dropdown.y = m_HelpRect.y + m_HelpRect.height;
+                m_Dropdown.width = m_HelpRect.width;
+                m_Dropdown.height = 200;
+
+                GUILayout.BeginArea(m_Dropdown);
+
                 EditorGUI.indentLevel++;
+                
 
                 if (ReusableMethods.Lists.IsNullOrEmpty(ref m_SingleTrainingExamplesNode.TrainingExamplesVector))
                 {
@@ -280,7 +288,7 @@ namespace InteractML
                     // Begins Vertical Scroll
                     int indentLevel = EditorGUI.indentLevel;
                     EditorGUILayout.BeginVertical();
-                    m_ScrollPos = EditorGUILayout.BeginScrollView(m_ScrollPos, GUILayout.Width(GetWidth() - 25), GUILayout.Height(GetWidth() - 50));
+                    m_ScrollPos = EditorGUILayout.BeginScrollView(m_ScrollPos, GUILayout.Width(GetWidth()-10), GUILayout.Height(GetWidth() - 50));
 
                     for (int i = 0; i < m_SingleTrainingExamplesNode.TrainingExamplesVector.Count; i++)
                     {
@@ -376,6 +384,7 @@ namespace InteractML
                 }
 
                 EditorGUI.indentLevel--;
+                GUILayout.EndArea();
             }
             
         }

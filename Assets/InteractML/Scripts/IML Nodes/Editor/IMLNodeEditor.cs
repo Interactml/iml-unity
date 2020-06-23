@@ -118,13 +118,13 @@ namespace InteractML
         /// <summary>
         /// Rects for node layout
         /// </summary>
-        private Rect m_BodyRect;
+        protected Rect m_BodyRect;
         protected Rect m_PortRect;
-        private Rect m_InnerBodyRect;
-        private Rect m_HelpRect;
-        private Rect m_WarningRect;
-        private Rect m_InnerWarningRect;
-        private Rect m_InnerInnerWarningRect;
+        protected Rect m_InnerBodyRect;
+        protected Rect m_HelpRect;
+        protected Rect m_WarningRect;
+        protected Rect m_InnerWarningRect;
+        protected Rect m_InnerInnerWarningRect;
 
         /// <summary>
         /// Number of input ports
@@ -145,6 +145,10 @@ namespace InteractML
 
         int count = 3;
         int counter = 0;
+
+        private Vector2 scrollPosition;
+
+        bool button;
 
         #endregion
 
@@ -214,7 +218,8 @@ namespace InteractML
                 ShowBodyFields();
 
                 // Draw help button
-                DrawHelpButtonLayout();
+                float bottomY = HeaderRect.height + m_PortRect.height + m_BodyRect.height;
+                DrawHelpButtonLayout(bottomY);
                 ShowHelpButton(m_HelpRect);
 
                 serializedObject.ApplyModifiedProperties();
@@ -416,21 +421,10 @@ namespace InteractML
             
         }
 
-        public void DrawHelpButtonLayout(Rect m_ButtonsRect, Rect m_PortRect, Rect m_IconsRect)
-         {
-             m_HelpRect.x = 5;
-             m_ButtonsRect.height = m_ButtonsRect.height + 15;
-             m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_IconsRect.height + m_ButtonsRect.height;
-             m_HelpRect.width = NodeWidth - 10;
-             m_HelpRect.height = 40;
-
-             // Draw body background purple rect below ports
-             GUI.DrawTexture(m_HelpRect, NodeColor);
-         }
         // <summary>
         /// Draws help button and tells whether mouse is over the tooltip
         /// </summary>
-        public void ShowHelpButton(Rect m_HelpRect)
+        public virtual void ShowHelpButton(Rect m_HelpRect)
         {
             // Load node skin
             if (m_NodeSkin == null)
@@ -444,22 +438,33 @@ namespace InteractML
             GUILayout.BeginArea(m_HelpRect);
             GUILayout.BeginHorizontal();
             GUILayout.Label("");
-            GUILayout.Button(new GUIContent("Help"), m_NodeSkin.GetStyle("Help Button"));
-            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            /* if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+             {
+
+                 showhelphelper = true;
+             }
+             else if (Event.current.type == EventType.Layout && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+             {
+                showHelp = false;
+                counter = 0;
+
+             }
+
+             if (showhelphelper && Event.current.type == EventType.Layout)
+             {
+                 showHelp = true;
+                 showhelphelper = false;
+             }*/
+            if (GUILayout.Button(new GUIContent("Help"), m_NodeSkin.GetStyle("Help Button")))
             {
-                
-                showhelphelper = true;
-            }
-            else if (Event.current.type == EventType.Layout && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
-            {
-               showHelp = false;
-               counter = 0;
-                
-            }
-            if (showhelphelper && Event.current.type == EventType.Layout)
-            {
-                showHelp = true;
-                showhelphelper = false;
+                Debug.Log("here");
+                if (showHelp)
+                {
+                    showHelp = false;
+                } else
+                {
+                    showHelp = true; 
+                }
             }
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
@@ -467,11 +472,35 @@ namespace InteractML
         // <summary>
         /// Takes in rect and a string. Rect is the rect which the hovered GUI element is in. String is the tip for this element. Draws a tooltip below the element.
         /// </summary>
+        public void ShowHelptip(Rect hoveredRect, string tip)
+        {
+            GUIStyle style = m_NodeSkin.GetStyle("TooltipHelp");
+            // calculates the height of the tooltip 
+            var x = style.CalcHeight(new GUIContent(tip), hoveredRect.width);
+            m_ToolRect.x = hoveredRect.x;
+            m_ToolRect.y = hoveredRect.y + hoveredRect.height;
+            m_ToolRect.width = hoveredRect.width;
+            m_ToolRect.height = 200;
+
+            GUILayout.BeginArea(m_ToolRect);
+            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, GUILayout.Width(GetWidth() - 10), GUILayout.Height(GetWidth() - 50));
+            GUILayout.BeginHorizontal();
+
+            GUILayoutOption[] options = new GUILayoutOption[] { GUILayout.MinWidth(hoveredRect.width), GUILayout.MaxHeight(x) };
+            GUILayout.TextArea(tip, style, options);
+            GUILayout.EndHorizontal();
+            EditorGUILayout.EndScrollView();
+            GUILayout.EndArea();
+            
+            
+        }
+
         public void ShowTooltip(Rect hoveredRect, string tip)
         {
             GUIStyle style = m_NodeSkin.GetStyle("Tooltip");
             // calculates the height of the tooltip 
             var x = style.CalcHeight(new GUIContent(tip), hoveredRect.width);
+
             m_ToolRect.x = hoveredRect.x;
             m_ToolRect.y = hoveredRect.y + hoveredRect.height;
             m_ToolRect.width = hoveredRect.width;
@@ -479,12 +508,15 @@ namespace InteractML
 
             GUILayout.BeginArea(m_ToolRect);
             GUILayout.BeginHorizontal();
-            
-            GUILayoutOption[] options = new GUILayoutOption[] { GUILayout.MinWidth(hoveredRect.width), GUILayout.MaxHeight(x)};
+
+            GUILayoutOption[] options = new GUILayoutOption[] { GUILayout.MinWidth(hoveredRect.width), GUILayout.MaxHeight(x) };
             GUILayout.TextArea(tip, style, options);
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
-            
+
+
+
+
         }
         // <summary>
         /// Takes in string goes through ports in that node to check if the mouse is over them. If the mouse is over one then it makes showport true and sets tooltip 
@@ -622,10 +654,10 @@ namespace InteractML
         /// <summary>
         /// Define rect values for node body and paint textures based on rects 
         /// </summary>
-        private void DrawHelpButtonLayout()
+        protected virtual void DrawHelpButtonLayout(float y)
         {
             m_HelpRect.x = 5;
-            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_BodyRect.height;
+            m_HelpRect.y = y;
             m_HelpRect.width = NodeWidth - 10;
             m_HelpRect.height = 40;
 

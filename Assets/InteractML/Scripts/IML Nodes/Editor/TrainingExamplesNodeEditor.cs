@@ -346,7 +346,6 @@ namespace InteractML
         protected void SetDropdownStyle()
         {
             GUI.skin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
-            GUILayout.Space(m_BodyRectButtons.height + 45);
             GUIStyle myFoldoutStyle = new GUIStyle(EditorStyles.foldout);
             Color myStyleColor = Color.white;
             myFoldoutStyle.fontStyle = FontStyle.Bold;
@@ -364,7 +363,40 @@ namespace InteractML
             m_ShowTrainingDataDropdown = EditorGUILayout.Foldout(m_ShowTrainingDataDropdown, "View Training Pairs", myFoldoutStyle);
         }
 
+        // <summary>
+        /// Draws help button and tells whether mouse is over the tooltip
+        /// </summary>
+        public override void ShowHelpButton(Rect m_HelpRect)
+        {
+            // Load node skin
+            if (m_NodeSkin == null)
+                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
 
+            m_HelpRect.x = m_HelpRect.x + 20;
+            m_HelpRect.y = m_HelpRect.y + 10;
+            m_HelpRect.width = m_HelpRect.width - 40;
+
+
+            GUILayout.BeginArea(m_HelpRect);
+            GUILayout.BeginHorizontal();
+            SetDropdownStyle();
+            EditorStyles.foldout.fontStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview").fontStyle;
+
+            if (GUILayout.Button(new GUIContent("Help"), m_NodeSkin.GetStyle("Help Button")))
+            {
+                Debug.Log("here");
+                if (showHelp)
+                {
+                    showHelp = false;
+                }
+                else
+                {
+                    showHelp = true;
+                }
+            }
+            GUILayout.EndHorizontal();
+            GUILayout.EndArea();
+        }
 
 
     }

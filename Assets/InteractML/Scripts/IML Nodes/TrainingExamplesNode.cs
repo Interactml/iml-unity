@@ -131,6 +131,8 @@ namespace InteractML
 
         private bool MLSClassification = false;
 
+        public IMLNodeTooltips TrainingTips;
+
         #endregion
 
         #region XNode Messages
@@ -141,8 +143,6 @@ namespace InteractML
             base.Init();
 
             Initialize();
-
-            tips = IMLTooltipsSerialization.LoadTooltip("TrainingExamples");
         }
 
         public override void OnCreateConnection(NodePort from, NodePort to)

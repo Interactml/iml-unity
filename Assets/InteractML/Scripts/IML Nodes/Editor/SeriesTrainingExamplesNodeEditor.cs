@@ -76,9 +76,14 @@ namespace InteractML
             DrawBodyLayoutButtons();
             ShowButtons();
 
-            DrawBodyLayoutBottom();
+            DrawHelpButtonLayout(m_BodyRectButtons.y + m_BodyRectButtons.height);
             ShowTrainingExamplesDropdown();
-            ShowHelpButton(m_BodyRectBottom);
+            ShowHelpButton(m_HelpRect);
+
+            if (showHelp)
+            {
+                ShowHelptip(m_HelpRect, m_SeriesTrainingExamplesNode.TrainingTips.HelpTooltip);
+            }
 
         }
 
@@ -239,14 +244,16 @@ namespace InteractML
         /// </summary>
         protected override void ShowTrainingExamplesDropdown()
         {
-            SetDropdownStyle();
-
-            //m_ShowTrainingDataDropdown = EditorGUILayout.Foldout(m_ShowTrainingDataDropdown, "Inspect Training Series");
-            EditorStyles.foldout.fontStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview").fontStyle;
             if (m_ShowTrainingDataDropdown)
             {
-                EditorGUI.indentLevel++;
+                m_Dropdown.x = m_HelpRect.x;
+                m_Dropdown.y = m_HelpRect.y + m_HelpRect.height;
+                m_Dropdown.width = m_HelpRect.width;
+                m_Dropdown.height = 200;
 
+                GUILayout.BeginArea(m_Dropdown);
+
+                EditorGUI.indentLevel++;
                 if (ReusableMethods.Lists.IsNullOrEmpty(ref m_SeriesTrainingExamplesNode.TrainingSeriesCollection))
                 {
                     EditorGUILayout.LabelField("Training Series List is empty", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("foldoutempty"));
@@ -342,6 +349,7 @@ namespace InteractML
                 }
 
                 EditorGUI.indentLevel--;
+                GUILayout.EndArea();
             }
 
         }
