@@ -385,7 +385,6 @@ namespace InteractML
 
             if (GUILayout.Button(new GUIContent("Help"), m_NodeSkin.GetStyle("Help Button")))
             {
-                Debug.Log("here");
                 if (showHelp)
                 {
                     showHelp = false;

@@ -3,7 +3,7 @@
   "PortTooltip": [ "Connect Recorded Data", "Connect Data Type Node or Feature Extractor", "Outputs the Output value/z of the machine learning system"],
   "BodyTooltip": {
     "tips": [
-      "tip 1",
+      "Reset Model",
       "Train Model",
       "Run Model"
     ],
@@ -13,5 +13,5 @@
       "error 2"
     ]
   },
-  "BottomError": [ "No training data please connect a Recorded Data Node or Record Examples on the connected node. ", "No live data please connect Live Data In to Data Type Nodes or Feature Extractor", "More examples recorded. Do you need to retrain?" ]
+  "BottomError": [ "No training data please connect a Recorded Data Node or Record Examples on the connected node. ", "No live data please connect Live Data In to Data Type Nodes or Feature Extractor", "The number of recorded training examples does not match the examples used to train the model. Do you need to retrain?" ]
 }
