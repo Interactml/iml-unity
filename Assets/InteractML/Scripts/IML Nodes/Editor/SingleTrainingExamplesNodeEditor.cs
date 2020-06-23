@@ -158,7 +158,13 @@ namespace InteractML
             GUILayout.Label("delete all \n recordings", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button Pink"));
             GUILayout.Label("");
             GUILayout.EndHorizontal();
-            
+
+            GUILayout.Space(10);
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(spacing);
+            GUILayout.Label("No of pairs " + m_SingleTrainingExamplesNode.TrainingExamplesVector.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"));
+            GUILayout.EndHorizontal();
+
             GUILayout.EndArea();
 
         }
@@ -273,6 +279,7 @@ namespace InteractML
                 m_Dropdown.y = m_HelpRect.y + m_HelpRect.height;
                 m_Dropdown.width = m_HelpRect.width;
                 m_Dropdown.height = 200;
+                GUI.DrawTexture(m_Dropdown, NodeColor);
 
                 GUILayout.BeginArea(m_Dropdown);
 

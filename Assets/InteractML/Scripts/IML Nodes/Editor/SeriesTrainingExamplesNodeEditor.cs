@@ -133,8 +133,14 @@ namespace InteractML
             GUILayout.Label(recordNameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
             GUILayout.Space(spacing-20);
             GUILayout.Label("delete all \n recordings", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button Pink"));
-            
             GUILayout.EndHorizontal();
+
+            GUILayout.Space(10);
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(spacing);
+            GUILayout.Label("No of pairs " + m_SeriesTrainingExamplesNode.TrainingExamplesVector.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"));
+            GUILayout.EndHorizontal();
+
             GUILayout.EndArea();
 
 
@@ -250,7 +256,7 @@ namespace InteractML
                 m_Dropdown.y = m_HelpRect.y + m_HelpRect.height;
                 m_Dropdown.width = m_HelpRect.width;
                 m_Dropdown.height = 200;
-
+                GUI.DrawTexture(m_Dropdown, NodeColor);
                 GUILayout.BeginArea(m_Dropdown);
 
                 EditorGUI.indentLevel++;
