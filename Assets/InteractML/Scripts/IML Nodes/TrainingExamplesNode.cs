@@ -133,6 +133,12 @@ namespace InteractML
 
         public IMLNodeTooltips TrainingTips;
 
+        private List<NodePort> inputPortList;
+        private List<NodePort> targetPortList;
+
+        private bool badRemove = false;
+        private string portName = "";
+
         #endregion
 
         #region XNode Messages
@@ -163,6 +169,7 @@ namespace InteractML
                 if (MLSClassification && TargetValues.Count >= 1 )
                 {
                     from.Disconnect(to);
+                    Debug.Log("not allowed 1");
                 }
                 else
                 {
@@ -170,13 +177,28 @@ namespace InteractML
                 }
                 MLSClassification = false;
             }
+            // if you have started training 
+            if(TrainingExamplesVector.Count > 0 && !badRemove)
+            {
+                Debug.Log("not allowed 2");
+                from.Disconnect(to);
+            }
             UpdateTargetValuesConfig();
-
-
+            inputPortList = this.GetInputPort("InputFeatures").GetConnections();
+            targetPortList = this.GetInputPort("TargetValues").GetConnections();
         }
 
         public override void OnRemoveConnection(NodePort port)
         {
+            if(TrainingExamplesVector.Count  > 0)
+            {
+                badRemove = true;
+                portName = port.fieldName;
+            } else
+            {
+                inputPortList = this.GetInputPort("InputFeatures").GetConnections();
+                targetPortList = this.GetInputPort("TargetValues").GetConnections();
+            }
             base.OnRemoveConnection(port);
             UpdateTargetValueInput();
             UpdateTargetValuesConfig();
@@ -275,7 +297,8 @@ namespace InteractML
         {
             // Handle Input
             KeyboardInput();
-
+            if (badRemove)
+                StopDisconnection();
             // Keep input config list updated
             UpdateInputConfigList();
 
@@ -646,6 +669,34 @@ namespace InteractML
                 m_DesiredInputFeatures.Add(inputValue.FeatureValues);
 
             }
+
+        }
+
+        protected void StopDisconnection()
+        {
+            if (portName == "TargetValues")
+            {
+                NodePort portConnect = GetInputPort(portName);
+                for (int i = 0; i < targetPortList.Count; i++)
+                {
+                    Debug.Log(targetPortList[i].fieldName);
+                    portConnect.Connect(targetPortList[i]);
+                    targetPortList[i].Connect(portConnect);
+                }
+            }
+
+            if (portName == "InputFeatures")
+            {
+                NodePort portConnect = GetInputPort(portName);
+                for (int i = 0; i < inputPortList.Count; i++)
+                {
+                    portConnect.Connect(inputPortList[i]);
+                    inputPortList[i].Connect(portConnect);
+                    
+                }
+            }
+
+            badRemove = false;
 
         }
 

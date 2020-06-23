@@ -759,7 +759,7 @@ namespace InteractML
             {
                 // Save size of rapidlib vectorsize to work with it 
                 // DIRTY CODE.  THIS SHOULD CHECK IF THE OUTPUT CONFIGURATION ACTUALLY DID CHANGE OR NOT. YOU COULD HAVE 2 DIFF OUTPUTS CONFIGS WITH SAME VECTOR SIZE
-                if(PredictedRapidlibOutput != null)
+                if (PredictedRapidlibOutput != null)
                     m_LastKnownRapidlibOutputVectorSize = PredictedRapidlibOutput.Length;
                 // Adjust the desired outputs list based on configuration selected
                 PredictedOutput.Clear();
@@ -804,6 +804,7 @@ namespace InteractML
                         // There was an unexpected change of training examples outputs, update list
                         UpdateDynamicOutputPorts(IMLTrainingExamplesNodes, m_ExpectedOutputList, ref m_DynamicOutputPorts);
                     }
+                    
                     /* DIRTY CODE */
                 }
 
