@@ -266,28 +266,12 @@ namespace InteractML
             //    m_CIMLConfiguration.ResetModel();
             //}
             // if button contains mouse position
-            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
-            {
-                buttonTipHelper = true;
-                TooltipText = m_CIMLConfiguration.tips.BodyTooltip.Tips[0];
-            }
-            // if event type layout and mouse is not on butoon make buttonTip false
-            else if (Event.current.type == EventType.Layout && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
-            {
-                buttonTip = false;
-
-            }
-            // if current event is layout and mouse has been detected on button make buttontip true and button tip helper false
-            if (Event.current.type == EventType.Layout && buttonTipHelper)
-            {
-                buttonTip = true;
-                buttonTipHelper = false;
-            }
-
             TrainModelButton();
             GUILayout.Space(15);
             RunModelButton();
             GUILayout.EndArea();
+
+            
         }
 
         private void ShowBottomButtons()
