@@ -11,14 +11,21 @@ public class MouseMover : MonoBehaviour {
     private Vector3 m_CurrentMouseWorldPos;
 
     public bool MoveAxisZ;
+    public bool UseCurrentZOnStart;
 
 	// Use this for initialization
 	void Start () {
         m_ObjToMove = this.gameObject;
 
-        // Init depth of movement
-        m_CurrentMouseWorldPos.z = -1f;
-
+        if (!UseCurrentZOnStart)
+        {
+            // Init depth of movement
+            m_CurrentMouseWorldPos.z = -1f;
+        }
+        else
+        {
+            m_CurrentMouseWorldPos.z = this.transform.position.z;
+        }
 
     }
 	
