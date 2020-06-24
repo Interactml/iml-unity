@@ -661,6 +661,14 @@ namespace InteractML
             {
                 for (int i = 0; i < m_ScriptNodesList.Count; i++)
                 {
+                    if (m_ScriptNodesList[i] == null)
+                    {
+                        // Remove null reference
+                        m_ScriptNodesList.RemoveAt(i);
+                        // Adjust index
+                        i--;
+                        continue;
+                    }
                     if (!m_ScriptNodesList[i].IsTaken)
                     {
                         // If there is a scriptHashCode from a previous script...

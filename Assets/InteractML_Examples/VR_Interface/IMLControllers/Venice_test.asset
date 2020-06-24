@@ -49,6 +49,64 @@ MonoBehaviour:
   x_switch: 1
   y_switch: 1
   z_switch: 1
+--- !u!114 &-6519772805324882145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
+  m_Name: Extract Position
+  m_EditorClassIdentifier: 
+  id: 887e0bbb-2274-4d43-b548-b2eb64fda60f
+  graph: {fileID: 11400000}
+  position: {x: 1064, y: -952}
+  ports:
+    keys:
+    - GameObjectDataIn
+    - LiveDataOut
+    values:
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: -6519772805324882145}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: GameObjectDataOut
+        node: {fileID: 3766432060736208195}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: LiveDataOut
+      _node: {fileID: -6519772805324882145}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: InputFeatures
+        node: {fileID: -4465432793664547719}
+        reroutePoints:
+        - {x: 1392, y: -928}
+        - {x: 1391.5735, y: -1217.0667}
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
+  LocalSpace: 0
+  x_switch: 1
+  y_switch: 1
+  z_switch: 1
+  m_PositionExtracted:
+    m_Values:
+    - -0.61
+    - 1.0307198
+    - 7.82
+  ReceivingData: 0
 --- !u!114 &-5696105290096626158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,6 +184,38 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 1
   RecordDataKey: 0
+--- !u!114 &-5528205844699251256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
+  m_Name: LightController (Script)
+  m_EditorClassIdentifier: 
+  id: 4eac3909-d4c6-4cac-a2fb-549ebc37bce0
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys:
+    - SetLightRotation
+    values:
+    - _fieldName: SetLightRotation
+      _node: {fileID: -5528205844699251256}
+      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  DevMode: 0
+  m_ScriptInternal: {fileID: 0}
+  ScriptHashCode: 23050
+  CreatedDuringPlaymode: 0
 --- !u!114 &-4465432793664547719
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,7 +256,10 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: LiveDataOut
+        node: {fileID: -6519772805324882145}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -187,7 +280,11 @@ MonoBehaviour:
       connections:
       - fieldName: m_In
         node: {fileID: -4052623649073675894}
-        reroutePoints: []
+        reroutePoints:
+        - {x: 1811.5874, y: -1372.5436}
+        - {x: 1904, y: -1136}
+        - {x: 1844.8661, y: -975.2785}
+        - {x: 1491.2793, y: -966.9588}
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -195,11 +292,12 @@ MonoBehaviour:
   DevMode: 0
   IMLTrainingExamplesNodes:
   - {fileID: -5696105290096626158}
-  InputFeatures: []
+  InputFeatures:
+  - {fileID: -6519772805324882145}
   ModelOutput: {fileID: 0}
   PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
-  m_ExpectedInputList: 
+  m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_LearningType: 2
   EnableKeyboardControl: 0
@@ -221,7 +319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 259cfcc4-1bc0-4451-bd81-6975592497cd
   graph: {fileID: 11400000}
-  position: {x: 1832, y: -1544}
+  position: {x: 1576, y: -872}
   ports:
     keys:
     - m_In
@@ -435,7 +533,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: f6bfcfd9-df45-4e2b-a64c-e126175643b4
   graph: {fileID: 11400000}
-  position: {x: 520, y: -1720}
+  position: {x: 584, y: -1736}
   ports:
     keys:
     - GameObjectDataIn
@@ -502,9 +600,41 @@ MonoBehaviour:
   - {fileID: 5906872443194838154}
   - {fileID: -4465432793664547719}
   - {fileID: -4052623649073675894}
-  - {fileID: 8037031471397098045}
-  - {fileID: 4677043442192726297}
+  - {fileID: -6519772805324882145}
+  - {fileID: -5528205844699251256}
   SceneComponent: {fileID: 0}
+--- !u!114 &2668313945233340378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
+  m_Name: LightController (Script)
+  m_EditorClassIdentifier: 
+  id: e076a2c2-942e-4f13-a5a5-92c6060c1523
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys:
+    - SetLightRotation
+    values:
+    - _fieldName: SetLightRotation
+      _node: {fileID: 2668313945233340378}
+      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  DevMode: 0
+  m_ScriptInternal: {fileID: 0}
+  ScriptHashCode: 23050
+  CreatedDuringPlaymode: 0
 --- !u!114 &3732566680617633936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,6 +711,11 @@ MonoBehaviour:
       - fieldName: GameObjectDataIn
         node: {fileID: -1060329389974368481}
         reroutePoints: []
+      - fieldName: GameObjectDataIn
+        node: {fileID: -6519772805324882145}
+        reroutePoints:
+        - {x: 489.6603, y: -1587.6509}
+        - {x: 576, y: -992}
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -646,38 +781,6 @@ MonoBehaviour:
   x_switch: 1
   y_switch: 1
   z_switch: 1
---- !u!114 &4677043442192726297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
-  m_Name: LightController (Script)
-  m_EditorClassIdentifier: 
-  id: 8056230d-f848-4c69-abff-c121142a34da
-  graph: {fileID: 11400000}
-  position: {x: 0, y: 0}
-  ports:
-    keys:
-    - SetLightRotation
-    values:
-    - _fieldName: SetLightRotation
-      _node: {fileID: 4677043442192726297}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-  DevMode: 0
-  m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 23236
-  CreatedDuringPlaymode: 0
 --- !u!114 &5906872443194838154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -722,41 +825,9 @@ MonoBehaviour:
   DevMode: 0
   ValueName: 
   m_In: 0
-  m_Value: 1
+  m_Value: 2
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  m_UserInput: 1
+  m_UserInput: 2
   int_switch: 1
---- !u!114 &8037031471397098045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
-  m_Name: LightController (Script)
-  m_EditorClassIdentifier: 
-  id: d23b2551-c43b-47c7-a13e-b11d62019047
-  graph: {fileID: 11400000}
-  position: {x: 0, y: 0}
-  ports:
-    keys:
-    - SetLightRotation
-    values:
-    - _fieldName: SetLightRotation
-      _node: {fileID: 8037031471397098045}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-  DevMode: 0
-  m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 23050
-  CreatedDuringPlaymode: 0
