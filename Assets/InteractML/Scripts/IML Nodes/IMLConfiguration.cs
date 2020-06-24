@@ -1408,6 +1408,7 @@ namespace InteractML
         /// </summary>
         protected void UpdateInputVector()
         {
+            CreateRapidlibInputVector();
             // If we have some input connected...
             if (!Lists.IsNullOrEmpty(ref InputFeatures))
             {
