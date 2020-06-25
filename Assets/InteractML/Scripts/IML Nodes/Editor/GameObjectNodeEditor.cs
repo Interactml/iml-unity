@@ -11,6 +11,10 @@ namespace InteractML
     [CustomNodeEditor(typeof(GameObjectNode))]
     public class GameObjectNodeEditor : IMLNodeEditor
     {
+        /// <summary>
+        /// Reference to the node itself
+        /// </summary>
+        private GameObjectNode m_GameObjectNode;
 
         Editor gameObjectEditor;
         GUIStyle stylePreview;
@@ -22,6 +26,31 @@ namespace InteractML
 
 
 
+        public override void OnHeaderGUI()
+        {
+            // Get reference to the current node
+            m_GameObjectNode = (target as GameObjectNode);
+
+            // Initialise header background Rects
+            InitHeaderRects();
+
+            NodeColor = GetColorTextureFromHexString("#3A3B5B");
+
+            // Draw header background Rect
+            GUI.DrawTexture(HeaderRect, NodeColor);
+
+            // Draw line below header
+            GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#E24680"));
+
+            //Display Node name
+            GUILayout.BeginArea(HeaderRect);
+            GUILayout.Space(10);
+            GUILayout.Label("GAME OBJECT INPUT", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+            GUILayout.EndArea();
+
+            GUILayout.Label("", GUILayout.MinHeight(60));
+
+        }
 
         public override void OnBodyGUI()
         {
@@ -110,7 +139,7 @@ namespace InteractML
             GUILayout.Space(5);
             GUIContent outputPortLabel = new GUIContent("GameObject\n Data Out", m_GameObjectNode.tips.PortTooltip[0]);
             PortField(outputPortLabel, m_GameObjectNode.GetOutputPort("GameObjectDataOut"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
-            
+
         }
 
         /// <summary>
@@ -123,7 +152,7 @@ namespace InteractML
 
             EditorGUILayout.Space();
             EditorGUILayout.Space();
-            
+
             // Show label of which object is being fed to the node
             GameObject gObj = m_GameObjectNode.GameObjectDataOut;
 
@@ -190,11 +219,11 @@ namespace InteractML
                         if (m_NoMeshTexture == null)
                         {
                             // Create new empty texture
-                            m_NoMeshTexture = new Texture2D(1,1);
+                            m_NoMeshTexture = new Texture2D(1, 1);
                             // Read texture from memory
                             m_NoMeshTexture.LoadImage(System.IO.File.ReadAllBytes(Application.dataPath + "/InteractML/Resources/Icons/gameobject_transform_img.png"));
                             // Resize it
-                            m_NoMeshTexture = TextureTools.ResampleAndCrop(m_NoMeshTexture, (int)NodeWidth, (int)(NodeWidth* m_TexHeightMultiplier));
+                            m_NoMeshTexture = TextureTools.ResampleAndCrop(m_NoMeshTexture, (int)NodeWidth, (int)(NodeWidth * m_TexHeightMultiplier));
                         }
                     }
 
@@ -214,7 +243,7 @@ namespace InteractML
 
 
 
- 
+
 
     }
 
