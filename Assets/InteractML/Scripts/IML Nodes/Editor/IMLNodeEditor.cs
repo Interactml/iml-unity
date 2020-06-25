@@ -626,8 +626,6 @@ namespace InteractML
                 m_PortRect.width = NodeWidth - 10;
                 m_PortRect.height = 50 + extraHeight;
             }
-
-            Debug.Log($"PortRect.x: {m_PortRect.x} , y: {m_PortRect.y}, width: {m_PortRect.width}, height: {m_PortRect.height}");
             
             GUI.DrawTexture(m_PortRect, NodeColor);
 

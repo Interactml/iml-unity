@@ -261,7 +261,7 @@ MonoBehaviour:
   GameObjectsToUse:
   - {fileID: 77529449}
   m_ScriptNodesList:
-  - {fileID: 847044801147235297, guid: 45b109d7874046141b6f67afaa5fe7d1, type: 2}
+  - {fileID: 2919915752842513222, guid: 45b109d7874046141b6f67afaa5fe7d1, type: 2}
   FeaturesUpdated: 1
   ComponentsWithIMLData:
   - GameComponent: {fileID: 2057764850}
@@ -561,7 +561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MLComponent: {fileID: 266555834}
-  controlRGB: 0
+  controlRGB: 1
   SetAbsoluteColour: 0
   SetR: 0
   SetG: 0
