@@ -89,6 +89,10 @@ namespace InteractML
         bool showporthelper;
         //Controls whether or not the reskinning of the node is automatically handled in the base IMLNodeEditor class (false to have default xNode skin, true for new IML skin)
         public bool UIReskinAuto = true;
+        /// <summary>
+        /// Do we need to recalculate background rects?
+        /// </summary>
+        private bool m_RecalculateRects;
 
         /// <summary>
         /// The skin to use on the node
@@ -125,6 +129,7 @@ namespace InteractML
         /// </summary>
         protected List<IMLNodePortPair> m_PortPairs;
 
+        private int m_KnownNumPortPairs;
 
 
         // Dictionaries to allow the override of portFields
@@ -219,6 +224,9 @@ namespace InteractML
                 {
                     ShowTooltip(m_HelpRect, nodeTips.HelpTooltip);
                 }
+
+                // Make sure we are not recalculating rects every frame
+                m_RecalculateRects = false;
             }
             // If we want to keep xNode's default skin
             else
@@ -601,22 +609,34 @@ namespace InteractML
             // Add x units to height per extra port
             if (m_PortPairs == null)
                 m_PortPairs = new List<IMLNodePortPair>();
-            if(m_PortRect.x == 0)
-            {
-                int numPortPairs = m_PortPairs.Count; ;
-                int extraHeight = (numPortPairs * 10);
 
+            // Check whether we need to recalculate rects because there are more portPairs
+            if (m_KnownNumPortPairs != m_PortPairs.Count)
+            {
+                m_KnownNumPortPairs = m_PortPairs.Count;
+                m_RecalculateRects = true;
+            }
+
+            if (m_RecalculateRects)
+            {
+                int extraHeight = (m_PortPairs.Count * 10);
                 // Draw body background purple rect below header
                 m_PortRect.x = 5;
                 m_PortRect.y = HeaderRect.height;
                 m_PortRect.width = NodeWidth - 10;
                 m_PortRect.height = 50 + extraHeight;
             }
+
+            Debug.Log($"PortRect.x: {m_PortRect.x} , y: {m_PortRect.y}, width: {m_PortRect.width}, height: {m_PortRect.height}");
             
             GUI.DrawTexture(m_PortRect, NodeColor);
 
+            // Calculate rect for line below ports
+            Rect lineRect = new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine);
+            Texture2D lineTex = GetColorTextureFromHexString("#888EF7");
+
             // Draw line below ports
-            GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), GetColorTextureFromHexString("#888EF7"));
+            GUI.DrawTexture(lineRect, lineTex);
 
         }
 
@@ -625,7 +645,7 @@ namespace InteractML
         /// </summary>
         private void DrawBodyLayout()
         {
-            if(m_BodyRect.x == 0)
+            if(m_RecalculateRects)
             {
                 m_BodyRect.x = 5;
                 m_BodyRect.y = HeaderRect.height + m_PortRect.height;
@@ -643,7 +663,7 @@ namespace InteractML
         /// </summary>
         protected virtual void DrawHelpButtonLayout(float y)
         {
-            if(m_HelpRect.x == 0)
+            if(m_RecalculateRects)
             {
                 m_HelpRect.x = 5;
                 m_HelpRect.y = y;

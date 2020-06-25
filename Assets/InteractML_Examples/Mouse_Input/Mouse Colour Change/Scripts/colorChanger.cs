@@ -16,6 +16,22 @@ public class colorChanger : MonoBehaviour
     float transitionTime = 5f;
     float transitionRate = 0;
 
+    /// <summary>
+    /// Are we using regression for RGB?
+    /// </summary>
+    public bool controlRGB;
+
+    // IML values classification
+    [PullFromIMLController]
+    public int SetAbsoluteColour;
+    // IML values regression
+    [PullFromIMLController]
+    public float SetR;
+    [PullFromIMLController]
+    public float SetG;
+    [PullFromIMLController]
+    public float SetB;
+
     // Start is called before the first frame update
     void Start()
     {
