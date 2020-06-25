@@ -33,9 +33,6 @@ namespace InteractML.DataTypeNodes
         float x, y, z, w;
         int counter, count;
 
-        [HideInInspector]
-        public IMLNodeTooltips tips;
-
         public bool InputConnected;
         public Vector4 m_UserInput;
         Vector4 receivedVector4;
@@ -45,7 +42,7 @@ namespace InteractML.DataTypeNodes
         {
             counter = 0;
             count = 5;
-            tips = IMLTooltipsSerialization.LoadTooltip("Vector4");
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Vector4");
             base.Init();
         }
 
