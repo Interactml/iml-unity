@@ -389,8 +389,12 @@ namespace InteractML
             SetLearningType();
 
             // Handle Input
-            KeyboardInput();
-            
+            //KeyboardInput();
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                ToggleRunning();
+            }
+
             // Update Input Config List
             UpdateInputConfigList();
 

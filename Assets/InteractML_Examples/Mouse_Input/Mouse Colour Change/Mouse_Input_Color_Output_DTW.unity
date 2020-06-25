@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveAxisZ: 0
+  UseCurrentZOnStart: 0
 --- !u!1 &266555833
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,14 +257,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c477b3f40f547843930edfdcbde5951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MLController: {fileID: 11400000, guid: e9a4d653667bc044980fe32879b586bc, type: 2}
+  MLController: {fileID: 11400000, guid: 4f7c21b001de13743a16ae174908e557, type: 2}
   GameObjectsToUse:
   - {fileID: 77529449}
-  TrainingExamplesNodesList:
-  - {fileID: 5402000221558968246, guid: e9a4d653667bc044980fe32879b586bc, type: 2}
-  IMLConfigurationNodesList:
-  - {fileID: -6845527610141923183, guid: e9a4d653667bc044980fe32879b586bc, type: 2}
+  m_ScriptNodesList:
+  - {fileID: -5020083817285506259, guid: 4f7c21b001de13743a16ae174908e557, type: 2}
   FeaturesUpdated: 0
+  ComponentsWithIMLData:
+  - GameComponent: {fileID: 2057764850}
+    ControlClones: 0
 --- !u!4 &266555835
 Transform:
   m_ObjectHideFlags: 0
@@ -558,4 +560,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbd2a755098f5f46814744bfc36b3e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MLComponent: {fileID: 0}
+  SetAbsoluteColour: 0
