@@ -22,31 +22,6 @@ namespace InteractML
 
 
 
-         public override void OnHeaderGUI()
-        {
-            base.OnHeaderGUI();
-            /*
-
-            // Initialise header background Rects
-            InitHeaderRects();
-
-            NodeColor = GetColorTextureFromHexString("#3A3B5B");
-
-            // Draw header background Rect
-            GUI.DrawTexture(HeaderRect, NodeColor);
-
-            // Draw line below header
-            GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#E24680"));
-
-            //Display Node name
-            GUILayout.BeginArea(HeaderRect);
-            GUILayout.Space(10);
-            GUILayout.Label("GAME OBJECT INPUT", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
-            GUILayout.EndArea();
-
-            GUILayout.Label("", GUILayout.MinHeight(60));*/
-
-        }
 
         public override void OnBodyGUI()
         {
