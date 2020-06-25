@@ -90,7 +90,7 @@ MonoBehaviour:
   DevMode: 0
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
-  state: 0
+  state: 1
 --- !u!114 &-6267761647402259264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,6 +347,7 @@ MonoBehaviour:
   - {fileID: -1047497902821097423}
   - {fileID: -9158786966055275176}
   - {fileID: 6287656070124255742}
+  - {fileID: 3852001797581773925}
   SceneComponent: {fileID: 0}
 --- !u!114 &1841612058189453493
 MonoBehaviour:
@@ -421,6 +422,58 @@ MonoBehaviour:
 
 
 '
+--- !u!114 &3852001797581773925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
+  m_Name: colorChangerRGB (Script)
+  m_EditorClassIdentifier: 
+  id: 94704560-eb8f-45ba-9ed6-310b57fc4269
+  graph: {fileID: 11400000}
+  position: {x: 0, y: 0}
+  ports:
+    keys:
+    - SetR
+    - SetG
+    - SetB
+    values:
+    - _fieldName: SetR
+      _node: {fileID: 3852001797581773925}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: SetG
+      _node: {fileID: 3852001797581773925}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: SetB
+      _node: {fileID: 3852001797581773925}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  DevMode: 0
+  m_ScriptInternal: {fileID: 0}
+  ScriptHashCode: 65114
+  CreatedDuringPlaymode: 0
 --- !u!114 &5092278411087661957
 MonoBehaviour:
   m_ObjectHideFlags: 0

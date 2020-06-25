@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveAxisZ: 0
+  UseCurrentZOnStart: 0
 --- !u!1 &266555833
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,10 +257,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c477b3f40f547843930edfdcbde5951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MLController: {fileID: 11400000, guid: 2594d0b219b963048bec5f6d15fbf34e, type: 2}
+  MLController: {fileID: 11400000, guid: 9e2fe998361fad74b9687f803bfa59ef, type: 2}
   GameObjectsToUse:
   - {fileID: 77529449}
+  m_ScriptNodesList:
+  - {fileID: 3829375924371095371, guid: 9e2fe998361fad74b9687f803bfa59ef, type: 2}
   FeaturesUpdated: 1
+  ComponentsWithIMLData:
+  - GameComponent: {fileID: 2057764850}
+    ControlClones: 0
 --- !u!4 &266555835
 Transform:
   m_ObjectHideFlags: 0
@@ -554,4 +560,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbd2a755098f5f46814744bfc36b3e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MLComponent: {fileID: 266555834}
+  SetAbsoluteColour: 0
