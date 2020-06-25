@@ -338,14 +338,11 @@ namespace InteractML
             // Run examples logic in case we need to start/stop collecting examples
             CollectExamplesLogic();
 
-            // Check input for keyboard shortcut in case is pressed
-            //if (EnableKeyboardShortcut)
-            //{
-            //    if (Input.GetKeyDown(KeyCode.Space) )
-            //    {
-            //        ToggleCollectExamples();
-            //    }
-            //}
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                ToggleCollectExamples();
+            }
+            
         }
 
         /// <summary>
