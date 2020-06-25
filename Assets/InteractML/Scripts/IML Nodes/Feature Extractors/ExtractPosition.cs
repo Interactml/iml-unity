@@ -175,6 +175,22 @@ namespace InteractML.FeatureExtractors
             return this;
 
         }
+
+        // Check that we are only connecting to a GameObject
+        public override void OnCreateConnection(NodePort from, NodePort to)
+        {
+            if (from.node.GetType() == this.GetType())
+            {
+                System.Type[] portTypesAccept = new System.Type[] { };
+                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(IMLConfiguration) };
+                this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
+            }
+            else
+            {
+                this.DisconnectIfNotType<BaseExtractorNode, GameObjectNode>(from, to);
+
+            }
+        }
     }
 }
 

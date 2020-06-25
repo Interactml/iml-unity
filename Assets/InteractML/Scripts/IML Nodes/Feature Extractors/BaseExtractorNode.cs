@@ -23,11 +23,11 @@ namespace InteractML.FeatureExtractors
             return null; // Replace this
         }
 
-        // Check that we are only connecting to a GameObject
-        public override void OnCreateConnection(NodePort from, NodePort to)
-        {
-            this.DisconnectIfNotType<BaseExtractorNode, GameObjectNode>(from, to);
-        }
+        //// Check that we are only connecting to a GameObject
+        //public override void OnCreateConnection(NodePort from, NodePort to)
+        //{
+        //    this.DisconnectIfNotType<BaseExtractorNode, GameObjectNode>(from, to);
+        //}
     }
 }
 

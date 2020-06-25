@@ -89,10 +89,6 @@ namespace InteractML.FeatureExtractors
             return UpdateFeature();
         }
 
-        public override void OnCreateConnection(NodePort from, NodePort to)
-        {
-            base.OnCreateConnection(from, to);
-        }
 
         public object UpdateFeature()
         {
@@ -189,6 +185,12 @@ namespace InteractML.FeatureExtractors
                 return this;
             }
 
+        }
+        public override void OnCreateConnection(NodePort from, NodePort to)
+        {
+            System.Type[] portTypesAccept = new System.Type[] { };
+            System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(IMLConfiguration) };
+            this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
         }
     }
 }
