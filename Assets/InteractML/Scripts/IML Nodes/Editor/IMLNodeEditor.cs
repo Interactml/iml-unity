@@ -171,7 +171,7 @@ namespace InteractML
 
                 //Display Node name
                 if (String.IsNullOrEmpty(NodeName))
-                    NodeName = typeof(IMLNode).Name + " (Script)";
+                    NodeName = target.GetType().Name;
 
                 GUILayout.BeginArea(HeaderRect);
                 GUILayout.Space(10);
