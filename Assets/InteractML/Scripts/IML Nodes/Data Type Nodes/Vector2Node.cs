@@ -35,15 +35,12 @@ namespace InteractML.DataTypeNodes
         float x, y;
         int counter, count;
 
-        [HideInInspector]
-        public IMLNodeTooltips tips;
-
         // Use this for initialization
         protected override void Init()
         {
             counter = 0;
             count = 5;
-            tips = IMLTooltipsSerialization.LoadTooltip("Vector2");
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Vector2");
             base.Init();
         }
 
