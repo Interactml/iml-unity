@@ -21,9 +21,6 @@ namespace InteractML
 
         #region XNode Messages
 
-        // Use this for initialization
-
-
         #endregion
 
         #region Unity Messages

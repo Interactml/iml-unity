@@ -154,6 +154,30 @@ namespace InteractML
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
             this.DisconnectIfNotType<TrainingExamplesNode, IFeatureIML>(from, to);
+            // DIRTY CODE
+            // InputFeatures size check
+            if (to.fieldName == "InputFeatures")
+            {
+                // DIRTY CODE
+                // Since there is a bug in DTW rapidlib, we don't allow features of different size connected
+                // If we are a training examples node for DTW...
+                if (this is SeriesTrainingExamplesNode)
+                {
+                    // If we have any features...
+                    if (!Lists.IsNullOrEmpty(ref InputFeatures))
+                    {
+                        // We check that the new feature connected is not of a different size
+                        int newFeatureSize = (from.node as IFeatureIML).FeatureValues.Values.Length;
+                        // Get the first feature connected as the template size
+                        int knownFeatureSize = (InputFeatures[0] as IFeatureIML).FeatureValues.Values.Length;
+                        // Disconnect if sizes don't match
+                        if (newFeatureSize != knownFeatureSize)
+                        {
+                            from.Disconnect(to);
+                        }
+                    }
+                }
+            }
             //if connected to target values 
             if(to.fieldName == "TargetValues")
             {
