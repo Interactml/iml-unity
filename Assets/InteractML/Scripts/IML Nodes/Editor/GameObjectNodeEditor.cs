@@ -16,18 +16,8 @@ namespace InteractML
         /// </summary>
         private GameObjectNode m_GameObjectNode;
 
-        /// <summary>
-        /// Rects for node layout
-        /// </summary>
-        private Rect m_BodyRect;
-        private Rect m_PortRect;
-        private Rect m_HelpRect;
-
         Editor gameObjectEditor;
         GUIStyle stylePreview;
-
-        bool state;
-
         /// <summary>
         /// The texture displayed when the gameObject doesn't have a Mesh Renderer
         /// </summary>

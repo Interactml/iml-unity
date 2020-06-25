@@ -21,7 +21,7 @@ namespace InteractML
     public class IMLNodeEditor : NodeEditor
     {
 
-        #region Variables
+        #region Variables All Nodes 
 
         /// <summary>
         /// Texture2D for node color
@@ -60,39 +60,32 @@ namespace InteractML
         /// <returns></returns>
         protected float NodeWidth { get; set; } = 250f;
 
+
+
         /// <summary>
-        /// Rect value for node header
+        /// Rects for node layout
         /// </summary>
-        /// <returns></returns>
         protected Rect HeaderRect;
-
-        /// <summary>
-        /// Rect value for node header
-        /// </summary>
-        /// <returns></returns>
         protected Rect LineBelowHeader;
-
         protected Rect m_ToolRect;
+        protected Rect m_BodyRect;
+        protected Rect m_PortRect;
+        protected Rect m_InnerBodyRect;
+        protected Rect m_HelpRect;
+        protected Rect m_WarningRect;
+        protected Rect m_InnerWarningRect;
+        protected Rect m_InnerInnerWarningRect;
+        public Rect ToolTipRect;
 
         public Vector2 positionPort;
+        protected Vector2 scrollPosition;
 
-        string description;
-
-        /// <summary>
-        /// Controls whether you see help tooltip
-        /// </summary>
+        //Controls whether you see help tooltip
         public bool showHelp;
-        bool showhelphelper;
-        /// <summary>
-        /// Controls whether you see a port tooltip
-        /// </summary>
+        // Controls whether you see a port tooltip
         public bool showPort = false;
         bool showporthelper;
-        
-
-        /// <summary>
-        /// Controls whether or not the reskinning of the node is automatically handled in the base IMLNodeEditor class (false to have default xNode skin, true for new IML skin)
-        /// </summary>
+        //Controls whether or not the reskinning of the node is automatically handled in the base IMLNodeEditor class (false to have default xNode skin, true for new IML skin)
         public bool UIReskinAuto = true;
 
         /// <summary>
@@ -114,17 +107,7 @@ namespace InteractML
         /// The name for this node
         /// </summary>
         public string NodeName;
-
-        /// <summary>
-        /// Rects for node layout
-        /// </summary>
-        protected Rect m_BodyRect;
-        protected Rect m_PortRect;
-        protected Rect m_InnerBodyRect;
-        protected Rect m_HelpRect;
-        protected Rect m_WarningRect;
-        protected Rect m_InnerWarningRect;
-        protected Rect m_InnerInnerWarningRect;
+        public string TooltipText = "";
 
         /// <summary>
         /// Number of input ports
@@ -140,15 +123,15 @@ namespace InteractML
         /// </summary>
         protected List<IMLNodePortPair> m_PortPairs;
 
-        public string TooltipText = "";
-        public Rect ToolTipRect;
-        private Vector2 scrollPosition;
+        
 
         // Dictionaries to allow the override of portFields
         protected Dictionary<string, string> InputPortsNamesOverride;
         protected Dictionary<string, string> OutputPortsNamesOverride;
         protected bool OverridePortNames = false;
 
+        #endregion
+        #region Variables GameObjectNode 
         #endregion
 
         #region XNode Messages
