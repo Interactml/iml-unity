@@ -1549,7 +1549,7 @@ MonoBehaviour:
   GameObjectsToUse:
   - {fileID: 38591870}
   m_ScriptNodesList:
-  - {fileID: 4677043442192726297, guid: 97ba4d902e126034b9b70455467a46e2, type: 2}
+  - {fileID: 1249230764547322781, guid: 97ba4d902e126034b9b70455467a46e2, type: 2}
   FeaturesUpdated: 0
   ComponentsWithIMLData:
   - GameComponent: {fileID: 1442713060}
@@ -19161,6 +19161,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   light: {fileID: 1316771338}
   SetLightRotation: {x: 0, y: 0, z: 0}
+  LightIntensity: 0
+  controlLightIntensity: 0
 --- !u!1 &1443691841
 GameObject:
   m_ObjectHideFlags: 0

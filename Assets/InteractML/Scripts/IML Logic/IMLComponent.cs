@@ -51,7 +51,7 @@ namespace InteractML
         private List<GameObjectNode> m_GameObjectNodeList;
         private List<RealtimeIMLOutputNode> m_RealtimeIMLOutputNodesList;
         public List<IFeatureIML> FeatureNodesList;
-        [SerializeField]
+        [SerializeField, HideInInspector]
         private List<ScriptNode> m_ScriptNodesList;
         #endregion
 

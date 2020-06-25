@@ -10,6 +10,11 @@ public class LightController : MonoBehaviour
     [PullFromIMLController]
     public Vector3 SetLightRotation;
 
+    [PullFromIMLController]
+    public float LightIntensity;
+
+    public bool controlLightIntensity;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +29,9 @@ public class LightController : MonoBehaviour
             var rotation = light.transform.rotation;
             rotation.eulerAngles = SetLightRotation;
             light.transform.rotation = rotation;
+
+            if (controlLightIntensity)
+                light.intensity = LightIntensity;
         }
     }
 }
