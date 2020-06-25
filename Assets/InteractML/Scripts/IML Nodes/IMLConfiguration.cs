@@ -455,9 +455,11 @@ namespace InteractML
             if (!m_Running)
             {
                 // Set flag to true if running inputs/outputs are not null and the model is trained!
-                if (m_RapidlibInputVector != null && m_RapidlibOutputVector != null && Trained)
+                if (((m_RapidlibInputVector != null && m_RapidlibOutputVector != null) || m_LearningType == IMLSpecifications.LearningType.DTW) && Trained)
                 {
-                    UpdateInputVector();
+                    // If we are on classification or regression...
+                    if (m_LearningType != IMLSpecifications.LearningType.Classification || m_LearningType != IMLSpecifications.LearningType.Regression)
+                        UpdateInputVector();
 
                     m_Running = true;
                 }
