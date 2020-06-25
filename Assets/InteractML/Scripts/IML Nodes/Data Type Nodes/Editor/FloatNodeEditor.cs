@@ -40,54 +40,7 @@ namespace InteractML.DataTypeNodes
             DataInToggle(m_FloatNode.ReceivingData, m_InnerBodyRect, m_BodyRect);
         }
 
-        /// <summary>
-        /// Define rect values for port section and paint textures based on rects 
-        /// </summary>
-        private void DrawPortLayout()
-        {
-            // Draw body background purple rect below header
-            m_PortRect.x = 5;
-            m_PortRect.y = HeaderRect.height;
-            m_PortRect.width = NodeWidth - 10;
-            m_PortRect.height = 60;
-            GUI.DrawTexture(m_PortRect, NodeColor);
-
-            // Draw line below ports
-            GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), GetColorTextureFromHexString("#888EF7"));
-        }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawBodyLayout()
-        {
-            m_BodyRect.x = 5;
-            m_BodyRect.y = HeaderRect.height + m_PortRect.height;
-            m_BodyRect.width = NodeWidth - 10;
-            m_BodyRect.height = 100;
-
-            // Draw body background purple rect below header
-            GUI.DrawTexture(m_BodyRect, NodeColor);
-        }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawHelpButtonLayout()
-        {
-            m_HelpRect.x = 5;
-            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_BodyRect.height;
-            m_HelpRect.width = NodeWidth - 10;
-            m_HelpRect.height = 40;
-
-            // Draw body background purple rect below header
-            GUI.DrawTexture(m_HelpRect, NodeColor);
-
-            //Draw separator line
-            GUI.DrawTexture(new Rect(m_HelpRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_HelpRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
-        }
-
-     
+        
         protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
         {
             // If something is connected to the input port show incoming data
@@ -107,23 +60,6 @@ namespace InteractML.DataTypeNodes
                 m_FloatNode.m_UserInput = EditorGUILayout.FloatField(m_FloatNode.m_UserInput, GUILayout.MaxWidth(60));
                 GUILayout.EndHorizontal();
             }
-        }
-
-        /// <summary>
-        /// Display help button
-        /// </summary>
-        private void ShowHelpButton()
-        {
-            m_HelpRect.x = m_HelpRect.x + 20;
-            m_HelpRect.y = m_HelpRect.y + 10;
-            m_HelpRect.width = m_HelpRect.width - 30;
-
-            GUILayout.BeginArea(m_HelpRect);
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("");
-            GUILayout.Button("Help", m_NodeSkin.GetStyle("Help Button"));
-            GUILayout.EndHorizontal();
-            GUILayout.EndArea();
         }
 
     }
