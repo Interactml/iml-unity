@@ -123,7 +123,7 @@ namespace InteractML
         /// </summary>
         protected List<IMLNodePortPair> m_PortPairs;
 
-        
+
 
         // Dictionaries to allow the override of portFields
         protected Dictionary<string, string> InputPortsNamesOverride;
@@ -132,7 +132,6 @@ namespace InteractML
 
         #endregion
         #region Variables GameObjectNode 
-        protected GameObjectNode m_GameObjectNode; 
         #endregion
 
         #region XNode Messages
@@ -147,24 +146,8 @@ namespace InteractML
             if (UIReskinAuto)
             {
                 // Get references
-                switch (target.GetType().ToString())
-                {
-                    case "InteractML.GameObjectNode":
-                        m_GameObjectNode = target as GameObjectNode;
-                        m_IMLNodeSerialized = new SerializedObject(m_GameObjectNode);
-                        NodeName = "GameObjectNode";
-                        break;
-                    default:
-                        m_IMLNode = target as IMLNode;
-                        m_IMLNodeSerialized = new SerializedObject(m_IMLNode);
-                        //Display Node name
-                        if (String.IsNullOrEmpty(m_IMLNode.name))
-                            NodeName = typeof(IMLNode).Name + " (Script)";
-                        else
-                            NodeName = m_IMLNode.name;
-                        break;
-                }
-                
+                m_IMLNode = target as IMLNode;
+                m_IMLNodeSerialized = new SerializedObject(m_IMLNode);
 
                 // Initialise header background Rects
                 InitHeaderRects();
@@ -177,7 +160,11 @@ namespace InteractML
                 // Draw line below header
                 GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
 
-                
+                //Display Node name
+                if (String.IsNullOrEmpty(m_IMLNode.name))
+                    NodeName = typeof(IMLNode).Name + " (Script)";
+                else
+                    NodeName = m_IMLNode.name;
 
                 GUILayout.BeginArea(HeaderRect);
                 GUILayout.Space(10);
@@ -314,7 +301,7 @@ namespace InteractML
             if (port.direction == XNode.NodePort.IO.Input)
             {
                 Rect rect = GUILayoutUtility.GetLastRect();
-                position = rect.position - new Vector2(15, - 65);
+                position = rect.position - new Vector2(15, -65);
             }
             // If property is an output, display a text label and put a port handle on the right side
             else if (port.direction == XNode.NodePort.IO.Output)
@@ -351,8 +338,10 @@ namespace InteractML
             Debug.Log("need to implement in node editor file");
         }
 
-        protected void DrawValues(List<IMLBaseDataType> values, string name) {
-            if (values != null) {
+        protected void DrawValues(List<IMLBaseDataType> values, string name)
+        {
+            if (values != null)
+            {
                 for (int i = 0; i < values.Count; i++)
                 {
                     if (m_NodeSkin == null)
@@ -361,7 +350,7 @@ namespace InteractML
                     var x = 30;
                     GUILayoutOption[] options = new GUILayoutOption[] { GUILayout.MinHeight(x), GUILayout.MaxHeight(x) };
                     GUILayout.BeginHorizontal();
-                    GUILayout.TextArea(name + " " +  i, style, options);
+                    GUILayout.TextArea(name + " " + i, style, options);
                     GUILayout.EndHorizontal();
                     switch (values[i].DataType)
                     {
@@ -407,7 +396,7 @@ namespace InteractML
 
         protected void HelpButton(string description)
         {
-            
+
         }
 
         // <summary>
@@ -426,7 +415,8 @@ namespace InteractML
             GUILayout.BeginHorizontal();
             GUILayout.Label("");
 
-            if (GUILayout.Button(new GUIContent("Help"), m_NodeSkin.GetStyle("Help Button"))) {
+            if (GUILayout.Button(new GUIContent("Help"), m_NodeSkin.GetStyle("Help Button")))
+            {
                 if (showHelp)
                 {
                     showHelp = false;
@@ -462,8 +452,8 @@ namespace InteractML
             GUILayout.EndHorizontal();
             EditorGUILayout.EndScrollView();
             GUILayout.EndArea();
-            
-            
+
+
         }
 
         public void ShowTooltip(Rect hoveredRect, string tip)
@@ -495,9 +485,9 @@ namespace InteractML
         /// </summary>
         public void PortTooltip(String[] portTips)
         {
-            
+
             List<NodePort> ports = target.Ports.ToList();
-           
+
 
             if (ports.Contains(window.hoveredPort))
             {
@@ -518,10 +508,10 @@ namespace InteractML
                 {
                     showPort = false;
                 }
-                    
+
             }
 
-            if(showporthelper && Event.current.type == EventType.Layout)
+            if (showporthelper && Event.current.type == EventType.Layout)
             {
                 showPort = true;
                 showporthelper = false;
@@ -595,7 +585,7 @@ namespace InteractML
                 m_PortPairs = new List<IMLNodePortPair>();
             int numPortPairs = m_PortPairs.Count; ;
             int extraHeight = (numPortPairs * 10);
-            
+
             // Draw body background purple rect below header
             m_PortRect.x = 5;
             m_PortRect.y = HeaderRect.height;
@@ -605,7 +595,7 @@ namespace InteractML
 
             // Draw line below ports
             GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), GetColorTextureFromHexString("#888EF7"));
-            
+
         }
 
         /// <summary>
@@ -674,7 +664,7 @@ namespace InteractML
                 m_NumInputs = target.Inputs.Count();
                 m_NumOutputs = target.Outputs.Count();
                 // Get inputs and outputs ports
-                IEnumerator<NodePort> inputs = target.Inputs.GetEnumerator();                
+                IEnumerator<NodePort> inputs = target.Inputs.GetEnumerator();
                 IEnumerator<NodePort> outputs = target.Outputs.GetEnumerator();
                 // Add them to the list
                 AddPairsToList(inputs, outputs, ref m_PortPairs);
@@ -702,7 +692,7 @@ namespace InteractML
                             string newLabel = inputPortLabel.text;
                             inputsNameOverride.TryGetValue(pair.input.fieldName, out newLabel);
                             inputPortLabel.text = newLabel;
-                        }                             
+                        }
                     }
                     // Draw port
                     IMLNodeEditor.PortField(inputPortLabel, m_IMLNode.GetInputPort(pair.input.fieldName), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
@@ -772,20 +762,20 @@ namespace InteractML
 
                 // Don't allow to draw ports (// TO DO, add ports to the list now?)
                 if (port != null) continue;
-                
+
                 // Save original editorStyle 
                 Color originalContentColor = GUI.contentColor;
                 Color originalColor = EditorStyles.label.normal.textColor;
                 Font originalFont = EditorStyles.label.font;
                 int origianlFontSize = EditorStyles.label.fontSize;
-                
+
                 // Replace skin for entire editorStyle with custom
                 EditorStyles.label.normal.textColor = Color.white;
                 EditorStyles.label.font = m_NodeSkin.label.font;
                 EditorStyles.label.fontSize = 13;
 
                 // Draw property
-                NodeEditorGUILayout.PropertyField(iterator, (NodePort) null, true );
+                NodeEditorGUILayout.PropertyField(iterator, (NodePort)null, true);
 
                 // Place original skin back to not mess other nodes
                 EditorStyles.label.normal.textColor = originalColor;
@@ -833,11 +823,11 @@ namespace InteractML
             while (outputs.MoveNext())
             {
                 // Add output to pair
-                portPair.output = outputs.Current;                
+                portPair.output = outputs.Current;
                 // If the output is null, skip to next iteration
-                if (portPair.output == null) continue;                
+                if (portPair.output == null) continue;
                 // If the list doesn't contain a pair with our output...
-                if (!pairs.Any(x => (x != null && x.output!=null) && x.output.fieldName.Equals(portPair.output.fieldName)))
+                if (!pairs.Any(x => (x != null && x.output != null) && x.output.fieldName.Equals(portPair.output.fieldName)))
                 {
                     // Add pair to list (input will be null)
                     pairs.Add(new IMLNodePortPair(portPair.input, portPair.output));

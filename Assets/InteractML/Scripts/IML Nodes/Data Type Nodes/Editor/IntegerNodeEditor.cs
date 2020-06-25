@@ -16,42 +16,11 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private IntegerNode m_IntegerNode;
 
-        /// <summary>
-        /// Rects for node layout
-        /// </summary>
-        private Rect m_BodyRect;
-        private Rect m_PortRect;
-        private Rect m_InnerBodyRect;
-        private Rect m_HelpRect;
-
-
         public override void OnHeaderGUI()
         {
             // Get reference to the current node
             m_IntegerNode = (target as IntegerNode);
-
-            // Load node skin
-            if (m_NodeSkin == null)
-                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
-
-            // Initialise header background Rects
-            InitHeaderRects();
-
-            NodeColor = GetColorTextureFromHexString("#3A3B5B");
-
-            // Draw header background Rect
-            GUI.DrawTexture(HeaderRect, NodeColor);
-
-            // Draw line below header
-            GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
-            
-            //Display Node name
-            GUILayout.BeginArea(HeaderRect);
-            GUILayout.Space(10);
-            GUILayout.Label("LIVE INTEGER DATA", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
-            GUILayout.EndArea();
-
-            GUILayout.Label("", GUILayout.MinHeight(60));
+            base.OnHeaderGUI();
         }
 
         public override void OnBodyGUI()

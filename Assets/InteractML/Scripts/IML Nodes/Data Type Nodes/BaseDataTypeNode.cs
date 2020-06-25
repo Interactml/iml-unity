@@ -6,7 +6,7 @@ using XNode;
 
 namespace InteractML.DataTypeNodes
 {
-    public abstract class BaseDataTypeNode<T> : Node, IFeatureIML
+    public abstract class BaseDataTypeNode<T> : IMLNode, IFeatureIML
     {
         #region Variables
 
