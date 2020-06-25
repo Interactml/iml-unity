@@ -1,0 +1,106 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8914584667776746422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
+  m_Name: Game Object
+  m_EditorClassIdentifier: 
+  id: a746dcaf-a7aa-461b-9f71-f1af5ad31538
+  graph: {fileID: 11400000}
+  position: {x: -396, y: -140.5}
+  ports:
+    keys:
+    - GameObjectDataOut
+    values:
+    - _fieldName: GameObjectDataOut
+      _node: {fileID: -8914584667776746422}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: GameObjectDataIn
+        node: {fileID: -7194312582767240663}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  GameObjectDataOut: {fileID: 0}
+  GameObjMissing: 0
+  state: 0
+--- !u!114 &-7194312582767240663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
+  m_Name: Extract Position
+  m_EditorClassIdentifier: 
+  id: d51e368a-b640-43b1-85eb-a3f30f22ccc7
+  graph: {fileID: 11400000}
+  position: {x: -40, y: -296}
+  ports:
+    keys:
+    - GameObjectDataIn
+    - LiveDataOut
+    values:
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: -7194312582767240663}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: GameObjectDataOut
+        node: {fileID: -8914584667776746422}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: LiveDataOut
+      _node: {fileID: -7194312582767240663}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
+  LocalSpace: 0
+  x_switch: 1
+  y_switch: 1
+  z_switch: 1
+  m_PositionExtracted:
+    m_Values:
+    - -16.6
+    - 2.07
+    - 3.9
+  ReceivingData: 0
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a8e1e2d4383d9e4081fe3bdfd1bfed4, type: 3}
+  m_Name: Classification_mouse_input_colorchange
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: -8914584667776746422}
+  - {fileID: -7194312582767240663}
+  SceneComponent: {fileID: 0}
