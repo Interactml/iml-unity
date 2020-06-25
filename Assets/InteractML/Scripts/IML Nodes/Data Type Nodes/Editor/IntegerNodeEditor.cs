@@ -27,109 +27,17 @@ namespace InteractML.DataTypeNodes
         {
             InputPortsNamesOverride = new Dictionary<string, string>();
             OutputPortsNamesOverride = new Dictionary<string, string>();
-            base.InputPortsNamesOverride.Add("m_In", "Int Data In");
-            base.OutputPortsNamesOverride.Add("m_Out", "Int Data Out");
+            base.InputPortsNamesOverride.Add("m_In", "Int\nData In");
+            base.OutputPortsNamesOverride.Add("m_Out", "Int\nData Out");
+            base.nodeTips = m_IntegerNode.tooltips;
+            bodyheight = 100;
             base.OnBodyGUI();
-         /*   // Draw Port Section
-            DrawPortLayout();
-            ShowIntegerNodePorts();
-
-            //check if port is hovered over 
-            PortTooltip(m_IntegerNode.tips.PortTooltip);
-
-            // Draw Body Section
-            DrawBodyLayout();
-            DataInToggle(m_IntegerNode.ReceivingData, m_InnerBodyRect, m_BodyRect);
-            //ShowIntegerValue();
-
-            // Draw help button
-            DrawHelpButtonLayout();
-            ShowHelpButton(m_HelpRect);
-
-            // if hovering port show port tooltip
-            if (showPort)
-            {
-                ShowTooltip(m_PortRect, TooltipText);
-            }
-            //if hovering over help show tooltip 
-            if (showHelp)
-            {
-                ShowTooltip(m_HelpRect, m_IntegerNode.tips.HelpTooltip);
-            }
-            // if hovering over body rect
-            if (IsThisRectHovered(m_BodyRect))
-                ShowTooltip(m_BodyRect, m_IntegerNode.tips.BodyTooltip.Tips[0]);
-            */
 
         }
 
         protected override void ShowBodyFields()
         {
             DataInToggle(m_IntegerNode.ReceivingData, m_InnerBodyRect, m_BodyRect);
-        }
-
-        /// <summary>
-        /// Define rect values for port section and paint textures based on rects 
-        /// </summary>
-        private void DrawPortLayout()
-        {
-            // Draw body background purple rect below header
-            m_PortRect.x = 5;
-            m_PortRect.y = HeaderRect.height;
-            m_PortRect.width = NodeWidth - 10;
-            m_PortRect.height = 60;
-            GUI.DrawTexture(m_PortRect, NodeColor);
-
-            // Draw line below ports
-            GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), GetColorTextureFromHexString("#888EF7"));
-        }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawBodyLayout()
-        {
-            m_BodyRect.x = 5;
-            m_BodyRect.y = HeaderRect.height + m_PortRect.height;
-            m_BodyRect.width = NodeWidth - 10;
-            m_BodyRect.height = 100;
-
-            // Draw body background purple rect below header
-            GUI.DrawTexture(m_BodyRect, NodeColor);
-        }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawHelpButtonLayout()
-        {
-            m_HelpRect.x = 5;
-            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_BodyRect.height;
-            m_HelpRect.width = NodeWidth - 10;
-            m_HelpRect.height = 40;
-
-            // Draw body background purple rect below header
-            GUI.DrawTexture(m_HelpRect, NodeColor);
-
-            //Draw separator line
-            GUI.DrawTexture(new Rect(m_HelpRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_HelpRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
-        }
-
-        /// <summary>
-        /// Show the input/output port fields 
-        /// </summary>
-        private void ShowIntegerNodePorts()
-        {
-            GUILayout.Space(5);
-            GUILayout.BeginHorizontal();
-
-            GUIContent inputPortLabel = new GUIContent("Integer\nData In", m_IntegerNode.tips.PortTooltip[0]);
-            IMLNodeEditor.PortField(inputPortLabel, m_IntegerNode.GetInputPort("m_In"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
-
-            GUIContent outputPortLabel = new GUIContent("Integer\nData Out", m_IntegerNode.tips.PortTooltip[1]);
-            IMLNodeEditor.PortField(outputPortLabel, m_IntegerNode.GetOutputPort("m_Out"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
-
-            GUILayout.EndHorizontal();
         }
         protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
         {
@@ -152,22 +60,6 @@ namespace InteractML.DataTypeNodes
             }
         }
 
-        /// <summary>
-        /// Display help button
-        /// </summary>
-        private void ShowHelpButton()
-        {
-            m_HelpRect.x = m_HelpRect.x + 20;
-            m_HelpRect.y = m_HelpRect.y + 10;
-            m_HelpRect.width = m_HelpRect.width - 30;
-
-            GUILayout.BeginArea(m_HelpRect);
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("");
-            GUILayout.Button("Help", m_NodeSkin.GetStyle("Help Button"));
-            GUILayout.EndHorizontal();
-            GUILayout.EndArea();
-        }
     }
 }
 

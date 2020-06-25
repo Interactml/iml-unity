@@ -77,6 +77,8 @@ namespace InteractML
         protected Rect m_InnerInnerWarningRect;
         public Rect ToolTipRect;
 
+        public float bodyheight;
+
         public Vector2 positionPort;
         protected Vector2 scrollPosition;
 
@@ -129,6 +131,8 @@ namespace InteractML
         protected Dictionary<string, string> InputPortsNamesOverride;
         protected Dictionary<string, string> OutputPortsNamesOverride;
         protected bool OverridePortNames = false;
+
+        protected IMLNodeTooltips nodeTips;
 
         #endregion
         #region Variables GameObjectNode 
@@ -194,6 +198,7 @@ namespace InteractML
                 // Draw Port Section
                 DrawPortLayout();
                 ShowNodePorts(InputPortsNamesOverride, OutputPortsNamesOverride, showOutputType: true);
+                PortTooltip();
 
                 // Draw Body Section
                 DrawBodyLayout();
@@ -205,6 +210,17 @@ namespace InteractML
                 ShowHelpButton(m_HelpRect);
 
                 serializedObject.ApplyModifiedProperties();
+
+                // if hovering port show port tooltip
+                if (showPort)
+                {
+                    ShowTooltip(m_PortRect, TooltipText);
+                }
+                //if hovering over help show tooltip 
+                if (showHelp && nodeTips != null)
+                {
+                    ShowTooltip(m_HelpRect, nodeTips.HelpTooltip);
+                }
             }
             // If we want to keep xNode's default skin
             else
@@ -483,39 +499,44 @@ namespace InteractML
         /// Takes in string goes through ports in that node to check if the mouse is over them. If the mouse is over one then it makes showport true and sets tooltip 
         /// string to the string of json for that port tip 
         /// </summary>
-        public void PortTooltip(String[] portTips)
+        public void PortTooltip(String[] portTips = null)
         {
-
-            List<NodePort> ports = target.Ports.ToList();
-
-
-            if (ports.Contains(window.hoveredPort))
+            
+            if (nodeTips != null)
             {
-                showporthelper = true;
-                for (int i = 0; i < ports.Count; i++)
-                {
-                    if (window.hoveredPort == ports[i])
-                    {
-                        TooltipText = portTips[i];
+                portTips = m_IMLNode.tooltips.PortTooltip;
+                List<NodePort> ports = target.Ports.ToList();
 
+
+                if (ports.Contains(window.hoveredPort))
+                {
+                    showporthelper = true;
+                    for (int i = 0; i < ports.Count; i++)
+                    {
+                        if (window.hoveredPort == ports[i])
+                        {
+                            TooltipText = portTips[i];
+
+                        }
+
+                    }
+                }
+                else
+                {
+                    if (Event.current.type == EventType.Layout)
+                    {
+                        showPort = false;
                     }
 
                 }
-            }
-            else
-            {
-                if (Event.current.type == EventType.Layout)
+
+                if (showporthelper && Event.current.type == EventType.Layout)
                 {
-                    showPort = false;
+                    showPort = true;
+                    showporthelper = false;
                 }
-
             }
-
-            if (showporthelper && Event.current.type == EventType.Layout)
-            {
-                showPort = true;
-                showporthelper = false;
-            }
+            
         }
         // <summary>
         /// Takes in rect and returns true if mouse is currently in that rect
@@ -607,13 +628,14 @@ namespace InteractML
         /// </summary>
         private void DrawBodyLayout()
         {
-            Debug.Log(m_BodyRect);
             if(m_BodyRect.x == 0)
             {
                 m_BodyRect.x = 5;
                 m_BodyRect.y = HeaderRect.height + m_PortRect.height;
                 m_BodyRect.width = NodeWidth - 10;
-                m_BodyRect.height = 150;
+                if (bodyheight == null)
+                    bodyheight = 150;
+                m_BodyRect.height = bodyheight;
             }
             // Draw body background purple rect below header
             GUI.DrawTexture(m_BodyRect, NodeColor);
@@ -624,11 +646,14 @@ namespace InteractML
         /// </summary>
         protected virtual void DrawHelpButtonLayout(float y)
         {
-            m_HelpRect.x = 5;
-            m_HelpRect.y = y;
-            m_HelpRect.width = NodeWidth - 10;
-            m_HelpRect.height = 40;
-
+            if(m_HelpRect.x == 0)
+            {
+                m_HelpRect.x = 5;
+                m_HelpRect.y = y;
+                m_HelpRect.width = NodeWidth - 10;
+                m_HelpRect.height = 40;
+            }
+            
             // Draw body background purple rect below header
             GUI.DrawTexture(m_HelpRect, NodeColor);
 
