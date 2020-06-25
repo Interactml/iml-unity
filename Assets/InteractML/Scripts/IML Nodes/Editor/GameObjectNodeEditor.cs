@@ -11,10 +11,6 @@ namespace InteractML
     [CustomNodeEditor(typeof(GameObjectNode))]
     public class GameObjectNodeEditor : IMLNodeEditor
     {
-        /// <summary>
-        /// Reference to the node itself
-        /// </summary>
-        private GameObjectNode m_GameObjectNode;
 
         Editor gameObjectEditor;
         GUIStyle stylePreview;
@@ -26,10 +22,10 @@ namespace InteractML
 
 
 
-        public override void OnHeaderGUI()
+         public override void OnHeaderGUI()
         {
-            // Get reference to the current node
-            m_GameObjectNode = (target as GameObjectNode);
+            base.OnHeaderGUI();
+            /*
 
             // Initialise header background Rects
             InitHeaderRects();
@@ -48,7 +44,7 @@ namespace InteractML
             GUILayout.Label("GAME OBJECT INPUT", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
             GUILayout.EndArea();
 
-            GUILayout.Label("", GUILayout.MinHeight(60));
+            GUILayout.Label("", GUILayout.MinHeight(60));*/
 
         }
 

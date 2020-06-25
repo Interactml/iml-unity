@@ -132,6 +132,7 @@ namespace InteractML
 
         #endregion
         #region Variables GameObjectNode 
+        protected GameObjectNode m_GameObjectNode; 
         #endregion
 
         #region XNode Messages
@@ -146,8 +147,24 @@ namespace InteractML
             if (UIReskinAuto)
             {
                 // Get references
-                m_IMLNode = target as IMLNode;
-                m_IMLNodeSerialized = new SerializedObject(m_IMLNode);
+                switch (target.GetType().ToString())
+                {
+                    case "InteractML.GameObjectNode":
+                        m_GameObjectNode = target as GameObjectNode;
+                        m_IMLNodeSerialized = new SerializedObject(m_GameObjectNode);
+                        NodeName = "GameObjectNode";
+                        break;
+                    default:
+                        m_IMLNode = target as IMLNode;
+                        m_IMLNodeSerialized = new SerializedObject(m_IMLNode);
+                        //Display Node name
+                        if (String.IsNullOrEmpty(m_IMLNode.name))
+                            NodeName = typeof(IMLNode).Name + " (Script)";
+                        else
+                            NodeName = m_IMLNode.name;
+                        break;
+                }
+                
 
                 // Initialise header background Rects
                 InitHeaderRects();
@@ -160,11 +177,7 @@ namespace InteractML
                 // Draw line below header
                 GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
 
-                //Display Node name
-                if (String.IsNullOrEmpty(m_IMLNode.name))
-                    NodeName = typeof(IMLNode).Name + " (Script)";
-                else
-                    NodeName = m_IMLNode.name;
+                
 
                 GUILayout.BeginArea(HeaderRect);
                 GUILayout.Space(10);
