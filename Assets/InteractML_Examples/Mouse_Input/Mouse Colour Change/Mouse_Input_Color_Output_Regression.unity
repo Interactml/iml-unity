@@ -261,11 +261,19 @@ MonoBehaviour:
   GameObjectsToUse:
   - {fileID: 77529449}
   m_ScriptNodesList:
-  - {fileID: 8917969792375559230, guid: 45b109d7874046141b6f67afaa5fe7d1, type: 2}
+  - {fileID: 4113153438833120164, guid: 45b109d7874046141b6f67afaa5fe7d1, type: 2}
   FeaturesUpdated: 1
   ComponentsWithIMLData:
   - GameComponent: {fileID: 2057764846}
     ControlClones: 0
+  m_MonoBehavioursPerScriptNode:
+    m_keys:
+    - {fileID: 266555834}
+    - {fileID: 2057764846}
+    m_values:
+    - {fileID: 0}
+    - {fileID: 4113153438833120164, guid: 45b109d7874046141b6f67afaa5fe7d1, type: 2}
+  m_MonobehaviourClones: []
 --- !u!4 &266555835
 Transform:
   m_ObjectHideFlags: 0

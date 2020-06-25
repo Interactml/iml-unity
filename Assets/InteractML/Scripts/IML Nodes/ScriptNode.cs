@@ -33,8 +33,9 @@ namespace InteractML
         public bool IsTaken { get { return (m_ScriptInternal != null); } }
 
         /// <summary>
-        /// Dictionary 
+        /// Dictionary that holds ports per field info
         /// </summary>
+        [SerializeField, HideInInspector]
         private NodePortFieldInfoDictionary m_PortsPerFieldInfo;
 
 #if UNITY_EDITOR
@@ -87,8 +88,14 @@ namespace InteractML
 
         public void SetScript(MonoBehaviour newScript)
         {
+            // If the script is null but we have some memory of the previous script...
+            if (m_ScriptInternal == null && ScriptHashCode != default(int))
+            {
+                // It is the same script! Assign it but don't clear ports
+                // do nothing
+            }
             // If we are overriding the script...
-            if (m_ScriptInternal != null && m_ScriptInternal.GetType() != newScript.GetType() || m_ScriptInternal == null && Ports.Count() > 0)
+            else if (m_ScriptInternal != null && m_ScriptInternal.GetType() != newScript.GetType() || m_ScriptInternal == null && Ports.Count() > 0)
             {
                 // Make sure to reset all dynamic ports!
                 ClearDynamicPorts();

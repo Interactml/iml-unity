@@ -107,10 +107,12 @@ namespace InteractML
         /// <summary>
         /// Dictionary to hold references of components with IML Data and which scriptNode manages them
         /// </summary>
+        [SerializeField, HideInInspector]
         private MonobehaviourScriptNodeDictionary m_MonoBehavioursPerScriptNode;
         /// <summary>
         /// Clones of a monobehaviour subscribed to ComponentsWithIMLData that is marked as "controlClones'
         /// </summary>
+        [SerializeField, HideInInspector]
         private List<MonoBehaviour> m_MonobehaviourClones;
         private Dictionary<FieldInfo, IMLFieldInfoContainer> m_DataContainersPerFieldInfo;
         private Dictionary<FieldInfo, MonoBehaviour> m_DataMonobehavioursPerFieldInfo;
@@ -674,29 +676,39 @@ namespace InteractML
                         // If there is a scriptHashCode from a previous script...
                         if (!m_ScriptNodesList[i].ScriptHashCode.Equals(default))
                         {
-                            // Check if that script is contained in the ComponentsWithIMLData list
-                            // Lambda statement, selecting the script that matches the hashcode from our scriptNode
-                            var script = ComponentsWithIMLData.Select(container => container.GameComponent).Where(gameComponent =>
-                                {
-                                    MonoBehaviour scriptToReturn = null;
-                                    if (gameComponent.GetHashCode().Equals(m_ScriptNodesList[i].ScriptHashCode))
-                                        scriptToReturn = gameComponent;
-                                    return scriptToReturn;
-                                }
-                            );
-                            if (script != null && script.Any())
+                            // Check if the monobehavioursPerScriptNode dictionary contains the node and its script
+                            var script = m_MonoBehavioursPerScriptNode.GetKey(m_ScriptNodesList[i]);
+                            // Set script if we found it
+                            if (script != null)
                             {
-                                var scriptToAdd = script.First(x => x != null);
-                                // If we found a matching script...
-                                if (scriptToAdd != null)
-                                {
-                                    // We add that script to our scriptNode (if it is not null)                                
-                                    m_ScriptNodesList[i].SetScript(scriptToAdd);
-                                    // Add it to the dictionary as well    
-                                    m_MonoBehavioursPerScriptNode.Add(scriptToAdd, m_ScriptNodesList[i]);
-                                }
+                                m_ScriptNodesList[i].SetScript(script);
                             }
-
+                            // If we didn't find it...
+                            else
+                            {
+                                // Check if that script is contained in the ComponentsWithIMLData list
+                                // Lambda statement, selecting the script that matches the hashcode from our scriptNode
+                                var resultSearch = ComponentsWithIMLData.Select(container => container.GameComponent).Where(gameComponent =>
+                                    {
+                                        MonoBehaviour scriptToReturn = null;
+                                        if (gameComponent.GetHashCode().Equals(m_ScriptNodesList[i].ScriptHashCode))
+                                            scriptToReturn = gameComponent;
+                                        return scriptToReturn;
+                                    }
+                                );
+                                if (script != null && resultSearch.Any())
+                                {
+                                    var scriptToAdd = resultSearch.First(x => x != null);
+                                    // If we found a matching script...
+                                    if (scriptToAdd != null)
+                                    {
+                                        // We add that script to our scriptNode (if it is not null)                                
+                                        m_ScriptNodesList[i].SetScript(scriptToAdd);
+                                        // Add it to the dictionary as well    
+                                        m_MonoBehavioursPerScriptNode.Add(scriptToAdd, m_ScriptNodesList[i]);
+                                    }
+                                }   
+                            }
                         }
                     }
                 }
@@ -959,6 +971,28 @@ namespace InteractML
                 // Now if the node wasn't removed, make sure that there is a script that the node is controlling in componentsWithIMLData
                 if (scriptNode != null)
                 {
+                    // If we are switching playmodes, it is very likely that we lost the reference to the script
+                    if (changingPlayMode)
+                    {
+                        // Check if the script reference is null
+                        if (scriptNode.GetScript() == null)
+                        {
+                            // See if we know the hash of the referenced script
+                            if (scriptNode.ScriptHashCode != default(int))
+                            {
+                                // Check if the script is contained in the components with IML Data
+                                var result = ComponentsWithIMLData.Select(x => x.GameComponent).Where(gameComponent => gameComponent.GetHashCode() == scriptNode.ScriptHashCode);                                
+                                var script = result.FirstOrDefault();
+                                // If we found the script...
+                                if (script != null)
+                                {
+                                    // Add the script to the node
+                                    scriptNode.SetScript(script);
+                                }
+                                
+                            }
+                        }
+                    }
                     // If we have a reference to the script the node controls...
                     if (scriptNode.GetScript() != null)
                     {
@@ -969,6 +1003,7 @@ namespace InteractML
                             ComponentsWithIMLData.Add(container);
                         }
                     }
+                    
                 }
 
             }
