@@ -79,7 +79,7 @@ MonoBehaviour:
       _dynamic: 1
   DevMode: 0
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 23100
+  ScriptHashCode: 23184
   CreatedDuringPlaymode: 0
 --- !u!114 &-6519772805324882145
 MonoBehaviour:
@@ -1467,7 +1467,7 @@ MonoBehaviour:
   DevMode: 0
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
-  state: 0
+  state: 1
 --- !u!114 &4171497210022189394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1572,7 +1572,7 @@ MonoBehaviour:
   m_Value: 0
   m_Out: 0
   ReceivingData: 0
-  InputConnected: 0
+  InputConnected: 1
   m_UserInput: 0
   int_switch: 1
 --- !u!114 &5618560274371023977

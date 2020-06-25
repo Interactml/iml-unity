@@ -247,6 +247,12 @@ namespace InteractML
 
             UpdateOutputConfigList();
 
+            // Check that lists are not null
+            if (m_ExpectedOutputList == null)
+                m_ExpectedOutputList = new List<IMLSpecifications.OutputsEnum>();
+            if (m_DynamicOutputPorts == null)
+                m_DynamicOutputPorts = new List<NodePort>();
+
             // IF expected outputs don't match with dynamic output ports, a training examples node was disconnected
             if (m_ExpectedOutputList.Count != m_DynamicOutputPorts.Count)
             {
