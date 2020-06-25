@@ -139,6 +139,8 @@ namespace InteractML
 
         protected IMLNodeTooltips nodeTips;
 
+        protected float nodeSpace;
+
         #endregion
         #region Variables GameObjectNode 
         #endregion
@@ -147,6 +149,7 @@ namespace InteractML
 
         public override void OnHeaderGUI()
         {
+            
             // Load node skin
             if (m_NodeSkin == null)
                 m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
@@ -164,7 +167,7 @@ namespace InteractML
                 NodeColor = GetColorTextureFromHexString("#3A3B5B");
 
                 // Draw header background Rect
-                GUI.DrawTexture(HeaderRect, NodeColor);
+                //GUI.DrawTexture(HeaderRect, NodeColor);
 
                 // Draw line below header
                 GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
@@ -188,6 +191,12 @@ namespace InteractML
             }
         }
 
+        public override Color GetTint()
+        {
+            ColorUtility.TryParseHtmlString("#3A3B5B", out customNodeColor);
+            return customNodeColor;
+        }
+
         public override void OnBodyGUI()
         {
             // If we want to reskin the node
@@ -206,6 +215,9 @@ namespace InteractML
                 // Draw Body Section
                 DrawBodyLayout();
                 ShowBodyFields();
+                if (nodeSpace == 0)
+                    nodeSpace = 80;
+                GUILayout.Space(nodeSpace);
 
                 // Draw help button
                 float bottomY = HeaderRect.height + m_PortRect.height + m_BodyRect.height;
@@ -627,7 +639,7 @@ namespace InteractML
                 m_PortRect.height = 50 + extraHeight;
             }
             
-            GUI.DrawTexture(m_PortRect, NodeColor);
+            //GUI.DrawTexture(m_PortRect, NodeColor);
 
             // Calculate rect for line below ports
             Rect lineRect = new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine);
@@ -653,7 +665,6 @@ namespace InteractML
                 m_BodyRect.height = bodyheight;
             }
             // Draw body background purple rect below header
-            GUI.DrawTexture(m_BodyRect, NodeColor);
         }
 
         /// <summary>
@@ -661,14 +672,10 @@ namespace InteractML
         /// </summary>
         protected virtual void DrawHelpButtonLayout(float y)
         {
-            if(m_RecalculateRects)
-            {
-                m_HelpRect.x = 5;
-                m_HelpRect.y = y;
-                m_HelpRect.width = NodeWidth - 10;
-                m_HelpRect.height = 40;
-            }
-            
+            m_HelpRect.x = 5;
+            m_HelpRect.y = y;
+            m_HelpRect.width = NodeWidth - 10;
+            m_HelpRect.height = 40;
             // Draw body background purple rect below header
             GUI.DrawTexture(m_HelpRect, NodeColor);
 
