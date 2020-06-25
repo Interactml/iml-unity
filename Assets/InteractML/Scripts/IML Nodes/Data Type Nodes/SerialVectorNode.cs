@@ -35,6 +35,12 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private IMLSerialVector m_FeatureValues;
 
+
+        protected override void Init()
+        {
+            tooltips = IMLTooltipsSerialization.LoadTooltip("SerialVector");
+            base.Init();
+        }
         // Check that a feature connected is of the right type
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
