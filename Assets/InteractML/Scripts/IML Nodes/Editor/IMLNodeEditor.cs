@@ -142,13 +142,7 @@ namespace InteractML
 
         public string TooltipText = "";
         public Rect ToolTipRect;
-
-        int count = 3;
-        int counter = 0;
-
         private Vector2 scrollPosition;
-
-        bool button;
 
         // Dictionaries to allow the override of portFields
         protected Dictionary<string, string> InputPortsNamesOverride;
@@ -343,12 +337,7 @@ namespace InteractML
             if (m_NodeSkin == null)
                 m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
 
-            m_InnerBodyRect.x = m_BodyRect.x + 20;
-            m_InnerBodyRect.y = m_BodyRect.y + 20;
-            m_InnerBodyRect.width = m_BodyRect.width - 20;
-            m_InnerBodyRect.height = m_BodyRect.height - 20;
-
-            GUILayout.BeginArea(m_InnerBodyRect);
+            GUILayout.Space(m_PortRect.height);
 
             if (dataIn)
             {
@@ -359,7 +348,6 @@ namespace InteractML
                 DrawPositionValueTogglesAndLabels(m_NodeSkin.GetStyle("Red Toggle"));
             }
 
-            GUILayout.EndArea();
         }
 
         protected virtual void DrawPositionValueTogglesAndLabels(GUIStyle style)
@@ -604,7 +592,7 @@ namespace InteractML
         /// <summary>
         /// Define rect values for port section and paint textures based on rects 
         /// </summary>
-        protected void DrawPortLayout()
+        protected virtual void DrawPortLayout()
         {
             // Add x units to height per extra port
             if (m_PortPairs == null)
