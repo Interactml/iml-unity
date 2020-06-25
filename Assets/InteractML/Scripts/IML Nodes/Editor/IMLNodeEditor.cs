@@ -165,14 +165,12 @@ namespace InteractML
                 GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
 
                 //Display Node name
-                if (String.IsNullOrEmpty(m_IMLNode.name))
+                if (String.IsNullOrEmpty(NodeName))
                     NodeName = typeof(IMLNode).Name + " (Script)";
-                else
-                    NodeName = m_IMLNode.name;
 
                 GUILayout.BeginArea(HeaderRect);
                 GUILayout.Space(10);
-                GUILayout.Label(NodeName, m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 50));
+                GUILayout.Label(NodeName, m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
                 GUILayout.EndArea();
 
                 GUILayout.Label("", GUILayout.MinHeight(60));
@@ -504,7 +502,7 @@ namespace InteractML
             
             if (nodeTips != null)
             {
-                portTips = m_IMLNode.tooltips.PortTooltip;
+                portTips = nodeTips.PortTooltip;
                 List<NodePort> ports = target.Ports.ToList();
 
 
@@ -516,7 +514,6 @@ namespace InteractML
                         if (window.hoveredPort == ports[i])
                         {
                             TooltipText = portTips[i];
-
                         }
 
                     }
@@ -633,7 +630,7 @@ namespace InteractML
                 m_BodyRect.x = 5;
                 m_BodyRect.y = HeaderRect.height + m_PortRect.height;
                 m_BodyRect.width = NodeWidth - 10;
-                if (bodyheight == null)
+                if (bodyheight == 0)
                     bodyheight = 150;
                 m_BodyRect.height = bodyheight;
             }

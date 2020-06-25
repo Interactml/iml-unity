@@ -20,6 +20,7 @@ namespace InteractML.DataTypeNodes
         {
             // Get reference to the current node
             m_IntegerNode = (target as IntegerNode);
+            NodeName = "LIVE INT DATA";
             base.OnHeaderGUI();
         }
 

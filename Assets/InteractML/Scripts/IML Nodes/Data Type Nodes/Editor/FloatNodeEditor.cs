@@ -16,79 +16,28 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private FloatNode m_FloatNode;
 
-        private int counter = 0;
-        private int count = 3;
-        private int stop = 6;
-
-        /// <summary>
-        /// Rects for node layout
-        /// </summary>
-        private Rect m_BodyRect;
-        private Rect m_PortRect;
-        private Rect m_InnerBodyRect;
-        private Rect m_HelpRect;
-
 
         public override void OnHeaderGUI()
         {
-            // Get reference to the current node
             m_FloatNode = (target as FloatNode);
-
-            // Load node skin
-            if (m_NodeSkin == null)
-                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
-
-            // Initialise header background Rects
-            InitHeaderRects();
-
-            NodeColor = GetColorTextureFromHexString("#3A3B5B");
-
-            // Draw header background Rect
-            GUI.DrawTexture(HeaderRect, NodeColor);
-
-            // Draw line below header
-            GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
-
-            //Display Node name
-            GUILayout.BeginArea(HeaderRect);
-            GUILayout.Space(10);
-            GUILayout.Label("LIVE FLOAT DATA", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
-            GUILayout.EndArea();
-
-            GUILayout.Label("", GUILayout.MinHeight(60));
+            NodeName = "LIVE FLOAT DATA";
+            base.OnHeaderGUI();
         }
 
         public override void OnBodyGUI()
         {
-            // Draw Port Section
-            DrawPortLayout();
-            ShowFloatNodePorts();
+            InputPortsNamesOverride = new Dictionary<string, string>();
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            base.InputPortsNamesOverride.Add("m_In", "Float\nData In");
+            base.OutputPortsNamesOverride.Add("m_Out", "Float\nData Out");
+            base.nodeTips = m_FloatNode.tooltips;
+            bodyheight = 100;
+            base.OnBodyGUI();
+        }
 
-            //check if port is hovered over 
-            PortTooltip(m_FloatNode.tips.PortTooltip);
-
-            // Draw Body Section
-            DrawBodyLayout();
+        protected override void ShowBodyFields()
+        {
             DataInToggle(m_FloatNode.ReceivingData, m_InnerBodyRect, m_BodyRect);
-            //ShowFloatValue();
-
-            // Draw help button
-            DrawHelpButtonLayout();
-            ShowHelpButton(m_HelpRect);
-
-            // if hovering port show port tooltip
-            if (showPort)
-            {
-                ShowTooltip(m_PortRect, TooltipText);
-            }
-            //if hovering over help show tooltip 
-            if (showHelp)
-            {
-                ShowTooltip(m_HelpRect, m_FloatNode.tips.HelpTooltip);
-            }
-            // if hovering over body rect
-            if (IsThisRectHovered(m_BodyRect))
-                ShowTooltip(m_BodyRect, m_FloatNode.tips.BodyTooltip.Tips[0]);
         }
 
         /// <summary>
@@ -138,23 +87,7 @@ namespace InteractML.DataTypeNodes
             GUI.DrawTexture(new Rect(m_HelpRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_HelpRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
         }
 
-        /// <summary>
-        /// Show the input/output port fields 
-        /// </summary>
-        private void ShowFloatNodePorts()
-        {
-            GUILayout.Space(5);
-            GUILayout.BeginHorizontal();
-
-            GUIContent inputPortLabel = new GUIContent("Float\nData In", m_FloatNode.tips.PortTooltip[0]);
-            IMLNodeEditor.PortField(inputPortLabel, m_FloatNode.GetInputPort("m_In"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
-
-            GUIContent outputPortLabel = new GUIContent("Float\nData Out", m_FloatNode.tips.PortTooltip[1]);
-            IMLNodeEditor.PortField(outputPortLabel, m_FloatNode.GetOutputPort("m_Out"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
-
-            GUILayout.EndHorizontal();
-        }
-
+     
         protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
         {
             // If something is connected to the input port show incoming data
