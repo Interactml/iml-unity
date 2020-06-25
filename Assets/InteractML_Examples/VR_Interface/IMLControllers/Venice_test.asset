@@ -448,7 +448,6 @@ MonoBehaviour:
     keys:
     - IMLTrainingExamplesNodes
     - InputFeatures
-    - ModelOutput
     - Output 0
     values:
     - _fieldName: IMLTrainingExamplesNodes
@@ -480,15 +479,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: ModelOutput
-      _node: {fileID: -2859394591832585847}
-      _typeQualifiedName: InteractML.IMLConfiguration, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
     - _fieldName: Output 0
       _node: {fileID: -2859394591832585847}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
@@ -507,7 +497,6 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: -2716719160027543089}
   - {fileID: -5637945858273645409}
-  ModelOutput: {fileID: 0}
   PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
   m_ExpectedInputList: 0200000002000000
@@ -687,7 +676,6 @@ MonoBehaviour:
     keys:
     - IMLTrainingExamplesNodes
     - InputFeatures
-    - ModelOutput
     values:
     - _fieldName: IMLTrainingExamplesNodes
       _node: {fileID: -1415829153963631823}
@@ -709,19 +697,9 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: ModelOutput
-      _node: {fileID: -1415829153963631823}
-      _typeQualifiedName: InteractML.IMLConfiguration, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
   DevMode: 0
   IMLTrainingExamplesNodes: []
   InputFeatures: []
-  ModelOutput: {fileID: 0}
   PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
   m_ExpectedInputList: 
@@ -1058,7 +1036,6 @@ MonoBehaviour:
     keys:
     - IMLTrainingExamplesNodes
     - InputFeatures
-    - ModelOutput
     - Output 0
     values:
     - _fieldName: IMLTrainingExamplesNodes
@@ -1090,15 +1067,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: ModelOutput
-      _node: {fileID: 135393960622618725}
-      _typeQualifiedName: InteractML.IMLConfiguration, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
     - _fieldName: Output 0
       _node: {fileID: 135393960622618725}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
@@ -1117,7 +1085,6 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: -1213859605955005494}
   - {fileID: -1000348210217435809}
-  ModelOutput: {fileID: 0}
   PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
   m_ExpectedInputList: 0100000001000000
@@ -1605,7 +1572,7 @@ MonoBehaviour:
   m_Value: 0
   m_Out: 0
   ReceivingData: 0
-  InputConnected: 1
+  InputConnected: 0
   m_UserInput: 0
   int_switch: 1
 --- !u!114 &5618560274371023977
@@ -1709,7 +1676,6 @@ MonoBehaviour:
     keys:
     - IMLTrainingExamplesNodes
     - InputFeatures
-    - ModelOutput
     - Output 0
     values:
     - _fieldName: IMLTrainingExamplesNodes
@@ -1741,15 +1707,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: ModelOutput
-      _node: {fileID: 6728232588367833586}
-      _typeQualifiedName: InteractML.IMLConfiguration, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
     - _fieldName: Output 0
       _node: {fileID: 6728232588367833586}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
@@ -1765,7 +1722,6 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: -6519772805324882145}
   - {fileID: -1219774021255464857}
-  ModelOutput: {fileID: 0}
   PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
   m_ExpectedInputList: 0300000002000000

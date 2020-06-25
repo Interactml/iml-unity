@@ -21,8 +21,8 @@ namespace InteractML
         public List<TrainingExamplesNode> IMLTrainingExamplesNodes;
         [Input]
         public List<Node> InputFeatures;
-        [Output, SerializeField]
-        public IMLConfiguration ModelOutput;
+        //[Output, SerializeField]
+        //public IMLConfiguration ModelOutput;
 
         /// <summary>
         /// The list of predicted outputs
