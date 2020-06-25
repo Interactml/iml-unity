@@ -337,7 +337,7 @@ namespace InteractML
             if (m_NodeSkin == null)
                 m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
 
-            GUILayout.Space(m_PortRect.height);
+            GUILayout.Space(HeaderRect.height);
 
             if (dataIn)
             {
