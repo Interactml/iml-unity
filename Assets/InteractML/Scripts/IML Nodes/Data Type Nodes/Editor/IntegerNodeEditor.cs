@@ -25,7 +25,12 @@ namespace InteractML.DataTypeNodes
 
         public override void OnBodyGUI()
         {
-            // Draw Port Section
+            InputPortsNamesOverride = new Dictionary<string, string>();
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            base.InputPortsNamesOverride.Add("m_In", "Int Data In");
+            base.OutputPortsNamesOverride.Add("m_Out", "Int Data Out");
+            base.OnBodyGUI();
+         /*   // Draw Port Section
             DrawPortLayout();
             ShowIntegerNodePorts();
 
@@ -54,7 +59,13 @@ namespace InteractML.DataTypeNodes
             // if hovering over body rect
             if (IsThisRectHovered(m_BodyRect))
                 ShowTooltip(m_BodyRect, m_IntegerNode.tips.BodyTooltip.Tips[0]);
+            */
 
+        }
+
+        protected override void ShowBodyFields()
+        {
+            DataInToggle(m_IntegerNode.ReceivingData, m_InnerBodyRect, m_BodyRect);
         }
 
         /// <summary>

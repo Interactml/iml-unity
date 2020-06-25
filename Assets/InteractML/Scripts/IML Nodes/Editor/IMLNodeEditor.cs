@@ -193,7 +193,7 @@ namespace InteractML
 
                 // Draw Port Section
                 DrawPortLayout();
-                ShowNodePorts();
+                ShowNodePorts(InputPortsNamesOverride, OutputPortsNamesOverride, showOutputType: true);
 
                 // Draw Body Section
                 DrawBodyLayout();
@@ -583,14 +583,18 @@ namespace InteractML
             // Add x units to height per extra port
             if (m_PortPairs == null)
                 m_PortPairs = new List<IMLNodePortPair>();
-            int numPortPairs = m_PortPairs.Count; ;
-            int extraHeight = (numPortPairs * 10);
+            if(m_PortRect.x == 0)
+            {
+                int numPortPairs = m_PortPairs.Count; ;
+                int extraHeight = (numPortPairs * 10);
 
-            // Draw body background purple rect below header
-            m_PortRect.x = 5;
-            m_PortRect.y = HeaderRect.height;
-            m_PortRect.width = NodeWidth - 10;
-            m_PortRect.height = 50 + extraHeight;
+                // Draw body background purple rect below header
+                m_PortRect.x = 5;
+                m_PortRect.y = HeaderRect.height;
+                m_PortRect.width = NodeWidth - 10;
+                m_PortRect.height = 50 + extraHeight;
+            }
+            
             GUI.DrawTexture(m_PortRect, NodeColor);
 
             // Draw line below ports
@@ -603,11 +607,14 @@ namespace InteractML
         /// </summary>
         private void DrawBodyLayout()
         {
-            m_BodyRect.x = 5;
-            m_BodyRect.y = HeaderRect.height + m_PortRect.height;
-            m_BodyRect.width = NodeWidth - 10;
-            m_BodyRect.height = 150;
-
+            Debug.Log(m_BodyRect);
+            if(m_BodyRect.x == 0)
+            {
+                m_BodyRect.x = 5;
+                m_BodyRect.y = HeaderRect.height + m_PortRect.height;
+                m_BodyRect.width = NodeWidth - 10;
+                m_BodyRect.height = 150;
+            }
             // Draw body background purple rect below header
             GUI.DrawTexture(m_BodyRect, NodeColor);
         }
@@ -742,7 +749,7 @@ namespace InteractML
         /// <summary>
         /// Shows all the property fields from the node
         /// </summary>
-        private void ShowBodyFields()
+        protected virtual void ShowBodyFields()
         {
             string[] excludes = { "m_Script", "graph", "position", "ports" };
 
