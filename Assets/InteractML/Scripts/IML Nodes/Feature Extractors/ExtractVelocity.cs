@@ -9,7 +9,8 @@ namespace InteractML.FeatureExtractors
     /// <summary>
     /// Extract the velocity from any other Feature
     /// </summary>
-    public class ExtractVelocity : Node, IFeatureIML
+    [NodeWidth(250)]
+    public class ExtractVelocity : BaseExtractorNode, IFeatureIML
     {
         /// <summary>
         /// The feature that has been previously extracted and from which we are calculating the velocity (i.e. position, rotation, etc)
@@ -55,11 +56,24 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         public bool isUpdated { get; set; }
 
+        // check whether incoming data
+        public bool ReceivingData = false;
+
+        /// <summary>
+        /// Controls whether to use each axis values in output 
+        /// </summary>
+        public bool x_switch = true;
+        public bool y_switch = true;
+        public bool z_switch = true;
+
+        [HideInInspector]
+        public IMLNodeTooltips tips;
+
         // Use this for initialization
         protected override void Init()
         {
             base.Init();
-
+            tips = IMLTooltipsSerialization.LoadTooltip("Velocity");
             // The velocity extractor expects any other feature extracted to make calculations
             FeatureToInput = GetInputValue<Node>("FeatureToInput");
             // If we managed to get the input
@@ -106,6 +120,18 @@ namespace InteractML.FeatureExtractors
                     // If the velocity hasn't been updated yet... (unlocked externally in the IML Component)
                     if (!isUpdated)
                     {
+                        ReceivingData = false;
+                        // is the GameObject moving 
+                        if (m_LastFrameFeatureValue != null)
+                        {
+                            for (int i = 0; i < m_LastFrameFeatureValue.Length; i++)
+                            {
+                                if (m_LastFrameFeatureValue[i] != featureToUse.Values[i])
+                                {
+                                    ReceivingData = true;
+                                }
+                            }
+                        }
 
                         // We check in case the input feature length changed
                         if (m_CurrentVelocity == null || m_CurrentVelocity.Length != featureToUse.Values.Length)
@@ -127,13 +153,18 @@ namespace InteractML.FeatureExtractors
                         // Calculate velocity itself
                         for (int i = 0; i < m_CurrentVelocity.Length; i++)
                         {
-                            m_CurrentVelocity[i] = (featureToUse.Values[i] - m_LastFrameFeatureValue[i]) / Time.smoothDeltaTime;
-                            //  Debug.Log(i + " " + m_CurrentVelocity[i]);
+                            if ((i == 0 && !x_switch) || (i == 1 && !y_switch) || (i == 2 && !z_switch))
+                            {
+                                Debug.Log("here");
+                                m_CurrentVelocity[i] = 0;
+                            }
+                            else
+                            {
+                                m_CurrentVelocity[i] = (featureToUse.Values[i] - m_LastFrameFeatureValue[i]) / Time.smoothDeltaTime;
+                            }
 
-                            // Store last known feature values for next frame
-                            //m_LastFrameFeatureValue[i] = featureToUse.Values[i];
+
                         }
-
                         // We make sure that the velocity extracted serial vector is not null
                         if (m_VelocityExtracted == null)
                         {
@@ -179,5 +210,14 @@ namespace InteractML.FeatureExtractors
             }
 
         }
+
+        public override void OnCreateConnection(NodePort from, NodePort to)
+        {
+                System.Type[] portTypesAccept = new System.Type[] { };
+                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(IMLConfiguration) };
+                this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
+        }
+
+
     }
 }

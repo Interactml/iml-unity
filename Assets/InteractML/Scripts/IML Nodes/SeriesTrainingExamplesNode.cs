@@ -10,7 +10,8 @@ namespace InteractML
     /// <summary>
     /// Holds the information and list of a training examples node
     /// </summary>
-    [NodeWidth(500)]
+    [CreateNodeMenuAttribute("Interact ML/Teach The Machine/TTM DTW")]
+    [NodeWidth(300)]
     public class SeriesTrainingExamplesNode : TrainingExamplesNode
     {
 
@@ -20,15 +21,22 @@ namespace InteractML
 
         #region XNode Messages
 
-        // Use this for initialization
-  
-
         #endregion
 
         #region Unity Messages
         #endregion
 
         #region Public Methods
+
+
+        protected override void Init()
+        {
+            base.Init();
+
+            Initialize();
+
+            TrainingTips = IMLTooltipsSerialization.LoadTooltip("SeriesTrainingExamples");
+        }
 
         /// <summary>
         /// Clears all the training examples stored in the node
@@ -37,7 +45,8 @@ namespace InteractML
         {
             // Clear series in node
             TrainingSeriesCollection.Clear();
-            UpdateOutputsList();
+            //UpdateOutputsList();
+            //UpdateTargeValues();
         }
 
         #endregion

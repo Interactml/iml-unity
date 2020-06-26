@@ -4,6 +4,7 @@ using System.Reflection;
 using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 using ReusableMethods;
 using XNode.Examples.MathNodes;
 using UnityEngine.SceneManagement;
@@ -37,7 +38,9 @@ namespace InteractML
         /// <summary>
         /// Collection of GameObjects that will be sent to the IML Controller
         /// </summary>
-        [Tooltip("Add here all the GameObjects to use in the IML Controller")]
+        [Header("GameObjects to Track")]
+        [Tooltip("Add number of GameObjects to use in the IML Controller and what they are here")]
+        [Rename("GameObject")]
         public List<GameObject> GameObjectsToUse;
 
         #region Private Lists of Nodes (Fields)
@@ -48,6 +51,8 @@ namespace InteractML
         private List<GameObjectNode> m_GameObjectNodeList;
         private List<RealtimeIMLOutputNode> m_RealtimeIMLOutputNodesList;
         public List<IFeatureIML> FeatureNodesList;
+        [SerializeField, HideInInspector]
+        private List<ScriptNode> m_ScriptNodesList;
         #endregion
 
         #region Public Lists of Nodes (Properties)
@@ -83,6 +88,7 @@ namespace InteractML
         /// <summary>
         /// Have all the features been updated? (useful for features that need to update only once)
         /// </summary>
+       [HideInInspector]
         public bool FeaturesUpdated;
 
         /// <summary>
@@ -95,8 +101,19 @@ namespace InteractML
         /// Add a Monobehaviour to this list and the IML Component will
         /// search for values marked with the "SendToIMLController" attribute
         /// </summary>
-        //[Header("Components with IML Data to Fetch"), SerializeField]
-        private List<MonoBehaviour> m_ComponentsWithIMLData;
+        [Header("Scripts to Track")]
+        [Tooltip("Add number of Scripts to use in the IML Controller and what they are here")]
+        public List<IMLMonoBehaviourContainer> ComponentsWithIMLData;
+        /// <summary>
+        /// Dictionary to hold references of components with IML Data and which scriptNode manages them
+        /// </summary>
+        [SerializeField, HideInInspector]
+        private MonobehaviourScriptNodeDictionary m_MonoBehavioursPerScriptNode;
+        /// <summary>
+        /// Clones of a monobehaviour subscribed to ComponentsWithIMLData that is marked as "controlClones'
+        /// </summary>
+        [SerializeField, HideInInspector]
+        private List<MonoBehaviour> m_MonobehaviourClones;
         private Dictionary<FieldInfo, IMLFieldInfoContainer> m_DataContainersPerFieldInfo;
         private Dictionary<FieldInfo, MonoBehaviour> m_DataMonobehavioursPerFieldInfo;
 
@@ -347,6 +364,9 @@ namespace InteractML
                     // Export output node
                     CheckTypeAddNodeToList(node, ref m_RealtimeIMLOutputNodesList);
 
+                    // ScriptNodes
+                    CheckTypeAddNodeToList(node, ref m_ScriptNodesList);
+
                 }
 
             }
@@ -534,7 +554,7 @@ namespace InteractML
                     // Assign each node a gameobject
                     for (int i = 0; i < m_GameObjectNodeList.Count; i++)
                     {
-                        m_GameObjectNodeList[i].GameObjectFromScene = GameObjectsToUse[i];
+                        m_GameObjectNodeList[i].GameObjectDataOut = GameObjectsToUse[i];
                        // Debug.Log("Injecting GObject " + GameObjectsToUse[i].name);
 
                     }
@@ -555,7 +575,7 @@ namespace InteractML
                     // Assign each node a gameobject
                     for (int i = 0; i < m_GameObjectNodeList.Count; i++)
                     {
-                        m_GameObjectNodeList[i].GameObjectFromScene = GameObjectsToUse[i];
+                        m_GameObjectNodeList[i].GameObjectDataOut = GameObjectsToUse[i];
                     }
 
                 }
@@ -568,7 +588,7 @@ namespace InteractML
                     // Add as many GameObjects as we can to the list
                     for (int i = 0; i < GameObjectsToUse.Count; i++)
                     {
-                        m_GameObjectNodeList[i].GameObjectFromScene = GameObjectsToUse[i];
+                        m_GameObjectNodeList[i].GameObjectDataOut = GameObjectsToUse[i];
                     }
                 }
             }
@@ -630,404 +650,171 @@ namespace InteractML
         /// </summary>
         private void FetchDataFromMonobehavioursSubscribed()
         {
-            if (m_ComponentsWithIMLData == null || m_ComponentsWithIMLData.Count == 0)
+            if (ComponentsWithIMLData == null || ComponentsWithIMLData.Count == 0)
             {
                 return;
             }
-            foreach (var gameComponent in m_ComponentsWithIMLData)
+
+            if (m_MonoBehavioursPerScriptNode == null)
+                m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
+
+            // See if we already have any non-assigned scriptNodes that matches any IMLComponent
+            if (m_ScriptNodesList != null && m_ScriptNodesList.Count > 0)
             {
-                // Gets all fields information from the game component (using System.Reflection)
-                FieldInfo[] objectFields = gameComponent.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public);
-
-                // Go through all the fields
-                for (int i = 0; i < objectFields.Length; i++)
+                for (int i = 0; i < m_ScriptNodesList.Count; i++)
                 {
-                    var fieldToUse = objectFields[i];
-
-                    // Check if the field is marked with the "SendToIMLController" attribute
-                    SendToIMLController dataForIMLController = Attribute.GetCustomAttribute(fieldToUse, typeof(SendToIMLController)) as SendToIMLController;
-                    // We check now if the field is marked with the "PullFromIMLController" attribute
-                    PullFromIMLController dataFromIMLController = Attribute.GetCustomAttribute(fieldToUse, typeof(PullFromIMLController)) as PullFromIMLController;
-                    // Define flags to identify attribute behaviour
-                    bool isInputData = false, isOutputData = false;
-                    // Update flags
-                    if (dataForIMLController != null)
-                        isInputData = true;
-                    if (dataFromIMLController != null)
-                        isOutputData = true;
-
-                    // If the field is marked as either input or output...
-                    if (isInputData || isOutputData)
+                    if (m_ScriptNodesList[i] == null)
                     {
-                        // Debug type of that value in console
-                        //Debug.Log(fieldToUse.Name + " Used in IMLComponent, With Type: " + fieldToUse.FieldType + ", With Value: " + fieldToUse.GetValue(gameComponent).ToString());
-
-                        // Make sure that the dictionaries are initialised
-                        if (m_DataMonobehavioursPerFieldInfo == null)
-                            m_DataMonobehavioursPerFieldInfo = new Dictionary<FieldInfo, MonoBehaviour>();
-                        if (m_DataContainersPerFieldInfo == null)
-                            m_DataContainersPerFieldInfo = new Dictionary<FieldInfo, IMLFieldInfoContainer>();
-
-                        // Check if the dictionary DOESN'T contain a fieldInfo for this reflected value, and then create nodes and dictionary values
-                        if (!m_DataMonobehavioursPerFieldInfo.ContainsKey(fieldToUse))
+                        // Remove null reference
+                        m_ScriptNodesList.RemoveAt(i);
+                        // Adjust index
+                        i--;
+                        continue;
+                    }
+                    if (!m_ScriptNodesList[i].IsTaken)
+                    {
+                        // If there is a scriptHashCode from a previous script...
+                        if (!m_ScriptNodesList[i].ScriptHashCode.Equals(default))
                         {
-                            // If it doesn't contain it, then we add it to both dictionaries
-                            // Firstly, to keep track which gamecomponent belongs to which field info
-                            m_DataMonobehavioursPerFieldInfo.Add(fieldToUse, gameComponent);
-                            // Secondly, we create a node (based on its type) for this fieldInfo and add it to the dictionary
-                            if (fieldToUse.FieldType == typeof(Single))
+                            // Check if the monobehavioursPerScriptNode dictionary contains the node and its script
+                            var script = m_MonoBehavioursPerScriptNode.GetKey(m_ScriptNodesList[i]);
+                            // Set script if we found it
+                            if (script != null)
                             {
-                                DataTypeNodes.FloatNode newNode = null;
-                                // First, we try and see if the graph already contains a node we can use
-                                foreach (var node in MLController.nodes)
-                                {
-                                    // We see if this node is of the right type
-                                    if (node.GetType() == typeof(DataTypeNodes.FloatNode))
-                                    {
-                                        // We check if the node is available to use
-                                        var isTaken = m_DataContainersPerFieldInfo.Values.Any(container => container.nodeForField == node);
-                                        // If the node is not taken...
-                                        if (!isTaken)
-                                        {
-                                            // This will be our node!
-                                            newNode = (DataTypeNodes.FloatNode)node;
-                                            // Stop searching for nodes
-                                            break;
-                                        }
-                                    }
-                                }
-
-                                // If we didn't find a suitable existing node...
-                                if (newNode == null)
-                                {
-                                    // Create a new Serial Vector node into the graph
-                                    newNode = MLController.AddNode<DataTypeNodes.FloatNode>();
-#if UNITY_EDITOR
-                                    // Save newnode to graph on disk                              
-                                    AssetDatabase.AddObjectToAsset(newNode, MLController);
-                                    // Reload graph into memory since we have modified it on disk
-                                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-#endif                              
-                                }
-
-                                // Configure our node appropiately
-                                newNode.Value = (float)fieldToUse.GetValue(gameComponent);
-                                newNode.ValueName = fieldToUse.Name;
-                                newNode.name = fieldToUse.Name + " (Float Node)";
-
-                                // Add all info to a container
-                                IMLFieldInfoContainer infoContainer = new IMLFieldInfoContainer(fieldToUse, newNode, IMLSpecifications.DataTypes.Float, gameComponent);
-                                // Add that to the dictionary
-                                m_DataContainersPerFieldInfo.Add(fieldToUse, infoContainer);
-
+                                m_ScriptNodesList[i].SetScript(script);
                             }
-                            else if (fieldToUse.FieldType == typeof(Int32))
+                            // If we didn't find it...
+                            else
                             {
-                                DataTypeNodes.IntegerNode newNode = null;
-                                // First, we try and see if the graph already contains a node we can use
-                                foreach (var node in MLController.nodes)
-                                {
-                                    // We see if this node is of the right type
-                                    if (node.GetType() == typeof(DataTypeNodes.IntegerNode))
+                                // Check if that script is contained in the ComponentsWithIMLData list
+                                // Lambda statement, selecting the script that matches the hashcode from our scriptNode
+                                var resultSearch = ComponentsWithIMLData.Select(container => container.GameComponent).Where(gameComponent =>
                                     {
-                                        // We check if the node is available to use
-                                        var isTaken = m_DataContainersPerFieldInfo.Values.Any(container => container.nodeForField == node);
-                                        // If the node is not taken...
-                                        if (!isTaken)
-                                        {
-                                            // This will be our node!
-                                            newNode = (DataTypeNodes.IntegerNode)node;
-                                            // Stop searching for nodes
-                                            break;
-                                        }
+                                        MonoBehaviour scriptToReturn = null;
+                                        if (gameComponent.GetHashCode().Equals(m_ScriptNodesList[i].ScriptHashCode))
+                                            scriptToReturn = gameComponent;
+                                        return scriptToReturn;
                                     }
-                                }
-
-                                // If we didn't find a suitable existing node...
-                                if (newNode == null)
+                                );
+                                if (script != null && resultSearch.Any())
                                 {
-                                    // Create a new Serial Vector node into the graph
-                                    newNode = MLController.AddNode<DataTypeNodes.IntegerNode>();
-#if UNITY_EDITOR
-                                    // Save newnode to graph on disk                              
-                                    AssetDatabase.AddObjectToAsset(newNode, MLController);
-                                    // Reload graph into memory since we have modified it on disk
-                                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-#endif
-                                }
-
-                                // Configure our node appropiately
-                                newNode.Value = (int)fieldToUse.GetValue(gameComponent);
-                                newNode.ValueName = fieldToUse.Name;
-                                newNode.name = fieldToUse.Name + " (Int Node)";
-
-                                // Add all info to a container
-                                IMLFieldInfoContainer infoContainer = new IMLFieldInfoContainer(fieldToUse, newNode, IMLSpecifications.DataTypes.Integer, gameComponent);
-                                // Add that to the dictionary
-                                m_DataContainersPerFieldInfo.Add(fieldToUse, infoContainer);
-
-                            }
-                            else if (fieldToUse.FieldType == typeof(Vector2))
-                            {
-                                DataTypeNodes.Vector2Node newNode = null;
-                                // First, we try and see if the graph already contains a node we can use
-                                foreach (var node in MLController.nodes)
-                                {
-                                    // We see if this node is of the right type
-                                    if (node.GetType() == typeof(DataTypeNodes.Vector2Node))
+                                    var scriptToAdd = resultSearch.First(x => x != null);
+                                    // If we found a matching script...
+                                    if (scriptToAdd != null)
                                     {
-                                        // We check if the node is available to use
-                                        var isTaken = m_DataContainersPerFieldInfo.Values.Any(container => container.nodeForField == node);
-                                        // If the node is not taken...
-                                        if (!isTaken)
-                                        {
-                                            // This will be our node!
-                                            newNode = (DataTypeNodes.Vector2Node)node;
-                                            // Stop searching for nodes
-                                            break;
-                                        }
+                                        // We add that script to our scriptNode (if it is not null)                                
+                                        m_ScriptNodesList[i].SetScript(scriptToAdd);
+                                        // Add it to the dictionary as well    
+                                        m_MonoBehavioursPerScriptNode.Add(scriptToAdd, m_ScriptNodesList[i]);
                                     }
-                                }
-
-                                // If we didn't find a suitable existing node...
-                                if (newNode == null)
-                                {
-                                    // Create a new Serial Vector node into the graph
-                                    newNode = MLController.AddNode<DataTypeNodes.Vector2Node>();
-#if UNITY_EDITOR
-                                    // Save newnode to graph on disk                              
-                                    AssetDatabase.AddObjectToAsset(newNode, MLController);
-                                    // Reload graph into memory since we have modified it on disk
-                                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-#endif
-
-                                }
-
-                                // Configure our node appropiately
-                                newNode.Value = (Vector2)fieldToUse.GetValue(gameComponent);
-                                newNode.ValueName = fieldToUse.Name;
-                                newNode.name = fieldToUse.Name + " (Vector2 Node)";
-
-                                // Add all info to a container
-                                IMLFieldInfoContainer infoContainer = new IMLFieldInfoContainer(fieldToUse, newNode, IMLSpecifications.DataTypes.Vector2, gameComponent);
-                                // Add that to the dictionary
-                                m_DataContainersPerFieldInfo.Add(fieldToUse, infoContainer);
-
-                            }
-                            else if (fieldToUse.FieldType == typeof(Vector3))
-                            {
-                                DataTypeNodes.Vector3Node newNode = null;
-                                // First, we try and see if the graph already contains a node we can use
-                                foreach (var node in MLController.nodes)
-                                {
-                                    // We see if this node is of the right type
-                                    if (node.GetType() == typeof(DataTypeNodes.Vector3Node))
-                                    {
-                                        // We check if the node is available to use
-                                        var isTaken = m_DataContainersPerFieldInfo.Values.Any(container => container.nodeForField == node);
-                                        // If the node is not taken...
-                                        if (!isTaken)
-                                        {
-                                            // This will be our node!
-                                            newNode = (DataTypeNodes.Vector3Node)node;
-                                            // Stop searching for nodes
-                                            break;
-                                        }
-                                    }
-                                }
-
-                                // If we didn't find a suitable existing node...
-                                if (newNode == null)
-                                {
-                                    // Create a new Serial Vector node into the graph
-                                    newNode = MLController.AddNode<DataTypeNodes.Vector3Node>();
-#if UNITY_EDITOR
-                                    // Save newnode to graph on disk                              
-                                    AssetDatabase.AddObjectToAsset(newNode, MLController);
-                                    // Reload graph into memory since we have modified it on disk
-                                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-#endif
-
-                                }
-
-                                // Configure our node appropiately
-                                newNode.Value = (Vector3)fieldToUse.GetValue(gameComponent);
-                                newNode.ValueName = fieldToUse.Name;
-                                newNode.name = fieldToUse.Name + " (Vector3 Node)";
-
-                                // Add all info to a container
-                                IMLFieldInfoContainer infoContainer = new IMLFieldInfoContainer(fieldToUse, newNode, IMLSpecifications.DataTypes.Vector3, gameComponent);
-                                // Add that to the dictionary
-                                m_DataContainersPerFieldInfo.Add(fieldToUse, infoContainer);
-
-                            }
-                            else if (fieldToUse.FieldType == typeof(Vector4) || fieldToUse.FieldType == typeof(Quaternion))
-                            {
-                                DataTypeNodes.Vector4Node newNode = null;
-                                // First, we try and see if the graph already contains a node we can use
-                                foreach (var node in MLController.nodes)
-                                {
-                                    // We see if this node is of the right type
-                                    if (node.GetType() == typeof(DataTypeNodes.Vector4Node))
-                                    {
-                                        // We check if the node is available to use
-                                        var isTaken = m_DataContainersPerFieldInfo.Values.Any(container => container.nodeForField == node);
-                                        // If the node is not taken...
-                                        if (!isTaken)
-                                        {
-                                            // This will be our node!
-                                            newNode = (DataTypeNodes.Vector4Node)node;
-                                            // Stop searching for nodes
-                                            break;
-                                        }
-                                    }
-                                }
-
-                                // If we didn't find a suitable existing node...
-                                if (newNode == null)
-                                {
-                                    // Create a new Serial Vector node into the graph
-                                    newNode = MLController.AddNode<DataTypeNodes.Vector4Node>();
-#if UNITY_EDITOR
-                                    // Save newnode to graph on disk                              
-                                    AssetDatabase.AddObjectToAsset(newNode, MLController);
-                                    // Reload graph into memory since we have modified it on disk
-                                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-#endif
-
-                                }
-
-                                // Configure our node appropiately
-                                newNode.Value = (Vector4)fieldToUse.GetValue(gameComponent);
-                                newNode.ValueName = fieldToUse.Name;
-                                newNode.name = fieldToUse.Name + " (Vector4 Node)";
-
-                                // Add all info to a container
-                                IMLFieldInfoContainer infoContainer = new IMLFieldInfoContainer(fieldToUse, newNode, IMLSpecifications.DataTypes.Vector4, gameComponent);
-                                // Add that to the dictionary
-                                m_DataContainersPerFieldInfo.Add(fieldToUse, infoContainer);
-
-                            }
-                            else if (fieldToUse.FieldType == typeof(float[]))
-                            {
-                                DataTypeNodes.SerialVectorNode newNode = null;
-                                // First, we try and see if the graph already contains a node we can use
-                                foreach (var node in MLController.nodes)
-                                {
-                                    // We see if this node is of the right type
-                                    if (node.GetType() == typeof(DataTypeNodes.SerialVectorNode))
-                                    {
-                                        // We check if the node is available to use
-                                        var isTaken = m_DataContainersPerFieldInfo.Values.Any(container => container.nodeForField == node);
-                                        // If the node is not taken...
-                                        if (!isTaken)
-                                        {
-                                            // This will be our node!
-                                            newNode = (DataTypeNodes.SerialVectorNode)node;
-                                            // Stop searching for nodes
-                                            break;
-                                        }
-                                    }
-                                }
-
-                                // If we didn't find a suitable existing node...
-                                if (newNode == null)
-                                {
-                                    // Create a new Serial Vector node into the graph
-                                    newNode = MLController.AddNode<DataTypeNodes.SerialVectorNode>();
-#if UNITY_EDITOR
-                                    // Save newnode to graph on disk                              
-                                    AssetDatabase.AddObjectToAsset(newNode, MLController);
-                                    // Reload graph into memory since we have modified it on disk
-                                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
-#endif
-                                }
-
-                                // Configure our node appropiately
-                                newNode.Value = (float[])fieldToUse.GetValue(gameComponent);
-                                newNode.ValueName = fieldToUse.Name;
-                                newNode.name = fieldToUse.Name + " (Serial Vector Node)";
-
-                                // Add all info to a container
-                                IMLFieldInfoContainer infoContainer = new IMLFieldInfoContainer(fieldToUse, newNode, IMLSpecifications.DataTypes.SerialVector, gameComponent);
-                                // Add that to the dictionary
-                                m_DataContainersPerFieldInfo.Add(fieldToUse, infoContainer);
-
-
+                                }   
                             }
                         }
-                        // If the dictionary already contains a fieldInfo, update it
-                        else if (true)
-                        {
-                            // Get the node linked to that field info
-                            var dataContainer = m_DataContainersPerFieldInfo[fieldToUse];
-
-                            // Detect the type of the node
-                            switch (dataContainer.DataType)
-                            {
-                                // FLOAT
-                                case IMLSpecifications.DataTypes.Float:
-                                    // If it is input...
-                                    if (isInputData)
-                                        (dataContainer.nodeForField as DataTypeNodes.FloatNode).Value = (float)fieldToUse.GetValue(gameComponent);
-                                    // If it is output...
-                                    if (isOutputData)
-                                        fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.FloatNode).Value);
-                                    break;
-                                // INTEGER
-                                case IMLSpecifications.DataTypes.Integer:
-                                    // If it is input...
-                                    if (isInputData)
-                                        (dataContainer.nodeForField as DataTypeNodes.IntegerNode).Value = (int)fieldToUse.GetValue(gameComponent);
-                                    // If it is output...
-                                    if (isOutputData)
-                                        fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.IntegerNode).Value);
-                                    break;
-                                // VECTOR 2
-                                case IMLSpecifications.DataTypes.Vector2:
-                                    // If it is input...
-                                    if (isInputData)
-                                        (dataContainer.nodeForField as DataTypeNodes.Vector2Node).Value = (Vector2)fieldToUse.GetValue(gameComponent);
-                                    // If it is output...
-                                    if (isOutputData)
-                                        fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.Vector2Node).Value);
-                                    break;
-                                // VECTOR 3
-                                case IMLSpecifications.DataTypes.Vector3:
-                                    // If it is input...
-                                    if (isInputData)
-                                        (dataContainer.nodeForField as DataTypeNodes.Vector3Node).Value = (Vector3)fieldToUse.GetValue(gameComponent);
-                                    // If it is output...
-                                    if (isOutputData)
-                                        fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.Vector3Node).Value);
-                                    break;
-                                // VECTOR 4
-                                case IMLSpecifications.DataTypes.Vector4:
-                                    // If it is input...
-                                    if (isInputData)
-                                        (dataContainer.nodeForField as DataTypeNodes.Vector4Node).Value = (Vector4)fieldToUse.GetValue(gameComponent);
-                                    // If it is output...
-                                    if (isOutputData)
-                                        fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.Vector4Node).Value);
-                                    break;
-                                // SERIAL VECTOR
-                                case IMLSpecifications.DataTypes.SerialVector:
-                                    // If it is input...
-                                    if (isInputData)
-                                        (dataContainer.nodeForField as DataTypeNodes.SerialVectorNode).Value = (float[])fieldToUse.GetValue(gameComponent);
-                                    // If it is output...
-                                    if (isOutputData)
-                                        fieldToUse.SetValue(gameComponent, (dataContainer.nodeForField as DataTypeNodes.SerialVectorNode).Value);
-                                    break;
-                                // DEFAULT SWITCH
-                                default:
-                                    break;
-                            }
-                        }
-
                     }
                 }
             }
+            // Fetch data from scripts added by the user
+            for (int i = 0; i < ComponentsWithIMLData.Count; i++)
+            {
+
+                var IMLGameComponentContainer = ComponentsWithIMLData[i];
+                var gameComponent = ComponentsWithIMLData[i].GameComponent;
+
+                /* ADD SCRIPT NODE */
+                ScriptNode scriptNode = null;
+
+                // If the gameComponent is null, we continue to the next one
+                if (gameComponent == null)
+                {
+                    continue;
+                }
+
+                // Check if the dictionary DOESN'T contain a fieldInfo for this reflected value, and then create nodes and dictionary values
+                if (!m_MonoBehavioursPerScriptNode.ContainsKey(IMLGameComponentContainer.GameComponent))
+                {
+                    // First, we try and see if the graph already contains an empty node we can use
+                    foreach (var node in MLController.nodes)
+                    {
+                        // We see if this node is of the right type
+                        if (node.GetType() == typeof(ScriptNode))
+                        {
+                            // We check if the node is available to use
+                            //var isTaken = m_MonoBehavioursPerScriptNode.Values.Any(container => container.Script == gameComponent);
+                            var foundScriptNode = (node as ScriptNode);
+                            bool isTaken = false;
+                            if (foundScriptNode.GetScript() != null)
+                            {
+                                isTaken = true;
+                                bool isSameType = foundScriptNode.GetScript().GetType() == gameComponent.GetType();
+                                // If the node is of the same type but we expect to control clones...
+                                if (isSameType && IMLGameComponentContainer.ControlClones)
+                                {
+                                    // We check if the script is attached to a clone
+                                    if (foundScriptNode.GetScript().gameObject.name.Contains("(Clone)") )
+                                        // If it is a clone we consider it not taken
+                                        isTaken = false;
+                                }
+                            }
+                            // If the node is not taken...
+                            if (!isTaken)
+                            {
+                                // This will be our node!
+                                scriptNode = foundScriptNode;
+                                // Stop searching for nodes
+                                break;
+                            }
+                        }
+                    }
+
+                    // If we didn't find a suitable existing node...
+                    if (scriptNode == null)
+                    {
+                        // Create a new script node into the graph
+                        scriptNode = MLController.AddNode<ScriptNode>();
+                    }
+
+                    // Configure our node appropiately
+                    scriptNode.SetScript(gameComponent);
+
+                    // Add that to the dictionary            
+                    m_MonoBehavioursPerScriptNode.Add(IMLGameComponentContainer.GameComponent, scriptNode);
+
+                }
+                // If it contains a fieldInfo for this reflected value, access node
+                else
+                {
+                    m_MonoBehavioursPerScriptNode.TryGetValue(IMLGameComponentContainer.GameComponent, out scriptNode);
+                }
+
+                // Update ports if required
+                if (scriptNode)
+                {
+                    scriptNode.UpdatePortFields(gameComponent);
+                }
+            }
+
+            if (m_MonobehaviourClones == null)
+                m_MonobehaviourClones = new List<MonoBehaviour>();
+            // Fetch data from clones if there are any
+            for (int i = 0; i < m_MonobehaviourClones.Count; i++)
+            {
+                var clone = m_MonobehaviourClones[i];
+                // If the clone is null by any chance, remove it from list
+                if (clone == null)
+                {
+                    m_MonobehaviourClones.RemoveAt(i);
+                    continue;
+                }
+                // Get corresponding scriptNode
+                if (m_MonoBehavioursPerScriptNode.Contains(clone) )
+                {
+                    ScriptNode scriptNode;
+                    m_MonoBehavioursPerScriptNode.TryGetValue(clone, out scriptNode);
+                    if (scriptNode)
+                        scriptNode.UpdatePortFields(clone);
+                }
+            }
+
         }
 
         #endregion
@@ -1055,6 +842,14 @@ namespace InteractML
             else
                 m_RealtimeIMLOutputNodesList = new List<RealtimeIMLOutputNode>();
 
+        }
+
+        [ContextMenu("ClearScriptNodes")]
+        public void ClearScriptNodes()
+        {
+            if (m_MonoBehavioursPerScriptNode == null)
+                m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
+            m_MonoBehavioursPerScriptNode.Clear();
         }
 
         /// <summary>
@@ -1125,6 +920,93 @@ namespace InteractML
         public void UpdateGameObjectsInIMLController()
         {
             SendGameObjectsToIMLController();
+        }
+
+        /// <summary>
+        /// Makes sure that there are no more scriptNodes that the ones needed
+        /// </summary>
+        public void UpdateScriptNodes(bool changingPlayMode = false)
+        {
+            if (m_ScriptNodesList == null)
+                m_ScriptNodesList = new List<ScriptNode>();
+            if (ComponentsWithIMLData == null)
+                ComponentsWithIMLData = new List<IMLMonoBehaviourContainer>();
+
+            for (int i = 0; i < m_ScriptNodesList.Count; i++)
+            {
+                var scriptNode = m_ScriptNodesList[i];
+                // Remove node from list if the reference is null
+                if (scriptNode == null)
+                {
+                    m_ScriptNodesList.RemoveAt(i);
+                    // Decrease counter to not delete the wrong element later
+                    i--;
+                }
+#if UNITY_EDITOR
+                else if (changingPlayMode && scriptNode.CreatedDuringPlaymode)
+                {
+                    // Destroy node
+                    MLController.RemoveNode(scriptNode);
+                    // Decrease counter to not delete the wrong element later
+                    i--;
+                    // Force scriptNode reference to null
+                    scriptNode = null;
+                }
+#endif
+                // Check if we need to remove the scriptNode from the list
+                else
+                {
+                    // If this script node is not contained in the logic dictionary...
+                    if (!m_MonoBehavioursPerScriptNode.ContainsValue(scriptNode))
+                    {
+                        // Destroy node
+                        MLController.RemoveNode(scriptNode);
+                        // Decrease counter to not delete the wrong element later
+                        i--;
+                        // Force scriptNode reference to null
+                        scriptNode = null;
+                    }
+                }
+
+                // Now if the node wasn't removed, make sure that there is a script that the node is controlling in componentsWithIMLData
+                if (scriptNode != null)
+                {
+                    // If we are switching playmodes, it is very likely that we lost the reference to the script
+                    if (changingPlayMode)
+                    {
+                        // Check if the script reference is null
+                        if (scriptNode.GetScript() == null)
+                        {
+                            // See if we know the hash of the referenced script
+                            if (scriptNode.ScriptHashCode != default(int))
+                            {
+                                // Check if the script is contained in the components with IML Data
+                                var result = ComponentsWithIMLData.Select(x => x.GameComponent).Where(gameComponent => gameComponent.GetHashCode() == scriptNode.ScriptHashCode);                                
+                                var script = result.FirstOrDefault();
+                                // If we found the script...
+                                if (script != null)
+                                {
+                                    // Add the script to the node
+                                    scriptNode.SetScript(script);
+                                }
+                                
+                            }
+                        }
+                    }
+                    // If we have a reference to the script the node controls...
+                    if (scriptNode.GetScript() != null)
+                    {
+                        // Make sure is managed in the list of scripts
+                        var container = new IMLMonoBehaviourContainer(scriptNode.GetScript());
+                        if (!ComponentsWithIMLData.Contains(container))
+                        {
+                            ComponentsWithIMLData.Add(container);
+                        }
+                    }
+                    
+                }
+
+            }
         }
 
         [ContextMenu("Delete All Models")]
@@ -1255,11 +1137,13 @@ namespace InteractML
             
         }
 
+        #region SubscriptionOfMonobehaviours
+
         /// <summary>
         /// Pass a Monobehaviour and mark any field with "SendToIMLController" or "PullFromIMLController" attribute to use it with the IML Component
         /// </summary>
         /// <param name="gameComponent"></param>
-        public void SubscribeToIMLController(MonoBehaviour gameComponent)
+        public void SubscribeToIMLController(MonoBehaviour gameComponent, bool controlClones = false)
         {
             if (gameComponent == null)
             {
@@ -1268,12 +1152,64 @@ namespace InteractML
             }
             else
             {
-                if (m_ComponentsWithIMLData == null)
-                    m_ComponentsWithIMLData = new List<MonoBehaviour>();
+                if (ComponentsWithIMLData == null)
+                    ComponentsWithIMLData = new List<IMLMonoBehaviourContainer>();
+                if (m_MonoBehavioursPerScriptNode == null)
+                    m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
+                if (m_MonobehaviourClones == null)
+                    m_MonobehaviourClones = new List<MonoBehaviour>();
 
-                if (!m_ComponentsWithIMLData.Contains(gameComponent))
+                var container = new IMLMonoBehaviourContainer(gameComponent, controlClones);
+                // If the list of component doesn't contain the monobehaviour to be added...
+                if (!ComponentsWithIMLData.Contains(container))
                 {
-                    m_ComponentsWithIMLData.Add(gameComponent);
+                    ComponentsWithIMLData.Add(container);
+                }
+                // If the monobehaviour is in the list, it might be a clone
+                else if (controlClones)
+                {
+                    // Check if this clone is already added
+                    if (!m_MonoBehavioursPerScriptNode.Contains(gameComponent))
+                    {
+                        // Retrieve scriptNode managing clones
+                        ScriptNode scriptNode = null;
+                        // Check if we have a matching script so that we can reuse the scriptNode
+                        var KeyValuePairs = m_MonoBehavioursPerScriptNode.GetEnumerator();
+                        while (KeyValuePairs.MoveNext())
+                        {
+                            // If we have a matching type...
+                            if (KeyValuePairs.Current.Key.GetType() == gameComponent.GetType())
+                            {
+                                // Get that scriptNode, it will control our clone
+                                scriptNode = KeyValuePairs.Current.Value;
+                            }
+                        }
+                        // If we didn't find a scriptNode for this clone...
+                        if (scriptNode == null)
+                        {
+                            // It might not be created yet, try updating scriptNodes to see if it will be created
+                            FetchDataFromMonobehavioursSubscribed();
+                            // Try again the search
+                            KeyValuePairs = m_MonoBehavioursPerScriptNode.GetEnumerator();
+                            while (KeyValuePairs.MoveNext())
+                            {
+                                // If we have a matching type...
+                                if (KeyValuePairs.Current.Key.GetType() == gameComponent.GetType())
+                                {
+                                    // Get that scriptNode, it will control our clone
+                                    scriptNode = KeyValuePairs.Current.Value;
+                                }
+                            }
+                        }
+                        // If we succesfully retrieved the scriptNode...
+                        if (scriptNode != null)
+                        {
+                            // Assign this clone to that scriptNode
+                            m_MonoBehavioursPerScriptNode.Add(gameComponent, scriptNode);
+                            // Save reference in our list of clones
+                            m_MonobehaviourClones.Add(gameComponent);
+                        }
+                    }
                 }
             }
         }
@@ -1282,7 +1218,7 @@ namespace InteractML
         /// Unsubscribes Monobehaviour from the list to use with the IMLController
         /// </summary>
         /// <param name="gameComponent"></param>
-        public void UnsubscribeFromIMLController(MonoBehaviour gameComponent)
+        public void UnsubscribeFromIMLController(MonoBehaviour gameComponent, bool controlClones = false)
         {
             if (gameComponent == null)
             {
@@ -1291,10 +1227,11 @@ namespace InteractML
             }
             else
             {
-                if (m_ComponentsWithIMLData == null)
-                    m_ComponentsWithIMLData = new List<MonoBehaviour>();
+                if (ComponentsWithIMLData == null)
+                    ComponentsWithIMLData = new List<IMLMonoBehaviourContainer>();
 
-                if (m_ComponentsWithIMLData.Contains(gameComponent))
+                var container = new IMLMonoBehaviourContainer(gameComponent, controlClones);
+                if (ComponentsWithIMLData.Contains(container))
                 {
                     // Before removing, make sure that the dictionaries and the IML Controller are updated with the changes
                     if (m_DataMonobehavioursPerFieldInfo.ContainsValue(gameComponent))
@@ -1326,11 +1263,42 @@ namespace InteractML
                     }
                     
                     // After all dictionaries are updated (and the ML grpah as well), remove gameComponent from list
-                    m_ComponentsWithIMLData.Remove(gameComponent);
+                    ComponentsWithIMLData.Remove(container);
                 }
             }
 
         }
+
+        #endregion
+
+        #region Add Nodes
+
+        /// <summary>
+        /// Adds a scriptNode internally to the list
+        /// </summary>
+        /// <param name="node"></param>
+        public void AddScriptNode(ScriptNode node)
+        {
+            if (node != null)
+            {
+                if (m_ScriptNodesList == null) m_ScriptNodesList = new List<ScriptNode>();
+                // Add node if it is not contained in list
+                if (!m_ScriptNodesList.Contains(node)) m_ScriptNodesList.Add(node);
+#if UNITY_EDITOR
+                // Mark node as created During Playmode if required
+                if (EditorApplication.isPlaying) node.CreatedDuringPlaymode = true;
+
+                // Save newnode to graph on disk                              
+                AssetDatabase.AddObjectToAsset(node, MLController);
+                // Reload graph into memory since we have modified it on disk
+                AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+#endif
+            }
+        }
+
+        #endregion
+
+        #region Deletion of Nodes
 
         /// <summary>
         /// Removes GameObjectNode From GameObjectNodeList 
@@ -1387,6 +1355,36 @@ namespace InteractML
             if (FeatureNodesList.Contains(nodeToDelete))
                 FeatureNodesList.Remove(nodeToDelete);
         }
+
+        /// <summary>
+        /// Removes a script node from the IML Component
+        /// </summary>
+        /// <param name="node"></param>
+        public void DeleteScriptNode(ScriptNode node)
+        {
+            var container = new IMLMonoBehaviourContainer(node.GetScript());
+
+            // Components with IML Data list
+            if (ComponentsWithIMLData == null)
+                ComponentsWithIMLData = new List<IMLMonoBehaviourContainer>();
+            else if (ComponentsWithIMLData.Contains(container))
+                ComponentsWithIMLData.Remove(container);
+
+            // Monobehaviours per scriptNode dictionary
+            if (m_MonoBehavioursPerScriptNode == null)
+                m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
+            else if (container.GameComponent != null && m_MonoBehavioursPerScriptNode.ContainsKey(container.GameComponent))
+                m_MonoBehavioursPerScriptNode.Remove(container.GameComponent);
+
+            // scriptNodes list
+            if (m_ScriptNodesList == null)
+                m_ScriptNodesList = new List<ScriptNode>();
+            else if (m_ScriptNodesList.Contains(node))
+                m_ScriptNodesList.Remove(node);
+        }
+
+        #endregion
+
         //Very dirty code need to sort it out in a better way - updates the node pointer when exiting or entering play mode 
         public void updateGameObjectImage()
         {

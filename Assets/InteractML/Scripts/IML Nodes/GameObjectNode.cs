@@ -5,18 +5,23 @@ using XNode;
 
 namespace InteractML
 {
+    [CreateNodeMenuAttribute("Interact ML/Game Object")]
+    [NodeWidth(250)]
     public class GameObjectNode : Node
     {
         /// <summary>
         /// The GameObject from the scene to use
         /// </summary>
-        [Output]
-        public GameObject GameObjectFromScene;
+        [Output] public GameObject GameObjectDataOut;
+        
 
         [HideInInspector]
         public bool GameObjMissing;
         [HideInInspector]
-        public bool state; 
+        public bool state;
+
+        [HideInInspector]
+        public IMLNodeTooltips tips;
 
         // Use this for initialization
         protected override void Init()
@@ -30,11 +35,7 @@ namespace InteractML
                
             }
 
-        }
-
-        void Start()
-        {
-           
+            tips = IMLTooltipsSerialization.LoadTooltip("GameObject");
         }
 
         public void OnDestroy()
@@ -50,10 +51,10 @@ namespace InteractML
         // Return the correct value of an output port when requested
         public override object GetValue(NodePort port)
         {
-            if (GameObjectFromScene != null)
+            if (GameObjectDataOut != null)
             {
                 GameObjMissing = false;
-                return GameObjectFromScene;
+                return GameObjectDataOut;
             }
             else
             {
@@ -65,5 +66,7 @@ namespace InteractML
                 return null;
             }
         }
+
+        
     }
 }

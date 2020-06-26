@@ -147,13 +147,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 77529449}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.36, y: 2.07, z: 3.9}
+  m_LocalRotation: {x: 0.70458376, y: -0.080454595, z: 0.16586284, w: 0.68525785}
+  m_LocalPosition: {x: -16.6, y: 2.07, z: 3.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 82.9, y: 92.7, z: 112.8}
 --- !u!136 &77529451
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -227,6 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveAxisZ: 0
+  UseCurrentZOnStart: 0
 --- !u!1 &266555833
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,14 +257,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c477b3f40f547843930edfdcbde5951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MLController: {fileID: 11400000, guid: 2594d0b219b963048bec5f6d15fbf34e, type: 2}
+  MLController: {fileID: 11400000, guid: 9e2fe998361fad74b9687f803bfa59ef, type: 2}
   GameObjectsToUse:
   - {fileID: 77529449}
-  TrainingExamplesNodesList:
-  - {fileID: 6732151304541360272, guid: 2594d0b219b963048bec5f6d15fbf34e, type: 2}
-  IMLConfigurationNodesList:
-  - {fileID: -2164575221549548335, guid: 2594d0b219b963048bec5f6d15fbf34e, type: 2}
-  FeaturesUpdated: 0
+  m_ScriptNodesList:
+  - {fileID: 3829375924371095371, guid: 9e2fe998361fad74b9687f803bfa59ef, type: 2}
+  FeaturesUpdated: 1
+  ComponentsWithIMLData:
+  - GameComponent: {fileID: 2057764850}
+    ControlClones: 0
 --- !u!4 &266555835
 Transform:
   m_ObjectHideFlags: 0
@@ -271,13 +273,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 266555833}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.42261827, y: 0, z: 0, w: 0.9063079}
   m_LocalPosition: {x: 2.2662807, y: -2.607616, z: -0.7418663}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: 0, z: 0}
 --- !u!1 &412234562
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,4 +560,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbd2a755098f5f46814744bfc36b3e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MLComponent: {fileID: 266555834}
+  SetAbsoluteColour: 0

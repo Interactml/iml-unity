@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Mouse_Input_Console_Output_IML_Controller
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: 114277858093761784}
   - {fileID: 114507523331420728}
   - {fileID: 114357140570682068}
   - {fileID: 114913048169967506}
   - {fileID: 114315671501912336}
+  - {fileID: 114277858093761784}
   SceneComponent: {fileID: 0}
 --- !u!114 &114277858093761784
 MonoBehaviour:
@@ -29,29 +29,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Game Object Node
+  m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
+  id: 42bf189a-fb56-4950-b205-5f13a4a707ec
   graph: {fileID: 11400000}
   position: {x: -632, y: -136}
   ports:
     keys:
-    - GameObjectFromScene
+    - GameObjectDataOut
     values:
-    - _fieldName: GameObjectFromScene
+    - _fieldName: GameObjectDataOut
       _node: {fileID: 114277858093761784}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: gameObjectIntoNode
-        node: {fileID: 114315671501912336}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  GameObjectFromScene: {fileID: 0}
+  GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
+  state: 0
 --- !u!114 &114315671501912336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,52 +61,46 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
-  m_Name: Extract Position
+  m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
+  id: fd93943d-403e-4532-abdd-feac88045df4
   graph: {fileID: 11400000}
   position: {x: -280, y: -184}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 114315671501912336}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: 114277858093761784}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 114315671501912336}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: InputFeatures
-        node: {fileID: 114507523331420728}
-        reroutePoints:
-        - {x: 64, y: -112}
-      - fieldName: InputFeatures
-        node: {fileID: 114357140570682068}
-        reroutePoints:
-        - {x: 216.53656, y: 282.88025}
-        - {x: 832.536, y: 282.19305}
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 114315671501912336}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
+  LocalSpace: 0
+  x_switch: 0
+  y_switch: 0
+  z_switch: 0
   m_PositionExtracted:
     m_Values:
     - 1.47
     - -4.98
     - -2.85
+  ReceivingData: 0
 --- !u!114 &114357140570682068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,8 +111,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
-  m_Name: IML Configuration
+  m_Name: MACHINE LEARNING SYSTEM
   m_EditorClassIdentifier: 
+  id: 04161202-039c-48d1-b3e5-ef8459a4cfea
   graph: {fileID: 11400000}
   position: {x: 984, y: -232}
   ports:
@@ -146,10 +140,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: positionExtracted
-        node: {fileID: 114315671501912336}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -172,9 +163,6 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 114315671501912336}
   ModelOutput: {fileID: 0}
-  EnableKeyboardShortcut: 1
-  TrainingKey: 116
-  RunningKey: 114
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -182,6 +170,9 @@ MonoBehaviour:
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 0
+  EnableKeyboardControl: 0
+  TrainingKey: 116
+  RunningKey: 114
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
 --- !u!114 &114507523331420728
@@ -194,8 +185,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
-  m_Name: Training Examples Node
+  m_Name: TEACH THE MACHINE
   m_EditorClassIdentifier: 
+  id: 2affc6e8-258c-418e-bca8-2919cb4deb85
   graph: {fileID: 11400000}
   position: {x: 280, y: -264}
   ports:
@@ -208,10 +200,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: positionExtracted
-        node: {fileID: 114315671501912336}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -241,7 +230,7 @@ MonoBehaviour:
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableKeyboardShortcut: 0
+  EnableKeyboardControl: 0
   RecordDataKey: 0
 --- !u!114 &114913048169967506
 MonoBehaviour:
@@ -253,8 +242,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
-  m_Name: Realtime IML Output Node
+  m_Name: OUTPUT
   m_EditorClassIdentifier: 
+  id: 2f83ca0d-ab96-467e-9f29-6c7c99788f27
   graph: {fileID: 11400000}
   position: {x: 1624, y: -216}
   ports:

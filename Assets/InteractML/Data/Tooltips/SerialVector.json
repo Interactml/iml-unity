@@ -1,0 +1,16 @@
+{
+  "HelpTooltip": "Extracts and Outputs a Vector3. The displayed data is either the live value when a Vector3 is connected to the input port, or when nothing is connected the display shows an editable field to output a Vector3",
+  "PortTooltip": [ "Connect a Vector3", "Outputs a Vector3" ],
+  "BodyTooltip": {
+    "tips": [
+      "x, y and z values: turn on/off using the toggle, flashes when detecting input",
+    ],
+    "error": [
+      "error"
+    ]
+  },
+  "BottomError": [ "bottom error" ]
+}
+
+
+

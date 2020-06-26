@@ -46,7 +46,7 @@ public class BoxForces : MonoBehaviour
         m_OriginalMat = this.GetComponent<Renderer>().material;
 
         if (IMLSystem)
-            IMLSystem.SubscribeToIMLController(this);
+            IMLSystem.SubscribeToIMLController(this, controlClones: true);
     }
 
     // Update is called once per frame

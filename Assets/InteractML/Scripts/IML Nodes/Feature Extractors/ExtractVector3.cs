@@ -9,7 +9,9 @@ namespace InteractML.FeatureExtractors
     /// <summary>
     /// Gets a Vector3 and converts it to a IMLVector3 FEature
     /// </summary>
-    public class ExtractVector3 : Node, IFeatureIML
+    [NodeTint("#3A3B5B")]
+    [NodeWidth(250)]
+    public class ExtractVector3 : BaseExtractorNode, IFeatureIML
     {
         /// <summary>
         /// Dummy float from which we extract a feature

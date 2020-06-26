@@ -10,25 +10,26 @@ namespace InteractML.FeatureExtractors
     /// <summary>
     /// Extracts the distance from one or several features to another one (i.e. fingers to the palm of the hand)
     /// </summary>
-    public class ExtractDistanceToFirstInput : Node, IFeatureIML
+    [NodeWidth(250)]
+    public class ExtractDistanceToFirstInput : BaseExtractorNode, IFeatureIML
     {
         /// <summary>
         /// The feature that has been previously extracted and from which we are calculating the distance from (i.e. position, rotation, etc)
         /// </summary>
         [Input]
-        public Node FeatureToInput;
+        public Node FirstInput;
 
         /// <summary>
         /// The features that we will measure the distance to the first feature to Input
         /// </summary>
         [Input]
-        public List<Node> FeaturesToMeasureDistanceToFirst;
+        public List<Node> SecondInput;
 
         /// <summary>
         /// Node data sent outside of this node onwards
         /// </summary>
         [Output]
-        public Node DistanceExtracted;
+        public Node DistanceBetweenInputs;
 
         /// <summary>
         /// Feature Values extracted (ready to be read by a different node)
@@ -57,16 +58,19 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         public bool isUpdated { get; set; }
 
+        [HideInInspector]
+        public IMLNodeTooltips tips;
 
 
         // Use this for initialization
         protected override void Init()
         {
             base.Init();
-
+            tips = IMLTooltipsSerialization.LoadTooltip("Distance");
             // This extractor expects any other feature extracted to make calculations
-            FeatureToInput = GetInputValue<Node>("FeatureToInput");
-            FeaturesToMeasureDistanceToFirst = GetInputValues<Node>("FeaturesToMeasureDistanceToFirst").ToList();
+            FirstInput = GetInputValue<Node>("FirstInput");
+            SecondInput = GetInputValues<Node>("SecondInput").ToList();
+
         }
 
         public void OnDestroy()
@@ -85,29 +89,30 @@ namespace InteractML.FeatureExtractors
             return UpdateFeature();
         }
 
+
         public object UpdateFeature()
         {
             // This extractor expects any other feature extracted to make calculations
-            FeatureToInput = GetInputValue<Node>("FeatureToInput");
-            FeaturesToMeasureDistanceToFirst = GetInputValues<Node>("FeaturesToMeasureDistanceToFirst").ToList();
+            FirstInput = GetInputValue<Node>("FeatureToInput");
+            SecondInput = GetInputValues<Node>("FeaturesToMeasureDistanceToFirst").ToList();
 
             if (!isUpdated)
             {
                 // If we managed to get the input
-                if (FeatureToInput != null && FeaturesToMeasureDistanceToFirst != null)
+                if (FirstInput != null && SecondInput != null)
                 {
                     // We check that it is an IML feature
-                    var featureToUseIML = (FeatureToInput as IFeatureIML).FeatureValues;
+                    var featureToUseIML = (FirstInput as IFeatureIML).FeatureValues;
                     if (featureToUseIML != null)
                     {
                         // Clear distances vector
-                        m_DistancesToFirstInput = new float[FeaturesToMeasureDistanceToFirst.Count];
+                        m_DistancesToFirstInput = new float[SecondInput.Count];
 
                         // We check that the features to measure the distance to the first are IML features
-                        for (int i = 0; i < FeaturesToMeasureDistanceToFirst.Count; i++)
+                        for (int i = 0; i < SecondInput.Count; i++)
                         {
                             //Debug.Log("Calculating distance iteration: " + i);
-                            var feautureToMeasure = FeaturesToMeasureDistanceToFirst[i];
+                            var feautureToMeasure = SecondInput[i];
                             var featureMeasureIML = (feautureToMeasure as IFeatureIML).FeatureValues;
                             // We check that the second inputs are also iml features
                             if (featureMeasureIML != null)
@@ -170,7 +175,6 @@ namespace InteractML.FeatureExtractors
                 // If we couldn't get an input (at all), we return null
                 else
                 {
-                    Debug.LogError("Could not get any input when measuring distance!");
                     return null;
                 }
 
@@ -181,6 +185,12 @@ namespace InteractML.FeatureExtractors
                 return this;
             }
 
+        }
+        public override void OnCreateConnection(NodePort from, NodePort to)
+        {
+            System.Type[] portTypesAccept = new System.Type[] { };
+            System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(IMLConfiguration) };
+            this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
         }
     }
 }

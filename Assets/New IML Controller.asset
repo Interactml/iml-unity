@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
-  m_Name: IML Configuration
+  m_Name: MACHINE LEARNING SYSTEM
   m_EditorClassIdentifier: 
+  id: 73ed6f77-9c5d-4c47-aeca-59599f226d17
   graph: {fileID: 11400000}
   position: {x: 2264, y: 136}
   ports:
@@ -64,9 +65,6 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: -1917692218081932056}
   ModelOutput: {fileID: 0}
-  KeyboardControl: 0
-  TrainingKey: 0
-  RunningKey: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -74,6 +72,9 @@ MonoBehaviour:
   m_ExpectedInputList: 00000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 1
+  EnableKeyboardControl: 0
+  TrainingKey: 0
+  RunningKey: 0
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
 --- !u!114 &-1917692218081932056
@@ -86,8 +87,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bffaa18ed98b0d942b9f429eb8ca06fb, type: 3}
-  m_Name: Extract Float
+  m_Name: LIVE FLOAT DATA
   m_EditorClassIdentifier: 
+  id: b8deb4a1-f51a-4e23-a53f-c9e32407fd15
   graph: {fileID: 11400000}
   position: {x: 1992, y: 600}
   ports:
@@ -153,8 +155,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
-  m_Name: Training Examples
+  m_Name: TEACH THE MACHINE
   m_EditorClassIdentifier: 
+  id: d2ee8ca8-307d-4aec-919c-9332de0a9512
   graph: {fileID: 11400000}
   position: {x: 1704.7339, y: 79.62778}
   ports:
@@ -200,7 +203,8 @@ MonoBehaviour:
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableCollectDataShortcut: 0
+  EnableKeyboardControl: 0
+  RecordDataKey: 0
 --- !u!114 &2671428476088739205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,8 +215,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
-  m_Name: Realtime IML Output
+  m_Name: OUTPUT
   m_EditorClassIdentifier: 
+  id: 8f23dad8-ad4b-414e-bfeb-529c1b16e9d7
   graph: {fileID: 11400000}
   position: {x: 2920.1946, y: 187.81004}
   ports:

@@ -9,7 +9,7 @@ using System;
 namespace InteractML
 {
     [NodeWidth(420)]
-    public class IMLConfiguration : Node
+    public class IMLConfiguration : IMLNode
     {
 
         #region Variables
@@ -21,8 +21,8 @@ namespace InteractML
         public List<TrainingExamplesNode> IMLTrainingExamplesNodes;
         [Input]
         public List<Node> InputFeatures;
-        [Output, SerializeField]
-        public IMLConfiguration ModelOutput;
+        //[Output, SerializeField]
+        //public IMLConfiguration ModelOutput;
 
         /// <summary>
         /// The list of predicted outputs
@@ -54,7 +54,8 @@ namespace InteractML
         [SerializeField, HideInInspector]
         protected List<IMLSpecifications.OutputsEnum> m_ExpectedOutputList;
         public List<IMLSpecifications.OutputsEnum> ExpectedOutputList { get { return m_ExpectedOutputList; } }
-        private List<NodePort> m_DynamicOutputPorts;
+        protected List<NodePort> m_DynamicOutputPorts;
+        public bool OutputPortsChanged { get; set; }
 
 
         /// <summary>
@@ -87,7 +88,9 @@ namespace InteractML
         public bool Training { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Training); } }
         public bool Trained { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Trained); } }
         public bool Untrained { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Untrained); } }
-
+        
+        [HideInInspector]
+        public IMLNodeTooltips tips;
 
         /// <summary>
         /// Reference to the rapidlib model this node is holding
@@ -135,8 +138,15 @@ namespace InteractML
         [HideInInspector]
         public bool RunOnAwake;
 
+        /* NODEPORT NAMES */
+        protected string m_TrainingExamplesNodeportName;
+        protected string m_LiveFeaturesNodeportName;
+
         /* ERROR FLAGS */
-        private bool m_ErrorWrongInputTrainingExamplesPort;
+        protected bool m_ErrorWrongInputTrainingExamplesPort;
+        protected bool m_WrongNumberOfTargetValues = false;
+
+        private List<TrainingExamplesNode> oldTrainingExamplesNodes;
 
         #endregion
 
@@ -148,6 +158,8 @@ namespace InteractML
             base.Init();
 
             Initialize();
+
+            tips = IMLTooltipsSerialization.LoadTooltip("Classification_MLS");
 
         }
 
@@ -202,29 +214,15 @@ namespace InteractML
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
             base.OnCreateConnection(from, to);
+            m_WrongNumberOfTargetValues = false;
 
             m_NodeConnectionChanged = true;
 
-            // If it was a connection to this node and the field is the training examples input port...
-            if (to.node is IMLConfiguration && to.fieldName == "IMLTrainingExamplesNodes")
-            {
-                TrainingExamplesNode examplesNode = from.node as TrainingExamplesNode;
-                // We check that the connection is from a training examples node
-                if (examplesNode != null)
-                {
-                    // Update dynamic ports for output
-                    AddDynamicOutputPorts(examplesNode, ref m_DynamicOutputPorts);
-                }
-                // If not, we break connection
-                else
-                {
-                    from.Disconnect(to);
-                    // Prepare flag to 
-                    m_ErrorWrongInputTrainingExamplesPort = true;
-                }
-            }
+            // Evaluate the nodeport for training examples
+            CheckTrainingExamplesConnections(from, to, m_TrainingExamplesNodeportName);
 
-            Debug.Log("Connection to port " + to.node.name + " created!");
+            // Evaluate nodeport for real-time features
+            CheckInputFeaturesConnections(from, to, m_LiveFeaturesNodeportName);
 
             // We call logic for adapting arrays and inputs/outputs for ML models
             // Create input feature vector for realtime rapidlib predictions
@@ -232,7 +230,13 @@ namespace InteractML
 
             // Create rapidlib predicted output vector
             CreateRapidLibOutputVector();
-
+            // if adding a training examples node connection add MLS system to that training nodes list of connected MLS systems
+            if(from.fieldName == "TrainingExamplesNodeToOutput" && !m_WrongNumberOfTargetValues) 
+            {
+                TrainingExamplesNode temp = from.node as TrainingExamplesNode;
+                temp.IMLConfigurationNodesConnected.Add(this);
+            }
+            
         }
 
         public override void OnRemoveConnection(NodePort port)
@@ -242,6 +246,12 @@ namespace InteractML
             m_NodeConnectionChanged = true;
 
             UpdateOutputConfigList();
+
+            // Check that lists are not null
+            if (m_ExpectedOutputList == null)
+                m_ExpectedOutputList = new List<IMLSpecifications.OutputsEnum>();
+            if (m_DynamicOutputPorts == null)
+                m_DynamicOutputPorts = new List<NodePort>();
 
             // IF expected outputs don't match with dynamic output ports, a training examples node was disconnected
             if (m_ExpectedOutputList.Count != m_DynamicOutputPorts.Count)
@@ -256,7 +266,6 @@ namespace InteractML
 
             // Create rapidlib predicted output vector
             CreateRapidLibOutputVector();
-
         }
 
         #endregion
@@ -339,6 +348,15 @@ namespace InteractML
             // Create rapidlib predicted output vector
             CreateRapidLibOutputVector();
 
+            //Add this node to list of IMLConfig nodes in all training nodes attached 
+            foreach(TrainingExamplesNode node in IMLTrainingExamplesNodes)
+            {
+                if(!node.IMLConfigurationNodesConnected.Contains(this))
+                    node.IMLConfigurationNodesConnected.Add(this);
+            }
+            // Specify the names for the nodeports
+            m_TrainingExamplesNodeportName = "IMLTrainingExamplesNodes";
+            m_LiveFeaturesNodeportName = "InputFeatures";
         }
 
         /// <summary>
@@ -367,13 +385,16 @@ namespace InteractML
 
         public void UpdateLogic()
         {
-            
             //Set Learning Type 
             SetLearningType();
 
             // Handle Input
-            KeyboardInput();
-            
+            //KeyboardInput();
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                ToggleRunning();
+            }
+
             // Update Input Config List
             UpdateInputConfigList();
 
@@ -444,9 +465,11 @@ namespace InteractML
             if (!m_Running)
             {
                 // Set flag to true if running inputs/outputs are not null and the model is trained!
-                if (m_RapidlibInputVector != null && m_RapidlibOutputVector != null && Trained)
+                if (((m_RapidlibInputVector != null && m_RapidlibOutputVector != null) || m_LearningType == IMLSpecifications.LearningType.DTW) && Trained)
                 {
-                    UpdateInputVector();
+                    // If we are on classification or regression...
+                    if (m_LearningType != IMLSpecifications.LearningType.Classification || m_LearningType != IMLSpecifications.LearningType.Regression)
+                        UpdateInputVector();
 
                     m_Running = true;
                 }
@@ -751,7 +774,7 @@ namespace InteractML
             {
                 // Save size of rapidlib vectorsize to work with it 
                 // DIRTY CODE.  THIS SHOULD CHECK IF THE OUTPUT CONFIGURATION ACTUALLY DID CHANGE OR NOT. YOU COULD HAVE 2 DIFF OUTPUTS CONFIGS WITH SAME VECTOR SIZE
-                if(PredictedRapidlibOutput != null)
+                if (PredictedRapidlibOutput != null)
                     m_LastKnownRapidlibOutputVectorSize = PredictedRapidlibOutput.Length;
                 // Adjust the desired outputs list based on configuration selected
                 PredictedOutput.Clear();
@@ -796,6 +819,7 @@ namespace InteractML
                         // There was an unexpected change of training examples outputs, update list
                         UpdateDynamicOutputPorts(IMLTrainingExamplesNodes, m_ExpectedOutputList, ref m_DynamicOutputPorts);
                     }
+                    
                     /* DIRTY CODE */
                 }
 
@@ -843,8 +867,18 @@ namespace InteractML
         /// </summary>
         protected void UpdateOutputConfigList()
         {
+            oldTrainingExamplesNodes = IMLTrainingExamplesNodes;
             // Get values from the training example node
             IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
+
+            if (IMLTrainingExamplesNodes.Count < oldTrainingExamplesNodes.Count)
+            {
+                List<TrainingExamplesNode> list3 = oldTrainingExamplesNodes.Except(IMLTrainingExamplesNodes).ToList();
+                foreach (TrainingExamplesNode node in list3)
+                {
+                    node.IMLConfigurationNodesConnected.Remove(this);
+                }
+            }
 
             // Make sure that the output list is initialised
             if (m_ExpectedOutputList == null)
@@ -939,7 +973,7 @@ namespace InteractML
             // Add a specific kind of type for the output node depending on the expected type. The index will be the current length of the outputPorts list (since we are adding new ones, it will constantly increase)
             switch (type)
             {
-                case IMLSpecifications.OutputsEnum.Float:
+                case IMLSpecifications.OutputsEnum.Float:                   
                     dynamicOutputPort = AddDynamicOutput(typeof(float), fieldName: "Output " + outputPorts.Count);
                     break;
                 case IMLSpecifications.OutputsEnum.Integer:
@@ -963,7 +997,7 @@ namespace InteractML
             }
 
             // If we got one output port to add, we add it
-            if (dynamicOutputPort != null)
+            if (dynamicOutputPort != null && !outputPorts.Contains(dynamicOutputPort))
                 outputPorts.Add(dynamicOutputPort);
 
         }
@@ -1075,6 +1109,9 @@ namespace InteractML
                 outputPorts.Clear();
 
             }
+            // Update flag so that the editor can be drawn properly
+            OutputPortsChanged = true;
+
             //// Clear entire local list
             //outputPorts.Clear();
             //// Use local list as a copy of parent class list
@@ -1383,6 +1420,7 @@ namespace InteractML
         /// </summary>
         protected void UpdateInputVector()
         {
+            CreateRapidlibInputVector();
             // If we have some input connected...
             if (!Lists.IsNullOrEmpty(ref InputFeatures))
             {
@@ -1430,7 +1468,52 @@ namespace InteractML
             m_ErrorWrongInputTrainingExamplesPort = value;
         }
 
-#endregion
+        protected virtual void CheckTrainingExamplesConnections(NodePort from, NodePort to, string portName)
+        {            
+            // Evaluate the nodeport for training examples
+            if (to.fieldName == portName)
+            {
+                // Check if the node connected was a training examples node
+                bool isNotTrainingExamplesNode = this.DisconnectIfNotType<IMLConfiguration, TrainingExamplesNode>(from, to);
+
+                // If we broke the connection...
+                if (isNotTrainingExamplesNode)
+                {
+                    // Prepare flag to show error regarding training examples
+                    m_ErrorWrongInputTrainingExamplesPort = true;
+                }
+                // If we accept the connection...
+                else
+                {
+                    TrainingExamplesNode examplesNode = from.node as TrainingExamplesNode;
+                    // We check that the connection is from a training examples node
+                    if (examplesNode != null)
+                    {
+                        // Update dynamic ports for output
+                        AddDynamicOutputPorts(examplesNode, ref m_DynamicOutputPorts);
+                    }
+                }
+            }
+        }
+
+        protected virtual void CheckInputFeaturesConnections(NodePort from, NodePort to, string portName)
+        {
+            // Evaluate nodeport for real-time features
+            if (to.fieldName == portName)
+            {
+                // Only accept IFeaturesIML
+                bool connectionBroken = this.DisconnectIfNotType<IMLConfiguration, IFeatureIML>(from, to);
+
+                if (connectionBroken)
+                {
+                    // TO DO
+                    // DISPLAY ERROR, not a feature connected
+                }
+            }
+        }
+       
+
+        #endregion
 
     }
 }

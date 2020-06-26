@@ -10,29 +10,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Game Object
+  m_Name: GAME OBJECT INPUT
   m_EditorClassIdentifier: 
+  id: d4c07034-3502-49bb-937a-1f3316ea5e58
   graph: {fileID: 11400000}
   position: {x: -328, y: -200}
   ports:
     keys:
-    - GameObjectFromScene
+    - GameObjectDataOut
     values:
-    - _fieldName: GameObjectFromScene
+    - _fieldName: GameObjectDataOut
       _node: {fileID: -8565157085726127961}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: gameObjectIntoNode
-        node: {fileID: 7550367206555960687}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  GameObjectFromScene: {fileID: 0}
+  GameObjectDataOut: {fileID: 0}
   GameObjMissing: 1
+  state: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,11 +45,11 @@ MonoBehaviour:
   m_Name: Mouse_Input_Sinewave_Output
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: -8565157085726127961}
   - {fileID: 7550367206555960687}
   - {fileID: 8682497231163542456}
   - {fileID: 2323328186122159904}
   - {fileID: 2644057686948360561}
+  - {fileID: -8565157085726127961}
   SceneComponent: {fileID: 0}
 --- !u!114 &2323328186122159904
 MonoBehaviour:
@@ -62,8 +61,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
-  m_Name: IML Configuration
+  m_Name: MACHINE LEARNING SYSTEM
   m_EditorClassIdentifier: 
+  id: a38526fb-144c-4c07-bc2d-9427c727cb4d
   graph: {fileID: 11400000}
   position: {x: 873.83765, y: 20.297722}
   ports:
@@ -90,10 +90,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: positionExtracted
-        node: {fileID: 7550367206555960687}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -116,9 +113,6 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 7550367206555960687}
   ModelOutput: {fileID: 0}
-  KeyboardControl: 1
-  TrainingKey: 0
-  RunningKey: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
@@ -126,6 +120,9 @@ MonoBehaviour:
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 00000000
   m_LearningType: 1
+  EnableKeyboardControl: 0
+  TrainingKey: 0
+  RunningKey: 0
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
 --- !u!114 &2644057686948360561
@@ -138,8 +135,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b516e76545beb34d8ff589c351c669d, type: 3}
-  m_Name: Realtime IML Output
+  m_Name: OUTPUT
   m_EditorClassIdentifier: 
+  id: 34b8dd53-5c33-43f2-92c1-6e425926cfa4
   graph: {fileID: 11400000}
   position: {x: 1401.1014, y: 137.37265}
   ports:
@@ -171,52 +169,46 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
-  m_Name: Extract Position
+  m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
+  id: 4def72b9-cb89-455f-9c95-69ddcddbeec6
   graph: {fileID: 11400000}
   position: {x: -40, y: -120}
   ports:
     keys:
-    - gameObjectIntoNode
-    - positionExtracted
+    - LiveDataOut
+    - GameObjectDataIn
     values:
-    - _fieldName: gameObjectIntoNode
-      _node: {fileID: 7550367206555960687}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectFromScene
-        node: {fileID: -8565157085726127961}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: positionExtracted
+    - _fieldName: LiveDataOut
       _node: {fileID: 7550367206555960687}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: InputFeatures
-        node: {fileID: 8682497231163542456}
-        reroutePoints: []
-      - fieldName: InputFeatures
-        node: {fileID: 2323328186122159904}
-        reroutePoints:
-        - {x: 220.04312, y: -196.20479}
-        - {x: 790.2378, y: -215.4971}
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 7550367206555960687}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
   DevMode: 0
-  gameObjectIntoNode: {fileID: 0}
-  positionExtracted: {fileID: 0}
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
+  x_switch: 0
+  y_switch: 0
+  z_switch: 0
   m_PositionExtracted:
     m_Values:
     - 1.47
     - -4.98
     - -2.85
+  ReceivingData: 0
 --- !u!114 &8682497231163542456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,8 +219,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
-  m_Name: Training Examples
+  m_Name: TEACH THE MACHINE
   m_EditorClassIdentifier: 
+  id: 61703cdc-d550-484e-b380-eba981f7fe3d
   graph: {fileID: 11400000}
   position: {x: 249, y: -104.5}
   ports:
@@ -241,10 +234,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: positionExtracted
-        node: {fileID: 7550367206555960687}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -274,5 +264,5 @@ MonoBehaviour:
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
-  EnableKeyboardShortcut: 1
+  EnableKeyboardControl: 0
   RecordDataKey: 0

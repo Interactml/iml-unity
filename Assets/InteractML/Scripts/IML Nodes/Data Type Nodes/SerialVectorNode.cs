@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
+using XNode;
 
 namespace InteractML.DataTypeNodes
 {
+    [NodeWidth(250)]
     public class SerialVectorNode : BaseDataTypeNode<float[]>
     {
         // Override set behaviour to avoid passing data by reference because of arrays
@@ -32,6 +34,22 @@ namespace InteractML.DataTypeNodes
         /// Local specific IML data type
         /// </summary>
         private IMLSerialVector m_FeatureValues;
+
+
+        protected override void Init()
+        {
+            tooltips = IMLTooltipsSerialization.LoadTooltip("SerialVector");
+            base.Init();
+        }
+        // Check that a feature connected is of the right type
+        public override void OnCreateConnection(NodePort from, NodePort to)
+        {
+            base.OnCreateConnection(from, to);
+
+            // Make sure that the IFeatureIML connected is matching our type
+            this.DisconnectFeatureNotSameIMLDataType(from, to, IMLSpecifications.DataTypes.SerialVector);
+
+        }
 
         /// <summary>
         /// Copies data from incoming array to our array

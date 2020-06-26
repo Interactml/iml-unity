@@ -9,7 +9,9 @@ namespace InteractML.FeatureExtractors
     /// <summary>
     /// Gets a float and converts it to a IMLFloat Feature
     /// </summary>
-    public class ExtractFloat : Node, IFeatureIML
+    [NodeTint("#3A3B5B")]
+    [NodeWidth(250)]
+    public class ExtractFloat : BaseExtractorNode, IFeatureIML
     {
         /// <summary>
         /// Dummy float from which we extract a feature

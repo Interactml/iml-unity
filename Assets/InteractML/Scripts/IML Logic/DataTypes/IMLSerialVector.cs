@@ -52,8 +52,13 @@ namespace InteractML
 
         public void SetValues(float[] newValues)
         {
-            if (m_Values == null || m_Values.Length != newValues.Length)
+            if (m_Values == null||m_Values.Length == 0||m_Values.Length != newValues.Length)
             {
+                //debugging code needs revisting
+                if(newValues == null)
+                {
+                    newValues = new float[0];
+                }
                 m_Values = new float[newValues.Length];
             }
 
@@ -61,7 +66,7 @@ namespace InteractML
             {
                 m_Values[i] = newValues[i];
             }
-        
+      
         }
 
         public float[] GetValues()

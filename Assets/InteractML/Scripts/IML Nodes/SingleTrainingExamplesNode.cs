@@ -10,7 +10,8 @@ namespace InteractML
     /// <summary>
     /// Holds the information and list of a training examples node
     /// </summary>
-    [NodeWidth(500)]
+    [CreateNodeMenuAttribute("Interact ML/Teach The Machine/TTM Classification Regression")]
+    [NodeWidth(300)]
     public class SingleTrainingExamplesNode : TrainingExamplesNode
     {
 
@@ -31,7 +32,14 @@ namespace InteractML
         #endregion
 
         #region Public Methods
+        protected override void Init()
+        {
+            base.Init();
 
+            Initialize();
+
+            TrainingTips = IMLTooltipsSerialization.LoadTooltip("SingleTrainingExamples");
+        }
 
         /// <summary>
         /// Clears all the training examples stored in the node
@@ -42,7 +50,8 @@ namespace InteractML
             TrainingExamplesVector.Clear();
 
             // Make sure the outputs are populated properly after clearing them out
-            UpdateOutputsList();
+            //UpdateOutputsList();
+            //UpdateTargeValues();
         }
 
         #endregion

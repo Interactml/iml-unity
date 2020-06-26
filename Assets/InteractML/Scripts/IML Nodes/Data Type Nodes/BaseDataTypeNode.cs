@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using XNode;
 
 namespace InteractML.DataTypeNodes
 {
-    public abstract class BaseDataTypeNode<T> : Node, IFeatureIML
+    public abstract class BaseDataTypeNode<T> : IMLNode, IFeatureIML
     {
+        #region Variables
+
         public string ValueName;
 
         // Data variables
@@ -35,15 +37,18 @@ namespace InteractML.DataTypeNodes
         bool IFeatureIML.isExternallyUpdatable { get { return true; } }
 
         /// <summary>
-        /// Was tge featyre already updated?
+        /// Was the feature already updated?
         /// </summary>
         bool IFeatureIML.isUpdated { get ; set; }
+
+        #endregion
+
+        #region XNode Messages
 
         // Use this for initialization
         protected override void Init()
         {
             base.Init();
-
         }
 
         // Return the correct value of an output port when requested
@@ -53,22 +58,45 @@ namespace InteractML.DataTypeNodes
             return Out;
         }
 
+        public override void OnCreateConnection(NodePort from, NodePort to)
+        {
+            System.Type[] portTypesAccept = new System.Type[] { typeof(T) };
+            System.Type[] nodeTypesAccept = new System.Type[] { this.GetType(), typeof(IFeatureIML), typeof(IMLConfiguration) };
+            this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
+
+        }
+
+        #endregion
+
+        #region IFeature Methods
+
         /// <summary>
         /// This update fetches the input value connected to this data type node
         /// </summary>
         /// <returns></returns>
         object IFeatureIML.UpdateFeature()
         {
-            // Read input (if it returns default(T) there is no connection )
+            return this.Update();
+        }
+
+        protected virtual object Update()
+        {
+            // Read input (if it returns default(T) there is no connection)
             var inputReceived = GetInputValue<T>("m_In");
+            
             // Check if we have something connected to the input port
-            if (inputReceived != null && !inputReceived.Equals(default(T)))
+            // (inputReceived != null && !inputReceived.Equals(default(T)))
+            if (inputReceived != null)
             {
                 // Update the value of this data node
-                Value = inputReceived;
+                Value = inputReceived;   
             }
+
             // Return entire node to satisfy IFeatureIML requirements
             return this;
         }
+
+        #endregion
+
     }
 }

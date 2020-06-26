@@ -10,7 +10,9 @@ namespace InteractML.FeatureExtractors
     /// <summary>
     /// Gets an int and converts it to a IMLInteger Feature
     /// </summary>
-    public class ExtractInt : Node, IFeatureIML
+    [NodeTint("#3A3B5B")]
+    [NodeWidth(250)]
+    public class ExtractInt : BaseExtractorNode, IFeatureIML
     {
         /// <summary>
         /// Dummy float from which we extract a feature

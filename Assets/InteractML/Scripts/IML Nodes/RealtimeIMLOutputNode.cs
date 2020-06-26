@@ -8,6 +8,8 @@ namespace InteractML
     /// <summary>
     /// Outputs the realtime IML Predictions from an IML Configuration node
     /// </summary>
+    [CreateNodeMenuAttribute("Output")]
+    [NodeWidth(250)]
     public class RealtimeIMLOutputNode : Node
     {
         /// <summary>
@@ -50,11 +52,10 @@ namespace InteractML
         /// </summary>
         /// <returns></returns>
         public double[] GetIMLControllerOutputs()
-        { 
+        {
             var IMLConfigNodeConnected = GetInputValue<Node>("IMLModelOutputs") as IMLConfiguration;
-
             // If there is an IML node connected...
-            if (IMLConfigNodeConnected)
+            if (IMLConfigNodeConnected != null)
             {
                 //m_IMLOutputVector = IMLConfigNodeConnected.DelayedPredictedOutput;
 
@@ -71,7 +72,6 @@ namespace InteractML
                         result[index] = IMLConfigNodeConnected.PredictedOutput[i].Values[j];
                     }
                 }
-
                 m_IMLOutputVector = result;
 
                 //for (int i = 0; i < m_IMLOutputVector.Length; i++)

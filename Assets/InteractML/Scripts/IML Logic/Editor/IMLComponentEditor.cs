@@ -17,6 +17,8 @@ namespace InteractML
         private bool m_ShowIMLControllerOutputsDropdown = true;
         private bool[] m_ShowSubIMLCtrlrOutputs;
 
+        private static GUIStyle editorLabelStyle;
+
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
@@ -24,14 +26,15 @@ namespace InteractML
             imlComponent = target as IMLComponent;
 
             // LIST OF IML CONTROLLER OUTPUTS
-            ShowIMLControllerOutputs();
+            //ShowIMLControllerOutputs();
 
-            // BUTTON GOBJECTS UPDATE
-            if (GUILayout.Button("Update IML Controller"))
+            // BUTTON OBJECTS UPDATE
+            if (GUILayout.Button("Add New GameObject"))
             {
                 imlComponent.UpdateGameObjectsInIMLController();
                 imlComponent.GetAllNodes();
             }
+
         }
 
         private void ShowIMLControllerOutputs()
