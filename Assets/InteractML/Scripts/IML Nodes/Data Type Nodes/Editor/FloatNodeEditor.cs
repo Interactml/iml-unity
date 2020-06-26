@@ -33,7 +33,9 @@ namespace InteractML.DataTypeNodes
             base.nodeTips = m_FloatNode.tooltips;
             bodyheight = 100;
             base.OnBodyGUI();
+            
         }
+
 
         protected override void ShowBodyFields()
         {

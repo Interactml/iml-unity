@@ -20,6 +20,7 @@ namespace InteractML.DataTypeNodes
         {
             m_Vector4Node = (target as Vector4Node);
             NodeName = "LIVE VECTOR 4 DATA";
+            nodeSpace = 60;
             base.OnHeaderGUI();
         }
 

@@ -20,6 +20,7 @@ namespace InteractML.DataTypeNodes
         {
             m_SerialVectorNode = (target as SerialVectorNode);
             NodeName = "LIVE SERIAL VECTOR DATA";
+            nodeSpace = 160;
             base.OnHeaderGUI();
         }
 
