@@ -11,6 +11,7 @@ namespace InteractML
     /// <summary>
     /// Node that will show information about a script subscribed to an IML Controller (MonoBehaviour)
     /// </summary>
+    [NodeWidth(250)]
     public class ScriptNode : IMLNode
     {
         #region Variables
