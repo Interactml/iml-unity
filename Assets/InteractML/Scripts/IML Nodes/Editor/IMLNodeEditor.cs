@@ -903,7 +903,14 @@ namespace InteractML
             return Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
 
         }
-
+        protected void ShowRunOnAwakeToggle(IMLConfiguration configNode)
+        {
+            GUILayout.Space(380);
+            GUILayout.BeginHorizontal();
+            configNode.RunOnAwake = EditorGUILayout.Toggle(configNode.RunOnAwake, m_NodeSkin.GetStyle("Local Space Toggle"));
+            EditorGUILayout.LabelField("Run Model On Play", m_NodeSkin.GetStyle("Node Local Space Label"));
+            GUILayout.EndHorizontal();
+        }
 
         #endregion
 

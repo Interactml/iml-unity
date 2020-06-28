@@ -1110,8 +1110,29 @@ namespace InteractML
                 if (imlConfigNode)
                 {
                     // Only eun if the flag is marked to do so
-                    if (imlConfigNode.RunOnAwake)
-                        imlConfigNode.ToggleRunning();
+                    bool trainingExamples = false;
+                    if (imlConfigNode.RunOnAwake && Application.isPlaying)
+                    {
+                        if (imlConfigNode.ModelStatus == IMLSpecifications.ModelStatus.Untrained)
+                        {
+                            for (int i = 0; i < imlConfigNode.IMLTrainingExamplesNodes.Count; i++)
+                            {
+                                if (imlConfigNode.IMLTrainingExamplesNodes[i].TrainingExamplesVector.Count > 0)
+                                {
+                                    trainingExamples = true;
+                                }
+                            }
+                            if (trainingExamples)
+                            {
+                                imlConfigNode.TrainModel();
+                            }
+                        }
+                        if (imlConfigNode.ModelStatus == IMLSpecifications.ModelStatus.Trained)
+                        {
+                            imlConfigNode.ToggleRunning();
+                        }
+                    }
+
                 }
             }
 

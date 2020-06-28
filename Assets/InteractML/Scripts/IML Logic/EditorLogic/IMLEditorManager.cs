@@ -93,7 +93,6 @@ public class IMLEditorManager
                 // Reload models
                 MLComponent.LoadAllModelsFromDisk();
                 // Run them (if marked with RunOnAwake)
-                MLComponent.RunAllModels();
             }
             //Debug.Log("**Models reconfigured in editor status: " + playModeStatus + "**");
         }
@@ -114,6 +113,15 @@ public class IMLEditorManager
                 MLComponent.updateGameObjectImage();
                 MLComponent.GetAllNodes();
                 MLComponent.UpdateScriptNodes(changingPlayMode: true);
+            }
+        }
+
+        if(playModeStatus == PlayModeStateChange.EnteredPlayMode)
+        {
+            foreach (var MLComponent in m_IMLComponents)
+            {
+                // Run them (if marked with RunOnAwake)
+                MLComponent.RunAllModels();
             }
         }
 
