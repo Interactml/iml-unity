@@ -98,6 +98,7 @@ namespace InteractML
 
             // Draw help button
             DrawHelpButtonLayout();
+            ShowRunOnAwakeToggle(m_RIMLConfiguration);
             ShowHelpButton(m_HelpRect);
             
             if (m_RIMLConfiguration.Model == null || m_RIMLConfiguration.TotalNumTrainingData < 1)

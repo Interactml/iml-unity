@@ -93,6 +93,7 @@ namespace InteractML
             // Draw body buttons
             DrawBodyLayoutButtons();
             ShowButtons();
+            
 
             // Draw body buttons
             DrawBodyLayoutBottomButtons();
@@ -100,6 +101,7 @@ namespace InteractML
 
             // Draw help button
             DrawHelpButtonLayout();
+            ShowRunOnAwakeToggle(m_CIMLConfiguration as IMLConfiguration);
             ShowHelpButton(m_HelpRect);
             
             if (m_CIMLConfiguration.Model == null || m_CIMLConfiguration.TotalNumTrainingData < 1)

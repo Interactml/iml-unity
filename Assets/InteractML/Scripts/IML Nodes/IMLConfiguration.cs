@@ -136,7 +136,7 @@ namespace InteractML
         /// Flag that controls if the iml model should run when the game awakes 
         /// </summary>
         [HideInInspector]
-        public bool RunOnAwake;
+        public bool RunOnAwake = false;
 
         /* NODEPORT NAMES */
         protected string m_TrainingExamplesNodeportName;
@@ -308,7 +308,7 @@ namespace InteractML
             }
         }
 
-#endregion
+        #endregion
 
         #region Public Methods
 
@@ -316,7 +316,7 @@ namespace InteractML
         {
             // Make sure the model is initialised properly
             if (m_Model == null)
-            m_Model = InstantiateRapidlibModel(m_LearningType);
+                m_Model = InstantiateRapidlibModel(m_LearningType);
 
             // Init lists
             if (Lists.IsNullOrEmpty(ref IMLTrainingExamplesNodes))
@@ -349,15 +349,15 @@ namespace InteractML
             CreateRapidLibOutputVector();
 
             //Add this node to list of IMLConfig nodes in all training nodes attached 
-            foreach(TrainingExamplesNode node in IMLTrainingExamplesNodes)
+            foreach (TrainingExamplesNode node in IMLTrainingExamplesNodes)
             {
-                if(!node.IMLConfigurationNodesConnected.Contains(this))
+                if (!node.IMLConfigurationNodesConnected.Contains(this))
                     node.IMLConfigurationNodesConnected.Add(this);
             }
             // Specify the names for the nodeports
             m_TrainingExamplesNodeportName = "IMLTrainingExamplesNodes";
             m_LiveFeaturesNodeportName = "InputFeatures";
-        }
+        }  
 
         /// <summary>
         /// Instantiates a rapidlibmodel
@@ -385,6 +385,7 @@ namespace InteractML
 
         public void UpdateLogic()
         {
+            Debug.Log(RunOnAwake);
             //Set Learning Type 
             SetLearningType();
 
@@ -461,6 +462,7 @@ namespace InteractML
 
         public void ToggleRunning()
         {
+            Debug.Log("running");
             // If the system is not running...
             if (!m_Running)
             {
@@ -591,6 +593,7 @@ namespace InteractML
 
                 if (Input.GetKeyDown(RunningKey))
                 {
+                    Debug.Log("running1");
                     ToggleRunning();
                 }
             }
