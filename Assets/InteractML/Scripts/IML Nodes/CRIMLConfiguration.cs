@@ -68,7 +68,7 @@ namespace InteractML
             {
 
                 // Transform the IML Training Examples into a format suitable for Rapidlib
-                m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes);
+                m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
 
                 // Trains rapidlib with the examples added
                 m_Model.Train(m_RapidlibTrainingExamples);

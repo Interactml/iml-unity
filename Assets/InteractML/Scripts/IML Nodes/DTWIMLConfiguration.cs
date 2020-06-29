@@ -57,7 +57,7 @@ namespace InteractML
                 if (m_RapidlibTrainingSeriesCollection == null)
                     m_RapidlibTrainingSeriesCollection = new List<RapidlibTrainingSerie>();
 
-                m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes);
+                m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
                 m_Model.Train(m_RapidlibTrainingSeriesCollection);
 
             }

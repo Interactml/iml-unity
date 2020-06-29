@@ -41,10 +41,12 @@ namespace InteractML
         protected int m_TotalNumTrainingData;
         public int TotalNumTrainingData { get { return m_TotalNumTrainingData; } }
 
+        [SerializeField, HideInInspector]
+        protected int m_NumExamplesTrainedOn;
         /// <summary>
         /// Total number of training examples used to train the current model
         /// </summary>
-        public int NumExamplesTrainedOn { get { return m_Model != null ? 0 : m_Model.NumExamplesTrainedOn; } }
+        public int NumExamplesTrainedOn { get { return m_NumExamplesTrainedOn; } }
 
         /// <summary>
         /// List of expected inputs
@@ -449,14 +451,14 @@ namespace InteractML
                 // If we have a dtw model...
                 if (m_LearningType == IMLSpecifications.LearningType.DTW)
                 {
-                    m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes);
+                    m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
                     m_Model.Train(m_RapidlibTrainingSeriesCollection);
                 }
                 // If it is a classification/regression model
                 else
                 {
                     // Transform the IML Training Examples into a format suitable for Rapidlib
-                    m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes);
+                    m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
 
                     // Trains rapidlib with the examples added
                     m_Model.Train(m_RapidlibTrainingExamples);
@@ -528,6 +530,9 @@ namespace InteractML
         {
             // Take care of the RapidlibModel reference to this node     
             m_Model = InstantiateRapidlibModel(m_LearningType);
+
+            // Reset numExamplesTrainedOn
+            m_NumExamplesTrainedOn = 0;
 
             // We reset the running flag
             m_Running = false;
@@ -1271,14 +1276,19 @@ namespace InteractML
         /// <summary>
         /// Create the rapidlib training examples list in the required format
         /// </summary>
-        protected List<RapidlibTrainingExample> TransformIMLDataToRapidlib(List<TrainingExamplesNode> trainingNodesIML)
+        protected List<RapidlibTrainingExample> TransformIMLDataToRapidlib(List<TrainingExamplesNode> trainingNodesIML, out int numExamples)
         {
             // Create list to return
             List<RapidlibTrainingExample> rapidlibExamples = new List<RapidlibTrainingExample>();
+            
+            // Reset counter examples trained on
+            numExamples = 0;
 
             // Go through all the IML Training Examples if we can
             if (!Lists.IsNullOrEmpty(ref trainingNodesIML))
             {
+                // Reset counter examples trained on
+                numExamples = 0;
                 // Go through each node
                 for (int i = 0; i < trainingNodesIML.Count; i++)
                 {
@@ -1305,6 +1315,8 @@ namespace InteractML
                                 }
                             }
                         }
+                        // Update counter examples trained on
+                        numExamples += trainingNodesIML[i].TrainingExamplesVector.Count;
                     }
                 }
             }
@@ -1318,10 +1330,11 @@ namespace InteractML
         /// </summary>
         /// <param name="trainingSeriesIML"></param>
         /// <returns></returns>
-        protected List<RapidlibTrainingSerie> TransformIMLSeriesToRapidlib(List<TrainingExamplesNode> trainingNodesIML)
+        protected List<RapidlibTrainingSerie> TransformIMLSeriesToRapidlib(List<TrainingExamplesNode> trainingNodesIML, out int numSeries)
         {
             List<RapidlibTrainingSerie> seriesToReturn = new List<RapidlibTrainingSerie>();
-
+            // Reset number of series
+            numSeries = 0;
             // Go through all the IML Training Examples if we can
             if (!Lists.IsNullOrEmpty(ref trainingNodesIML))
             {
@@ -1336,6 +1349,9 @@ namespace InteractML
                             // Add each series to the rapidlib series list to return
                             seriesToReturn.Add(new RapidlibTrainingSerie(IMLSeries.GetSeriesFeatures(), IMLSeries.LabelSeries));
                         }
+                        // Increase counter of series
+                        numSeries += trainingNodesIML[i].TrainingSeriesCollection.Count;
+
                     }
                 }
             }

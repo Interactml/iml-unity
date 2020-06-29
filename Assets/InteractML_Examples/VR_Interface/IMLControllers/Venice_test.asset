@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: fd6ce85b-b4c9-40c3-92a0-0ca21dbcb34a
   graph: {fileID: 11400000}
-  position: {x: 1016, y: -1768}
+  position: {x: 72, y: -488}
   ports:
     keys:
     - InputFeatures
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 940cd46f-9a54-4a73-8256-ee70ccd1c210
   graph: {fileID: 11400000}
-  position: {x: 2552, y: -1672}
+  position: {x: 1608, y: -392}
   ports:
     keys:
     - SetLightRotation
@@ -120,30 +120,9 @@ MonoBehaviour:
       _dynamic: 1
   DevMode: 0
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 23086
+  ScriptHashCode: 23092
   m_PortsPerFieldInfo:
-    m_keys:
-    - _fieldName: SetLightRotation
-      _node: {fileID: -6179746957524285236}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: LightIntensity
-      _node: {fileID: -6179746957524285236}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_Out
-        node: {fileID: -5901800254154747165}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
+    m_keys: []
   CreatedDuringPlaymode: 0
 --- !u!114 &-5901800254154747165
 MonoBehaviour:
@@ -159,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 12edd0ab-e75c-4468-a02d-540889ef0c5b
   graph: {fileID: 11400000}
-  position: {x: 2056, y: -1704}
+  position: {x: 1112, y: -424}
   ports:
     keys:
     - m_In
@@ -212,7 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: fb2cc17a-9de5-4de1-81de-abe07ac7a6b3
   graph: {fileID: 11400000}
-  position: {x: 2056, y: -1416}
+  position: {x: 1112, y: -136}
   ports:
     keys:
     - m_In
@@ -259,7 +238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: f6bfcfd9-df45-4e2b-a64c-e126175643b4
   graph: {fileID: 11400000}
-  position: {x: 600, y: -1800}
+  position: {x: -344, y: -520}
   ports:
     keys:
     - GameObjectDataIn
@@ -338,7 +317,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 45615557-17f6-4fcb-a2b0-c520c33ee477
   graph: {fileID: 11400000}
-  position: {x: 88, y: -1656}
+  position: {x: -856, y: -376}
   ports:
     keys:
     - GameObjectDataOut
@@ -361,7 +340,7 @@ MonoBehaviour:
   DevMode: 0
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
-  state: 1
+  state: 0
 --- !u!114 &4125335913069827217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,7 +355,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3c87b539-c5cf-4d5e-85b0-d52b6c965d62
   graph: {fileID: 11400000}
-  position: {x: 728, y: -856}
+  position: {x: -216, y: 424}
   ports:
     keys:
     - GameObjectDataIn
@@ -401,7 +380,7 @@ MonoBehaviour:
       - fieldName: InputFeatures
         node: {fileID: 4953794314262557231}
         reroutePoints:
-        - {x: 1417.1415, y: -789.1871}
+        - {x: 480, y: 496}
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -433,7 +412,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 378023cc-b573-4635-b668-a182a1bf3c4c
   graph: {fileID: 11400000}
-  position: {x: 1592, y: -1784}
+  position: {x: 648, y: -504}
   ports:
     keys:
     - IMLTrainingExamplesNodes
@@ -487,6 +466,7 @@ MonoBehaviour:
   - 0
   DelayedPredictedOutput:
   - 20
+  m_NumExamplesTrainedOn: 177
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_LearningType: 0
@@ -510,7 +490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 7bf5b3e4-0d33-49bf-af3c-b84374aa6d4d
   graph: {fileID: 11400000}
-  position: {x: 584, y: -1384}
+  position: {x: -360, y: -104}
   ports:
     keys:
     - m_In
