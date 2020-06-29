@@ -42,6 +42,11 @@ namespace InteractML
         public int TotalNumTrainingData { get { return m_TotalNumTrainingData; } }
 
         /// <summary>
+        /// Total number of training examples used to train the current model
+        /// </summary>
+        public int NumExamplesTrainedOn { get { return m_Model != null ? 0 : m_Model.NumExamplesTrainedOn; } }
+
+        /// <summary>
         /// List of expected inputs
         /// </summary>
         [SerializeField, HideInInspector]
@@ -95,6 +100,7 @@ namespace InteractML
         /// <summary>
         /// Reference to the rapidlib model this node is holding
         /// </summary>
+        [SerializeField]
         protected RapidlibModel m_Model;
         /// <summary>
         /// Public reference to the rapidlib model this node is holding
@@ -275,7 +281,7 @@ namespace InteractML
         public void OnValidate()
         {
             // Checks that the rapidlib model is instanced (only if model is null)
-            if (m_Model == null)
+            if (m_Model == null && (this.graph as IMLController).IsGraphRunning)
             {
                 m_Model = InstantiateRapidlibModel(m_LearningType);
             }
@@ -315,7 +321,7 @@ namespace InteractML
         public void Initialize()
         {
             // Make sure the model is initialised properly
-            if (m_Model == null)
+            if (m_Model == null && (this.graph as IMLController).IsGraphRunning)
                 m_Model = InstantiateRapidlibModel(m_LearningType);
 
             // Init lists
@@ -365,7 +371,7 @@ namespace InteractML
         /// <param name="learningType"></param>
         public virtual RapidlibModel InstantiateRapidlibModel(IMLSpecifications.LearningType learningType)
         {
-            RapidlibModel model = new RapidlibModel();
+            RapidlibModel model;
             switch (learningType)
             {
                 case IMLSpecifications.LearningType.Classification:
@@ -378,6 +384,7 @@ namespace InteractML
                     model = new RapidlibModel(RapidlibModel.ModelType.DTW);
                     break;
                 default:
+                    model = new RapidlibModel();
                     break;
             }
             return model;
@@ -519,7 +526,7 @@ namespace InteractML
         /// </summary>
         public void ResetModel()
         {
-            // Take care of the RapidlibModel reference to this node            
+            // Take care of the RapidlibModel reference to this node     
             m_Model = InstantiateRapidlibModel(m_LearningType);
 
             // We reset the running flag

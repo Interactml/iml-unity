@@ -22,7 +22,6 @@ namespace InteractML
         /// </summary>
         private CIMLConfiguration m_CIMLConfiguration;
 
-        private int numberOfExamplesTrained = 0;
         #endregion
 
 
@@ -109,7 +108,7 @@ namespace InteractML
                 DrawWarningLayout(m_HelpRect);
                 ShowWarning(m_CIMLConfiguration.tips.BottomError[0]);
             }
-            if (numberOfExamplesTrained > 0 && numberOfExamplesTrained != m_CIMLConfiguration.TotalNumTrainingData)
+            if (m_CIMLConfiguration.NumExamplesTrainedOn > 0 && m_CIMLConfiguration.NumExamplesTrainedOn != m_CIMLConfiguration.TotalNumTrainingData)
             {
                 DrawWarningLayout(m_HelpRect);
                 ShowWarning(m_CIMLConfiguration.tips.BottomError[2]);
@@ -304,7 +303,6 @@ namespace InteractML
             // Init model button (to debug the model not working)
             if (GUILayout.Button("", m_NodeSkin.GetStyle("Reset")))
             {
-                numberOfExamplesTrained = 0;
                 m_CIMLConfiguration.ResetModel();
             }
             GUILayout.EndHorizontal();
@@ -363,7 +361,7 @@ namespace InteractML
                 if (m_CIMLConfiguration.Training)
                     nameButton = "STOP Training Model";
                 if (m_CIMLConfiguration.Trained)
-                    nameButton = "Trained (" + numberOfExamplesTrained + " Examples)";
+                    nameButton = "Trained (" + m_CIMLConfiguration.NumExamplesTrainedOn + " Examples)";
                 else
                     nameButton = "Train Model";
 
@@ -374,7 +372,6 @@ namespace InteractML
                 if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Train")))
                 {
                     m_CIMLConfiguration.TrainModel();
-                    numberOfExamplesTrained = m_CIMLConfiguration.TotalNumTrainingData;
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;

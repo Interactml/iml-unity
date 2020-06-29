@@ -14,11 +14,17 @@ namespace InteractML
     {
 
         #region Variables
-       
+
 
         #endregion
 
         #region XNode Messages
+        // Override Init to set learning type as classification
+        protected override void Init()
+        {
+            SetLearningType();
+            base.Init();
+        }
 
         #endregion
 
@@ -35,9 +41,8 @@ namespace InteractML
         /// <param name="learningType"></param>
         public override RapidlibModel InstantiateRapidlibModel(IMLSpecifications.LearningType learningType)
         {
-            RapidlibModel model = new RapidlibModel();
-            model = new RapidlibModel(RapidlibModel.ModelType.kNN);
-            return model;
+            SetLearningType();
+            return base.InstantiateRapidlibModel(learningType);
         }
 
         /// <summary>
@@ -62,7 +67,7 @@ namespace InteractML
         protected override void SetLearningType()
         {
             m_LearningType = IMLSpecifications.LearningType.Classification;
-
+            learningChoice = CR_LearningChoice.Classification; ;
         }
         protected override void OverrideModel(IMLSpecifications.LearningType learningType)
         {

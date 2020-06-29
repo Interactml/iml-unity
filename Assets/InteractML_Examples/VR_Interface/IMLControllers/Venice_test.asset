@@ -91,7 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 940cd46f-9a54-4a73-8256-ee70ccd1c210
   graph: {fileID: 11400000}
-  position: {x: 0, y: 0}
+  position: {x: 2552, y: -1672}
   ports:
     keys:
     - SetLightRotation
@@ -110,14 +110,40 @@ MonoBehaviour:
       _node: {fileID: -6179746957524285236}
       _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: m_Out
+        node: {fileID: -5901800254154747165}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
   DevMode: 0
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 23192
+  ScriptHashCode: 23086
+  m_PortsPerFieldInfo:
+    m_keys:
+    - _fieldName: SetLightRotation
+      _node: {fileID: -6179746957524285236}
+      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: LightIntensity
+      _node: {fileID: -6179746957524285236}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: -5901800254154747165}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   CreatedDuringPlaymode: 0
 --- !u!114 &-5901800254154747165
 MonoBehaviour:
@@ -155,7 +181,10 @@ MonoBehaviour:
       _node: {fileID: -5901800254154747165}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: LightIntensity
+        node: {fileID: -6179746957524285236}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -332,7 +361,7 @@ MonoBehaviour:
   DevMode: 0
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
-  state: 0
+  state: 1
 --- !u!114 &4125335913069827217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,7 +486,7 @@ MonoBehaviour:
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput:
-  - 0
+  - 20
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_LearningType: 0

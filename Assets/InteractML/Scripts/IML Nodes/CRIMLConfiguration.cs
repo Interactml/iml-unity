@@ -37,19 +37,22 @@ namespace InteractML
         /// <param name="learningType"></param>
         public override RapidlibModel InstantiateRapidlibModel(IMLSpecifications.LearningType learningType)
         {
-            RapidlibModel model = new RapidlibModel();
+            // Switch local learning type
             switch (learningType)
             {
                 case IMLSpecifications.LearningType.Classification:
-                    model = new RapidlibModel(RapidlibModel.ModelType.kNN);
+                    learningChoice = CR_LearningChoice.Classification;
                     break;
                 case IMLSpecifications.LearningType.Regression:
-                    model = new RapidlibModel(RapidlibModel.ModelType.NeuralNetwork);
+                    learningChoice = CR_LearningChoice.Regression;
                     break;
                 default:
                     break;
             }
-            return model;
+            // Update local and parent learning type
+            SetLearningType();
+            // Return new model
+            return base.InstantiateRapidlibModel(learningType);
         }
 
 

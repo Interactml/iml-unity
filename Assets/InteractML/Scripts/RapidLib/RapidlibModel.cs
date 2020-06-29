@@ -9,6 +9,7 @@ namespace InteractML
     /// Holds address and configuration for a rapidlibmodel in memory. 
     /// Very basic and clean. Use if you are implementing training logic yourself
     /// </summary>
+    [System.Serializable]
     public class RapidlibModel
     {
         #region Variables
@@ -42,6 +43,12 @@ namespace InteractML
         /// </summary>
         public IMLSpecifications.ModelStatus ModelStatus { get => m_ModelStatus; }
 
+        private int m_NumExamplesTrainedOn;
+        /// <summary>
+        /// The number of training examples this model was trained on
+        /// </summary>
+        public int NumExamplesTrainedOn { get => m_NumExamplesTrainedOn; }
+
 
         #endregion
 
@@ -57,6 +64,7 @@ namespace InteractML
             m_ModelJSONString = "";
             m_TypeOfModel = ModelType.None;
             m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+            m_NumExamplesTrainedOn = 0;
 
         }
 
@@ -71,6 +79,7 @@ namespace InteractML
             m_ModelJSONString = "";
             m_TypeOfModel = modelToCreate;
             m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+            m_NumExamplesTrainedOn = 0;
 
             // Creates the specific model type
             switch (modelToCreate)
@@ -223,6 +232,7 @@ namespace InteractML
         {
             bool isTrained = false;
             IntPtr trainingSetAddress = (IntPtr)0;
+            m_NumExamplesTrainedOn = 0; 
             // Only allow training of classification and regression (because of the format of the training data)
             switch (m_TypeOfModel)
             {
@@ -262,6 +272,7 @@ namespace InteractML
         public bool Train(List<RapidlibTrainingSerie> trainingSeries)
         {
             bool isTrained = true;
+            m_NumExamplesTrainedOn = 0;
             // Only allow training of DTW (because of the format of the training data)
             switch (m_TypeOfModel)
             {
@@ -533,6 +544,8 @@ namespace InteractML
                     example.Input, example.Input.Length,
                     example.Output, example.Output.Length);
             }
+            // Increase counter of training examples
+            m_NumExamplesTrainedOn = trainingExamplesToTransform.Count();
             // Return the address for the training set in memory
             return rapidlibTrainingSetAddress;
         }
@@ -564,6 +577,8 @@ namespace InteractML
                 {
                     // Adds one feature
                     RapidlibLinkerDLL.AddInputsToSeries(trainingSeriesUnmanaged, feature, feature.Length);
+                    // Increase counter of training examples
+                    m_NumExamplesTrainedOn++;
                 }
                 // Adds label to serie
                 RapidlibLinkerDLL.AddLabelToSeries(trainingSeriesUnmanaged, series.LabelSerie);

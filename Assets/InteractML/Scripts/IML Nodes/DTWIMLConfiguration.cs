@@ -18,12 +18,18 @@ namespace InteractML
         #endregion
 
         #region XNode Messages
+        // Override Init to set learning type as dtw
+        protected override void Init()
+        {
+            SetLearningType();
+            base.Init();
+        }
 
         #endregion
 
         #region Unity Messages
 
-#endregion
+        #endregion
 
         #region Public Methods
 
@@ -34,9 +40,8 @@ namespace InteractML
         /// <param name="learningType"></param>
         public override RapidlibModel InstantiateRapidlibModel(IMLSpecifications.LearningType learningType)
         {
-            RapidlibModel model = new RapidlibModel();
-            model = new RapidlibModel(RapidlibModel.ModelType.DTW);
-            return model;
+            SetLearningType();
+            return base.InstantiateRapidlibModel(learningType);
         }
 
         public override void TrainModel()

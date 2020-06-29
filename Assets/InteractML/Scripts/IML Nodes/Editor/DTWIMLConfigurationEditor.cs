@@ -19,7 +19,6 @@ namespace InteractML
         /// Reference to the node itself
         /// </summary>
         private DTWIMLConfiguration m_DTWIMLConfiguration;
-        private int numberOfExamplesTrained = 0;
 
         /// <summary>
         /// Rects for node layout
@@ -129,7 +128,7 @@ namespace InteractML
                 DrawWarningLayout(m_HelpRect);
                 ShowWarning(m_DTWIMLConfiguration.tips.BottomError[0]);
             }
-            if (numberOfExamplesTrained > 0 && numberOfExamplesTrained != m_DTWIMLConfiguration.TotalNumTrainingData)
+            if (m_DTWIMLConfiguration.NumExamplesTrainedOn > 0 && m_DTWIMLConfiguration.NumExamplesTrainedOn != m_DTWIMLConfiguration.TotalNumTrainingData)
             {
                 DrawWarningLayout(m_HelpRect);
                 ShowWarning(m_DTWIMLConfiguration.tips.BottomError[2]);
@@ -321,7 +320,6 @@ namespace InteractML
             if (GUILayout.Button("", m_NodeSkin.GetStyle("Reset")))
             {
                 m_DTWIMLConfiguration.ResetModel();
-                numberOfExamplesTrained = 0;
             }
             GUILayout.EndHorizontal();
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
@@ -373,7 +371,7 @@ namespace InteractML
                 if (m_DTWIMLConfiguration.Training)
                     nameButton = "STOP Training Model";
                 if (m_DTWIMLConfiguration.Trained)
-                    nameButton = "Trained (" + numberOfExamplesTrained + " Examples)";
+                    nameButton = "Trained (" + m_DTWIMLConfiguration.NumExamplesTrainedOn + " Examples)";
                 else
                     nameButton = "Train Model";
 
@@ -383,7 +381,6 @@ namespace InteractML
                 if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Train")))
                 {
                     m_DTWIMLConfiguration.TrainModel();
-                    numberOfExamplesTrained = m_DTWIMLConfiguration.TotalNumTrainingData;
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;
