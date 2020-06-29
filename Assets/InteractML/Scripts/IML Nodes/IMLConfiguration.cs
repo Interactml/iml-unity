@@ -102,7 +102,6 @@ namespace InteractML
         /// <summary>
         /// Reference to the rapidlib model this node is holding
         /// </summary>
-        [SerializeField]
         protected RapidlibModel m_Model;
         /// <summary>
         /// Public reference to the rapidlib model this node is holding
@@ -551,9 +550,9 @@ namespace InteractML
         /// Loads the current model from disk (dataPath specified in IMLDataSerialization)
         /// </summary>
         /// <param name="fileName"></param>
-        public virtual void LoadModelFromDisk()
+        public virtual void LoadModelFromDisk(bool reCreateModel = false)
         {
-            m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id);
+            m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id, reCreateModel);
             // We update the node learning type to match the one from the loaded model
             switch (m_Model.TypeOfModel)
             {

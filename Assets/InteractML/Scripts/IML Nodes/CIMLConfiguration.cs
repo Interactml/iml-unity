@@ -49,9 +49,9 @@ namespace InteractML
         /// Loads the current model from disk (dataPath specified in IMLDataSerialization)
         /// </summary>
         /// <param name="fileName"></param>
-        public override void LoadModelFromDisk()
+        public override void LoadModelFromDisk(bool reCreateModel = false)
         {
-            m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id);
+            m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id, reCreateModel);
             // We update the node learning type to match the one from the loaded model
             m_LearningType = IMLSpecifications.LearningType.Classification;
             // Configure inputs and outputs

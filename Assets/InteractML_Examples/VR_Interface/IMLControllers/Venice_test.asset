@@ -120,9 +120,30 @@ MonoBehaviour:
       _dynamic: 1
   DevMode: 0
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 23092
+  ScriptHashCode: 23086
   m_PortsPerFieldInfo:
-    m_keys: []
+    m_keys:
+    - _fieldName: SetLightRotation
+      _node: {fileID: -6179746957524285236}
+      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: LightIntensity
+      _node: {fileID: -6179746957524285236}
+      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: -5901800254154747165}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   CreatedDuringPlaymode: 0
 --- !u!114 &-5901800254154747165
 MonoBehaviour:
@@ -171,8 +192,8 @@ MonoBehaviour:
   DevMode: 0
   ValueName: 
   m_In: 0
-  m_Value: 0
-  m_Out: 0
+  m_Value: 1
+  m_Out: 1
   ReceivingData: 0
   InputConnected: 1
   m_UserInput: 0
@@ -277,7 +298,7 @@ MonoBehaviour:
   m_PositionExtracted:
     m_Values:
     - -0.61
-    - 1.0307198
+    - -5.2
     - 7.82
   ReceivingData: 0
 --- !u!114 &11400000
@@ -340,7 +361,7 @@ MonoBehaviour:
   DevMode: 0
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
-  state: 0
+  state: 1
 --- !u!114 &4125335913069827217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,7 +416,7 @@ MonoBehaviour:
   m_PositionExtracted:
     m_Values:
     - -0.61
-    - 1.0307198
+    - -5.2
     - 7.82
   ReceivingData: 0
 --- !u!114 &4953794314262557231
@@ -463,9 +484,9 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 4125335913069827217}
   PredictedRapidlibOutput:
-  - 0
+  - 1
   DelayedPredictedOutput:
-  - 20
+  - 1
   m_NumExamplesTrainedOn: 177
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000

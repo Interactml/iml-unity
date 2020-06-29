@@ -75,6 +75,14 @@ public class IMLEditorManager
         Debug.Log("SceneOpened");
         ClearIMLComponents();
         FindIMLComponents();
+        // Reload all models (if we can) when we enter playmode or when we come back to the editor
+        foreach (var MLComponent in m_IMLComponents)
+        {
+            // Reload models
+            MLComponent.LoadAllModelsFromDisk(reCreateModels: true);
+            // Run them (if marked with RunOnAwake)
+        }
+
     }
 
     /// <summary>
@@ -83,9 +91,10 @@ public class IMLEditorManager
     /// <param name="playModeStatus"></param>
     private static void PlayModeStateChangedLogic(PlayModeStateChange playModeStatus)
     {
-        
-        // We load models if we are entering a playmode or editormode
-        if (playModeStatus == PlayModeStateChange.EnteredEditMode || playModeStatus == PlayModeStateChange.EnteredPlayMode)
+        #region Enter Events
+
+        // We load models if we are entering a playmode (not required when leaving playmode)
+        if (playModeStatus == PlayModeStateChange.EnteredPlayMode)
         {
             // Reload all models (if we can) when we enter playmode or when we come back to the editor
             foreach (var MLComponent in m_IMLComponents)
@@ -93,8 +102,32 @@ public class IMLEditorManager
                 // Reload models
                 MLComponent.LoadAllModelsFromDisk();
                 // Run them (if marked with RunOnAwake)
+                MLComponent.RunAllModels();
             }
             //Debug.Log("**Models reconfigured in editor status: " + playModeStatus + "**");
+        }
+
+        if (playModeStatus == PlayModeStateChange.EnteredEditMode)
+        {
+            foreach (var MLComponent in m_IMLComponents)
+            {
+                MLComponent.updateGameObjectImage();
+                MLComponent.GetAllNodes();
+                MLComponent.UpdateScriptNodes(changingPlayMode: true);
+            }
+        }
+
+        #endregion
+
+        #region Exit Events
+
+        // Remove any scriptNodes added during playtime when leaving playMode
+        if (playModeStatus == PlayModeStateChange.ExitingPlayMode)
+        {
+            foreach (var MLComponent in m_IMLComponents)
+            {
+                MLComponent.UpdateScriptNodes(changingPlayMode: true);
+            }
         }
 
         // We save models if we are leaving a playmode or editormode
@@ -106,33 +139,9 @@ public class IMLEditorManager
                 MLComponent.SaveAllModels();
             }
         }
-        if (playModeStatus == PlayModeStateChange.EnteredEditMode)
-        {
-            foreach (var MLComponent in m_IMLComponents)
-            {
-                MLComponent.updateGameObjectImage();
-                MLComponent.GetAllNodes();
-                MLComponent.UpdateScriptNodes(changingPlayMode: true);
-            }
-        }
 
-        if(playModeStatus == PlayModeStateChange.EnteredPlayMode)
-        {
-            foreach (var MLComponent in m_IMLComponents)
-            {
-                // Run them (if marked with RunOnAwake)
-                MLComponent.RunAllModels();
-            }
-        }
+        #endregion
 
-        // Remove any scriptNodes added during playtime when leaving playMode
-        if (playModeStatus == PlayModeStateChange.ExitingPlayMode)
-        {
-            foreach (var MLComponent in m_IMLComponents)
-            {
-                MLComponent.UpdateScriptNodes(changingPlayMode: true);
-            }
-        }
     }
 
 #endif

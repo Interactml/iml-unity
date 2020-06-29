@@ -57,7 +57,6 @@ namespace InteractML
             m_ModelJSONString = "";
             m_TypeOfModel = ModelType.None;
             m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
-
         }
 
         /// <summary>
@@ -115,7 +114,12 @@ namespace InteractML
             // We only allow running if the model is trained
             if (m_ModelStatus == IMLSpecifications.ModelStatus.Untrained)
                 throw new Exception("You can't run an untrained model!");
-            
+
+            if (m_ModelAddress == (IntPtr)0)
+            {
+                throw new Exception("Error when running Model. Model pointer lost!");
+            }
+
             // We run only classification and regression with the data passed in
             switch (m_TypeOfModel)
             {
@@ -154,6 +158,12 @@ namespace InteractML
             // Make sure to only run if the inputSerie is not null or empty!
             if (inputSerie.ExampleSerie == null || inputSerie.ExampleSerie.Count == 0)
                 throw new Exception("You can't run a DTW model with an empty serie!");
+            // Make sure model pointer is not 0
+            if (m_ModelAddress == (IntPtr)0)
+            {
+                throw new Exception("Error when running Model. Model pointer lost!");
+            }
+
             string outputDTW = "";
             // We only run DTW with the data passed in
             switch (m_TypeOfModel)
@@ -221,6 +231,11 @@ namespace InteractML
         /// <param name="trainingExamples">True if training succeeded</param>
         public bool Train(List<RapidlibTrainingExample> trainingExamples)
         {
+            if (m_ModelAddress == (IntPtr)0)
+            {
+                throw new Exception("Error when training Model. Model pointer lost!");
+            }
+
             bool isTrained = false;
             IntPtr trainingSetAddress = (IntPtr)0;
             // Only allow training of classification and regression (because of the format of the training data)
@@ -261,6 +276,11 @@ namespace InteractML
         /// <returns>True if training succeeded</returns>
         public bool Train(List<RapidlibTrainingSerie> trainingSeries)
         {
+            if (m_ModelAddress == (IntPtr)0)
+            {
+                throw new Exception("Error when training Model. Model pointer lost!");
+            }
+
             bool isTrained = true;
             // Only allow training of DTW (because of the format of the training data)
             switch (m_TypeOfModel)
@@ -425,8 +445,12 @@ namespace InteractML
         /// Loads the model with the specified name into this instance
         /// </summary>
         /// <param name="fileName"></param>
-        public void LoadModelFromDisk(string fileName)
+        public void LoadModelFromDisk(string fileName, bool reCreateModel = false)
         {
+            // If we are meant to recreate the model, destroy any reference in unmanaged memory
+            if (reCreateModel)
+                DestroyModel();
+
             // Attempt to load model
             string stringLoaded = IMLDataSerialization.LoadRapidlibModelFromDisk(fileName);
 
