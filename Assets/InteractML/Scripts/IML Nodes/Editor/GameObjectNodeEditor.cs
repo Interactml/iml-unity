@@ -30,116 +30,26 @@ namespace InteractML
         {
             // Get reference to the current node
             m_GameObjectNode = (target as GameObjectNode);
-
-            // Initialise header background Rects
-            InitHeaderRects();
-
-            NodeColor = GetColorTextureFromHexString("#3A3B5B");
-
-            // Draw header background Rect
-            GUI.DrawTexture(HeaderRect, NodeColor);
-
-            // Draw line below header
-            GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#E24680"));
-
-            //Display Node name
-            GUILayout.BeginArea(HeaderRect);
-            GUILayout.Space(10);
-            GUILayout.Label("GAME OBJECT INPUT", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
-            GUILayout.EndArea();
-
-            GUILayout.Label("", GUILayout.MinHeight(60));
+            nodeSpace = 230;
+            NodeName = "GAME OBJECT";
+            base.OnHeaderGUI();
 
         }
 
         public override void OnBodyGUI()
         {
-            // Draw Port Section
-            DrawPortLayout();
-            ShowGameObjectNodePorts();
-            //check if port is hovered over 
-            PortTooltip(m_GameObjectNode.tips.PortTooltip);
+            InputPortsNamesOverride = new Dictionary<string, string>();
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            base.InputPortsNamesOverride.Add("GameObjectDataIn", "Game Object\nData In");
+            base.OutputPortsNamesOverride.Add("LiveDataOut", "Rotation\nData Out");
+            base.nodeTips = m_GameObjectNode.tooltips;
+            m_BodyRect.height = 170;
+            base.OnBodyGUI();
+        }
 
-            DrawBodyLayout();
-            EditorGUI.indentLevel++;
+        protected override void ShowBodyFields()
+        {
             ShowGameObjectPreview();
-            EditorGUI.indentLevel--;
-
-            // Draw help button
-            DrawHelpButtonLayout();
-            ShowHelpButton(m_HelpRect);
-            // to do when refactor make all tips one bool
-            // if hovering port show port tooltip
-            if (showPort)
-            {
-                ShowTooltip(m_PortRect, TooltipText);
-            }
-            //if hovering over help show tooltip 
-            if (showHelp)
-            {
-                ShowTooltip(m_HelpRect, m_GameObjectNode.tips.HelpTooltip);
-            }
-            // if hovering over body rect
-            if (IsThisRectHovered(m_BodyRect))
-                ShowTooltip(m_BodyRect, m_GameObjectNode.tips.BodyTooltip.Tips[0]);
-        }
-
-        /// <summary>
-        /// Define rect values for port section and paint textures based on rects 
-        /// </summary>
-        private void DrawPortLayout()
-        {
-            // Draw body background purple rect below header
-            m_PortRect.x = 5;
-            m_PortRect.y = HeaderRect.height;
-            m_PortRect.width = NodeWidth - 10;
-            m_PortRect.height = 60;
-            GUI.DrawTexture(m_PortRect, NodeColor);
-
-            // Draw line below ports
-            GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), GetColorTextureFromHexString("#E24680"));
-        }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawBodyLayout()
-        {
-            m_BodyRect.x = 5;
-            m_BodyRect.y = HeaderRect.height + m_PortRect.height;
-            m_BodyRect.width = NodeWidth - 10;
-            m_BodyRect.height = 160;
-
-            // Draw body background purple rect below header
-            GUI.DrawTexture(m_BodyRect, NodeColor);
-        }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawHelpButtonLayout()
-        {
-            m_HelpRect.x = 5;
-            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_BodyRect.height;
-            m_HelpRect.width = NodeWidth - 10;
-            m_HelpRect.height = 40;
-
-            // Draw body background purple rect below header
-            GUI.DrawTexture(m_HelpRect, NodeColor);
-
-            //Draw separator line
-            GUI.DrawTexture(new Rect(m_HelpRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_HelpRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
-        }
-
-        /// <summary>
-        /// Show the input/output port fields 
-        /// </summary>
-        private void ShowGameObjectNodePorts()
-        {
-            GUILayout.Space(5);
-            GUIContent outputPortLabel = new GUIContent("GameObject\n Data Out", m_GameObjectNode.tips.PortTooltip[0]);
-            PortField(outputPortLabel, m_GameObjectNode.GetOutputPort("GameObjectDataOut"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
-
         }
 
         /// <summary>

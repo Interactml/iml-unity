@@ -21,7 +21,7 @@ namespace InteractML.FeatureExtractors
             // Get reference to the current node
             m_ExtractRotation = (target as ExtractRotation);
             nodeSpace = 150;
-            NodeName = "LIVE POSITION DATA";
+            NodeName = "LIVE ROTATION DATA";
             base.OnHeaderGUI();
 
         }

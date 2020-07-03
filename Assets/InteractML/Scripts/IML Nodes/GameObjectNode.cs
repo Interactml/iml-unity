@@ -7,7 +7,7 @@ namespace InteractML
 {
     [CreateNodeMenuAttribute("Interact ML/Game Object")]
     [NodeWidth(250)]
-    public class GameObjectNode : Node
+    public class GameObjectNode : IMLNode
     {
         /// <summary>
         /// The GameObject from the scene to use
@@ -19,9 +19,6 @@ namespace InteractML
         public bool GameObjMissing;
         [HideInInspector]
         public bool state;
-
-        [HideInInspector]
-        public IMLNodeTooltips tips;
 
         // Use this for initialization
         protected override void Init()
@@ -35,7 +32,7 @@ namespace InteractML
                
             }
 
-            tips = IMLTooltipsSerialization.LoadTooltip("GameObject");
+            tooltips = IMLTooltipsSerialization.LoadTooltip("GameObject");
         }
 
         public void OnDestroy()

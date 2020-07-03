@@ -385,7 +385,6 @@ namespace InteractML
 
         public void UpdateLogic()
         {
-            Debug.Log(RunOnAwake);
             //Set Learning Type 
             SetLearningType();
 
