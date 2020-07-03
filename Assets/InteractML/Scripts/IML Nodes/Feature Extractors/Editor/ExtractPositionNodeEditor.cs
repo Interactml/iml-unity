@@ -16,291 +16,66 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         private ExtractPosition m_ExtractPosition;
 
-        private int counter = 0;
-        private int count = 3;
-        private int stop = 6;
-
-        /// <summary>
-        /// Rects for node layout
-        /// </summary>
-        private Rect m_BodyRect;
-        private Rect m_InnerBodyRect;
-        private Rect m_PortRect;
-        private Rect m_LocalSpaceRect;
-        private Rect m_InnerLocalSpaceRect;
-        private Rect m_HelpRect;
-
         public override void OnHeaderGUI()
         {
             // Get reference to the current node
             m_ExtractPosition = (target as ExtractPosition);
-
-            // Load node skin
-            if (m_NodeSkin == null)
-                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
-
-            // Initialise header background Rects
-            InitHeaderRects();
-
-            NodeColor = GetColorTextureFromHexString("#3A3B5B");
-
-            // Draw header background Rect
-            GUI.DrawTexture(HeaderRect, NodeColor);
-
-            // Draw line below header
-            GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
-
-            //Display Node name
-            GUILayout.BeginArea(HeaderRect);
-            GUILayout.Space(10);
-            GUILayout.Label("LIVE POSITION DATA", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
-            GUILayout.EndArea();
-
-            GUILayout.Label("", GUILayout.MinHeight(60));
+            nodeSpace = 150;
+            NodeName = "LIVE POSITION DATA";
+            base.OnHeaderGUI();
         }
     
 
         public override void OnBodyGUI()
         {
-            // Draw the ports
-            DrawPortLayout();
-            ShowExtractPositionNodePorts();
+            InputPortsNamesOverride = new Dictionary<string, string>();
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            base.InputPortsNamesOverride.Add("GameObjectDataIn", "Game Object\nData In");
+            base.OutputPortsNamesOverride.Add("LiveDataOut", "Position\nData Out");
+            base.nodeTips = m_ExtractPosition.tooltips;
+            m_BodyRect.height = 150;
+            base.OnBodyGUI();
 
-            //check if port is hovered over 
-            PortTooltip(m_ExtractPosition.tips.PortTooltip);
+        }
 
-            // Draw the body
-            DrawBodyLayout();
-            //ShowExtractedPositionValues();
+        protected override void ShowBodyFields()
+        {
             DataInToggle(m_ExtractPosition.ReceivingData, m_InnerBodyRect, m_BodyRect);
-
-            // Draw local space toggle
-            DrawLocalSpaceLayout();
-            ShowLocalSpaceToggle();
-
-            // Draw help button
-            DrawHelpButtonLayout();
-            ShowHelpButton(m_HelpRect);
-
-            // if hovering port show port tooltip
-            if (showPort)
-            {
-                ShowTooltip(m_PortRect, TooltipText);
-            }
-            //if hovering over help show tooltip 
-            if (showHelp)
-            {
-                ShowTooltip(m_HelpRect, m_ExtractPosition.tips.HelpTooltip);
-            }
-            // if hovering over body rect
-            if (IsThisRectHovered(m_BodyRect))
-                ShowTooltip(m_BodyRect, m_ExtractPosition.tips.BodyTooltip.Tips[0]);
-
-            // if hovering over body rect
-            if (IsThisRectHovered(m_LocalSpaceRect))
-                ShowTooltip(m_LocalSpaceRect, m_ExtractPosition.tips.BodyTooltip.Tips[1]);
-        }
-
-
-        #region Methods
-
-        /// <summary>
-        /// Define rect values for port section and paint textures based on rects 
-        /// </summary>
-        private void DrawPortLayout()
-        {
-            // Draw body background purple rect below header
-            m_PortRect.x = 5;
-            m_PortRect.y = HeaderRect.height;
-            m_PortRect.width = NodeWidth - 10;
-            m_PortRect.height = 60;
-            GUI.DrawTexture(m_PortRect, NodeColor);
-
-            // Draw line below ports
-
-            //GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSeparatorLine, m_PortRect.width, WeightOfSeparatorLine), SeparatorLineColor);
-
             
-            if (m_ExtractPosition.ReceivingData)
-            {
-                foreach (var port in m_ExtractPosition.Ports)
-                {
-                    if (counter >= count)
-                    {
-                        if (port.IsInput)
-                        {
-                            Vector2 positionOut = IMLNodeEditor.GetPortPosition(port);
-                            positionOut = positionOut - new Vector2(2, -1);
-                            Rect circle = new Rect(positionOut, new Vector2(20, 20));
-                            Color col = GUI.color;
-                            GUI.color = Color.white;
-                            GUI.DrawTexture(circle, NodeEditorResources.dotOuter);
-
-                            GUI.color = col;
-                        }
-
-                        if (counter == stop)
-                        {
-                            counter = 0;
-                        }
-                    } 
-                }
-                counter++;
-            } 
-
-            GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), GetColorTextureFromHexString("#888EF7"));
-
         }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawBodyLayout()
-        {
-            m_BodyRect.x = 5;
-            m_BodyRect.y = HeaderRect.height + m_PortRect.height;
-            m_BodyRect.width = NodeWidth - 10;
-            m_BodyRect.height = 120;
-
-            // Draw body background purple rect below header
-            GUI.DrawTexture(m_BodyRect, NodeColor);
-        }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawLocalSpaceLayout()
-        {
-            m_LocalSpaceRect.x = 5;
-            m_LocalSpaceRect.y = HeaderRect.height + m_PortRect.height + m_BodyRect.height;
-            m_LocalSpaceRect.width = NodeWidth - 10;
-            m_LocalSpaceRect.height = 50;
-
-            // Draw body background purple rect below header
-            GUI.DrawTexture(m_LocalSpaceRect, NodeColor);
-
-            //Draw separator line
-            GUI.DrawTexture(new Rect(m_LocalSpaceRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_LocalSpaceRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
-        }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawHelpButtonLayout()
-        {
-            m_HelpRect.x = 5;
-            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_BodyRect.height + m_LocalSpaceRect.height;
-            m_HelpRect.width = NodeWidth - 10;
-            m_HelpRect.height = 40;
-
-            // Draw body background purple rect below header
-            GUI.DrawTexture(m_HelpRect, NodeColor);
-
-            //Draw separator line
-            GUI.DrawTexture(new Rect(m_HelpRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height + m_LocalSpaceRect.height - WeightOfSeparatorLine, m_HelpRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
-        }
-
-
-        /// <summary>
-        /// Show the input/output port fields 
-        /// </summary>
-        private void ShowExtractPositionNodePorts()
-        {
-            GUILayout.Space(5);
-            GUILayout.BeginHorizontal();
-            
-            GUIContent inputPortLabel = new GUIContent("GameObject \nData In", m_ExtractPosition.tips.PortTooltip[0]);
-            IMLNodeEditor.PortField(inputPortLabel, m_ExtractPosition.GetInputPort("GameObjectDataIn"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
-
-            GUIContent outputPortLabel = new GUIContent("Live Data\n Out", m_ExtractPosition.tips.PortTooltip[1]);
-            IMLNodeEditor.PortField(outputPortLabel, m_ExtractPosition.GetOutputPort("LiveDataOut"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
-
-            GUILayout.EndHorizontal();
-        }
-
-        /// <summary>
-        /// Show the position value fields 
-        /// </summary>
-        //private void ShowExtractedPositionValues()
-        //{
-        //    m_InnerBodyRect.x = m_BodyRect.x + 20;
-        //    m_InnerBodyRect.y = m_BodyRect.y + 20;
-        //    m_InnerBodyRect.width = m_BodyRect.width - 20;
-        //    m_InnerBodyRect.height = m_BodyRect.height - 20;
-
-        //    GUILayout.BeginArea(m_InnerBodyRect);
-
-        //    if (m_ExtractPosition.ReceivingData)
-        //    {
-        //        DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Green Toggle"));
-        //    }
-        //    else
-        //    {
-        //        DrawPositionValueTogglesAndLabels(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Red Toggle"));
-        //    }
-
-        //    GUILayout.EndArea();
-
-        //}
 
         protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
         {
             GUILayout.BeginHorizontal();
+            GUILayout.Space(bodySpace);
             m_ExtractPosition.x_switch = EditorGUILayout.Toggle(m_ExtractPosition.x_switch, style);
-            EditorGUILayout.LabelField("x: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField("x: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
             GUILayout.EndHorizontal();
 
             EditorGUILayout.Space();
 
             GUILayout.BeginHorizontal();
+            GUILayout.Space(bodySpace);
             m_ExtractPosition.y_switch = EditorGUILayout.Toggle(m_ExtractPosition.y_switch, style);
-            EditorGUILayout.LabelField("y: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[1], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField("y: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[1], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
             GUILayout.EndHorizontal();
 
             EditorGUILayout.Space();
 
             GUILayout.BeginHorizontal();
+            GUILayout.Space(bodySpace);
             m_ExtractPosition.z_switch = EditorGUILayout.Toggle(m_ExtractPosition.z_switch, style);
-            EditorGUILayout.LabelField("z: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[2], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+            EditorGUILayout.LabelField("z: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[2], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
             GUILayout.EndHorizontal();
-        }
 
-        /// <summary>
-        /// Show the local space toggle 
-        /// </summary>
-        private void ShowLocalSpaceToggle()
-        {
-            m_InnerLocalSpaceRect.x = m_LocalSpaceRect.x + 24;
-            m_InnerLocalSpaceRect.y = m_LocalSpaceRect.y + 16;
-            m_InnerLocalSpaceRect.width = m_LocalSpaceRect.width;
-            m_InnerLocalSpaceRect.height = m_LocalSpaceRect.height;
+            GUILayout.Space(20);
 
-            GUILayout.BeginArea(m_InnerLocalSpaceRect);
             GUILayout.BeginHorizontal();
+            GUILayout.Space(bodySpace);
             m_ExtractPosition.LocalSpace = EditorGUILayout.Toggle(m_ExtractPosition.LocalSpace, m_NodeSkin.GetStyle("Local Space Toggle"));
             EditorGUILayout.LabelField("Use local space for transform", m_NodeSkin.GetStyle("Node Local Space Label"));
             GUILayout.EndHorizontal();
-            GUILayout.EndArea();
         }
-
-        /// <summary>
-        /// Display help button
-        /// </summary>
-        private void ShowHelpButton()
-        {
-            m_HelpRect.x = m_HelpRect.x + 20;
-            m_HelpRect.y = m_HelpRect.y + 10;
-            m_HelpRect.width = m_HelpRect.width - 30;
-
-            GUILayout.BeginArea(m_HelpRect);
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("");
-            GUILayout.Button("Help", m_NodeSkin.GetStyle("Help Button"));
-            GUILayout.EndHorizontal();
-            GUILayout.EndArea();
-        }
-
-        #endregion
 
     }
 

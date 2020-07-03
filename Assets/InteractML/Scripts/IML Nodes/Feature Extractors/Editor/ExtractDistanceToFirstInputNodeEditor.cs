@@ -15,144 +15,32 @@ namespace InteractML.FeatureExtractors
         /// Reference to the node itself
         /// </summary>
         private ExtractDistanceToFirstInput m_ExtractDistanceToFirstInput;
-
-        /// <summary>
-        /// Rects for node layout
-        /// </summary>
-        private Rect m_BodyRect;
-        private Rect m_PortRect;
-        private Rect m_InnerBodyRect;
-        private Rect m_HelpRect;
-
         public override void OnHeaderGUI()
         {
             // Get reference to the current node
             m_ExtractDistanceToFirstInput = (target as ExtractDistanceToFirstInput);
-
-            // Load node skin
-            if (m_NodeSkin == null)
-                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
-
-            // Initialise header background Rects
-            InitHeaderRects();
-
-            NodeColor = GetColorTextureFromHexString("#3A3B5B");
-
-            // Draw header background Rect
-            GUI.DrawTexture(HeaderRect, NodeColor);
-
-            // Draw line below header
-            GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
-
-            //Display Node name
-            GUILayout.BeginArea(HeaderRect);
-            GUILayout.Space(10);
-            GUILayout.Label("LIVE DISTANCE DATA", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
-            GUILayout.EndArea();
-
-            GUILayout.Label("", GUILayout.MinHeight(60));
+            nodeSpace = 150;
+            NodeName = "DISTANCE BETWEEN INPUTS";
+            base.OnHeaderGUI();
         }
 
         public override void OnBodyGUI()
         {
-            // Draw the ports
-            DrawPortLayout();
-            ShowDistanceBetweenInputsNodePorts();
-
-            //check if port is hovered over 
-            PortTooltip(m_ExtractDistanceToFirstInput.tips.PortTooltip);
-
-            // Draw the body
-            DrawBodyLayout();
-            ShowDistanceBetweenInputsValue();
-
-            // Draw help button
-            DrawHelpButtonLayout();
-            ShowHelpButton(m_HelpRect);
-
-            // if hovering port show port tooltip
-            if (showPort)
-            {
-                ShowTooltip(m_PortRect, TooltipText);
-            }
-            //if hovering over help show tooltip 
-            if (showHelp)
-            {
-                ShowTooltip(m_HelpRect, m_ExtractDistanceToFirstInput.tips.HelpTooltip);
-            }
-            // if hovering over body rect
-            if (IsThisRectHovered(m_BodyRect))
-                ShowTooltip(m_BodyRect, m_ExtractDistanceToFirstInput.tips.BodyTooltip.Tips[0]);
+            InputPortsNamesOverride = new Dictionary<string, string>();
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            base.InputPortsNamesOverride.Add("FirstInput", "First Input");
+            base.InputPortsNamesOverride.Add("SecondInput", "Second Input");
+            base.OutputPortsNamesOverride.Add("DistanceBetweenInputs", "Distance\nBetween\nInputs");
+            base.nodeTips = m_ExtractDistanceToFirstInput.tooltips;
+            m_BodyRect.height = 100;
+            base.OnBodyGUI();
         }
 
         #region Methods
 
-
-        /// <summary>
-        /// Define rect values for port section and paint textures based on rects 
-        /// </summary>
-        private void DrawPortLayout()
+        protected override void ShowBodyFields()
         {
-            // Draw body background purple rect below header
-            m_PortRect.x = 5;
-            m_PortRect.y = HeaderRect.height;
-            m_PortRect.width = NodeWidth - 10;
-            m_PortRect.height = 60;
-            GUI.DrawTexture(m_PortRect, NodeColor);
-
-            // Draw line below ports
-            GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), GetColorTextureFromHexString("#888EF7"));
-        }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawBodyLayout()
-        {
-            m_BodyRect.x = 5;
-            m_BodyRect.y = HeaderRect.height + m_PortRect.height;
-            m_BodyRect.width = NodeWidth - 10;
-            m_BodyRect.height = 70;
-
-            // Draw body background purple rect below header
-            GUI.DrawTexture(m_BodyRect, NodeColor);
-        }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        private void DrawHelpButtonLayout()
-        {
-            m_HelpRect.x = 5;
-            m_HelpRect.y = HeaderRect.height + m_PortRect.height + m_BodyRect.height;
-            m_HelpRect.width = NodeWidth - 10;
-            m_HelpRect.height = 40;
-
-            // Draw body background purple rect below header
-            GUI.DrawTexture(m_HelpRect, NodeColor);
-
-            //Draw separator line
-            GUI.DrawTexture(new Rect(m_HelpRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_HelpRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
-        }
-
-        /// <summary>
-        /// Show the input/output port fields 
-        /// </summary>
-        private void ShowDistanceBetweenInputsNodePorts()
-        {
-            GUILayout.Space(5);
-            GUILayout.BeginHorizontal();
-
-            GUIContent inputPortLabel = new GUIContent("First Input", m_ExtractDistanceToFirstInput.tips.PortTooltip[0]);
-            IMLNodeEditor.PortField(inputPortLabel, m_ExtractDistanceToFirstInput.GetInputPort("FirstInput"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
-
-            GUIContent outputPortLabel = new GUIContent("Live Data\n Out", m_ExtractDistanceToFirstInput.tips.PortTooltip[1]);
-            IMLNodeEditor.PortField(outputPortLabel, m_ExtractDistanceToFirstInput.GetOutputPort("DistanceBetweenInputs"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
-
-            GUILayout.EndHorizontal();
-
-            GUIContent secondInputPortLabel = new GUIContent("Second Input", m_ExtractDistanceToFirstInput.tips.PortTooltip[0]);
-            IMLNodeEditor.PortField(secondInputPortLabel, m_ExtractDistanceToFirstInput.GetInputPort("SecondInput"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(0));
+            ShowDistanceBetweenInputsValue();
         }
 
         /// <summary>
@@ -184,22 +72,7 @@ namespace InteractML.FeatureExtractors
             
         }
 
-        /// <summary>
-        /// Display help button
-        /// </summary>
-        private void ShowHelpButton()
-        {
-            m_HelpRect.x = m_HelpRect.x + 20;
-            m_HelpRect.y = m_HelpRect.y + 10;
-            m_HelpRect.width = m_HelpRect.width - 30;
 
-            GUILayout.BeginArea(m_HelpRect);
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("");
-            GUILayout.Button("Help", m_NodeSkin.GetStyle("Help Button"));
-            GUILayout.EndHorizontal();
-            GUILayout.EndArea();
-        }
         #endregion
 
     }

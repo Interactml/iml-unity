@@ -31,11 +31,10 @@ namespace InteractML.DataTypeNodes
             base.InputPortsNamesOverride.Add("m_In", "Float\nData In");
             base.OutputPortsNamesOverride.Add("m_Out", "Float\nData Out");
             base.nodeTips = m_FloatNode.tooltips;
-            bodyheight = 100;
+            m_BodyRect.height = 80;
             base.OnBodyGUI();
-            
         }
-
+        
 
         protected override void ShowBodyFields()
         {
@@ -45,23 +44,24 @@ namespace InteractML.DataTypeNodes
         
         protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
         {
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(bodySpace);
             // If something is connected to the input port show incoming data
             if (m_FloatNode.InputConnected)
             {
-                GUILayout.BeginHorizontal();
-                m_FloatNode.float_switch = EditorGUILayout.Toggle(m_FloatNode.float_switch, style);
+                m_FloatNode.float_switch = EditorGUILayout.Toggle(m_FloatNode.float_switch, style, GUILayout.MaxWidth(dataWidth));
                 EditorGUILayout.LabelField("Float: " + System.Math.Round(m_FloatNode.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
-                GUILayout.EndHorizontal();
             }
             // If there is nothing connected to the input port show editable fields
             else
             {
-                GUILayout.BeginHorizontal();
-                m_FloatNode.float_switch = EditorGUILayout.Toggle(m_FloatNode.float_switch, style, GUILayout.MaxWidth(40));
-                EditorGUILayout.LabelField("Float: ", m_NodeSkin.GetStyle("Node Body Label"), GUILayout.MaxWidth(40));
-                m_FloatNode.m_UserInput = EditorGUILayout.FloatField(m_FloatNode.m_UserInput, GUILayout.MaxWidth(60));
-                GUILayout.EndHorizontal();
+                m_FloatNode.float_switch = EditorGUILayout.Toggle(m_FloatNode.float_switch, style, GUILayout.MaxWidth(dataWidth));
+                EditorGUILayout.LabelField("Float: ", m_NodeSkin.GetStyle("Node Body Label"), GUILayout.MaxWidth(dataWidth));
+                GUILayout.Space(10);
+                m_FloatNode.m_UserInput = EditorGUILayout.FloatField(m_FloatNode.m_UserInput, GUILayout.MaxWidth(inputWidth));
+                
             }
+            GUILayout.EndHorizontal();
         }
 
     }

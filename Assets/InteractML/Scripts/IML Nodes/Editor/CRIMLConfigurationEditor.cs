@@ -55,41 +55,7 @@ namespace InteractML
 
         #endregion
 
-        public override void OnHeaderGUI()
-        {
-            // Load node skin
-            if (m_NodeSkin == null)
-                m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
-
-            // Get references
-            m_IMLNode = target as IMLNode;
-            m_IMLNodeSerialized = new SerializedObject(m_IMLNode);
-
-            // Get reference to the current node
-            m_CRIMLConfiguration = (target as CRIMLConfiguration);
-
-            NodeWidth = 300;
-
-            // Initialise header background Rects
-            InitHeaderRects();
-
-            NodeColor = GetColorTextureFromHexString("#3A3B5B");
-
-            // Draw header background Rect
-            GUI.DrawTexture(HeaderRect, NodeColor);
-
-            // Draw line below header
-            GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#5EB3F9"));
-
-            //Display Node name
-            GUILayout.BeginArea(HeaderRect);
-            GUILayout.Space(5);
-            GUILayout.Label("MACHINE LEARNING SYSTEM", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
-            GUILayout.Label("Classification and Regression", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
-            GUILayout.EndArea();
-
-            GUILayout.Label("", GUILayout.MinHeight(60));
-        }
+      
 
         public override void OnBodyGUI()
         {

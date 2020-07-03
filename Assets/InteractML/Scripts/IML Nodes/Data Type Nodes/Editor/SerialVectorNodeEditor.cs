@@ -20,7 +20,7 @@ namespace InteractML.DataTypeNodes
         {
             m_SerialVectorNode = (target as SerialVectorNode);
             NodeName = "LIVE SERIAL VECTOR DATA";
-            nodeSpace = 160;
+            nodeSpace = 140;
             base.OnHeaderGUI();
         }
 
@@ -31,7 +31,7 @@ namespace InteractML.DataTypeNodes
             base.InputPortsNamesOverride.Add("m_In", "Serial Vector\nData In");
             base.OutputPortsNamesOverride.Add("m_Out", "Serial Vector \nData Out");
             base.nodeTips = m_SerialVectorNode.tooltips;
-            bodyheight = 100;
+            m_BodyRect.height = 80;
             base.OnBodyGUI();
         }
 
@@ -47,9 +47,8 @@ namespace InteractML.DataTypeNodes
             m_InnerBodyRect.height = m_BodyRect.height - 20;
 
             GUILayout.BeginArea(m_InnerBodyRect);
-            EditorGUILayout.Space();
             EditorGUILayout.LabelField("Name: " + m_SerialVectorNode.ValueName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            EditorGUILayout.Space();
+            
             if (m_SerialVectorNode.FeatureValues.Values.Length != 0 && m_SerialVectorNode.FeatureValues.Values != null) { 
                 for (int i = 0; i < m_SerialVectorNode.FeatureValues.Values.Length; i++)
                 {

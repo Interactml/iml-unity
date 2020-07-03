@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using XNodeEditor.Internal;
 using InteractML;
 using XNode;
+using XNodeEditor.Internal;
 #if UNITY_EDITOR
 using UnityEditor;
 using XNodeEditor;
@@ -78,6 +78,10 @@ namespace InteractML
         public Rect ToolTipRect;
 
         public float bodyheight;
+        protected int dataWidth = 45;
+        protected int inputWidth = 35;
+        protected int bodySpace = 30;
+        protected int vectorBodySpace = 50;
 
         public Vector2 positionPort;
         protected Vector2 scrollPosition;
@@ -93,6 +97,8 @@ namespace InteractML
         /// Do we need to recalculate background rects?
         /// </summary>
         private bool m_RecalculateRects;
+        //Show output type for ports 
+        protected bool showOutput = false;
 
         /// <summary>
         /// The skin to use on the node
@@ -161,13 +167,11 @@ namespace InteractML
                 m_IMLNode = target as IMLNode;
                 m_IMLNodeSerialized = new SerializedObject(m_IMLNode);
 
+
                 // Initialise header background Rects
                 InitHeaderRects();
 
                 NodeColor = GetColorTextureFromHexString("#3A3B5B");
-
-                // Draw header background Rect
-                //GUI.DrawTexture(HeaderRect, NodeColor);
 
                 // Draw line below header
                 GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
@@ -177,7 +181,6 @@ namespace InteractML
                     NodeName = target.GetType().Name;
 
                 GUILayout.BeginArea(HeaderRect);
-                GUILayout.Space(10);
                 GUILayout.Label(NodeName, m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
                 GUILayout.EndArea();
 
@@ -209,7 +212,7 @@ namespace InteractML
 
                 // Draw Port Section
                 DrawPortLayout();
-                ShowNodePorts(InputPortsNamesOverride, OutputPortsNamesOverride, showOutputType: true);
+                ShowNodePorts(InputPortsNamesOverride, OutputPortsNamesOverride, showOutput);
                 PortTooltip();
 
                 // Draw Body Section
@@ -354,8 +357,9 @@ namespace InteractML
             if (m_NodeSkin == null)
                 m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
 
-            GUILayout.Space(HeaderRect.height);
-
+            GUILayout.Space(60);
+            GUILayout.BeginArea(m_BodyRect);
+            GUILayout.Space(30);
             if (dataIn)
             {
                 DrawPositionValueTogglesAndLabels(m_NodeSkin.GetStyle("Green Toggle"));
@@ -364,7 +368,7 @@ namespace InteractML
             {
                 DrawPositionValueTogglesAndLabels(m_NodeSkin.GetStyle("Red Toggle"));
             }
-
+            GUILayout.EndArea();
         }
 
         protected virtual void DrawPositionValueTogglesAndLabels(GUIStyle style)
@@ -660,9 +664,8 @@ namespace InteractML
                 m_BodyRect.x = 5;
                 m_BodyRect.y = HeaderRect.height + m_PortRect.height;
                 m_BodyRect.width = NodeWidth - 10;
-                if (bodyheight == 0)
-                    bodyheight = 150;
-                m_BodyRect.height = bodyheight;
+                if (m_BodyRect.height == 0)
+                    m_BodyRect.height = 150;
             }
             // Draw body background purple rect below header
         }
@@ -676,11 +679,8 @@ namespace InteractML
             m_HelpRect.y = y;
             m_HelpRect.width = NodeWidth - 10;
             m_HelpRect.height = 40;
-            // Draw body background purple rect below header
-            GUI.DrawTexture(m_HelpRect, NodeColor);
-
             //Draw separator line
-            GUI.DrawTexture(new Rect(m_HelpRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_HelpRect.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
+            GUI.DrawTexture(new Rect(m_HelpRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_HelpRect.width, WeightOfSeparatorLine*2), GetColorTextureFromHexString("#888EF7"));
         }
 
         /// <summary>

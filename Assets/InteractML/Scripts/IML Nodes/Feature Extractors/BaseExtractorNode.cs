@@ -9,7 +9,7 @@ namespace InteractML.FeatureExtractors
     /// <summary>
     /// Base Class for Feature Extractor Nodes
     /// </summary>
-    public class BaseExtractorNode : Node
+    public class BaseExtractorNode : IMLNode
     {
         // Use this for initialization
         protected override void Init()

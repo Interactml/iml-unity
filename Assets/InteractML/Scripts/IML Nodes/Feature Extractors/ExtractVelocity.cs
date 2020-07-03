@@ -66,14 +66,11 @@ namespace InteractML.FeatureExtractors
         public bool y_switch = true;
         public bool z_switch = true;
 
-        [HideInInspector]
-        public IMLNodeTooltips tips;
-
         // Use this for initialization
         protected override void Init()
         {
             base.Init();
-            tips = IMLTooltipsSerialization.LoadTooltip("Velocity");
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Velocity");
             // The velocity extractor expects any other feature extracted to make calculations
             FeatureToInput = GetInputValue<Node>("FeatureToInput");
             // If we managed to get the input

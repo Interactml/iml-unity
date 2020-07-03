@@ -20,7 +20,7 @@ namespace InteractML.DataTypeNodes
         {
             m_Vector4Node = (target as Vector4Node);
             NodeName = "LIVE VECTOR 4 DATA";
-            nodeSpace = 60;
+            nodeSpace = 160;
             base.OnHeaderGUI();
         }
 
@@ -31,7 +31,7 @@ namespace InteractML.DataTypeNodes
             base.InputPortsNamesOverride.Add("m_In", "Vector3\nData In");
             base.OutputPortsNamesOverride.Add("m_Out", "Vector3\nData Out");
             base.nodeTips = m_Vector4Node.tooltips;
-            bodyheight = 160;
+            m_BodyRect.height = 160;
             base.OnBodyGUI();
         }
 
@@ -46,29 +46,33 @@ namespace InteractML.DataTypeNodes
             if (m_Vector4Node.InputConnected)
             {
                 GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
                 m_Vector4Node.x_switch = EditorGUILayout.Toggle(m_Vector4Node.x_switch, style);
-                EditorGUILayout.LabelField("x: " + System.Math.Round(m_Vector4Node.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+                EditorGUILayout.LabelField("x: " + System.Math.Round(m_Vector4Node.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
                 GUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
 
                 GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
                 m_Vector4Node.y_switch = EditorGUILayout.Toggle(m_Vector4Node.y_switch, style);
-                EditorGUILayout.LabelField("y: " + System.Math.Round(m_Vector4Node.FeatureValues.Values[1], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+                EditorGUILayout.LabelField("y: " + System.Math.Round(m_Vector4Node.FeatureValues.Values[1], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
                 GUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
 
                 GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
                 m_Vector4Node.z_switch = EditorGUILayout.Toggle(m_Vector4Node.z_switch, style);
-                EditorGUILayout.LabelField("z: " + System.Math.Round(m_Vector4Node.FeatureValues.Values[2], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+                EditorGUILayout.LabelField("z: " + System.Math.Round(m_Vector4Node.FeatureValues.Values[2], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
                 GUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
 
                 GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
                 m_Vector4Node.w_switch = EditorGUILayout.Toggle(m_Vector4Node.w_switch, style);
-                EditorGUILayout.LabelField("w: " + System.Math.Round(m_Vector4Node.FeatureValues.Values[3], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+                EditorGUILayout.LabelField("w: " + System.Math.Round(m_Vector4Node.FeatureValues.Values[3], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
                 GUILayout.EndHorizontal();
 
             }
@@ -76,32 +80,36 @@ namespace InteractML.DataTypeNodes
             else
             {
                 GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
                 m_Vector4Node.x_switch = EditorGUILayout.Toggle(m_Vector4Node.x_switch, style, GUILayout.MaxWidth(40));
-                EditorGUILayout.LabelField("x: ", m_NodeSkin.GetStyle("Node Body Label"), GUILayout.MaxWidth(20));
+                EditorGUILayout.LabelField("x: ", m_NodeSkin.GetStyle("Node Body Label Axis"), GUILayout.MaxWidth(20));
                 m_Vector4Node.m_UserInput.x = EditorGUILayout.FloatField(m_Vector4Node.m_UserInput.x, GUILayout.MaxWidth(60));
                 GUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
 
                 GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
                 m_Vector4Node.y_switch = EditorGUILayout.Toggle(m_Vector4Node.y_switch, style, GUILayout.MaxWidth(40));
-                EditorGUILayout.LabelField("y: ", m_NodeSkin.GetStyle("Node Body Label"), GUILayout.MaxWidth(20));
+                EditorGUILayout.LabelField("y: ", m_NodeSkin.GetStyle("Node Body Label Axis"), GUILayout.MaxWidth(20));
                 m_Vector4Node.m_UserInput.y = EditorGUILayout.FloatField(m_Vector4Node.m_UserInput.y, GUILayout.MaxWidth(60));
                 GUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
 
                 GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
                 m_Vector4Node.z_switch = EditorGUILayout.Toggle(m_Vector4Node.z_switch, style, GUILayout.MaxWidth(40));
-                EditorGUILayout.LabelField("z: ", m_NodeSkin.GetStyle("Node Body Label"), GUILayout.MaxWidth(20));
+                EditorGUILayout.LabelField("z: ", m_NodeSkin.GetStyle("Node Body Label Axis"), GUILayout.MaxWidth(20));
                 m_Vector4Node.m_UserInput.z = EditorGUILayout.FloatField(m_Vector4Node.m_UserInput.z, GUILayout.MaxWidth(60));
                 GUILayout.EndHorizontal();
 
                 EditorGUILayout.Space();
 
                 GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
                 m_Vector4Node.w_switch = EditorGUILayout.Toggle(m_Vector4Node.w_switch, style, GUILayout.MaxWidth(40));
-                EditorGUILayout.LabelField("w: ", m_NodeSkin.GetStyle("Node Body Label"), GUILayout.MaxWidth(20));
+                EditorGUILayout.LabelField("w: ", m_NodeSkin.GetStyle("Node Body Label Axis"), GUILayout.MaxWidth(20));
                 m_Vector4Node.m_UserInput.w = EditorGUILayout.FloatField(m_Vector4Node.m_UserInput.w, GUILayout.MaxWidth(60));
                 GUILayout.EndHorizontal();
 

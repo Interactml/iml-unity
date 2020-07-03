@@ -71,14 +71,11 @@ namespace InteractML.FeatureExtractors
         int counter = 0;
         int count = 5;
 
-        [HideInInspector]
-        public IMLNodeTooltips tips;
-
         // Use this for initialization
         protected override void Init()
         {
             base.Init();
-            tips = IMLTooltipsSerialization.LoadTooltip("Rotation");
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation");
             if (m_RotationExtracted == null)
             {
                 m_RotationExtracted = new IMLVector4();
