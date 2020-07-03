@@ -96,7 +96,7 @@ namespace InteractML
         /// <summary>
         /// Do we need to recalculate background rects?
         /// </summary>
-        private bool m_RecalculateRects;
+        protected bool m_RecalculateRects;
         //Show output type for ports 
         protected bool showOutput = false;
 
@@ -119,6 +119,7 @@ namespace InteractML
         /// The name for this node
         /// </summary>
         public string NodeName;
+        public string NodeSubtitle;
         public string TooltipText = "";
 
         /// <summary>
@@ -148,9 +149,25 @@ namespace InteractML
         protected float nodeSpace;
 
         #endregion
-        #region Variables GameObjectNode 
-        #endregion
+        #region Variables MachineLearningSystemNodes
+        protected Rect m_IconCenter;
+        protected Rect m_ButtonsRect;
 
+        protected bool buttonTip;
+        protected bool buttonTipHelper;
+        protected bool bottomButtonTip;
+        protected bool bottomButtonTipHelper;
+
+        protected Texture trainingIcon;
+
+        protected int numberOfExamplesTrained;
+
+        #endregion
+        #region Variable TrainingExamples 
+        protected int m_ConnectedInputs;
+        protected int m_ConnectedTargets;
+        protected Rect SepLineRect;
+        #endregion
         #region XNode Messages
 
         public override void OnHeaderGUI()
@@ -182,6 +199,8 @@ namespace InteractML
 
                 GUILayout.BeginArea(HeaderRect);
                 GUILayout.Label(NodeName, m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+                if(!String.IsNullOrEmpty(NodeSubtitle))
+                    GUILayout.Label(NodeSubtitle, m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
                 GUILayout.EndArea();
 
                 GUILayout.Label("", GUILayout.MinHeight(60));
@@ -216,10 +235,10 @@ namespace InteractML
                 PortTooltip();
 
                 // Draw Body Section
-                DrawBodyLayout();
+                InitBodyLayout();
                 ShowBodyFields();
                 if (nodeSpace == 0)
-                    nodeSpace = 80;
+                    nodeSpace = 100;
                 GUILayout.Space(nodeSpace);
 
                 // Draw help button
@@ -260,7 +279,14 @@ namespace InteractML
             HeaderRect.x = 5;
             HeaderRect.y = 0;
             HeaderRect.width = NodeWidth - 10;
-            HeaderRect.height = 60;
+            if (String.IsNullOrEmpty(NodeSubtitle))
+            {
+                HeaderRect.height = 60;
+            } else
+            {
+                HeaderRect.height = 70;
+            }
+            
 
             // Set Line below header background Rect values
             LineBelowHeader.x = 5;
@@ -388,28 +414,33 @@ namespace InteractML
                     var x = 30;
                     GUILayoutOption[] options = new GUILayoutOption[] { GUILayout.MinHeight(x), GUILayout.MaxHeight(x) };
                     GUILayout.BeginHorizontal();
+                    GUILayout.Space(bodySpace);
                     GUILayout.TextArea(name + " " + i, style, options);
                     GUILayout.EndHorizontal();
                     switch (values[i].DataType)
                     {
                         case IMLSpecifications.DataTypes.Float:
                             GUILayout.BeginHorizontal();
+                            GUILayout.Space(bodySpace);
                             GUILayout.TextArea("float: " + System.Math.Round(values[i].Values[0], 3).ToString(), style, options);
                             GUILayout.EndHorizontal();
                             break;
                         case IMLSpecifications.DataTypes.Integer:
                             GUILayout.BeginHorizontal();
+                            GUILayout.Space(bodySpace);
                             GUILayout.TextArea("int: " + System.Math.Round(values[i].Values[0], 3).ToString(), style, options);
                             GUILayout.EndHorizontal();
                             break;
                         case IMLSpecifications.DataTypes.Vector2:
                             GUILayout.BeginHorizontal();
+                            GUILayout.Space(bodySpace);
                             GUILayout.TextArea("x: " + System.Math.Round(values[i].Values[0], 3).ToString(), style, options);
                             GUILayout.TextArea("y: " + System.Math.Round(values[i].Values[1], 3).ToString(), style, options);
                             GUILayout.EndHorizontal();
                             break;
                         case IMLSpecifications.DataTypes.Vector3:
                             GUILayout.BeginHorizontal();
+                            GUILayout.Space(bodySpace);
                             GUILayout.TextArea("x: " + System.Math.Round(values[i].Values[0], 3).ToString(), style, options);
                             GUILayout.TextArea("y: " + System.Math.Round(values[i].Values[1], 3).ToString(), style, options);
                             GUILayout.TextArea("z: " + System.Math.Round(values[i].Values[2], 3).ToString(), style, options);
@@ -417,6 +448,7 @@ namespace InteractML
                             break;
                         case IMLSpecifications.DataTypes.Vector4:
                             GUILayout.BeginHorizontal();
+                            GUILayout.Space(bodySpace);
                             GUILayout.TextArea("x: " + System.Math.Round(values[i].Values[0], 3).ToString(), style, options);
                             GUILayout.TextArea("y: " + System.Math.Round(values[i].Values[1], 3).ToString(), style, options);
                             GUILayout.TextArea("z: " + System.Math.Round(values[i].Values[2], 3).ToString(), style, options);
@@ -657,7 +689,7 @@ namespace InteractML
         /// <summary>
         /// Define rect values for node body and paint textures based on rects 
         /// </summary>
-        private void DrawBodyLayout()
+        protected virtual void InitBodyLayout()
         {
             if(m_RecalculateRects)
             {
@@ -665,7 +697,7 @@ namespace InteractML
                 m_BodyRect.y = HeaderRect.height + m_PortRect.height;
                 m_BodyRect.width = NodeWidth - 10;
                 if (m_BodyRect.height == 0)
-                    m_BodyRect.height = 150;
+                    m_BodyRect.height = 90;
             }
             // Draw body background purple rect below header
         }
@@ -688,7 +720,14 @@ namespace InteractML
         /// </summary>
         protected void ShowNodePorts(Dictionary<string, string> inputsNameOverride = null, Dictionary<string, string> outputsNameOverride = null, bool showOutputType = false)
         {
-            GUILayout.Space(5);
+            if(NodeSubtitle != null)
+            {
+                GUILayout.Space(15);
+            } else
+            {
+                GUILayout.Space(5);
+            }
+            
 
             // Iterate through dynamic ports and draw them in the order in which they are serialized
             // Init variables
@@ -905,11 +944,78 @@ namespace InteractML
         }
         protected void ShowRunOnAwakeToggle(IMLConfiguration configNode)
         {
-            GUILayout.Space(380);
             GUILayout.BeginHorizontal();
+            GUILayout.Space(bodySpace);
             configNode.RunOnAwake = EditorGUILayout.Toggle(configNode.RunOnAwake, m_NodeSkin.GetStyle("Local Space Toggle"));
             EditorGUILayout.LabelField("Run Model On Play", m_NodeSkin.GetStyle("Node Local Space Label"));
             GUILayout.EndHorizontal();
+        }
+
+        protected void ShowTrainingIcon(string MLS)
+        {
+            m_IconCenter.x = m_BodyRect.x;
+            m_IconCenter.y = m_BodyRect.y;
+            m_IconCenter.width = m_BodyRect.width;
+            m_IconCenter.height = 150;
+
+            GUILayout.BeginArea(m_IconCenter);
+            GUILayout.Space(bodySpace);
+            GUILayout.BeginHorizontal();
+            if(trainingIcon == null)
+               trainingIcon = EditorGUIUtility.Load("Icons/"+MLS+ ".png") as Texture;
+            GUILayout.Box(trainingIcon, m_NodeSkin.GetStyle(MLS + " MLS Image"));
+            GUILayout.EndHorizontal();
+            
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(MLS, m_NodeSkin.GetStyle(MLS +" Label"));
+            GUILayout.EndHorizontal();
+            
+            GUILayout.EndArea();
+
+        }
+
+        /// <summary>
+        /// Show the load, delete and record buttons
+        /// </summary>
+        protected void ShowButtons(IMLConfiguration node)
+        {
+            m_ButtonsRect.x = m_IconCenter.x + 20;
+            m_ButtonsRect.y = m_IconCenter.y + m_IconCenter.height;
+            m_ButtonsRect.width = m_BodyRect.width-40;
+            m_ButtonsRect.height = 150;
+
+            
+            GUILayout.BeginArea(m_ButtonsRect);
+            
+            // if button contains mouse position
+            TrainModelButton();
+            GUILayout.Space(15);
+            RunModelButton();
+            GUILayout.Space(15);
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(NodeWidth/2 - 40);
+            if (GUILayout.Button("", m_NodeSkin.GetStyle("Reset")))
+            {
+                node.ResetModel();
+                numberOfExamplesTrained = 0;
+            }
+            GUILayout.EndHorizontal();
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("reset model", m_NodeSkin.GetStyle("Reset Pink Label"));
+            GUILayout.EndHorizontal();
+            GUILayout.Space(15);
+            ShowRunOnAwakeToggle(node);
+            GUILayout.EndArea();
+        }
+
+        protected virtual void TrainModelButton()
+        {
+
+        }
+
+        protected virtual void RunModelButton()
+        {
+
         }
 
         #endregion

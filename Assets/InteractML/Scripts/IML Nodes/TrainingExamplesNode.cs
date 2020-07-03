@@ -11,7 +11,7 @@ namespace InteractML
     /// Holds the information and list of a training examples node
     /// </summary>
     [NodeWidth(500)]
-    public class TrainingExamplesNode : Node
+    public class TrainingExamplesNode : IMLNode
     {
 
         #region Variables
@@ -126,8 +126,6 @@ namespace InteractML
         public bool EnableKeyboardControl;
         [HideInInspector]
         public KeyCode RecordDataKey;
-
-        public IMLNodeTooltips tips;
 
         private bool MLSClassification = false;
 

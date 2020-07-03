@@ -159,7 +159,7 @@ namespace InteractML
 
             Initialize();
 
-            tips = IMLTooltipsSerialization.LoadTooltip("Classification_MLS");
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Classification_MLS");
 
         }
 

@@ -57,7 +57,7 @@ namespace InteractML
 
       
 
-        public override void OnBodyGUI()
+     /*   public override void OnBodyGUI()
         {
             // Specify any overrides to port fieldNames
             if (OverridePortNames == false)
@@ -80,7 +80,7 @@ namespace InteractML
             //ShowSystemNodePorts();
             base.ShowNodePorts();
             //check if port is hovered over 
-            PortTooltip(m_CRIMLConfiguration.tips.PortTooltip);
+
 
             // Draw body Icons
             DrawBodyLayoutIcons();
@@ -117,7 +117,7 @@ namespace InteractML
 
             serializedObject.ApplyModifiedProperties();
 
-        }
+        }*/
 
         /// <summary>
         /// Define rect values for port section and paint textures based on rects 

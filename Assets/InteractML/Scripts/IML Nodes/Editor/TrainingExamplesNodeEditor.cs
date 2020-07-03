@@ -44,71 +44,17 @@ namespace InteractML
 
         #endregion
 
-        public override void OnHeaderGUI()
+
+
+        protected override void InitBodyLayout()
         {
-            // Get reference to the current node
-            m_TrainingExamplesNode = (target as TrainingExamplesNode);
-
-            NodeWidth = 300;
-
-            // Initialise header background Rects
-            InitHeaderRects();
-
-            NodeColor = GetColorTextureFromHexString("#3A3B5B");
-
-            // Draw header background Rect
-            GUI.DrawTexture(HeaderRect, NodeColor);
-
-            // Draw line below header
-            GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#74DF84"));
-
-            //Display Node name
-            GUILayout.BeginArea(HeaderRect);
-            GUILayout.Space(5);
-            GUILayout.Label("TEACH THE MACHINE", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
-            GUILayout.Label("Dynamic Time Warping", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
-            GUILayout.EndArea();
-
-            GUILayout.Label("", GUILayout.MinHeight(60));
-
-
-        }
-
-        public override void OnBodyGUI()
-        {
-            DrawPortLayout();
-            ShowSeriesTrainingExamplesNodePorts();
-            GUILayout.Space(50);
-
-            DrawBodyLayoutInputs(m_TrainingExamplesNode.DesiredInputsConfig.Count);
-            DrawValues(m_TrainingExamplesNode.DesiredInputFeatures, "Input Values");
-
-            DrawBodyLayoutTargets(m_TrainingExamplesNode.DesiredOutputFeatures.Count);
-            GUILayout.Space(80);
-            DrawValues(m_TrainingExamplesNode.DesiredOutputFeatures, "Target Values");
-
-            DrawBodyLayoutButtons();
-            ShowButtons();
-
-            DrawBodyLayoutBottom();
-            ShowHelpButton(m_BodyRectBottom);
-
-        }
-
-        /// <summary>
-        /// Define rect values for port section and paint textures based on rects 
-        /// </summary>
-        protected void DrawPortLayout()
-        {
-            // Draw body background purple rect below header
-            m_PortRect.x = 5;
-            m_PortRect.y = HeaderRect.height;
-            m_PortRect.width = NodeWidth - 10;
-            m_PortRect.height = 60;
-            GUI.DrawTexture(m_PortRect, NodeColor);
-
-            // Draw line below ports
-            GUI.DrawTexture(new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine), GetColorTextureFromHexString("#74DF84"));
+            if (m_RecalculateRects)
+            {
+                m_BodyRect.x = 5;
+                m_BodyRect.y = HeaderRect.height + m_PortRect.height;
+                m_BodyRect.width = NodeWidth - 10;
+                m_BodyRect.height = 310 + (m_ConnectedInputs + m_ConnectedTargets) * 60;
+            }
         }
 
         /// <summary>

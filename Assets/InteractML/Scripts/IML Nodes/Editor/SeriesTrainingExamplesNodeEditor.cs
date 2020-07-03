@@ -34,94 +34,39 @@ namespace InteractML
         {
             // Get reference to the current node
             m_SeriesTrainingExamplesNode = (target as SeriesTrainingExamplesNode);
-
-            NodeWidth = 300;
-
-            // Initialise header background Rects
-            InitHeaderRects();
-
-            NodeColor = GetColorTextureFromHexString("#3A3B5B");
-
-            // Draw header background Rect
-            GUI.DrawTexture(HeaderRect, NodeColor);
-
-            // Draw line below header
-            GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#74DF84"));
-
-            //Display Node name
-            GUILayout.BeginArea(HeaderRect);
-            GUILayout.Space(5);
-            GUILayout.Label("TEACH THE MACHINE", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header"), GUILayout.MinWidth(NodeWidth-10));
-            GUILayout.Label("Dynamic Time Warping", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth-10));
-            GUILayout.EndArea();
-
-            GUILayout.Label("", GUILayout.MinHeight(60));
-
-
+            nodeSpace = 360 + (m_ConnectedInputs + m_ConnectedTargets)* 60;
+            NodeName = "TEACH THE MACHINE";
+            NodeSubtitle = "DTW Training Examples";
+            base.OnHeaderGUI();
         }
 
         public override void OnBodyGUI()
         {
-            DrawPortLayout();
-            ShowSeriesTrainingExamplesNodePorts();
-            PortTooltip(m_SeriesTrainingExamplesNode.TrainingTips.PortTooltip);
-            GUILayout.Space(50);
+            NodeWidth = 300;
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            OutputPortsNamesOverride.Add("TrainingExamplesNodeToOutput", "Recorded\nExamples");
 
-            DrawBodyLayoutInputs(m_SeriesTrainingExamplesNode.DesiredInputFeatures.Count);
-            DrawValues(m_SeriesTrainingExamplesNode.DesiredInputFeatures, "Input Values");
-
-            DrawBodyLayoutTargets(m_SeriesTrainingExamplesNode.DesiredOutputFeatures.Count);
-            GUILayout.Space(80);
-            DrawValues(m_SeriesTrainingExamplesNode.DesiredOutputFeatures, "Target Values");
-
-            DrawBodyLayoutButtons();
-            ShowButtons();
-
-            DrawHelpButtonLayout(m_BodyRectButtons.y + m_BodyRectButtons.height);
-            ShowTrainingExamplesDropdown();
-            ShowHelpButton(m_HelpRect);
-
-            if (showHelp)
-            {
-                ShowHelptip(m_HelpRect, m_SeriesTrainingExamplesNode.TrainingTips.HelpTooltip);
-            }
-            if (showPort)
-            {
-                ShowTooltip(m_PortRect, TooltipText);
-            }
-            if (IsThisRectHovered(m_BodyRectInputs))
-                ShowTooltip(m_BodyRectInputs, m_SeriesTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[0]);
-
-            if (IsThisRectHovered(m_BodyRectTargets))
-                ShowTooltip(m_BodyRectTargets, m_SeriesTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[1]);
-            if (buttonTip)
-            {
-                ShowTooltip(m_BodyRectButtons, TooltipText);
-            }
+            base.nodeTips = m_SeriesTrainingExamplesNode.tooltips;
+            if (m_SeriesTrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_SeriesTrainingExamplesNode.DesiredOutputFeatures.Count)
+                m_RecalculateRects = true;
+            m_ConnectedInputs = m_SeriesTrainingExamplesNode.DesiredInputFeatures.Count;
+            m_ConnectedTargets = m_SeriesTrainingExamplesNode.DesiredOutputFeatures.Count;
+            base.OnBodyGUI();
         }
 
-  
-
-        /// <summary>
-        /// Show the input/output port fields 
-        /// </summary>
-        private void ShowSeriesTrainingExamplesNodePorts()
+        protected override void ShowBodyFields()
         {
-            GUILayout.Space(5);
-            GUILayout.BeginHorizontal();
-
-            GUIContent inputPortLabel = new GUIContent("Live Data In");
-            IMLNodeEditor.PortField(inputPortLabel, m_SeriesTrainingExamplesNode.GetInputPort("InputFeatures"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
-
-            GUIContent outputPortLabel = new GUIContent("Recorded\nData Out");
-            IMLNodeEditor.PortField(outputPortLabel, m_SeriesTrainingExamplesNode.GetOutputPort("TrainingExamplesNodeToOutput"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
-
-            GUILayout.EndHorizontal();
-
-            GUIContent secondInputPortLabel = new GUIContent("Target Values");
-            IMLNodeEditor.PortField(secondInputPortLabel, m_SeriesTrainingExamplesNode.GetInputPort("TargetValues"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
-
+            GUILayout.BeginArea(m_BodyRect);
+            GUILayout.Space(bodySpace);
+            DrawValues(m_SeriesTrainingExamplesNode.DesiredInputFeatures, "Input Values");
+            GUILayout.Space(bodySpace);
+            DrawValues(m_SeriesTrainingExamplesNode.DesiredOutputFeatures, "Target Values");
+            ShowButtons();
+            GUILayout.EndArea();
+            ShowTrainingExamplesDropdown();
         }
+
+
 
         /// <summary>
         /// Show the load, delete and record buttons
@@ -129,8 +74,7 @@ namespace InteractML
         protected override void ShowButtons()
         {
             int spacing = 75;
-            GUILayout.BeginArea(m_BodyRectButtons);
-            GUILayout.Space(30);
+            GUILayout.Space(40);
 
             GUILayout.BeginHorizontal();
             GUILayout.Space(spacing);
@@ -153,9 +97,6 @@ namespace InteractML
             GUILayout.Space(spacing-15);
             GUILayout.Label("No of pairs: " + m_SeriesTrainingExamplesNode.TrainingSeriesCollection.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"));
             GUILayout.EndHorizontal();
-
-            GUILayout.EndArea();
-
 
         }
 
@@ -295,6 +236,7 @@ namespace InteractML
         /// </summary>
         protected override void ShowTrainingExamplesDropdown()
         {
+            Debug.Log(m_HelpRect.x);
             if (m_ShowTrainingDataDropdown)
             {
                 m_Dropdown.x = m_HelpRect.x;

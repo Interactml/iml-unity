@@ -35,7 +35,7 @@ namespace InteractML
 
             Initialize();
 
-            TrainingTips = IMLTooltipsSerialization.LoadTooltip("SeriesTrainingExamples");
+            tooltips = IMLTooltipsSerialization.LoadTooltip("SeriesTrainingExamples");
         }
 
         /// <summary>
