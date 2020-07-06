@@ -110,6 +110,9 @@ namespace InteractML
         /// <returns>True if succesfully trained</returns>
         public static bool TrainRegression(IntPtr model, IntPtr trainingSet)
         {
+            if (model == IntPtr.Zero)
+                throw new Exception("The address to the model is zero, aborting trainRegression.");
+
             return trainRegression(model, trainingSet);
         }
 
@@ -138,6 +141,9 @@ namespace InteractML
         /// <returns>True if succesfully trained</returns>
         public static bool TrainClassification(IntPtr model, IntPtr trainingSeriesCollection)
         {
+            if (model == IntPtr.Zero)
+                throw new Exception("The address to the model is zero, aborting trainClassification.");
+
             return trainClassification(model, trainingSeriesCollection);
         }
 
@@ -165,6 +171,9 @@ namespace InteractML
         /// <param name="trainingSeriesCollection"></param>
         public static bool TrainSeriesClassification(IntPtr model, IntPtr trainingSeriesCollection)
         {
+            if (model == IntPtr.Zero || trainingSeriesCollection == IntPtr.Zero)
+                throw new Exception("The address to the model is zero, aborting trainingSeriesClassification.");
+
             return trainSeriesClassification(model, trainingSeriesCollection);
         }
 
@@ -175,6 +184,9 @@ namespace InteractML
         /// <returns>True if succesful reset</returns>
         public static bool ResetSeriesClassification(IntPtr model)
         {
+            if (model == IntPtr.Zero)
+                throw new Exception("The address to the model is zero, aborting resetSeriesClassification.");
+
             return resetSeriesClassification(model);
         }
 
@@ -184,6 +196,9 @@ namespace InteractML
         /// <param name="model"></param>
         public static void DestroySeriesClassificationModel(IntPtr model)
         {
+            if (model == IntPtr.Zero)
+                throw new Exception("The address to the model is zero, aborting seriesClassificationModel destruction.");
+
             destroySeriesClassificationModel(model);
         }
         
@@ -195,6 +210,9 @@ namespace InteractML
         /// <returns>The position of the closest known serie in the model </returns>
         public static string RunSeriesClassification(IntPtr model, IntPtr runningSeries)
         {
+            if (model == IntPtr.Zero)
+                throw new Exception("The address to the model is zero, aborting runSeriesClassification.");
+
             string outputString = "";
             try
             {
@@ -216,6 +234,9 @@ namespace InteractML
         /// <returns></returns>
         public static int GetSeriesClassificationCosts(IntPtr model, double[] output, int numOutputs)
         {
+            if (model == IntPtr.Zero)
+                throw new Exception("The address to the model is zero, aborting getSeriesClassification.");
+
             return getSeriesClassificationCosts(model, output, numOutputs);
         }
 
@@ -231,6 +252,9 @@ namespace InteractML
         /// <returns></returns>
         public static int Process(IntPtr model, double[] input, int numInputs, ref double[] output, int numOutputs)
         {
+            if (model == IntPtr.Zero)
+                throw new Exception("The address to the model is zero, aborting model process.");
+
             return process(model, input, numInputs, output, numOutputs);
         }
 
@@ -240,6 +264,9 @@ namespace InteractML
         /// <param name="model"></param>
         public static void DestroyModel(IntPtr model)
         {
+            if (model == IntPtr.Zero)
+                throw new Exception("The address to the model is zero, aborting model destruction.");
+
             destroyModel(model);
         }
 
@@ -250,6 +277,9 @@ namespace InteractML
         /// <returns></returns>
         public static string GetJSON(IntPtr model)
         {
+            if (model == IntPtr.Zero)
+                throw new Exception("The address to the model is zero, aborting GetJSON.");
+
             return Marshal.PtrToStringAnsi(getJSON(model));
         }
 
@@ -293,6 +323,9 @@ namespace InteractML
         /// <param name="trainingSet"></param>
         public static void DestroyTrainingSet(IntPtr trainingSet)
         {
+            if (trainingSet == IntPtr.Zero)
+                throw new Exception("The address to the trainingSet is zero, aborting destruction.");
+
             destroyTrainingSet(trainingSet);
         }
         
@@ -306,6 +339,9 @@ namespace InteractML
         /// <param name="numOutputs"></param>
         public static void AddTrainingExample(IntPtr trainingSet, double[] inputs, int numInputs, double[] outputs, int numOutputs)
         {
+            if (trainingSet == IntPtr.Zero)
+                throw new Exception("The address to the trainingSet is zero, aborting additionTrainingExample.");
+
             addTrainingExample(trainingSet, inputs, numInputs, outputs, numOutputs);
         }
         
@@ -316,6 +352,9 @@ namespace InteractML
         /// <returns>Number of training examples</returns>
         public static int GetNumTrainingExamples(IntPtr trainingSet)
         {
+            if (trainingSet == IntPtr.Zero)
+                throw new Exception("The address to the trainingSet is zero, aborting getNumTrainingExamples.");
+
             return getNumTrainingExamples(trainingSet);
         }
 
@@ -328,6 +367,9 @@ namespace InteractML
         /// <returns>Value of the input</returns>
         public static double GetInput(IntPtr trainingSet, int trainingExamplePos, int inputPos)
         {
+            if (trainingSet == IntPtr.Zero)
+                throw new Exception("The address to the trainingSet is zero, aborting getInput.");
+
             return getInput(trainingSet, trainingExamplePos, inputPos);
         }
 
@@ -340,6 +382,9 @@ namespace InteractML
         /// <returns>Value of the output</returns>
         public static double GetOutput(IntPtr trainingSet, int trainingExamplePos, int outputPos)
         {
+            if (trainingSet == IntPtr.Zero)
+                throw new Exception("The address to the trainingSet is zero, aborting getOutput.");
+
             return getOutput(trainingSet, trainingExamplePos, outputPos);
         }
 
@@ -370,6 +415,9 @@ namespace InteractML
         /// <param name="seriesToDestroy"></param>
         public static void DestroyTrainingSeries(IntPtr seriesToDestroy)
         {
+            if (seriesToDestroy == IntPtr.Zero)
+                throw new Exception("The address to the seriesToDestroy is zero, aborting destruction.");
+
             destroyTrainingSeries(seriesToDestroy);
         }
 
@@ -381,6 +429,9 @@ namespace InteractML
         /// <param name="numInputs"></param>
         public static void AddInputsToSeries(IntPtr series, double[] inputs, int numInputs)
         {
+            if (series == IntPtr.Zero)
+                throw new Exception("The address to the series is zero, aborting addInputsToSeries.");
+
             addInputsToSeries(series, inputs, numInputs);
         }
 
@@ -391,6 +442,9 @@ namespace InteractML
         /// <param name="label"></param>
         public static void AddLabelToSeries(IntPtr series, string label)
         {
+            if (series == IntPtr.Zero)
+                throw new Exception("The address to the series is zero, aborting addLabelToSeries.");
+
             addLabelToSeries(series, label);
         }
 
@@ -409,6 +463,9 @@ namespace InteractML
         /// <param name="seriesCollection"></param>
         public static void DestroyTrainingSeriesCollection(IntPtr seriesCollection)
         {
+            if (seriesCollection == IntPtr.Zero)
+                throw new Exception("The address to the seriesCollection is zero, aborting destroyTrainingSeriesCollection.");
+
             try
             {
                 destroyTrainingSeriesCollection(seriesCollection);
@@ -426,6 +483,9 @@ namespace InteractML
         /// <param name="series"></param>
         public static void AddSeriesToSeriesCollection(IntPtr seriesCollection, IntPtr series)
         {
+            if (seriesCollection == IntPtr.Zero || series == IntPtr.Zero)
+                throw new Exception("The address to the seriesCollection is zero, aborting addSeriesToSeriesCollection.");
+
             addSeriesToSeriesCollection(seriesCollection, series);
         }
 

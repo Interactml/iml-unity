@@ -56,8 +56,9 @@ namespace InteractML
         }
 
 
-        public override void TrainModel()
+        public override bool TrainModel()
         {
+            bool isTrained = false;
             RunningLogic();
             // if there are no training examples in connected training nodes do not train 
            if(m_TotalNumTrainingData == 0)
@@ -71,12 +72,13 @@ namespace InteractML
                 m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
 
                 // Trains rapidlib with the examples added
-                m_Model.Train(m_RapidlibTrainingExamples);
+                isTrained = m_Model.Train(m_RapidlibTrainingExamples);
 
                 //Debug.Log("***Retraining IML Config node with num Examples: " + RapidLibComponent.trainingExamples.Count + " Rapidlib training succesful: " + RapidLibComponent.Trained + "***");
             
             }
-          
+
+            return isTrained;
         }
 
         /// <summary>

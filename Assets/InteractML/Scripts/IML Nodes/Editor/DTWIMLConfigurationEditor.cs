@@ -380,7 +380,13 @@ namespace InteractML
                     GUI.enabled = false;
                 if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Train")))
                 {
-                    m_DTWIMLConfiguration.TrainModel();
+                    // Train model
+                    if (m_DTWIMLConfiguration.TrainModel())
+                    {
+                        // Save model if succesfully trained
+                        m_DTWIMLConfiguration.SaveModelToDisk();
+                    }
+
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;

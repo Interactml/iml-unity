@@ -44,8 +44,9 @@ namespace InteractML
             return base.InstantiateRapidlibModel(learningType);
         }
 
-        public override void TrainModel()
+        public override bool TrainModel()
         {
+            bool isTrained = false;
             RunningLogic();
             // if there are no training examples in connected training nodes do not train 
            if(m_TotalNumTrainingData == 0)
@@ -58,9 +59,11 @@ namespace InteractML
                     m_RapidlibTrainingSeriesCollection = new List<RapidlibTrainingSerie>();
 
                 m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
-                m_Model.Train(m_RapidlibTrainingSeriesCollection);
+                isTrained = m_Model.Train(m_RapidlibTrainingSeriesCollection);
 
             }
+
+            return isTrained;
           
         }
 

@@ -117,7 +117,7 @@ namespace InteractML
 
             if (m_ModelAddress == (IntPtr)0)
             {
-                throw new Exception("Error when running Model. Model pointer lost!");
+                throw new Exception("Error when running Model. Model pointer lost! Try resetting the model");
             }
 
             // We run only classification and regression with the data passed in
@@ -161,7 +161,7 @@ namespace InteractML
             // Make sure model pointer is not 0
             if (m_ModelAddress == (IntPtr)0)
             {
-                throw new Exception("Error when running Model. Model pointer lost!");
+                throw new Exception("Error when running Model. Model pointer lost! Try resetting the model");
             }
 
             string outputDTW = "";
@@ -233,7 +233,7 @@ namespace InteractML
         {
             if (m_ModelAddress == (IntPtr)0)
             {
-                throw new Exception("Error when training Model. Model pointer lost!");
+                throw new Exception("Error when training Model. Model pointer lost! Try resetting the model");
             }
 
             bool isTrained = false;
@@ -278,7 +278,7 @@ namespace InteractML
         {
             if (m_ModelAddress == (IntPtr)0)
             {
-                throw new Exception("Error when training Model. Model pointer lost!");
+                throw new Exception("Error when training Model. Model pointer lost! Try resetting the model");
             }
 
             bool isTrained = true;
@@ -360,8 +360,9 @@ namespace InteractML
         /// Configures the model with data from the json string
         /// </summary>
         /// <param name="jsonstring"></param>
-        public void ConfigureModelWithJson(string jsonstring)
+        public bool ConfigureModelWithJson(string jsonstring)
         {
+            bool isConfigured = false;
             //dirty code need to fix DTW
             if (!String.IsNullOrEmpty(jsonstring)&& !jsonstring.Contains("\"modelSet\" : null"))
             {
@@ -383,32 +384,30 @@ namespace InteractML
                     {
                         CreateTimeSeriesClassificationModel();
                         // After we have created it, we exit the method since we can't configure it!
-                        return;
+                        return isConfigured;
                     }
 
                 }
                 // Configure the model in memory
-                if (!jsonstring.Contains("\"modelType\" : \"Series Classification\""))
-                {
-                    RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
-                }
-
                 // Set the status to trained (since we assume the model we loaded was trained) only if not DTW as not implemented yet
                 if (!jsonstring.Contains("\"modelType\" : \"Series Classification\""))
                 {
                     RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
                     m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
-                } else
+                    isConfigured = true;
+                }
+                else
                 {
                     m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
-                }
-                
+                }                               
                 
             } else
             {
                 if(jsonstring.Contains("\"modelSet\" : null"))
                     Debug.LogWarning("json data from file null");
             }
+
+            return isConfigured;
         }
 
         /* I/O FOR MODEL DATA */

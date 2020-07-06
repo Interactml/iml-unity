@@ -281,7 +281,12 @@ namespace InteractML
                     GUI.enabled = false;
                 if (GUILayout.Button(nameButton))
                 {
-                    m_IMLConfigNode.TrainModel();
+                    // Train model
+                    if (m_IMLConfigNode.TrainModel())
+                    {
+                        // Save model if succesfully trained
+                        m_IMLConfigNode.SaveModelToDisk();
+                    }
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;

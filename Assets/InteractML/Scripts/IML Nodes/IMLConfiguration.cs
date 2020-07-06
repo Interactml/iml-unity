@@ -284,14 +284,8 @@ namespace InteractML
             // Checks that the rapidlib model is instanced (only if model is null)
             if (m_Model == null && (this.graph as IMLController).IsGraphRunning)
             {
-                m_Model = InstantiateRapidlibModel(m_LearningType);
-            }
-
-            // Did the learning type change in the editor?
-            if ((int)m_LearningType != (int)m_Model.TypeOfModel)
-            {
-                // Override model
-                OverrideModel(m_LearningType);
+                // Attempt to load model
+                LoadModelFromDisk(reCreateModel: true);
             }
 
             // We call logic for adapting arrays and inputs/outputs for ML models
@@ -432,8 +426,9 @@ namespace InteractML
 
         }
 
-        public virtual void TrainModel()
+        public virtual bool TrainModel()
         {
+            bool isTrained = false;
             RunningLogic();
             // if there are no training examples in connected training nodes do not train 
            if(m_TotalNumTrainingData == 0)
@@ -451,7 +446,7 @@ namespace InteractML
                 if (m_LearningType == IMLSpecifications.LearningType.DTW)
                 {
                     m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
-                    m_Model.Train(m_RapidlibTrainingSeriesCollection);
+                    isTrained = m_Model.Train(m_RapidlibTrainingSeriesCollection);
                 }
                 // If it is a classification/regression model
                 else
@@ -460,12 +455,13 @@ namespace InteractML
                     m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
 
                     // Trains rapidlib with the examples added
-                    m_Model.Train(m_RapidlibTrainingExamples);
+                    isTrained = m_Model.Train(m_RapidlibTrainingExamples);
 
                     //Debug.Log("***Retraining IML Config node with num Examples: " + RapidLibComponent.trainingExamples.Count + " Rapidlib training succesful: " + RapidLibComponent.Trained + "***");
                 }
             }
-          
+
+            return isTrained;
         }
 
         public void ToggleRunning()

@@ -353,7 +353,13 @@ namespace InteractML
                     GUI.enabled = false;
                 if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Train")))
                 {
-                    m_RIMLConfiguration.TrainModel();
+                    // Train model
+                    if (m_RIMLConfiguration.TrainModel())
+                    {
+                        // Save model if succesfully trained
+                        m_RIMLConfiguration.SaveModelToDisk();
+                    }
+
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;

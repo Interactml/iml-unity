@@ -100,7 +100,7 @@ public class IMLEditorManager
             foreach (var MLComponent in m_IMLComponents)
             {
                 // Reload models
-                MLComponent.LoadAllModelsFromDisk();
+                MLComponent.LoadAllModelsFromDisk(reCreateModels: true);
                 // Run them (if marked with RunOnAwake)
                 MLComponent.RunAllModels();
             }
@@ -130,13 +130,12 @@ public class IMLEditorManager
             }
         }
 
-        // We save models if we are leaving a playmode or editormode
+        // We stop models if we are leaving a playmode or editormode
         if (playModeStatus == PlayModeStateChange.ExitingEditMode || playModeStatus == PlayModeStateChange.ExitingPlayMode)
         {
             foreach (var MLComponent in m_IMLComponents)
             {
                 MLComponent.StopAllModels();
-                MLComponent.SaveAllModels();
             }
         }
 
