@@ -192,8 +192,8 @@ MonoBehaviour:
   DevMode: 0
   ValueName: 
   m_In: 0
-  m_Value: 20
-  m_Out: 20
+  m_Value: 0
+  m_Out: 0
   ReceivingData: 0
   InputConnected: 1
   m_UserInput: 0
@@ -297,10 +297,10 @@ MonoBehaviour:
   z_switch: 1
   m_PositionExtracted:
     m_Values:
-    - -11.890246
-    - 22.713202
+    - -0.61
+    - -5.2
     - 7.82
-  ReceivingData: 1
+  ReceivingData: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,7 +361,7 @@ MonoBehaviour:
   DevMode: 0
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
-  state: 0
+  state: 1
 --- !u!114 &4125335913069827217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,10 +415,10 @@ MonoBehaviour:
   z_switch: 1
   m_PositionExtracted:
     m_Values:
-    - -11.890246
-    - 22.713202
+    - -0.61
+    - -5.2
     - 7.82
-  ReceivingData: 1
+  ReceivingData: 0
 --- !u!114 &4953794314262557231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -484,7 +484,7 @@ MonoBehaviour:
   InputFeatures:
   - {fileID: 4125335913069827217}
   PredictedRapidlibOutput:
-  - 20
+  - 0
   DelayedPredictedOutput:
   - 20
   m_NumExamplesTrainedOn: 177

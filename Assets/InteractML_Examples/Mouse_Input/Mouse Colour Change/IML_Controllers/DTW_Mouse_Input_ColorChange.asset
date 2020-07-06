@@ -143,6 +143,7 @@ MonoBehaviour:
   - {fileID: -5672025770827786827}
   PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
+  m_NumExamplesTrainedOn: 3
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_LearningType: 2
@@ -208,10 +209,10 @@ MonoBehaviour:
   z_switch: 1
   m_PositionExtracted:
     m_Values:
-    - -7.36
-    - 2.07
-    - 3.9
-  ReceivingData: 0
+    - -8.103152
+    - 21.387657
+    - -1
+  ReceivingData: 1
 --- !u!114 &-5020083817285506259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -226,7 +227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 713cd1d3-f011-4638-9104-c9c8fd9382fc
   graph: {fileID: 11400000}
-  position: {x: 0, y: 0}
+  position: {x: 2296, y: -24}
   ports:
     keys:
     - SetAbsoluteColour
@@ -235,14 +236,31 @@ MonoBehaviour:
       _node: {fileID: -5020083817285506259}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: m_Out
+        node: {fileID: 848793323497249020}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
   DevMode: 0
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 65336
+  ScriptHashCode: 91746
+  m_PortsPerFieldInfo:
+    m_keys:
+    - _fieldName: SetAbsoluteColour
+      _node: {fileID: -5020083817285506259}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: 848793323497249020}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   CreatedDuringPlaymode: 0
 --- !u!114 &-4667354009457295448
 MonoBehaviour:
@@ -364,7 +382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 9268ba68-3741-419d-8608-174fd97f1d73
   graph: {fileID: 11400000}
-  position: {x: 1816, y: 152}
+  position: {x: 1896, y: -40}
   ports:
     keys:
     - m_In
@@ -386,7 +404,10 @@ MonoBehaviour:
       _node: {fileID: 848793323497249020}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: SetAbsoluteColour
+        node: {fileID: -5020083817285506259}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -394,41 +415,9 @@ MonoBehaviour:
   DevMode: 0
   ValueName: 
   m_In: 0
-  m_Value: 0
-  m_Out: 0
+  m_Value: 1
+  m_Out: 1
   ReceivingData: 0
   InputConnected: 1
   m_UserInput: 0
   int_switch: 1
---- !u!114 &7467764810389790839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
-  m_Name: colorChanger (Script)
-  m_EditorClassIdentifier: 
-  id: 39ad5bf9-d0d4-4cc3-bde4-12e238107f6d
-  graph: {fileID: 11400000}
-  position: {x: 0, y: 0}
-  ports:
-    keys:
-    - SetAbsoluteColour
-    values:
-    - _fieldName: SetAbsoluteColour
-      _node: {fileID: 7467764810389790839}
-      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-  DevMode: 0
-  m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 65336
-  CreatedDuringPlaymode: 0
