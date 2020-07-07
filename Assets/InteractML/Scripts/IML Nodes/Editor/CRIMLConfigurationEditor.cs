@@ -311,7 +311,12 @@ namespace InteractML
                     GUI.enabled = false;
                 if (GUILayout.Button(nameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Train")))
                 {
-                    m_CRIMLConfiguration.TrainModel();
+                    // Train model
+                    if (m_CRIMLConfiguration.TrainModel())
+                    {
+                        // Save model if succesfully trained
+                        m_CRIMLConfiguration.SaveModelToDisk();
+                    }
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;

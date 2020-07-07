@@ -37,24 +37,28 @@ namespace InteractML
         /// <param name="learningType"></param>
         public override RapidlibModel InstantiateRapidlibModel(IMLSpecifications.LearningType learningType)
         {
-            RapidlibModel model = new RapidlibModel();
+            // Switch local learning type
             switch (learningType)
             {
                 case IMLSpecifications.LearningType.Classification:
-                    model = new RapidlibModel(RapidlibModel.ModelType.kNN);
+                    learningChoice = CR_LearningChoice.Classification;
                     break;
                 case IMLSpecifications.LearningType.Regression:
-                    model = new RapidlibModel(RapidlibModel.ModelType.NeuralNetwork);
+                    learningChoice = CR_LearningChoice.Regression;
                     break;
                 default:
                     break;
             }
-            return model;
+            // Update local and parent learning type
+            SetLearningType();
+            // Return new model
+            return base.InstantiateRapidlibModel(learningType);
         }
 
 
-        public override void TrainModel()
+        public override bool TrainModel()
         {
+            bool isTrained = false;
             RunningLogic();
             // if there are no training examples in connected training nodes do not train 
            if(m_TotalNumTrainingData == 0)
@@ -65,24 +69,25 @@ namespace InteractML
             {
 
                 // Transform the IML Training Examples into a format suitable for Rapidlib
-                m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes);
+                m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
 
                 // Trains rapidlib with the examples added
-                m_Model.Train(m_RapidlibTrainingExamples);
+                isTrained = m_Model.Train(m_RapidlibTrainingExamples);
 
                 //Debug.Log("***Retraining IML Config node with num Examples: " + RapidLibComponent.trainingExamples.Count + " Rapidlib training succesful: " + RapidLibComponent.Trained + "***");
             
             }
-          
+
+            return isTrained;
         }
 
         /// <summary>
         /// Loads the current model from disk (dataPath specified in IMLDataSerialization)
         /// </summary>
         /// <param name="fileName"></param>
-        public override void LoadModelFromDisk()
+        public override void LoadModelFromDisk(bool reCreateModel = false)
         {
-            m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id);
+            m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id, reCreateModel);
             // We update the node learning type to match the one from the loaded model
             switch (m_Model.TypeOfModel)
             {

@@ -756,7 +756,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 38591870}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.61, y: 1.0307198, z: 7.82}
+  m_LocalPosition: {x: -0.61, y: -5.2, z: 7.82}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1549,11 +1549,17 @@ MonoBehaviour:
   GameObjectsToUse:
   - {fileID: 38591870}
   m_ScriptNodesList:
-  - {fileID: 1249230764547322781, guid: 97ba4d902e126034b9b70455467a46e2, type: 2}
+  - {fileID: -6179746957524285236, guid: 97ba4d902e126034b9b70455467a46e2, type: 2}
   FeaturesUpdated: 0
   ComponentsWithIMLData:
   - GameComponent: {fileID: 1442713060}
     ControlClones: 0
+  m_MonoBehavioursPerScriptNode:
+    m_keys:
+    - {fileID: 1442713060}
+    m_values:
+    - {fileID: -6179746957524285236, guid: 97ba4d902e126034b9b70455467a46e2, type: 2}
+  m_MonobehaviourClones: []
 --- !u!4 &138508039
 Transform:
   m_ObjectHideFlags: 0
@@ -19162,7 +19168,7 @@ MonoBehaviour:
   light: {fileID: 1316771338}
   SetLightRotation: {x: 0, y: 0, z: 0}
   LightIntensity: 0
-  controlLightIntensity: 0
+  controlLightIntensity: 1
 --- !u!1 &1443691841
 GameObject:
   m_ObjectHideFlags: 0

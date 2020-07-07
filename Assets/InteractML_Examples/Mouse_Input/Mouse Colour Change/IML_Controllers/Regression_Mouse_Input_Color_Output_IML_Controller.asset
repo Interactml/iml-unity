@@ -487,7 +487,7 @@ MonoBehaviour:
       _dynamic: 1
   DevMode: 0
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 21194
+  ScriptHashCode: 91688
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: SetR
@@ -731,9 +731,10 @@ MonoBehaviour:
   - 0
   - 0
   DelayedPredictedOutput:
-  - 0.10424133715360157
-  - 0.2045442910331074
-  - 0.1041201558908702
+  - 0.10073141174513112
+  - 0.20078365679764404
+  - 0.1007105142672351
+  m_NumExamplesTrainedOn: 75
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 000000000000000000000000
   m_LearningType: 1
@@ -742,7 +743,7 @@ MonoBehaviour:
   RunningKey: 0
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
-  learningChoice: 0
+  learningChoice: 1
 --- !u!114 &7294438029271661948
 MonoBehaviour:
   m_ObjectHideFlags: 0

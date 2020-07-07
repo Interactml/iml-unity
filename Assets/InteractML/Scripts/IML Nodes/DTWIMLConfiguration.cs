@@ -18,12 +18,18 @@ namespace InteractML
         #endregion
 
         #region XNode Messages
+        // Override Init to set learning type as dtw
+        protected override void Init()
+        {
+            SetLearningType();
+            base.Init();
+        }
 
         #endregion
 
         #region Unity Messages
 
-#endregion
+        #endregion
 
         #region Public Methods
 
@@ -34,13 +40,13 @@ namespace InteractML
         /// <param name="learningType"></param>
         public override RapidlibModel InstantiateRapidlibModel(IMLSpecifications.LearningType learningType)
         {
-            RapidlibModel model = new RapidlibModel();
-            model = new RapidlibModel(RapidlibModel.ModelType.DTW);
-            return model;
+            SetLearningType();
+            return base.InstantiateRapidlibModel(learningType);
         }
 
-        public override void TrainModel()
+        public override bool TrainModel()
         {
+            bool isTrained = false;
             RunningLogic();
             // if there are no training examples in connected training nodes do not train 
            if(m_TotalNumTrainingData == 0)
@@ -52,10 +58,12 @@ namespace InteractML
                 if (m_RapidlibTrainingSeriesCollection == null)
                     m_RapidlibTrainingSeriesCollection = new List<RapidlibTrainingSerie>();
 
-                m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes);
-                m_Model.Train(m_RapidlibTrainingSeriesCollection);
+                m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
+                isTrained = m_Model.Train(m_RapidlibTrainingSeriesCollection);
 
             }
+
+            return isTrained;
           
         }
 
@@ -64,9 +72,9 @@ namespace InteractML
         /// Loads the current model from disk (dataPath specified in IMLDataSerialization)
         /// </summary>
         /// <param name="fileName"></param>
-        public override void LoadModelFromDisk()
+        public override void LoadModelFromDisk(bool reCreateModel = false)
         {
-            m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id);
+            m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id, reCreateModel);
             // We update the node learning type to match the one from the loaded model
             switch (m_Model.TypeOfModel)
             {

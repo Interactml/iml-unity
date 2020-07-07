@@ -14,12 +14,17 @@ namespace InteractML
     {
 
         #region Variables
-        
-       
+
+
         #endregion
 
         #region XNode Messages
-
+        // Override Init to set learning type as regression
+        protected override void Init()
+        {
+            SetLearningType();
+            base.Init();
+        }
         #endregion
 
         #region Unity Messages
@@ -35,18 +40,17 @@ namespace InteractML
         /// <param name="learningType"></param>
         public override RapidlibModel InstantiateRapidlibModel(IMLSpecifications.LearningType learningType)
         {
-            RapidlibModel model = new RapidlibModel();
-            model = new RapidlibModel(RapidlibModel.ModelType.NeuralNetwork);
-            return model;
+            SetLearningType();
+            return base.InstantiateRapidlibModel(learningType);
         }
 
         /// <summary>
         /// Loads the current model from disk (dataPath specified in IMLDataSerialization)
         /// </summary>
         /// <param name="fileName"></param>
-        public override void LoadModelFromDisk()
+        public override void LoadModelFromDisk(bool reCreateModel = false)
         {
-            m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id);
+            m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id, reCreateModel);
             // We update the node learning type to match the one from the loaded model
             m_LearningType = IMLSpecifications.LearningType.Regression;
             // Configure inputs and outputs
@@ -60,8 +64,9 @@ namespace InteractML
 
         #region Protected Methods
         protected override void SetLearningType()
-        {
+        {            
             m_LearningType = IMLSpecifications.LearningType.Regression;
+            learningChoice = CR_LearningChoice.Regression;            
         }
 
         protected override void OverrideModel(IMLSpecifications.LearningType learningType)

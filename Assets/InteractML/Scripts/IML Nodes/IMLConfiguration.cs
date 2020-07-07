@@ -41,6 +41,13 @@ namespace InteractML
         protected int m_TotalNumTrainingData;
         public int TotalNumTrainingData { get { return m_TotalNumTrainingData; } }
 
+        [SerializeField, HideInInspector]
+        protected int m_NumExamplesTrainedOn;
+        /// <summary>
+        /// Total number of training examples used to train the current model
+        /// </summary>
+        public int NumExamplesTrainedOn { get { return m_NumExamplesTrainedOn; } }
+
         /// <summary>
         /// List of expected inputs
         /// </summary>
@@ -275,16 +282,10 @@ namespace InteractML
         public void OnValidate()
         {
             // Checks that the rapidlib model is instanced (only if model is null)
-            if (m_Model == null)
+            if (m_Model == null && (this.graph as IMLController).IsGraphRunning)
             {
-                m_Model = InstantiateRapidlibModel(m_LearningType);
-            }
-
-            // Did the learning type change in the editor?
-            if ((int)m_LearningType != (int)m_Model.TypeOfModel)
-            {
-                // Override model
-                OverrideModel(m_LearningType);
+                // Attempt to load model
+                LoadModelFromDisk(reCreateModel: true);
             }
 
             // We call logic for adapting arrays and inputs/outputs for ML models
@@ -315,7 +316,7 @@ namespace InteractML
         public void Initialize()
         {
             // Make sure the model is initialised properly
-            if (m_Model == null)
+            if (m_Model == null && (this.graph as IMLController).IsGraphRunning)
                 m_Model = InstantiateRapidlibModel(m_LearningType);
 
             // Init lists
@@ -365,7 +366,7 @@ namespace InteractML
         /// <param name="learningType"></param>
         public virtual RapidlibModel InstantiateRapidlibModel(IMLSpecifications.LearningType learningType)
         {
-            RapidlibModel model = new RapidlibModel();
+            RapidlibModel model;
             switch (learningType)
             {
                 case IMLSpecifications.LearningType.Classification:
@@ -378,6 +379,7 @@ namespace InteractML
                     model = new RapidlibModel(RapidlibModel.ModelType.DTW);
                     break;
                 default:
+                    model = new RapidlibModel();
                     break;
             }
             return model;
@@ -423,8 +425,9 @@ namespace InteractML
 
         }
 
-        public virtual void TrainModel()
+        public virtual bool TrainModel()
         {
+            bool isTrained = false;
             RunningLogic();
             // if there are no training examples in connected training nodes do not train 
            if(m_TotalNumTrainingData == 0)
@@ -441,22 +444,23 @@ namespace InteractML
                 // If we have a dtw model...
                 if (m_LearningType == IMLSpecifications.LearningType.DTW)
                 {
-                    m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes);
-                    m_Model.Train(m_RapidlibTrainingSeriesCollection);
+                    m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
+                    isTrained = m_Model.Train(m_RapidlibTrainingSeriesCollection);
                 }
                 // If it is a classification/regression model
                 else
                 {
                     // Transform the IML Training Examples into a format suitable for Rapidlib
-                    m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes);
+                    m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
 
                     // Trains rapidlib with the examples added
-                    m_Model.Train(m_RapidlibTrainingExamples);
+                    isTrained = m_Model.Train(m_RapidlibTrainingExamples);
 
                     //Debug.Log("***Retraining IML Config node with num Examples: " + RapidLibComponent.trainingExamples.Count + " Rapidlib training succesful: " + RapidLibComponent.Trained + "***");
                 }
             }
-          
+
+            return isTrained;
         }
 
         public void ToggleRunning()
@@ -518,8 +522,11 @@ namespace InteractML
         /// </summary>
         public void ResetModel()
         {
-            // Take care of the RapidlibModel reference to this node            
+            // Take care of the RapidlibModel reference to this node     
             m_Model = InstantiateRapidlibModel(m_LearningType);
+
+            // Reset numExamplesTrainedOn
+            m_NumExamplesTrainedOn = 0;
 
             // We reset the running flag
             m_Running = false;
@@ -538,9 +545,9 @@ namespace InteractML
         /// Loads the current model from disk (dataPath specified in IMLDataSerialization)
         /// </summary>
         /// <param name="fileName"></param>
-        public virtual void LoadModelFromDisk()
+        public virtual void LoadModelFromDisk(bool reCreateModel = false)
         {
-            m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id);
+            m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id, reCreateModel);
             // We update the node learning type to match the one from the loaded model
             switch (m_Model.TypeOfModel)
             {
@@ -1263,14 +1270,19 @@ namespace InteractML
         /// <summary>
         /// Create the rapidlib training examples list in the required format
         /// </summary>
-        protected List<RapidlibTrainingExample> TransformIMLDataToRapidlib(List<TrainingExamplesNode> trainingNodesIML)
+        protected List<RapidlibTrainingExample> TransformIMLDataToRapidlib(List<TrainingExamplesNode> trainingNodesIML, out int numExamples)
         {
             // Create list to return
             List<RapidlibTrainingExample> rapidlibExamples = new List<RapidlibTrainingExample>();
+            
+            // Reset counter examples trained on
+            numExamples = 0;
 
             // Go through all the IML Training Examples if we can
             if (!Lists.IsNullOrEmpty(ref trainingNodesIML))
             {
+                // Reset counter examples trained on
+                numExamples = 0;
                 // Go through each node
                 for (int i = 0; i < trainingNodesIML.Count; i++)
                 {
@@ -1297,6 +1309,8 @@ namespace InteractML
                                 }
                             }
                         }
+                        // Update counter examples trained on
+                        numExamples += trainingNodesIML[i].TrainingExamplesVector.Count;
                     }
                 }
             }
@@ -1310,10 +1324,11 @@ namespace InteractML
         /// </summary>
         /// <param name="trainingSeriesIML"></param>
         /// <returns></returns>
-        protected List<RapidlibTrainingSerie> TransformIMLSeriesToRapidlib(List<TrainingExamplesNode> trainingNodesIML)
+        protected List<RapidlibTrainingSerie> TransformIMLSeriesToRapidlib(List<TrainingExamplesNode> trainingNodesIML, out int numSeries)
         {
             List<RapidlibTrainingSerie> seriesToReturn = new List<RapidlibTrainingSerie>();
-
+            // Reset number of series
+            numSeries = 0;
             // Go through all the IML Training Examples if we can
             if (!Lists.IsNullOrEmpty(ref trainingNodesIML))
             {
@@ -1328,6 +1343,9 @@ namespace InteractML
                             // Add each series to the rapidlib series list to return
                             seriesToReturn.Add(new RapidlibTrainingSerie(IMLSeries.GetSeriesFeatures(), IMLSeries.LabelSeries));
                         }
+                        // Increase counter of series
+                        numSeries += trainingNodesIML[i].TrainingSeriesCollection.Count;
+
                     }
                 }
             }

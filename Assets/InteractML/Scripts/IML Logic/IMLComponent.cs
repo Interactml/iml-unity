@@ -1033,12 +1033,12 @@ namespace InteractML
         /// <summary>
         /// Reload all models from disk (when possible)
         /// </summary>
-        public void LoadAllModelsFromDisk()
+        public void LoadAllModelsFromDisk(bool reCreateModels = false)
         {
             foreach (var IMLConfigNode in m_IMLConfigurationNodesList)
             {
                 // Loads the model in the IMLConfigNode
-                IMLConfigNode.LoadModelFromDisk();
+                IMLConfigNode.LoadModelFromDisk(reCreateModels);
             }
             
         }

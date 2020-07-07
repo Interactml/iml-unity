@@ -9,6 +9,7 @@ namespace InteractML
     /// Holds address and configuration for a rapidlibmodel in memory. 
     /// Very basic and clean. Use if you are implementing training logic yourself
     /// </summary>
+    [System.Serializable]
     public class RapidlibModel
     {
         #region Variables
@@ -42,7 +43,6 @@ namespace InteractML
         /// </summary>
         public IMLSpecifications.ModelStatus ModelStatus { get => m_ModelStatus; }
 
-
         #endregion
 
         #region Constructor
@@ -57,7 +57,6 @@ namespace InteractML
             m_ModelJSONString = "";
             m_TypeOfModel = ModelType.None;
             m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
-
         }
 
         /// <summary>
@@ -115,7 +114,12 @@ namespace InteractML
             // We only allow running if the model is trained
             if (m_ModelStatus == IMLSpecifications.ModelStatus.Untrained)
                 throw new Exception("You can't run an untrained model!");
-            
+
+            if (m_ModelAddress == (IntPtr)0)
+            {
+                throw new Exception("Error when running Model. Model pointer lost! Try resetting the model");
+            }
+
             // We run only classification and regression with the data passed in
             switch (m_TypeOfModel)
             {
@@ -154,6 +158,12 @@ namespace InteractML
             // Make sure to only run if the inputSerie is not null or empty!
             if (inputSerie.ExampleSerie == null || inputSerie.ExampleSerie.Count == 0)
                 throw new Exception("You can't run a DTW model with an empty serie!");
+            // Make sure model pointer is not 0
+            if (m_ModelAddress == (IntPtr)0)
+            {
+                throw new Exception("Error when running Model. Model pointer lost! Try resetting the model");
+            }
+
             string outputDTW = "";
             // We only run DTW with the data passed in
             switch (m_TypeOfModel)
@@ -221,6 +231,11 @@ namespace InteractML
         /// <param name="trainingExamples">True if training succeeded</param>
         public bool Train(List<RapidlibTrainingExample> trainingExamples)
         {
+            if (m_ModelAddress == (IntPtr)0)
+            {
+                throw new Exception("Error when training Model. Model pointer lost! Try resetting the model");
+            }
+
             bool isTrained = false;
             IntPtr trainingSetAddress = (IntPtr)0;
             // Only allow training of classification and regression (because of the format of the training data)
@@ -261,6 +276,11 @@ namespace InteractML
         /// <returns>True if training succeeded</returns>
         public bool Train(List<RapidlibTrainingSerie> trainingSeries)
         {
+            if (m_ModelAddress == (IntPtr)0)
+            {
+                throw new Exception("Error when training Model. Model pointer lost! Try resetting the model");
+            }
+
             bool isTrained = true;
             // Only allow training of DTW (because of the format of the training data)
             switch (m_TypeOfModel)
@@ -340,8 +360,9 @@ namespace InteractML
         /// Configures the model with data from the json string
         /// </summary>
         /// <param name="jsonstring"></param>
-        public void ConfigureModelWithJson(string jsonstring)
+        public bool ConfigureModelWithJson(string jsonstring)
         {
+            bool isConfigured = false;
             //dirty code need to fix DTW
             if (!String.IsNullOrEmpty(jsonstring)&& !jsonstring.Contains("\"modelSet\" : null"))
             {
@@ -363,32 +384,30 @@ namespace InteractML
                     {
                         CreateTimeSeriesClassificationModel();
                         // After we have created it, we exit the method since we can't configure it!
-                        return;
+                        return isConfigured;
                     }
 
                 }
                 // Configure the model in memory
-                if (!jsonstring.Contains("\"modelType\" : \"Series Classification\""))
-                {
-                    RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
-                }
-
                 // Set the status to trained (since we assume the model we loaded was trained) only if not DTW as not implemented yet
                 if (!jsonstring.Contains("\"modelType\" : \"Series Classification\""))
                 {
                     RapidlibLinkerDLL.PutJSON(m_ModelAddress, jsonstring);
                     m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
-                } else
+                    isConfigured = true;
+                }
+                else
                 {
                     m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
-                }
-                
+                }                               
                 
             } else
             {
                 if(jsonstring.Contains("\"modelSet\" : null"))
                     Debug.LogWarning("json data from file null");
             }
+
+            return isConfigured;
         }
 
         /* I/O FOR MODEL DATA */
@@ -425,8 +444,12 @@ namespace InteractML
         /// Loads the model with the specified name into this instance
         /// </summary>
         /// <param name="fileName"></param>
-        public void LoadModelFromDisk(string fileName)
+        public void LoadModelFromDisk(string fileName, bool reCreateModel = false)
         {
+            // If we are meant to recreate the model, destroy any reference in unmanaged memory
+            if (reCreateModel)
+                DestroyModel();
+
             // Attempt to load model
             string stringLoaded = IMLDataSerialization.LoadRapidlibModelFromDisk(fileName);
 
