@@ -28,7 +28,7 @@ namespace InteractML
             m_SingleTrainingExamplesNode = (target as SingleTrainingExamplesNode);
             nodeSpace = 360 + (m_ConnectedInputs + m_ConnectedTargets) * 60;
             NodeName = "TEACH THE MACHINE";
-            NodeSubtitle = "DTW Training Examples";
+            NodeSubtitle = "Classification & Regression Training Examples";
             base.OnHeaderGUI();
         }
 
