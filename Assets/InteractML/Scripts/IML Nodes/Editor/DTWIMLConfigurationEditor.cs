@@ -106,11 +106,11 @@ namespace InteractML
                 buttonTipHelper = true;
                 if (GUI.enabled)
                 {
-                    TooltipText = m_DTWIMLConfiguration.tips.BodyTooltip.Tips[1];
+                    TooltipText = m_DTWIMLConfiguration.tooltips.BodyTooltip.Tips[1];
                 }
                 else
                 {
-                    TooltipText = m_DTWIMLConfiguration.tips.BodyTooltip.Error[0];
+                    TooltipText = m_DTWIMLConfiguration.tooltips.BodyTooltip.Error[0];
                 }
             }
             else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
@@ -170,11 +170,11 @@ namespace InteractML
                 buttonTipHelper = true;
                 if (enabled)
                 {
-                    TooltipText = m_DTWIMLConfiguration.tips.BodyTooltip.Tips[2];
+                    TooltipText = m_DTWIMLConfiguration.tooltips.BodyTooltip.Tips[2];
                 }
                 else
                 {
-                    TooltipText = m_DTWIMLConfiguration.tips.BodyTooltip.Error[1];
+                    TooltipText = m_DTWIMLConfiguration.tooltips.BodyTooltip.Error[1];
                 }
             }
             else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))

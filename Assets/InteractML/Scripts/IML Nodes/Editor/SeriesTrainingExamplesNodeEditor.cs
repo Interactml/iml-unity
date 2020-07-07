@@ -145,7 +145,7 @@ namespace InteractML
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
                 buttonTipHelper = true;
-                TooltipText = m_SeriesTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[2];
+                //TooltipText = m_SeriesTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[2];
             }
             else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
@@ -201,7 +201,7 @@ namespace InteractML
                 if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
                 {
                     buttonTipHelper = true;
-                    TooltipText = m_SeriesTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[3];
+                    //TooltipText = m_SeriesTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[3];
                 }
                 else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
                 {
@@ -236,7 +236,6 @@ namespace InteractML
         /// </summary>
         protected override void ShowTrainingExamplesDropdown()
         {
-            Debug.Log(m_HelpRect.x);
             if (m_ShowTrainingDataDropdown)
             {
                 m_Dropdown.x = m_HelpRect.x;
