@@ -243,10 +243,6 @@ namespace InteractML
 
                 // Draw help button
                 float bottomY = HeaderRect.height + m_PortRect.height + m_BodyRect.height;
-                Debug.Log(bottomY);
-                Debug.Log(HeaderRect.height);
-                Debug.Log(m_PortRect.height);
-                Debug.Log(m_BodyRect.height);
                 DrawHelpButtonLayout(bottomY);
                 ShowHelpButton(m_HelpRect);
 
