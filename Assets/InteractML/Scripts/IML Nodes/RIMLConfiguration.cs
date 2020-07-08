@@ -23,6 +23,7 @@ namespace InteractML
         protected override void Init()
         {
             SetLearningType();
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Regression_MLS");
             base.Init();
         }
         #endregion

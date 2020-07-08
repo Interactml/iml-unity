@@ -46,6 +46,10 @@ namespace InteractML
             OutputPortsNamesOverride = new Dictionary<string, string>();
             OutputPortsNamesOverride.Add("TrainingExamplesNodeToOutput", "Recorded\nExamples");
 
+            InputPortsNamesOverride = new Dictionary<string, string>();
+            InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
+            InputPortsNamesOverride.Add("TargetValues", "Target Values");
+
             base.nodeTips = m_SeriesTrainingExamplesNode.tooltips;
             if (m_SeriesTrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_SeriesTrainingExamplesNode.DesiredOutputFeatures.Count)
                 m_RecalculateRects = true;
@@ -95,7 +99,7 @@ namespace InteractML
             GUILayout.Space(20);
             GUILayout.BeginHorizontal();
             GUILayout.Space(spacing-15);
-            GUILayout.Label("No of pairs: " + m_SeriesTrainingExamplesNode.TrainingSeriesCollection.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"));
+            GUILayout.Label("No of training pairs: " + m_SeriesTrainingExamplesNode.TrainingSeriesCollection.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"));
             GUILayout.EndHorizontal();
 
         }

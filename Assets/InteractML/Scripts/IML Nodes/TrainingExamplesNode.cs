@@ -701,7 +701,6 @@ namespace InteractML
                 NodePort portConnect = GetInputPort(portName);
                 for (int i = 0; i < targetPortList.Count; i++)
                 {
-                    Debug.Log(targetPortList[i].fieldName);
                     portConnect.Connect(targetPortList[i]);
                     targetPortList[i].Connect(portConnect);
                 }

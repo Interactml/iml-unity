@@ -38,6 +38,10 @@ namespace InteractML
             OutputPortsNamesOverride = new Dictionary<string, string>();
             OutputPortsNamesOverride.Add("TrainingExamplesNodeToOutput", "Recorded\nExamples");
 
+            InputPortsNamesOverride = new Dictionary<string, string>();
+            InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
+            InputPortsNamesOverride.Add("TargetValues", "Target Values");
+
             base.nodeTips = m_SingleTrainingExamplesNode.tooltips;
             if (m_SingleTrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_SingleTrainingExamplesNode.DesiredOutputFeatures.Count)
                 m_RecalculateRects = true;

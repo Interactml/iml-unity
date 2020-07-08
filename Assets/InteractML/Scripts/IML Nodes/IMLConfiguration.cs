@@ -166,8 +166,6 @@ namespace InteractML
 
             Initialize();
 
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Classification_MLS");
-
         }
 
         // Return the correct value of an output port when requested

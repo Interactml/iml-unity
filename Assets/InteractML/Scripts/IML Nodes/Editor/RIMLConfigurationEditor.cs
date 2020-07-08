@@ -42,9 +42,7 @@ namespace InteractML
             m_BodyRect.height = 320;
             m_BodyRect.height = 320;
             base.OnBodyGUI();
-            Debug.Log(HeaderRect.height);
-            Debug.Log(m_PortRect.height);
-            Debug.Log(m_BodyRect.height);
+
         }
 
         protected override void ShowBodyFields()

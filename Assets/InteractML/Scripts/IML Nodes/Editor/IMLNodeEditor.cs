@@ -569,7 +569,16 @@ namespace InteractML
                     {
                         if (window.hoveredPort == ports[i])
                         {
-                            TooltipText = portTips[i];
+                            // If there are more ports than tooltips show the last one in the list (asthe number of outputs in a mls node is undeterminanate)
+                            if (i >= portTips.Length)
+                            {
+                                TooltipText = portTips[portTips.Length - 1];
+                            }
+                            else
+                            {
+                                TooltipText = portTips[i];
+                            }
+
                         }
 
                     }

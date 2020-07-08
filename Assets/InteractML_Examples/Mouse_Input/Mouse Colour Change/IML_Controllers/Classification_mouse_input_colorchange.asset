@@ -372,7 +372,7 @@ MonoBehaviour:
   m_Value: 0
   m_Out: 0
   ReceivingData: 0
-  InputConnected: 1
+  InputConnected: 0
   m_UserInput: 0
   int_switch: 1
 --- !u!114 &7664542125311193265
@@ -408,7 +408,7 @@ MonoBehaviour:
       _dynamic: 1
   DevMode: 0
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 21806
+  ScriptHashCode: 22178
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: SetAbsoluteColour

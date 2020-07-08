@@ -22,6 +22,7 @@ namespace InteractML
         protected override void Init()
         {
             SetLearningType();
+            tooltips = IMLTooltipsSerialization.LoadTooltip("DTW_MLS");
             base.Init();
         }
 
