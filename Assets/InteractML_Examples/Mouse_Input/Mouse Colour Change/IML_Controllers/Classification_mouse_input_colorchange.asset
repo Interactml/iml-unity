@@ -34,7 +34,7 @@ MonoBehaviour:
   DevMode: 0
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
-  state: 1
+  state: 0
 --- !u!114 &-7194312582767240663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,7 +408,7 @@ MonoBehaviour:
       _dynamic: 1
   DevMode: 0
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 87294
+  ScriptHashCode: 21806
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: SetAbsoluteColour

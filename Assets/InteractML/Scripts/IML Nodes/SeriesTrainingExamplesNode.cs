@@ -45,6 +45,7 @@ namespace InteractML
         {
             // Clear series in node
             TrainingSeriesCollection.Clear();
+            SaveDataToDisk();
             //UpdateOutputsList();
             //UpdateTargeValues();
         }

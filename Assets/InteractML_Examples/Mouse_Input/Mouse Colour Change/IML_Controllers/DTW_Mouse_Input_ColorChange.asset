@@ -209,10 +209,10 @@ MonoBehaviour:
   z_switch: 1
   m_PositionExtracted:
     m_Values:
-    - -8.103152
-    - 21.387657
-    - -1
-  ReceivingData: 1
+    - -7.36
+    - 2.07
+    - 3.9
+  ReceivingData: 0
 --- !u!114 &-5020083817285506259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,7 +246,7 @@ MonoBehaviour:
       _dynamic: 1
   DevMode: 0
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 91746
+  ScriptHashCode: 21984
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: SetAbsoluteColour
@@ -415,8 +415,8 @@ MonoBehaviour:
   DevMode: 0
   ValueName: 
   m_In: 0
-  m_Value: 1
-  m_Out: 1
+  m_Value: 0
+  m_Out: 0
   ReceivingData: 0
   InputConnected: 1
   m_UserInput: 0
