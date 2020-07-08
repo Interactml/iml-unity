@@ -155,6 +155,7 @@ namespace InteractML
 
         private List<TrainingExamplesNode> oldTrainingExamplesNodes;
 
+        public bool matchLiveDataInputs = true;
         #endregion
 
         #region XNode Messages
@@ -394,6 +395,9 @@ namespace InteractML
             {
                 ToggleRunning();
             }
+
+            //Check if live data input matches training examples 
+            CheckLiveDataInputMatchesTrainingExamples();
 
             // Update Input Config List
             UpdateInputConfigList();
@@ -1263,6 +1267,30 @@ namespace InteractML
                     }
                 }
             }
+        }
+
+        protected void CheckLiveDataInputMatchesTrainingExamples()
+        {
+            // Get training examples from the connected examples nodes
+            IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
+            int numberOfTrainingDataInputs = 0;
+
+            if (!Lists.IsNullOrEmpty(ref IMLTrainingExamplesNodes))
+            {
+                for (int i = 0; i < IMLTrainingExamplesNodes.Count; i++)
+                {
+                    if (IMLTrainingExamplesNodes[i] != null)
+                    {
+                        numberOfTrainingDataInputs = numberOfTrainingDataInputs + IMLTrainingExamplesNodes[i].GetInputPort("InputFeatures").GetConnections().Count();
+                    }
+                }
+            }
+
+            if (numberOfTrainingDataInputs == GetInputPort("InputFeatures").GetConnections().Count())
+                matchLiveDataInputs = true;
+            else
+                matchLiveDataInputs = false;
+            
         }
 
         /// <summary>

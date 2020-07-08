@@ -1,5 +1,5 @@
 {
-  "HelpTooltip": "Teach the Machine node is where you record examples of the movement that you want to be recognised, where you record the training data. It is through this node you set the number of outputs, their format and record examples of movement. This node is connected to one or more extractors through its input port. It is attached to IML Configuration through its output port. ",
+  "HelpTooltip": "This node trains the machine learning model and runs the model to recognise inputs. This is the Regression MLS it takes in single inputs and outputs a continuous value.",
   "PortTooltip": [ "Connect Recorded Data", "Connect Data Type Node or Feature Extractor", "Outputs the Output value/z of the machine learning system"],
   "BodyTooltip": {
     "tips": [
@@ -9,7 +9,7 @@
     ],
     "error": [
       "No training data",
-      "Model must be trained before running",
+      "Model must be trained before running or live data inputs do not match",
       "error 2"
     ]
   },

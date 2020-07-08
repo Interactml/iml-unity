@@ -75,6 +75,9 @@ namespace InteractML
                 // Disable button if model is Running OR Trainig 
                 if (m_DTWIMLConfiguration.Running || m_DTWIMLConfiguration.Training)
                     GUI.enabled = false;
+
+
+
                 if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Train")))
                 {
                     m_DTWIMLConfiguration.TrainModel();
@@ -146,6 +149,14 @@ namespace InteractML
                 // Disable button if model is Trainig OR Untrained
                 if (m_DTWIMLConfiguration.Training || m_DTWIMLConfiguration.Untrained)
                     GUI.enabled = false;
+
+                //Disable button if inputs don't match attached training examples node/s
+                if (!m_DTWIMLConfiguration.matchLiveDataInputs)
+                {
+                    Debug.Log("Number of live data nodes connected to input features do not match training examples live inputs input features");
+                    GUI.enabled = false;
+                }
+
                 if (GUILayout.Button(nameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Run")))
                 {
                     m_DTWIMLConfiguration.ToggleRunning();

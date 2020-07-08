@@ -100,10 +100,10 @@ namespace InteractML
                 buttonTipHelper = true;
                 if (GUI.enabled)
                 {
-                    TooltipText = m_RIMLConfiguration.tips.BodyTooltip.Tips[1];
+                    TooltipText = m_RIMLConfiguration.tooltips.BodyTooltip.Tips[1];
                 } else
                 {
-                    TooltipText = m_RIMLConfiguration.tips.BodyTooltip.Error[0];
+                    TooltipText = m_RIMLConfiguration.tooltips.BodyTooltip.Error[0];
                 }
             }
             else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
@@ -145,7 +145,12 @@ namespace InteractML
                 {
                     enabled = true;
                 }
-                    
+                //Disable button if inputs don't match attached training examples node/s
+                if (!m_RIMLConfiguration.matchLiveDataInputs)
+                {
+                    Debug.Log("Number of live data nodes connected to input features do not match training examples live inputs input features");
+                    GUI.enabled = false;
+                }
                 if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Run")))
                 {
                     m_RIMLConfiguration.ToggleRunning();
@@ -170,7 +175,7 @@ namespace InteractML
                 buttonTipHelper = true;
                 if (enabled)
                 {
-                    TooltipText = m_RIMLConfiguration.tips.BodyTooltip.Tips[2];
+                    TooltipText = m_RIMLConfiguration.tooltips.BodyTooltip.Tips[2];
                 }
                 else
                 {
