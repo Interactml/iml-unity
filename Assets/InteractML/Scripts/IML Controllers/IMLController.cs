@@ -30,17 +30,34 @@ namespace InteractML
         public override Node AddNode(Type type)
         {
             // TO DO: account for specific node types and add them to custom lists (to avoid pulling nodes every frame)
-            var node = base.AddNode(type);
+            Node node = null;
             if (SceneComponent != null)
             {
+                // base logic
+                node = base.AddNode(type);
+                bool success = false;
+
+                // Check if the node should be added to our IML Graph
                 if (node is ScriptNode)
                 {
                     // Add scriptNode.script to all lists
-                    SceneComponent.AddScriptNode((ScriptNode)node);
+                    success = SceneComponent.AddScriptNode((ScriptNode)node);
 
                 }
+                else if (node is GameObjectNode)
+                {
+                    // Add gameObjectNode to all lists
+                    success = SceneComponent.AddGameObjectNode((GameObjectNode)node);
+                }
 
-
+                // If we couldn't add the node...
+                if (success == false)
+                {
+                    // Remove node from nodes
+                    nodes.Remove(node);
+                    // Destroy node
+                    node = null;
+                }
             }
             return node;
         }
@@ -59,6 +76,12 @@ namespace InteractML
                     var scriptNode = node as ScriptNode;
                     // Remove scriptNode.script from all lists
                     SceneComponent.DeleteScriptNode(scriptNode);
+                }
+                // GameObjectNode
+                if (node is GameObjectNode)
+                {
+                    var goNode = node as GameObjectNode;
+                    SceneComponent.DeleteGameObjectNode(goNode);
                 }
             }
             RemoveNodeImmediate(node);  

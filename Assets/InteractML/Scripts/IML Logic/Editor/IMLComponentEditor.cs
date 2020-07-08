@@ -31,7 +31,7 @@ namespace InteractML
             // BUTTON OBJECTS UPDATE
             if (GUILayout.Button("Add New GameObject"))
             {
-                imlComponent.UpdateGameObjectsInIMLController();
+                imlComponent.UpdateGameObjectNodes();
                 imlComponent.GetAllNodes();
             }
 
