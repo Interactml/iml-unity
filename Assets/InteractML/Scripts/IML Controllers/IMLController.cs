@@ -36,27 +36,37 @@ namespace InteractML
                 // base logic
                 node = base.AddNode(type);
                 bool success = false;
+                bool isCustomType = false;
 
                 // Check if the node should be added to our IML Graph
                 if (node is ScriptNode)
                 {
                     // Add scriptNode.script to all lists
                     success = SceneComponent.AddScriptNode((ScriptNode)node);
-
+                    isCustomType = true;
                 }
                 else if (node is GameObjectNode)
                 {
                     // Add gameObjectNode to all lists
                     success = SceneComponent.AddGameObjectNode((GameObjectNode)node);
+                    isCustomType = true;
                 }
 
-                // If we couldn't add the node...
-                if (success == false)
+                if (isCustomType)
                 {
-                    // Remove node from nodes
-                    nodes.Remove(node);
-                    // Destroy node
-                    node = null;
+                    // If we couldn't add the node...
+                    if (success == false)
+                    {
+                        // Remove node from nodes list (it was added in the base logic)
+                        nodes.Remove(node);
+                        // Destroy node
+#if UNITY_EDITOR
+                        ScriptableObject.DestroyImmediate(node, true);
+#else
+                        ScriptableObject.Destroy(node);
+#endif
+                    }
+
                 }
             }
             return node;
