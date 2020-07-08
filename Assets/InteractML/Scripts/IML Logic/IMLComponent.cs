@@ -42,12 +42,19 @@ namespace InteractML
         [Tooltip("Add number of GameObjects to use in the IML Controller and what they are here")]
         [Rename("GameObject")]
         public List<GameObject> GameObjectsToUse;
+        /// <summary>
+        /// Dictionary to hold references of GameObjects and which GONode manages them
+        /// </summary>
+        [SerializeField, HideInInspector]
+        private GOPerGONodeDictionary m_GOsPerGONodes;
+
 
         #region Private Lists of Nodes (Fields)
         /* Private Lists of nodes that we can have in the graph */
         private List<TextNote> m_TextNoteNodesList;
         private List<TrainingExamplesNode> m_TrainingExamplesNodesList;
         private List<IMLConfiguration> m_IMLConfigurationNodesList;
+        [SerializeField, HideInInspector]
         private List<GameObjectNode> m_GameObjectNodeList;
         private List<RealtimeIMLOutputNode> m_RealtimeIMLOutputNodesList;
         public List<IFeatureIML> FeatureNodesList;
@@ -543,55 +550,173 @@ namespace InteractML
         /// </summary>
         private void SendGameObjectsToIMLController()
         {
-            //Debug.Log("GameObjects being injected to IML Controller");
-            if (!Lists.IsNullOrEmpty(ref m_GameObjectNodeList) && !Lists.IsNullOrEmpty(ref GameObjectsToUse))
+            // Don't do anything if there are no gameObjects from the scene to use
+            if (GameObjectsToUse == null || GameObjectsToUse.Count == 0)
             {
-                // Compare distance between both lists
-                int distanceLists = GameObjectsToUse.Count - m_GameObjectNodeList.Count;
-                // If they are the same length
-                if (distanceLists == 0)
+                return;
+            }
+
+            // Make sure dictionaries and lists are init
+            if (m_MonoBehavioursPerScriptNode == null)
+                m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
+            if (m_GameObjectNodeList == null)
+                m_GameObjectNodeList = new List<GameObjectNode>();
+
+            // Go through GONodes looking for empty entries that could contain memory (lost ref due to unity hotlreload)
+            for (int i = 0; i < m_GameObjectNodeList.Count; i++)
+            {
+                var goNode = m_GameObjectNodeList[i];
+                // If we find a null node, remove it!
+                if (goNode == null)
                 {
-                    // Assign each node a gameobject
-                    for (int i = 0; i < m_GameObjectNodeList.Count; i++)
-                    {
-                        m_GameObjectNodeList[i].GameObjectDataOut = GameObjectsToUse[i];
-                       // Debug.Log("Injecting GObject " + GameObjectsToUse[i].name);
-
-                    }
-
+                    // Remove null reference
+                    m_GameObjectNodeList.RemoveAt(i);
+                    // Adjust index
+                    i--;
+                    continue;
                 }
-                // If there are more gObjects than nodes, we spawn a few extract nodes and add the gameobjects to them
-                else if (distanceLists > 0)
+                if (!goNode.IsTaken)
                 {
-                    // Spawn as many nodes as distance we have
-                    for (int i = 0; i < distanceLists; i++)
+                    // If there is a scriptHashCode from a previous GO...
+                    if (!goNode.GOHashCode.Equals(default))
                     {
-                        MLController.AddNode<GameObjectNode>();
-                    }
 
-                    // Refresh list of nodes
-                    GetAllNodes();
+                        // Check if the GOsPerGONodes dictionary contains the node and its GO
+                        var gameObject = m_GOsPerGONodes.GetKey(goNode);
+                        // Set GO if we found it
+                        if (gameObject != null)
+                        {
+                            goNode.SetGameObject(gameObject);
+                        }
+                        // If we didn't find it...
+                        else
+                        {
+                            // Check if that GO is contained in the GameobjectToUse list
+                            // Lambda statement, selecting the GO that matches the hashcode memory from our GONode
+                            var resultSearch = GameObjectsToUse.Select(GO => GO).Where(GO => GO.GetHashCode().Equals(goNode.GOHashCode));
+                            if (resultSearch.Any())
+                            {
+                                var goToAdd = resultSearch.First(x => x != null);
+                                // If we found a matching GO...
+                                if (goToAdd != null)
+                                {
+                                    // We add that GO to our GONode (if it is not null) 
+                                    goNode.SetGameObject(goToAdd);
+                                    // Add it to the dictionary as well 
+                                    if (!m_GOsPerGONodes.Contains(goToAdd))
+                                        m_GOsPerGONodes.Add(goToAdd, goNode);
+                                }
+                            }
 
-                    // Assign each node a gameobject
-                    for (int i = 0; i < m_GameObjectNodeList.Count; i++)
-                    {
-                        m_GameObjectNodeList[i].GameObjectDataOut = GameObjectsToUse[i];
-                    }
-
-                }
-                // If there are more nodes than gameObjects
-                else if (distanceLists < 0)
-                {
-                    // We warn the user
-                    Debug.LogWarning("There are currently more GameObject Nodes in " + MLController.name + " than GameObjects referenced in the IML Component of " + this.name);
-
-                    // Add as many GameObjects as we can to the list
-                    for (int i = 0; i < GameObjectsToUse.Count; i++)
-                    {
-                        m_GameObjectNodeList[i].GameObjectDataOut = GameObjectsToUse[i];
+                        }
+                        
                     }
                 }
             }
+
+            // Go through gameObjects added by the user
+            for (int i = 0; i < GameObjectsToUse.Count; i++)
+            {
+                var go = GameObjectsToUse[i];
+
+                /* ADD GAMEOBJECT NODE */
+                GameObjectNode goNode = null;
+
+                // If the gameObject is null, we continue to the next one
+                if (go == null)
+                {
+                    continue;
+                }
+
+                // Check if the dictionary DOESN'T contain this GameObject value, and then create nodes and dictionary values (it is a new GameObject)
+                if (!m_GOsPerGONodes.ContainsKey(go))
+                {
+                    // First, we try and see if the graph already contains an empty node we can use
+                    foreach (var potentialGONode in m_GameObjectNodeList)
+                    {                        
+                        // We check if the node is available to use                        
+                        // If the node is not taken...
+                        if (!potentialGONode.IsTaken)
+                        {
+                            // This will be our node!
+                            goNode = potentialGONode;
+                            // Stop searching for nodes
+                            break;
+                        }                        
+                    }
+
+                    // If we didn't find a suitable existing node...
+                    if (goNode == null)
+                    {
+                        // Create a new script node into the graph
+                        goNode = MLController.AddNode<GameObjectNode>();
+                    }
+
+                    // Configure our node appropiately
+                    goNode.SetGameObject(go);
+
+                    // Add that to the dictionary            
+                    m_GOsPerGONodes.Add(go, goNode);
+                }
+
+
+
+            }
+
+            /* OLD LOGIC 
+
+            ////Debug.Log("GameObjects being injected to IML Controller");
+            //if (!Lists.IsNullOrEmpty(ref m_GameObjectNodeList) && !Lists.IsNullOrEmpty(ref GameObjectsToUse))
+            //{
+            //    // Compare distance between both lists
+            //    int distanceLists = GameObjectsToUse.Count - m_GameObjectNodeList.Count;
+            //    // If they are the same length
+            //    if (distanceLists == 0)
+            //    {
+            //        // Assign each node a gameobject
+            //        for (int i = 0; i < m_GameObjectNodeList.Count; i++)
+            //        {
+            //            m_GameObjectNodeList[i].GameObjectDataOut = GameObjectsToUse[i];
+            //           // Debug.Log("Injecting GObject " + GameObjectsToUse[i].name);
+
+            //        }
+
+            //    }
+            //    // If there are more gObjects than nodes, we spawn a few extract nodes and add the gameobjects to them
+            //    else if (distanceLists > 0)
+            //    {
+            //        // Spawn as many nodes as distance we have
+            //        for (int i = 0; i < distanceLists; i++)
+            //        {
+            //            MLController.AddNode<GameObjectNode>();
+            //        }
+
+            //        // Refresh list of nodes
+            //        GetAllNodes();
+
+            //        // Assign each node a gameobject
+            //        for (int i = 0; i < m_GameObjectNodeList.Count; i++)
+            //        {
+            //            m_GameObjectNodeList[i].GameObjectDataOut = GameObjectsToUse[i];
+            //        }
+
+            //    }
+            //    // If there are more nodes than gameObjects
+            //    else if (distanceLists < 0)
+            //    {
+            //        // We warn the user
+            //        Debug.LogWarning("There are currently more GameObject Nodes in " + MLController.name + " than GameObjects referenced in the IML Component of " + this.name);
+
+            //        // Add as many GameObjects as we can to the list
+            //        for (int i = 0; i < GameObjectsToUse.Count; i++)
+            //        {
+            //            m_GameObjectNodeList[i].GameObjectDataOut = GameObjectsToUse[i];
+            //        }
+            //    }
+            //}
+            
+             END OF OLD LOGIC */
+
         }
 
         /// <summary>
@@ -696,7 +821,7 @@ namespace InteractML
                                         return scriptToReturn;
                                     }
                                 );
-                                if (script != null && resultSearch.Any())
+                                if (resultSearch.Any())
                                 {
                                     var scriptToAdd = resultSearch.First(x => x != null);
                                     // If we found a matching script...
@@ -898,6 +1023,9 @@ namespace InteractML
                 // Fetch data from the Monobehaviours we have subscribed into and out of the IML Controller
                 FetchDataFromMonobehavioursSubscribed();
 
+                // Send GameObject data to GONodes
+                SendGameObjectsToIMLController();
+
                 // Run logic for all feature nodes
                 RunFeaturesLogic();
 
@@ -915,11 +1043,89 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Public function that updates the game objects in the graph
+        /// Public function that updates the game objects in the graph and make sure no node is empty
         /// </summary>
-        public void UpdateGameObjectsInIMLController()
+        public void UpdateGameObjectNodes(bool changingPlayMode = false)
         {
-            SendGameObjectsToIMLController();
+            if (m_GameObjectNodeList == null)
+                m_GameObjectNodeList = new List<GameObjectNode>();
+            if (GameObjectsToUse == null)
+                GameObjectsToUse = new List<GameObject>();
+
+            for (int i = 0; i < m_GameObjectNodeList.Count; i++)
+            {
+                var goNode = m_GameObjectNodeList[i];
+                // Remove node from list if the reference is null
+                if (goNode == null)
+                {
+                    m_GameObjectNodeList.RemoveAt(i);
+                    // Decrease counter to not delete the wrong element later
+                    i--;
+                }
+#if UNITY_EDITOR
+                else if (changingPlayMode && goNode.CreatedDuringPlaymode)
+                {
+                    // Destroy node
+                    MLController.RemoveNode(goNode);
+                    // Decrease counter to not delete the wrong element later
+                    i--;
+                    // Force scriptNode reference to null
+                    goNode = null;
+                }
+#endif
+                // Check if we need to remove the goNode from the list
+                else
+                {
+                    // If this GO node is not contained in the logic dictionary...
+                    if (!m_GOsPerGONodes.ContainsValue(goNode))
+                    {
+                        // Destroy node
+                        MLController.RemoveNode(goNode);
+                        // Decrease counter to not delete the wrong element later
+                        i--;
+                        // Force scriptNode reference to null
+                        goNode = null;
+                    }
+                }
+
+                // Now if the node wasn't removed, make sure that there is a script that the node is controlling in the scene list that the user controls
+                if (goNode != null)
+                {
+                    // If we are switching playmodes, it is very likely that we lost the reference to the GO?
+                    if (changingPlayMode)
+                    {
+                        // Check if the script reference is null
+                        if (goNode.GameObjectDataOut == null)
+                        {
+                            // See if we know the hash of the referenced script
+                            if (goNode.GOHashCode != default(int))
+                            {
+                                // Check if the script is contained in the scene list
+                                var result = GameObjectsToUse.Select(x => x).Where(go => go.GetHashCode().Equals(goNode.GetHashCode()) );
+                                var goFound = result.FirstOrDefault();
+                                // If we found the go...
+                                if (goFound != null)
+                                {
+                                    // Add the go to the node
+                                    goNode.SetGameObject(goFound);
+                                }
+
+                            }
+                        }
+                    }
+                    // If we have a reference to the go the node controls...
+                    if (goNode.GameObjectDataOut != null)
+                    {
+                        // Make sure is managed in the scene list of GOs
+                        if (!GameObjectsToUse.Contains(goNode.GameObjectDataOut))
+                        {
+                            GameObjectsToUse.Add(goNode.GameObjectDataOut);
+                        }
+                    }
+
+                }
+
+            }
         }
 
         /// <summary>
@@ -1298,23 +1504,61 @@ namespace InteractML
         /// Adds a scriptNode internally to the list
         /// </summary>
         /// <param name="node"></param>
-        public void AddScriptNode(ScriptNode node)
+        public bool AddScriptNode(ScriptNode node)
         {
+            bool nodeAdded = false;
             if (node != null)
             {
                 if (m_ScriptNodesList == null) m_ScriptNodesList = new List<ScriptNode>();
                 // Add node if it is not contained in list
-                if (!m_ScriptNodesList.Contains(node)) m_ScriptNodesList.Add(node);
-#if UNITY_EDITOR
-                // Mark node as created During Playmode if required
-                if (EditorApplication.isPlaying) node.CreatedDuringPlaymode = true;
+                if (!m_ScriptNodesList.Contains(node))
+                {
+                    m_ScriptNodesList.Add(node);
+                    nodeAdded = true;
 
-                // Save newnode to graph on disk                              
-                AssetDatabase.AddObjectToAsset(node, MLController);
-                // Reload graph into memory since we have modified it on disk
-                AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+#if UNITY_EDITOR
+                    // Mark node as created During Playmode if required
+                    if (EditorApplication.isPlaying) node.CreatedDuringPlaymode = true;
+
+                    // Save newnode to graph on disk                              
+                    AssetDatabase.AddObjectToAsset(node, MLController);
+                    // Reload graph into memory since we have modified it on disk
+                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
 #endif
+
+                }
             }
+            return nodeAdded;
+        }
+
+        /// <summary>
+        /// Adds a gameObjectNode internally to the list
+        /// </summary>
+        /// <param name="node"></param>
+        public bool AddGameObjectNode(GameObjectNode node)
+        {
+            bool nodeAdded = false;
+            if (node != null)
+            {
+                if (m_GameObjectNodeList == null) m_GameObjectNodeList = new List<GameObjectNode>();
+                // Add node if it is not contained in list
+                if (!m_GameObjectNodeList.Contains(node))
+                {
+                    m_GameObjectNodeList.Add(node);
+                    nodeAdded = true;
+#if UNITY_EDITOR
+                    // Mark node as created During Playmode if required
+                    if (EditorApplication.isPlaying) node.CreatedDuringPlaymode = true;
+
+                    // Save newnode to graph on disk                              
+                    AssetDatabase.AddObjectToAsset(node, MLController);
+                    // Reload graph into memory since we have modified it on disk
+                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+#endif
+                }
+
+            }
+            return nodeAdded;
         }
 
         #endregion
@@ -1329,6 +1573,26 @@ namespace InteractML
         {
             if (m_GameObjectNodeList.Contains(nodeToDelete))
                 m_GameObjectNodeList.Remove(nodeToDelete);
+
+            // GameObjectsToUse user GOs fro scene list
+            if (GameObjectsToUse == null)
+                GameObjectsToUse = new List<GameObject>();
+            else if (nodeToDelete.GameObjectDataOut != null)
+                if (GameObjectsToUse.Contains(nodeToDelete.GameObjectDataOut))
+                    GameObjectsToUse.Remove(nodeToDelete.GameObjectDataOut);
+
+            // GOs per GONodes dictionary
+            if (m_GOsPerGONodes == null)
+                m_GOsPerGONodes = new GOPerGONodeDictionary();
+            else if (nodeToDelete.GameObjectDataOut != null && m_GOsPerGONodes.ContainsKey(nodeToDelete.GameObjectDataOut))
+                m_GOsPerGONodes.Remove(nodeToDelete.GameObjectDataOut);
+
+            // GONodes list
+            if (m_GameObjectNodeList == null)
+                m_GameObjectNodeList = new List<GameObjectNode>();
+            else if (m_GameObjectNodeList.Contains(nodeToDelete))
+                m_GameObjectNodeList.Remove(nodeToDelete);
+
 
         }
         /// <summary>
