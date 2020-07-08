@@ -31,6 +31,7 @@ namespace InteractML
         {
             // TO DO: account for specific node types and add them to custom lists (to avoid pulling nodes every frame)
             Node node = null;
+            // If the graph is attached to an IMLComponent...
             if (SceneComponent != null)
             {
                 // base logic
@@ -68,6 +69,11 @@ namespace InteractML
                     }
 
                 }
+            }
+            // If this graph is not attached to an IML Component...
+            else
+            {
+                Debug.LogError("You can't add nodes to an IMLController that is not attached to an IMLComponent!");
             }
             return node;
         }
