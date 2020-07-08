@@ -49,7 +49,7 @@ namespace InteractML
         {
             // Clear examples in node
             TrainingExamplesVector.Clear();
-
+            SaveDataToDisk();
             // Make sure the outputs are populated properly after clearing them out
             //UpdateOutputsList();
             //UpdateTargeValues();

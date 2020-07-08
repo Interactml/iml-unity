@@ -508,7 +508,7 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Adds a single training example 
+        /// Adds a single training example
         /// </summary>
         protected void AddTrainingExampleprotected()
         {
@@ -529,6 +529,7 @@ namespace InteractML
             
             // Add the training example to the vector
             TrainingExamplesVector.Add(newExample);
+            SaveDataToDisk();
 
         }
 
