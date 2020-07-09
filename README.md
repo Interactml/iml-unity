@@ -17,10 +17,22 @@ InteractML is an Unity3d Plugin that enables developers to configure, train, and
 ### Limitations
 * Alpha stage
 * Anything not Windows/Mac not tested or currently supported
-* No Documentation (but working on it)
 
 ### Installation
-Download the master branch and open with Unity. The unitypackages released are heavily outdated and buggy!
+Don't download the master branch! It currently contains several dependencies that might break your project. Instead, download one of the relase packages as follows:
+
+1) Download the latest UnityPackage from the InteractML release github page here: [https://github.com/Interactml/iml-unity/releases](https://github.com/Interactml/iml-unity/releases)
+
+2) With your unity project open, navigate to the top menu bar and select _Assets_. In the Assets menu select _Import Package_, then select _Custom Package_.
+
+3) Find the downloaded unity package in your file system and click _Open_. Wait for unity to prepare the package.
+
+4) In the Import Unity Package window that pops up click _Import_. Wait for unity to import the package.
+
+That’s it! The InteractML folder will appear in your assets folder along with a folder of examples to start you off.
+
+### Documentation
+Visit the [wiki to have a look at our how-to guides.](https://github.com/Interactml/iml-unity/wiki)
 
 ### Dependencies
 InteractML is built with 
