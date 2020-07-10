@@ -72,7 +72,7 @@ public class IMLEditorManager
     /// <param name="mode"></param>
     private static void SceneOpenedLogic(UnityEngine.SceneManagement.Scene scene, UnityEditor.SceneManagement.OpenSceneMode mode)
     {
-        Debug.Log("SceneOpened");
+        //Debug.Log("SceneOpened");
         ClearIMLComponents();
         FindIMLComponents();
         // Reload all models (if we can) when we enter playmode or when we come back to the editor

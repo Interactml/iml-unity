@@ -95,7 +95,12 @@ namespace InteractML
 
                     // Draw preview of Game Object
                     if (stylePreview != null && gameObjectEditor != null)
-                        gameObjectEditor.OnPreviewGUI(GUILayoutUtility.GetRect(100, 100), stylePreview);
+                    {
+                        Rect auxRect = GUILayoutUtility.GetRect(100, 100);
+                        auxRect.width = 200;
+                        auxRect.height = 100;
+                        gameObjectEditor.OnPreviewGUI(auxRect, stylePreview);
+                    }
                     else
                         Debug.LogError("Null reference in the preview style of the GameObjectNode");
 
