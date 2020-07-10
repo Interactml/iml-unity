@@ -467,7 +467,7 @@ namespace InteractML
 
         public void ToggleRunning()
         {
-            Debug.Log("running");
+            //Debug.Log("running");
             // If the system is not running...
             if (!m_Running)
             {

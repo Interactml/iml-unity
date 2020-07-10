@@ -464,7 +464,7 @@ namespace InteractML
             // If we couldn't load anything, throw exception
             else
             {
-                throw new Exception("Couldn't load rapidlib model because nothing was found in provided path: " + fileName + ". Try resetting and re-training the model");
+                throw new Exception("Couldn't load rapidlib model because nothing was found in provided path: " + fileName + ". Try resetting and re-training the model. The model might have never been trained!");
             }
         }
 

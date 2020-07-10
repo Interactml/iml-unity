@@ -66,7 +66,7 @@ namespace InteractML
                 if (m_CIMLConfiguration.Training)
                     nameButton = "STOP Training Model";
                 if (m_CIMLConfiguration.Trained)
-                    nameButton = "Trained (" + numberOfExamplesTrained + " Examples)";
+                    nameButton = "Trained (" + m_CIMLConfiguration.NumExamplesTrainedOn + " Examples)";
                 else
                     nameButton = "Train Model";
 
@@ -77,8 +77,12 @@ namespace InteractML
                 
                 if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Train")))
                 {
-                    m_CIMLConfiguration.TrainModel();
-                    numberOfExamplesTrained = m_CIMLConfiguration.TotalNumTrainingData;
+                    // Train model
+                    if (m_CIMLConfiguration.TrainModel())
+                    {
+                        // Save model if succesfully trained
+                        m_CIMLConfiguration.SaveModelToDisk();
+                    }
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;
