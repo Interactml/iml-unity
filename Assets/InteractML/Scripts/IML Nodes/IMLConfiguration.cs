@@ -498,7 +498,9 @@ namespace InteractML
                     PredictedOutput = IMLDataSerialization.ParseJSONToIMLFeature(predictionDTW);
 
                     if (PredictedOutput != null && PredictedOutput.Count > 0)
-                        Debug.Log("Predicted output is: " + PredictedOutput[0].Values[0]);
+                    {
+                        //Debug.Log("Predicted output is: " + PredictedOutput[0].Values[0]);
+                    }
                 }
                 // Set flag to false
                 m_Running = false;

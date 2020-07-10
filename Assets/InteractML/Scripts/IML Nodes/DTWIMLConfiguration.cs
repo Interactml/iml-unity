@@ -90,7 +90,7 @@ namespace InteractML
                 case RapidlibModel.ModelType.DTW:
                     m_LearningType = IMLSpecifications.LearningType.DTW;
                     // DTW model will need to retrain!
-                    Debug.Log("DTW RETRAINING WHEN LOADING MODEL NOT IMPLEMENTED YET!");
+                    Debug.Log("YOU NEED TO RETRAIN DTW EVERYTIME YOU ENTER PLAYMODE!");
                     break;
                 case RapidlibModel.ModelType.None:
                     break;

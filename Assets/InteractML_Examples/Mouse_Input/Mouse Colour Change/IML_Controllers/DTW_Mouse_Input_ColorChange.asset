@@ -143,7 +143,7 @@ MonoBehaviour:
   - {fileID: -5672025770827786827}
   PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
-  m_NumExamplesTrainedOn: 3
+  m_NumExamplesTrainedOn: 14
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_LearningType: 2
@@ -152,6 +152,7 @@ MonoBehaviour:
   RunningKey: 0
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
+  matchLiveDataInputs: 1
 --- !u!114 &-5672025770827786827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,7 +247,7 @@ MonoBehaviour:
       _dynamic: 1
   DevMode: 0
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 22390
+  ScriptHashCode: 73354
   m_PortsPerFieldInfo:
     m_keys: []
   CreatedDuringPlaymode: 0
@@ -260,7 +261,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Game Object
+  m_Name: Capsule (GameObject)
   m_EditorClassIdentifier: 
   id: fe563f64-6001-43c9-b370-abe9ffd9a33f
   graph: {fileID: 11400000}
@@ -284,7 +285,9 @@ MonoBehaviour:
   DevMode: 0
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
-  state: 0
+  state: 1
+  GOHashCode: 73312
+  CreatedDuringPlaymode: 0
 --- !u!114 &-4001488984950691715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -329,11 +332,11 @@ MonoBehaviour:
   DevMode: 0
   ValueName: 
   m_In: 0
-  m_Value: 1
+  m_Value: 3
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  m_UserInput: 1
+  m_UserInput: 3
   int_switch: 1
 --- !u!114 &11400000
 MonoBehaviour:
@@ -403,8 +406,8 @@ MonoBehaviour:
   DevMode: 0
   ValueName: 
   m_In: 0
-  m_Value: 0
-  m_Out: 0
+  m_Value: 1
+  m_Out: 1
   ReceivingData: 0
   InputConnected: 1
   m_UserInput: 0
