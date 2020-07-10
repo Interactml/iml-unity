@@ -8,12 +8,10 @@ public class LightController : MonoBehaviour
     public Light light;
 
     [PullFromIMLController]
-    public Vector3 SetLightRotation;
+    public float SetLightIntensity;
 
-    [PullFromIMLController]
-    public float LightIntensity;
-
-    public bool controlLightIntensity;
+    [SendToIMLController]
+    public Vector3 LightPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -24,14 +22,16 @@ public class LightController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (light != null)
         {
-            var rotation = light.transform.rotation;
-            rotation.eulerAngles = SetLightRotation;
-            light.transform.rotation = rotation;
+            // Pull data from IML Controller
+            light.intensity = SetLightIntensity;
 
-            if (controlLightIntensity)
-                light.intensity = LightIntensity;
+            // Send data to IML Controller
+            LightPosition = light.transform.position;   
+
         }
+
     }
 }

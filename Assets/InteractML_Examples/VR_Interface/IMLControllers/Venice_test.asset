@@ -77,74 +77,6 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 0
---- !u!114 &-6179746957524285236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
-  m_Name: LightController (Script)
-  m_EditorClassIdentifier: 
-  id: 940cd46f-9a54-4a73-8256-ee70ccd1c210
-  graph: {fileID: 11400000}
-  position: {x: 1608, y: -392}
-  ports:
-    keys:
-    - SetLightRotation
-    - LightIntensity
-    values:
-    - _fieldName: SetLightRotation
-      _node: {fileID: -6179746957524285236}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: LightIntensity
-      _node: {fileID: -6179746957524285236}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_Out
-        node: {fileID: -5901800254154747165}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-  DevMode: 0
-  m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 23204
-  m_PortsPerFieldInfo:
-    m_keys:
-    - _fieldName: SetLightRotation
-      _node: {fileID: -6179746957524285236}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: LightIntensity
-      _node: {fileID: -6179746957524285236}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_Out
-        node: {fileID: -5901800254154747165}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-  CreatedDuringPlaymode: 0
 --- !u!114 &-5901800254154747165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,10 +113,7 @@ MonoBehaviour:
       _node: {fileID: -5901800254154747165}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: LightIntensity
-        node: {fileID: -6179746957524285236}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -198,6 +127,43 @@ MonoBehaviour:
   InputConnected: 1
   m_UserInput: 0
   int_switch: 1
+--- !u!114 &-5589921693402112624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
+  m_Name: MouseMover (GameObject)
+  m_EditorClassIdentifier: 
+  id: daa9a00d-657e-43bb-97b9-03385db00d67
+  graph: {fileID: 11400000}
+  position: {x: -856, y: -520}
+  ports:
+    keys:
+    - GameObjectDataOut
+    values:
+    - _fieldName: GameObjectDataOut
+      _node: {fileID: -5589921693402112624}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: GameObjectDataIn
+        node: {fileID: -1060329389974368481}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  GameObjectDataOut: {fileID: 0}
+  GameObjMissing: 0
+  state: 0
+  GOHashCode: 21412
+  CreatedDuringPlaymode: 0
 --- !u!114 &-2722114149467732918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,7 +237,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectDataOut
-        node: {fileID: 3766432060736208195}
+        node: {fileID: -5589921693402112624}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -314,54 +280,15 @@ MonoBehaviour:
   m_Name: Venice_test
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: 3766432060736208195}
   - {fileID: -1060329389974368481}
   - {fileID: 5906872443194838154}
   - {fileID: 4953794314262557231}
   - {fileID: -6700883288501594885}
   - {fileID: 4125335913069827217}
   - {fileID: -5901800254154747165}
-  - {fileID: -6179746957524285236}
   - {fileID: -2722114149467732918}
+  - {fileID: -5589921693402112624}
   SceneComponent: {fileID: 0}
---- !u!114 &3766432060736208195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Game Object
-  m_EditorClassIdentifier: 
-  id: 45615557-17f6-4fcb-a2b0-c520c33ee477
-  graph: {fileID: 11400000}
-  position: {x: -856, y: -376}
-  ports:
-    keys:
-    - GameObjectDataOut
-    values:
-    - _fieldName: GameObjectDataOut
-      _node: {fileID: 3766432060736208195}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataIn
-        node: {fileID: -1060329389974368481}
-        reroutePoints: []
-      - fieldName: GameObjectDataIn
-        node: {fileID: 4125335913069827217}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  GameObjectDataOut: {fileID: 0}
-  GameObjMissing: 0
-  state: 1
 --- !u!114 &4125335913069827217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,10 +313,7 @@ MonoBehaviour:
       _node: {fileID: 4125335913069827217}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataOut
-        node: {fileID: 3766432060736208195}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -496,6 +420,7 @@ MonoBehaviour:
   RunningKey: 0
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
+  matchLiveDataInputs: 1
   learningChoice: 0
 --- !u!114 &5906872443194838154
 MonoBehaviour:
