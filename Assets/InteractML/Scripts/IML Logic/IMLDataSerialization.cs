@@ -599,7 +599,7 @@ namespace InteractML
                 // Generate JSON string from the entire list
                 //COMEBACK
                 var jsonTrainingeExamplesList = JsonConvert.SerializeObject(listToSave, Formatting.Indented);
-                Debug.Log(jsonTrainingeExamplesList);
+                //Debug.Log(jsonTrainingeExamplesList);
                 // Write on the path
                 File.WriteAllText(auxFilePath, jsonTrainingeExamplesList);
             }
