@@ -122,6 +122,10 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
+            if (type.PrettyName() == "InteractML.FeatureExtractors.ExtractRotationEuler")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
             if (type.PrettyName() == "InteractML.FeatureExtractors.ExtractVelocity")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");

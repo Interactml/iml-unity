@@ -141,7 +141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: daa9a00d-657e-43bb-97b9-03385db00d67
   graph: {fileID: 11400000}
-  position: {x: -920, y: -968}
+  position: {x: -936, y: -1576}
   ports:
     keys:
     - GameObjectDataOut
@@ -156,6 +156,9 @@ MonoBehaviour:
         reroutePoints: []
       - fieldName: GameObjectDataIn
         node: {fileID: -279078844009144918}
+        reroutePoints: []
+      - fieldName: GameObjectDataIn
+        node: {fileID: 7011470081474174257}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -403,6 +406,7 @@ MonoBehaviour:
   - {fileID: 4052037564740709672}
   - {fileID: -279078844009144918}
   - {fileID: -3785671710325468040}
+  - {fileID: 7011470081474174257}
   SceneComponent: {fileID: 0}
 --- !u!114 &4052037564740709672
 MonoBehaviour:
@@ -463,14 +467,13 @@ MonoBehaviour:
   DevMode: 0
   InputFeatures:
   - {fileID: -1060329389974368481}
-  - {fileID: 0}
   TargetValues:
   - {fileID: -3785671710325468040}
   TrainingExamplesNodeToOutput: {fileID: 0}
   ModeOfCollection: 1
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
-  m_DesiredInputsConfig: 0300000003000000
+  m_DesiredInputsConfig: 03000000
   m_DesiredOutputsConfig: 01000000
   IMLConfigurationNodesConnected: []
   StartDelay: 0
@@ -661,3 +664,57 @@ MonoBehaviour:
   InputConnected: 0
   m_UserInput: 20
   int_switch: 1
+--- !u!114 &7011470081474174257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14a4527b431d72944b42dd8d2f6b0fd7, type: 3}
+  m_Name: Extract Rotation Euler
+  m_EditorClassIdentifier: 
+  id: 3b56eff1-2c3b-4a23-abbc-ee46795d1dd6
+  graph: {fileID: 11400000}
+  position: {x: -440, y: -1672}
+  ports:
+    keys:
+    - GameObjectDataIn
+    - LiveDataOut
+    values:
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: 7011470081474174257}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: GameObjectDataOut
+        node: {fileID: -5589921693402112624}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: LiveDataOut
+      _node: {fileID: 7011470081474174257}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
+  LocalSpace: 0
+  x_switch: 1
+  y_switch: 1
+  z_switch: 1
+  m_RotationExtracted:
+    m_Values:
+    - -0
+    - 0
+    - 0
+  GameObjInputMissing: 0
+  ReceivingData: 0
