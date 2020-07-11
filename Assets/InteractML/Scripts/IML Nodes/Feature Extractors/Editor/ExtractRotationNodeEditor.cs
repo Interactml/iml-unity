@@ -20,7 +20,7 @@ namespace InteractML.FeatureExtractors
         {
             // Get reference to the current node
             m_ExtractRotation = (target as ExtractRotation);
-            nodeSpace = 150;
+            nodeSpace = 170;
             NodeName = "LIVE ROTATION DATA";
             base.OnHeaderGUI();
 
@@ -34,7 +34,7 @@ namespace InteractML.FeatureExtractors
             base.InputPortsNamesOverride.Add("GameObjectDataIn", "Game Object\nData In");
             base.OutputPortsNamesOverride.Add("LiveDataOut", "Rotation\nData Out");
             base.nodeTips = m_ExtractRotation.tooltips;
-            m_BodyRect.height = 150;
+            m_BodyRect.height = 170;
             base.OnBodyGUI();
         }
 
@@ -68,6 +68,14 @@ namespace InteractML.FeatureExtractors
             GUILayout.Space(bodySpace);
             m_ExtractRotation.z_switch = EditorGUILayout.Toggle(m_ExtractRotation.z_switch, style);
             EditorGUILayout.LabelField("z: " + System.Math.Round(m_ExtractRotation.FeatureValues.Values[2], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
+            GUILayout.EndHorizontal();
+
+            EditorGUILayout.Space();
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(bodySpace);
+            m_ExtractRotation.w_switch = EditorGUILayout.Toggle(m_ExtractRotation.w_switch, style);
+            EditorGUILayout.LabelField("w: " + System.Math.Round(m_ExtractRotation.FeatureValues.Values[3], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
             GUILayout.EndHorizontal();
 
             GUILayout.Space(20);
