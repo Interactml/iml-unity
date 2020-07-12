@@ -60,6 +60,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
+  IsInitialized: 1
   InputFeatures:
   - {fileID: -5672025770827786827}
   TargetValues:
@@ -137,6 +138,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   DevMode: 0
+  IsInitialized: 1
   IMLTrainingExamplesNodes:
   - {fileID: -7499883729234944769}
   InputFeatures:
@@ -150,7 +152,7 @@ MonoBehaviour:
   EnableKeyboardControl: 0
   TrainingKey: 0
   RunningKey: 0
-  TrainOnPlaymodeChange: 0
+  TrainOnPlaymodeChange: 1
   RunOnAwake: 1
   matchLiveDataInputs: 1
 --- !u!114 &-5672025770827786827
@@ -202,6 +204,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
+  IsInitialized: 1
   GameObjectDataIn: {fileID: 0}
   LiveDataOut: {fileID: 0}
   LocalSpace: 0
@@ -246,8 +249,9 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   DevMode: 0
+  IsInitialized: 1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 21668
+  ScriptHashCode: 24910
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: SetAbsoluteColour
@@ -295,10 +299,11 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
+  IsInitialized: 1
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 1
-  GOHashCode: 21626
+  GOHashCode: 24868
   CreatedDuringPlaymode: 0
 --- !u!114 &-4001488984950691715
 MonoBehaviour:
@@ -342,6 +347,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
+  IsInitialized: 1
   ValueName: 
   m_In: 0
   m_Value: 3
@@ -416,10 +422,11 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
+  IsInitialized: 1
   ValueName: 
   m_In: 0
-  m_Value: 1
-  m_Out: 1
+  m_Value: 3
+  m_Out: 3
   ReceivingData: 0
   InputConnected: 1
   m_UserInput: 0

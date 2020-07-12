@@ -444,8 +444,10 @@ namespace InteractML
         /// Loads the model with the specified name into this instance
         /// </summary>
         /// <param name="fileName"></param>
-        public void LoadModelFromDisk(string fileName, bool reCreateModel = false)
+        public bool LoadModelFromDisk(string fileName, bool reCreateModel = false)
         {
+            bool success = false;
+
             // If we are meant to recreate the model, destroy any reference in unmanaged memory
             if (reCreateModel)
                 DestroyModel();
@@ -460,12 +462,15 @@ namespace InteractML
                 ConfigureModelWithJson(stringLoaded);
                 // We store the loaded string 
                 m_ModelJSONString = stringLoaded;
+                success = true;
             }
             // If we couldn't load anything, throw exception
             else
             {
                 throw new Exception("Couldn't load rapidlib model because nothing was found in provided path: " + fileName + ". Try resetting and re-training the model. The model might have never been trained!");
             }
+
+            return success;
         }
 
         /* INFO ABOUT LOADED MODEL */

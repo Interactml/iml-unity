@@ -85,9 +85,15 @@ namespace InteractML
         /// Loads the current model from disk (dataPath specified in IMLDataSerialization)
         /// </summary>
         /// <param name="fileName"></param>
-        public override void LoadModelFromDisk(bool reCreateModel = false)
+        public override bool LoadModelFromDisk(bool reCreateModel = false)
         {
-            m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id, reCreateModel);
+            bool success = false;
+
+            // Make sure to re-instantiate the model if null or flag is true
+            if (m_Model == null || reCreateModel)
+                m_Model = InstantiateRapidlibModel(LearningType);
+
+            success = m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id, reCreateModel);
             // We update the node learning type to match the one from the loaded model
             switch (m_Model.TypeOfModel)
             {
@@ -116,6 +122,8 @@ namespace InteractML
                 default:
                     break;
             }
+
+            return success;
         }
 
         #endregion

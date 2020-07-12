@@ -16,6 +16,9 @@
          "inputs-3",
          "inputs-1",
          "inputs-2",
+         "inputs-3",
+         "inputs-1",
+         "inputs-2",
          "inputs-3"
       ],
       "numInputs" : 3,
@@ -27,6 +30,9 @@
          "inBases" : [ -0.74541282653808594, 13.467142581939697, 0 ],
          "inRanges" : [ 12.299319267272949, 17.915877819061279, 1 ],
          "inputNames" : [
+            "inputs-1",
+            "inputs-2",
+            "inputs-3",
             "inputs-1",
             "inputs-2",
             "inputs-3",
@@ -100,6 +106,9 @@
             "inputs-3",
             "inputs-1",
             "inputs-2",
+            "inputs-3",
+            "inputs-1",
+            "inputs-2",
             "inputs-3"
          ],
          "modelType" : "Neural Network",
@@ -145,6 +154,9 @@
          "inBases" : [ -0.74541282653808594, 13.467142581939697, 0 ],
          "inRanges" : [ 12.299319267272949, 17.915877819061279, 1 ],
          "inputNames" : [
+            "inputs-1",
+            "inputs-2",
+            "inputs-3",
             "inputs-1",
             "inputs-2",
             "inputs-3",

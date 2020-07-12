@@ -1,5 +1,5 @@
 {
-  "HelpTooltip": "KEYBOARD SHORTCUTS: \n Populate Model = P \n \n This node trains the machine learning model and runs the model to recognise inputs. This is the DTW MLS it takes a series of inputs and outputs a distinct value.",
+  "HelpTooltip": "KEYBOARD SHORTCUTS: \n Train Model = P \n Populate Model = P \n \n This node trains the machine learning model and runs the model to recognise inputs. This is the DTW MLS it takes a series of inputs and outputs a distinct value.",
   "PortTooltip": [ "Connect Recorded Data", "Connect Data Type Node or Feature Extractor", "Outputs the Output value/s of the machine learning system" ],
   "BodyTooltip": {
     "tips": [

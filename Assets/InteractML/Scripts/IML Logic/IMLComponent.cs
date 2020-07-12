@@ -263,17 +263,8 @@ namespace InteractML
 #if !UNITY_EDITOR
             // If we are not on the editor...
             if (Application.isPlaying)
-            {               
-                Debug.Log("RESET AND RETRAIN CALLED FROM IML COMPONENT");    
-            
-                // Reset all models
-                //ResetAllModels();
-
-                // Retrain them
-                ReTrainAllModels();
-
-                // Run the models
-                RunAllModels();
+            {
+                LoadDataAndRunOnAwakeModels();
             }
 
 #endif
@@ -1215,6 +1206,95 @@ namespace InteractML
             }
         }
 
+        /// <summary>
+        /// Loads and runs (or retrains if needed) models from disk on awake
+        /// </summary>
+        public void LoadDataAndRunOnAwakeModels()
+        {
+            // There will be waits for things to init. Take into account
+            IEnumerator coroutine = LoadDataAndRunOnAwakeModelsCoroutine();
+            StartCoroutine(coroutine);
+
+        }
+
+        /// <summary>
+        /// Coroutine to load and run (or retrain if needed) models from disk on awake
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator LoadDataAndRunOnAwakeModelsCoroutine()
+        {
+            yield return new WaitForSeconds(0.05f);
+
+            Debug.Log("RESET AND RETRAIN CALLED FROM IML COMPONENT");
+
+            // Reset all models
+            //ResetAllModels();
+
+            // Reload Training Data Set
+            while (!LoadAllTrainingExamples())
+            {
+                // wait for a frame until the data is loaded
+                yield return null;
+            }
+
+            // Wait for another frame
+            yield return null;
+
+            // Retrain them
+            //ReTrainAllModelsCoroutine();
+
+            while(!RetrainAllModelsPrivate())
+            {
+                // wait for a frame until models are retrained
+                yield return null;
+            }
+
+            // Wait for another frame
+            yield return null;
+
+            // Run the models
+            while(!RunAllModels() )
+            {
+                yield return null;
+            }
+
+            yield break;
+
+        }
+
+        /// <summary>
+        /// Loads training data from disk and forces an init on the training examples node if not init
+        /// </summary>
+        public bool LoadAllTrainingExamples()
+        {
+            bool success = false;
+            // Only run if we got trainnig examples
+            if (m_TrainingExamplesNodesList == null && m_TrainingExamplesNodesList.Count == 0)
+                return success;
+
+            // Go through all training examples
+            foreach (var trainingExamplesNode in m_TrainingExamplesNodesList)
+            {
+                // Skip if null
+                if (trainingExamplesNode == null)
+                    continue;
+
+                // Force node init
+                while (!trainingExamplesNode.IsInitialized)
+                {
+                    // We leave the method (but we will come back to it since we call it from a coroutine)
+                    return success;
+                }
+
+                // Load Data
+                trainingExamplesNode.LoadDataFromDisk();
+
+                success = true;
+            }
+
+            return success;
+        }
+
         [ContextMenu("Delete All Models")]
         public void DeleteAllModels()
         {
@@ -1309,8 +1389,9 @@ namespace InteractML
         /// <summary>
         /// Runs all models that are marked with RunOnAwake
         /// </summary>
-        public void RunAllModels()
+        public bool RunAllModels()
         {
+            bool success = false;
             foreach (var imlConfigNode in m_IMLConfigurationNodesList)
             {
                 if (imlConfigNode)
@@ -1340,20 +1421,21 @@ namespace InteractML
                                 }
                                 if (trainingExamples)
                                 {
-                                    imlConfigNode.TrainModel();
+                                    success = imlConfigNode.TrainModel();
                                 }
                             }
                         }
-                        // Toggle Run only if the model is trained
-                        if (imlConfigNode.Trained)
+                        // Toggle Run only if the model is trained (and it is not DTW, the user should do that)
+                        if (imlConfigNode.Trained && imlConfigNode.LearningType != IMLSpecifications.LearningType.DTW)
                         {
                             imlConfigNode.ToggleRunning();
+                            success = true;
                         }
                     }
 
                 }
             }
-
+            return success;
         }
 
         /// <summary>
@@ -1370,10 +1452,41 @@ namespace InteractML
                     // Only retrains if the flag is marked to do so
                     if (imlConfigNode.TrainOnPlaymodeChange)
                         imlConfigNode.TrainModel();
+
                     yield return null;
                 }
             }
             
+        }
+
+        /// <summary>
+        /// Retrain all the models at once
+        /// </summary>
+        /// <returns></returns>
+        private bool RetrainAllModelsPrivate()
+        {
+            bool success = false;
+            foreach (var imlConfigNode in m_IMLConfigurationNodesList)
+            {
+                if (imlConfigNode)
+                {
+                    // Reset Model
+                    imlConfigNode.ResetModel();
+                    // Attempt to load if not DTW
+                    if (imlConfigNode.LearningType != IMLSpecifications.LearningType.DTW)
+                    {
+                        success = imlConfigNode.LoadModelFromDisk();
+                    }
+                    // If the model didn't succeed in loading
+                    if (!success)
+                    {
+                        // Only retrains if the flag is marked to do so
+                        if (imlConfigNode.TrainOnPlaymodeChange)
+                            success = imlConfigNode.TrainModel();
+                    }
+                }
+            }
+            return success;
         }
 
         #region SubscriptionOfMonobehaviours
