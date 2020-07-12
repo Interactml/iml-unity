@@ -1013,7 +1013,7 @@ namespace InteractML
             GUILayout.Label("reset model", m_NodeSkin.GetStyle("Reset Pink Label"));
             GUILayout.EndHorizontal();
             GUILayout.Space(15);
-            ShowRunOnAwakeToggle(node);
+            //ShowRunOnAwakeToggle(node);
             GUILayout.EndArea();
         }
 

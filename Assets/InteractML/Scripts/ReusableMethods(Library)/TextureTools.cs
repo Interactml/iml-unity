@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#if UNITY_EDITOR
+
+using System.Collections.Generic;
 using System.IO;
 using System.Collections;
 using UnityEditor;
@@ -569,3 +571,5 @@ public class TextureTools
         return tex;
     }
 }
+
+#endif

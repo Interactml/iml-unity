@@ -267,7 +267,7 @@ namespace InteractML
                 Debug.Log("RESET AND RETRAIN CALLED FROM IML COMPONENT");    
             
                 // Reset all models
-                ResetAllModels();
+                //ResetAllModels();
 
                 // Retrain them
                 ReTrainAllModels();
@@ -1315,25 +1315,37 @@ namespace InteractML
             {
                 if (imlConfigNode)
                 {
-                    // Only eun if the flag is marked to do so
+                    // Only run if the flag is marked to do so
                     bool trainingExamples = false;
-                    if (imlConfigNode.RunOnAwake && Application.isPlaying)
+                    if (imlConfigNode.RunOnAwake)
                     {
-                        if (imlConfigNode.ModelStatus == IMLSpecifications.ModelStatus.Untrained)
+                        // Attempt to load/train if the model is untrained
+                        if (imlConfigNode.Untrained)
                         {
-                            for (int i = 0; i < imlConfigNode.IMLTrainingExamplesNodes.Count; i++)
+                            // First try to load the model (unless is DTW)
+                            if (imlConfigNode.LearningType != IMLSpecifications.LearningType.DTW)
                             {
-                                if (imlConfigNode.IMLTrainingExamplesNodes[i].TrainingExamplesVector.Count > 0)
+                                imlConfigNode.LoadModelFromDisk();
+                            }
+                            // Only attempt to train if model is still untrained
+                            if (imlConfigNode.Untrained)
+                            {
+                                // Train if there are training examples available
+                                for (int i = 0; i < imlConfigNode.IMLTrainingExamplesNodes.Count; i++)
                                 {
-                                    trainingExamples = true;
+                                    if (imlConfigNode.IMLTrainingExamplesNodes[i].TrainingExamplesVector.Count > 0)
+                                    {
+                                        trainingExamples = true;
+                                    }
+                                }
+                                if (trainingExamples)
+                                {
+                                    imlConfigNode.TrainModel();
                                 }
                             }
-                            if (trainingExamples)
-                            {
-                                imlConfigNode.TrainModel();
-                            }
                         }
-                        if (imlConfigNode.ModelStatus == IMLSpecifications.ModelStatus.Trained)
+                        // Toggle Run only if the model is trained
+                        if (imlConfigNode.Trained)
                         {
                             imlConfigNode.ToggleRunning();
                         }

@@ -48,11 +48,12 @@ namespace InteractML
         {
             ShowTrainingIcon("Classification");
             ShowButtons(m_CIMLConfiguration);
+            ShowRunOnAwakeToggle(m_CIMLConfiguration as IMLConfiguration);
         }
 
 
-       
-        
+
+
         protected override void TrainModelButton()
         {
             

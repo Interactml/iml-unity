@@ -55,6 +55,7 @@ namespace InteractML
         {
             ShowTrainingIcon("DTW");
             ShowButtons(m_DTWIMLConfiguration);
+            ShowRunOnAwakeToggle(m_DTWIMLConfiguration as IMLConfiguration);
         }
 
         protected override void TrainModelButton()

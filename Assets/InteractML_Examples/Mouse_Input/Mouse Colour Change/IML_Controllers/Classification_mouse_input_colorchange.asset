@@ -34,8 +34,8 @@ MonoBehaviour:
   DevMode: 0
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
-  state: 0
-  GOHashCode: 68940
+  state: 1
+  GOHashCode: 21378
   CreatedDuringPlaymode: 0
 --- !u!114 &-7194312582767240663
 MonoBehaviour:
@@ -174,7 +174,7 @@ MonoBehaviour:
   TrainingKey: 0
   RunningKey: 0
   TrainOnPlaymodeChange: 0
-  RunOnAwake: 0
+  RunOnAwake: 1
   matchLiveDataInputs: 1
   learningChoice: 0
 --- !u!114 &11400000
@@ -411,19 +411,7 @@ MonoBehaviour:
       _dynamic: 1
   DevMode: 0
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 68982
+  ScriptHashCode: 21420
   m_PortsPerFieldInfo:
-    m_keys:
-    - _fieldName: SetAbsoluteColour
-      _node: {fileID: 7664542125311193265}
-      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_Out
-        node: {fileID: 6125476143715219942}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
+    m_keys: []
   CreatedDuringPlaymode: 0

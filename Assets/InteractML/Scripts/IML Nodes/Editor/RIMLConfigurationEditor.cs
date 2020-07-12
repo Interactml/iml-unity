@@ -49,9 +49,10 @@ namespace InteractML
         {
             ShowTrainingIcon("Regression");
             ShowButtons(m_RIMLConfiguration);
+            ShowRunOnAwakeToggle(m_RIMLConfiguration as IMLConfiguration);
         }
 
- 
+
         protected override void TrainModelButton()
         {
             // Only run button logic when rapidlib reference not null and training examples are not null

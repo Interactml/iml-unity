@@ -143,7 +143,7 @@ namespace InteractML
         /// Flag that controls if the iml model should run when the game awakes 
         /// </summary>
         [HideInInspector]
-        public bool RunOnAwake = false;
+        public bool RunOnAwake;
 
         /* NODEPORT NAMES */
         protected string m_TrainingExamplesNodeportName;
@@ -551,6 +551,10 @@ namespace InteractML
         /// <param name="fileName"></param>
         public virtual void LoadModelFromDisk(bool reCreateModel = false)
         {
+            // Make sure to re-instantiate the model if null or flag is true
+            if (m_Model == null || reCreateModel)
+                m_Model = InstantiateRapidlibModel(LearningType);
+
             m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id, reCreateModel);
             // We update the node learning type to match the one from the loaded model
             switch (m_Model.TypeOfModel)

@@ -83,6 +83,7 @@ public class IMLEditorManager
             // Reload models
             MLComponent.LoadAllModelsFromDisk(reCreateModels: true);
             // Run them (if marked with RunOnAwake)
+            MLComponent.RunAllModels();
         }
 
     }
@@ -218,6 +219,8 @@ public class IMLEditorManager
 
     }
 
+#if UNITY_EDITOR
+
     /// <summary>
     /// Creates an IML System GameObject in the scene
     /// </summary>
@@ -234,4 +237,7 @@ public class IMLEditorManager
         Undo.RegisterCreatedObjectUndo(imlSystem, "Create " + imlSystem.name);
         Selection.activeObject = imlSystem;
     }
+
+#endif
+
 }

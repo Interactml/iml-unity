@@ -167,8 +167,8 @@ MonoBehaviour:
   DevMode: 0
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
-  state: 0
-  GOHashCode: 21554
+  state: 1
+  GOHashCode: 21438
   CreatedDuringPlaymode: 0
 --- !u!114 &-3785671710325468040
 MonoBehaviour:
@@ -326,6 +326,61 @@ MonoBehaviour:
     - -5.2
     - 7.82
   ReceivingData: 0
+--- !u!114 &-427985021308498859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051a7e150efca304da37d460de663b87, type: 3}
+  m_Name: Extract Velocity
+  m_EditorClassIdentifier: 
+  id: cb549bf3-c772-48c4-bb0a-2347919a3c12
+  graph: {fileID: 11400000}
+  position: {x: 108.40431, y: -1626.3503}
+  ports:
+    keys:
+    - FeatureToInput
+    - VelocityExtracted
+    values:
+    - _fieldName: FeatureToInput
+      _node: {fileID: -427985021308498859}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: LiveDataOut
+        node: {fileID: 7011470081474174257}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: VelocityExtracted
+      _node: {fileID: -427985021308498859}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  FeatureToInput: {fileID: 7011470081474174257}
+  VelocityExtracted: {fileID: 0}
+  m_VelocityExtracted:
+    m_Values:
+    - 0
+    - 0
+    - 0
+  m_LastFrameFeatureValue:
+  - -0
+  - 0
+  - 0
+  ReceivingData: 0
+  x_switch: 1
+  y_switch: 1
+  z_switch: 1
 --- !u!114 &-279078844009144918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -407,6 +462,7 @@ MonoBehaviour:
   - {fileID: -279078844009144918}
   - {fileID: -3785671710325468040}
   - {fileID: 7011470081474174257}
+  - {fileID: -427985021308498859}
   SceneComponent: {fileID: 0}
 --- !u!114 &4052037564740709672
 MonoBehaviour:
@@ -699,7 +755,10 @@ MonoBehaviour:
     - _fieldName: LiveDataOut
       _node: {fileID: 7011470081474174257}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: FeatureToInput
+        node: {fileID: -427985021308498859}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
