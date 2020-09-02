@@ -23,7 +23,7 @@ namespace InteractML.FeatureExtractors
         /// The features that we will measure the distance to the first feature to Input
         /// </summary>
         [Input]
-        public List<Node> SecondInput;
+        public List<Node> SecondInputs;
 
         /// <summary>
         /// Node data sent outside of this node onwards
@@ -66,7 +66,7 @@ namespace InteractML.FeatureExtractors
             tooltips = IMLTooltipsSerialization.LoadTooltip("Distance");
             // This extractor expects any other feature extracted to make calculations
             FirstInput = GetInputValue<Node>("FirstInput");
-            SecondInput = GetInputValues<Node>("SecondInput").ToList();
+            SecondInputs = GetInputValues<Node>("SecondInputs").ToList();
 
         }
 
@@ -90,58 +90,55 @@ namespace InteractML.FeatureExtractors
         public object UpdateFeature()
         {
             // This extractor expects any other feature extracted to make calculations
-            FirstInput = GetInputValue<Node>("FeatureToInput");
-            SecondInput = GetInputValues<Node>("FeaturesToMeasureDistanceToFirst").ToList();
+            FirstInput = GetInputValue<Node>("FirstInput");
+            SecondInputs = GetInputValues<Node>("SecondInputs").ToList();
+
+            
 
             if (!isUpdated)
             {
-                // If we managed to get the input
-                if (FirstInput != null && SecondInput != null)
+                // If there are connections for both input ports
+                if (FirstInput != null && SecondInputs.Count > 0)
                 {
-                    // We check that it is an IML feature
-                    var featureToUseIML = (FirstInput as IFeatureIML).FeatureValues;
-                    if (featureToUseIML != null)
+                    // We check that the first input is an IML feature
+                    var firstInputIMLFeature = (FirstInput as IFeatureIML).FeatureValues;
+                    if (firstInputIMLFeature != null)
                     {
-                        // Clear distances vector
-                        m_DistancesToFirstInput = new float[SecondInput.Count];
+                        // Clear distances vector with new vector based on the number of second inputs
+                        m_DistancesToFirstInput = new float[SecondInputs.Count];
 
-                        // We check that the features to measure the distance to the first are IML features
-                        for (int i = 0; i < SecondInput.Count; i++)
+                        
+                        for (int i = 0; i < SecondInputs.Count; i++)
                         {
-                            //Debug.Log("Calculating distance iteration: " + i);
-                            var feautureToMeasure = SecondInput[i];
-                            var featureMeasureIML = (feautureToMeasure as IFeatureIML).FeatureValues;
                             // We check that the second inputs are also iml features
-                            if (featureMeasureIML != null)
+                            var secondInputIMLFeature = (SecondInputs[i] as IFeatureIML).FeatureValues;
+                            if (secondInputIMLFeature != null)
                             {
-                                // Then we calculate the distance to the first feature
-
                                 // We make sure that the features to calculate are the same
-                                if (featureToUseIML.DataType == featureMeasureIML.DataType)
+                                if (firstInputIMLFeature.DataType == secondInputIMLFeature.DataType)
                                 {
-                                    // Calculate distance between each of the entries in the values vector
-                                    float[] distancesEachFeature = new float[featureToUseIML.Values.Length];
-                                    for (int j = 0; j < featureToUseIML.Values.Length; j++)
-                                    {
-                                        distancesEachFeature[j] = (featureMeasureIML.Values[j] - featureToUseIML.Values[j]);
-                                    }
-                                    // Follow the euclidean formula for distance: square and add together all distances
-                                    for (int j = 0; j < featureToUseIML.Values.Length; j++)
-                                    {
-                                        m_DistancesToFirstInput[i] += (distancesEachFeature[j] * distancesEachFeature[j]);
-                                    }
-
                                     // We make sure that the extracted serial vector is not null
                                     if (m_DistancesExtracted == null)
                                     {
                                         m_DistancesExtracted = new IMLSerialVector(m_DistancesToFirstInput);
                                     }
 
-                                    // Set values for velocity extracted and for last frame feature value
-                                    m_DistancesExtracted.SetValues(m_DistancesToFirstInput);
+                                    // Calculate distance between each of the entries in the values vector
+                                    float[] distancesVectorBetweenEachFeature = new float[firstInputIMLFeature.Values.Length];
 
-                                    // Make sure to mark the feature as updated to avoid calculating twice
-                                    isUpdated = true;
+                                    for (int j = 0; j < firstInputIMLFeature.Values.Length; j++)
+                                    {
+                                        distancesVectorBetweenEachFeature[j] = (secondInputIMLFeature.Values[j] - firstInputIMLFeature.Values[j]);
+                                    }
+
+
+                                    // Follow the euclidean formula for distance: square and add together all distances
+                                    for (int j = 0; j < firstInputIMLFeature.Values.Length; j++)
+                                    {
+                                        m_DistancesToFirstInput[i] += (distancesVectorBetweenEachFeature[j] * distancesVectorBetweenEachFeature[j]);
+                                    }
+
+                                    m_DistancesToFirstInput[i] = Mathf.Sqrt(m_DistancesToFirstInput[i]);
 
                                 }
                                 else
@@ -149,16 +146,23 @@ namespace InteractML.FeatureExtractors
                                     Debug.LogError("Features Types to measure distance are different!");
                                     return null;
                                 }
-
                             }
                             // If we couldn't get an input (in the second input), we return null
                             else
                             {
-                                Debug.LogError("Could not get second input " + i +" when measuring distance!");
+                                Debug.LogError("Could not get second input " + i + " when measuring distance!");
+                                m_DistancesExtracted = null;
                                 return null;
                             }
 
+                            
                         }
+
+                        // Set values for distance extracted and for last frame feature value
+                        m_DistancesExtracted.SetValues(m_DistancesToFirstInput);
+
+                        // Make sure to mark the feature as updated to avoid calculating twice
+                        isUpdated = true;
 
                         return this;
                     }
@@ -166,12 +170,14 @@ namespace InteractML.FeatureExtractors
                     else
                     {
                         Debug.LogError("Could not get first input when measuring distance!");
+                        m_DistancesExtracted = null;
                         return null;
                     }
                 }
                 // If we couldn't get an input (at all), we return null
                 else
                 {
+                    m_DistancesExtracted = null;
                     return null;
                 }
 
