@@ -199,7 +199,7 @@ namespace InteractML
                 MLSClassification = false;
             }
             // if you have started training and this is not the system trying to stop you changing the connection and it is an output port 
-            if((TrainingExamplesVector.Count > 0|| TrainingSeriesCollection.Count > 0) && from.IsInput && !badRemove)
+            if(TrainingExamplesVector.Count > 0|| TrainingSeriesCollection.Count > 0 && from.IsInput && !badRemove)
             {
                 from.Disconnect(to);
             }
