@@ -243,6 +243,7 @@ namespace InteractML
             {
                 TrainingExamplesNode temp = from.node as TrainingExamplesNode;
                 if (!temp.IMLConfigurationNodesConnected.Contains(this))
+                    temp.IMLConfigurationNodesConnected.Add(this);
             }
             
         }
