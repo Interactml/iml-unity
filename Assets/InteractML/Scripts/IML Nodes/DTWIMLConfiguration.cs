@@ -47,29 +47,6 @@ namespace InteractML
             return base.InstantiateRapidlibModel(learningType);
         }
 
-        public override bool TrainModel()
-        {
-            bool isTrained = false;
-            RunningLogic();
-            // if there are no training examples in connected training nodes do not train 
-           if(m_TotalNumTrainingData == 0)
-            {
-                Debug.Log("no training examples");
-            }
-            else
-            {
-                if (m_RapidlibTrainingSeriesCollection == null)
-                    m_RapidlibTrainingSeriesCollection = new List<RapidlibTrainingSerie>();
-
-                m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
-                isTrained = m_Model.Train(m_RapidlibTrainingSeriesCollection);
-
-            }
-
-            return isTrained;
-          
-        }
-
 
         /// <summary>
         /// Loads the current model from disk (dataPath specified in IMLDataSerialization)
