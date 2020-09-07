@@ -156,7 +156,7 @@ namespace InteractML
                     GUI.enabled = false;
 
                 //Disable button if inputs don't match attached training examples node/s
-                if (!m_DTWIMLConfiguration.matchLiveDataInputs)
+                if (!m_DTWIMLConfiguration.matchLiveDataInputs || !m_DTWIMLConfiguration.matchVectorLength)
                 {
                     Debug.Log("Number of live data nodes connected to input features do not match training examples live inputs input features");
                     GUI.enabled = false;

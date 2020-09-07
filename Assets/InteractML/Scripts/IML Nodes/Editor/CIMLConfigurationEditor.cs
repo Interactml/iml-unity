@@ -160,7 +160,7 @@ namespace InteractML
                     enabled = true;
                 }
                 //Disable button if inputs don't match attached training examples node/s
-                if (!m_CIMLConfiguration.matchLiveDataInputs)
+                if (!m_CIMLConfiguration.matchLiveDataInputs || !m_CIMLConfiguration.matchVectorLength)
                 {
                     Debug.Log("Number of live data nodes connected to input features do not match training examples live inputs input features");
                     GUI.enabled = false;
