@@ -63,7 +63,6 @@ namespace InteractML.DataTypeNodes
 
         public override void OnRemoveConnection(NodePort port)
         {
-            Debug.Log("here");
             base.OnRemoveConnection(port);
         }
 
