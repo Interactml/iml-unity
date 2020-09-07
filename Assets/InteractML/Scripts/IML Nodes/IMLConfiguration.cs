@@ -154,8 +154,10 @@ namespace InteractML
         protected bool m_WrongNumberOfTargetValues = false;
 
         private List<TrainingExamplesNode> oldTrainingExamplesNodes;
-
+        private int lengthtrainingvector;
         public bool matchLiveDataInputs = true;
+        //does the vector length match? to be deleted when new inputs implemented 
+        public bool matchVectorLength = false;
         #endregion
 
         #region XNode Messages
@@ -240,7 +242,7 @@ namespace InteractML
             if(from.fieldName == "TrainingExamplesNodeToOutput" && !m_WrongNumberOfTargetValues) 
             {
                 TrainingExamplesNode temp = from.node as TrainingExamplesNode;
-                temp.IMLConfigurationNodesConnected.Add(this);
+                if (!temp.IMLConfigurationNodesConnected.Contains(this))
             }
             
         }
@@ -336,7 +338,7 @@ namespace InteractML
 
             if (Lists.IsNullOrEmpty(ref m_DynamicOutputPorts))
                 m_DynamicOutputPorts = new List<NodePort>();
-
+            
             m_NodeConnectionChanged = false;
 
             m_LastKnownRapidlibOutputVectorSize = 0;
@@ -388,6 +390,9 @@ namespace InteractML
         {
             //Set Learning Type 
             SetLearningType();
+
+            if (Trained && !matchVectorLength)
+                CheckLengthInputsVector();
 
             // Handle Input
             //KeyboardInput();
@@ -465,8 +470,58 @@ namespace InteractML
                     //Debug.Log("***Retraining IML Config node with num Examples: " + RapidLibComponent.trainingExamples.Count + " Rapidlib training succesful: " + RapidLibComponent.Trained + "***");
                 }
             }
+            if (isTrained)
+            {
+                lengthtrainingvector = 0;
+                TrainingExamplesNode tNode = IMLTrainingExamplesNodes[0];
+                IMLTrainingExample example = tNode.TrainingExamplesVector[0];
+                foreach (IMLInput input in example.Inputs)
+                {
+                    for (int i = 0; i < input.InputData.Values.Length; i++)
+                    {
+                        lengthtrainingvector++;
+                    }
+                }
+                    
+            }
+            CheckLengthInputsVector();   
 
             return isTrained;
+        }
+
+        //checks the length of input vector and checks if the same as the trained data set to be deleted when new input system done
+        protected void CheckLengthInputsVector()
+        {
+            int vectorSize = 0;
+            if(InputFeatures != null)
+            {
+                for (int i = 0; i < InputFeatures.Count; i++)
+                {
+                    var inputFeature = InputFeatures[i] as IFeatureIML;
+                    if (inputFeature != null)
+                    {
+                        if (inputFeature.FeatureValues != null)
+                        {
+                            if (inputFeature.FeatureValues.Values != null)
+                            {
+                                vectorSize += inputFeature.FeatureValues.Values.Length;
+                            }
+                        }
+                    }
+                }
+                if (vectorSize == lengthtrainingvector)
+                {
+                    matchVectorLength = true;
+                }
+                else
+                {
+                    Debug.LogWarning("mismatch in live inputs to trained data");
+                }
+            } else {
+                matchVectorLength = false;
+
+            }
+            
         }
 
         public void ToggleRunning()
@@ -1304,7 +1359,9 @@ namespace InteractML
                 matchLiveDataInputs = true;
             else
                 matchLiveDataInputs = false;
-            
+
+   
+
         }
 
         /// <summary>
