@@ -8,6 +8,8 @@ namespace InteractML
     public class IMLNode : Node
     {
         [HideInInspector]
+        public string id;
+        [HideInInspector]
         public IMLNodeTooltips tooltips;
 
         /// <summary>
@@ -19,6 +21,7 @@ namespace InteractML
         // Use this for initialization
         protected override void Init()
         {
+            id = NodeID.CheckNodeID(id, this);
             base.Init();
             IsInitialized = true;
         }

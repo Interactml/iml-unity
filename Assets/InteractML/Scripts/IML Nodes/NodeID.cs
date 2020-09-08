@@ -5,11 +5,12 @@ using XNode;
 using System;
 
 
-    /// <summary>
-    /// Offers a collection of functions to serialize/deserialize IML data from disk
-    /// </summary>
+namespace InteractML
+{  /// <summary>
+   /// Offers a collection of functions to serialize/deserialize IML data from disk
+   /// </summary>
     public static class NodeID
-    { 
+    {
         public static string CheckNodeID(string id, Node node)
         {
             if (id == null)
@@ -18,9 +19,10 @@ using System;
             }
             else
             {
-                var match = node.graph.nodes.Find(n => {
+                var match = node.graph.nodes.Find(n =>
+                {
                     if (n == node) return false;
-                    Node skillNode = n;
+                    IMLNode skillNode = n as IMLNode;
                     return skillNode != null && skillNode.id == id;
                 });
 
@@ -32,4 +34,5 @@ using System;
             return id;
         }
     }
+}
 
