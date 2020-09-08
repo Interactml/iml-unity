@@ -28,7 +28,10 @@ namespace InteractML
             // Get reference to the current node
             m_RIMLConfiguration = (target as RIMLConfiguration);
             nodeSpace = 380;
-            NodeName = "MACHINE LEARNING SYSTEM";
+            string arrayNo = "";
+            if (m_RIMLConfiguration.numberInComponentList != -1)
+                arrayNo = m_RIMLConfiguration.numberInComponentList.ToString();
+            NodeName = "MACHINE LEARNING SYSTEM " + arrayNo;
             base.OnHeaderGUI();
         }
 

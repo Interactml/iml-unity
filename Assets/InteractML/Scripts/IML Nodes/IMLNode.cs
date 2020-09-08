@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XNode;
@@ -10,6 +11,8 @@ namespace InteractML
         [HideInInspector]
         public string id;
         [HideInInspector]
+        public int numberInComponentList = -1;
+        [HideInInspector]
         public IMLNodeTooltips tooltips;
 
         /// <summary>
@@ -17,6 +20,8 @@ namespace InteractML
         /// </summary>
         [HideInInspector]
         public bool IsInitialized = false;
+
+
 
         // Use this for initialization
         protected override void Init()
@@ -30,6 +35,26 @@ namespace InteractML
         public override object GetValue(NodePort port)
         {
             return null; // Replace this
+        }
+
+        public IMLComponent FindController()
+        {
+            IMLController MLController = graph as IMLController;
+            IMLComponent MLComponent = MLController.SceneComponent;
+            return MLComponent;
+        }
+
+        public void FindComponentListNumber<T>(List<T> list, IMLComponent MLComponent)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (this == list[i] as IMLNode)
+                {
+                    numberInComponentList = i;
+                    break;
+                }
+
+            }
         }
     }
 }

@@ -27,7 +27,10 @@ namespace InteractML
             // Get reference to the current node
             m_SingleTrainingExamplesNode = (target as SingleTrainingExamplesNode);
             nodeSpace = 360 + (m_ConnectedInputs + m_ConnectedTargets) * 60;
-            NodeName = "TEACH THE MACHINE";
+            string arrayNo = "";
+            if (m_SingleTrainingExamplesNode.numberInComponentList != -1)
+                 arrayNo = m_SingleTrainingExamplesNode.numberInComponentList.ToString();
+            NodeName = "TEACH THE MACHINE " + arrayNo;
             NodeSubtitle = "Classification & Regression Training Examples";
             base.OnHeaderGUI();
         }

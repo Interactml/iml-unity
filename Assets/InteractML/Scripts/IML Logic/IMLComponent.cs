@@ -1746,6 +1746,10 @@ namespace InteractML
         {
             if (m_TrainingExamplesNodesList.Contains(nodeToDelete))
                 m_TrainingExamplesNodesList.Remove(nodeToDelete);
+            foreach (TrainingExamplesNode tNode in m_TrainingExamplesNodesList)
+            {
+                tNode.SetArrayNumber();
+            }
         }
         /// <summary>
         /// Removes TextNoteNode From TextNoteNodeList 

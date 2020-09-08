@@ -36,7 +36,10 @@ namespace InteractML
             // Get reference to the current node
             m_DTWIMLConfiguration = (target as DTWIMLConfiguration);
             nodeSpace = 380;
-            NodeName = "MACHINE LEARNING SYSTEM";
+            string arrayNo = "";
+            if (m_DTWIMLConfiguration.numberInComponentList != -1)
+                arrayNo = m_DTWIMLConfiguration.numberInComponentList.ToString();
+            NodeName = "MACHINE LEARNING SYSTEM " + arrayNo;
             base.OnHeaderGUI();
         }
 

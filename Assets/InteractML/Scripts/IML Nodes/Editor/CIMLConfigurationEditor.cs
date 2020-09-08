@@ -29,7 +29,10 @@ namespace InteractML
             // Get reference to the current node
             m_CIMLConfiguration = (target as CIMLConfiguration);
             nodeSpace = 380;
-            NodeName = "MACHINE LEARNING SYSTEM";
+            string arrayNo = "";
+            if (m_CIMLConfiguration.numberInComponentList != -1)
+                arrayNo = m_CIMLConfiguration.numberInComponentList.ToString();
+            NodeName = "MACHINE LEARNING SYSTEM " + arrayNo;
             base.OnHeaderGUI();
         }
 

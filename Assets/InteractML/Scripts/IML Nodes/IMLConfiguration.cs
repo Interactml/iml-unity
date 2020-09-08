@@ -389,6 +389,10 @@ namespace InteractML
 
         public void UpdateLogic()
         {
+            if (numberInComponentList == -1)
+            {
+                SetArrayNumber();
+            }
             //Set Learning Type 
             SetLearningType();
 
@@ -707,6 +711,16 @@ namespace InteractML
                 pointerRawOutputVector += outputFeature.Values.Length;
             }
 
+        }
+
+        public void SetArrayNumber()
+        {
+            //Set array number
+            IMLComponent MLComponent = this.FindController();
+            List<IMLConfiguration> cNodes = new List<IMLConfiguration>();
+            if (MLComponent.IMLConfigurationNodesList != null)
+                cNodes = MLComponent.IMLConfigurationNodesList;
+            FindComponentListNumber<IMLConfiguration>(cNodes, MLComponent);
         }
 
         /// <summary>

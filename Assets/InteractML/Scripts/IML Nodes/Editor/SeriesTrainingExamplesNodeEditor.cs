@@ -35,7 +35,10 @@ namespace InteractML
             // Get reference to the current node
             m_SeriesTrainingExamplesNode = (target as SeriesTrainingExamplesNode);
             nodeSpace = 360 + (m_ConnectedInputs + m_ConnectedTargets)* 60;
-            NodeName = "TEACH THE MACHINE";
+            string arrayNo = "";
+            if (m_SeriesTrainingExamplesNode.numberInComponentList != -1)
+                arrayNo = m_SeriesTrainingExamplesNode.numberInComponentList.ToString();
+            NodeName = "TEACH THE MACHINE " + arrayNo;
             NodeSubtitle = "DTW Training Examples";
             base.OnHeaderGUI();
         }

@@ -305,6 +305,7 @@ namespace InteractML
 
             inputPortList = this.GetInputPort("InputFeatures").GetConnections();
             targetPortList = this.GetInputPort("TargetValues").GetConnections();
+            
         }
         /// <summary>
         /// Starts/Stops collecting examples when called
@@ -328,6 +329,10 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
+            if (numberInComponentList == -1)
+            {
+                SetArrayNumber();
+            }
             //Debug.Log(IMLConfigurationNodesConnected.Count);
             // Handle Input
             KeyboardInput();
@@ -665,6 +670,16 @@ namespace InteractML
             string graphName = this.graph.name;
             string fileName = graphName + "TrainingExamplesNode" + this.id;
             return fileName;
+        }
+
+        public void SetArrayNumber()
+        {
+            //Set array number
+            IMLComponent MLComponent = this.FindController();
+            List<TrainingExamplesNode> tNodes = new List<TrainingExamplesNode>();
+            if (MLComponent.TrainingExamplesNodesList != null)
+                tNodes = MLComponent.TrainingExamplesNodesList;
+            FindComponentListNumber<TrainingExamplesNode>(tNodes, MLComponent);
         }
 
         protected void KeyboardInput()
