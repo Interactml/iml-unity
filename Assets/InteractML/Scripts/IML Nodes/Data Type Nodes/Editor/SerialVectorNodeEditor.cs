@@ -20,7 +20,7 @@ namespace InteractML.DataTypeNodes
         {
             m_SerialVectorNode = (target as SerialVectorNode);
             NodeName = "LIVE SERIAL VECTOR DATA";
-            nodeSpace = 140;
+            nodeSpace = 120 + (m_ConnectedInputs * 20);
             base.OnHeaderGUI();
         }
 
@@ -31,7 +31,8 @@ namespace InteractML.DataTypeNodes
             base.InputPortsNamesOverride.Add("m_In", "Serial Vector\nData In");
             base.OutputPortsNamesOverride.Add("m_Out", "Serial Vector \nData Out");
             base.nodeTips = m_SerialVectorNode.tooltips;
-            m_BodyRect.height = 80;
+            m_ConnectedInputs = m_SerialVectorNode.FeatureValues.Values.Length;
+            m_BodyRect.height = 60 + (m_ConnectedInputs * 20);
             base.OnBodyGUI();
         }
 
@@ -47,12 +48,16 @@ namespace InteractML.DataTypeNodes
             m_InnerBodyRect.height = m_BodyRect.height - 20;
 
             GUILayout.BeginArea(m_InnerBodyRect);
-            EditorGUILayout.LabelField("Name: " + m_SerialVectorNode.ValueName, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
-            
-            if (m_SerialVectorNode.FeatureValues.Values.Length != 0 && m_SerialVectorNode.FeatureValues.Values != null) { 
+
+            if (m_SerialVectorNode.FeatureValues.Values.Length == 0 || m_SerialVectorNode.FeatureValues.Values == null)
+            {
+                EditorGUILayout.LabelField("Connect an array", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+            }
+            else
+            { 
                 for (int i = 0; i < m_SerialVectorNode.FeatureValues.Values.Length; i++)
                 {
-                    EditorGUILayout.LabelField("Size: " + System.Math.Round(m_SerialVectorNode.FeatureValues.Values[i], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
+                    EditorGUILayout.LabelField("Element " + i + ":  " + System.Math.Round(m_SerialVectorNode.FeatureValues.Values[i], 3).ToString(), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label"));
                 }
             }
             GUILayout.EndArea();
