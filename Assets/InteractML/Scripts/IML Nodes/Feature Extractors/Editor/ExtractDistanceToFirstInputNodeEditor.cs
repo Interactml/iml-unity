@@ -19,7 +19,8 @@ namespace InteractML.FeatureExtractors
         {
             // Get reference to the current node
             m_ExtractDistanceToFirstInput = (target as ExtractDistanceToFirstInput);
-            nodeSpace = 210;
+            nodeSpace = 110 + (m_ConnectedInputs * 20);
+
             NodeName = "DISTANCE BETWEEN INPUTS";
             base.OnHeaderGUI();
         }
@@ -32,7 +33,8 @@ namespace InteractML.FeatureExtractors
             base.InputPortsNamesOverride.Add("SecondInputs", "Second Input");
             base.OutputPortsNamesOverride.Add("DistanceBetweenInputs", "Distance\nBetween\nInputs");
             base.nodeTips = m_ExtractDistanceToFirstInput.tooltips;
-            m_BodyRect.height = 150;
+            m_ConnectedInputs = m_ExtractDistanceToFirstInput.FeatureValues.Values.Length;
+            m_BodyRect.height = 60 + (m_ConnectedInputs * 20);
             base.OnBodyGUI();
         }
 
