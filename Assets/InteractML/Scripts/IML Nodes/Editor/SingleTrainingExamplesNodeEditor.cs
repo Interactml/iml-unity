@@ -73,7 +73,7 @@ namespace InteractML
             int spacing = 75;
             GUILayout.Space(40);
 
-            // show record examples buttons 
+            // show record ONE example button
             GUILayout.BeginHorizontal();
             GUILayout.Space(spacing);
             if (GUILayout.Button(new GUIContent("Record One \n example"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record One Button")))
@@ -98,6 +98,7 @@ namespace InteractML
                 buttonTipHelper = false;
             }
 
+            // show record examples button
             GUILayout.Space(spacing);
             string recordNameButton = ShowRecordExamplesButton();
 
@@ -170,7 +171,7 @@ namespace InteractML
                 }
             }*/
 
-            // Draw button
+            // Draw button record examples
             if (disableButton)
                 GUI.enabled = false;
             if (GUILayout.Button("Record Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button")))
