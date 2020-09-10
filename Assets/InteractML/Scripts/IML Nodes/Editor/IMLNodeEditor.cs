@@ -633,7 +633,7 @@ namespace InteractML
 
         public void ShowWarning(string tip)
         {
-            m_InnerWarningRect.x = m_WarningRect.x + 20;
+          /*  m_InnerWarningRect.x = m_WarningRect.x + 20;
             m_InnerWarningRect.y = m_WarningRect.y + 20;
             m_InnerWarningRect.width = m_WarningRect.width - 40;
             m_InnerWarningRect.height = m_WarningRect.height - 40;
@@ -644,18 +644,17 @@ namespace InteractML
             m_InnerInnerWarningRect.x = m_InnerWarningRect.x + 10;
             m_InnerInnerWarningRect.y = m_InnerWarningRect.y + 10;
             m_InnerInnerWarningRect.width = m_InnerWarningRect.width - 20;
-            m_InnerInnerWarningRect.height = m_InnerWarningRect.height - 20;
+            m_InnerInnerWarningRect.height = m_InnerWarningRect.height - 20;*/
 
-            GUILayout.BeginArea(m_InnerInnerWarningRect);
             GUILayout.BeginHorizontal();
             GUILayout.Button("", m_NodeSkin.GetStyle("Warning"));
-            GUILayout.Space(5);
+            GUILayout.Space(35);
             GUILayout.Label("Warning", m_NodeSkin.GetStyle("Warning Header"));
             GUILayout.EndHorizontal();
             GUILayout.Space(5);
             GUILayout.Label(tip, m_NodeSkin.GetStyle("Warning Label"));
 
-            GUILayout.EndArea();
+            
 
         }
         /// <summary>
@@ -954,7 +953,7 @@ namespace InteractML
         protected void ShowRunOnAwakeToggle(IMLConfiguration configNode)
         {
             GUILayout.BeginHorizontal();
-            GUILayout.Space(bodySpace);
+            GUILayout.Space(15);
             configNode.RunOnAwake = EditorGUILayout.Toggle(configNode.RunOnAwake, m_NodeSkin.GetStyle("Local Space Toggle"));
             EditorGUILayout.LabelField("Run Model On Play", m_NodeSkin.GetStyle("Node Local Space Label"));
             GUILayout.EndHorizontal();

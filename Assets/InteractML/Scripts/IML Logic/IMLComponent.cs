@@ -517,6 +517,10 @@ namespace InteractML
 
         private void RunIMLConfigurationsLogic()
         {
+            if(m_IMLConfigurationNodesList == null)
+            {
+                GetAllNodes();
+            }
             for (int i = 0; i < m_IMLConfigurationNodesList.Count; i++)
             {
                 // If the node is null...
@@ -1728,6 +1732,10 @@ namespace InteractML
         {
             if (m_IMLConfigurationNodesList.Contains(nodeToDelete))
                 m_IMLConfigurationNodesList.Remove(nodeToDelete);
+            foreach (IMLConfiguration cNode in m_IMLConfigurationNodesList)
+            {
+                cNode.SetArrayNumber();
+            }
         }
         /// <summary>
         /// Removes RealtimeOutputNode From RealtimeOutputNodeList 

@@ -27,7 +27,7 @@ namespace InteractML
         {
             // Get reference to the current node
             m_RIMLConfiguration = (target as RIMLConfiguration);
-            nodeSpace = 380;
+            nodeSpace = 60;
             string arrayNo = "";
             if (m_RIMLConfiguration.numberInComponentList != -1)
                 arrayNo = m_RIMLConfiguration.numberInComponentList.ToString();
@@ -42,8 +42,7 @@ namespace InteractML
             InputPortsNamesOverride.Add("IMLTrainingExamplesNodes", "Recorded Data In");
             InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
             base.nodeTips = m_RIMLConfiguration.tooltips;
-            m_BodyRect.height = 320;
-            m_BodyRect.height = 320;
+            m_BodyRect.height = 360;
             base.OnBodyGUI();
 
         }
@@ -51,8 +50,16 @@ namespace InteractML
         protected override void ShowBodyFields()
         {
             ShowTrainingIcon("Regression");
+            GUILayout.Space(320);
             ShowButtons(m_RIMLConfiguration);
             ShowRunOnAwakeToggle(m_RIMLConfiguration as IMLConfiguration);
+            // if there is an error show the correct warning
+            if (m_RIMLConfiguration.error)
+            {
+                nodeSpace = 70;
+                m_BodyRect.height = m_BodyRect.height + HeaderRect.height + 40;
+                ShowWarning(m_RIMLConfiguration.warning);
+            }
         }
 
 

@@ -10,7 +10,7 @@ using XNodeEditor;
 namespace InteractML
 {
     [CustomNodeEditor(typeof(DTWIMLConfiguration))]
-    public class CDTWIMLConfigurationEditor : IMLNodeEditor
+    public class DTWIMLConfigurationEditor : IMLNodeEditor
     {
 
         #region Variables 
@@ -35,7 +35,7 @@ namespace InteractML
         {
             // Get reference to the current node
             m_DTWIMLConfiguration = (target as DTWIMLConfiguration);
-            nodeSpace = 380;
+            nodeSpace = 20;
             string arrayNo = "";
             if (m_DTWIMLConfiguration.numberInComponentList != -1)
                 arrayNo = m_DTWIMLConfiguration.numberInComponentList.ToString();
@@ -50,7 +50,7 @@ namespace InteractML
             InputPortsNamesOverride.Add("IMLTrainingExamplesNodes", "Recorded Data In");
             InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
             base.nodeTips = m_DTWIMLConfiguration.tooltips;
-            m_BodyRect.height = 320;
+            m_BodyRect.height = 330;
             base.OnBodyGUI();
         }
 
@@ -58,8 +58,20 @@ namespace InteractML
         {
             ShowTrainingIcon("DTW");
             ShowButtons(m_DTWIMLConfiguration);
+            GUILayout.Space(320);
             ShowRunOnAwakeToggle(m_DTWIMLConfiguration as IMLConfiguration);
+            GUILayout.Space(20);
+            // if there is an error show the correct warning
+            if (m_DTWIMLConfiguration.error)
+            {
+                nodeSpace = 40;
+                m_BodyRect.height = 430;
+                ShowWarning(m_DTWIMLConfiguration.warning);
+            }
+
+            
         }
+
 
         protected override void TrainModelButton()
         {

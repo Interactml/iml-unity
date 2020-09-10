@@ -69,6 +69,10 @@ namespace InteractML
             GUILayout.Space(bodySpace);
             DrawValues(m_SeriesTrainingExamplesNode.DesiredOutputFeatures, "Target Values");
             ShowButtons();
+            if(m_SeriesTrainingExamplesNode.TrainingSeriesCollection.Count > 0)
+            {
+                ShowWarning(m_SeriesTrainingExamplesNode.tooltips.BottomError[0]);
+            }
             GUILayout.EndArea();
             ShowTrainingExamplesDropdown();
         }

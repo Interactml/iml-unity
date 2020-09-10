@@ -61,6 +61,12 @@ namespace InteractML
             GUILayout.Space(bodySpace);
             DrawValues(m_SingleTrainingExamplesNode.DesiredOutputFeatures, "Target Values");
             ShowButtons();
+            if (m_SingleTrainingExamplesNode.TrainingExamplesVector.Count > 0)
+            {
+                nodeSpace = 450 + (m_ConnectedInputs + m_ConnectedTargets) * 60;
+                m_BodyRect.height = 400 + (m_ConnectedInputs + m_ConnectedTargets) * 60;
+                ShowWarning(m_SingleTrainingExamplesNode.tooltips.BottomError[0]);
+            }
             GUILayout.EndArea();
             ShowTrainingExamplesDropdown();
         }

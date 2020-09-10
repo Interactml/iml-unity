@@ -13,5 +13,10 @@
       "error 2"
     ]
   },
-  "BottomError": [ "No training data please connect a Recorded Data Node or Record Examples on the connected node. ", "No live data please connect Live Data In to Data Type Nodes or Feature Extractor", "The number of recorded training examples does not match the examples used to train the model. Do you need to retrain?" ]
+  "BottomError": [
+    "No training data please connect a Recorded Data Node or Record Examples on the connected node. ",
+    "No live data please connect Live Data In to Data Type Nodes or Feature Extractor",
+    "The number of recorded training examples does not match the examples used to train the model. Do you need to retrain?",
+    "Live data in does not match the trained examples",
+    "Machine Learning system can only run in play mode"]
 }
