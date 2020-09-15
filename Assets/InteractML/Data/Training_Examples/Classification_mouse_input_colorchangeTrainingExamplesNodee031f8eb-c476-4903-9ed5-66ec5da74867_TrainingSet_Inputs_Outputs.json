@@ -1,0 +1,26 @@
+[
+  {
+    "Inputs": [
+      {
+        "InputType": 0,
+        "InputData": {
+          "Values": [
+            0.0
+          ],
+          "DataType": 1
+        }
+      }
+    ],
+    "Outputs": [
+      {
+        "OutputType": 0,
+        "OutputData": {
+          "Values": [
+            3.0
+          ],
+          "DataType": 1
+        }
+      }
+    ]
+  }
+]

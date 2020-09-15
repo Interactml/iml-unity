@@ -14,8 +14,6 @@ using UnityEngine;
 /// This component is responsible for moving the character capsule to match the HMD, fading out the camera or blocking movement when 
 /// collisions occur, and adjusting the character capsule height to match the HMD's offset from the ground.
 /// </summary>
-[RequireComponent(typeof(CharacterController))]
-[RequireComponent(typeof(OVRPlayerController))]
 public class CharacterCameraConstraint : MonoBehaviour
 {
 	/// <summary>
@@ -25,28 +23,11 @@ public class CharacterCameraConstraint : MonoBehaviour
 	public OVRCameraRig CameraRig;
 
 	/// <summary>
-	/// This value represents the character capsule's distance from the HMD's position. When the player is moving in legal space without collisions, this will be zero.
-	/// </summary>
-	[Tooltip("This value represents the character capsule's distance from the HMD's position. When the player is moving in legal space without collisions, this will be zero.")]
-	public float CurrentDistance;
-
-	/// <summary>
-	/// When true, the camera will fade to black when the HMD is moved into collidable geometry.
-	/// </summary>
-	[Tooltip("When true, the camera will fade to black when the HMD is moved into collidable geometry.")]
-	public bool EnableFadeout;
-
-	/// <summary>
-	/// When true, the camera will be prevented from passing through collidable geometry. This is usually considered uncomfortable for users.
+	/// When true, the character capsule won't grow into upwards geo when the player stands up under a low surface.
 	/// </summary>
 	[Tooltip("When true, the camera will be prevented from passing through collidable geometry. This is usually considered uncomfortable for users.")]
 	public bool EnableCollision;
-
-	/// <summary>
-	/// When true, adjust the character controller height on the fly to match the HMD's offset from the ground which will allow ducking to go through smaller spaces.
-	/// </summary>
-	[Tooltip("When true, adjust the character controller height on the fly to match the HMD's offset from the ground which will allow ducking to go through smaller spaces.")]
-	public bool DynamicHeight;
+	public LayerMask CollideLayers;
 
 	/// <summary>
 	/// This should be set to 1 to make the screen completely fade out when the HMD is inside world geometry. Lesser values can be useful for testing.
@@ -61,6 +42,12 @@ public class CharacterCameraConstraint : MonoBehaviour
 	public float FadeMinDistance = 0.25f;
 
 	/// <summary>
+	/// If > 0, the capsule will stretch or shrink so that the top of it is at the camera's y location.
+	/// Note that if you want the capsule to go a bit higher than the camera you'll need to add your own padding logic.
+	/// </summary>
+    public float PreferredHeight = 1.0f;
+
+	/// <summary>
 	/// This value is used to control how far from the character capsule the HMD must be before the fade to black is complete. 
 	/// This should be tuned so that it is fully faded in before the camera will clip geometry that the player should not be able see beyond.
 	/// </summary>
@@ -69,48 +56,51 @@ public class CharacterCameraConstraint : MonoBehaviour
 
 	private readonly Action _cameraUpdateAction;
 	private readonly Action _preCharacterMovementAction;
-	private CharacterController _character;
-	private OVRPlayerController _playerController;
+
+	private CapsuleCollider _character;
+    private SimpleCapsuleWithStickMovement _simplePlayerController;
 
 	CharacterCameraConstraint()
 	{
 		_cameraUpdateAction = CameraUpdate;
-		_preCharacterMovementAction = PreCharacterMovement;
 	}
 
 	void Awake ()
 	{
-		_character = GetComponent<CharacterController>();
-		_playerController = GetComponent<OVRPlayerController>();
+		_character = GetComponent<CapsuleCollider>();
+		_simplePlayerController = GetComponent<SimpleCapsuleWithStickMovement>();
+	}
+
+	private void Start()
+	{
 	}
 
 	void OnEnable()
 	{
-		_playerController.CameraUpdated += _cameraUpdateAction;
-		_playerController.PreCharacterMove += _preCharacterMovementAction;
+        _simplePlayerController.CameraUpdated += _cameraUpdateAction;
 	}
 
 	void OnDisable()
 	{
-		_playerController.PreCharacterMove -= _preCharacterMovementAction;
-		_playerController.CameraUpdated -= _cameraUpdateAction;
+        _simplePlayerController.CameraUpdated -= _cameraUpdateAction;
 	}
 
-	/// <summary>
-	/// This method is the handler for the PlayerController.CameraUpdated event, which is used
-	/// to update the character height based on camera position.
-	/// </summary>
-	private void CameraUpdate()
+    /// <summary>
+    /// This method is the handler for the PlayerController.CameraUpdated event, which is used
+    /// to update the character height based on camera position.
+    /// </summary>
+    private void CameraUpdate()
 	{
 		// If dynamic height is enabled, try to adjust the controller height to the height of the camera.
-		if (DynamicHeight)
+		if (PreferredHeight > 0.0f)
 		{
-			var cameraHeight = _playerController.CameraHeight;
-
-			// If the new height is less than before, just accept the reduced height.
-			if (cameraHeight <= _character.height)
+            float camHeight = Mathf.Min(CameraRig.centerEyeAnchor.transform.localPosition.y, PreferredHeight);
+			float newHeight = camHeight;
+			
+			// If the new height is less than before, or we don't need to check for collision, just accept the new height.
+			if (camHeight <= _character.height || !EnableCollision)
 			{
-				_character.height = cameraHeight - _character.skinWidth;
+                // we're good, do nothing.
 			}
 			else
 			{
@@ -122,90 +112,28 @@ public class CharacterCameraConstraint : MonoBehaviour
 				// however it is useful to keep the character controller at a size that fits the space because this would allow
 				// the player to move to a taller space. If the character controller was simply made as tall as the camera wanted,
 				// the player would then be stuck and unable to move at all until the player ducked back down to the 
-				// necessary elevation.
-				var bottom = _character.transform.position;
-				bottom += _character.center;
-				bottom.y -= _character.height / 2.0f + _character.radius;
+				// necessary elevation. 
+				Vector3 rayStart = _character.transform.position;
 				RaycastHit info;
-				var pad = _character.radius - _character.skinWidth;
-				if (EnableCollision && Physics.SphereCast(bottom, _character.radius, Vector3.up, out info, cameraHeight + pad,
-					_character.gameObject.layer, QueryTriggerInteraction.Ignore))
+				Vector3 rayEnd = rayStart;
+				rayEnd.y += newHeight * 4;
+				Debug.DrawLine(rayStart, rayEnd);
+				if (Physics.SphereCast(rayStart, _character.radius * 0.2f, Vector3.up, out info, 4.0f,
+					CollideLayers, QueryTriggerInteraction.Ignore))
 				{
-					_character.height = info.distance - _character.radius - _character.skinWidth;
-					var t = _character.transform;
-					var p = t.position;
-					p.y -= (cameraHeight - info.distance + pad); 
-					t.position = p;
-				}
-				else
-				{
-					_character.height = cameraHeight - _character.skinWidth;
-				}
+					newHeight = info.distance + _character.radius;
+				} // else, no hit, we're fine
 			}
+
+			// camHeight/newHeight here is tracking space distance from player's eyes to player's feet.
+			// But note that the player controller is centered in the middle of the rigid body.
+			// So we move the camera position down by half the player's height to get the eye position to line
+			// up with the top of the capsule.
+			_character.height = newHeight;
+			Vector3 newCamPos = CameraRig.transform.localPosition;
+			newCamPos.y = -_character.height * 0.5f;
+			CameraRig.transform.localPosition = newCamPos;
 		}
 	}
 
-	/// <summary>
-	/// This method is the handler for the PlayerController.PreCharacterMove event, which is used
-	/// to do the work of fading out the camera or adjust the position depending on the 
-	/// settings and the relationship of where the camera is and where the character is.
-	/// </summary>
-	void PreCharacterMovement()
-	{
-		if (_playerController.Teleported)
-			return;
-		
-		// First, determine if the lateral movement will collide with the scene geometry.
-		var oldCameraPos = CameraRig.transform.position;
-		var wpos = CameraRig.centerEyeAnchor.position;
-		var delta = wpos - transform.position;
-		delta.y = 0;
-		var len = delta.magnitude;
-		if (len > 0.0f)
-		{
-			_character.Move(delta);
-			var currentDelta = transform.position - wpos;
-			currentDelta.y = 0;
-			CurrentDistance = currentDelta.magnitude;
-			CameraRig.transform.position = oldCameraPos;
-			if (EnableCollision)
-			{
-				if (CurrentDistance > 0)
-				{
-					CameraRig.transform.position = oldCameraPos - delta;
-				}
-				//OVRInspector.instance.fader.SetFadeLevel(0);
-				return;
-			}
-		}
-		else
-		{
-			CurrentDistance = 0;
-		}
-
-		// Next, determine if the player camera is colliding with something above the player by doing a sphere test from the feet to the head.
-		var bottom = transform.position;
-		bottom += _character.center;
-		bottom.y -= _character.height / 2.0f;
-
-		RaycastHit info;
-		var max = _playerController.CameraHeight;
-		if (Physics.SphereCast(bottom, _character.radius, Vector3.up, out info, max,
-			gameObject.layer, QueryTriggerInteraction.Ignore))
-		{
-			// It hit something. Use the fade distance min/max to determine how much to fade.
-			var dist = info.distance;
-			dist = max - dist;
-			if (dist > CurrentDistance)
-			{
-				CurrentDistance = dist;
-			}
-		}
-
-		//if (EnableFadeout)
-		//{
-			//float fadeLevel = Mathf.Clamp01((CurrentDistance - FadeMinDistance)/ (FadeMaxDistance - FadeMinDistance));
-			//OVRInspector.instance.fader.SetFadeLevel(fadeLevel * MaxFade);
-		//}
-	}
 }

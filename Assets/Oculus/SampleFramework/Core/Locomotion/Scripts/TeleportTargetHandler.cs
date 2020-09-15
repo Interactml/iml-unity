@@ -112,6 +112,7 @@ public abstract class TeleportTargetHandler : TeleportSupport
 	/// <param name="end"></param>
 	protected abstract bool ConsiderTeleport(Vector3 start, ref Vector3 end);
 
+	const float ERROR_MARGIN = 0.1f;
 
 	/// <summary>
 	/// Adjust the provided located to account for character height and perform any checks that might
@@ -123,13 +124,12 @@ public abstract class TeleportTargetHandler : TeleportSupport
 	public virtual Vector3? ConsiderDestination(Vector3 location)
 	{
 		var character = LocomotionTeleport.LocomotionController.CharacterController;
-		var radius = character.radius - character.skinWidth;
-		var skinWidth = character.skinWidth;
+		var radius = character.radius - ERROR_MARGIN;
 
 		var start = location;
-		start.y += radius + skinWidth;
+		start.y += radius + ERROR_MARGIN;
 		var end = start;
-		end.y += character.height - skinWidth;
+		end.y += character.height - ERROR_MARGIN;
 
 		var result = Physics.CheckCapsule(start, end, radius,
 			AimCollisionLayerMask, QueryTriggerInteraction.Ignore);

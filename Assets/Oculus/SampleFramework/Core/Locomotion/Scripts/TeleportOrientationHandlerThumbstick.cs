@@ -28,9 +28,9 @@ public class TeleportOrientationHandlerThumbstick : TeleportOrientationHandler
 	public OVRInput.Controller Thumbstick;
 
 	/// <summary>
-	/// The orientation will only change if the thumbstick magnitude is above this value. This will usually be larger than the TeleportInputHandlerAvatarTouch.ThumbstickTeleportThreshold.
+	/// The orientation will only change if the thumbstick magnitude is above this value. This will usually be larger than the TeleportInputHandlerTouch.ThumbstickTeleportThreshold.
 	/// </summary>
-	[Tooltip("The orientation will only change if the thumbstick magnitude is above this value. This will usually be larger than the TeleportInputHandlerAvatarTouch.ThumbstickTeleportThreshold.")]
+	[Tooltip("The orientation will only change if the thumbstick magnitude is above this value. This will usually be larger than the TeleportInputHandlerTouch.ThumbstickTeleportThreshold.")]
 	public float RotateStickThreshold = 0.8f;
 
 	private Quaternion _initialRotation;
