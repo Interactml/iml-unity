@@ -9,6 +9,9 @@ using XNodeEditor;
 
 namespace InteractML
 {
+    /// <summary>
+    /// Editor for Single Training Examples Node known as Teach the Machine Classification and Regression
+    /// </summary>
     [CustomNodeEditor(typeof(SingleTrainingExamplesNode))]
     public class SingleTrainingExamplesNodeEditor : TrainingExamplesNodeEditor
     {
