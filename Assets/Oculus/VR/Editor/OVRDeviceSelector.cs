@@ -26,15 +26,6 @@ using UnityEditor;
 
 public class OVRDeviceSelector
 {
-	public static bool isTargetDeviceGearVrOrGo
-	{
-		get
-		{
-			OVRProjectConfig projectConfig = OVRProjectConfig.GetProjectConfig();
-			return projectConfig.targetDeviceTypes.Contains(OVRProjectConfig.DeviceType.GearVrOrGo);
-		}
-	}
-
 	public static bool isTargetDeviceQuest
 	{
 		get

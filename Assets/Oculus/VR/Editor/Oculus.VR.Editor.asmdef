@@ -13,7 +13,12 @@
         {
             "name": "com.unity.xr.management",
             "expression": "",
-            "define": "USING_XR_SDK"
+            "define": "USING_XR_MANAGEMENT"
+        },
+        {
+            "name": "com.unity.xr.oculus",
+            "expression": "",
+            "define": "USING_XR_SDK_OCULUS"
         }
     ]
 }

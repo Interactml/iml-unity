@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4000013012824352}
   - component: {fileID: 33000011886826330}
   - component: {fileID: 23000012145311598}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000014291504098}
   - component: {fileID: 114000013141257940}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: TeleportDestination
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,7 +54,7 @@ GameObject:
   - component: {fileID: 4000011801263008}
   - component: {fileID: 33000012318126592}
   - component: {fileID: 23000010924140402}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Position
   m_TagString: Untagged
   m_Icon: {fileID: 0}
