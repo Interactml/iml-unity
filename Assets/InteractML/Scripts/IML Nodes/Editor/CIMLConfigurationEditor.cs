@@ -38,7 +38,6 @@ namespace InteractML
 
         public override void OnBodyGUI()
         {
-            NodeWidth = 300;
             InputPortsNamesOverride = new Dictionary<string, string>();
             InputPortsNamesOverride.Add("IMLTrainingExamplesNodes", "Recorded Data In");
             InputPortsNamesOverride.Add("InputFeatures", "Live Data In");

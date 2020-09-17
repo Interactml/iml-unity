@@ -45,7 +45,7 @@ namespace InteractML
         /// Float value for node width
         /// </summary>
         /// <returns></returns>
-        protected float NodeWidth { get; set; } = 250f;
+        protected float NodeWidth;
 
 
 
@@ -187,7 +187,6 @@ namespace InteractML
 
         public override void OnHeaderGUI()
         {
-            
             // Load node skin
             if (m_NodeSkin == null)
                 m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
@@ -199,7 +198,7 @@ namespace InteractML
                 m_IMLNode = target as IMLNode;
                 m_IMLNodeSerialized = new SerializedObject(m_IMLNode);
 
-
+                NodeWidth = this.GetWidth();
                 // Initialise header background Rects
                 InitHeaderRects();
 
@@ -214,8 +213,8 @@ namespace InteractML
 
                 GUILayout.BeginArea(HeaderRect);
                 GUILayout.Label(NodeName, m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
-                if(!String.IsNullOrEmpty(NodeSubtitle))
-                    GUILayout.Label(NodeSubtitle, m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
+                //if(!String.IsNullOrEmpty(NodeSubtitle)) this causes the GUI to stutter 
+                GUILayout.Label(NodeSubtitle, m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
                 GUILayout.EndArea();
 
                 GUILayout.Label("", GUILayout.MinHeight(60));
@@ -940,6 +939,18 @@ namespace InteractML
             EditorGUILayout.Space();
 
         }
+        protected virtual void ShowTrainingExamplesDropdown()
+        {
+            Debug.Log("should be implemented in single or series node editor");
+        }
+        /// <summary>
+        /// Show the load, delete and record buttons
+        /// </summary>
+        protected virtual void ShowButtons()
+        {
+
+        }
+        
         #endregion
         #region IMLConfiguration Node Methods 
         /// <summary>

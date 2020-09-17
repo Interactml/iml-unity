@@ -27,25 +27,53 @@ namespace InteractML
         protected Rect m_BodyRectButtons;
         protected Rect m_BodyRectBottom;
         protected Rect m_Dropdown;
-
-
         /// <summary>
-        /// Bool for add/remove output
+        /// Boolean that shows or hides training data
         /// </summary>
-        private bool m_AddOutput;
-        private bool m_RemoveOutput;
-
-        private static GUIStyle editorLabelStyle;
-
-        bool help = false;
-
         protected bool m_ShowTrainingDataDropdown;
+        /// <summary>
+        /// Position of scroll for dropdown
+        /// </summary>
         protected Vector2 m_ScrollPos;
+        /// <summary>
+        /// holds the base height of the node for recalculating height
+        /// </summary>
+        protected float baseNodeBodyHeight;
+        /// <summary>
+        /// Holds whether show warning was changed in the last frame
+        /// </summary>
+        protected bool lastShowWarning = false;
 
         #endregion
+        #region XNode messages
+        public override void OnHeaderGUI()
+        {
+            // Get reference to the current node
+            m_TrainingExamplesNode = (target as TrainingExamplesNode);
+            base.OnHeaderGUI();
+        }
 
+        public override void OnBodyGUI()
+        {
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            OutputPortsNamesOverride.Add("TrainingExamplesNodeToOutput", "Recorded\nExamples");
 
+            InputPortsNamesOverride = new Dictionary<string, string>();
+            InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
+            InputPortsNamesOverride.Add("TargetValues", "Target Values");
 
+            base.nodeTips = m_TrainingExamplesNode.tooltips;
+            if (m_TrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_TrainingExamplesNode.DesiredOutputFeatures.Count|| lastShowWarning != m_TrainingExamplesNode.showWarning)
+                m_RecalculateRects = true;
+            m_ConnectedInputs = m_TrainingExamplesNode.DesiredInputFeatures.Count;
+            m_ConnectedTargets = m_TrainingExamplesNode.DesiredOutputFeatures.Count;
+            lastShowWarning = m_TrainingExamplesNode.showWarning;
+            base.OnBodyGUI();
+        }
+        #endregion
+        /// <summary>
+        /// Initialise body layout 
+        /// </summary>
         protected override void InitBodyLayout()
         {
             if (m_RecalculateRects)
@@ -53,188 +81,123 @@ namespace InteractML
                 m_BodyRect.x = 5;
                 m_BodyRect.y = HeaderRect.height + m_PortRect.height;
                 m_BodyRect.width = NodeWidth - 10;
-                m_BodyRect.height = 310 + (m_ConnectedInputs + m_ConnectedTargets) * 60;
+                // height is the base node height plus the number of inputs/targets 
+                m_BodyRect.height = baseNodeBodyHeight + ((m_ConnectedInputs + m_ConnectedTargets) * 80);
+                // if showing warning increase height 
+                if (m_TrainingExamplesNode.showWarning)
+                {
+                    m_BodyRect.height += 60;
+                }
+                nodeSpace = m_BodyRect.height + 50;
             }
         }
-
         /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
+        /// GUI elements that show up in the body of the node
         /// </summary>
-        protected void DrawBodyLayoutInputs(int connectedInputs)
+        protected override void ShowBodyFields()
         {
-            m_BodyRectInputs.x = 5;
-            m_BodyRectInputs.y = HeaderRect.height + m_PortRect.height;
-            m_BodyRectInputs.width = NodeWidth - 10;
-            m_BodyRectInputs.height = 80 + connectedInputs * 60;
-
-            // Draw body background purple rect below ports
-            GUI.DrawTexture(m_BodyRectInputs, NodeColor);
-
-
-            // Draw line below add/remove buttons
-            GUI.DrawTexture(new Rect(m_BodyRectInputs.x, m_BodyRectInputs.y + m_BodyRectInputs.height - WeightOfSeparatorLine, m_BodyRectInputs.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
-        }
-
-        protected void DrawBodyLayoutTargets(int connectedTargets)
-        {
-            m_BodyRectTargets.x = 5;
-            m_BodyRectTargets.y = m_BodyRectInputs.y + m_BodyRectInputs.height + WeightOfSeparatorLine;
-            m_BodyRectTargets.width = NodeWidth - 10;
-            m_BodyRectTargets.height = 80 + connectedTargets * 60;
-
-            // Draw body background purple rect below ports
-            GUI.DrawTexture(m_BodyRectTargets, NodeColor);
-
-            // Draw line below add/remove buttons
-            GUI.DrawTexture(new Rect(m_BodyRectTargets.x, m_BodyRectTargets.y + m_BodyRectTargets.height - WeightOfSeparatorLine, m_BodyRectTargets.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
-        }
-
-
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        protected void DrawBodyLayoutButtons()
-        {
-            m_BodyRectButtons.x = 5;
-            m_BodyRectButtons.y = m_BodyRectTargets.y + m_BodyRectTargets.height;
-            m_BodyRectButtons.width = NodeWidth - 10;
-            m_BodyRectButtons.height = 230;
-
-            // Draw body background purple rect below ports
-            GUI.DrawTexture(m_BodyRectButtons, NodeColor);
-
-            // Draw line below add/remove buttons
-            GUI.DrawTexture(new Rect(m_BodyRectButtons.x, (m_BodyRectButtons.y + m_BodyRectButtons.height) - WeightOfSeparatorLine, m_BodyRectButtons.width, WeightOfSeparatorLine), GetColorTextureFromHexString("#888EF7"));
-        }
-
-        /// <summary>
-        /// Define rect values for node body and paint textures based on rects 
-        /// </summary>
-        protected void DrawBodyLayoutBottom()
-        {
-            m_BodyRectBottom.x = 5;
-            m_BodyRectBottom.y = m_BodyRectButtons.y + m_BodyRectButtons.height;
-            m_BodyRectBottom.width = NodeWidth - 10;
-            m_BodyRectBottom.height = 40;
-
-            // Draw body background purple rect below ports
-            GUI.DrawTexture(m_BodyRectBottom, NodeColor);
-        }
-
-        /// <summary>
-        /// Show the input/output port fields 
-        /// </summary>
-        private void ShowSeriesTrainingExamplesNodePorts()
-        {
-            GUILayout.Space(5);
-            GUILayout.BeginHorizontal();
-
-            GUIContent inputPortLabel = new GUIContent("Live Data In");
-            IMLNodeEditor.PortField(inputPortLabel, m_TrainingExamplesNode.GetInputPort("InputFeatures"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
-
-            GUIContent outputPortLabel = new GUIContent("Recorded\nData Out");
-            IMLNodeEditor.PortField(outputPortLabel, m_TrainingExamplesNode.GetOutputPort("TrainingExamplesNodeToOutput"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
-
-            GUILayout.EndHorizontal();
-
-            GUIContent secondInputPortLabel = new GUIContent("Target Values");
-            IMLNodeEditor.PortField(secondInputPortLabel, m_TrainingExamplesNode.GetInputPort("TargetValues"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(0));
-
-        }
-
-        /// <summary>
-        /// Show the load, delete and record buttons
-        /// </summary>
-        protected virtual void ShowButtons()
-        {
-            m_BodyRectButtons.x = m_BodyRectButtons.x + 30;
-            m_BodyRectButtons.y = m_BodyRectButtons.y + 20;
-            m_BodyRectButtons.width = m_BodyRectButtons.width - 70;
-
-            GUILayout.BeginArea(m_BodyRectButtons);
-            GUILayout.BeginHorizontal();
-
-            if (GUILayout.Button("Record One /n example", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button")))
+            GUILayout.BeginArea(m_BodyRect);
+            GUILayout.Space(bodySpace);
+            DrawValues(m_TrainingExamplesNode.DesiredInputFeatures, "Input Values");
+            GUILayout.Space(bodySpace);
+            DrawValues(m_TrainingExamplesNode.DesiredOutputFeatures, "Target Values");
+            ShowButtons();
+            //show warning if there are training examples 
+            if (m_TrainingExamplesNode.showWarning)
             {
-                m_TrainingExamplesNode.LoadDataFromDisk();
+                ShowWarning(m_TrainingExamplesNode.tooltips.BottomError[0]);
+                m_RecalculateRects = true;
             }
-            GUILayout.Label("");
-
-            ShowClearAllExamplesButton();
-            GUILayout.Label("");
-
-            string recordNameButton = ShowRecordExamplesButton();
-
-            GUILayout.EndHorizontal();
             GUILayout.EndArea();
-
-            m_BodyRectButtons.x = m_BodyRectButtons.x - 10;
-            m_BodyRectButtons.y = m_BodyRectButtons.y + 35;
-            m_BodyRectButtons.width = m_BodyRectButtons.width + 40;
-            GUILayout.BeginArea(m_BodyRectButtons);
-
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Load Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Load Button Yellow"));
-            GUILayout.Label("");
-            GUILayout.Label("Delete Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button Pink"));
-            GUILayout.Label("");
-            GUILayout.Label(recordNameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
-            GUILayout.EndHorizontal();
-
-            GUILayout.EndArea();
-
-
+            ShowTrainingExamplesDropdown();
         }
 
-        private string ShowRecordExamplesButton()
+        protected string ShowRecordExamplesButton()
         {
             string nameButton = "";
 
             //// Only run button logic when there are features to extract from
-            //if (!Lists.IsNullOrEmpty(ref m_SeriesTrainingExamplesNode.InputFeatures))
-            //{
+
             if (m_TrainingExamplesNode.CollectingData)
             {
-                nameButton = "       STOP          ";
+                nameButton = "stop \n recording";
             }
             else
             {
-                nameButton = "Record Series   ";
+                nameButton = "start \n recording";
             }
 
             bool disableButton = false;
 
             // If there are any models connected we check some conditions
-            /*if (!Lists.IsNullOrEmpty(ref m_SeriesTrainingExamplesNode.IMLConfigurationNodesConnected))
-            {
-                for (int i = 0; i < m_SeriesTrainingExamplesNode.IMLConfigurationNodesConnected.Count; i++)
-                {
-                    var IMLConfigNodeConnected = m_SeriesTrainingExamplesNode.IMLConfigurationNodesConnected[i];
-                    // Disable button if model(s) connected are runnning or training
-                    if (IMLConfigNodeConnected.Running || IMLConfigNodeConnected.Training)
-                    {
-                        disableButton = true;
-                        break;
-                    }
+            /* if (!Lists.IsNullOrEmpty(ref m_SingleTrainingExamplesNode.IMLConfigurationNodesConnected))
+             {
+                 for (int i = 0; i < m_SingleTrainingExamplesNode.IMLConfigurationNodesConnected.Count; i++)
+                 {
+                     var IMLConfigNodeConnected = m_SingleTrainingExamplesNode.IMLConfigurationNodesConnected[i];
+                     // Disable button if model(s) connected are runnning or training
+                     if (IMLConfigNodeConnected.Running || IMLConfigNodeConnected.Training)
+                     {
+                         disableButton = true;
+                         break;
+                     }
 
-                }
-            }*/
+                 }
+             }*/
 
-            // Draw button
+            // Draw button record examples
             if (disableButton)
                 GUI.enabled = false;
             if (GUILayout.Button("Record Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button")))
             {
                 m_TrainingExamplesNode.ToggleCollectExamples();
             }
+
+            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                buttonTipHelper = true;
+                //TooltipText = m_TrainingExamplesNode.TrainingTips.BodyTooltip.Tips[3];
+            }
+            else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            {
+                buttonTip = false;
+
+            }
+
+            if (Event.current.type == EventType.Layout && buttonTipHelper)
+            {
+                buttonTip = true;
+                buttonTipHelper = false;
+            }
             // Always enable it back at the end
             GUI.enabled = true;
             return nameButton;
-            //}
         }
 
-        private void ShowClearAllExamplesButton()
+        /// <summary>
+        /// Set style for dropdown for training examples nodes
+        /// </summary>
+        protected void SetDropdownStyle()
+        {
+            GUI.skin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+            GUIStyle myFoldoutStyle = new GUIStyle(EditorStyles.foldout);
+            Color myStyleColor = Color.white;
+            myFoldoutStyle.fontStyle = FontStyle.Bold;
+            myFoldoutStyle.normal.textColor = myStyleColor;
+            myFoldoutStyle.onNormal.textColor = myStyleColor;
+            myFoldoutStyle.hover.textColor = myStyleColor;
+            myFoldoutStyle.onHover.textColor = myStyleColor;
+            myFoldoutStyle.focused.textColor = myStyleColor;
+            myFoldoutStyle.onFocused.textColor = myStyleColor;
+            myFoldoutStyle.active.textColor = myStyleColor;
+            myFoldoutStyle.onActive.textColor = myStyleColor;
+            myFoldoutStyle.fontStyle = FontStyle.Bold;
+            myFoldoutStyle.normal.textColor = myStyleColor;
+            myFoldoutStyle.fontStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview").fontStyle;
+            m_ShowTrainingDataDropdown = EditorGUILayout.Foldout(m_ShowTrainingDataDropdown, "View Training Pairs", myFoldoutStyle);
+        }
+
+        protected void ShowClearAllExamplesButton()
         {
 
             bool disableButton = false;
@@ -268,6 +231,21 @@ namespace InteractML
                 {
                     m_TrainingExamplesNode.ClearTrainingExamples();
                 }
+                if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+                {
+                    buttonTipHelper = true;
+                    //TooltipText = m_SeriesTrainingExamplesNode.toooltips.BodyTooltip.Tips[3];
+                }
+                else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+                {
+                    buttonTip = false;
+
+                }
+                if (Event.current.type == EventType.Layout && buttonTipHelper)
+                {
+                    buttonTip = true;
+                    buttonTipHelper = false;
+                }
                 // Always enable it back at the end
                 GUI.enabled = true;
 
@@ -278,36 +256,7 @@ namespace InteractML
             else
             {
                 GUI.enabled = false;
-                if (GUILayout.Button("Delete Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button")))
-                {
-                    m_TrainingExamplesNode.ToggleCollectExamples();
-                }
-                GUI.enabled = true;
             }
-        }
-        protected virtual void ShowTrainingExamplesDropdown()
-        {
-            Debug.Log("should be implemented in single or series node editor");
-        }
-
-        protected void SetDropdownStyle()
-        {
-            GUI.skin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
-            GUIStyle myFoldoutStyle = new GUIStyle(EditorStyles.foldout);
-            Color myStyleColor = Color.white;
-            myFoldoutStyle.fontStyle = FontStyle.Bold;
-            myFoldoutStyle.normal.textColor = myStyleColor;
-            myFoldoutStyle.onNormal.textColor = myStyleColor;
-            myFoldoutStyle.hover.textColor = myStyleColor;
-            myFoldoutStyle.onHover.textColor = myStyleColor;
-            myFoldoutStyle.focused.textColor = myStyleColor;
-            myFoldoutStyle.onFocused.textColor = myStyleColor;
-            myFoldoutStyle.active.textColor = myStyleColor;
-            myFoldoutStyle.onActive.textColor = myStyleColor;
-            myFoldoutStyle.fontStyle = FontStyle.Bold;
-            myFoldoutStyle.normal.textColor = myStyleColor;
-            myFoldoutStyle.fontStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview").fontStyle;
-            m_ShowTrainingDataDropdown = EditorGUILayout.Foldout(m_ShowTrainingDataDropdown, "View Training Pairs", myFoldoutStyle);
         }
 
         // <summary>

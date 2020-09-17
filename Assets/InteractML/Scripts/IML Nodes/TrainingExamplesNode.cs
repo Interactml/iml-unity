@@ -115,6 +115,7 @@ namespace InteractML
         protected float m_TimeToStopCapture = 0.0f;
 
         protected bool m_CollectData;
+        public bool showWarning; 
         /// <summary>
         /// Is the Node Collecting Data?
         /// </summary>
@@ -128,8 +129,6 @@ namespace InteractML
         public KeyCode RecordDataKey;
 
         private bool MLSClassification = false;
-
-        public IMLNodeTooltips TrainingTips;
 
         private List<NodePort> inputPortList;
         private List<NodePort> targetPortList;
@@ -305,6 +304,7 @@ namespace InteractML
 
             inputPortList = this.GetInputPort("InputFeatures").GetConnections();
             targetPortList = this.GetInputPort("TargetValues").GetConnections();
+            CheckWarning();
             
         }
         /// <summary>
@@ -322,6 +322,7 @@ namespace InteractML
         public void AddSingleTrainingExample()
         {
             AddTrainingExampleprotected();
+            CheckWarning();
         }
 
         /// <summary>
@@ -378,9 +379,9 @@ namespace InteractML
                 default:
                     break;
             }
-
-
-
+            //set false to show warning about training 
+            CheckWarning();
+            
             // I AM GOING TO KEEP THE DESIRED OUTPUTS UNCHANGED FOR THE MOMENT
 
             // Clear list of desired outputs (which is also fed to the training examples vector when adding a single training example)
@@ -403,7 +404,7 @@ namespace InteractML
         /// </summary>
         protected virtual void SetDataCollection()
         {
-
+            // implement in subclass 
         }
 
         /// <summary>
@@ -583,6 +584,7 @@ namespace InteractML
             {
                 StartCollectingData();
             }
+            CheckWarning();
 
         }
 
@@ -609,7 +611,7 @@ namespace InteractML
         /// <summary>
         /// Sets the collect data flag to false to stop collecting data
         /// </summary>
-        protected virtual void StopCollectingData()
+        protected void StopCollectingData()
         {
             m_CollectData = false;
 
@@ -629,18 +631,7 @@ namespace InteractML
 
         public virtual void SaveDataToDisk()
         {
-            if (ModeOfCollection == CollectionMode.SingleExample)
-            {
-                IMLDataSerialization.SaveTrainingSetToDisk(TrainingExamplesVector, GetJSONFileName());
-            } else if (ModeOfCollection == CollectionMode.Series)
-            {
-                IMLDataSerialization.SaveTrainingSeriesCollectionToDisk(TrainingSeriesCollection, GetJSONFileName());
-            }else
-            {
-                Debug.LogWarning("No data collection set");
-            }
-            
-            
+            //implemented in subclass
         }
 
         public virtual void LoadDataFromDisk()
@@ -744,6 +735,20 @@ namespace InteractML
 
             badRemove = false;
 
+        }
+        /// <summary>
+        /// Checks whether warning should be shown
+        /// </summary>
+        protected void CheckWarning()
+        {
+            if (TrainingExamplesVector.Count == 0 && TrainingSeriesCollection.Count == 0)
+            {
+                showWarning = false;
+
+            } else
+            {
+                showWarning = true;
+            }
         }
 
         #endregion

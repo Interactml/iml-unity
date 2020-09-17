@@ -38,18 +38,6 @@ namespace InteractML
             tooltips = IMLTooltipsSerialization.LoadTooltip("SeriesTrainingExamples");
         }
 
-        /// <summary>
-        /// Clears all the training examples stored in the node
-        /// </summary>
-        public override void ClearTrainingExamples()
-        {
-            // Clear series in node
-            TrainingSeriesCollection.Clear();
-            SaveDataToDisk();
-            //UpdateOutputsList();
-            //UpdateTargeValues();
-        }
-
         #endregion
 
         #region Protected Methods
@@ -60,21 +48,6 @@ namespace InteractML
         protected override void SetDataCollection()
         {
             ModeOfCollection = CollectionMode.Series;
-        }
-
-        /// <summary>
-        /// Sets the collect data flag to false to stop collecting data
-        /// </summary>
-        protected override void StopCollectingData()
-        {
-            m_CollectData = false;
-
-            // We add our series to the series collection
-            TrainingSeriesCollection.Add(new IMLTrainingSeries(m_SingleSeries));
-            m_SingleSeries.ClearSerie();
-
-            // Save data to disk
-            SaveDataToDisk();
         }
 
 

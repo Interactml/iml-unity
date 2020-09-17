@@ -38,22 +38,9 @@ namespace InteractML
 
             Initialize();
 
-            TrainingTips = IMLTooltipsSerialization.LoadTooltip("SingleTrainingExamples");
             tooltips = IMLTooltipsSerialization.LoadTooltip("SingleTrainingExamples");
         }
 
-        /// <summary>
-        /// Clears all the training examples stored in the node
-        /// </summary>
-        public void ClearTrainingExamples()
-        {
-            // Clear examples in node
-            TrainingExamplesVector.Clear();
-            SaveDataToDisk();
-            // Make sure the outputs are populated properly after clearing them out
-            //UpdateOutputsList();
-            //UpdateTargeValues();
-        }
 
         #endregion
 
@@ -65,14 +52,6 @@ namespace InteractML
         protected override void SetDataCollection()
         {
             ModeOfCollection = CollectionMode.SingleExample;
-        }
-        /// <summary>
-        /// Sets the collect data flag to false to stop collecting data
-        /// </summary>
-        protected override void StopCollectingData()
-        {
-            m_CollectData = false;
-            SaveDataToDisk();
         }
 
 

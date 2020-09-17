@@ -27,51 +27,16 @@ namespace InteractML
 
         public override void OnHeaderGUI()
         {
+            baseNodeBodyHeight = 360;
+            base.OnHeaderGUI();
             // Get reference to the current node
-            m_SingleTrainingExamplesNode = (target as SingleTrainingExamplesNode);
-            nodeSpace = 360 + (m_ConnectedInputs + m_ConnectedTargets) * 60;
+            m_SingleTrainingExamplesNode = m_TrainingExamplesNode as SingleTrainingExamplesNode;
             string arrayNo = "";
+            //array number of training node 
             if (m_SingleTrainingExamplesNode.numberInComponentList != -1)
-                 arrayNo = m_SingleTrainingExamplesNode.numberInComponentList.ToString();
+                arrayNo = m_SingleTrainingExamplesNode.numberInComponentList.ToString();
             NodeName = "TEACH THE MACHINE " + arrayNo;
             NodeSubtitle = "Classification & Regression Training Examples";
-            base.OnHeaderGUI();
-        }
-
-        public override void OnBodyGUI()
-        {
-            NodeWidth = 300;
-            OutputPortsNamesOverride = new Dictionary<string, string>();
-            OutputPortsNamesOverride.Add("TrainingExamplesNodeToOutput", "Recorded\nExamples");
-
-            InputPortsNamesOverride = new Dictionary<string, string>();
-            InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
-            InputPortsNamesOverride.Add("TargetValues", "Target Values");
-
-            base.nodeTips = m_SingleTrainingExamplesNode.tooltips;
-            if (m_SingleTrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_SingleTrainingExamplesNode.DesiredOutputFeatures.Count)
-                m_RecalculateRects = true;
-            m_ConnectedInputs = m_SingleTrainingExamplesNode.DesiredInputFeatures.Count;
-            m_ConnectedTargets = m_SingleTrainingExamplesNode.DesiredOutputFeatures.Count;
-            base.OnBodyGUI();
-        }
-
-        protected override void ShowBodyFields()
-        {
-            GUILayout.BeginArea(m_BodyRect);
-            GUILayout.Space(bodySpace);
-            DrawValues(m_SingleTrainingExamplesNode.DesiredInputFeatures, "Input Values");
-            GUILayout.Space(bodySpace);
-            DrawValues(m_SingleTrainingExamplesNode.DesiredOutputFeatures, "Target Values");
-            ShowButtons();
-            if (m_SingleTrainingExamplesNode.TrainingExamplesVector.Count > 0)
-            {
-                nodeSpace = 450 + (m_ConnectedInputs + m_ConnectedTargets) * 60;
-                m_BodyRect.height = 400 + (m_ConnectedInputs + m_ConnectedTargets) * 60;
-                ShowWarning(m_SingleTrainingExamplesNode.tooltips.BottomError[0]);
-            }
-            GUILayout.EndArea();
-            ShowTrainingExamplesDropdown();
         }
 
         /// <summary>
@@ -93,7 +58,7 @@ namespace InteractML
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
                 buttonTipHelper = true;
-                TooltipText = m_SingleTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[2];
+                TooltipText = m_SingleTrainingExamplesNode.tooltips.BodyTooltip.Tips[2];
             }
             else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
             {
@@ -147,137 +112,7 @@ namespace InteractML
 
         }
 
-        private string ShowRecordExamplesButton()
-        {
-            string nameButton = "";
-
-            //// Only run button logic when there are features to extract from
-           
-            if (m_SingleTrainingExamplesNode.CollectingData)
-            {
-                nameButton = "stop \n recording";
-            }
-            else
-            {
-                nameButton = "start \n recording";
-            }
-
-            bool disableButton = false;
-
-            // If there are any models connected we check some conditions
-           /* if (!Lists.IsNullOrEmpty(ref m_SingleTrainingExamplesNode.IMLConfigurationNodesConnected))
-            {
-                for (int i = 0; i < m_SingleTrainingExamplesNode.IMLConfigurationNodesConnected.Count; i++)
-                {
-                    var IMLConfigNodeConnected = m_SingleTrainingExamplesNode.IMLConfigurationNodesConnected[i];
-                    // Disable button if model(s) connected are runnning or training
-                    if (IMLConfigNodeConnected.Running || IMLConfigNodeConnected.Training)
-                    {
-                        disableButton = true;
-                        break;
-                    }
-
-                }
-            }*/
-
-            // Draw button record examples
-            if (disableButton)
-                GUI.enabled = false;
-            if (GUILayout.Button("Record Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button")))
-            {
-                m_SingleTrainingExamplesNode.ToggleCollectExamples();
-            }
-
-            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
-            {
-                buttonTipHelper = true;
-                TooltipText = m_SingleTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[3];
-            }
-            else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
-            {
-                buttonTip = false;
-
-            }
-
-            if (Event.current.type == EventType.Layout && buttonTipHelper)
-            {
-                buttonTip = true;
-                buttonTipHelper = false;
-            }
-            // Always enable it back at the end
-            GUI.enabled = true;
-            return nameButton;
-            //}
-        }
-
-        private void ShowClearAllExamplesButton()
-        {
-
-            bool disableButton = false;
-
-            if (!Lists.IsNullOrEmpty(ref m_SingleTrainingExamplesNode.TrainingExamplesVector))
-            {
-                disableButton = false;
-            }
-
-            // Only run button logic when there are training examples to delete
-            if (!disableButton)
-            {
-                // If there are any models connected we check some conditions
-               /* if (!Lists.IsNullOrEmpty(ref m_SingleTrainingExamplesNode.IMLConfigurationNodesConnected))
-                {
-                    foreach (var IMLConfigNode in m_SingleTrainingExamplesNode.IMLConfigurationNodesConnected)
-                    {
-                        // Disable button if any of the models is runnning OR collecting data OR training
-                        if (IMLConfigNode.Running || IMLConfigNode.Training || m_SingleTrainingExamplesNode.CollectingData)
-                        {
-                            disableButton = true;
-                            break;
-                        }
-                    }
-                }*/
-
-                // Draw button
-                if (disableButton)
-                    GUI.enabled = false;
-                if (GUILayout.Button("Delete Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button")))
-                {
-                    m_SingleTrainingExamplesNode.ClearTrainingExamples();
-                }
-                //tooltipcode
-                if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
-                {
-                    buttonTipHelper = true;
-                    TooltipText = m_SingleTrainingExamplesNode.TrainingTips.BodyTooltip.Tips[3];
-                }
-                else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
-                {
-                    buttonTip = false;
-
-                }
-
-                if (Event.current.type == EventType.Layout && buttonTipHelper)
-                {
-                    buttonTip = true;
-                    buttonTipHelper = false;
-                }
-                // Always enable it back at the end
-                GUI.enabled = true;
-
-
-
-            }
-            // If there are no training examples to delete we draw a disabled button
-            else
-            {
-                GUI.enabled = false;
-                if (GUILayout.Button("Delete Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button")))
-                {
-                    m_SingleTrainingExamplesNode.ToggleCollectExamples();
-                }
-                GUI.enabled = true;
-            }
-        }
+     
 
         /// <summary>
         /// Show single training examples on foldout arrow
