@@ -16,23 +16,31 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private IntegerNode m_IntegerNode;
 
-        public override void OnHeaderGUI()
+        /// <summary>
+        /// Initialise node specific interface values
+        /// </summary>
+        public override void OnCreate()
         {
             // Get reference to the current node
             m_IntegerNode = (target as IntegerNode);
-            NodeName = "LIVE INT DATA";
-            base.OnHeaderGUI();
-        }
 
-        public override void OnBodyGUI()
-        {
-            InputPortsNamesOverride = new Dictionary<string, string>();
-            OutputPortsNamesOverride = new Dictionary<string, string>();
-            base.InputPortsNamesOverride.Add("m_In", "Int\nData In");
-            base.OutputPortsNamesOverride.Add("m_Out", "Int\nData Out");
-            base.nodeTips = m_IntegerNode.tooltips;
+            // Initialise node name
+            NodeName = "LIVE INTEGER DATA";
+
+            // Initialise node body height
             m_BodyRect.height = 80;
-            base.OnBodyGUI();
+            nodeSpace = 80;
+
+            // Initialise input port labels
+            InputPortsNamesOverride = new Dictionary<string, string>();
+            base.InputPortsNamesOverride.Add("m_In", "Integer\nData In");
+
+            // Initialise output port labels
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            base.OutputPortsNamesOverride.Add("m_Out", "Integer\nData Out");
+
+            // Initialise node tooltips
+            base.nodeTips = m_IntegerNode.tooltips;
 
         }
 

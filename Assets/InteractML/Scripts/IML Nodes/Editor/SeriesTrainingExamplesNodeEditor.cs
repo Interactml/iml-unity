@@ -20,6 +20,10 @@ namespace InteractML
         /// </summary>
         private SeriesTrainingExamplesNode m_SeriesTrainingExamplesNode;
 
+<<<<<<< Updated upstream
+=======
+        private static GUIStyle editorLabelStyle;
+>>>>>>> Stashed changes
         #endregion
 
         public override void OnHeaderGUI()
@@ -33,6 +37,29 @@ namespace InteractML
                 arrayNo = m_SeriesTrainingExamplesNode.numberInComponentList.ToString();
             NodeName = "TEACH THE MACHINE " + arrayNo;
             NodeSubtitle = "DTW Training Examples";
+<<<<<<< Updated upstream
+=======
+            base.OnHeaderGUI();
+        }
+
+        public override void OnBodyGUI()
+        {
+            NodeWidth = 300;
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            OutputPortsNamesOverride.Add("TrainingExamplesNodeToOutput", "Recorded\nExamples");
+
+            InputPortsNamesOverride = new Dictionary<string, string>();
+            InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
+            InputPortsNamesOverride.Add("TargetValues", "Target Values");
+
+            base.nodeTips = m_SeriesTrainingExamplesNode.tooltips;
+            if (m_SeriesTrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_SeriesTrainingExamplesNode.DesiredOutputFeatures.Count)
+                m_RecalculateRects = true;
+            m_ConnectedInputs = m_SeriesTrainingExamplesNode.DesiredInputFeatures.Count;
+            m_ConnectedTargets = m_SeriesTrainingExamplesNode.DesiredOutputFeatures.Count;
+            base.OnBodyGUI();
+
+>>>>>>> Stashed changes
         }
 
         /// <summary>

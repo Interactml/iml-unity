@@ -16,23 +16,32 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private Vector2Node m_Vector2Node;
 
-        public override void OnHeaderGUI()
+        /// <summary>
+        /// Initialise node specific interface values
+        /// </summary>
+        public override void OnCreate()
         {
+            // Get reference to the current node
             m_Vector2Node = (target as Vector2Node);
-            NodeName = "LIVE VECTOR 2 DATA";
-            nodeSpace = 100;
-            base.OnHeaderGUI();
-        }
 
-        public override void OnBodyGUI()
-        {
+            // Initialise node name
+            NodeName = "LIVE VECTOR2 DATA";
+
+            // Initialise node body height
+            m_BodyRect.height = 110;
+            nodeSpace = 110;
+
+            // Initialise input port labels
             InputPortsNamesOverride = new Dictionary<string, string>();
+            base.InputPortsNamesOverride.Add("m_In", "Vector2\nData In");
+
+            // Initialise output port labels
             OutputPortsNamesOverride = new Dictionary<string, string>();
-            base.InputPortsNamesOverride.Add("m_In", "Float\nData In");
-            base.OutputPortsNamesOverride.Add("m_Out", "Float\nData Out");
+            base.OutputPortsNamesOverride.Add("m_Out", "Vector2\nData Out");
+
+            // Initialise node tooltips
             base.nodeTips = m_Vector2Node.tooltips;
-            m_BodyRect.height = 100;
-            base.OnBodyGUI();
+
         }
 
         protected override void ShowBodyFields()

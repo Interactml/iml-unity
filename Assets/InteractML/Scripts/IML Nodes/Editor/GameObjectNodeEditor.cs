@@ -24,27 +24,28 @@ namespace InteractML
         Texture2D m_NoMeshTexture;
         float m_TexHeightMultiplier = 0.45f;
 
-
-
-        public override void OnHeaderGUI()
+        /// <summary>
+        /// Initialise node specific interface labels and parameters
+        /// </summary>
+        public override void OnCreate()
         {
             // Get reference to the current node
             m_GameObjectNode = (target as GameObjectNode);
-            nodeSpace = 230;
+
+            // Initialise node name
             NodeName = "GAME OBJECT";
-            base.OnHeaderGUI();
 
-        }
-
-        public override void OnBodyGUI()
-        {
-            InputPortsNamesOverride = new Dictionary<string, string>();
-            OutputPortsNamesOverride = new Dictionary<string, string>();
-            base.InputPortsNamesOverride.Add("GameObjectDataIn", "Game Object\nData In");
-            base.OutputPortsNamesOverride.Add("LiveDataOut", "Rotation\nData Out");
-            base.nodeTips = m_GameObjectNode.tooltips;
+            // Initialise node height
             m_BodyRect.height = 170;
-            base.OnBodyGUI();
+            nodeSpace = 230;
+
+            // Initialise output port labels
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            base.OutputPortsNamesOverride.Add("GameObjectDataOut", "Game Object\nData Out");
+            
+            // Initialise node tooltips
+            base.nodeTips = m_GameObjectNode.tooltips;
+
         }
 
         protected override void ShowBodyFields()

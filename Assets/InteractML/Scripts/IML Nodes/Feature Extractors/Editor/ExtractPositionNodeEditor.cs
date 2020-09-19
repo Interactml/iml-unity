@@ -16,32 +16,37 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         private ExtractPosition m_ExtractPosition;
 
-        public override void OnHeaderGUI()
+        /// <summary>
+        /// Initialise node specific interface labels and parameters
+        /// </summary>
+        public override void OnCreate()
         {
             // Get reference to the current node
             m_ExtractPosition = (target as ExtractPosition);
-            nodeSpace = 150;
-            NodeName = "LIVE POSITION DATA";
-            base.OnHeaderGUI();
-        }
-    
 
-        public override void OnBodyGUI()
-        {
-            InputPortsNamesOverride = new Dictionary<string, string>();
-            OutputPortsNamesOverride = new Dictionary<string, string>();
-            base.InputPortsNamesOverride.Add("GameObjectDataIn", "Game Object\nData In");
-            base.OutputPortsNamesOverride.Add("LiveDataOut", "Position\nData Out");
-            base.nodeTips = m_ExtractPosition.tooltips;
+            // Initialise node name
+            NodeName = "LIVE POSITION DATA";
+
+            // Initialise node height
             m_BodyRect.height = 150;
-            base.OnBodyGUI();
+            nodeSpace = 150;
+
+            // Initialise input port labels
+            InputPortsNamesOverride = new Dictionary<string, string>();
+            base.InputPortsNamesOverride.Add("GameObjectDataIn", "Game Object\nData In");
+
+            // Initialise output port labels
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            base.OutputPortsNamesOverride.Add("LiveDataOut", "Position\nData Out");
+
+            // Initialise node tooltips
+            base.nodeTips = m_ExtractPosition.tooltips;
 
         }
 
         protected override void ShowBodyFields()
         {
-            DataInToggle(m_ExtractPosition.ReceivingData, m_InnerBodyRect, m_BodyRect);
-            
+            DataInToggle(m_ExtractPosition.ReceivingData, m_InnerBodyRect, m_BodyRect);   
         }
 
         protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
