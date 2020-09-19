@@ -1,13 +1,9 @@
 {
-  "HelpTooltip": "Extracts and Outputs the rotation from a Game Object.
+  "HelpTooltip": "Extracts and Outputs the rotation in euler angles from a Game Object.
 
-GameObject Data In port connects to a GameObject
-node Data Out port. Live Data Out port connects to a
-DataType, Velocity, Record Examples and Machine
-Learning System nodes.
+GameObject Data In port connects to a GameObject node Data Out port. Live Data Out port connects to a DataType, Velocity, Record Examples and Machine Learning System nodes.
 
-Use local space is only applicable if the GameObject is a
-child of another object.",
+Use local space is only applicable if the GameObject is a child of another object.",
   "PortTooltip": [ "Connect a GameObject node", "Connect to Data In port. Outputs a Vector3" ],
   "BodyTooltip": {
     "tips": [

@@ -10,7 +10,7 @@ namespace InteractML.FeatureExtractors
     /// Feature extractor for rotations
     /// </summary>
     [NodeWidth(250)]
-    public class ExtractRotation : BaseExtractorNode, IFeatureIML
+    public class ExtractRotationQuaternion : BaseExtractorNode, IFeatureIML
     {
         /// <summary>
         /// GameObject from which we extract a feature
@@ -76,7 +76,7 @@ namespace InteractML.FeatureExtractors
         protected override void Init()
         {
             base.Init();
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation");
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation Quaternion");
             if (m_RotationExtracted == null)
             {
                 m_RotationExtracted = new IMLVector4();

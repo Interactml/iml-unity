@@ -118,7 +118,7 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.FeatureExtractors.ExtractRotation")
+            if (type.PrettyName() == "InteractML.FeatureExtractors.ExtractRotationQuaternion")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
