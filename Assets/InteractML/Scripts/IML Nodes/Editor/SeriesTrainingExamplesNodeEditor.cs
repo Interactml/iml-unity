@@ -20,10 +20,8 @@ namespace InteractML
         /// </summary>
         private SeriesTrainingExamplesNode m_SeriesTrainingExamplesNode;
 
-<<<<<<< Updated upstream
-=======
         private static GUIStyle editorLabelStyle;
->>>>>>> Stashed changes
+
         #endregion
 
         public override void OnHeaderGUI()
@@ -37,8 +35,7 @@ namespace InteractML
                 arrayNo = m_SeriesTrainingExamplesNode.numberInComponentList.ToString();
             NodeName = "TEACH THE MACHINE " + arrayNo;
             NodeSubtitle = "DTW Training Examples";
-<<<<<<< Updated upstream
-=======
+
             base.OnHeaderGUI();
         }
 
@@ -59,7 +56,6 @@ namespace InteractML
             m_ConnectedTargets = m_SeriesTrainingExamplesNode.DesiredOutputFeatures.Count;
             base.OnBodyGUI();
 
->>>>>>> Stashed changes
         }
 
         /// <summary>
