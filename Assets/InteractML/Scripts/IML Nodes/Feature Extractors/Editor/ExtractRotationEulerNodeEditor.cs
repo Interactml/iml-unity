@@ -54,7 +54,7 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Show the local space toggle 
         /// </summary>
-        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        protected override void DrawFeatureValueTogglesAndLabels(GUIStyle style)
         {
             GUILayout.BeginHorizontal();
             GUILayout.Space(bodySpace);

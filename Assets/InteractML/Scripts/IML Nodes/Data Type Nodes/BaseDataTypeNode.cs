@@ -10,26 +10,31 @@ namespace InteractML.DataTypeNodes
     {
         #region Variables
 
+        /// <summary>
+        // Data value name
+        /// </summary>
         public string ValueName;
 
-        // Data variables
-        // Input
+        /// <summary>
+        // Input data variables
+        /// </summary>
         public virtual T In { get { return m_In; } set { m_In = value; } }
         [Input, SerializeField]
         private T m_In;
 
+        /// <summary>
         // Value itself contained in the node
+        /// </summary>
         public virtual T Value { get { return m_Value; } set { m_Value = value; } }
         [SerializeField]
         private T m_Value;
 
-        // Output
+        /// <summary>
+        // Output data variables
+        /// </summary>
         public virtual T Out { get { return m_Out; } set { m_Out = value; } }
         [Output, SerializeField]
         private T m_Out;
-
-        // IMLFeature variables
-        public abstract IMLBaseDataType FeatureValues { get; }
 
         /// <summary>
         /// Lets external classes know if they should call UpdateFeature (always true for a data type)
@@ -41,6 +46,43 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         bool IFeatureIML.isUpdated { get ; set; }
 
+        /// <summary>
+        /// Is the node currently receiving input data
+        /// </summary>
+        public bool ReceivingData;
+
+        /// <summary>
+        /// Does the node currently have connections in the input port
+        /// </summary>
+        public bool InputConnected;
+
+        /// <summary>
+        /// Variables to count the number of frames the input values stay the same 
+        /// </summary>
+        public int Counter, Count;
+
+        /// <summary>
+        /// Array of booleans, one per each feature value to allow user to toggle each value on/off
+        /// </summary>
+        public bool[] ToggleSwitches;
+
+        /// <summary>
+        // Variable storing previous frame feature values to test incoming data is changing
+        /// </summary>
+        public IMLBaseDataType PreviousFeatureValues;
+
+        /// <summary>
+        // Field to store input value from editable field when nothing is connected to input port
+        /// </summary>
+        public IMLBaseDataType UserInput { get; set; }
+
+        /// <summary>
+        // IMLFeature variables
+        /// </summary>
+        public abstract IMLBaseDataType FeatureValues { get; }
+
+
+
         #endregion
 
         #region XNode Messages
@@ -48,6 +90,15 @@ namespace InteractML.DataTypeNodes
         // Use this for initialization
         protected override void Init()
         {
+            // initialise counters to change toggle colour
+            Counter = 0;
+            Count = 5;
+
+            // create new array of boolean for each of the features in the data type and set all to true
+            ToggleSwitches = new bool[FeatureValues.Values.Length];
+            for (int i = 0; i < FeatureValues.Values.Length; i++)
+                ToggleSwitches[i] = true;
+
             base.Init();
         }
 
@@ -100,7 +151,6 @@ namespace InteractML.DataTypeNodes
             var inputReceived = GetInputValue<T>("m_In");
             
             // Check if we have something connected to the input port
-            // (inputReceived != null && !inputReceived.Equals(default(T)))
             if (inputReceived != null)
             {
                 // Update the value of this data node

@@ -25,21 +25,16 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private IMLVector2 m_FeatureValues;
 
-        public bool ReceivingData;
-        public bool InputConnected;
         public Vector2 m_UserInput;
         Vector2 receivedVector2;
 
         public bool x_switch = true;
         public bool y_switch = true;
         float x, y;
-        int counter, count;
 
         // Use this for initialization
         protected override void Init()
         {
-            counter = 0;
-            count = 5;
             tooltips = IMLTooltipsSerialization.LoadTooltip("Vector2");
             base.Init();
         }
@@ -62,9 +57,9 @@ namespace InteractML.DataTypeNodes
         {
             base.Update();
             //check if receiving data
-            if (counter == count)
+            if (Counter == Count)
             {
-                counter = 0;
+                Counter = 0;
                 if ((x == FeatureValues.Values[0] || !x_switch) && y == FeatureValues.Values[1])
                 {
                     ReceivingData = false;
@@ -78,7 +73,7 @@ namespace InteractML.DataTypeNodes
                 y = FeatureValues.Values[1];
             }
 
-            counter++;
+            Counter++;
 
             //check if input connected
             if (this.GetInputNodesConnected("m_In") == null)

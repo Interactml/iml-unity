@@ -26,19 +26,14 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private IMLInteger m_FeatureValues;
 
-        public bool ReceivingData;
-        public bool InputConnected;
         public int m_UserInput;
-        int receivedInt;
+        public int receivedInt;
         public bool int_switch = true;
-        float f;
-        int counter, count;
+        public float f;
 
         // Use this for initialization
         protected override void Init()
         {
-            counter = 0;
-            count = 5;
             tooltips = IMLTooltipsSerialization.LoadTooltip("Int");
             base.Init();
         }
@@ -61,9 +56,9 @@ namespace InteractML.DataTypeNodes
         {
             base.Update();
             //check if receiving data
-            if (counter == count)
+            if (Counter == Count)
             {
-                counter = 0;
+                Counter = 0;
                 if ((f == FeatureValues.Values[0]))
                 {
                     ReceivingData = false;
@@ -76,7 +71,7 @@ namespace InteractML.DataTypeNodes
                 f = FeatureValues.Values[0];
             }
 
-            counter++;
+            Counter++;
 
             //check if input connected
             if (this.GetInputNodesConnected("m_In") == null)

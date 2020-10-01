@@ -48,7 +48,7 @@ namespace InteractML.DataTypeNodes
         {
             DataInToggle(m_IntegerNode.ReceivingData, m_InnerBodyRect, m_BodyRect);
         }
-        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        protected override void DrawFeatureValueTogglesAndLabels(GUIStyle style)
         {
             GUILayout.BeginHorizontal();
             GUILayout.Space(bodySpace);

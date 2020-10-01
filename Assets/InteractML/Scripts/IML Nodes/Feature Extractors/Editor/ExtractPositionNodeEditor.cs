@@ -49,7 +49,7 @@ namespace InteractML.FeatureExtractors
             DataInToggle(m_ExtractPosition.ReceivingData, m_InnerBodyRect, m_BodyRect);   
         }
 
-        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        protected override void DrawFeatureValueTogglesAndLabels(GUIStyle style)
         {
             GUILayout.BeginHorizontal();
             GUILayout.Space(bodySpace);

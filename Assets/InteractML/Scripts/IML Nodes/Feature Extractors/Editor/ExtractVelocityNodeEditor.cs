@@ -50,7 +50,7 @@ namespace InteractML.FeatureExtractors
         }
 
 
-        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        protected override void DrawFeatureValueTogglesAndLabels(GUIStyle style)
         {
             if (m_ExtractVelocity.FeatureValues.Values.Length != 0)
             {

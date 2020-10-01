@@ -24,28 +24,25 @@ namespace InteractML.DataTypeNodes
         /// <summary>
         /// Local specific IML data type
         /// </summary>
-        private IMLVector3 m_FeatureValues;
-
-        public bool ReceivingData;
-        public bool InputConnected;
+        private IMLVector3 m_FeatureValues;/// <summary>
+        // Input value from editable field when nothing is connected to input port
+        /// </summary>
         public Vector3 m_UserInput;
+
+
         Vector3 receivedVector3;
 
         public bool x_switch = true;
         public bool y_switch = true;
         public bool z_switch = true;
         float x, y, z;
-        int counter, count;
+
 
         // Use this for initialization
         protected override void Init()
         {
-            counter = 0;
-            count = 5;
-
-            base.Init();
-
             tooltips = IMLTooltipsSerialization.LoadTooltip("Vector3");
+            base.Init();    
         }
 
         // Check that a feature connected is of the right type
@@ -67,10 +64,10 @@ namespace InteractML.DataTypeNodes
         {
 
             //check if receiving data
-            if (counter == count)
+            if (Counter == Count)
             {
-                counter = 0;
-                if ((x == FeatureValues.Values[0] || !x_switch) && y == FeatureValues.Values[1] && z == FeatureValues.Values[2])
+                Counter = 0;
+                if (x == FeatureValues.Values[0] && y == FeatureValues.Values[1] && z == FeatureValues.Values[2])
                 {
                     ReceivingData = false;
                 }
@@ -84,7 +81,7 @@ namespace InteractML.DataTypeNodes
                 z = FeatureValues.Values[2];
             }
 
-            counter++;
+            Counter++;
 
             //check if input connected
             if (this.GetInputNodesConnected("m_In") == null)

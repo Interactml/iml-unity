@@ -67,10 +67,9 @@ namespace InteractML
         public float bodyheight;
         protected int dataWidth = 45;
         protected int inputWidth = 35;
-        protected int bodySpace = 30;
+        public int bodySpace = 30;
         protected int vectorBodySpace = 50;
 
-        //public Vector2 positionPort;
         /// <summary>
         /// Vector2 position for scroll on help tooltip
         /// </summary>
@@ -104,7 +103,7 @@ namespace InteractML
         /// <summary>
         /// The skin to use on the node
         /// </summary>
-        protected GUISkin m_NodeSkin;
+        public GUISkin m_NodeSkin;
 
         /// <summary>
         /// Reference to this iml node
@@ -153,6 +152,7 @@ namespace InteractML
         /// </summary>
         protected float nodeSpace;
 
+
         #endregion
         #region Variables MachineLearningSystemNodes
         /// <summary>
@@ -171,6 +171,8 @@ namespace InteractML
        /// Number of examples that the system is trained on 
        /// </summary>
         protected int numberOfExamplesTrained;
+
+        public string[] feature_labels;
 
         #endregion
         #region Variable TrainingExamples 
@@ -851,11 +853,11 @@ namespace InteractML
             //if data coming in green if not red toggle
             if (dataIn)
             {
-                DrawPositionValueTogglesAndLabels(m_NodeSkin.GetStyle("Green Toggle"));
+                DrawFeatureValueTogglesAndLabels(m_NodeSkin.GetStyle("Green Toggle"));
             }
             else
             {
-                DrawPositionValueTogglesAndLabels(m_NodeSkin.GetStyle("Red Toggle"));
+                DrawFeatureValueTogglesAndLabels(m_NodeSkin.GetStyle("Red Toggle"));
             }
             GUILayout.EndArea();
         }
@@ -863,7 +865,7 @@ namespace InteractML
         /// Draws position and values of toggle and labels - should be implemented inside nodes editor script 
         /// </summary>
         /// <param name="style"></param>
-        protected virtual void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        protected virtual void DrawFeatureValueTogglesAndLabels(GUIStyle style)
         {
             Debug.Log("need to implement in node editor file");
         }

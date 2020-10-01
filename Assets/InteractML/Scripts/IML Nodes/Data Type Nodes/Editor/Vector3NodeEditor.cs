@@ -48,7 +48,7 @@ namespace InteractML.DataTypeNodes
         {
             DataInToggle(m_Vector3Node.ReceivingData, m_InnerBodyRect, m_BodyRect);
         }
-        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        protected override void DrawFeatureValueTogglesAndLabels(GUIStyle style)
         {
             
             // If something is connected to the input port show incoming data
