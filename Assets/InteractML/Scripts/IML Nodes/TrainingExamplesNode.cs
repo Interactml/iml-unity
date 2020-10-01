@@ -10,7 +10,7 @@ namespace InteractML
     /// <summary>
     /// Holds the information and list of a training examples node
     /// </summary>
-    [NodeWidth(500)]
+    [NodeWidth(300)]
     public class TrainingExamplesNode : IMLNode
     {
 
@@ -21,6 +21,9 @@ namespace InteractML
         /// </summary>
         [Input]
         public List<Node> InputFeatures;
+        /// <summary>
+        /// Target data types /features passed to node
+        /// </summary>
         [Input]
         public List<Node> TargetValues;
 
@@ -30,8 +33,13 @@ namespace InteractML
         [Output, SerializeField]
         public TrainingExamplesNode TrainingExamplesNodeToOutput;
 
-        
+        /// <summary>
+        /// Enum types of collection 
+        /// </summary>
         public enum CollectionMode { SingleExample, Series }
+        /// <summary>
+        /// Collection modes of the current training example node 
+        /// </summary>
         [HideInInspector]
         public CollectionMode ModeOfCollection;
 
@@ -53,10 +61,6 @@ namespace InteractML
         /// </summary>
         protected IMLTrainingSeries m_SingleSeries;
 
-        public List<IMLBaseDataType> testList;
-
-        public List<IMLBaseDataType> testListReadFromDisk;
-
         /// <summary>
         /// Configuration of desired inputs for the Training Examples node 
         /// </summary>
@@ -75,11 +79,13 @@ namespace InteractML
         /// </summary>
         protected List<IMLSpecifications.OutputsEnum> m_LastKnownDesireOutputsConfig;
 
-
+        /// <summary>
+        /// IMLBaseDataTypes of input and output features
+        /// </summary>
         protected List<IMLBaseDataType> m_DesiredOutputFeatures;
         protected List<IMLBaseDataType> m_DesiredInputFeatures;
         /// <summary>
-        /// List of desired outputs for this training set
+        /// List of desired IMLBaseDataTypes outputs/inputs for this training set
         /// </summary>
         public List<IMLBaseDataType> DesiredOutputFeatures { get { return m_DesiredOutputFeatures; } }
         public List<IMLBaseDataType> DesiredInputFeatures { get { return m_DesiredInputFeatures; } }
@@ -103,8 +109,9 @@ namespace InteractML
         /// </summary>
         [HideInInspector]
         public List<IMLConfiguration> IMLConfigurationNodesConnected;
-
-        // Variables for collecting data
+        /// <summary>
+        /// Variables for setting delay in time for collecting data
+        /// </summary>
         [HideInInspector]
         public float StartDelay = 0.0f;
         [HideInInspector]
@@ -114,27 +121,39 @@ namespace InteractML
         protected float m_TimeToNextCapture = 0.0f;
         protected float m_TimeToStopCapture = 0.0f;
 
-        protected bool m_CollectData;
-        public bool showWarning; 
         /// <summary>
-        /// Is the Node Collecting Data?
+        /// boolean for whether collecting data or not 
         /// </summary>
+        protected bool m_CollectData;
         public bool CollectingData { get { return m_CollectData; } }
 
         /// <summary>
         /// Flag to have a shortcut to collect data (CTRL + Space)
         /// </summary>
         public bool EnableKeyboardControl;
+        /// <summary>
+        /// What key willl record data 
+        /// </summary>
         [HideInInspector]
         public KeyCode RecordDataKey;
-
+        /// <summary>
+        /// boolean for whether the MLS node connecting is a classification algorithm
+        /// </summary>
         private bool MLSClassification = false;
-
+        /// <summary>
+        /// Lists of input ports 
+        /// </summary>
         private List<NodePort> inputPortList;
         private List<NodePort> targetPortList;
-
+        /// <summary>
+        /// boolean to hold whether the user removed a target value/input port connection when there were trained examples
+        /// </summary>
         private bool badRemove = false;
         private string portName = "";
+        /// <summary>
+        /// boolean for whether the node should be showing a warning 
+        /// </summary>
+        public bool showWarning;
 
         #endregion
 
@@ -301,7 +320,7 @@ namespace InteractML
             UpdateTargetValuesConfig();
             // Load training data from disk
             LoadDataFromDisk();
-
+            
             inputPortList = this.GetInputPort("InputFeatures").GetConnections();
             targetPortList = this.GetInputPort("TargetValues").GetConnections();
             CheckWarning();

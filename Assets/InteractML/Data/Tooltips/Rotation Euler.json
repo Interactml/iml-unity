@@ -1,0 +1,24 @@
+{
+  "HelpTooltip": "Extracts and Outputs the rotation in euler angles from a Game Object.
+
+GameObject Data In port connects to a GameObject node Data Out port. Live Data Out port connects to a DataType, Velocity, Record Examples and Machine Learning System nodes.
+
+Use local space is only applicable if the GameObject is a child of another object.",
+  "PortTooltip": [ "Connect a GameObject node", "Connect to Data In port. Outputs a Vector3" ],
+  "BodyTooltip": {
+    "tips": [
+      "x, y and z euler rotation values: turn on/off using the toggle, flashes when detecting input",
+	  "check the box to use local space values",
+    ],
+    "error": [
+      "error"
+    ]
+  },
+  "BottomError": [ "bottom error" ]
+}
+
+
+
+
+
+

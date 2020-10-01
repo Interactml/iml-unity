@@ -160,6 +160,7 @@ namespace InteractML
         public bool matchVectorLength = false;
         public string warning;
         public bool error = false;
+
         #endregion
 
         #region XNode Messages
@@ -391,11 +392,6 @@ namespace InteractML
 
         public void UpdateLogic()
         {
-            //set array number for UI
-            if (numberInComponentList == -1)
-            {
-                SetArrayNumber();
-            }
             //set errors for ui
             UIErrors();
             //Set Learning Type 
@@ -738,15 +734,7 @@ namespace InteractML
 
         }
 
-        public void SetArrayNumber()
-        {
-            //Set array number
-            IMLComponent MLComponent = this.FindController();
-            List<IMLConfiguration> cNodes = new List<IMLConfiguration>();
-            if (MLComponent.IMLConfigurationNodesList != null)
-                cNodes = MLComponent.IMLConfigurationNodesList;
-            FindComponentListNumber<IMLConfiguration>(cNodes, MLComponent);
-        }
+     
 
         /// <summary>
         /// Runs the model and updates the predicted output from the rapidlib predictions by 
@@ -1697,8 +1685,6 @@ namespace InteractML
             {
                 warning = tooltips.BottomError[3];
                 error = true;
-                Debug.Log(matchLiveDataInputs);
-                Debug.Log(matchVectorLength);
             } else if (!Application.isPlaying)
             {
                 warning = tooltips.BottomError[4];

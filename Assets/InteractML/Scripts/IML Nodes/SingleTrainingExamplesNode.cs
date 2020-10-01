@@ -15,23 +15,8 @@ namespace InteractML
     public class SingleTrainingExamplesNode : TrainingExamplesNode
     {
 
-        #region Variables
 
-        #endregion
-
-        #region XNode Messages
-
-
-
-        #endregion
-
-        #region Unity Messages
-
-
-
-        #endregion
-
-        #region Public Methods
+        #region Protected Methods
         protected override void Init()
         {
             base.Init();
@@ -41,11 +26,6 @@ namespace InteractML
             tooltips = IMLTooltipsSerialization.LoadTooltip("SingleTrainingExamples");
         }
 
-
-        #endregion
-
-        #region Protected Methods
-
         /// <summary>
         /// Sets Data Collection Type 
         /// </summary>
@@ -53,13 +33,18 @@ namespace InteractML
         {
             ModeOfCollection = CollectionMode.SingleExample;
         }
-
-
+        #endregion
+        #region Public Methods
+        /// <summary>
+        /// Save IML Training Data to Disk 
+        /// </summary>
         public override void SaveDataToDisk()
         {
            IMLDataSerialization.SaveTrainingSetToDisk(TrainingExamplesVector, GetJSONFileName());
         }
-
+        /// <summary>
+        /// LoadsIML training data from disk 
+        /// </summary>
         public override void LoadDataFromDisk()
         {
             //Load training data from disk

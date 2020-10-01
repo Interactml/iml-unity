@@ -89,12 +89,13 @@ namespace InteractML
                 
                 if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Train")))
                 {
+                    EventDispatcher.TrainMLSCallback(m_CIMLConfiguration.id);
                     // Train model
-                    if (m_CIMLConfiguration.TrainModel())
+                   /* if (m_CIMLConfiguration.TrainModel())
                     {
                         // Save model if succesfully trained
                         m_CIMLConfiguration.SaveModelToDisk();
-                    }
+                    }*/
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;

@@ -181,6 +181,7 @@ namespace InteractML
         {
             // We unsubscribe the component form the editor manager to avoid messing up with the list
             IMLEditorManager.UnsubscribeIMLComponent(this);
+            EventDispatcher.TrainMLSCallback -= Train;
         }
 #endregion
 
@@ -188,6 +189,7 @@ namespace InteractML
 
         private void Initialize()
         {
+            EventDispatcher.TrainMLSCallback += Train;
             // Initialise list of nodes for the IML Controller
             if (Lists.IsNullOrEmpty(ref GameObjectsToUse))
                 GameObjectsToUse = new List<GameObject>();
@@ -334,6 +336,21 @@ namespace InteractML
                 // We flush all the lists
                 ClearLists();
             }
+        }
+
+        private bool Train(string nodeID)
+        {
+            bool success = false;
+            foreach (IMLConfiguration IMLConfigNode in IMLConfigurationNodesList)
+            {
+                if(nodeID == IMLConfigNode.id)
+                {
+                    success = IMLConfigNode.TrainModel();
+                    if(success)
+                        IMLConfigNode.SaveModelToDisk();
+                }
+            }
+            return success;
         }
 
         // this should only happen when a node is added 
@@ -1732,10 +1749,6 @@ namespace InteractML
         {
             if (m_IMLConfigurationNodesList.Contains(nodeToDelete))
                 m_IMLConfigurationNodesList.Remove(nodeToDelete);
-            foreach (IMLConfiguration cNode in m_IMLConfigurationNodesList)
-            {
-                cNode.SetArrayNumber();
-            }
         }
         /// <summary>
         /// Removes RealtimeOutputNode From RealtimeOutputNodeList 
