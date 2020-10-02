@@ -16,27 +16,35 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         private ExtractRotationEuler m_ExtractRotationEuler;
 
-        public override void OnHeaderGUI()
+        /// <summary>
+        /// Initialise node specific interface labels and parameters
+        /// </summary>
+        public override void OnCreate()
         {
             // Get reference to the current node
             m_ExtractRotationEuler = (target as ExtractRotationEuler);
-            nodeSpace = 150;
-            NodeName = "LIVE EULER ANGLES DATA";
-            base.OnHeaderGUI();
 
-        }
+            // Initialise node name
+            NodeName = "LIVE ROTATION DATA";
+            NodeSubtitle = "Euler";
 
-
-        public override void OnBodyGUI()
-        {
-            InputPortsNamesOverride = new Dictionary<string, string>();
-            OutputPortsNamesOverride = new Dictionary<string, string>();
-            base.InputPortsNamesOverride.Add("GameObjectDataIn", "Game Object\nData In");
-            base.OutputPortsNamesOverride.Add("LiveDataOut", "Rotation\nData Out");
-            base.nodeTips = m_ExtractRotationEuler.tooltips;
+            // Initialise node height
             m_BodyRect.height = 150;
-            base.OnBodyGUI();
+            nodeSpace = 150;
+
+            // Initialise input port labels
+            InputPortsNamesOverride = new Dictionary<string, string>();
+            base.InputPortsNamesOverride.Add("GameObjectDataIn", "Game Object\nData In");
+
+            // Initialise output port labels
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            base.OutputPortsNamesOverride.Add("LiveDataOut", "Rotation\nData Out");
+
+            // Initialise node tooltips
+            base.nodeTips = m_ExtractRotationEuler.tooltips;
+
         }
+
 
         protected override void ShowBodyFields()
         {
@@ -46,7 +54,7 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Show the local space toggle 
         /// </summary>
-        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        protected override void DrawFeatureValueTogglesAndLabels(GUIStyle style)
         {
             GUILayout.BeginHorizontal();
             GUILayout.Space(bodySpace);
@@ -79,41 +87,6 @@ namespace InteractML.FeatureExtractors
             GUILayout.EndHorizontal();
         }
 
-        /// <summary>
-        /// Show the local space toggle 
-        /// </summary>
-       /* private void ShowLocalSpaceToggle()
-        {
-            m_InnerLocalSpaceRect.x = m_LocalSpaceRect.x + 24;
-            m_InnerLocalSpaceRect.y = m_LocalSpaceRect.y + 16;
-            m_InnerLocalSpaceRect.width = m_LocalSpaceRect.width;
-            m_InnerLocalSpaceRect.height = m_LocalSpaceRect.height;
-
-            GUILayout.BeginArea(m_InnerLocalSpaceRect);
-            GUILayout.BeginHorizontal();
-            m_ExtractRotation.LocalSpace = EditorGUILayout.Toggle(m_ExtractRotation.LocalSpace, m_NodeSkin.GetStyle("Local Space Toggle"));
-            EditorGUILayout.LabelField("Use local space for transform", m_NodeSkin.GetStyle("Node Local Space Label"));
-            GUILayout.EndHorizontal();
-            GUILayout.EndArea();
-            
-        }*/
-
-        /// <summary>
-        /// Display help button
-        /// </summary>
-        private void ShowHelpButton()
-        {
-            m_HelpRect.x = m_HelpRect.x + 20;
-            m_HelpRect.y = m_HelpRect.y + 10;
-            m_HelpRect.width = m_HelpRect.width - 30;
-
-            GUILayout.BeginArea(m_HelpRect);
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("");
-            GUILayout.Button("Help", m_NodeSkin.GetStyle("Help Button"));
-            GUILayout.EndHorizontal();
-            GUILayout.EndArea();
-        }
     }
 
 }

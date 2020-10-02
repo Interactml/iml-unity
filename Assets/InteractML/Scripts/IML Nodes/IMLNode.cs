@@ -16,7 +16,7 @@ namespace InteractML
         public IMLNodeTooltips tooltips;
 
         /// <summary>
-        /// Has the init() mehtod been called?
+        /// Has the init() method been called?
         /// </summary>
         [HideInInspector]
         public bool IsInitialized = false;

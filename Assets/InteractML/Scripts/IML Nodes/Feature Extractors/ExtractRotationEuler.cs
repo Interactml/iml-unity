@@ -75,7 +75,7 @@ namespace InteractML.FeatureExtractors
         protected override void Init()
         {
             base.Init();
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation");
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation Euler");
             if (m_RotationExtracted == null)
             {
                 m_RotationExtracted = new IMLVector3();

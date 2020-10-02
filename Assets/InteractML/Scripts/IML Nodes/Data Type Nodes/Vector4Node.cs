@@ -20,29 +20,20 @@ namespace InteractML.DataTypeNodes
                 return m_FeatureValues;
             }
         }
+
         /// <summary>
         /// Local specific IML data type
         /// </summary>
         private IMLVector4 m_FeatureValues;
 
-        public bool ReceivingData;
-        public bool x_switch = true;
-        public bool y_switch = true;
-        public bool z_switch = true;
-        public bool w_switch = true;
-        float x, y, z, w;
-        int counter, count;
-
-        public bool InputConnected;
-        public Vector4 m_UserInput;
-        Vector4 receivedVector4;
 
         // Use this for initialization
         protected override void Init()
         {
-            counter = 0;
-            count = 5;
+            UserInput = new IMLVector4();
+
             tooltips = IMLTooltipsSerialization.LoadTooltip("Vector4");
+            
             base.Init();
         }
 
@@ -64,47 +55,51 @@ namespace InteractML.DataTypeNodes
         {
             base.Update();
             //check if receiving data
-            if (counter == count)
+            if (Counter == Count)
             {
-                counter = 0;
-                if ((x == FeatureValues.Values[0] || !x_switch) && y == FeatureValues.Values[1] && z == FeatureValues.Values[2] && w == FeatureValues.Values[2])
-                {
+                Counter = 0;
+                if (PreviousFeatureValues == FeatureValues)
                     ReceivingData = false;
-                }
                 else
-                {
                     ReceivingData = true;
 
-                }
-                x = FeatureValues.Values[0];
-                y = FeatureValues.Values[1];
-                z = FeatureValues.Values[2];
-                w = FeatureValues.Values[2];
+                PreviousFeatureValues = FeatureValues;
             }
 
-            counter++;
+            Counter++;
 
-            //check if input connected
+            //If there is no input connected take input from the user
             if (this.GetInputNodesConnected("m_In") == null)
             {
+                
                 InputConnected = false;
-                if (!x_switch) m_UserInput.x = 0;
-                if (!y_switch) m_UserInput.y = 0;
-                if (!z_switch) m_UserInput.z = 0;
-                if (!w_switch) m_UserInput.w = 0;
 
-                Value = m_UserInput;
+                // for each of the feature values 
+                for (int i = 0; i < FeatureValues.Values.Length; i++)
+                {
+                    // check toggle array length is the same as the amount of values in the user input 
+                    //if toggles are off set user input value to 0
+                    if (!ToggleSwitches[i]) { UserInput.Values[i] = 0; }
+                }
+
+                //Set feature value to user input
+                Vector4 v = new Vector4(UserInput.Values[0], UserInput.Values[1], UserInput.Values[2], UserInput.Values[3]);
+                Value = v;
             }
             else
             {
                 InputConnected = true;
+                
                 base.Update();
-                receivedVector4 = Value;
-                if (!x_switch) receivedVector4.x = 0;
-                if (!y_switch) receivedVector4.y = 0;
-                if (!z_switch) receivedVector4.z = 0;
-                if (!z_switch) receivedVector4.w = 0;
-                Value = receivedVector4;
+
+                var receivedValue = Value;
+                // for each of the feature values 
+                for (int i = 0; i < FeatureValues.Values.Length; i++)
+                {
+                    if (!ToggleSwitches[i]) { receivedValue[i] = 0; }
+                }
+                
+                Value = receivedValue;
             }
 
             return this;

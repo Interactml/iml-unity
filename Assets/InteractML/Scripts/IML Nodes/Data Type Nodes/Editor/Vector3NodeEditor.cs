@@ -17,30 +17,38 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private Vector3Node m_Vector3Node;
 
-        public override void OnHeaderGUI()
+        /// <summary>
+        /// Initialise node specific interface values
+        /// </summary>
+        public override void OnCreate()
         {
+            // Get reference to the current node
             m_Vector3Node = (target as Vector3Node);
-            NodeName = "LIVE VECTOR 3 DATA";
-            nodeSpace = 140;
-            base.OnHeaderGUI();
-        }
 
-        public override void OnBodyGUI()
-        {
+            // Initialise node name
+            NodeName = "LIVE VECTOR3 DATA";
+
+            // Initialise node body height
+            m_BodyRect.height = 130;
+            nodeSpace = 130;
+
+            // Initialise input port labels
             InputPortsNamesOverride = new Dictionary<string, string>();
-            OutputPortsNamesOverride = new Dictionary<string, string>();
             base.InputPortsNamesOverride.Add("m_In", "Vector3\nData In");
+
+            // Initialise output port labels
+            OutputPortsNamesOverride = new Dictionary<string, string>();
             base.OutputPortsNamesOverride.Add("m_Out", "Vector3\nData Out");
+
+            // Initialise node tooltips
             base.nodeTips = m_Vector3Node.tooltips;
-            m_BodyRect.height = 140;
-            base.OnBodyGUI();
         }
 
         protected override void ShowBodyFields()
         {
             DataInToggle(m_Vector3Node.ReceivingData, m_InnerBodyRect, m_BodyRect);
         }
-        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        protected override void DrawFeatureValueTogglesAndLabels(GUIStyle style)
         {
             
             // If something is connected to the input port show incoming data

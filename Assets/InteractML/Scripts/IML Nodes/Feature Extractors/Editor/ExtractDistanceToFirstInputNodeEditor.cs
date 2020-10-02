@@ -15,33 +15,43 @@ namespace InteractML.FeatureExtractors
         /// Reference to the node itself
         /// </summary>
         private ExtractDistanceToFirstInput m_ExtractDistanceToFirstInput;
-        public override void OnHeaderGUI()
+
+        /// <summary>
+        /// Initialise node specific interface labels and parameters
+        /// </summary>
+        public override void OnCreate()
         {
             // Get reference to the current node
             m_ExtractDistanceToFirstInput = (target as ExtractDistanceToFirstInput);
-            nodeSpace = 110 + (m_ConnectedInputs * 20);
 
+            // Initialise node name
             NodeName = "DISTANCE BETWEEN INPUTS";
-            base.OnHeaderGUI();
-        }
 
-        public override void OnBodyGUI()
-        {
+            // Initialise node height
+            m_BodyRect.height = 80;
+            nodeSpace = 80;
+
+            // Initialise input port labels
             InputPortsNamesOverride = new Dictionary<string, string>();
-            OutputPortsNamesOverride = new Dictionary<string, string>();
             base.InputPortsNamesOverride.Add("FirstInput", "First Input");
             base.InputPortsNamesOverride.Add("SecondInputs", "Second Input");
+
+            // Initialise output port labels
+            OutputPortsNamesOverride = new Dictionary<string, string>();
             base.OutputPortsNamesOverride.Add("DistanceBetweenInputs", "Distance\nBetween\nInputs");
+
+            // Initialise node tooltips
             base.nodeTips = m_ExtractDistanceToFirstInput.tooltips;
-            m_ConnectedInputs = m_ExtractDistanceToFirstInput.FeatureValues.Values.Length;
-            m_BodyRect.height = 60 + (m_ConnectedInputs * 20);
-            base.OnBodyGUI();
+
         }
 
         #region Methods
 
         protected override void ShowBodyFields()
         {
+            nodeSpace = 110 + (m_ConnectedInputs * 20);
+            m_ConnectedInputs = m_ExtractDistanceToFirstInput.FeatureValues.Values.Length;
+            m_BodyRect.height = 60 + (m_ConnectedInputs * 20);
             ShowDistanceBetweenInputsValue();
         }
 
