@@ -10,7 +10,7 @@ namespace InteractML
 {
     [NodeWidth(300)]
     [CreateNodeMenuAttribute("Interact ML/Machine Learning System/MLS Classification")]
-    public class CIMLConfiguration: CRIMLConfiguration
+    public class CIMLConfiguration: CRIMLConfiguration, IIMLConfiguration
     {
 
         #region Variables
@@ -89,7 +89,7 @@ namespace InteractML
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <param name="portName"></param>
-        protected override void CheckTrainingExamplesConnections(NodePort from, NodePort to, string portName)
+        protected override void CheckTrainingExamplesConnections(XNode.NodePort from, XNode.NodePort to, string portName)
         {
             // Evaluate the nodeport for training examples
             if (to.fieldName == portName)
@@ -126,6 +126,18 @@ namespace InteractML
         }
 
         #endregion
+        //Interface method
+        public bool Train()
+        {
+            bool success = false;
+            return success;
+        }
+        //Interface method
+        public bool ToggleRun()
+        {
+            bool success = false;
+            return success;
+        }
 
     }
 }

@@ -89,7 +89,7 @@ namespace InteractML
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <param name="portName"></param>
-        protected override void CheckTrainingExamplesConnections(NodePort from, NodePort to, string portName)
+        protected override void CheckTrainingExamplesConnections(XNode.NodePort from, XNode.NodePort to, string portName)
         {
             // Evaluate the nodeport for training examples
             if (to.fieldName == portName)
