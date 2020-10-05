@@ -9,6 +9,9 @@ namespace InteractML
         public delegate bool TrainMLS(string nodeID);
         public static TrainMLS TrainMLSCallback;
 
+        public delegate bool ToggleRunningModel(string nodeID);
+        public static ToggleRunningModel ToggleRun;
+
 
     }
 }
