@@ -28,8 +28,11 @@ namespace InteractML
         {
             // Get reference to the current node
             m_CIMLConfiguration = (target as CIMLConfiguration);
-            nodeSpace = 380;
-            NodeName = "MACHINE LEARNING SYSTEM";
+            nodeSpace = 20;
+            string arrayNo = "";
+            if (m_CIMLConfiguration.numberInComponentList != -1)
+                arrayNo = m_CIMLConfiguration.numberInComponentList.ToString();
+            NodeName = "MACHINE LEARNING SYSTEM " + arrayNo;
             base.OnHeaderGUI();
         }
 
@@ -40,7 +43,7 @@ namespace InteractML
             InputPortsNamesOverride.Add("IMLTrainingExamplesNodes", "Recorded Data In");
             InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
             base.nodeTips = m_CIMLConfiguration.tooltips;
-            m_BodyRect.height = 320;
+            m_BodyRect.height = 330;
             base.OnBodyGUI();
         }
 
@@ -48,7 +51,16 @@ namespace InteractML
         {
             ShowTrainingIcon("Classification");
             ShowButtons(m_CIMLConfiguration);
+            GUILayout.Space(m_BodyRect.height + HeaderRect.height - 50);
             ShowRunOnAwakeToggle(m_CIMLConfiguration as IMLConfiguration);
+            GUILayout.Space(20);
+            // if there is an error show the correct warning
+            if (m_CIMLConfiguration.error)
+            {
+                nodeSpace = 40;
+                m_BodyRect.height = m_BodyRect.height + HeaderRect.height + 60;
+                ShowWarning(m_CIMLConfiguration.warning);
+            }
         }
 
 
@@ -160,7 +172,7 @@ namespace InteractML
                     enabled = true;
                 }
                 //Disable button if inputs don't match attached training examples node/s
-                if (!m_CIMLConfiguration.matchLiveDataInputs)
+                if (!m_CIMLConfiguration.matchLiveDataInputs || !m_CIMLConfiguration.matchVectorLength)
                 {
                     Debug.Log("Number of live data nodes connected to input features do not match training examples live inputs input features");
                     GUI.enabled = false;

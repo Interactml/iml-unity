@@ -157,6 +157,35 @@ namespace InteractML
             else return null;
         }
 
+        /// <summary> Safely remove a node and all its connections. </summary>
+        public override void RemoveNode(XNode.Node node)
+        {
+            string name = node.GetType().ToString();
+            //find out if the node is a feature extractor or data type node connected to training examples with trained data
+            if (name.Contains("FeatureExtractor") || name.Contains("DataType"))
+            {
+                foreach (XNode.NodePort output in node.Outputs)
+                {
+                    foreach (XNode.NodePort connected in output.GetConnections())
+                    {
+                        if (connected.node.name.Contains("Training"))
+                        {
+                            TrainingExamplesNode teNode = connected.node as TrainingExamplesNode;
+                            if (teNode.TrainingExamplesVector.Count > 0)
+                            {
+                                Debug.Log("could not delete node");
+                                return;
+                            }
+                        }
+                    }
+
+                }
+
+
+            }
+            base.RemoveNode(node);
+        }
+
     }
 
 }

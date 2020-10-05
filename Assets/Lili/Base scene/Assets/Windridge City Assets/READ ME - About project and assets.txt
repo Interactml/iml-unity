@@ -1,0 +1,37 @@
+Hello
+
+NatureManufacture (Asset Store Publisher) and Indago create visual aspect of the demo, we shared trial assets to give you full view of simulation.
+
+Check out their assets here:
+NatureManufacture - https://assetstore.unity.com/publishers/6887
+Indago
+
+We higly advise to use full version of our assets because trials contain baked, lower resolution and compressed data.
+Many of the included assets have been compressed to keep file size low such as texture resolutions which were dropped from 2048 or 4096 into 512 or lower, as well as reduced number of LOD's. Shaders texture sampling was locked into arrays.
+We also removed many functions from shading, which you will find in full version of this assets. 
+
+Terrain core was made with Gaia and Gena. We build whole road system with Easyroads3d PRO and it's HD road addon which we made and publish in co-op with EasyRoads3d team. 
+
+Terrain is shaded by CTS terrain shading which we build and publish in co-op with Procedural Worlds team. Shader support heighblend and many cool features like geological layer, perlin noise etc.. 
+
+Full versions with full resolution you could find here in links below:
+
+Trees, grass, ground textures, town props, additonal rocks, rivers, lava etc could be found here:
+https://www.assetstore.unity3d.com/#!/list/28499-naturemanufacture-assets?aid=1011lGkb
+
+Full version of the CTS terrain shader:
+https://www.assetstore.unity3d.com/#!/content/91938?aid=1011lGkb
+
+Full version of road system:
+https://www.assetstore.unity3d.com/#!/content/469?aid=1011lGkb
+
+Full version of HD road materials:
+https://www.assetstore.unity3d.com/#!/content/118774?aid=1011lGkb
+
+Full version of procedural terrain shaping and painting:
+https://www.assetstore.unity3d.com/#!/content/42618?aid=1011lGkb
+
+Full version of procedural foliage spawn:
+https://www.assetstore.unity3d.com/#!/content/74407?aid=1011lGkb
+
+

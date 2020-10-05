@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f500f5ef081dec548b5e12f1809fd242
+timeCreated: 1526041300
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - NoiseTexture: {fileID: 2800000, guid: eb58c36f965ff024cb94d9bba46e33e7, type: 3}
+  - GustMaskTexture: {fileID: 2800000, guid: adabe9ddbe5480a4191c8823f4785a22, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

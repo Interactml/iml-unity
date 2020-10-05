@@ -152,6 +152,12 @@ namespace InteractML
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
             this.DisconnectIfNotType<TrainingExamplesNode, IFeatureIML>(from, to);
+            bool trainingExamplesRecorded = false;
+            // if you have started training and this is not the system trying to stop you changing the connection and it is an output port 
+            if (TrainingExamplesVector.Count > 0 || TrainingSeriesCollection.Count > 0 && !badRemove)
+            {
+                trainingExamplesRecorded = true;
+            }
             // DIRTY CODE
             // InputFeatures size check
             if (to.fieldName == "InputFeatures")
@@ -175,10 +181,18 @@ namespace InteractML
                         }
                     }
                 }
+                if (trainingExamplesRecorded)
+                    from.Disconnect(to);
             }
             //if connected to target values 
             if(to.fieldName == "TargetValues")
             {
+                if (trainingExamplesRecorded)
+                {
+                    from.Disconnect(to);
+                    return;
+                }
+
                 // Go through MLS systems connected if any MLS are classification or DTW set MLSclassification to true
                 foreach (IMLConfiguration MLS in IMLConfigurationNodesConnected)
                 {
@@ -198,11 +212,7 @@ namespace InteractML
                 }
                 MLSClassification = false;
             }
-            // if you have started training and this is not the system trying to stop you changing the connection and it is an output port 
-            if((TrainingExamplesVector.Count > 0|| TrainingSeriesCollection.Count > 0) && from.IsInput && !badRemove)
-            {
-                from.Disconnect(to);
-            }
+            
             UpdateTargetValuesConfig();
             inputPortList = this.GetInputPort("InputFeatures").GetConnections();
             targetPortList = this.GetInputPort("TargetValues").GetConnections();
@@ -295,6 +305,7 @@ namespace InteractML
 
             inputPortList = this.GetInputPort("InputFeatures").GetConnections();
             targetPortList = this.GetInputPort("TargetValues").GetConnections();
+            
         }
         /// <summary>
         /// Starts/Stops collecting examples when called
@@ -318,6 +329,10 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
+            if (numberInComponentList == -1)
+            {
+                SetArrayNumber();
+            }
             //Debug.Log(IMLConfigurationNodesConnected.Count);
             // Handle Input
             KeyboardInput();
@@ -655,6 +670,16 @@ namespace InteractML
             string graphName = this.graph.name;
             string fileName = graphName + "TrainingExamplesNode" + this.id;
             return fileName;
+        }
+
+        public void SetArrayNumber()
+        {
+            //Set array number
+            IMLComponent MLComponent = this.FindController();
+            List<TrainingExamplesNode> tNodes = new List<TrainingExamplesNode>();
+            if (MLComponent.TrainingExamplesNodesList != null)
+                tNodes = MLComponent.TrainingExamplesNodesList;
+            FindComponentListNumber<TrainingExamplesNode>(tNodes, MLComponent);
         }
 
         protected void KeyboardInput()

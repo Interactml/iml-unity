@@ -10,7 +10,7 @@ using XNodeEditor;
 namespace InteractML
 {
     [CustomNodeEditor(typeof(DTWIMLConfiguration))]
-    public class CDTWIMLConfigurationEditor : IMLNodeEditor
+    public class DTWIMLConfigurationEditor : IMLNodeEditor
     {
 
         #region Variables 
@@ -35,8 +35,11 @@ namespace InteractML
         {
             // Get reference to the current node
             m_DTWIMLConfiguration = (target as DTWIMLConfiguration);
-            nodeSpace = 380;
-            NodeName = "MACHINE LEARNING SYSTEM";
+            nodeSpace = 20;
+            string arrayNo = "";
+            if (m_DTWIMLConfiguration.numberInComponentList != -1)
+                arrayNo = m_DTWIMLConfiguration.numberInComponentList.ToString();
+            NodeName = "MACHINE LEARNING SYSTEM " + arrayNo;
             base.OnHeaderGUI();
         }
 
@@ -47,7 +50,7 @@ namespace InteractML
             InputPortsNamesOverride.Add("IMLTrainingExamplesNodes", "Recorded Data In");
             InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
             base.nodeTips = m_DTWIMLConfiguration.tooltips;
-            m_BodyRect.height = 320;
+            m_BodyRect.height = 290;
             base.OnBodyGUI();
         }
 
@@ -55,8 +58,19 @@ namespace InteractML
         {
             ShowTrainingIcon("DTW");
             ShowButtons(m_DTWIMLConfiguration);
-            ShowRunOnAwakeToggle(m_DTWIMLConfiguration as IMLConfiguration);
+            GUILayout.Space(320);
+           // ShowRunOnAwakeToggle(m_DTWIMLConfiguration as IMLConfiguration);
+            // if there is an error show the correct warning
+            if (m_DTWIMLConfiguration.error)
+            {
+                nodeSpace = 40;
+                m_BodyRect.height = 380;
+                ShowWarning(m_DTWIMLConfiguration.warning);
+            }
+
+            
         }
+
 
         protected override void TrainModelButton()
         {
@@ -156,7 +170,7 @@ namespace InteractML
                     GUI.enabled = false;
 
                 //Disable button if inputs don't match attached training examples node/s
-                if (!m_DTWIMLConfiguration.matchLiveDataInputs)
+                if (!m_DTWIMLConfiguration.matchLiveDataInputs || !m_DTWIMLConfiguration.matchVectorLength)
                 {
                     Debug.Log("Number of live data nodes connected to input features do not match training examples live inputs input features");
                     GUI.enabled = false;

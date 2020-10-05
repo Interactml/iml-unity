@@ -1,0 +1,214 @@
+fileFormatVersion: 2
+guid: a79d4713c937ea744b7f77efd655df6d
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: TrafficLightMap2_v1
+    100004: TrafficLightMap2_v1_light_1_1
+    100006: TrafficLightMap2_v1_light_1_2
+    100008: TrafficLightMap2_v1_light_1_3
+    100010: TrafficLightMap2_v1_light_1_4
+    100012: TrafficLightMap2_v1_light_2_1
+    100014: TrafficLightMap2_v1_light_2_2
+    100016: TrafficLightMap2_v1_light_2_3
+    100018: TrafficLightMap2_v1_light_2_4
+    100020: TrafficLightMap2_v1_light_3_1
+    100022: TrafficLightMap2_v1_light_3_2
+    100024: TrafficLightMap2_v1_light_3_3
+    100026: TrafficLightMap2_v1_light_3_4
+    100028: TrafficLightMap2_v1_light_4_1
+    100030: TrafficLightMap2_v1_light_4_2
+    100032: TrafficLightMap2_v1_light_4_3
+    100034: TrafficLightMap2_v1_light_5_1
+    100036: TrafficLightMap2_v1_light_5_2
+    100038: TrafficLightMap2_v1_light_5_3
+    100040: TrafficLightMap2_v1_light_5_4
+    100042: TrafficLightMap2_v1_lights
+    100044: TrafficLightMap2_v1_lights1
+    100046: TrafficLightMap2_v1_lights2
+    100048: TrafficLightMap2_v1_lights3
+    100050: TrafficLightMap2_v1_lights4
+    100052: TrafficLightMap2_v1_lights5
+    100054: TrafficLightMap2_v1_mainBody
+    100056: TrafficLightMap2_v1_signs
+    400000: //RootNode
+    400002: TrafficLightMap2_v1
+    400004: TrafficLightMap2_v1_light_1_1
+    400006: TrafficLightMap2_v1_light_1_2
+    400008: TrafficLightMap2_v1_light_1_3
+    400010: TrafficLightMap2_v1_light_1_4
+    400012: TrafficLightMap2_v1_light_2_1
+    400014: TrafficLightMap2_v1_light_2_2
+    400016: TrafficLightMap2_v1_light_2_3
+    400018: TrafficLightMap2_v1_light_2_4
+    400020: TrafficLightMap2_v1_light_3_1
+    400022: TrafficLightMap2_v1_light_3_2
+    400024: TrafficLightMap2_v1_light_3_3
+    400026: TrafficLightMap2_v1_light_3_4
+    400028: TrafficLightMap2_v1_light_4_1
+    400030: TrafficLightMap2_v1_light_4_2
+    400032: TrafficLightMap2_v1_light_4_3
+    400034: TrafficLightMap2_v1_light_5_1
+    400036: TrafficLightMap2_v1_light_5_2
+    400038: TrafficLightMap2_v1_light_5_3
+    400040: TrafficLightMap2_v1_light_5_4
+    400042: TrafficLightMap2_v1_lights
+    400044: TrafficLightMap2_v1_lights1
+    400046: TrafficLightMap2_v1_lights2
+    400048: TrafficLightMap2_v1_lights3
+    400050: TrafficLightMap2_v1_lights4
+    400052: TrafficLightMap2_v1_lights5
+    400054: TrafficLightMap2_v1_mainBody
+    400056: TrafficLightMap2_v1_signs
+    2100000: TrafficLightMap2_v1_mat
+    2300000: TrafficLightMap2_v1_light_1_1
+    2300002: TrafficLightMap2_v1_light_1_2
+    2300004: TrafficLightMap2_v1_light_1_3
+    2300006: TrafficLightMap2_v1_light_1_4
+    2300008: TrafficLightMap2_v1_light_2_1
+    2300010: TrafficLightMap2_v1_light_2_2
+    2300012: TrafficLightMap2_v1_light_2_3
+    2300014: TrafficLightMap2_v1_light_2_4
+    2300016: TrafficLightMap2_v1_light_3_1
+    2300018: TrafficLightMap2_v1_light_3_2
+    2300020: TrafficLightMap2_v1_light_3_3
+    2300022: TrafficLightMap2_v1_light_3_4
+    2300024: TrafficLightMap2_v1_light_4_1
+    2300026: TrafficLightMap2_v1_light_4_2
+    2300028: TrafficLightMap2_v1_light_4_3
+    2300030: TrafficLightMap2_v1_light_5_1
+    2300032: TrafficLightMap2_v1_light_5_2
+    2300034: TrafficLightMap2_v1_light_5_3
+    2300036: TrafficLightMap2_v1_light_5_4
+    2300038: TrafficLightMap2_v1_mainBody
+    2300040: TrafficLightMap2_v1_signs
+    3300000: TrafficLightMap2_v1_light_1_1
+    3300002: TrafficLightMap2_v1_light_1_2
+    3300004: TrafficLightMap2_v1_light_1_3
+    3300006: TrafficLightMap2_v1_light_1_4
+    3300008: TrafficLightMap2_v1_light_2_1
+    3300010: TrafficLightMap2_v1_light_2_2
+    3300012: TrafficLightMap2_v1_light_2_3
+    3300014: TrafficLightMap2_v1_light_2_4
+    3300016: TrafficLightMap2_v1_light_3_1
+    3300018: TrafficLightMap2_v1_light_3_2
+    3300020: TrafficLightMap2_v1_light_3_3
+    3300022: TrafficLightMap2_v1_light_3_4
+    3300024: TrafficLightMap2_v1_light_4_1
+    3300026: TrafficLightMap2_v1_light_4_2
+    3300028: TrafficLightMap2_v1_light_4_3
+    3300030: TrafficLightMap2_v1_light_5_1
+    3300032: TrafficLightMap2_v1_light_5_2
+    3300034: TrafficLightMap2_v1_light_5_3
+    3300036: TrafficLightMap2_v1_light_5_4
+    3300038: TrafficLightMap2_v1_mainBody
+    3300040: TrafficLightMap2_v1_signs
+    4300000: TrafficLightMap2_v1_signs
+    4300002: TrafficLightMap2_v1_mainBody
+    4300004: TrafficLightMap2_v1_light_1_1
+    4300006: TrafficLightMap2_v1_light_1_2
+    4300008: TrafficLightMap2_v1_light_1_3
+    4300010: TrafficLightMap2_v1_light_1_4
+    4300012: TrafficLightMap2_v1_light_2_1
+    4300014: TrafficLightMap2_v1_light_2_2
+    4300016: TrafficLightMap2_v1_light_2_3
+    4300018: TrafficLightMap2_v1_light_2_4
+    4300020: TrafficLightMap2_v1_light_3_1
+    4300022: TrafficLightMap2_v1_light_3_2
+    4300024: TrafficLightMap2_v1_light_3_3
+    4300026: TrafficLightMap2_v1_light_3_4
+    4300028: TrafficLightMap2_v1_light_4_1
+    4300030: TrafficLightMap2_v1_light_4_2
+    4300032: TrafficLightMap2_v1_light_4_3
+    4300034: TrafficLightMap2_v1_light_5_1
+    4300036: TrafficLightMap2_v1_light_5_2
+    4300038: TrafficLightMap2_v1_light_5_3
+    4300040: TrafficLightMap2_v1_light_5_4
+    9500000: //RootNode
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TrafficLightMap2_v1_mat
+    second: {fileID: 2100000, guid: e211d64e966868c47974c46e1cbfaef3, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 1
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

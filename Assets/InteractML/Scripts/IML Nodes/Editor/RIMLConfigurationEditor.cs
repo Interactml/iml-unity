@@ -27,8 +27,11 @@ namespace InteractML
         {
             // Get reference to the current node
             m_RIMLConfiguration = (target as RIMLConfiguration);
-            nodeSpace = 380;
-            NodeName = "MACHINE LEARNING SYSTEM";
+            nodeSpace = 60;
+            string arrayNo = "";
+            if (m_RIMLConfiguration.numberInComponentList != -1)
+                arrayNo = m_RIMLConfiguration.numberInComponentList.ToString();
+            NodeName = "MACHINE LEARNING SYSTEM " + arrayNo;
             base.OnHeaderGUI();
         }
 
@@ -39,8 +42,7 @@ namespace InteractML
             InputPortsNamesOverride.Add("IMLTrainingExamplesNodes", "Recorded Data In");
             InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
             base.nodeTips = m_RIMLConfiguration.tooltips;
-            m_BodyRect.height = 320;
-            m_BodyRect.height = 320;
+            m_BodyRect.height = 360;
             base.OnBodyGUI();
 
         }
@@ -48,8 +50,16 @@ namespace InteractML
         protected override void ShowBodyFields()
         {
             ShowTrainingIcon("Regression");
+            GUILayout.Space(320);
             ShowButtons(m_RIMLConfiguration);
             ShowRunOnAwakeToggle(m_RIMLConfiguration as IMLConfiguration);
+            // if there is an error show the correct warning
+            if (m_RIMLConfiguration.error)
+            {
+                nodeSpace = 70;
+                m_BodyRect.height = m_BodyRect.height + HeaderRect.height;
+                ShowWarning(m_RIMLConfiguration.warning);
+            }
         }
 
 
@@ -151,7 +161,7 @@ namespace InteractML
                     enabled = true;
                 }
                 //Disable button if inputs don't match attached training examples node/s
-                if (!m_RIMLConfiguration.matchLiveDataInputs)
+                if (!m_RIMLConfiguration.matchLiveDataInputs || !m_RIMLConfiguration.matchVectorLength)
                 {
                     Debug.Log("Number of live data nodes connected to input features do not match training examples live inputs input features");
                     GUI.enabled = false;

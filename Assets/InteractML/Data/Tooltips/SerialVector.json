@@ -1,9 +1,9 @@
 {
-  "HelpTooltip": "Extracts and Outputs a Vector3. The displayed data is either the live value when a Vector3 is connected to the input port, or when nothing is connected the display shows an editable field to output a Vector3",
-  "PortTooltip": [ "Connect a Vector3", "Outputs a Vector3" ],
+  "HelpTooltip": "Extracts and Outputs an array of floats.  Attach ",
+  "PortTooltip": [ "Connect an array of floats, either from a script node or from a distance from first input node", "Outputs an array of floats, connect to a teach the machine node or to a script node" ],
   "BodyTooltip": {
     "tips": [
-      "x, y and z values: turn on/off using the toggle, flashes when detecting input",
+      "Values for each element in the array",
     ],
     "error": [
       "error"

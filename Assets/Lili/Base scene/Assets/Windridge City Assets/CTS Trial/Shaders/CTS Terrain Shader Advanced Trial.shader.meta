@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 5928845464a53fc4f97518f3cae3ecad
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _Texture_Array_Normal: {instanceID: 0}
+  - _Texture_Geological_Map: {instanceID: 0}
+  - _texcoord: {instanceID: 0}
+  - _Texture_Splat_1: {fileID: 28681822788971444, guid: cfe3009bfc1196048948d9635fe4d766,
+      type: 2}
+  - _Texture_Splat_2: {fileID: 28867416947674120, guid: cfe3009bfc1196048948d9635fe4d766,
+      type: 2}
+  - _Texture_Array_Albedo: {instanceID: 0}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -13,7 +13,7 @@
       "Connect a GameObject"
     ]
   },
-  "BottomError": [ "bottom error" ]
+  "BottomError": [ "You cannot add or edit Live Data In or Target Values as you have started recording data" ]
 }
 
 

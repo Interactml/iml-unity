@@ -1,0 +1,11 @@
+We advice to use deferred rendering with linear color space setup.
+- Linear color space: because all materials were setup to linear color rendering, at gamma they could be to intensive or simply render unproperly.
+- Deferred rendering: it's because reflection probes have  blending distance setup, so whole surface will reflect environment properly.
+You could use forward rendering but probably reflection probes should be adjusted by additional "box size" range. 
+Anyway best performance at this project you will get with deffered rendering and linear color space.
+
+If you will import full versions of the packs (from asset store) which we use to build this scene, they should automatically replace correct
+files and give full resolution HQ view.
+
+
+

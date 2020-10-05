@@ -154,8 +154,12 @@ namespace InteractML
         protected bool m_WrongNumberOfTargetValues = false;
 
         private List<TrainingExamplesNode> oldTrainingExamplesNodes;
-
+        private int lengthtrainingvector;
         public bool matchLiveDataInputs = true;
+        //does the vector length match? to be deleted when new inputs implemented 
+        public bool matchVectorLength = false;
+        public string warning;
+        public bool error = false;
         #endregion
 
         #region XNode Messages
@@ -240,7 +244,8 @@ namespace InteractML
             if(from.fieldName == "TrainingExamplesNodeToOutput" && !m_WrongNumberOfTargetValues) 
             {
                 TrainingExamplesNode temp = from.node as TrainingExamplesNode;
-                temp.IMLConfigurationNodesConnected.Add(this);
+                if (!temp.IMLConfigurationNodesConnected.Contains(this))
+                    temp.IMLConfigurationNodesConnected.Add(this);
             }
             
         }
@@ -336,7 +341,7 @@ namespace InteractML
 
             if (Lists.IsNullOrEmpty(ref m_DynamicOutputPorts))
                 m_DynamicOutputPorts = new List<NodePort>();
-
+            
             m_NodeConnectionChanged = false;
 
             m_LastKnownRapidlibOutputVectorSize = 0;
@@ -386,19 +391,19 @@ namespace InteractML
 
         public void UpdateLogic()
         {
+            //set array number for UI
+            if (numberInComponentList == -1)
+            {
+                SetArrayNumber();
+            }
+            //set errors for ui
+            UIErrors();
             //Set Learning Type 
             SetLearningType();
 
-            // Handle Input
-            //KeyboardInput();
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                ToggleRunning();
-            }
-            if (Input.GetKeyDown(KeyCode.T))
-            {
-                TrainModel();
-            }
+            if (Trained && !matchVectorLength)
+                CheckLengthInputsVector();
+
 
             //Check if live data input matches training examples 
             CheckLiveDataInputMatchesTrainingExamples();
@@ -431,49 +436,126 @@ namespace InteractML
 
         }
 
-        public virtual bool TrainModel()
+        public bool TrainModel()
         {
             bool isTrained = false;
-            RunningLogic();
-            // if there are no training examples in connected training nodes do not train 
-           if(m_TotalNumTrainingData == 0)
+            //if the MLS is not running, training and the model is not null and the total number of training data is bigger than 0
+            if (!Running && !Training && Model != null && TotalNumTrainingData > 0)
             {
-                Debug.Log("no training examples");
-            }
-            else
-            {
-                if (m_RapidlibTrainingSeriesCollection == null)
-                    m_RapidlibTrainingSeriesCollection = new List<RapidlibTrainingSerie>();
-
-                
-                //TD Turn into two methods to be overriden in subclass 
-                // If we have a dtw model...
-                if (m_LearningType == IMLSpecifications.LearningType.DTW)
+                RunningLogic();
+                // if there are no training examples in connected training nodes do not train 
+                if (m_TotalNumTrainingData == 0)
                 {
-                    m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
-                    isTrained = m_Model.Train(m_RapidlibTrainingSeriesCollection);
+                    Debug.Log("no training examples");
                 }
-                // If it is a classification/regression model
                 else
                 {
-                    // Transform the IML Training Examples into a format suitable for Rapidlib
-                    m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
+                    if (m_RapidlibTrainingSeriesCollection == null)
+                        m_RapidlibTrainingSeriesCollection = new List<RapidlibTrainingSerie>();
 
-                    // Trains rapidlib with the examples added
-                    isTrained = m_Model.Train(m_RapidlibTrainingExamples);
 
-                    //Debug.Log("***Retraining IML Config node with num Examples: " + RapidLibComponent.trainingExamples.Count + " Rapidlib training succesful: " + RapidLibComponent.Trained + "***");
+                    //TD Turn into two methods to be overriden in subclass 
+                    // If we have a dtw model...
+                    if (m_LearningType == IMLSpecifications.LearningType.DTW)
+                    {
+                        m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
+                        isTrained = m_Model.Train(m_RapidlibTrainingSeriesCollection);
+                    }
+                    // If it is a classification/regression model
+                    else
+                    {
+                        // Transform the IML Training Examples into a format suitable for Rapidlib
+                        m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
+
+                        // Trains rapidlib with the examples added
+                        isTrained = m_Model.Train(m_RapidlibTrainingExamples);
+
+                        //Debug.Log("***Retraining IML Config node with num Examples: " + RapidLibComponent.trainingExamples.Count + " Rapidlib training succesful: " + RapidLibComponent.Trained + "***");
+                    }
                 }
-            }
+                if (isTrained)
+                {
+                    lengthtrainingvector = 0;
+                    TrainingExamplesNode tNode = IMLTrainingExamplesNodes[0];
+                    lengthtrainingvector = CheckLengthTrainingVector(tNode);
 
+                }
+                CheckLengthInputsVector();
+            }
             return isTrained;
+        }
+
+        protected int CheckLengthTrainingVector(TrainingExamplesNode tNode)
+        {
+            int trainingVector = 0;
+            if(LearningType != IMLSpecifications.LearningType.DTW)
+            {
+                IMLTrainingExample example = tNode.TrainingExamplesVector[0];
+                
+                foreach (IMLInput input in example.Inputs)
+                {
+                    for (int i = 0; i < input.InputData.Values.Length; i++)
+                    {
+                        trainingVector++;
+                    }
+                }
+            } else
+            {
+                IMLTrainingSeries example = tNode.TrainingSeriesCollection[0];
+                List<IMLInput> tempList = example.Series[0];
+                foreach (IMLInput input in tempList)
+                {
+                    for (int i = 0; i < input.InputData.Values.Length; i++)
+                    {
+                        trainingVector++;
+                    }
+                }
+
+            }
+            
+            return trainingVector;
+        }
+
+        //checks the length of input vector and checks if the same as the trained data set to be deleted when new input system done
+        protected void CheckLengthInputsVector()
+        {
+            int vectorSize = 0;
+            if(InputFeatures != null)
+            {
+                for (int i = 0; i < InputFeatures.Count; i++)
+                {
+                    var inputFeature = InputFeatures[i] as IFeatureIML;
+                    if (inputFeature != null)
+                    {
+                        if (inputFeature.FeatureValues != null)
+                        {
+                            if (inputFeature.FeatureValues.Values != null)
+                            {
+                                vectorSize += inputFeature.FeatureValues.Values.Length;
+                            }
+                        }
+                    }
+                }
+                if (vectorSize == lengthtrainingvector)
+                {
+                    matchVectorLength = true;
+                }
+                else
+                {
+                    Debug.LogWarning("mismatch in live inputs to trained data");
+                }
+            } else {
+                matchVectorLength = false;
+
+            }
+            
         }
 
         public void ToggleRunning()
         {
             //Debug.Log("running");
-            // If the system is not running...
-            if (!m_Running)
+            // If the system is not running and it is trained, it is not traing and the vectors match 
+            if (!m_Running && Trained && !Training && matchLiveDataInputs && matchVectorLength)
             {
                 // Set flag to true if running inputs/outputs are not null and the model is trained!
                 if (((m_RapidlibInputVector != null && m_RapidlibOutputVector != null) || m_LearningType == IMLSpecifications.LearningType.DTW) && Trained)
@@ -490,7 +572,7 @@ namespace InteractML
                 }
             }
             // If the system is already running...
-            else
+            else if (m_Running)
             {
                 // If we are on DTW, we run the iteration at the end of the data collection period
                 if (m_LearningType == IMLSpecifications.LearningType.DTW)
@@ -510,6 +592,9 @@ namespace InteractML
                 m_Running = false;
                 // Stop model
                 m_Model.StopRunning();
+            } else
+            {
+               
             }
         }
 
@@ -651,6 +736,16 @@ namespace InteractML
                 pointerRawOutputVector += outputFeature.Values.Length;
             }
 
+        }
+
+        public void SetArrayNumber()
+        {
+            //Set array number
+            IMLComponent MLComponent = this.FindController();
+            List<IMLConfiguration> cNodes = new List<IMLConfiguration>();
+            if (MLComponent.IMLConfigurationNodesList != null)
+                cNodes = MLComponent.IMLConfigurationNodesList;
+            FindComponentListNumber<IMLConfiguration>(cNodes, MLComponent);
         }
 
         /// <summary>
@@ -1304,7 +1399,9 @@ namespace InteractML
                 matchLiveDataInputs = true;
             else
                 matchLiveDataInputs = false;
-            
+
+   
+
         }
 
         /// <summary>
@@ -1321,6 +1418,7 @@ namespace InteractML
             // Go through all the IML Training Examples if we can
             if (!Lists.IsNullOrEmpty(ref trainingNodesIML))
             {
+                //comeback
                 // Reset counter examples trained on
                 numExamples = 0;
                 // Go through each node
@@ -1569,6 +1667,44 @@ namespace InteractML
                     // TO DO
                     // DISPLAY ERROR, not a feature connected
                 }
+            }
+        }
+
+        protected bool CheckTrainingExamplesConfigMatch(List<TrainingExamplesNode> trainingNodesIML)
+        {
+            bool match = true;
+            //if there are more than one training node connected check there is an equal vector
+            if (trainingNodesIML.Count > 1)
+            {
+                int vectorSize = CheckLengthTrainingVector(trainingNodesIML[0]);
+                int targetVector = 0;
+                for (int i = 1; i < trainingNodesIML.Count; i++)
+                {
+                    //make this method for target values too 
+                    if (vectorSize != CheckLengthTrainingVector(trainingNodesIML[i]))
+                    {
+                        Debug.LogWarning("Can't train mismatch in Inputs");
+                        
+                    }
+                }
+
+            }
+            return match;
+        }
+        private void UIErrors()
+        {
+            if (!matchLiveDataInputs || !matchVectorLength)
+            {
+                //warning = tooltips.BottomError[3];
+                error = true;
+            } else if (!Application.isPlaying)
+            {
+                warning = tooltips.BottomError[4];
+                error = true;
+            }
+            else
+            {
+                error = false;
             }
         }
        

@@ -1,0 +1,55 @@
+Asset is governed by the Asset Store EULA; however, the following components are governed by the licenses indicated below:
+
+
+NMWind.cginc
+Unity Companion License
+
+NMWindNoShiver.cginc
+Unity Companion License
+
+NMWind.hlsl
+Unity Companion License
+
+NMWindNoShiver.hlsl
+Unity Companion License
+
+NM_Wind.cs
+Unity Companion License
+
+ShaderWindSettings.cs
+Unity Companion License
+
+3DNoise.psd
+Unity Companion License
+
+GustNoise.psd
+Unity Companion License
+
+
+License link:
+https://unity3d.com/legal/licenses/Unity_Companion_License
+
+
+
+Acknowledgments:
+
+Visual nature of the demo as well as included trial assets brough to you by:
+Naturemanufacture
+Indago
+
+Tools used to create the demo were licensed from:
+Andasoft
+Procedural Worlds
+
+
+
+
+
+Use or inclusion of all or part of the asset package [Windridge City] inside another package submitted to the Unity Asset Store is strictly forbidden.
+
+From the Asset Store Submission Guidelines
+https://unity3d.com/asset-store/sell-assets/submission-guidelines
+
+1.1.e Unless expressly forbidden, any products that are developed and published under the Unity Technologies account on the Asset Store are allowed to be 
+incorporated into submitted products for demonstration purposes. To avoid needless file size and clutter, we require that you only include Unity Technology 
+content that is directly being utilized in your demos.

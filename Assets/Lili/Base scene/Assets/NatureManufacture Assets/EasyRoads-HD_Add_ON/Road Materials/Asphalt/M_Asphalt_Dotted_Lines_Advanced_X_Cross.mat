@@ -1,0 +1,202 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: M_Asphalt_Dotted_Lines_Advanced_X_Cross
+  m_Shader: {fileID: 4800000, guid: d880b57b930dca9409faa0b685048792, type: 3}
+  m_ShaderKeywords: _ALPHATEST_ON _DETAIL_MULX2 _METALLICGLOSSMAP _NORMALMAP _PARALLAXMAP
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _ArrayCrossRoadAlbedo_T:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ArrayCrossRoadMetallicRAmbientocclusionGHeightBSmoothnessA:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ArrayCrossRoadNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ArrayMainRoadAlbedo_T:
+        m_Texture: {fileID: 18700000, guid: 404101e223e612643a6bac4fe504a0c3, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ArrayMainRoadMetallicRAmbientOcclusionGHeightBSmoothnessA:
+        m_Texture: {fileID: 18700000, guid: db0d968a1406c874aa0ae0484c3ed23b, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ArrayMainRoadNormal:
+        m_Texture: {fileID: 18700000, guid: c1b74a8472a430e4ab39e7dfa9e95ae4, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: 77d1d677e1b3a2543a89628a9524039c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CrossRoadMetallicRAmbientocclusionGHeightBSmoothnessA:
+        m_Texture: {fileID: 2800000, guid: 84cbf6dedca02814989a21098fbdcc84, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _CrossRoadNormal:
+        m_Texture: {fileID: 2800000, guid: 4ac85b6d082329e43b40e46bb847d900, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 2800000, guid: 607c1207c94fbfc4080fdae7991c40fe, type: 3}
+        m_Scale: {x: 1, y: 0.4}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 2800000, guid: 3498603a0ba179d4e9d61d586403c6a8, type: 3}
+        m_Scale: {x: 1, y: 0.4}
+        m_Offset: {x: 1.53, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 2800000, guid: 588a750f48b6e3946bc551bd4eafce7a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 1f3c7a04e9dcb1549acb680190563c3d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetalicRAmbientOcclusionGHeightBEmissionA:
+        m_Texture: {fileID: 2800000, guid: 3f72478befc025049a84e041b73b59d0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 2800000, guid: 94cec10f43d3ce0458cb7f16dfbe4d55, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 2800000, guid: 94cec10f43d3ce0458cb7f16dfbe4d55, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 2800000, guid: b06193349889d694a86f9b22e7475caa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SecondRoadMetalicRAmbientocclusionGHeightB:
+        m_Texture: {fileID: 2800000, guid: c9453e45d1577c446af508a18dca3adc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SecondRoadMetalicRAmbientocclusionGHeightBSmoothnessA:
+        m_Texture: {fileID: 2800000, guid: c9453e45d1577c446af508a18dca3adc, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SecondRoadMetallicRAmbientocclusionGHeightBSmoothnessA:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SecondRoadNormal:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample1:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample4:
+        m_Texture: {fileID: 2800000, guid: 432744a369048c440b361ee1624c040f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - MainRoadIndex: 2
+    - _BumpScale: 1
+    - _CrossRoadAlphaCutOut: 1
+    - _CrossRoadAmbientOcclusionPower: 1
+    - _CrossRoadBrightness: 1
+    - _CrossRoadMetallicPower: 1
+    - _CrossRoadNormalScale: 1
+    - _CrossRoadParallaxPower: 0.002
+    - _CrossRoadSmoothnessPower: 1
+    - _CrossRoadUV3: 0
+    - _Cutoff: 0.5
+    - _DetailAlbedoPower: 1.806
+    - _DetailNormalMapScale: 0.35
+    - _DstBlend: 0
+    - _Float0: 0.35
+    - _Float1: 0
+    - _Float2: 0
+    - _Float3: 0.35
+    - _Float4: 0
+    - _Float5: 0
+    - _Float6: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _IgnoreCrossRoadAlpha: 0
+    - _IgnoreSecondRoadAlpha: 0
+    - _MainRoadAlphaCutOut: 1
+    - _MainRoadAmbientOcclusionPower: 1
+    - _MainRoadBrightness: 1
+    - _MainRoadHeightmapDepth: 1
+    - _MainRoadMetalicPower: 1
+    - _MainRoadParallaxPower: 0.002
+    - _MainRoadSmoothnessPower: 1
+    - _MainRoadSmothnessPower: 1
+    - _MainRoadUV3: 0
+    - _Metallic: 0
+    - _Mode: 1
+    - _OcclusionStrength: 1
+    - _Parallax: 0.045
+    - _SecondRoadAlphaCutOut: 0
+    - _SecondRoadAmbientOcclusionPower: 0
+    - _SecondRoadBrightness: 1
+    - _SecondRoadHeighblendTreshold: 41
+    - _SecondRoadHeightmapContrast: 0.16
+    - _SecondRoadHeightmapDepth: 0.876
+    - _SecondRoadMetalicPower: 0
+    - _SecondRoadNoiseMaskPower: 0
+    - _SecondRoadNoiseMaskTreshold: 1
+    - _SecondRoadNormalBlend: 0
+    - _SecondRoadNormalScale: 0
+    - _SecondRoadParallaxPower: 0
+    - _SecondRoadSmoothnessPower: 0
+    - _SecondRoadSmothnessPower: 1
+    - _SecondRoadUV3: 0
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _TessMax: 35
+    - _TessMin: 0
+    - _TessPhongStrength: 0.47
+    - _TessValue: 14.89
+    - _Tiling: 0.1
+    - _UVSec: 0
+    - _ZWrite: 1
+    - __dirty: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _CrossRoadColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _MainRoadColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _SecondRoadColor: {r: 1, g: 1, b: 1, a: 1}

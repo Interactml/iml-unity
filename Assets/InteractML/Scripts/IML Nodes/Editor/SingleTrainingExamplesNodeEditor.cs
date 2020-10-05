@@ -27,7 +27,10 @@ namespace InteractML
             // Get reference to the current node
             m_SingleTrainingExamplesNode = (target as SingleTrainingExamplesNode);
             nodeSpace = 360 + (m_ConnectedInputs + m_ConnectedTargets) * 60;
-            NodeName = "TEACH THE MACHINE";
+            string arrayNo = "";
+            if (m_SingleTrainingExamplesNode.numberInComponentList != -1)
+                 arrayNo = m_SingleTrainingExamplesNode.numberInComponentList.ToString();
+            NodeName = "TEACH THE MACHINE " + arrayNo;
             NodeSubtitle = "Classification & Regression Training Examples";
             base.OnHeaderGUI();
         }
@@ -58,6 +61,12 @@ namespace InteractML
             GUILayout.Space(bodySpace);
             DrawValues(m_SingleTrainingExamplesNode.DesiredOutputFeatures, "Target Values");
             ShowButtons();
+            if (m_SingleTrainingExamplesNode.TrainingExamplesVector.Count > 0)
+            {
+                nodeSpace = 450 + (m_ConnectedInputs + m_ConnectedTargets) * 60;
+                m_BodyRect.height = 400 + (m_ConnectedInputs + m_ConnectedTargets) * 60;
+                ShowWarning(m_SingleTrainingExamplesNode.tooltips.BottomError[0]);
+            }
             GUILayout.EndArea();
             ShowTrainingExamplesDropdown();
         }
@@ -70,7 +79,7 @@ namespace InteractML
             int spacing = 75;
             GUILayout.Space(40);
 
-            // show record examples buttons 
+            // show record ONE example button
             GUILayout.BeginHorizontal();
             GUILayout.Space(spacing);
             if (GUILayout.Button(new GUIContent("Record One \n example"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record One Button")))
@@ -95,6 +104,7 @@ namespace InteractML
                 buttonTipHelper = false;
             }
 
+            // show record examples button
             GUILayout.Space(spacing);
             string recordNameButton = ShowRecordExamplesButton();
 
@@ -167,7 +177,7 @@ namespace InteractML
                 }
             }*/
 
-            // Draw button
+            // Draw button record examples
             if (disableButton)
                 GUI.enabled = false;
             if (GUILayout.Button("Record Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button")))

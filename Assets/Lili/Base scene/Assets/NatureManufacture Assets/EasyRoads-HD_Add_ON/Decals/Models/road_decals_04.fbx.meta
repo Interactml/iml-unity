@@ -1,0 +1,144 @@
+fileFormatVersion: 2
+guid: 038702beb26d6344abb68cee795994b2
+timeCreated: 1524830765
+licenseType: Store
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: decal_lines_dotted_01
+    100002: decal_lines_dotted_02
+    100004: decal_lines_double
+    100006: decal_lines_double_dotted
+    100008: decal_lines_side
+    100010: decal_lines_single
+    100012: decal_lines_stripped_dotted_01
+    100014: decal_lines_stripped_dotted_02
+    100016: decal_lines_stripped_double
+    100018: decal_lines_stripped_double_dotted
+    100020: decal_lines_stripped_side
+    100022: decal_lines_stripped_single
+    100024: //RootNode
+    400000: decal_lines_dotted_01
+    400002: decal_lines_dotted_02
+    400004: decal_lines_double
+    400006: decal_lines_double_dotted
+    400008: decal_lines_side
+    400010: decal_lines_single
+    400012: decal_lines_stripped_dotted_01
+    400014: decal_lines_stripped_dotted_02
+    400016: decal_lines_stripped_double
+    400018: decal_lines_stripped_double_dotted
+    400020: decal_lines_stripped_side
+    400022: decal_lines_stripped_single
+    400024: //RootNode
+    2300000: decal_lines_dotted_01
+    2300002: decal_lines_dotted_02
+    2300004: decal_lines_double
+    2300006: decal_lines_double_dotted
+    2300008: decal_lines_side
+    2300010: decal_lines_single
+    2300012: decal_lines_stripped_dotted_01
+    2300014: decal_lines_stripped_dotted_02
+    2300016: decal_lines_stripped_double
+    2300018: decal_lines_stripped_double_dotted
+    2300020: decal_lines_stripped_side
+    2300022: decal_lines_stripped_single
+    3300000: decal_lines_dotted_01
+    3300002: decal_lines_dotted_02
+    3300004: decal_lines_double
+    3300006: decal_lines_double_dotted
+    3300008: decal_lines_side
+    3300010: decal_lines_single
+    3300012: decal_lines_stripped_dotted_01
+    3300014: decal_lines_stripped_dotted_02
+    3300016: decal_lines_stripped_double
+    3300018: decal_lines_stripped_double_dotted
+    3300020: decal_lines_stripped_side
+    3300022: decal_lines_stripped_single
+    4300000: decal_lines_single
+    4300002: decal_lines_stripped_single
+    4300004: decal_lines_stripped_side
+    4300006: decal_lines_stripped_dotted_01
+    4300008: decal_lines_stripped_dotted_02
+    4300010: decal_lines_stripped_double
+    4300012: decal_lines_stripped_double_dotted
+    4300014: decal_lines_side
+    4300016: decal_lines_dotted_01
+    4300018: decal_lines_dotted_02
+    4300020: decal_lines_double
+    4300022: decal_lines_double_dotted
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

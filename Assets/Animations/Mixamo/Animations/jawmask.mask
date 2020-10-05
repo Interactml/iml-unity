@@ -1,0 +1,303 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: jawmask
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: bob_curled_underMesh
+    m_Weight: 1
+  - m_Path: Default simplified
+    m_Weight: 1
+  - m_Path: Default simplified/root
+    m_Weight: 1
+  - m_Path: Default simplified/root/pelvis.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/pelvis.L/upperleg01.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/pelvis.L/upperleg01.L/upperleg02.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/pelvis.L/upperleg01.L/upperleg02.L/lowerleg01.L/lowerleg02.L/foot.L/toe1-1.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/pelvis.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/pelvis.R/upperleg01.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/pelvis.R/upperleg01.R/upperleg02.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/pelvis.R/upperleg01.R/upperleg02.R/lowerleg01.R/lowerleg02.R/foot.R/toe1-1.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/breast.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/breast.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/finger1-1.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/finger1-1.L/finger1-2.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/finger1-1.L/finger1-2.L/finger1-3.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal1.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal1.L/finger2-1.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal1.L/finger2-1.L/finger2-2.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal1.L/finger2-1.L/finger2-2.L/finger2-3.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal2.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal2.L/finger3-1.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal2.L/finger3-1.L/finger3-2.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal2.L/finger3-1.L/finger3-2.L/finger3-3.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal3.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal3.L/finger4-1.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal3.L/finger4-1.L/finger4-2.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal3.L/finger4-1.L/finger4-2.L/finger4-3.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal4.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal4.L/finger5-1.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal4.L/finger5-1.L/finger5-2.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.L/shoulder01.L/upperarm01.L/upperarm02.L/lowerarm01.L/lowerarm02.L/wrist.L/metacarpal4.L/finger5-1.L/finger5-2.L/finger5-3.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/finger1-1.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/finger1-1.R/finger1-2.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/finger1-1.R/finger1-2.R/finger1-3.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal1.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal1.R/finger2-1.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal1.R/finger2-1.R/finger2-2.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal1.R/finger2-1.R/finger2-2.R/finger2-3.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal2.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal2.R/finger3-1.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal2.R/finger3-1.R/finger3-2.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal2.R/finger3-1.R/finger3-2.R/finger3-3.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal3.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal3.R/finger4-1.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal3.R/finger4-1.R/finger4-2.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal3.R/finger4-1.R/finger4-2.R/finger4-3.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal4.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal4.R/finger5-1.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal4.R/finger5-1.R/finger5-2.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/clavicle.R/shoulder01.R/upperarm01.R/upperarm02.R/lowerarm01.R/lowerarm02.R/wrist.R/metacarpal4.R/finger5-1.R/finger5-2.R/finger5-3.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw
+    m_Weight: 0
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04
+    m_Weight: 0
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris02
+    m_Weight: 0
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris02/oris01
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris06.L
+    m_Weight: 0
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris06.L/oris07.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris06.R
+    m_Weight: 0
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/special04/oris06.R/oris07.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00
+    m_Weight: 0
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01
+    m_Weight: 0
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02
+    m_Weight: 0
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue03
+    m_Weight: 0
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue03/tongue04
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue03/tongue07.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue03/tongue07.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue06.L
+    m_Weight: 0
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue02/tongue06.R
+    m_Weight: 0
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue05.L
+    m_Weight: 0
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/jaw/tongue00/tongue01/tongue05.R
+    m_Weight: 0
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.L/levator03.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.L/levator03.L/levator04.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.L/levator03.L/levator04.L/levator05.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.R/levator03.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.R/levator03.R/levator04.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/levator02.R/levator03.R/levator04.R/levator05.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris04.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris04.L/oris03.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris04.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris04.R/oris03.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris06
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special01/oris06/oris05
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special03
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special03/levator06.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special03/levator06.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.L/special05.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.L/special05.L/eye.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.L/special05.L/orbicularis03.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.L/special05.L/orbicularis04.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.R/special05.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.R/special05.R/eye.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.R/special05.R/orbicularis03.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/special06.R/special05.R/orbicularis04.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.L/oculi02.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.L/oculi02.L/oculi01.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.R/oculi02.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis01.R/oculi02.R/oculi01.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.L/risorius02.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.L/risorius02.L/risorius03.L
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.R/risorius02.R
+    m_Weight: 1
+  - m_Path: Default simplified/root/spine05/spine04/spine03/spine02/spine01/neck01/neck02/neck03/head/temporalis02.R/risorius02.R/risorius03.R
+    m_Weight: 1
+  - m_Path: eyebrow005Mesh
+    m_Weight: 1
+  - m_Path: eyelashes01Mesh
+    m_Weight: 1
+  - m_Path: female_genericMesh
+    m_Weight: 1
+  - m_Path: high-polyMesh
+    m_Weight: 1
+  - m_Path: high_heels_libraryMesh
+    m_Weight: 1
+  - m_Path: qipaoMesh
+    m_Weight: 1
