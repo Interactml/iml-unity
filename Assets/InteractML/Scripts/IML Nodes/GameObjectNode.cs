@@ -46,21 +46,6 @@ namespace InteractML
 
         #region XNode Messages
 
-        // Use this for initialization
-        protected override void Init()
-        {
-            base.Init();
-
-            var MLController = graph as IMLController;
-            if (MLController.SceneComponent != null)
-            {
-                MLController.SceneComponent.GetAllNodes();
-               
-            }
-
-            tooltips = IMLTooltipsSerialization.LoadTooltip("GameObject");
-        }
-
         public void OnDestroy()
         {
             // Remove reference of this node in the IMLComponent controlling this node (if any)
