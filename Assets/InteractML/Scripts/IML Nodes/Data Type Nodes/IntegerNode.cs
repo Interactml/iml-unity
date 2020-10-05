@@ -26,15 +26,13 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private IMLInteger m_FeatureValues;
 
-        public int m_UserInput;
-        public int receivedInt;
-        public bool int_switch = true;
-        public float f;
-
         // Use this for initialization
         protected override void Init()
         {
+            UserInput = new IMLInteger();
+
             tooltips = IMLTooltipsSerialization.LoadTooltip("Int");
+            
             base.Init();
         }
 
@@ -59,35 +57,50 @@ namespace InteractML.DataTypeNodes
             if (Counter == Count)
             {
                 Counter = 0;
-                if ((f == FeatureValues.Values[0]))
-                {
+                if (PreviousFeatureValues == FeatureValues)
                     ReceivingData = false;
-                }
                 else
-                {
                     ReceivingData = true;
 
-                }
-                f = FeatureValues.Values[0];
+                PreviousFeatureValues = FeatureValues;
             }
 
             Counter++;
 
-            //check if input connected
+            //If there is no input connected take input from the user
             if (this.GetInputNodesConnected("m_In") == null)
             {
+
                 InputConnected = false;
-                if (!int_switch) m_UserInput = 0;
-                Value = m_UserInput;
+
+                // for each of the feature values 
+                for (int i = 0; i < FeatureValues.Values.Length; i++)
+                {
+                    // check toggle array length is the same as the amount of values in the user input 
+                    //if toggles are off set user input value to 0
+                    if (!ToggleSwitches[i]) { UserInput.Values[i] = 0; }
+                }
+
+                //Set feature value to user input
+                int v = (int)UserInput.Values[0];
+                Value = v;
             }
             else
             {
                 InputConnected = true;
+
                 base.Update();
-                receivedInt = Value;
-                if (!int_switch) receivedInt = 0;
-                Value = receivedInt;
+
+                var receivedValue = Value;
+                // for each of the feature values 
+                for (int i = 0; i < FeatureValues.Values.Length; i++)
+                {
+                    if (!ToggleSwitches[i]) { receivedValue = 0; }
+                }
+
+                Value = receivedValue;
             }
+
             return this;
 
         }

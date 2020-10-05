@@ -75,6 +75,17 @@ public abstract class OvrAvatarDriver : MonoBehaviour {
         var headsetType = OVRPlugin.GetSystemHeadsetType();
         switch (headsetType)
         {
+            case OVRPlugin.SystemHeadset.GearVR_R320:
+            case OVRPlugin.SystemHeadset.GearVR_R321:
+            case OVRPlugin.SystemHeadset.GearVR_R322:
+            case OVRPlugin.SystemHeadset.GearVR_R323:
+            case OVRPlugin.SystemHeadset.GearVR_R324:
+            case OVRPlugin.SystemHeadset.GearVR_R325:
+                ControllerType = ovrAvatarControllerType.Malibu;
+                break;
+            case OVRPlugin.SystemHeadset.Oculus_Go:
+                ControllerType = ovrAvatarControllerType.Go;
+                break;
             case OVRPlugin.SystemHeadset.Oculus_Quest:
             case OVRPlugin.SystemHeadset.Rift_S:
                 ControllerType = ovrAvatarControllerType.Quest;
@@ -103,6 +114,6 @@ public abstract class OvrAvatarDriver : MonoBehaviour {
 
     public static bool GetIsTrackedRemote()
     {
-        return false;
+        return OVRInput.IsControllerConnected(OVRInput.Controller.RTrackedRemote) || OVRInput.IsControllerConnected(OVRInput.Controller.LTrackedRemote);
     }
 }

@@ -19,14 +19,6 @@ limitations under the License.
 
 ************************************************************************************/
 
-#if USING_XR_MANAGEMENT && USING_XR_SDK_OCULUS
-#define USING_XR_SDK
-#endif
-
-#if UNITY_2020_1_OR_NEWER
-#define REQUIRES_XR_SDK
-#endif
-
 using UnityEngine;
 using UnityEditor;
 using System;
@@ -46,10 +38,8 @@ partial class OculusBuildApp : EditorWindow
 		{
 			EditorUserBuildSettings.SwitchActiveBuildTarget (BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows);
 		}
-#if !USING_XR_SDK && !REQUIRES_XR_SDK
 		UnityEditorInternal.VR.VREditor.SetVREnabledOnTargetGroup(BuildTargetGroup.Standalone, true);
 		PlayerSettings.virtualRealitySupported = true;
-#endif
 		AssetDatabase.SaveAssets();
 	}
 
@@ -63,14 +53,12 @@ partial class OculusBuildApp : EditorWindow
 			EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Android, BuildTarget.Android);
 		}
 
-#if !USING_XR_SDK && !REQUIRES_XR_SDK
 		UnityEditorInternal.VR.VREditor.SetVREnabledOnTargetGroup(BuildTargetGroup.Standalone, true);
 		PlayerSettings.virtualRealitySupported = true;
-#endif
 		AssetDatabase.SaveAssets();
 	}
 
-#if UNITY_EDITOR_WIN && UNITY_ANDROID
+#if UNITY_EDITOR_WIN && UNITY_2018_3_OR_NEWER && UNITY_ANDROID
 	// Build setting constants
 	const string REMOTE_APK_PATH = "/sdcard/Oculus/Temp";
 	const float USB_TRANSFER_SPEED_THRES = 25.0f;
@@ -227,7 +215,6 @@ partial class OculusBuildApp : EditorWindow
 
 		if (!CheckADBDevices())
 		{
-			buildFailed = true;
 			return;
 		}
 
@@ -243,27 +230,18 @@ partial class OculusBuildApp : EditorWindow
 		SetupDirectories();
 
 		// 1. Get scenes to build in Unity, and export gradle project
-		var buildResult = UnityBuildPlayer();
+		List<string> sceneList = GetScenesToBuild();
+		DateTime unityExportStart = DateTime.Now;
+		var buildResult = BuildPipeline.BuildPlayer(sceneList.ToArray(), gradleTempExport, BuildTarget.Android,
+			BuildOptions.AcceptExternalModificationsToPlayer |
+			BuildOptions.Development |
+			BuildOptions.AllowDebugging);
 
 		if (buildResult.summary.result == UnityEditor.Build.Reporting.BuildResult.Succeeded)
 		{
-			foreach (var step in buildResult.steps)
-			{
-				// Only log top level build steps & specific nested steps to reduce the number of events sent
-				if (step.depth == 1 ||
-					(step.name.StartsWith("Packaging assets") && step.name.EndsWith(".assets")) ||
-					step.name.Equals("Managed Stripping: (Mono)") ||
-					step.name.Equals("Splitting assets") ||
-					step.name.Equals("IL2CPP") ||
-					step.name.Equals("Exporting project")
-					)
-				{
-					OVRPlugin.SendEvent($"build_step_unity_build_player {step.name}", step.duration.TotalSeconds.ToString(), "ovrbuild");
-				}
-			}
-
-			OVRPlugin.SendEvent("build_step_unity_export", buildResult.summary.totalTime.TotalSeconds.ToString(), "ovrbuild");
-			totalBuildTime += buildResult.summary.totalTime.TotalSeconds;
+			double unityExportTime = (DateTime.Now - unityExportStart).TotalSeconds;
+			OVRPlugin.SendEvent("build_step_unity_export", unityExportTime.ToString(), "ovrbuild");
+			totalBuildTime += unityExportTime;
 
 			// Set static variables so build thread has updated data
 			showCancel = true;
@@ -296,47 +274,7 @@ partial class OculusBuildApp : EditorWindow
 		buildFailed = true;
 	}
 
-	private static UnityEditor.Build.Reporting.BuildReport UnityBuildPlayer()
-	{
-		var sceneList = GetScenesToBuild();
-		var buildPlayerOptions = new BuildPlayerOptions
-		{
-			scenes = sceneList.ToArray(),
-			locationPathName = gradleTempExport,
-			target = BuildTarget.Android,
-			options = BuildOptions.AcceptExternalModificationsToPlayer |
-				BuildOptions.Development |
-				BuildOptions.AllowDebugging
-		};
-
-		var buildResult = BuildPipeline.BuildPlayer(buildPlayerOptions);
-
-		UnityEngine.Debug.Log(UnityBuildPlayerSummary(buildResult));
-
-		return buildResult;
-	}
-
-	private static string UnityBuildPlayerSummary(UnityEditor.Build.Reporting.BuildReport report)
-	{
-		var sb = new System.Text.StringBuilder();
-
-		sb.Append($"Unity Build Player: Build {report.summary.result} ({report.summary.totalSize} bytes) in {report.summary.totalTime.TotalSeconds:0.00}s");
-
-		foreach (var step in report.steps)
-		{
-			sb.AppendLine();
-			if (step.depth > 0)
-			{
-				sb.Append(new String('-', step.depth));
-				sb.Append(' ');
-			}
-			sb.Append($"{step.name}: {step.duration:g}");
-		}
-
-		return sb.ToString();
-	}
-
-	private static void OVRBuildRun()
+	static void OVRBuildRun()
 	{
 		// 2. Process gradle project
 		IncrementProgressBar("Processing gradle project . . .");
@@ -361,7 +299,7 @@ partial class OculusBuildApp : EditorWindow
 	{
 		gradleBuildProcess = new Process();
 		string arguments = "-Xmx4096m -classpath \"" + gradlePath +
-			"\" org.gradle.launcher.GradleMain assembleDebug -x validateSigningDebug --profile";
+			"\" org.gradle.launcher.GradleMain assembleDebug -x validateSigningDebug";
 #if UNITY_2019_3_OR_NEWER
 		var gradleProjectPath = gradleExport;
 #else
@@ -398,8 +336,7 @@ partial class OculusBuildApp : EditorWindow
 			(s, e) =>
 			{
 				if (e != null && e.Data != null &&
-					e.Data.Length != 0 &&
-					(e.Data.Contains("BUILD") || e.Data.StartsWith("See the profiling report at:")))
+					e.Data.Length != 0 && e.Data.Contains("BUILD"))
 				{
 					UnityEngine.Debug.LogFormat("Gradle: {0}", e.Data);
 					if (e.Data.Contains("SUCCESSFUL"))
@@ -665,5 +602,5 @@ partial class OculusBuildApp : EditorWindow
 		progressMessage = message;
 		UnityEngine.Debug.Log("OVRBuild: " + message);
 	}
-#endif //UNITY_EDITOR_WIN && UNITY_ANDROID
+#endif //UNITY_EDITOR_WIN && UNITY_2018_1_OR_NEWER && UNITY_ANDROID
 		}

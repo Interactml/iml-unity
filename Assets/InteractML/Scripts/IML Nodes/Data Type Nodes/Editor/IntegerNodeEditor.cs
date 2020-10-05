@@ -8,6 +8,9 @@ using XNodeEditor;
 
 namespace InteractML.DataTypeNodes
 {
+    /// <summary>
+    /// Editor class drawing a IMLInteger Feature - receiving an integer or drawing editable integer field 
+    /// </summary>
     [CustomNodeEditor(typeof(IntegerNode))]
     public class IntegerNodeEditor : IMLNodeEditor
     {
@@ -41,13 +44,23 @@ namespace InteractML.DataTypeNodes
 
             // Initialise node tooltips
             base.nodeTips = m_IntegerNode.tooltips;
-
+            
+            // Initialise axis labels
+            feature_labels = new string[1] { " " };
         }
 
+        /// <summary>
+        /// Draws node specific body fields
+        /// </summary>
         protected override void ShowBodyFields()
         {
+            // Checks if node if receiving data- sets green toggle if data incoming, red if no data incoming
             DataInToggle(m_IntegerNode.ReceivingData, m_InnerBodyRect, m_BodyRect);
         }
+
+        /// <summary>
+        //// Draws position and values of toggle and labels, draws green toggle if data incoming, red if no data incoming
+        /// </summary>
         protected override void DrawFeatureValueTogglesAndLabels(GUIStyle style)
         {
             GUILayout.BeginHorizontal();
@@ -55,17 +68,13 @@ namespace InteractML.DataTypeNodes
             // If something is connected to the input port show incoming data
             if (m_IntegerNode.InputConnected)
             {
-                m_IntegerNode.int_switch = EditorGUILayout.Toggle(m_IntegerNode.int_switch, style);
-                EditorGUILayout.LabelField("Int: " + System.Math.Round(m_IntegerNode.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
-                
+                IMLNodeEditorMethods.DrawFeatureValueToggleAndLabel(m_IntegerNode, this, style);
             }
             // If there is nothing connected to the input port show editable fields
             else
             {
-                m_IntegerNode.int_switch = EditorGUILayout.Toggle(m_IntegerNode.int_switch, style, GUILayout.MaxWidth(dataWidth));
-                EditorGUILayout.LabelField("Int: ", m_NodeSkin.GetStyle("Node Body Label"), GUILayout.MaxWidth(dataWidth));
-                m_IntegerNode.m_UserInput = EditorGUILayout.IntField(m_IntegerNode.m_UserInput, GUILayout.MaxWidth(inputWidth));
-                
+                //draws node editable fields
+                DataTypeNodeEditorMethods.DrawEditableFieldsAndToggles(m_IntegerNode, this, style);
             }
             GUILayout.EndHorizontal();
         }

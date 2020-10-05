@@ -115,7 +115,7 @@ Shader "Unlit/OVROverlaySrcRectEditor"
 					col = _BackgroundColor;
 				}
 
-				float2 uv = i.uv.xy;
+				float2 uv = float2(i.uv.x, 1 - i.uv.y);
 
 				// now draw clipping objects
 				float left = onLine(uv, _SrcRectLeft) ||

@@ -8,6 +8,9 @@ using XNodeEditor;
 
 namespace InteractML.DataTypeNodes
 {
+    /// <summary>
+    /// Editor class drawing a IMLVector4 Feature - receiving a Vector4 or drawing editable Vector4 field 
+    /// </summary>
     [CustomNodeEditor(typeof(Vector4Node))]
     public class Vector4NodeEditor : IMLNodeEditor
     {
@@ -46,11 +49,18 @@ namespace InteractML.DataTypeNodes
             feature_labels = new string[4] { "x: ", "y: ", "z: ", "w: "};
         }
 
+        /// <summary>
+        /// Draws node specific body fields
+        /// </summary>
         protected override void ShowBodyFields()
         {
+            // Checks if node if receiving data- sets green toggle if data incoming, red if no data incoming
             DataInToggle(m_Vector4Node.ReceivingData, m_InnerBodyRect, m_BodyRect);
         }
 
+        /// <summary>
+        //// Draws position and values of toggle and labels, draws green toggle if data incoming, red if no data incoming
+        /// </summary>
         protected override void DrawFeatureValueTogglesAndLabels(GUIStyle style)
         {
             // If something is connected to the input port show incoming data
@@ -61,12 +71,9 @@ namespace InteractML.DataTypeNodes
             // If there is nothing connected to the input port show editable fields
             else
             {
+                //draws node editable fields
                 DataTypeNodeEditorMethods.DrawEditableFieldsAndToggles(m_Vector4Node, this, style);
             }
-
-            
-
-            
 
         }
 

@@ -10,7 +10,6 @@ namespace Oculus.Platform.Models
 
   public class User
   {
-    public readonly string DisplayName;
     public readonly UInt64 ID;
     public readonly string ImageURL;
     public readonly string InviteToken;
@@ -24,7 +23,6 @@ namespace Oculus.Platform.Models
 
     public User(IntPtr o)
     {
-      DisplayName = CAPI.ovr_User_GetDisplayName(o);
       ID = CAPI.ovr_User_GetID(o);
       ImageURL = CAPI.ovr_User_GetImageUrl(o);
       InviteToken = CAPI.ovr_User_GetInviteToken(o);

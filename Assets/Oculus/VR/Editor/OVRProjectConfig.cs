@@ -27,14 +27,11 @@ using System.IO;
 using System;
 
 [System.Serializable]
-#if UNITY_EDITOR
-[UnityEditor.InitializeOnLoad]
-#endif
 public class OVRProjectConfig : ScriptableObject
 {
 	public enum DeviceType
 	{
-		//GearVrOrGo = 0, // DEPRECATED
+		GearVrOrGo = 0,
 		Quest = 1
 	}
 
@@ -50,28 +47,10 @@ public class OVRProjectConfig : ScriptableObject
 
 	public bool disableBackups;
 	public bool enableNSCConfig;
-	public string securityXmlPath;
 
-	public bool skipUnneededShaders;
 	public bool focusAware;
-	public bool requiresSystemKeyboard;
 
 	//public const string OculusProjectConfigAssetPath = "Assets/Oculus/OculusProjectConfig.asset";
-
-	static OVRProjectConfig()
-	{
-		// BuildPipeline.isBuildingPlayer cannot be called in a static constructor
-		// Run Update once to call GetProjectConfig then remove delegate
-		EditorApplication.update += Update;
-	}
-
-	static void Update()
-	{
-		// Initialize the asset if it doesn't exist
-		GetProjectConfig();
-		// Stop running Update
-		EditorApplication.update -= Update;
-	}
 
 	private static string GetOculusProjectConfigAssetPath()
 	{
@@ -101,8 +80,7 @@ public class OVRProjectConfig : ScriptableObject
 		{
 			Debug.LogWarningFormat("Unable to load ProjectConfig from {0}, error {1}", oculusProjectConfigAssetPath, e.Message);
 		}
-		// Initialize the asset only if a build is not currently running.
-		if (projectConfig == null && !BuildPipeline.isBuildingPlayer)
+		if (projectConfig == null)
 		{
 			projectConfig = ScriptableObject.CreateInstance<OVRProjectConfig>();
 			projectConfig.targetDeviceTypes = new List<DeviceType>();
@@ -110,19 +88,8 @@ public class OVRProjectConfig : ScriptableObject
 			projectConfig.handTrackingSupport = HandTrackingSupport.ControllersOnly;
 			projectConfig.disableBackups = true;
 			projectConfig.enableNSCConfig = true;
-			projectConfig.skipUnneededShaders = false;
-			projectConfig.focusAware = true;
-			projectConfig.requiresSystemKeyboard = false;
+			projectConfig.focusAware = false;
 			AssetDatabase.CreateAsset(projectConfig, oculusProjectConfigAssetPath);
-		}
-		// Force migration to Quest device if still on legacy GearVR/Go device type
-		if (projectConfig.targetDeviceTypes.Contains((DeviceType)0)) // deprecated GearVR/Go device
-		{
-			projectConfig.targetDeviceTypes.Remove((DeviceType)0); // deprecated GearVR/Go device
-			if (!projectConfig.targetDeviceTypes.Contains(DeviceType.Quest))
-			{
-				projectConfig.targetDeviceTypes.Add(DeviceType.Quest);
-			}
 		}
 		return projectConfig;
 	}

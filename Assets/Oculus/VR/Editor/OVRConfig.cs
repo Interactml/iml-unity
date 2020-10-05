@@ -54,7 +54,7 @@ public class OVRConfig : ScriptableObject
 	{
 #if UNITY_2019_1_OR_NEWER
 		// Check for use of embedded path or user defined 
-		bool useEmbedded = EditorPrefs.GetBool("SdkUseEmbedded") || string.IsNullOrEmpty(EditorPrefs.GetString("AndroidSdkRoot"));
+		bool useEmbedded = EditorPrefs.GetBool("SdkUseEmbedded");
 		if (useEmbedded)
 		{
 			androidSDKPath = Path.Combine(BuildPipeline.GetPlaybackEngineDirectory(BuildTarget.Android, BuildOptions.None), "SDK");
@@ -94,7 +94,7 @@ public class OVRConfig : ScriptableObject
 		string libPath = "";
 #if UNITY_2019_1_OR_NEWER
 		// Check for use of embedded path or user defined 
-		bool useEmbedded = EditorPrefs.GetBool("GradleUseEmbedded") || string.IsNullOrEmpty(EditorPrefs.GetString("GradlePath"));
+		bool useEmbedded = EditorPrefs.GetBool("GradleUseEmbedded");
 
 		if (useEmbedded)
 		{
@@ -139,7 +139,7 @@ public class OVRConfig : ScriptableObject
 	{
 #if UNITY_EDITOR_WIN
 		// Check for use of embedded path or user defined 
-		bool useEmbedded = EditorPrefs.GetBool("JdkUseEmbedded") || string.IsNullOrEmpty(EditorPrefs.GetString("JdkPath"));
+		bool useEmbedded = EditorPrefs.GetBool("JdkUseEmbedded");
 
 		string exePath = "";
 		if (useEmbedded)

@@ -1,107 +1,576 @@
-﻿Oculus Master SDK License Agreement - 1.0
+OCULUS UTILITIES SOFTWARE DEVELOPMENT KIT LICENSE AGREEMENT
 
-Effective date: 6/1/2020
+1.	INTRODUCTION This Oculus Utilities Software Development Kit License Agreement
+(“License”) forms a legally binding contract between you and Facebook
+Technologies, LLC formerly known as Oculus VR, LLC (“Oculus”) and governs your
+use of the Oculus Utilities Software Development Kit (“Utilities SDK”). In order
+to obtain and use the Utilities SDK, you must first agree to the terms and
+conditions of this License. If you agree to the terms and conditions of this
+License, you may use the Utilities SDK. If you do not agree to the terms and
+conditions of this License, then you may not use the Utilities SDK. PLEASE READ
+THIS LICENSE CAREFULLY TO ENSURE THAT YOU UNDERSTAND EACH PROVISION. THIS
+LICENSE CONTAINS A MANDATORY INDIVIDUAL ARBITRATION AND CLASS ACTION/JURY TRIAL
+WAIVER PROVISION THAT REQUIRES THE USE OF ARBITRATION ON AN INDIVIDUAL BASIS TO
+RESOLVE DISPUTES, RATHER THAN JURY TRIALS OR CLASS ACTIONS.  BY CLICKING ACCEPT
+OR USING, DOWNLOADING OR COPYING THE UTILITIES SDK, YOU SIGNIFY THAT YOU HAVE
+READ, UNDERSTOOD AND HEREBY AGREE TO BE BOUND BY THE TERMS AND CONDITIONS OF
+THIS LICENSE.
 
-Copyright © Facebook Technologies, LLC and its affiliates. All rights reserved.
+2.	ELIGIBILITY By entering into this License with Oculus, you represent and
+warrant that you are not a person with whom Oculus is prohibited from
+transacting business under applicable law, nor are you a person who Oculus has
+previously denied access to or use of the Utilities SDK. If you will use the
+Utilities SDK on behalf of your employer or other company, organization,
+educational institution or any governmental agency, instrumentality or
+department (your “Entity”), you represent and warrant that you have full legal
+authority to bind your Entity to all of the terms and conditions of this
+License. If you do not have the requisite authority to so bind your Entity, you
+may not accept this License or use the Utilities SDK on behalf of your Entity.
 
-The text of this may be found at: https://developer.oculus.com/licenses/oculusmastersdk-1.0/
+3.	UTILITIES SDK LICENSE
 
-This Oculus Master SDK License Agreement ("Agreement") is a legal agreement between you and Oculus governing your use of our Oculus Software Development Kit.  Oculus Software Development Kit means any SDK, application programming interfaces ("APIs"), tools, plugins, code, technology, specification, documentation, Platform Services, and/or content made available by us to others, including app developers and content providers (collectively, the "SDK").
+3.1.	License. Subject to the terms and conditions of this License, Oculus hereby
+grants to you a limited, worldwide, freely revocable, non-exclusive,
+non-transferable, sublicensable, fully paid-up royalty-free license under
+Oculus’ copyright rights to:
 
-By downloading or using our SDK, you are agreeing to this Agreement along with other applicable terms and conditions such as the additional terms or documents accompanying the SDK, the Oculus Terms of Service, and our Privacy Policy (collectively, "Terms"). If you use the SDK as an interface to, or in conjunction with other Oculus products or services, then the terms for those other products or services also apply.
-Here, "Oculus" means Facebook Technologies, LLC, formerly known as Oculus VR, LLC, a Delaware limited liability company with its principal place of business at 1 Hacker Way, Menlo Park, California 94025, United States unless set forth otherwise. We may refer to "Oculus" as "we", "our", or "us" in the Agreement.
+(a)	store, use, reproduce, and redistribute (subject to the restrictions below)
+the software contained in the Utilities SDK (including, but not limited to
+OVRPlugin binary files, models, and Utilities Code (as defined below)) solely to
+design, develop, test, and run your engines, tools, applications, content, games
+and demos (collectively and generally referred to as “Developer Content”) to be
+used in connection with any and all compatible software or hardware (including,
+without limitation and by way of example, with commercial headsets, mobile
+tablets or phones) made available by Oculus or any third parties;
 
-You may not use the SDK and may not accept the Agreement if (1) you are a person with whom Oculus is prohibited from transacting business under applicable law, or (2) you are a person barred from using or receiving the SDK by Oculus or under the applicable laws of the United States or other countries including the country in which you are resident or from which you use the SDK. If you are using the SDK on behalf of an entity, you represent and warrant that you have authority to bind that entity to the Agreement and by accepting the Agreement, you are doing so on behalf of that entity (and all references to "you" in the Agreement refer to that entity).
+(b)	use, reproduce, modify, distribute, and create derivative works of the
+following named folders in the Utilities SDK: Prefabs, Resources, Scenes,
+Scripts, and Shader (collectively, “Utilities Code”) to internally design,
+develop and test Developer Content, and (ii) incorporate such Utilities Code and
+any such modifications, in whole or in part, into your Developer Content
+developed through your use of the Utilities SDK; and
 
-This Agreement requires the resolution of most disputes between you and Oculus by binding arbitration on an individual basis; class actions and jury trials are not permitted.
+(c)	use any documentation made available by Oculus to you in connection with the
+Utilities SDK solely in connection with your exercise of the licenses and rights
+granted in this License.
 
-1 License Grant
+3.2.	License Restrictions. You may not use the Utilities SDK for any purpose not
+expressly permitted by this License. Without in any way limiting the foregoing
+restriction, except as expressly permitted in this License, you agree not to (or
+enable any third party to):
 
-   1.1 License. Subject to the Terms and the restrictions in this Section, Oculus hereby grants you a limited, royalty-free, non-exclusive, non-transferrable, non-sublicensable, revocable copyright license ("License") during the term of this Agreement to use and reproduce the SDK solely to develop, test, or distribute your Application (defined below) and to enable you and/or your end users access to Oculus features through your Application. You may only use the SDK to develop Applications in connection with Oculus approved hardware and software products ("Oculus Approved Products") unless the documentation accompanying the SDK expressly authorizes broader use such as with other third-party platforms. 
-      1.1.1  If the SDK includes any libraries, sample source code, or other materials that we make available specifically for incorporation in your Application (as indicated by applicable documentation), you may incorporate those materials and reproduce and distribute them as part of your Application, including by distributing those materials to third parties contributing to your Application. 
-      1.1.2 The SDK may include other content (e.g., sample code) that is for demonstration, reference, or other purposes and is subject to terms and conditions included with such materials. Such materials will be clearly marked in the applicable documentation. Absent such additional terms and conditions, you may modify, distribute, and sublicense any sample source made available as part of the SDK pursuant to the Terms. 
-      1.1.3 The SDK may include Oculus content that is subject to your additional right to display the content to your end users through the use of the corresponding SDK, as contemplated by the documentation accompanying such SDK. For example, the SDK may include avatars that you may display to your end users.  
+(a)	 modify or create any derivative works of the Utilities SDK other than the
+Utilities Code;
 
-   1.2 General Restrictions. The License grant in this Section is solely for the purpose of developing, testing, and promoting your engines, tools, applications, content, games and demos, or other products and features (collectively, "Application") and providing you and/or your end users access to Oculus services and features through your Application as contemplated by applicable documentation accompanying the SDK. You may not (or allow those acting on your behalf to):
-      1.2.1 modify or create derivative works from any SDK or its component (other than sample source code described in this Section or expressly authorized by the documents accompanying the SDK);
-      1.2.2 misrepresent or mask either your identity or your Application's identity when using the SDK or developer accounts;
-      1.2.3 attempt to circumvent any limitations documented with the SDK (e.g., limiting the number of requests you may make or end users you may serve);
-      1.2.4 reverse engineer, decompile, disassemble, or otherwise attempt to extract the source code from the SDK, except to the extent that applicable law expressly permits despite this limitation;
-      1.2.5 alter, restrict, or interfere with the normal operation or functionality of the SDK, the Oculus hardware or software, or Oculus Approved Products, including, but not limited to: (a) the behavior of the "Oculus button" and "XBox button" implemented by the Oculus system software; (b) any on-screen messages or information; (c) the behavior of the proximity sensor in the Oculus hardware implemented by the Oculus system software; (d) any Oculus hardware or software security features; (e) any end user's settings; and (f) the Oculus Flash Screen Warnings or Health and Safety Warnings; 
-      1.2.6 use the SDK or your Application in a manner that violates: (a) the Oculus Data Use Policy (where applicable); (b) the Oculus Content Guidelines, or other applicable terms and policies made available on our Developer Policy portal; (c) any rights of Oculus or third parties; (d) applicable laws (such as laws regarding import, export, privacy, health & safety); or (e) other terms of service with Oculus or its affiliates;
-      1.2.7 remove, obscure, or alter any Oculus Terms or any links to or notices of those Terms; or
-      1.28 use or redistribute the SDK or any portion thereof in any manner that would cause the SDK (or any portion thereof) or Oculus to become subject to the terms of any open source license or other restrictions.
+(b)	work around any technical measures in the Utilities SDK, or use the
+Utilities SDK (alone or in conjunction with any device, program or service) in
+an attempt to circumvent any technical measures employed by or for Oculus or any
+third party to control access to, or any rights in, any content, file or other
+work;
 
-   1.3 Distribution and Sublicense Restrictions. The redistribution and sublicense rights under this Section are further subject to the following restrictions: (1) redistribution of sample source code or other materials must include the following copyright notice: "Copyright © Facebook Technologies, LLC and its affiliates. All rights reserved;" and (2) If the sample source code or other materials include a "License" or "Notice" text file, you must provide a copy of the License or Notice file with the sample code. 
+(c)	decompile, reverse engineer, disassemble, decipher, translate or otherwise
+attempt to derive or access any source code of the Utilities SDK or any part of
+the Utilities SDK (other than any component of the Utilities SDK that is made
+available by Oculus in source code form), or any other software or firmware
+provided to you by Oculus (except as and only to the extent the foregoing
+restriction is prohibited by applicable law);
 
-   1.4 Privacy and Security.  
-      1.4.1 You are responsible for the data of your Application and agree to comply with all applicable privacy and data protection laws, as well as our applicable terms and policies, particularly the Oculus Developer Data Use Policy. You represent and warrant that you have provided robust and sufficiently prominent notice to users regarding data processing that includes, at a minimum, that third parties, including Oculus and its affiliates, may collect or receive information from your Application.
-      1.4.2 For purposes of the GDPR, you acknowledge and agree that you are a separate and independent controller of the Developer User Data (as defined in the Oculus Developer Data Use Policy) and Facebook Technologies Ireland Limited (an affiliate of Oculus) is a separate and independent controller of the Oculus User Data (as defined in the Oculus Developer Data Use Policy). The parties do not and will not process Developer User Data nor Oculus User Data as joint controllers. Each party shall comply with the obligations that apply to it as a controller under the GDPR, and each party shall be individually and separately responsible for its own compliance.
-      1.4.3 Notwithstanding the foregoing, to the extent the Developer User Data contain personal data which you process subject to the GDPR, you acknowledge and agree that only for purposes of providing/operating some APIs (for example, Spatial Audio VoIP API) as described in the Data Processing Terms, you have instructed Facebook Technologies Ireland Limited to process such personal data on your behalf as your processor pursuant to this Agreement and the Data Processing Terms, which are incorporated herein by reference. 
-      1.4.4 "Personal data," "controller," "processor," and "process" in this Section have the meanings set out in the Data Processing Terms.
+(d)	publish, rent, lease, lend, sell, sublicense, distribute, transfer, disclose
+or otherwise provide the Utilities SDK;
 
-   1.5 No Obligations. You have no obligations under this Agreement to license or make available your Application to Oculus or any third parties. Nothing in this Agreement obligates Oculus to enable you or any of your Applications to access, interact with, or retrieve or publish content to any Oculus platform or service. However, Oculus may require you to agree to additional terms as a condition of providing you with such platform services in connection with your use of the SDK. You acknowledge and agree that Oculus may develop products or services that may compete with your Application or any other products or services of yours.
-   
-2 Oculus Platform Services.  Oculus and/or its affiliates makes certain Platform Services (defined below) available to you to include and enable in your Application on our Platform.  An Application that enables or includes any Platform Service must implement the Oculus Platform Framework with the Application. Once your Application has been authorized for use of the Platform Services, you are not required to update your Application to include new Platform Services that Oculus and/or its affiliates may make available as part of the Oculus Platform Framework.  For more information, please visit https://developer.oculus.com. 
+(e)	remove, obscure or alter any proprietary notices on or in the Utilities SDK
+or any Oculus license terms, policies or terms of service or any links to or
+notices thereto;
 
-   2.1 For the purpose of this Section,
-      2.1.1 "Application Services" means services provided by Oculus and/or its affiliates associated with the Platform, including, but not limited to, in-app purchasing, multiplayer matchmaking, friends, leader boards, achievements, Virtual Reality Real Time Systems ("VERTS"), voice over IP and cloud saves, which list may be changed from time to time in Oculus' or its affiliates' sole discretion.
-      2.1.2 "Oculus Platform Framework" means the suite of Oculus platform services, including, but not limited to, the Oculus file distribution and update system (enabling distribution and updates of Applications by Oculus and/or its affiliates, including through generated activation Keys), entitlement system, and account authentication, which list may be changed from time to time in Oculus' or its affiliates' sole discretion.
-      2.1.3 "Platform" means the virtual, mixed, and augmented reality platform made available by Oculus and/or its affiliates, including, but not limited to, the user experience, user interface, store, and social features, usable on hardware approved by Oculus or its affiliates or any third-party device or operating system, including, but not limited to, iOS, Android, Windows, OS X, Linux, and Windows Mobile.
-      2.1.4 "Platform Services" means the Oculus Platform Framework and the Application Services.
+(f)	use the Utilities SDK in connection with the development or transmission of
+any malware, viruses, hacks, bots, Trojan horses or other harmful or malicious
+code;
 
-   2.2 Key Provision and Redemption. If you request that Oculus generate activation keys for your Application on the Platform ("Keys") and Oculus agrees, you hereby grant Oculus and its affiliates (1) the right to generate Keys for you and (2) a license to make available, reproduce, distribute, perform, and display the Application to end users who have submitted a Key to Oculus or its affiliates. Oculus agrees to authenticate and make the Application available to any end user supplying a valid Key (or have its affiliates do so) (unless the Application has been removed or withdrawn).
+(g)	use the Utilities SDK (i) to infringe or violate any rights of Oculus, any
+of its affiliates or any third party or (ii) in any way that does not comply
+with all applicable laws (including, without limitation, all applicable export,
+import, privacy and data security laws);
 
-   2.3 Platform Services Requirements. You will not make any use of any API, software, code or other item or information supplied by Oculus or its affiliates in connection with the Platform Services other than to enhance the functionality of your Application. In particular, you must not (nor enable others to): (1) defame, abuse, harass, stalk, or threaten others, or to promote or facilitate any prohibited or illegal activities; (2) enable any functionality in your Application that would generate excessive traffic over the Oculus network or servers that would negatively impact other users' experience, or otherwise interfere with or restrict the operation of the Platform Services, or Oculus' or its affiliates' servers or networks providing the Platform Services;  (3) remove, obscure, or alter any license terms, policies or terms of service or any links to or notices thereto provided by Oculus or its affiliates; or (4) violate any rights of Oculus, its affiliates, or any third parties. You may not sublicense any software, firmware or other item or information supplied by Oculus or its affiliates in connection with the Platform Services for use by a third party, unless expressly authorized by Oculus or its affiliates to do so. You agree not to use (or encourage the use of) the Platform Services for mission critical, life saving or ultra-hazardous activities. Oculus or its affiliates may suspend operation of or remove any Application that does not comply with the restrictions in this Agreement.
+(h)	use the Utilities SDK in any way that interferes with, disrupts, damages or
+accesses in any manner not expressly authorized by Oculus, or accesses for any
+purpose not expressly authorized by Oculus, any services, networks, other
+properties, data or information of Oculus or any of its affiliates or any third
+party;
 
-   2.4 Oculus and/or its affiliates may discontinue or change functionality of the Platform Services at any time, and your continued use of the Platform Services or use of any modified or additional Platform Services is conditioned upon your adherence to the terms of this Agreement, as modified by Oculus or its affiliates from time to time.
+(i)	use the Utilities SDK in any manner other than to enhance your Developer
+Content or the functionality thereof in accordance with Section 3.1;
 
-3 Intellectual Property
+(j)	develop any Developer Content or other application or software that could
+(i) disable, hack or otherwise interfere with any authentication, content
+protection, digital signing, digital rights management, security or verification
+mechanisms or (ii) disable, override or otherwise interfere with any device,
+system or software, including any device, system or software intended to notify
+an end user that such end user’s personal information is being collected,
+transmitted, stored, maintained, processed or used;
 
-   3.1 Ownership. As between you and Oculus, Oculus and/or its affiliates or licensors own all rights, title, and interest, including all Intellectual Property Rights, in and to the SDK (including associated Oculus content and sample code) and all derivatives thereof. Oculus reserves all rights not expressly granted under the License. As between you and Oculus, you and/or your licensors own all rights, title, and interest in and to your Application, (excluding our SDK), including all Intellectual Property Rights.   "Intellectual Property Rights" means any and all worldwide rights under applicable laws of patent, copyright, trade secret, trademark, rights of publicity and privacy, and other proprietary rights.
+(k)	use the Utilities SDK to (i) defame, abuse, harass, stalk, bully or threaten
+any third party or (ii) promote or facilitate any prohibited or illegal
+activities;
 
-   3.2 Third-Party Materials. Our SDK may include third-party software offered under an open source license or third-party content subject to a separate third-party agreement. To the extent any of such third-party terms conflicts with this Agreement, such third-party terms will control solely with respect to such third-party software or content.
+(l)	enable any functionality in your Developer Content that would generate
+excessive traffic over any network or servers of Oculus or any of its affiliates
+or any third party that would negatively impact the experience of any user of
+any product or service of Oculus or any of its affiliates (or of any third party
+made available through any network or service of Oculus or any of its
+affiliates), or otherwise interfere with, limit or restrict the operation of any
+servers or networks of Oculus or any of its affiliates;
 
-   3.3 Feedback. If you provide comments, suggestions, recommendations, or other feedback about our SDK or any other Oculus or affiliate product or service, we (and our affiliates and those we allow) may use such information for any purposes without obligation to you.
+(m)	use or encourage the use of the Utilities SDK for any mission critical,
+life-saving or ultra-hazardous activities; or
 
-   3.4 Brand Attribution. This Agreement does not grant you or any third party permission to use our trade names, trademarks, service marks, logos, domain names, and other distinctive brand features (collectively, "Brand Features") except as required for reasonable and customary use in describing the origin of the SDK or reproduction of the copyright notice as required under the License grant. You will not make any statement regarding the SDK or your Application which suggests partnership with, sponsorship by, or endorsement by Oculus or its employee, contractor, contributor, licensor, affiliate, or partner without our prior written permission.   
+(n)	use or redistribute the Utilities SDK or any portion or component thereof in
+any manner that would cause the Utilities SDK or any portion or component
+thereof to become subject to the terms of any open source license.
 
-4 Confidentiality 
+3.3.	Redistribution and Sublicense Restriction.  Subject to the terms and
+conditions of this License, your license to redistribute and sublicense the
+Utilities SDK (or any portion thereof) is also expressly made subject to the
+following conditions:
 
-   4.1 Confidentiality. Our communications to you and our SDK may contain Oculus confidential information, which includes information that is marked confidential or that would normally be considered confidential under the circumstances. If you receive any such information, you will not disclose it to any third party without Oculus' prior written consent. Oculus confidential information does not include information that you independently developed, that was rightfully given to you by a third party without a confidentiality obligation with regard to such information, or that becomes public through no fault of your own. You may disclose Oculus confidential information when compelled to do so by law if you provide us reasonable prior notice, unless a court order prohibits such notice.
+(a)	You may sublicense and redistribute the Utilities SDK to your end users in
+whole for no charge or as part of a for-charge piece of Developer Content;
+provided that you may only license, sublicense or redistribute the Utilities
+SDK: (a) in its entirety; (b) solely in compiled binary executable form; and (c)
+solely as incorporated into your Developer Content;
 
-5 Termination
+(b)	You must include with all such redistributed or sublicensed Utilities SDK
+code the following copyright notice: “Copyright © Facebook Technologies, LLC and
+its affiliates. All rights reserved.”;
 
-   5.1 Termination. The term of this Agreement will begin on the date on which you click accept, download, or use the SDK or any of its components and will continue until terminated as set forth in this Agreement. Oculus reserves the right to terminate this Agreement with you, or to discontinue or suspend the SDK or any portion or feature or your access thereto for any reason or no reason and at any time without liability or other obligation to you. Without limiting the generality of the foregoing, Oculus reserves the right to terminate this Agreement, including the License, immediately in the event you breach any material provisions of this Agreement or the Terms. 
+(c)	You must give any other recipients of the Utilities SDK a copy of this
+License as such recipients, licensees or sublicensees may only use the Utilities
+SDK subject to the terms of this License and such recipient's, licensee's or
+sublicensee's agreement to and acceptance of this License with Oculus;
 
-   5.2 Effect of Termination. Upon termination of this Agreement, you will immediately stop using, distributing, or otherwise making available the SDK and all Applications that incorporate the SDK or any of its components, cease all use of the Oculus Brand Features, and destroy or return any cached or stored content, software, or other materials obtained through our SDK. 
+(d)	Each sublicense you grant to your end users must be pursuant to a valid and
+enforceable license agreement that (i) includes an acknowledgement by such end
+user that the Utilities SDK is the proprietary property of Oculus or its
+licensors or contributors, (ii) ensures that neither Oculus nor any of its
+licensors or contributors has any obligations to such end user with respect to
+any the Utilities SDK and (iii) imposes obligations on such end user no less
+restrictive than your obligations under this License with respect to the use and
+protection of the Utilities SDK; and
 
-   5.3 Surviving Provisions. When the Agreement comes to an end, those terms that by their nature are intended to continue indefinitely will continue to apply, including, but not limited to, Section 3 (Intellectual Property), Section 4 (Confidentiality), Section 5 (Termination), Section 6 (Liability) and Section 7 (General Provisions).  
+(e)	the Utilities SDK includes a "LICENSE" text file (the "License Notice"), and
+any Utilities SDK distribution that you distribute must include a copy of this
+License with the License Notice. Notwithstanding the foregoing in this Section
+3.3, you may grant to end users of your Developer Content a non-exclusive
+runtime sublicense to use the Utilities Code and any modifications of any
+Utilities Code incorporated into your Developer Content pursuant to and in
+accordance with this License: (a) solely in the form in which the Utilities Code
+is made available to you by Oculus; and (b) solely as incorporated into your
+Developer Content pursuant to and in accordance with this License (“Runtime
+Sublicense”). You agree to include a Runtime Sublicense with any of your
+Developer Content that incorporates any Utilities Code (or any modifications of
+any Utilities Code) that you provide, distribute or make available to any end
+user of such Developer Content. Each Runtime Sublicense you grant to an end user
+of your Developer Content must be granted pursuant to a valid and enforceable
+license agreement that: (i) includes an acknowledgement by such end user that
+the Utilities Code (and any modifications of any Utilities Code (other than
+modifications of the Utilities Code developed by you during the term of this
+License in accordance with Section 3.1 (“Developer Modified Utilities Code”)) is
+the proprietary property of Oculus or its licensors or contributors, (ii)
+ensures that neither Oculus nor any of its licensors or contributors has any
+obligations to such end user with respect to any Utilities Code (or any
+modifications of any Utilities Code) and (iii) imposes obligations on such end
+user no less restrictive than your obligations under this License with respect
+to the use and protection of the Utilities Code. If you incorporate any of the
+Utilities Code or Developer Modified Utilities Code into any of your Developer
+Content, you must include in or on all copies of such Developer Content a copy
+of this License and the following copyright notice (along with any other notices
+or license files that appear in or on the Utilities SDK): “Certain portions of
+the code are owned by Facebook Technologies, LLC. Copyright © Facebook
+Technologies, LLC. All rights reserved”.
 
-6 Liability
+3.4.	Developer Content Rules, Restrictions and License.
 
-   6.1 Indemnification. Unless prohibited by applicable law, you will indemnify and (at Oculus's option), defend Oculus, its affiliates, subsidiaries, agents, licensors, contributors, directors, officers, employees, suppliers, and distributors (collectively, "Oculus Parties") against all liabilities, damages, losses, costs, fees (including legal fees), and expenses relating to any allegation or third-party legal proceeding arising from: (1) your use of the SDK, or any negligence or misconduct by you, or your employees, agents, vendors, or contractors (collectively "Developer Parties"); (2) any Developer Parties' violation of the Agreement, Terms, or any applicable law and regulation; (3) any of your Application; or (4) End User Data (defined in SDK Data Use Policy). 
+(a)	You agree that as a condition of this License you will design and distribute
+your Developer Content to ensure that your Developer Content and any software
+required to use your Developer Content does not, and you will not, alter or
+interfere with the normal operation, behavior or functionality of the compatible
+hardware or software of Oculus or any third party. Without limiting the
+foregoing, in the case of Oculus hardware or software, you will ensure that your
+Developer Content and any software required to use your Developer Content does
+not alter or interfere with: (i) the behavior of the "Oculus button" and "XBox
+button" implemented by the Oculus system software; (ii) any on-screen messages
+or information; (iii) the behavior of the proximity sensor in the Oculus
+hardware implemented by the Oculus system software; (iv) any Oculus hardware or
+software security features; (v) end user's settings; or (vi) the Oculus Flash
+Screen Warnings. You also agree not to (i) commit any act, or enable, assist or
+instruct any third party to commit any act, intended to interfere with the
+normal operation of any compatible hardware or software of Oculus or any third
+party or (ii) provide any software to any users or developers that would induce
+breach of any Oculus’s or other software or hardware providers’ agreements or
+that contains any malware, viruses, hacks, bots, Trojan horses or other harmful
+or malicious code. You also agree that your Developer Content will not violate
+the Oculus Content Guidelines (available at
+https://developer.oculus.com/distribute/latest/concepts/publish-content-guidelines/).
 
-   6.2 WARRANTIES. EXCEPT AS EXPRESSLY SET OUT IN THE TERMS, THE SDK IS PROVIDED "AS IS" WITHOUT ANY SPECIFIC PROMISES OR WARRANTIES, INCLUDING, BUT NOT LIMITED TO, ANY COMMITMENTS ABOUT THE CONTENT ACCESSED THROUGH THE SDK, THE SPECIFIC FUNCTIONS OF THE SDK OR OUR PLATFORM SERVICE, OR THEIR RELIABILITY, AVAILABILITY, OR ABILITY TO MEET YOUR NEEDS. THE OCULUS PARTIES HEREBY DISCLAIM ANY IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. SOME JURISDICTIONS DO NOT PERMIT THE EXCLUSION OR LIMITATION OF IMPLIED WARRANTIES, SO YOU MAY HAVE ADDITIONAL RIGHTS.
+(b)	Oculus may suspend operation of or remove any Developer Content that does
+not comply with the restrictions in this License.
 
-   6.3 LIMITATION OF LIABILITY. TO THE EXTENT PERMITTED BY APPLICABLE LAW, OCULUS PARTIES WILL NOT BE RESPONSIBLE FOR LOST PROFITS, BUSINESS OR GOODWILL, REVENUES, OR DATA; FINANCIAL LOSSES; OR INDIRECT, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) ARISING AS A RESULT OF THIS AGREEMENT, USE OF THE SDK OR ANY MODIFIED SAMPLE CODE EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. YOU AGREE THAT YOUR REMEDIES UNDER THIS AGREEMENT ARE LIMITED SOLELY TO THE RIGHT TO COLLECT MONEY DAMAGES, IF ANY, AND YOU HEREBY WAIVE YOUR RIGHT TO SEEK INJUNCTIVE RELIEF OR OTHER EQUITABLE RELIEF.  IF YOU ARE A CALIFORNIA RESIDENT, YOU AGREE TO WAIVE CALIFORNIA CIVIL CODE § 1542, WHICH SAYS: "A GENERAL RELEASE DOES NOT EXTEND TO CLAIMS WHICH THE CREDITOR DOES NOT KNOW OR SUSPECT TO EXIST IN HIS OR HER FAVOR AT THE TIME OF EXECUTING THE RELEASE, WHICH IF KNOWN BY HIM OR HER MUST HAVE MATERIALLY AFFECTED HIS OR HER SETTLEMENT WITH THE DEBTOR." TO THE EXTENT PERMITTED BY LAW, THE CUMULATIVE, AGGREGATE LIABILITY OF OCULUS PARTIES, FOR ANY CLAIM UNDER THE AGREEMENT SHALL NOT EXCEED THE GREATER OF ONE HUNDRED US DOLLARS ($100) OR THE AMOUNT YOU HAVE PAID US IN THE PAST TWELVE MONTHS. IN ALL CASES, OCULUS PARTIES WILL NOT BE LIABLE FOR ANY EXPENSE, LOSS, OR DAMAGE THAT IS NOT REASONABLY FORESEEABLE. 
+(c)	You agree that Oculus may grant its employees and internal contractors the
+right to use, perform and display the Developer Content you provide to Oculus
+for user research, testing, evaluation and approval purposes, which shall be on
+a royalty-free basis.
 
-7 General Provisions
+4.	OCULUS PLATFORM SERVICES
 
-   7.1 Updates. We may need to update the Agreement from time to time, including to accurately reflect the access or uses of our SDK, and so we encourage you to check the Agreement regularly.  By continuing to access or use our SDK after any notice of an update to this Agreement, you agree to be bound by them.  Any updates to the Disputes section of this Agreement will apply only to disputes that arise after notice of the update takes place.  If you do not agree to the updated terms, please stop all access or use of our SDK or. You cannot sidestep your compliance obligations under an updated version of the Agreement by developing against an older release of the SDK or relying on the older Agreement and all updates to your application are subject to the modified Agreement. 
+4.1.	Definitions. For the purposes of this Section 4:
 
-   7.2 Authorization. You hereby grant Oculus and its contractors and affiliates the authorization reasonably necessary for Oculus to exercise its rights and perform its obligations under this Agreement, including a limited, royalty-free, non-exclusive license to use, perform, and display the Application you provide to Oculus for testing, evaluation, and approval purposes. 
+(a)	"Application Services" means services provided by Oculus associated with the
+Platform, including but not limited to in-app purchasing, multiplayer
+matchmaking, friends, leader boards, achievements, rooms, voice over IP and
+cloud saves, which list may be changed from time to time in Oculus' sole
+discretion.
 
-   7.3 General Provisions. You and Oculus are independent contractors with regard to each other. The Agreement does not create any third-party beneficiary rights or any agency, partnership, employment, or joint venture. We are not liable for failure or delay in performance to the extent caused by circumstances beyond our reasonable control. If you do not comply with the Agreement, and Oculus does not take action right away or does not enforce any provision of the Agreement, this inaction or lack of enforcement will not act as a waiver by Oculus of any rights that it may have (such as taking action in the future) or in any way affect the validity of this Agreement or parts thereof. If a particular provision of this Agreement is deemed unenforceable, it will be deemed modified to the minimum extent necessary to render it enforceable and most nearly reflect the intent of the original provision, and  all other provisions in this Agreement shall remain in full force and effect. You may not assign or delegate this Agreement or any obligations under this Agreement without our advance written consent. Any such prohibited attempted assignment will be void.  Oculus may assign or delegate this Agreement and any of its rights or obligations under the Agreement without your consent or notice to you. This Agreement shall bind the parties and their respective heirs, successors, and permitted assigns. The Agreement is the entire agreement between you and Oculus relating to its subject and supersede any prior or contemporaneous agreements on that subject.
+(b)	"Oculus Platform Framework" means the suite of Oculus platform services,
+including but not limited to the Oculus file distribution and update system
+(enabling distribution and updates of Developer Content by Oculus, including
+through generated activation Keys), entitlement system, and account
+authentication, which list may be changed from time to time in Oculus' sole
+discretion.
 
-   7.4 Dispute Resolution. 
-      7.4.1 If you reside outside the US or your business is located outside the US: You agree that any claim, cause of action, or dispute you have against us that arises out of or relates to any access or use of the SDK must be resolved exclusively in the U.S. District Court for the Northern District of California or a state court located in San Mateo County, that you submit to the personal jurisdiction of either of these courts for the purpose of litigating any such claim, and that the laws of the State of California will govern this Agreement and any such claim, without regard to conflict of law provisions.
-      7.4.2 If you reside in the US or your business is located in the US: You and we agree to arbitrate any claim, cause of action, or dispute between you and us that arises out of or relates to any access or use of the SDK for business or commercial purposes ("commercial claim"). This provision does not cover any commercial claims relating to violations of your or our intellectual property rights, including, but not limited to, copyright infringement, patent infringement, trademark infringement, violations of the brand guidelines, violations of your or our confidential information or trade secrets, or efforts to interfere with our products or engage with our products in unauthorized ways (for example, automated ways).
-      7.4.3 We and you agree that, by entering into this arbitration provision all parties are waiving their respective rights to a trial by jury or to participate in a class or representative action. THE PARTIES AGREE THAT EACH MAY BRING COMMERCIAL CLAIMS AGAINST THE OTHER ONLY IN ITS INDIVIDUAL CAPACITY, AND NOT AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED CLASS, REPRESENTATIVE, OR PRIVATE ATTORNEY GENERAL PROCEEDING. You may bring a commercial claim only on your own behalf and cannot seek relief that would affect other parties. If there is a final judicial determination that any particular commercial claim (or a request for particular relief) cannot be arbitrated in accordance with this paragraph's limitations, then only that commercial claim (or only that request for relief) may be brought in court. All other commercial claims (or requests for relief) remain subject to this paragraph.
-      7.4.4 The Federal Arbitration Act governs the interpretation and enforcement of this arbitration provision. All issues are for an arbitrator to decide, except that only a court may decide issues relating to the scope or enforceability of this arbitration provision or the interpretation of the prohibition of class and representative actions.
-      7.4.5 If any party intends to seek arbitration of a dispute, that party must provide the other party with notice in writing. 
-      7.4.6 The arbitration will be governed by the AAA's Commercial Arbitration Rules ("AAA Rules"), as modified by this Agreement, and will be administered by the AAA. If the AAA is unavailable, the parties will agree to another arbitration provider or the court will appoint a substitute. The arbitrator will not be bound by rulings in other arbitrations in which you are not a party. To the fullest extent permitted by applicable law, any evidentiary submissions made in arbitration will be maintained as confidential in the absence of good cause for its disclosure. The arbitrator's award will be maintained as confidential only to the extent necessary to protect either party's trade secrets or proprietary business information or to comply with a legal requirement mandating confidentiality. Each party will be responsible for paying any AAA filing, administrative and arbitrator fees in accordance with AAA Rules, except that we will pay for your filing, administrative, and arbitrator fees if your commercial claim for damages does not exceed $75,000 and is non-frivolous (as measured by the standards set forth in Federal Rule of Civil Procedure 11(b)).
-      7.4.7 If you do not wish to be bound by this provision (including its waiver of class and representative claims), you must notify us as set forth below within 30 days of the first acceptance date of any version of this Agreement containing an arbitration provision. Your notice to us under this subsection must be submitted to the address here: Facebook Technologies, LLC, 1 Hacker Way, Menlo Park, California 94025
-      7.4.8 All commercial claims between us, whether subject to arbitration or not, will be governed by California law, excluding California's conflict of laws rules, except to the extent that California law is contrary to or preempted by federal law.
-      7.4.9 If a commercial claim between you and us is not subject to arbitration, you agree that the claim must be resolved exclusively in the U.S. District Court for the Northern District of California or a state court located in San Mateo County, and that you submit to the personal jurisdiction of either of these courts for the purpose of litigating any such claim.
-      7.4.10 If any provision of this dispute resolution provision is found unenforceable, that provision will be severed and the balance of the dispute resolution provision will remain in full force and effect.
+(c)	"Platform" means the Oculus virtual reality platform, including but not
+limited to the user experience, user interface, store, and social features,
+usable on Oculus approved hardware or any third-party device or operating
+system, including but not limited to iOS, Android, Windows, OS X, Linux, and
+Windows Mobile.
+
+(d)	"Platform Services" means the Oculus Platform Framework and the Application
+Services.
+
+4.2.	Oculus Platform Services. Oculus makes certain Platform Services available
+to you to include and enable in your Developer Content. Developer Content that
+enables or includes any Platform Service must implement the Oculus Platform
+Framework with that Developer Content. Once your Developer Content has been
+authorized for use of the Platform Services, you are not required to update your
+Developer Content to include new Platform Services Oculus may make available as
+part of the Oculus Platform Framework.
+
+4.3.	Key Provision and Redemption. If you request that Oculus generate
+activation keys for your Developer Content on the Platform ("Keys") and Oculus
+agrees, you hereby grant Oculus (i) the right to generate Keys for you and (ii)
+a license to make available, reproduce, distribute, perform, and display the
+Developer Content to end users who have submitted a Key to Oculus. Oculus agrees
+to authenticate and make Developer Content available to any end user supplying a
+valid Key (unless the Developer Content has been removed or withdrawn).
+
+4.4.	Limited Authorization. You hereby grant Oculus the limited authorization
+reasonably necessary for Oculus's exercise of its rights and performance of its
+obligations under this Section 4. You agree that Oculus may use its contractors
+and affiliates for the purposes of exercising its rights and licenses set forth
+in this Section 4.
+
+4.5.	Platform Services Requirements. You will not make any use of any API,
+software, code or other item or information supplied by Oculus in connection
+with the Platform Services other than to enhance the functionality of your
+Developer Content. You may not sublicense any software, firmware or other item
+or information supplied by Oculus in connection with the Platform Service for
+use by a third party, unless expressly authorized by Oculus to do so.
+
+5.	INTELLECTUAL PROPERTY RIGHTS
+
+5.1.	Ownership.
+
+(a)	Oculus. As between you and Oculus, Oculus retains all rights (including all
+intellectual property rights), title and interest (subject to the license
+granted to you in Section 3.1 during the term of this License) in and to the
+Utilities SDK and any derivatives or modifications of the Utilities SDK,
+including all source code and object code of any of the foregoing (other than
+any Developer Modified Utilities Code). Oculus reserves all rights not expressly
+granted to you under this License.
+
+(b)	Developer. For the sake of clarification, when you use the Utilities SDK in
+or with Developer Content, you retain all rights to: (i) your Developer Content,
+and (ii) Developer Modified Utilities Code; provided however, Oculus retains all
+rights to the Utilities SDK (including without limitation, any and all software
+contained therein), including those that may be incorporated into your Developer
+Content. Except as otherwise provided herein, you have no obligations to share
+or license Developer Content (including your source and object code) or any of
+your Developer Modified Utilities Code to Oculus or any third parties;
+
+5.2.	Additional Content. Oculus may include additional content in the Utilities
+SDK for demonstration, references or other purposes. Such content will be
+clearly marked in the Utilities SDK and is subject to any terms and conditions
+included with such content.
+
+5.3.	Publicity; Use of Trademarks. This License does not grant you or any
+third-party permission to use any of the trade names, trademarks, service marks,
+logos or product names of Oculus, except as required for reasonable and
+customary use in describing the origin of the Utilities SDK or reproducing the
+copyright or other notice required pursuant to Section 3.3. Neither the name of
+Oculus nor the name of any contributor, licensor, employee or contractor of
+Oculus may be used to endorse or promote any Developer Content or any other
+products, content or materials developed using the Utilities SDK without
+specific prior written permission of Oculus.
+
+5.4.	Feedback. You may, but are not obligated to, provide Oculus with comments
+or other feedback, suggestions or recommended improvements regarding the
+Utilities SDK or any other Oculus products or services (collectively,
+“Feedback”). You hereby grant Oculus a worldwide, non-exclusive, perpetual,
+irrevocable, royalty-free, fully paid-up, transferable, sublicensable (through
+multiple tiers of sublicenses) license to use, disclose, reproduce, modify,
+create derivatives of, license, distribute, provide and exploit any Feedback for
+any purpose whatsoever, without any obligation, limitation or restriction of any
+kind.
+
+6.	THIRD PARTY SOFTWARE OR MATERIALS  Your use of any third-party software
+(including any open source software) or materials included in the Utilities SDK
+may be subject to other terms and conditions typically found in separate
+third-party license agreements or "READ ME" files included with such third-party
+software or materials. To the extent any of such other terms and conditions
+conflict with any of the terms and conditions of this License, such other terms
+and conditions applicable to such third-party software or materials will control
+solely with respect to such third-party software or materials (but to no other
+portion or component of the Utilities SDK).
+
+7.	INDEMNIFICATION  You agree to defend, indemnify and hold harmless Oculus and
+its subsidiaries, agents, contributors, licensors, managers, and other
+affiliated companies, and their employees, contractors, agents, officers and
+directors, from and against any and all claims, damages, obligations, losses,
+liabilities, costs or debt, and expenses (including, without limitation,
+reasonable attorneys’ fees and expenses) arising from or relating to (a) your
+exercise of any of the licenses or rights granted to you under this License, (b)
+your use and access of the Utilities SDK and/or the Platform Services, (c) any
+Developer Content, (d) any negligence or misconduct by you or any of your
+employees, agents, vendors or contractors, (e) your violation of any third-party
+right, including without limitation any right of privacy or intellectual
+property rights, (f) your violation of any applicable law, rule or regulation,
+or (g) your breach of any provision of this License.
+
+8.	NO WARRANTIES THE UTILITIES SDK, ANY PORTION OR COMPONENT OF THE UTILITIES
+SDK (INCLUDING, BY WAY OF EXAMPLE AND WITHOUT LIMITATION, THE OVRPLUGIN BINARY
+FILES, MODELS, AND UTILITIES CODE), THE PLATFORM SERVICES AND ALL DOCUMENTATION
+OR OTHER INFORMATION OR MATERIALS PROVIDED OR MADE AVAILABLE BY OR FOR OCULUS
+ARE PROVIDED "AS IS" AND WITHOUT ANY WARRANTY OF ANY KIND, WHETHER EXPRESS,
+IMPLIED, STATUTORY OR OTHERWISE. ALL EXPRESS OR IMPLIED WARRANTIES ARE HEREBY
+DISCLAIMED, INCLUDING, WITHOUT LIMITATION: (A) ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, QUIET
+ENJOYMENT, QUIET POSSESSION OR TITLE; AND (B) ANY WARRANTIES THAT THE UTILITIES
+SDK, ANY PORTION OR COMPONENT OF THE UTILITIES SDK, THE PLATFORM SERVICES OR ANY
+DOCUMENTATION OR OTHER INFORMATION OR MATERIALS PROVIDED OR MADE AVAILABLE BY OR
+FOR OCULUS (I) WILL MEET ANY OF YOUR REQUIREMENTS (INCLUDING, WITHOUT
+LIMITATION, YOUR REQUIREMENTS RELATING TO ANY DESIGN OR PERFORMANCE), (II) WILL
+BE UNINTERRUPTED OR ERROR-FREE, (III) ARE FREE OF ANY MALWARE, VIRUSES, HACKS,
+BOTS, TROJAN HORSES AND OTHER HARMFUL OR MALICIOUS CODE; AND (D) ARE FUNCTIONAL
+ON ANY HARDWARE OR IN ANY ENVIRONMENT. FEDERAL LAW, SOME STATES, PROVINCES AND
+OTHER JURISDICTIONS DO NOT ALLOW THE EXCLUSION AND LIMITATIONS OF CERTAIN
+IMPLIED WARRANTIES, SO THE ABOVE EXCLUSIONS MAY NOT APPLY TO YOU. THIS LICENSE
+GIVES YOU SPECIFIC LEGAL RIGHTS, AND YOU MAY ALSO HAVE OTHER RIGHTS WHICH VARY
+FROM STATE TO STATE. THE DISCLAIMERS AND EXCLUSIONS UNDER THIS LICENSE WILL NOT
+APPLY TO THE EXTENT PROHIBITED BY APPLICABLE LAW.
+
+9.	LIMITATION OF LIABILITY TO THE FULLEST EXTEST PERMITTED UNDER APPLICABLE LAW,
+IN NO EVENT SHALL OCULUS OR ANY OF ITS LICENSORS OR CONTRIBUTORS BE LIABLE TO
+YOU OR ANY END USER OR OTHER THIRD PARTY WITH RESPECT TO ANY SUBJECT MATTER OF
+THIS LICENSE (INCLUDING, WITHOUT LIMITATION, WITH RESPECT TO ANY OF THE LICENSES
+OR OTHER RIGHTS GRANTED BY OCULUS UNDER THIS LICENSE) OR ARISING IN ANY WAY OUT
+OF THE UTILITIES SDK OR ANY PORTION OR COMPONENT OF THE UTILITIES SDK
+(INCLUDING, BY WAY OF EXAMPLE AND WITHOUT LIMITATION, THE OVRPLUGIN BINARY
+FILES, MODELS, AND UTILITIES CODE), THE PLATFORM SERVICES, ALL DOCUMENTATION OR
+OTHER INFORMATION OR MATERIALS PROVIDED OR MADE AVAILABLE BY OR FOR OCULUS OR
+ANY OF YOUR USE OF THE FOREGOING FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
+CONSEQUENTIAL, EXEMPLARY OR PUNITIVE DAMAGES (INCLUDING, WITHOUT LIMITATION:
+DAMAGE TO BUSINESS REPTUATION; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+OF USE, PROFITS, BUSINESS OR GOODWILL; LOSS OR CORRUPTION OF DATA; OR BUSINESS
+INTERRUPTION), HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY (LEGAL, EQUITABLE
+OR OTHERWISE), WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (WHETHER
+NEGLIGENCE OR OTHERWISE), WHETHER FORESEEABLE OR NOT AND REGARDLESS OF WHETHER
+YOU HAVE BEEN OR OCULUS HAS BEEN ADVISED OF THE POSSIBILITY OF ANY SUCH DAMAGE.
+YOU ACKNOWLEDGE AND AGREE THAT YOUR REMEDIES UNDER THIS LICENSE ARE LIMITED
+SOLELY TO THE RIGHT TO COLLECT MONEY DAMAGES, IF ANY, AND YOU HEREBY WAIVE YOUR
+RIGHT TO SEEK INJUNCTIVE OR OTHER EQUITABLE RELIEF. THE CUMULATIVE, AGGREGATE
+LIABILITY OF OCULUS AND ITS AFFILIATES, LICENSORS AND CONTRIBUTORS UNDER THIS
+LICENSE WILL BE LIMITED TO ONE HUNDRED US DOLLARS (US $100). THE EXISTENCE OF
+MULTIPLE CLAIMS OR SUITS UNDER OR RELATED TO THIS LICENSE WILL NOT ENLARGE OR
+EXTEND THE FOREGOING MONETARY CAP ON DAMAGES. SOME STATES DO NOT ALLOW THE
+EXCLUSION OR LIMITATION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THE ABOVE
+LIMITATIONS OR EXCLUSIONS MAY NOT APPLY TO YOU. THIS LICENSE GIVES YOU SPECIFIC
+LEGAL RIGHTS, AND YOU MAY ALSO HAVE OTHER RIGHTS WHICH VARY FROM STATE TO STATE.
+THE DISCLAIMERS, EXCLUSIONS, AND LIMITATIONS OF LIABILITY UNDER THIS LICENSE
+WILL NOT APPLY TO THE EXTENT PROHIBITED BY APPLICABLE LAW.
+
+10.	LICENSE TERM
+
+10.1.	Term and Termination.  The term of this License will commence on the date
+on which you click accept or use, download or copy the Utilities SDK or any
+portion or component thereof and will continue until terminated as set forth in
+this License. This License and all your rights under this License shall
+automatically and immediately terminate in the event you breach any provision of
+this License (including, without limitation, your failure to provide required
+notices as set forth in Section 3.3 or your failure to observe any of the
+restrictions set forth in Sections 3.2, 3.3 or 3.4) or for any of the following
+reasons:
+
+(a)	Any of the following infringes or violates any intellectual property rights
+of any third party or violates any applicable law: (i) your exercise of any of
+the licenses or rights granted under this License; and/or (ii) your Developer
+Content or any use or exploitation of any such Developer Content;
+
+(b)	Your Developer Content violates applicable law;
+
+(c)	Any health or safety issues associated with your Developer Content;
+
+(d)	Failure to comply with or use properly the Oculus Flash Screen Warnings;
+
+(e)	To the extent applicable, any failure to comply with or properly use the
+Oculus help and safety warnings;
+
+(f)	Failure to provide required notices as set forth above; and
+
+(g)	Failure to observe the restrictions in Section 3.2.
+
+10.2.	Effect of Termination; Survival. If this License is terminated for any
+reason, (a) all licenses and rights granted under this License will immediately
+terminate; (b) you must immediately cease using the Utilities SDK, all portions
+and components of the Utilities SDK, all documentation made available by Oculus
+to you in connection with the Utilities SDK; and (c) using, distributing,
+providing, making available and exploiting any Developer Content that
+incorporates any Utilities Code, any modifications of any Utilities Code (other
+than any Developer Modified Utilities Code), or any other portion or component
+of the Utilities SDK. Notwithstanding any termination of this License, the
+following provisions shall survive indefinitely: Sections 1, 2, 3.2, 3.3, 3.4,
+4.1, 4.4, 4.5, 5, 6, 7, 8, 9, 10.2, 11, and 12.
+
+11.	GOVERNING LAW; ARBITRATION; CLASS ACTION/JURY TRIAL WAIVER
+
+11.1.	Governing Law; Alternative Dispute Resolution.  This License shall be
+governed by the laws of the State of California, without giving effect to
+conflict of laws provisions or principles thereof. The parties agree that,
+except as provided below, all disputes relating to this License shall be
+resolved by binding non-appearance-based arbitration before a single neutral
+arbitrator in San Mateo, California. The arbitration will be conducted in the
+English language by a single arbitrator who is an attorney-at-law with at least
+fifteen (15) years’ experience in consumer and technology transactions and who
+is also a member of the JAMS roster of arbitrators. If you and Oculus cannot
+agree on a mutually acceptable arbitrator within thirty (30) days after the
+arbitration is initiated, then JAMS will pick a neutral arbitrator who meets
+such qualifications. The arbitration shall be conducted in accordance with the
+rules and procedures of JAMS then in effect, and the judgment of the arbitrator
+shall be final and capable of entry in any court of competent jurisdiction. The
+parties undertake to keep confidential all awards in their arbitration, together
+with all materials in the proceedings created for the purpose of the arbitration
+and all other documents produced by another party in the proceedings not
+otherwise in the public domain, save and to the extent that disclosure may be
+required of a party by legal duty, to protect or pursue a legal right or to
+enforce or challenge an award in legal proceedings before a court or other
+judicial authority. You and Oculus agree the following may be submitted to a
+court of competent jurisdiction located within San Francisco, California and
+further agree to submit to the personal jurisdiction of the courts located
+within San Francisco, California in connection with (a) any entrance of an
+arbitrator's judgment or decision, (b) any dispute with respect to the
+arbitration process or procedure, (c) Oculus’ exercise of any of its equitable
+rights or remedies or (d) any claims regarding the ownership, validity,
+enforceability and/or infringement of any intellectual property rights.
+
+11.2.	Class Action/Jury Waiver.  WITH RESPECT TO ALL PERSONS AND ENTITIES,
+REGARDLESS OF WHETHER THEY HAVE OBTAINED OR USED THE UTILITIES SDK FOR PERSONAL,
+COMMERCIAL OR OTHER PURPOSES, ALL CLAIMS MUST BE BROUGHT IN THE PARTIES’
+INDIVIDUAL CAPACITY, AND NOT AS A PLAINTIFF OR CLASS MEMBER IN ANY PURPORTED
+CLASS ACTION, COLLECTIVE ACTION, PRIVATE ATTORNEY GENERAL ACTION OR OTHER
+REPRESENTATIVE PROCEEDING. THIS WAIVER APPLIES TO CLASS ARBITRATION, AND, UNLESS
+WE AGREE OTHERWISE, THE ARBITRATOR MAY NOT CONSOLIDATE MORE THAN ONE PERSON’S
+CLAIMS. YOU AGREE THAT, BY ENTERING INTO THIS LICENSE, YOU AND OCULUS ARE EACH
+WAIVING THE RIGHT TO A TRIAL BY JURY OR TO PARTICIPATE IN A CLASS ACTION,
+COLLECTIVE ACTION, PRIVATE ATTORNEY GENERAL ACTION, OR OTHER REPRESENTATIVE
+PROCEEDING OF ANY KIND.
+
+11.3.	License Suspension. If you file a suit or initiate a proceeding with or
+before a governmental authority in which you challenge Oculus’ ownership of any
+intellectual property rights related to the Utilities SDK or the validity or
+enforceability of any such intellectual property rights (a “Claim”), the
+licenses granted to you under this License shall automatically and immediately
+(upon the filing of such suit or proceeding) be suspended. Such suspension will
+continue until all such Claims asserted by you are dismissed, withdrawn or are
+finally settled and no longer pending, as applicable, in which case, such
+licenses will be automatically reinstated; provided, however, that such
+reinstatement will not release you from any liabilities, or remedies therefor,
+that arise during the period of such suspension.
+
+12.	OTHER PROVISIONS
+
+12.1.	Changes to the SDK. Oculus may discontinue or change functionality of the
+Utilities SDK at any time, and your continued use of the Utilities SDK or use of
+any modified or additional Utilities SDL is conditioned upon your adherence to
+the terms of this License, as modified by Oculus from time to time in accordance
+with Section 12.2.
+
+12.2.	Updates to License. Oculus may revise and update this License at any time
+by posting the amended terms and conditions of this License (“Updated License
+Terms”) to: https://developer.oculus.com/licenses/. Your continued use of the
+Utilities SDK or any portion or component of the Utilities SDK constitutes your
+acceptance of the Updated License Terms. If there are Updated License Terms for
+any future release of the Utilities SDK, you: (a) agree to comply with all terms
+and conditions of such Updated License Terms for such future Utilities SDK
+release and (b) acknowledge and agree that such Updated License Terms will apply
+to all Developer Content that may be developed using or incorporating such
+future Utilities SDK or any portion or component of the Utilities SDK (for
+example, without limitation, you cannot avoid complying with the terms and
+conditions of such Updated License Terms by developing any Developer Content
+using or incorporating any release of the Utilities SDK that precedes such
+future Utilities SDK or under any version of this License that precedes such
+Updated License Terms).
+
+12.3.	Export Law Compliance. You will comply, and will not cause Oculus to not
+comply (by for example, providing Developer Content to Oculus under this
+Agreement for which required export clearances have not been obtained), with all
+applicable export control laws of the United States and any other applicable
+governmental authority, including without limitation, the U.S. Export
+Administration Regulations.
+
+12.4.	Confidentiality.  You agree that (a) the Utilities SDK and all
+documentation or other information or materials provided or made available by or
+for Oculus are Oculus’ confidential information and (b) you will not use,
+disclose or make available any of such Oculus confidential information to any
+third party except as expressly permitted under, and in accordance with, the
+terms and conditions of this License.
+
+12.5.	Relationship of the Parties. The parties hereto are independent
+contractors. Neither party has any express or implied right or authority to
+assume or create any obligations on behalf of the other or to bind such other
+party to any contract, agreement or undertaking with any third party. Nothing in
+this License shall be construed to create a partnership, joint venture,
+employment or agency relationship.
+
+12.6.	Assignment. You may not assign this License or any licenses or rights
+granted under this License or delegate any obligations under this License, in
+each case, without the advance written consent of Oculus, which may be withheld
+in its sole discretion. Any attempted assignment by you without such advance
+written consent of Oculus will be null and void. Oculus may assign this License
+or any licenses or rights granted under this License or delegate any obligations
+under this License in its sole discretion, in each case, without your consent or
+any notice to you. This License shall be binding on, inure to the benefit of,
+and be enforceable by the parties and their respective heirs, successors and
+permitted assigns.
+
+12.7.	Severability. In the event that any provision of this License is held to
+be null, void, invalid or unenforceable by a court, other governmental body or
+arbitration tribunal, in each case of competent jurisdiction, you and Oculus
+agree (a) such provision will be modified to the extent necessary to allow it to
+be valid and enforceable to the extent permitted by applicable law, provided
+that such modification reflects as nearly as possible the intentions of the
+parties when entering into this License and (b) the remaining provisions of this
+License shall remain in full force and effect.
+
+12.8.	Headings. The section headings contained in this License are for reference
+purposes only and shall not affect in any way the meaning or interpretation of
+this License.
+
+12.9.	No Waiver. Failure of either party at any time to exercise or enforce any
+legal right or remedy under this License will not be construed as a waiver of
+such provisions or in any way affect the validity of this License or any portion
+of this License. No waiver of any provision of this License shall be of any
+force or effect unless set forth in a writing signed by an authorized
+representative of each party.
+
+12.10.	Entire Agreement. This License constitutes the entire agreement between
+you and Oculus regarding your use of the Utilities SDK and supersedes and
+replaces any prior or contemporaneous agreements, understandings, negotiations
+and discussions between you and Oculus regarding your access and use of the
+Utilities SDK.

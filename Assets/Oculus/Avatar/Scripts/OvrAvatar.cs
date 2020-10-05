@@ -79,7 +79,7 @@ public class OvrAvatar : MonoBehaviour
     [SerializeField]
     internal ovrAvatarAssetLevelOfDetail LevelOfDetail = ovrAvatarAssetLevelOfDetail.Highest;
 #endif
-#if UNITY_ANDROID && UNITY_5_5_OR_NEWER && !UNITY_EDITOR
+#if UNITY_ANDROID && UNITY_5_5_OR_NEWER
     [Tooltip(
         "Enable to use combined meshes to reduce draw calls. Currently only available on mobile devices. " +
         "Will be forced to false on PC.")]
@@ -117,6 +117,7 @@ public class OvrAvatar : MonoBehaviour
     // Avatar asset
     private HashSet<UInt64> assetLoadingIds = new HashSet<UInt64>();
     private bool assetsFinishedLoading = false;
+    private int renderPartCount = 0;
 
     // Material manager
     private OvrAvatarMaterialManager materialManager;
@@ -150,7 +151,7 @@ public class OvrAvatar : MonoBehaviour
     private bool showRightController;
 
     // Consts
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID
     private const bool USE_MOBILE_TEXTURE_FORMAT = true;
 #else
     private const bool USE_MOBILE_TEXTURE_FORMAT = false;
@@ -593,6 +594,39 @@ public class OvrAvatar : MonoBehaviour
 
         Capabilities = 0;
 
+        bool is3Dof = false;
+        var headsetType = OVRPlugin.GetSystemHeadsetType();
+        switch (headsetType)
+        {
+            case OVRPlugin.SystemHeadset.GearVR_R320:
+            case OVRPlugin.SystemHeadset.GearVR_R321:
+            case OVRPlugin.SystemHeadset.GearVR_R322:
+            case OVRPlugin.SystemHeadset.GearVR_R323:
+            case OVRPlugin.SystemHeadset.GearVR_R324:
+            case OVRPlugin.SystemHeadset.GearVR_R325:
+            case OVRPlugin.SystemHeadset.Oculus_Go:
+                is3Dof = true;
+                break;
+            case OVRPlugin.SystemHeadset.Oculus_Quest:
+            case OVRPlugin.SystemHeadset.Rift_S:
+            case OVRPlugin.SystemHeadset.Rift_DK1:
+            case OVRPlugin.SystemHeadset.Rift_DK2:
+            case OVRPlugin.SystemHeadset.Rift_CV1:
+            default:
+                break;
+        }
+
+        // The SDK 3 DOF Arm Model requires the body skeleton to pose itself. It will crash without it
+        // The likely use case here is trying to have an invisible body.
+        // T45010595
+        if (is3Dof && !EnableBody)
+        {
+            AvatarLogger.Log("Forcing the Body component for 3Dof hand tracking, and setting the visibility to 1st person");
+            EnableBody = true;
+            ShowFirstPerson = true;
+            ShowThirdPerson = false;
+        }
+
         if (EnableBody) Capabilities |= ovrAvatarCapabilities.Body;
         if (EnableHands) Capabilities |= ovrAvatarCapabilities.Hands;
         if (EnableBase && EnableBody) Capabilities |= ovrAvatarCapabilities.Base;
@@ -669,7 +703,7 @@ public class OvrAvatar : MonoBehaviour
                 catch (Exception e)
                 {
                     assetsFinishedLoading = true;
-                    throw e; // rethrow the original exception to preserve callstack
+                    throw; // rethrow the original exception to preserve callstack
                 }
 #if AVATAR_INTERNAL
                 AssetsDoneLoading.Invoke();

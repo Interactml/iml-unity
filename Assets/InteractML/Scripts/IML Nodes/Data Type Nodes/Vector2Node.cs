@@ -25,17 +25,13 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private IMLVector2 m_FeatureValues;
 
-        public Vector2 m_UserInput;
-        Vector2 receivedVector2;
-
-        public bool x_switch = true;
-        public bool y_switch = true;
-        float x, y;
-
         // Use this for initialization
         protected override void Init()
         {
+            UserInput = new IMLVector2();
+
             tooltips = IMLTooltipsSerialization.LoadTooltip("Vector2");
+            
             base.Init();
         }
 
@@ -55,44 +51,52 @@ namespace InteractML.DataTypeNodes
         /// <returns></returns>
         protected override object Update()
         {
-            base.Update();
             //check if receiving data
             if (Counter == Count)
             {
                 Counter = 0;
-                if ((x == FeatureValues.Values[0] || !x_switch) && y == FeatureValues.Values[1])
-                {
+                if (PreviousFeatureValues == FeatureValues)
                     ReceivingData = false;
-                }
                 else
-                {
                     ReceivingData = true;
 
-                }
-                x = FeatureValues.Values[0];
-                y = FeatureValues.Values[1];
+                PreviousFeatureValues = FeatureValues;
             }
 
             Counter++;
 
-            //check if input connected
+            //If there is no input connected take input from the user
             if (this.GetInputNodesConnected("m_In") == null)
             {
-                InputConnected = false;
-                if (!x_switch) m_UserInput.x = 0;
-                if (!y_switch) m_UserInput.y = 0;
 
-                Value = m_UserInput;
+                InputConnected = false;
+
+                // for each of the feature values 
+                for (int i = 0; i < FeatureValues.Values.Length; i++)
+                {
+                    // check toggle array length is the same as the amount of values in the user input 
+                    //if toggles are off set user input value to 0
+                    if (!ToggleSwitches[i]) { UserInput.Values[i] = 0; }
+                }
+
+                //Set feature value to user input
+                Vector2 v = new Vector2(UserInput.Values[0], UserInput.Values[1]);
+                Value = v;
             }
             else
             {
                 InputConnected = true;
-                base.Update();
-                receivedVector2 = Value;
-                if (!x_switch) receivedVector2.x = 0;
-                if (!y_switch) receivedVector2.y = 0;
 
-                Value = receivedVector2;
+                base.Update();
+
+                var receivedValue = Value;
+                // for each of the feature values 
+                for (int i = 0; i < FeatureValues.Values.Length; i++)
+                {
+                    if (!ToggleSwitches[i]) { receivedValue[i] = 0; }
+                }
+
+                Value = receivedValue;
             }
 
             return this;

@@ -8,6 +8,9 @@ using XNodeEditor;
 
 namespace InteractML.DataTypeNodes
 {
+    /// <summary>
+    /// Editor class drawing a IMLFloat Feature - receiving a float or drawing editable float field 
+    /// </summary>
     [CustomNodeEditor(typeof(FloatNode))]
     public class FloatNodeEditor : IMLNodeEditor
     {
@@ -41,16 +44,24 @@ namespace InteractML.DataTypeNodes
 
             // Initialise node tooltips
             base.nodeTips = m_FloatNode.tooltips;
-            
-        }
-        
 
+            // Initialise axis labels
+            feature_labels = new string[1] { " " };
+
+        }
+
+        /// <summary>
+        /// Draws node specific body fields
+        /// </summary>
         protected override void ShowBodyFields()
         {
+            // Checks if node if receiving data- sets green toggle if data incoming, red if no data incoming
             DataInToggle(m_FloatNode.ReceivingData, m_InnerBodyRect, m_BodyRect);
         }
 
-        
+        /// <summary>
+        //// Draws position and values of toggle and labels, draws green toggle if data incoming, red if no data incoming
+        /// </summary>
         protected override void DrawFeatureValueTogglesAndLabels(GUIStyle style)
         {
             GUILayout.BeginHorizontal();
@@ -58,17 +69,13 @@ namespace InteractML.DataTypeNodes
             // If something is connected to the input port show incoming data
             if (m_FloatNode.InputConnected)
             {
-                m_FloatNode.float_switch = EditorGUILayout.Toggle(m_FloatNode.float_switch, style, GUILayout.MaxWidth(dataWidth));
-                EditorGUILayout.LabelField("Float: " + System.Math.Round(m_FloatNode.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+                IMLNodeEditorMethods.DrawFeatureValueToggleAndLabel(m_FloatNode, this, style);
             }
             // If there is nothing connected to the input port show editable fields
             else
             {
-                m_FloatNode.float_switch = EditorGUILayout.Toggle(m_FloatNode.float_switch, style, GUILayout.MaxWidth(dataWidth));
-                EditorGUILayout.LabelField("Float: ", m_NodeSkin.GetStyle("Node Body Label"), GUILayout.MaxWidth(dataWidth));
-                GUILayout.Space(10);
-                m_FloatNode.m_UserInput = EditorGUILayout.FloatField(m_FloatNode.m_UserInput, GUILayout.MaxWidth(inputWidth));
-                
+                //draws node editable fields
+                DataTypeNodeEditorMethods.DrawEditableFieldsAndToggles(m_FloatNode, this, style);
             }
             GUILayout.EndHorizontal();
         }

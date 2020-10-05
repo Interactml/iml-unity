@@ -1,12 +1,7 @@
-/************************************************************************************
-
-Copyright (c) Facebook Technologies, LLC and its affiliates. All rights reserved.  
-
-See SampleFramework license.txt for license terms.  Unless required by applicable law 
-or agreed to in writing, the sample code is provided “AS IS” WITHOUT WARRANTIES OR 
-CONDITIONS OF ANY KIND, either express or implied.  See the license for specific 
-language governing permissions and limitations under the license.
-
+/********************************************************************************//**
+\file      HandPose.cs
+\brief     Stores pose-specific data such as the animation id and allowing gestures.
+\copyright Copyright 2015 Oculus VR, LLC All Rights reserved.
 ************************************************************************************/
 
 using UnityEngine;
@@ -21,7 +16,6 @@ namespace OVRTouchSample
         Controller
     }
 
-	// Stores pose-specific data such as the animation id and allowing gestures.
     public class HandPose : MonoBehaviour
     {
         [SerializeField]

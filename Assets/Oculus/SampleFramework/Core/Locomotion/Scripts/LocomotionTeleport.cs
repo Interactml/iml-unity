@@ -16,6 +16,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine.EventSystems;
+using UnityEngine.VR;
 using Debug = UnityEngine.Debug;
 
 
@@ -412,15 +413,12 @@ public class LocomotionTeleport : MonoBehaviour
 
 	/// <summary>
 	/// Start the state machine coroutines.
+	/// Note that Unity will shut down the coroutines when this component is disabled.
 	/// </summary>
 	public virtual void OnEnable ()
 	{
 		CurrentState = States.Ready;
 		StartCoroutine(ReadyStateCoroutine());
-	}
-	public virtual void OnDisable ()
-	{
-		StopAllCoroutines();
 	}
 
 	/// <summary>

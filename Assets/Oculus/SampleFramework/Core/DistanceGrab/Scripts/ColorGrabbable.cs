@@ -9,11 +9,16 @@ language governing permissions and limitations under the license.
 
 ************************************************************************************/
 
+/********************************************************************************//**
+\file      ColorGrabbable.cs
+\brief     Simple component that changes color based on grab state.
+\copyright Copyright 2015 Oculus VR, LLC All Rights reserved.
+************************************************************************************/
+
 using UnityEngine;
 
 namespace OculusSampleFramework
 {
-	// Simple component that changes color based on grab state.
     public class ColorGrabbable : OVRGrabbable
     {
         public static readonly Color COLOR_GRAB = new Color(1.0f, 0.5f, 0.0f, 1.0f);

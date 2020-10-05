@@ -24,8 +24,6 @@ using System.Runtime.InteropServices;
 
 public class ONSPAmbisonicsNative : MonoBehaviour
 {
-    // this caches the audio source so that per-frame reflection isnt needed to use them.
-    AudioSource source;
 #if !UNITY_5
 	static int numFOAChannels    = 4;  // we are only dealing with 1st order Ambisonics at this time
     static int paramVSpeakerMode = 6;  // set speaker mode (OculusAmbi or VSpeaker)
@@ -70,7 +68,7 @@ public class ONSPAmbisonicsNative : MonoBehaviour
         Debug.Log("Ambisonic ERROR: Ambisonic support in Unity 2017 or higher");
 #else
 
-        source = GetComponent<AudioSource>();
+        AudioSource source = GetComponent<AudioSource>();
 
         currentStatus = ovrAmbisonicsNativeStatus.Uninitialized;
 
@@ -108,6 +106,8 @@ public class ONSPAmbisonicsNative : MonoBehaviour
     /// </summary>
     void Update()
     {
+        AudioSource source = GetComponent<AudioSource>();
+
         if (source == null)
         {
             // We already caught the error in Awake so bail

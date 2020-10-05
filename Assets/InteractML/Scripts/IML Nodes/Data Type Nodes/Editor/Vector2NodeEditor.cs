@@ -8,6 +8,9 @@ using XNodeEditor;
 
 namespace InteractML.DataTypeNodes
 {
+    /// <summary>
+    /// Editor class drawing a IMLVector2 Feature - receiving a Vector2 or drawing editable Vector2 field 
+    /// </summary>
     [CustomNodeEditor(typeof(Vector2Node))]
     public class Vector2NodeEditor : IMLNodeEditor
     {
@@ -42,71 +45,37 @@ namespace InteractML.DataTypeNodes
             // Initialise node tooltips
             base.nodeTips = m_Vector2Node.tooltips;
 
+            // Initialise axis labels
+            feature_labels = new string[2] { "x: ", "y: " };
+
         }
 
+        /// <summary>
+        /// Draws node specific body fields
+        /// </summary>
         protected override void ShowBodyFields()
         {
+            // Checks if node if receiving data- sets green toggle if data incoming, red if no data incoming
             DataInToggle(m_Vector2Node.ReceivingData, m_InnerBodyRect, m_BodyRect);
         }
 
+        /// <summary>
+        //// Draws position and values of toggle and labels, draws green toggle if data incoming, red if no data incoming
+        /// </summary>
         protected override void DrawFeatureValueTogglesAndLabels(GUIStyle style)
         {
-            GUILayout.BeginHorizontal();
-            GUILayout.Space(bodySpace);
             // If something is connected to the input port show incoming data
             if (m_Vector2Node.InputConnected)
             {
-                m_Vector2Node.x_switch = EditorGUILayout.Toggle(m_Vector2Node.x_switch, style);
-                EditorGUILayout.LabelField("x: " + System.Math.Round(m_Vector2Node.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
-                GUILayout.EndHorizontal();
-
-                EditorGUILayout.Space();
-
-                GUILayout.BeginHorizontal();
-                GUILayout.Space(bodySpace);
-                m_Vector2Node.y_switch = EditorGUILayout.Toggle(m_Vector2Node.y_switch, style);
-                EditorGUILayout.LabelField("y: " + System.Math.Round(m_Vector2Node.FeatureValues.Values[1], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
-                GUILayout.EndHorizontal();
-
+                IMLNodeEditorMethods.DrawFeatureValueToggleAndLabel(m_Vector2Node, this, style);
             }
             // If there is nothing connected to the input port show editable fields
-            else { 
-                m_Vector2Node.x_switch = EditorGUILayout.Toggle(m_Vector2Node.x_switch, style, GUILayout.MaxWidth(30));
-                EditorGUILayout.LabelField("x: ", m_NodeSkin.GetStyle("Node Body Label Axis"), GUILayout.MaxWidth(20));
-                m_Vector2Node.m_UserInput.x = EditorGUILayout.FloatField(m_Vector2Node.m_UserInput.x, GUILayout.MaxWidth(inputWidth));
-                GUILayout.EndHorizontal();
-
-                EditorGUILayout.Space();
-
-                GUILayout.BeginHorizontal();
-                GUILayout.Space(bodySpace);
-                m_Vector2Node.y_switch = EditorGUILayout.Toggle(m_Vector2Node.y_switch, style, GUILayout.MaxWidth(30));
-                EditorGUILayout.LabelField("y: ", m_NodeSkin.GetStyle("Node Body Label Axis"), GUILayout.MaxWidth(20));
-                m_Vector2Node.m_UserInput.y = EditorGUILayout.FloatField(m_Vector2Node.m_UserInput.y, GUILayout.MaxWidth(inputWidth));
-                GUILayout.EndHorizontal();
-
+            else
+            {
+                DataTypeNodeEditorMethods.DrawEditableFieldsAndToggles(m_Vector2Node, this, style);
             }
-
-
         }
 
-
-        /// <summary>
-        /// Display help button
-        /// </summary>
-        private void ShowHelpButton()
-        {
-            m_HelpRect.x = m_HelpRect.x + 20;
-            m_HelpRect.y = m_HelpRect.y + 10;
-            m_HelpRect.width = m_HelpRect.width - 30;
-
-            GUILayout.BeginArea(m_HelpRect);
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("");
-            GUILayout.Button("Help", m_NodeSkin.GetStyle("Help Button"));
-            GUILayout.EndHorizontal();
-            GUILayout.EndArea();
-        }
     }
 }
 

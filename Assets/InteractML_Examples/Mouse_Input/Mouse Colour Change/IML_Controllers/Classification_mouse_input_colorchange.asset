@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
   m_Name: Capsule (GameObject)
   m_EditorClassIdentifier: 
-  id: a746dcaf-a7aa-461b-9f71-f1af5ad31538
   graph: {fileID: 11400000}
   position: {x: -264, y: -136}
   ports:
@@ -32,11 +31,13 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
+  id: a746dcaf-a7aa-461b-9f71-f1af5ad31538
+  numberInComponentList: -1
   IsInitialized: 1
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
-  state: 1
-  GOHashCode: 24758
+  state: 0
+  GOHashCode: 33280
   CreatedDuringPlaymode: 0
 --- !u!114 &-7194312582767240663
 MonoBehaviour:
@@ -50,7 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
   m_Name: Extract Position
   m_EditorClassIdentifier: 
-  id: d51e368a-b640-43b1-85eb-a3f30f22ccc7
   graph: {fileID: 11400000}
   position: {x: 104, y: -296}
   ports:
@@ -87,6 +87,8 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
+  id: d51e368a-b640-43b1-85eb-a3f30f22ccc7
+  numberInComponentList: -1
   IsInitialized: 1
   GameObjectDataIn: {fileID: 0}
   LiveDataOut: {fileID: 0}
@@ -112,7 +114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a51c50017649824896fd13d40aded38, type: 3}
   m_Name: CIML Configuration
   m_EditorClassIdentifier: 
-  id: f28c9c2a-1042-4fe9-8122-af165fe278e2
   graph: {fileID: 11400000}
   position: {x: 872, y: -280}
   ports:
@@ -160,6 +161,8 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   DevMode: 0
+  id: f28c9c2a-1042-4fe9-8122-af165fe278e2
+  numberInComponentList: 0
   IsInitialized: 1
   IMLTrainingExamplesNodes:
   - {fileID: 1450248094575614031}
@@ -179,6 +182,9 @@ MonoBehaviour:
   TrainOnPlaymodeChange: 0
   RunOnAwake: 1
   matchLiveDataInputs: 1
+  matchVectorLength: 0
+  warning: Live data in does not match the trained examples
+  error: 1
   learningChoice: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -213,7 +219,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10a91209fffbd444385488c8c3e7a6e2, type: 3}
   m_Name: Single Training Examples
   m_EditorClassIdentifier: 
-  id: b597a594-3e20-474b-a110-06fcb86833df
   graph: {fileID: 11400000}
   position: {x: 456, y: -296}
   ports:
@@ -261,6 +266,8 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
+  id: b597a594-3e20-474b-a110-06fcb86833df
+  numberInComponentList: 0
   IsInitialized: 1
   InputFeatures:
   - {fileID: -7194312582767240663}
@@ -277,6 +284,7 @@ MonoBehaviour:
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
+  showWarning: 1
   EnableKeyboardControl: 0
   RecordDataKey: 0
 --- !u!114 &2814283000950002832
@@ -291,9 +299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d534d44a87f50e4f80bf8cd2142328f, type: 3}
   m_Name: Integer
   m_EditorClassIdentifier: 
-  id: 282326c9-9be9-44ca-a528-f6974c34baa9
   graph: {fileID: 11400000}
-  position: {x: 120, y: 88}
+  position: {x: 72, y: 88}
   ports:
     keys:
     - m_In
@@ -321,15 +328,18 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
+  id: 282326c9-9be9-44ca-a528-f6974c34baa9
+  numberInComponentList: -1
   IsInitialized: 1
   ValueName: 
   m_In: 0
-  m_Value: 3
+  m_Value: 0
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  m_UserInput: 3
-  int_switch: 1
+  Counter: 3
+  Count: 5
+  ToggleSwitches: 01
 --- !u!114 &6125476143715219942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,7 +352,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d534d44a87f50e4f80bf8cd2142328f, type: 3}
   m_Name: Integer
   m_EditorClassIdentifier: 
-  id: 66a99386-8dbe-4f28-9b46-d6101cd87e86
   graph: {fileID: 11400000}
   position: {x: 1256, y: -344}
   ports:
@@ -375,6 +384,8 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
+  id: 66a99386-8dbe-4f28-9b46-d6101cd87e86
+  numberInComponentList: -1
   IsInitialized: 1
   ValueName: 
   m_In: 0
@@ -382,8 +393,9 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 1
-  m_UserInput: 0
-  int_switch: 1
+  Counter: 3
+  Count: 5
+  ToggleSwitches: 01
 --- !u!114 &7664542125311193265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,7 +408,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
   m_Name: colorChanger (Script)
   m_EditorClassIdentifier: 
-  id: 7eecfaca-7f02-4244-92b9-07995c0217c1
   graph: {fileID: 11400000}
   position: {x: 1672, y: -312}
   ports:
@@ -416,9 +427,23 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   DevMode: 0
+  id: 7eecfaca-7f02-4244-92b9-07995c0217c1
+  numberInComponentList: -1
   IsInitialized: 1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 24800
+  ScriptHashCode: 33322
   m_PortsPerFieldInfo:
-    m_keys: []
+    m_keys:
+    - _fieldName: SetAbsoluteColour
+      _node: {fileID: 7664542125311193265}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: 6125476143715219942}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   CreatedDuringPlaymode: 0

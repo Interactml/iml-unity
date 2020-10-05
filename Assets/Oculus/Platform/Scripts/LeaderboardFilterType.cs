@@ -16,9 +16,6 @@ namespace Oculus.Platform
     [Description("UNKNOWN")]
     Unknown,
 
-    [Description("USER_IDS")]
-    UserIds,
-
   }
 
 }

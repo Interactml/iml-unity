@@ -15,20 +15,13 @@ namespace Assets.Oculus.VR.Editor
 	{
 		private const string DEFAULT_RELEASE_CHANNEL = "Alpha";
 
-		static OVRPlatformToolSettings()
+		public enum GamepadType
 		{
-			// BuildPipeline.isBuildingPlayer cannot be called in a static constructor
-			// Run Update once to call TryInitialize then remove delegate
-			EditorApplication.update += Update;
-		}
-
-		static void Update()
-		{
-			// Initialize the instance only if a build is not currently running.
-			TryInitialize();
-			// Stop running Update
-			EditorApplication.update -= Update;
-		}
+			OFF,
+			TWINSTICK,
+			RIGHT_D_PAD,
+			LEFT_D_PAD,
+		};
 
 		public static string AppID
 		{
@@ -301,17 +294,17 @@ namespace Assets.Oculus.VR.Editor
 			}
 		}
 
-		public static OVRPlatformTool.GamepadType RiftGamepadEmulation
+		public static GamepadType RiftGamepadEmulation
 		{
 			get
 			{
 				if (EditorPrefs.HasKey("OVRPlatformToolSettings_RiftGamepadEmulation"))
 				{
-					return (OVRPlatformTool.GamepadType)EditorPrefs.GetInt("OVRPlatformToolSettings_RiftGamepadEmulation");
+					return (GamepadType)EditorPrefs.GetInt("OVRPlatformToolSettings_RiftGamepadEmulation");
 				}
 				else
 				{
-					return OVRPlatformTool.GamepadType.OFF;
+					return GamepadType.OFF;
 				}
 			}
 			set
@@ -374,19 +367,6 @@ namespace Assets.Oculus.VR.Editor
 		[SerializeField]
 		private bool runOvrLint = true;
 
-		public static bool TryInitialize()
-		{
-			// If not initialized and Build Player is current running, UnityEditor.AssetDatabase.CreateAsset
-			// is unsafe to call and will cause a crash. Only load the resource if it already exists.
-			if (instance == null && BuildPipeline.isBuildingPlayer)
-			{
-				instance = Resources.Load<OVRPlatformToolSettings>("OVRPlatformToolSettings");
-				return instance != null;
-			}
-			// Otherwise create/load the resource instance normally.
-			return Instance != null;
-		}
-
 		private static OVRPlatformToolSettings instance;
 		public static OVRPlatformToolSettings Instance
 		{
@@ -398,15 +378,6 @@ namespace Assets.Oculus.VR.Editor
 
 					if (instance == null)
 					{
-						if (BuildPipeline.isBuildingPlayer)
-						{
-							// UnityEditor.AssetDatabase.CreateAsset is unsafe to call during a build and
-							// may cause a crash.
-							// This should be rare as the asset is created in the static constructor and should
-							// usually exist.
-							throw new UnityEditor.Build.BuildFailedException(
-								"Cannot create OVRPlatformToolSettings asset while building.");
-						}
 						instance = ScriptableObject.CreateInstance<OVRPlatformToolSettings>();
 
 						string properPath = System.IO.Path.Combine(UnityEngine.Application.dataPath, "Resources");
