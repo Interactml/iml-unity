@@ -159,13 +159,7 @@ namespace InteractML
 
         #region XNode Messages
 
-        // Use this for initialization
-        protected override void Init()
-        {
-            base.Init();
-
-            Initialize();
-        }
+      
 
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
@@ -289,7 +283,7 @@ namespace InteractML
         /// <summary>
         /// Initialises nodes values and vars
         /// </summary>
-        public void Initialize()
+        public override void Initialize()
         {
             SetDataCollection();
             // Make sure internal feature lists are initialized

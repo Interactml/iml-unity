@@ -17,14 +17,6 @@ namespace InteractML
 
 
         #region Protected Methods
-        protected override void Init()
-        {
-            base.Init();
-
-            Initialize();
-
-            tooltips = IMLTooltipsSerialization.LoadTooltip("SingleTrainingExamples");
-        }
 
         /// <summary>
         /// Sets Data Collection Type 
