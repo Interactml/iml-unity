@@ -21,8 +21,14 @@ namespace InteractML
         /// <returns>Returns a IMLNodeTooltips object </returns>
         public static IMLNodeTooltips LoadTooltip(string fileName)
         {
-            string jsonFile = File.ReadAllText(SetUpFileNamesAndPaths(fileName));
-            IMLNodeTooltips toolTips = JsonConvert.DeserializeObject<IMLNodeTooltips>(jsonFile);
+            IMLNodeTooltips toolTips = new IMLNodeTooltips();
+            if (File.Exists(SetUpFileNamesAndPaths(fileName)))
+            {
+                Debug.Log(fileName);
+                string jsonFile = File.ReadAllText(SetUpFileNamesAndPaths(fileName));
+                toolTips = JsonConvert.DeserializeObject<IMLNodeTooltips>(jsonFile);
+            }
+            
             return toolTips;
         }
 
