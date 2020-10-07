@@ -52,6 +52,13 @@ namespace InteractML
                     success = SceneComponent.AddGameObjectNode((GameObjectNode)node);
                     isCustomType = true;
                 }
+                // if the node is an IML node then initialize this node
+                if (node is IMLNode)
+                {
+                    IMLNode imlNode = node as IMLNode;
+                    imlNode.NodeInitalize();
+                }
+                
 
                 if (isCustomType)
                 {

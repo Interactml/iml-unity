@@ -130,6 +130,19 @@ namespace InteractML
 
         #region Unity Messages
 
+        private void OnEnable()
+        {
+
+            // if this componenet is in the open scene 
+            if (this.gameObject.scene.IsValid())
+            {
+                //Initialize this object 
+                Initialize();
+                // initialize all nodes 
+                InitializeAllNodes();
+            }
+        }
+
         // Called when something changes in the scene
         private void OnValidate()
         {
@@ -153,7 +166,7 @@ namespace InteractML
         // Start is called before the first frame update
         void Start()
         {
-            Initialize();
+            //Initialize();
         }
 
         // Update is called once per frame
@@ -280,6 +293,51 @@ namespace InteractML
         }
 
         /// <summary>
+        /// Initialize all nodes in the graph called OnEnable
+        /// </summary>
+        private void InitializeAllNodes()
+        {
+            //Initialise GameObjectNodes
+            InitializeNodeType(m_GameObjectNodeList);
+            //Initialise Features
+            InitializeFeatureNode(FeatureNodesList);
+            //Initialise Training Examples
+            InitializeNodeType(TrainingExamplesNodesList);
+            //Initialise IMLConfiguration
+            InitializeNodeType(IMLConfigurationNodesList);
+            //Initialise Script nodes
+            InitializeNodeType(m_ScriptNodesList);
+        }
+
+        /// <summary>
+        /// Goes through all IMLnodes in list and initialises. Called in InitializeAllNodes
+        /// </summary>
+        /// <param name="ListToInitalize">IMLNode List to initiliaze</param>
+        private void InitializeNodeType(IEnumerable<IMLNode> ListToInitalize)
+        {
+            // loop through all nodes in list
+            foreach (IMLNode node in ListToInitalize)
+            {
+                if(node != null)
+                {
+                    //Initialize node 
+                    node.NodeInitalize();
+                }
+                
+            }
+        }
+        
+        private void InitializeFeatureNode(List<IFeatureIML> ListToInitalize)
+        {
+            // loop through all nodes in list
+            foreach (IMLNode node in ListToInitalize)
+            {
+                //Initialize node 
+                node.NodeInitalize();
+            }
+        }
+
+        /// <summary>
         /// Checks if an IMLController is owned and properly updates it when needed
         /// </summary>
         private void IMLControllerOwnershipLogic()
@@ -337,22 +395,7 @@ namespace InteractML
                 ClearLists();
             }
         }
-
-        private bool Train(string nodeID)
-        {
-            bool success = false;
-            foreach (IMLConfiguration IMLConfigNode in IMLConfigurationNodesList)
-            {
-                if(nodeID == IMLConfigNode.id)
-                {
-                    success = IMLConfigNode.TrainModel();
-                    if(success)
-                        IMLConfigNode.SaveModelToDisk();
-                }
-            }
-            return success;
-        }
-
+     
         // this should only happen when a node is added 
         /// <summary>
         /// Finds all nodes in the IML Controller and puts them in lists of their types
@@ -1710,7 +1753,7 @@ namespace InteractML
         #endregion
 
         #region Deletion of Nodes
-
+        // code needs refactoring 
         /// <summary>
         /// Removes GameObjectNode From GameObjectNodeList 
         /// </summary>
@@ -1838,12 +1881,28 @@ namespace InteractML
         private void SceneOpenedLogic(UnityEngine.SceneManagement.Scene scene, UnityEditor.SceneManagement.OpenSceneMode mode)
         {
             Debug.Log("SceneOpened detected by IMLComponent");
-        }      
+        }
 
 #endif
 
-#endregion
-
+        #endregion
+        #region Delegates
+        // Delegate to Train nodes - still being worked on 
+        private bool Train(string nodeID)
+        {
+            bool success = false;
+            foreach (IMLConfiguration IMLConfigNode in IMLConfigurationNodesList)
+            {
+                if (nodeID == IMLConfigNode.id)
+                {
+                    success = IMLConfigNode.TrainModel();
+                    if (success)
+                        IMLConfigNode.SaveModelToDisk();
+                }
+            }
+            return success;
+        }
+        #endregion
     }
 
 }

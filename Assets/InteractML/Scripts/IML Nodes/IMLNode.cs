@@ -19,27 +19,41 @@ namespace InteractML
         /// Has the init() method been called?
         /// </summary>
         [HideInInspector]
-        public bool IsInitialized = false;
+        public bool IsInitialized { get {return m_IsInitialized; } }
+        private bool m_IsInitialized = false;
 
-        // Use this for initialization
         protected override void Init()
         {
-            // method that loads uniqie id of this node
-            id = NodeID.CheckNodeID(id, this);
-            // call base init 
-            base.Init();
-            //potentially delete checks if initalized has been called 
-            IsInitialized = true;
-            //load reference to the graph which this node is a member of 
-            var MLController = graph as IMLController;
-            // if that graph exists refresh the nodes in that graph 
-            if (MLController.SceneComponent != null)
+            if (!m_IsInitialized)
             {
-                MLController.SceneComponent.GetAllNodes();
-
+                //NodeInitalize();
+                //Initialize();
             }
-            // load tooltips for the node using reference to the nodes class name 
-            LoadTooltips(this.GetType().Name);
+        }
+        // Use this for initialization
+        public void NodeInitalize()
+        {
+            // if id not initalised use this to tell whether node has been properly added to the graph 
+            if(id == null)
+            {
+                // method that loads uniqie id of this node
+                id = NodeID.CheckNodeID(id, this);
+                //load reference to the graph which this node is a member of 
+                var MLController = graph as IMLController;
+                // if that graph exists refresh the nodes in that graph 
+                if (MLController.SceneComponent != null)
+                {
+                    MLController.SceneComponent.GetAllNodes();
+
+                }
+            }
+            
+            //potentially delete checks if initalized has been called 
+            m_IsInitialized = true;
+            // load tooltips for the node using reference to the nodes class name
+            Debug.Log(this.GetType().Name);
+            IMLTooltipsSerialization.LoadTooltip(this.GetType().Name + "Tooltips");
+            //Debug.Log(this.GetType().Name);
             // all other initialize code needed for the node - to be overriden in the subclass if there more that needs to be added 
             Initialize();
 
@@ -50,13 +64,6 @@ namespace InteractML
             // to be overridden by all nodes
         }
 
-        public void LoadTooltips(string name)
-        {
-            if (File.Exists(name))
-            {
-                tooltips = IMLTooltipsSerialization.LoadTooltip(this.name);
-            }
-        }
         // Return the correct value of an output port when requested
         public override object GetValue(XNode.NodePort port)
         {
