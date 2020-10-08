@@ -536,7 +536,8 @@ namespace InteractML
                 }
                 else
                 {
-                    Debug.LogWarning("mismatch in live inputs to trained data");
+                    // uncommented because firing too often can be reinstated for debugging
+                    //Debug.LogWarning("mismatch in live inputs to trained data");
                 }
             } else {
                 matchVectorLength = false;
