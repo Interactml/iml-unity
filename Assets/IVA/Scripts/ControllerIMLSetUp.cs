@@ -11,7 +11,7 @@ public class ControllerIMLSetUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SteamVR_Actions.default_GrabPinch.AddOnStateDownListener(, SteamVR_Input_Sources.Any);
+        //SteamVR_Actions.default_GrabPinch.AddOnStateDownListener(grabAction.onStateDown, SteamVR_Input_Sources.Any);
     }
 
     // Update is called once per frame

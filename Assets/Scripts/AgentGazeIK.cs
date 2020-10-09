@@ -23,6 +23,13 @@ public class AgentGazeIK : MonoBehaviour
     public float TransitionTime;
     public float ChangedLookAtPositionTime;
 
+    public Transform position;
+
+    public Camera head;
+    public GameObject left;
+    public GameObject right;
+
+
     public bool IkActive
     {
         get { return m_ikActive; }
@@ -47,7 +54,7 @@ public class AgentGazeIK : MonoBehaviour
         m_ikWeight = 0.9f;
         m_animator = GetComponent<Animator>();
 
-        UserHeadCamTransform = Camera.main.transform;
+        UserHeadCamTransform = head.transform;
         // this should be the user
         m_lookObj = UserHeadCamTransform;
     }
