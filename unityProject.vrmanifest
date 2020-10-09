@@ -2,13 +2,13 @@
   "source": "Unity",
   "applications": [
     {
-      "app_key": "application.generated.unity.iml_goldsmiths.exe",
+      "app_key": "application.generated.unity.vr_ml_agent_vivejam2020.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-      "action_manifest_path": "C:\\Users\\Nicola\\OneDrive - Goldsmiths College\\Unity Projects\\InteractML\\Assets\\StreamingAssets\\SteamVR\\actions.json",
+      "action_manifest_path": "C:\\Users\\Clarice\\Documents\\iml-unity\\Assets\\StreamingAssets\\SteamVR\\actions.json",
       "strings": {
         "en_us": {
-          "name": "IML_Goldsmiths [Testing]"
+          "name": "VR_ML_Agent_ViveJam2020 [Testing]"
         }
       }
     }
