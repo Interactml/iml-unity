@@ -42,42 +42,26 @@ namespace InteractML.FeatureExtractors
             // Initialise node tooltips
             base.nodeTips = m_ExtractPosition.tooltips;
 
+            // Initialise axis labels
+            feature_labels = new string[3] { "x: ", "y: ", "z: " };
         }
 
         protected override void ShowBodyFields()
         {
-            DataInToggle(m_ExtractPosition.ReceivingData, m_InnerBodyRect, m_BodyRect);   
+            DataInToggle(m_ExtractPosition.isReceivingData, m_InnerBodyRect, m_BodyRect);   
         }
 
         protected override void DrawFeatureValueTogglesAndLabels(GUIStyle style)
         {
-            GUILayout.BeginHorizontal();
-            GUILayout.Space(bodySpace);
-            m_ExtractPosition.x_switch = EditorGUILayout.Toggle(m_ExtractPosition.x_switch, style);
-            EditorGUILayout.LabelField("x: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
-            GUILayout.EndHorizontal();
+            //draws node data fields
+            IMLNodeEditorMethods.DrawFeatureValueToggleAndLabel(m_ExtractPosition, this, style);
 
-            EditorGUILayout.Space();
-
-            GUILayout.BeginHorizontal();
-            GUILayout.Space(bodySpace);
-            m_ExtractPosition.y_switch = EditorGUILayout.Toggle(m_ExtractPosition.y_switch, style);
-            EditorGUILayout.LabelField("y: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[1], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
-            GUILayout.EndHorizontal();
-
-            EditorGUILayout.Space();
-
-            GUILayout.BeginHorizontal();
-            GUILayout.Space(bodySpace);
-            m_ExtractPosition.z_switch = EditorGUILayout.Toggle(m_ExtractPosition.z_switch, style);
-            EditorGUILayout.LabelField("z: " + System.Math.Round(m_ExtractPosition.FeatureValues.Values[2], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
-            GUILayout.EndHorizontal();
-
-            GUILayout.Space(20);
+            GUILayout.Space(30);
 
             GUILayout.BeginHorizontal();
             GUILayout.Space(bodySpace);
             m_ExtractPosition.LocalSpace = EditorGUILayout.Toggle(m_ExtractPosition.LocalSpace, m_NodeSkin.GetStyle("Local Space Toggle"));
+            GUILayout.Space(5);
             EditorGUILayout.LabelField("Use local space for transform", m_NodeSkin.GetStyle("Node Local Space Label"));
             GUILayout.EndHorizontal();
         }

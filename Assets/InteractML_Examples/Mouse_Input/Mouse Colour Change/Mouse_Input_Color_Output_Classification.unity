@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -147,13 +148,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 77529449}
-  m_LocalRotation: {x: 0.70458376, y: -0.080454595, z: 0.16586284, w: 0.68525785}
-  m_LocalPosition: {x: -16.6, y: 2.07, z: 3.9}
+  m_LocalRotation: {x: -0.5462098, y: -0.44995865, z: -0.67464155, w: -0.20988311}
+  m_LocalPosition: {x: -250.54, y: 2.07, z: 3.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 82.9, y: 92.7, z: 112.8}
+  m_LocalEulerAnglesHint: {x: 337.8, y: 90.1, z: 123.2}
 --- !u!136 &77529451
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -182,6 +183,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -260,12 +262,25 @@ MonoBehaviour:
   MLController: {fileID: 11400000, guid: 9e2fe998361fad74b9687f803bfa59ef, type: 2}
   GameObjectsToUse:
   - {fileID: 77529449}
+  m_GOsPerGONodes:
+    m_keys:
+    - {fileID: 77529449}
+    m_values:
+    - {fileID: -8914584667776746422, guid: 9e2fe998361fad74b9687f803bfa59ef, type: 2}
+  m_GameObjectNodeList:
+  - {fileID: -8914584667776746422, guid: 9e2fe998361fad74b9687f803bfa59ef, type: 2}
   m_ScriptNodesList:
-  - {fileID: 3829375924371095371, guid: 9e2fe998361fad74b9687f803bfa59ef, type: 2}
+  - {fileID: 7664542125311193265, guid: 9e2fe998361fad74b9687f803bfa59ef, type: 2}
   FeaturesUpdated: 1
   ComponentsWithIMLData:
   - GameComponent: {fileID: 2057764850}
     ControlClones: 0
+  m_MonoBehavioursPerScriptNode:
+    m_keys:
+    - {fileID: 2057764850}
+    m_values:
+    - {fileID: 7664542125311193265, guid: 9e2fe998361fad74b9687f803bfa59ef, type: 2}
+  m_MonobehaviourClones: []
 --- !u!4 &266555835
 Transform:
   m_ObjectHideFlags: 0
@@ -388,8 +403,9 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1845601775}
   m_Enabled: 1
-  serializedVersion: 9
+  serializedVersion: 10
   m_Type: 1
+  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
@@ -484,9 +500,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &2057764847
 MeshRenderer:
@@ -502,6 +518,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

@@ -68,6 +68,7 @@ namespace InteractML.DataTypeNodes
             // If something is connected to the input port show incoming data
             if (m_IntegerNode.InputConnected)
             {
+                //draws node data fields
                 IMLNodeEditorMethods.DrawFeatureValueToggleAndLabel(m_IntegerNode, this, style);
             }
             // If there is nothing connected to the input port show editable fields

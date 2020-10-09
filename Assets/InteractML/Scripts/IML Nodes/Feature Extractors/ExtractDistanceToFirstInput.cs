@@ -34,7 +34,7 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Feature Values extracted (ready to be read by a different node)
         /// </summary>
-        public IMLBaseDataType FeatureValues { get { return m_DistancesExtracted; } }
+        public override IMLBaseDataType FeatureValues { get { return m_DistancesExtracted; } }
 
         /// <summary>
         /// The private feature values extracted in a more specific data type

@@ -67,11 +67,13 @@ namespace InteractML.DataTypeNodes
             // If something is connected to the input port show incoming data
             if (m_Vector2Node.InputConnected)
             {
+                //draws node data fields
                 IMLNodeEditorMethods.DrawFeatureValueToggleAndLabel(m_Vector2Node, this, style);
             }
             // If there is nothing connected to the input port show editable fields
             else
             {
+                //draws node editable fields
                 DataTypeNodeEditorMethods.DrawEditableFieldsAndToggles(m_Vector2Node, this, style);
             }
         }

@@ -8,6 +8,9 @@ using XNodeEditor;
 
 namespace InteractML
 {
+    /// <summary>
+    /// Editor class drawing a Game Object Feature - receiving the transform from a game object in the scene.
+    /// </summary>
     [CustomNodeEditor(typeof(GameObjectNode))]
     public class GameObjectNodeEditor : IMLNodeEditor
     {

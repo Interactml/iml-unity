@@ -26,14 +26,22 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private IMLVector4 m_FeatureValues;
 
+        /// <summary>
+        /// Local specific Vector4 Value
+        /// </summary>
+        private Vector4 m_UpdatedValue;
 
         // Use this for initialization
         protected override void Init()
         {
+            // initialise variables
+            PreviousFeatureValues = new IMLVector4();
             UserInput = new IMLVector4();
+            m_UpdatedValue = new Vector4();
 
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Vector4");
-            
+            // load node specific tooltips
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Vector3");
+
             base.Init();
         }
 
@@ -53,57 +61,52 @@ namespace InteractML.DataTypeNodes
         /// <returns></returns>
         protected override object Update()
         {
-            base.Update();
-            //check if receiving data
-            if (Counter == Count)
+            // update if node is receiving data
+            ReceivingData = DataTypeNodeMethods.IsReceivingData(this);
+
+            // update if node has input connected
+            InputConnected = DataTypeNodeMethods.IsInputConnected(this);
+
+            // if there is no input connected take input from the user
+            if (!InputConnected)
             {
-                Counter = 0;
-                if (PreviousFeatureValues == FeatureValues)
-                    ReceivingData = false;
-                else
-                    ReceivingData = true;
+                // check if each toggle is off and set feature value to 0, return float array of updated feature values
+                ReceivedValue = DataTypeNodeMethods.CheckTogglesAndUpdateFeatures(this, UserInput.Values);
 
-                PreviousFeatureValues = FeatureValues;
-            }
+                // convert float array to vector
+                m_UpdatedValue.x = ReceivedValue[0];
+                m_UpdatedValue.y = ReceivedValue[1];
+                m_UpdatedValue.z = ReceivedValue[2];
+                m_UpdatedValue.w = ReceivedValue[3];
 
-            Counter++;
-
-            //If there is no input connected take input from the user
-            if (this.GetInputNodesConnected("m_In") == null)
-            {
-                
-                InputConnected = false;
-
-                // for each of the feature values 
-                for (int i = 0; i < FeatureValues.Values.Length; i++)
-                {
-                    // check toggle array length is the same as the amount of values in the user input 
-                    //if toggles are off set user input value to 0
-                    if (!ToggleSwitches[i]) { UserInput.Values[i] = 0; }
-                }
-
-                //Set feature value to user input
-                Vector4 v = new Vector4(UserInput.Values[0], UserInput.Values[1], UserInput.Values[2], UserInput.Values[3]);
-                Value = v;
+                // update values in node
+                Value = m_UpdatedValue;
             }
             else
             {
-                InputConnected = true;
-                
+                // update node value based on input
                 base.Update();
 
-                var receivedValue = Value;
-                // for each of the feature values 
-                for (int i = 0; i < FeatureValues.Values.Length; i++)
-                {
-                    if (!ToggleSwitches[i]) { receivedValue[i] = 0; }
-                }
-                
-                Value = receivedValue;
+                // convert input vector to float array
+                ReceivedValue[0] = Value.x;
+                ReceivedValue[1] = Value.y;
+                ReceivedValue[2] = Value.z;
+                ReceivedValue[2] = Value.w;
+
+                // check if each toggle is off and set feature value to 0, return float array of updated feature values
+                ReceivedValue = DataTypeNodeMethods.CheckTogglesAndUpdateFeatures(this, ReceivedValue);
+
+                // convert float array to vector 
+                m_UpdatedValue.x = ReceivedValue[0];
+                m_UpdatedValue.y = ReceivedValue[1];
+                m_UpdatedValue.z = ReceivedValue[2];
+                m_UpdatedValue.w = ReceivedValue[3];
+
+                // update values in node
+                Value = m_UpdatedValue;
             }
 
             return this;
-
         }
 
     }

@@ -28,7 +28,7 @@ namespace InteractML.DataTypeNodes
         public virtual T Value { get { return m_Value; } set { m_Value = value; } }
         [SerializeField]
         private T m_Value;
-
+        
         /// <summary>
         // Output data variables
         /// </summary>
@@ -67,6 +67,11 @@ namespace InteractML.DataTypeNodes
         public bool[] ToggleSwitches;
 
         /// <summary>
+        /// Local float array to store received values
+        /// </summary>
+        public float[] ReceivedValue;
+
+        /// <summary>
         // Variable storing previous frame feature values to test incoming data is changing
         /// </summary>
         public IMLBaseDataType PreviousFeatureValues;
@@ -87,7 +92,10 @@ namespace InteractML.DataTypeNodes
 
         #region XNode Messages
 
-        // Use this for initialization
+        /// <summary>
+        /// Initialise node
+        /// </summary>
+        /// <returns></returns>
         protected override void Init()
         {
             // initialise counters to change toggle colour
@@ -99,9 +107,16 @@ namespace InteractML.DataTypeNodes
             for (int i = 0; i < FeatureValues.Values.Length; i++)
                 ToggleSwitches[i] = true;
 
+            // set float array to size matching amount of features
+            ReceivedValue = new float[FeatureValues.Values.Length];
+
             base.Init();
         }
 
+        /// <summary>
+        /// Remove node from graph and asset when deleted
+        /// </summary>
+        /// <returns></returns>
         public void OnDestroy()
         {
             // Remove reference of this node in the IMLComponent controlling this node (if any)
@@ -112,18 +127,29 @@ namespace InteractML.DataTypeNodes
             }
         }
 
+        /// <summary>
+        /// Remove connection to nodes port
+        /// </summary>
+        /// <returns></returns>
         public override void OnRemoveConnection(NodePort port)
         {
             base.OnRemoveConnection(port);
         }
 
-        // Return the correct value of an output port when requested
+        /// <summary>
+        /// Return the correct value of an output port when requested
+        /// </summary>
+        /// <returns></returns>
         public override object GetValue(NodePort port)
         {
             Out = Value;
             return Out;
         }
 
+        /// <summary>
+        /// On new connection to a node, method disconnects if node is of wrong type
+        /// </summary>
+        /// <returns></returns>
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
             System.Type[] portTypesAccept = new System.Type[] { typeof(T) };
@@ -145,6 +171,10 @@ namespace InteractML.DataTypeNodes
             return this.Update();
         }
 
+        /// <summary>
+        /// Update the Value variable stored in the node from the input
+        /// </summary>
+        /// <returns></returns>
         protected virtual object Update()
         {
             // Read input (if it returns default(T) there is no connection)

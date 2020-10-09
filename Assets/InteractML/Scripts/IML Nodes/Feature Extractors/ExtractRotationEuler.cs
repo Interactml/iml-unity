@@ -10,7 +10,7 @@ namespace InteractML.FeatureExtractors
     /// Feature extractor for euler rotations
     /// </summary>
     [NodeWidth(250)]
-    public class ExtractRotationEuler : BaseExtractorNode, IFeatureIML
+    public class ExtractRotationEuler : BaseExtractorNode
     {
         /// <summary>
         /// GameObject from which we extract a feature
@@ -39,7 +39,7 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Feature Values extracted (ready to be read by a different node)
         /// </summary>
-        public IMLBaseDataType FeatureValues { get { return m_RotationExtracted; } }
+        public override IMLBaseDataType FeatureValues { get { return m_RotationExtracted; } }
 
         /// <summary>
         /// The private feature values extracted in a more specific data type
@@ -89,15 +89,7 @@ namespace InteractML.FeatureExtractors
         {
             return UpdateFeature();
         }
-        public void OnDestroy()
-        {
-            // Remove reference of this node in the IMLComponent controlling this node (if any)
-            var MLController = graph as IMLController;
-            if (MLController.SceneComponent != null)
-            {
-                MLController.SceneComponent.DeleteFeatureNode(this);
-            }
-        }
+
         /// <summary>
         /// Updates Feature values
         /// </summary>

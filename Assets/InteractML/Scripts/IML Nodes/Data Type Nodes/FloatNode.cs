@@ -29,11 +29,17 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private IMLFloat m_FeatureValues;
 
-        // Use this for initialization
+        /// <summary>
+        /// Initialise node
+        /// </summary>
+        /// <returns></returns>
         protected override void Init()
         {
+            // initialise variables
+            PreviousFeatureValues = new IMLFloat();
             UserInput = new IMLFloat();
 
+            // load node specific tooltips
             tooltips = IMLTooltipsSerialization.LoadTooltip("Float");
 
             base.Init();
@@ -55,53 +61,34 @@ namespace InteractML.DataTypeNodes
         /// <returns></returns>
         protected override object Update()
         {
-            base.Update();
-            //check if receiving data
-            if (Counter == Count)
+            // update if node is receiving data
+            ReceivingData = DataTypeNodeMethods.IsReceivingData(this);
+
+            // update if node has input connected
+            InputConnected = DataTypeNodeMethods.IsInputConnected(this);
+
+            // if there is no input connected take input from the user
+            if (!InputConnected)
             {
-                Counter = 0;
-                if (PreviousFeatureValues == FeatureValues)
-                    ReceivingData = false;
-                else
-                    ReceivingData = true;
+                // check if each toggle is off and set feature value to 0, return float array of updated feature values
+                ReceivedValue = DataTypeNodeMethods.CheckTogglesAndUpdateFeatures(this, UserInput.Values);
 
-                PreviousFeatureValues = FeatureValues;
-            }
-
-            Counter++;
-
-            //If there is no input connected take input from the user
-            if (this.GetInputNodesConnected("m_In") == null)
-            {
-
-                InputConnected = false;
-
-                // for each of the feature values 
-                for (int i = 0; i < FeatureValues.Values.Length; i++)
-                {
-                    // check toggle array length is the same as the amount of values in the user input 
-                    //if toggles are off set user input value to 0
-                    if (!ToggleSwitches[i]) { UserInput.Values[i] = 0; }
-                }
-
-                //Set feature value to user input
-                float v = UserInput.Values[0];
-                Value = v;
+                // update values in node
+                Value = ReceivedValue[0];
             }
             else
             {
-                InputConnected = true;
-
+                // update node value based on input
                 base.Update();
 
-                var receivedValue = Value;
-                // for each of the feature values 
-                for (int i = 0; i < FeatureValues.Values.Length; i++)
-                {
-                    if (!ToggleSwitches[i]) { receivedValue = 0; }
-                }
+                // convert input float to float array
+                ReceivedValue[0] = Value;
 
-                Value = receivedValue;
+                // check if each toggle is off and set feature value to 0, return float array of updated feature values
+                ReceivedValue = DataTypeNodeMethods.CheckTogglesAndUpdateFeatures(this, ReceivedValue);
+
+                // update values in node
+                Value = ReceivedValue[0];
             }
 
             return this;
