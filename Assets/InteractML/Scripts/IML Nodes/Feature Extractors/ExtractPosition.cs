@@ -93,9 +93,9 @@ namespace InteractML.FeatureExtractors
             {
                 Counter = 0;
                 if (PreviousFeatureValues == FeatureValues)
-                    isReceivingData = false;
+                    ReceivingData = false;
                 else
-                    isReceivingData = true;
+                    ReceivingData = true;
 
                 PreviousFeatureValues = FeatureValues; 
             }

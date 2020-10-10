@@ -48,13 +48,13 @@ namespace InteractML.FeatureExtractors
 
         protected override void ShowBodyFields()
         {
-            DataInToggle(m_ExtractPosition.isReceivingData, m_InnerBodyRect, m_BodyRect);   
+            DataInToggle(m_ExtractPosition.ReceivingData, m_InnerBodyRect, m_BodyRect);   
         }
 
         protected override void DrawFeatureValueTogglesAndLabels(GUIStyle style)
         {
             //draws node data fields
-            IMLNodeEditorMethods.DrawFeatureValueToggleAndLabel(m_ExtractPosition, this, style);
+            //IMLNodeEditorMethods.DrawFeatureValueToggleAndLabel(m_ExtractPosition, this, style);
 
             GUILayout.Space(30);
 

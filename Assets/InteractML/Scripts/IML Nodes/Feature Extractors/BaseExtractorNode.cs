@@ -32,7 +32,7 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Is the node currently receiving input data
         /// </summary>
-        public bool isReceivingData;
+        public bool ReceivingData;
 
         /// <summary>
         /// Variables to count the number of frames the input values stay the same 

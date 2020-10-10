@@ -1,5 +1,63 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9016431718341933165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273181444add554da4a7af8f2464174, type: 3}
+  m_Name: Vector 4
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -776, y: -776}
+  ports:
+    keys:
+    - m_In
+    - m_Out
+    values:
+    - _fieldName: m_In
+      _node: {fileID: -9016431718341933165}
+      _typeQualifiedName: UnityEngine.Vector4, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: m_Out
+        node: {fileID: 818625671814626761}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: m_Out
+      _node: {fileID: -9016431718341933165}
+      _typeQualifiedName: UnityEngine.Vector4, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  id: 1d1af2ef-2f87-4ef7-bdbd-0a979d812a2a
+  numberInComponentList: -1
+  IsInitialized: 1
+  ValueName: 
+  m_In: {x: 0, y: 0, z: 0, w: 0}
+  m_Value: {x: 0, y: 4, z: 4, w: 0}
+  m_Out: {x: 0, y: 0, z: 0, w: 0}
+  ReceivingData: 0
+  InputConnected: 1
+  Counter: 1
+  Count: 5
+  ToggleSwitches: 01010101
+  ReceivedValue:
+  - 0
+  - 4
+  - 4
+  - 0
 --- !u!114 &-8914584667776746422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,18 +144,18 @@ MonoBehaviour:
   id: d51e368a-b640-43b1-85eb-a3f30f22ccc7
   numberInComponentList: -1
   IsInitialized: 1
-  isReceivingData: 0
+  ReceivingData: 0
   Counter: 1
   Count: 5
   ToggleSwitches: 010101
   GameObjectDataIn: {fileID: 0}
-  LiveDataOut: {x: -250.54, y: 2.07, z: 3.9}
+  LiveDataOut: {x: -256.57, y: 151.2, z: 18.13}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
-    - -250.54
-    - 2.07
-    - 3.9
+    - -256.57
+    - 151.2
+    - 18.13
 --- !u!114 &-6267016618958553248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,7 +281,67 @@ MonoBehaviour:
   - {fileID: 7664542125311193265}
   - {fileID: -6267016618958553248}
   - {fileID: 5095695781220236157}
+  - {fileID: -9016431718341933165}
+  - {fileID: 818625671814626761}
   SceneComponent: {fileID: 0}
+--- !u!114 &818625671814626761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1273181444add554da4a7af8f2464174, type: 3}
+  m_Name: Vector 4
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -1160, y: -760}
+  ports:
+    keys:
+    - m_In
+    - m_Out
+    values:
+    - _fieldName: m_In
+      _node: {fileID: 818625671814626761}
+      _typeQualifiedName: UnityEngine.Vector4, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: m_Out
+      _node: {fileID: 818625671814626761}
+      _typeQualifiedName: UnityEngine.Vector4, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: m_In
+        node: {fileID: -9016431718341933165}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  id: d65e1df9-f3a5-4541-81df-a758e8ef88e3
+  numberInComponentList: -1
+  IsInitialized: 1
+  ValueName: 
+  m_In: {x: 0, y: 0, z: 0, w: 0}
+  m_Value: {x: 0, y: 4, z: 0, w: 4}
+  m_Out: {x: 0, y: 4, z: 0, w: 4}
+  ReceivingData: 0
+  InputConnected: 0
+  Counter: 1
+  Count: 5
+  ToggleSwitches: 01010101
+  ReceivedValue:
+  - 0
+  - 4
+  - 0
+  - 4
 --- !u!114 &1450248094575614031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -411,7 +529,7 @@ MonoBehaviour:
   IsInitialized: 1
   ValueName: 
   m_In: {x: 0, y: 0, z: 23.5}
-  m_Value: {x: -250.54, y: 2.07, z: 3.9}
+  m_Value: {x: -256.57, y: 151.2, z: 18.13}
   m_Out: {x: 0, y: 0, z: 0}
   ReceivingData: 0
   InputConnected: 1
@@ -419,9 +537,9 @@ MonoBehaviour:
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue:
-  - -250.54
-  - 2.07
-  - 3.9
+  - -256.57
+  - 151.2
+  - 18.13
 --- !u!114 &6125476143715219942
 MonoBehaviour:
   m_ObjectHideFlags: 0

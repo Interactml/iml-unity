@@ -91,7 +91,7 @@ namespace InteractML.DataTypeNodes
                 ReceivedValue[0] = Value.x;
                 ReceivedValue[1] = Value.y;
                 ReceivedValue[2] = Value.z;
-                ReceivedValue[2] = Value.w;
+                ReceivedValue[3] = Value.w;
 
                 // check if each toggle is off and set feature value to 0, return float array of updated feature values
                 ReceivedValue = DataTypeNodeMethods.CheckTogglesAndUpdateFeatures(this, ReceivedValue);

@@ -65,8 +65,6 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         public bool isUpdated { get; set; }
 
-        public bool ReceivingData;
-
         float x, y, z;
         int counter = 0;
         int count = 5;

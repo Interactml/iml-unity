@@ -7,7 +7,6 @@ using InteractML;
 using XNode;
 using XNodeEditor.Internal;
 #if UNITY_EDITOR
-using UnityEditor;
 using XNodeEditor;
 #endif
 
@@ -834,7 +833,7 @@ namespace InteractML
             GUILayout.Label(tip, m_NodeSkin.GetStyle("Warning Label"));
         }
 
-        
+
 
         #endregion
         #region DataType and Feature Extractor Methods

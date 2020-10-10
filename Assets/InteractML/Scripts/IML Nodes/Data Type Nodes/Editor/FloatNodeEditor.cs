@@ -55,31 +55,11 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         protected override void ShowBodyFields()
         {
-            // Checks if node if receiving data- sets green toggle if data incoming, red if no data incoming
-            DataInToggle(m_FloatNode.ReceivingData, m_InnerBodyRect, m_BodyRect);
+            // draws each feature in the node
+            DataTypeNodeEditorMethods.DrawFeatureOrEditableFields(this, m_FloatNode, m_BodyRect);
         }
 
-        /// <summary>
-        //// Draws position and values of toggle and labels, draws green toggle if data incoming, red if no data incoming
-        /// </summary>
-        protected override void DrawFeatureValueTogglesAndLabels(GUIStyle style)
-        {
-            GUILayout.BeginHorizontal();
-            GUILayout.Space(bodySpace);
-            // If something is connected to the input port show incoming data
-            if (m_FloatNode.InputConnected)
-            {
-                //draws node data fields
-                IMLNodeEditorMethods.DrawFeatureValueToggleAndLabel(m_FloatNode, this, style);
-            }
-            // If there is nothing connected to the input port show editable fields
-            else
-            {
-                //draws node editable fields
-                DataTypeNodeEditorMethods.DrawEditableFieldsAndToggles(m_FloatNode, this, style);
-            }
-            GUILayout.EndHorizontal();
-        }
+        
 
     }
 }

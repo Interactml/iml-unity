@@ -56,9 +56,6 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         public bool isUpdated { get; set; }
 
-        // check whether incoming data
-        public bool ReceivingData = false;
-
         /// <summary>
         /// Controls whether to use each axis values in output 
         /// </summary>
