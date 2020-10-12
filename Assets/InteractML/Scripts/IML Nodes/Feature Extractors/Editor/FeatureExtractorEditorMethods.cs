@@ -22,21 +22,24 @@ namespace InteractML.FeatureExtractors
         {
             GUILayout.Space(10);
 
-            // for each of the features in the data type
-            for (int i = 0; i < numberOfFeatures; i++)
+            if (numberOfFeatures == node.ToggleSwitches.Length)
             {
-                // Draw each feature on a single line
-                GUILayout.BeginHorizontal();
-                GUILayout.Space(nodeEditor.bodySpace);
+                // for each of the features in the data type
+                for (int i = 0; i < numberOfFeatures; i++)
+                {
+                    // Draw each feature on a single line
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Space(nodeEditor.bodySpace);
 
-                //draw toggle
-                node.ToggleSwitches[i] = EditorGUILayout.Toggle(node.ToggleSwitches[i], toggle_style);
+                    //draw toggle
+                    node.ToggleSwitches[i] = EditorGUILayout.Toggle(node.ToggleSwitches[i], toggle_style);
 
-                //draw label
-                EditorGUILayout.LabelField(nodeEditor.feature_labels[i] + System.Math.Round(node.FeatureValues.Values[i], 3).ToString(), nodeEditor.m_NodeSkin.GetStyle("Node Body Label Axis"));
+                    //draw label
+                    EditorGUILayout.LabelField(nodeEditor.feature_labels[i] + System.Math.Round(node.FeatureValues.Values[i], 3).ToString(), nodeEditor.m_NodeSkin.GetStyle("Node Body Label Axis"));
 
-                GUILayout.EndHorizontal();
-                EditorGUILayout.Space();
+                    GUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+                }
             }
         }
 

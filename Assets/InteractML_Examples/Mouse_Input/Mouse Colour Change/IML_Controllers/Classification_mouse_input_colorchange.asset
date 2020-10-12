@@ -26,6 +26,9 @@ MonoBehaviour:
       - fieldName: GameObjectDataIn
         node: {fileID: -7194312582767240663}
         reroutePoints: []
+      - fieldName: GameObjectDataIn
+        node: {fileID: -6373008310426652469}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -37,7 +40,7 @@ MonoBehaviour:
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 0
-  GOHashCode: 17270
+  GOHashCode: 17268
   CreatedDuringPlaymode: 0
 --- !u!114 &-7194312582767240663
 MonoBehaviour:
@@ -77,6 +80,9 @@ MonoBehaviour:
       - fieldName: InputFeatures
         node: {fileID: 1450248094575614031}
         reroutePoints: []
+      - fieldName: m_In
+        node: {fileID: 5095695781220236157}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -86,17 +92,79 @@ MonoBehaviour:
   numberInComponentList: -1
   IsInitialized: 1
   ReceivingData: 0
-  Counter: 1
+  Counter: 2
   Count: 5
   ToggleSwitches: 010101
+  ReceivedValue:
+  - -476.3
+  - 196.1
+  - 18.13
   GameObjectDataIn: {fileID: 0}
   LiveDataOut: {fileID: 0}
   LocalSpace: 0
+  GameObjInputMissing: 0
   m_PositionExtracted:
     m_Values:
-    - -476.3
-    - 196.1
+    - 12.5
+    - 151.2
     - 18.13
+--- !u!114 &-6373008310426652469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14a4527b431d72944b42dd8d2f6b0fd7, type: 3}
+  m_Name: Extract Rotation Euler
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 72, y: -184}
+  ports:
+    keys:
+    - GameObjectDataIn
+    - LiveDataOut
+    values:
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: -6373008310426652469}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: GameObjectDataOut
+        node: {fileID: -8914584667776746422}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: LiveDataOut
+      _node: {fileID: -6373008310426652469}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  id: 4dee4c4b-e23e-4cfb-9125-4ac3853b76ab
+  numberInComponentList: -1
+  IsInitialized: 1
+  ReceivingData: 0
+  Counter: 1
+  Count: 5
+  ToggleSwitches: 010101
+  ReceivedValue: []
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
+  LocalSpace: 0
+  m_RotationEulerExtracted:
+    m_Values:
+    - 0
+    - 0
+    - 0
+  GameObjInputMissing: 1
 --- !u!114 &-6267016618958553248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,6 +292,7 @@ MonoBehaviour:
   - {fileID: 5095695781220236157}
   - {fileID: 7486966759787654995}
   - {fileID: 6335695614778997051}
+  - {fileID: -6373008310426652469}
   SceneComponent: {fileID: 0}
 --- !u!114 &1450248094575614031
 MonoBehaviour:
@@ -318,7 +387,7 @@ MonoBehaviour:
   m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 72, y: 88}
+  position: {x: 40, y: 200}
   ports:
     keys:
     - m_In
@@ -383,7 +452,10 @@ MonoBehaviour:
       _node: {fileID: 5095695781220236157}
       _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: LiveDataOut
+        node: {fileID: -7194312582767240663}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -409,7 +481,7 @@ MonoBehaviour:
   m_Value: {x: 0, y: 0, z: 0}
   m_Out: {x: 0, y: 0, z: 0}
   ReceivingData: 0
-  InputConnected: 0
+  InputConnected: 1
   Counter: 1
   Count: 5
   ToggleSwitches: 010101
@@ -570,6 +642,7 @@ MonoBehaviour:
   Counter: 0
   Count: 5
   ToggleSwitches: 010101
+  ReceivedValue: []
   VelocityExtracted: {fileID: 0}
   m_VelocityExtracted:
     m_Values:
@@ -618,7 +691,7 @@ MonoBehaviour:
   numberInComponentList: -1
   IsInitialized: 1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 17312
+  ScriptHashCode: 17310
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: SetAbsoluteColour

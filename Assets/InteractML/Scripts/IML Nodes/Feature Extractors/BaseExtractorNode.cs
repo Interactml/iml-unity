@@ -45,6 +45,11 @@ namespace InteractML.FeatureExtractors
         public bool[] ToggleSwitches;
 
         /// <summary>
+        /// Local float array to store received values
+        /// </summary>
+        public float[] ReceivedValue;
+
+        /// <summary>
         // Variable storing previous frame feature values to test incoming data is changing
         /// </summary>
         public IMLBaseDataType PreviousFeatureValues;

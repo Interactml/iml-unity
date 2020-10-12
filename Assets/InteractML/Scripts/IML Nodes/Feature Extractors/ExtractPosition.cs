@@ -23,13 +23,14 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         [Output]
         public Node LiveDataOut;
-        //private Vector3 m_LiveDataOut;
         
         /// <summary>
         /// Controls whether to use local space or not
         /// </summary>
         public bool LocalSpace = false;
 
+        [HideInInspector]
+        public bool GameObjInputMissing;
 
         /// <summary>
         /// Feature Values extracted (ready to be read by a different node)
@@ -81,10 +82,6 @@ namespace InteractML.FeatureExtractors
         public override object GetValue(NodePort port)
         {
             return UpdateFeature();
-
-            // to change output type to Vector3
-            //LiveDataOut = m_LiveDataOut;
-            //return LiveDataOut;
         }
 
         /// <summary>
@@ -98,29 +95,27 @@ namespace InteractML.FeatureExtractors
 
             var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
 
-            if (gameObjRef != null)
+            if (gameObjRef == null)
+            {
+                if ((graph as IMLController).IsGraphRunning)
+                {
+                    // If the gameobject is null, we throw an error on the editor console
+                    //Debug.LogWarning("GameObject missing in Extract Rotation Node!");
+                }
+                GameObjInputMissing = true;
+            }
+            else
             {
                 // Set values of our feature extracted
                 if (LocalSpace)
                     m_PositionExtracted.SetValues(gameObjRef.transform.localPosition);
-                else
+                else 
                     m_PositionExtracted.SetValues(gameObjRef.transform.position);
-            }
-            
+            } 
 
-            var receivedValue = FeatureValues.Values;
-            // for each of the feature values 
-            for (int i = 0; i < FeatureValues.Values.Length; i++)
-            {
-                if (!ToggleSwitches[i]) { receivedValue[i] = 0; }
-            }
-            
-            FeatureValues.Values = receivedValue;
-
-            //m_LiveDataOut.x = FeatureValues.Values[0];
-            //m_LiveDataOut.y = FeatureValues.Values[1];
-            //m_LiveDataOut.z = FeatureValues.Values[2];
-
+            // check if each toggle is off and set feature value to 0, return float array of updated feature values
+            m_PositionExtracted.Values = FeatureExtractorMethods.CheckTogglesAndUpdateFeatures(this, m_PositionExtracted.Values);
+          
             return this;
 
         }

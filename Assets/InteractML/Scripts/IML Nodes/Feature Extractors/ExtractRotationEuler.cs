@@ -10,7 +10,7 @@ namespace InteractML.FeatureExtractors
     /// Feature extractor for euler rotations
     /// </summary>
     [NodeWidth(250)]
-    public class ExtractRotationEuler : BaseExtractorNode
+    public class ExtractRotationEuler : BaseExtractorNode, IFeatureIML
     {
         /// <summary>
         /// GameObject from which we extract a feature
@@ -32,13 +32,13 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Feature Values extracted (ready to be read by a different node)
         /// </summary>
-        public override IMLBaseDataType FeatureValues { get { return m_RotationExtracted; } }
+        public override IMLBaseDataType FeatureValues { get { return m_RotationEulerExtracted; } }
 
         /// <summary>
         /// The private feature values extracted in a more specific data type
         /// </summary>
         [SerializeField]
-        private IMLVector3 m_RotationExtracted;
+        private IMLVector3 m_RotationEulerExtracted;
 
         [HideInInspector]
         public bool GameObjInputMissing;
@@ -58,24 +58,15 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         public bool isUpdated { get; set; }
 
-        float x, y, z;
-        int counter = 0;
-        int count = 5;
-
-        public bool x_switch = true;
-        public bool y_switch = true;
-        public bool z_switch = true;
-
         // Use this for initialization
         protected override void Init()
         {
             base.Init();
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation Euler");
-            if (m_RotationExtracted == null)
-            {
-                m_RotationExtracted = new IMLVector3();
 
-            }
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation Euler");
+            
+            if (m_RotationEulerExtracted == null)
+                m_RotationEulerExtracted = new IMLVector3();
 
             PreviousFeatureValues = new IMLVector3();
         }
@@ -92,31 +83,9 @@ namespace InteractML.FeatureExtractors
         /// <returns></returns>
         public object UpdateFeature()
         {
-            //check if receiving data
-            if (counter == count)
-            {
-                counter = 0;
-                if (x == FeatureValues.Values[0] && y == FeatureValues.Values[1] && z == FeatureValues.Values[2])
-                {
-                    ReceivingData = false;
-                }
-                else
-                {
-                    ReceivingData = true;
 
-                }
-                x = FeatureValues.Values[0];
-                y = FeatureValues.Values[1];
-                z = FeatureValues.Values[2];
-            }
-
-            counter++;
-
-            if (m_RotationExtracted == null)
-            {
-                m_RotationExtracted = new IMLVector3();
-
-            }
+            // update if node is receiving data
+            ReceivingData = FeatureExtractorMethods.IsReceivingData(this);
 
             var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
 
@@ -133,22 +102,17 @@ namespace InteractML.FeatureExtractors
             {
                 // Set values of our feature extracted
                 if (LocalSpace)
-                    m_RotationExtracted.SetValues(gameObjRef.transform.localEulerAngles);
+                    m_RotationEulerExtracted.SetValues(gameObjRef.transform.localEulerAngles);
                 else
-                    m_RotationExtracted.SetValues(gameObjRef.transform.eulerAngles);
+                    m_RotationEulerExtracted.SetValues(gameObjRef.transform.eulerAngles);
 
                 GameObjInputMissing = false;
             }
 
-            if (!x_switch)
-                FeatureValues.Values[0] = 0;
+            // check if each toggle is off and set feature value to 0, return float array of updated feature values
+            m_RotationEulerExtracted.Values = FeatureExtractorMethods.CheckTogglesAndUpdateFeatures(this, m_RotationEulerExtracted.Values);
 
-            if (!y_switch)
-                FeatureValues.Values[1] = 0;
-
-            if (!z_switch)
-                FeatureValues.Values[2] = 0;
-
+           
             return this;
 
         }

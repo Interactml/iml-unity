@@ -55,5 +55,30 @@ namespace InteractML.FeatureExtractors
             node.Counter++;
             return node.ReceivingData;
         }
+
+        /// </summary>
+        /// Checks if toggle flag if on/off for each feature and returns updated float array 
+        /// </summary>
+        /// <param name="data type node"></param>
+        /// <param name="float array"></param>
+        /// <return></return>
+        public static float[] CheckTogglesAndUpdateFeatures(this BaseExtractorNode node, float[] value)
+        {
+            // checks the amount of feature values matches the size of the amount of toggles and items in the float array, throws an error otherwise
+            if (node.ToggleSwitches.Length == node.FeatureValues.Values.Length && value.Length == node.FeatureValues.Values.Length)
+            {
+                // for each of the feature values 
+                for (int i = 0; i < node.FeatureValues.Values.Length; i++)
+                {
+                    // set any values where the toggle is off to 0
+                    if (!node.ToggleSwitches[i]) { value[i] = 0; }
+                }
+            }
+            else
+            {
+                Debug.Log("The number of feature values in the node does not match the number of items in the boolean array for toggle switches: Cannot update values");
+            }
+            return value;
+        }
     }
 }
