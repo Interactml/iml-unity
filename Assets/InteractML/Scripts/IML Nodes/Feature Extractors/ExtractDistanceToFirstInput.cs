@@ -40,7 +40,7 @@ namespace InteractML.FeatureExtractors
         /// The private feature values extracted in a more specific data type
         /// </summary>
         [SerializeField]
-        private IMLSerialVector m_DistancesExtracted;
+        private IMLArray m_DistancesExtracted;
         private float[] m_DistancesToFirstInput;
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace InteractML.FeatureExtractors
                                     // We make sure that the extracted serial vector is not null
                                     if (m_DistancesExtracted == null)
                                     {
-                                        m_DistancesExtracted = new IMLSerialVector(m_DistancesToFirstInput);
+                                        m_DistancesExtracted = new IMLArray(m_DistancesToFirstInput);
                                     }
 
                                     // Calculate distance between each of the entries in the values vector

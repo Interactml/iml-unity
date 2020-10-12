@@ -46,8 +46,6 @@ namespace InteractML
         /// <returns></returns>
         protected float NodeWidth;
 
-
-
         /// <summary>
         /// Rects for node layout
         /// </summary>

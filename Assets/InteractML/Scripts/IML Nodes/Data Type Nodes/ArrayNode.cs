@@ -4,7 +4,7 @@ using XNode;
 namespace InteractML.DataTypeNodes
 {
     [NodeWidth(250)]
-    public class SerialVectorNode : BaseDataTypeNode<float[]>
+    public class ArrayNode : BaseDataTypeNode<float[]>
     {
         // Override set behaviour to avoid passing data by reference because of arrays
         // Input
@@ -23,7 +23,7 @@ namespace InteractML.DataTypeNodes
             {
                 // Make sure feature value is never null
                 if (m_FeatureValues == null)
-                    m_FeatureValues = new IMLSerialVector();
+                    m_FeatureValues = new IMLArray();
 
                 // Update local IML Data copy
                 m_FeatureValues.SetValues(Value);
@@ -33,7 +33,7 @@ namespace InteractML.DataTypeNodes
         /// <summary>
         /// Local specific IML data type
         /// </summary>
-        private IMLSerialVector m_FeatureValues;
+        private IMLArray m_FeatureValues;
 
 
         protected override void Init()
@@ -47,7 +47,7 @@ namespace InteractML.DataTypeNodes
             base.OnCreateConnection(from, to);
 
             // Make sure that the IFeatureIML connected is matching our type
-            this.DisconnectFeatureNotSameIMLDataType(from, to, IMLSpecifications.DataTypes.SerialVector);
+            this.DisconnectFeatureNotSameIMLDataType(from, to, IMLSpecifications.DataTypes.Array);
 
         }
 

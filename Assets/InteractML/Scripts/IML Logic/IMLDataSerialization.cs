@@ -98,8 +98,8 @@ namespace InteractML
                 case IMLSpecifications.DataTypes.Vector4:
                     dataToInstantiate = new IMLVector4(dataToReadFrom);
                     break;
-                case IMLSpecifications.DataTypes.SerialVector:
-                    dataToInstantiate = new IMLSerialVector(dataToReadFrom);
+                case IMLSpecifications.DataTypes.Array:
+                    dataToInstantiate = new IMLArray(dataToReadFrom);
                     break;
                 default:
                     break;
@@ -132,8 +132,8 @@ namespace InteractML
                 case IMLSpecifications.DataTypes.Vector4:
                     dataToInstantiate = new IMLVector4();
                     break;
-                case IMLSpecifications.DataTypes.SerialVector:
-                    dataToInstantiate = new IMLSerialVector();
+                case IMLSpecifications.DataTypes.Array:
+                    dataToInstantiate = new IMLArray();
                     break;
                 default:
                     break;

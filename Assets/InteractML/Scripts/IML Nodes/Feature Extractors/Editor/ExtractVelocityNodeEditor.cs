@@ -46,61 +46,28 @@ namespace InteractML.FeatureExtractors
 
         protected override void ShowBodyFields()
         {
-            DataInToggle(m_ExtractVelocity.ReceivingData, m_InnerBodyRect, m_BodyRect);
-        }
+            nodeSpace = 60 + (m_ExtractVelocity.FeatureValues.Values.Length * 20);
+            GUILayout.Space(nodeSpace);
+            m_BodyRect.height = 60 + (m_ExtractVelocity.FeatureValues.Values.Length * 20);
+            // set body space based on node editors rects 
+            GUILayout.BeginArea(m_BodyRect);
+            GUILayout.Space(20);
 
-
-        protected override void DrawFeatureValueTogglesAndLabels(GUIStyle style)
-        {
-            if (m_ExtractVelocity.FeatureValues.Values.Length != 0)
+            // check if there are any feature connected
+            if (m_ExtractVelocity.FeatureValues.Values != null || m_ExtractVelocity.FeatureValues.Values.Length != 0)
             {
-                GUILayout.BeginHorizontal();
-                GUILayout.Space(bodySpace);
-                m_ExtractVelocity.x_switch = EditorGUILayout.Toggle(m_ExtractVelocity.x_switch, style);
-                EditorGUILayout.LabelField("x: " + System.Math.Round(m_ExtractVelocity.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
-                GUILayout.EndHorizontal();
-
-                EditorGUILayout.Space();
-
-                GUILayout.BeginHorizontal();
-                GUILayout.Space(bodySpace);
-                m_ExtractVelocity.y_switch = EditorGUILayout.Toggle(m_ExtractVelocity.y_switch, style);
-                EditorGUILayout.LabelField("y: " + System.Math.Round(m_ExtractVelocity.FeatureValues.Values[1], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
-                GUILayout.EndHorizontal();
-
-                EditorGUILayout.Space();
-
-                GUILayout.BeginHorizontal();
-                GUILayout.Space(bodySpace);
-                m_ExtractVelocity.z_switch = EditorGUILayout.Toggle(m_ExtractVelocity.z_switch, style);
-                EditorGUILayout.LabelField("z: " + System.Math.Round(m_ExtractVelocity.FeatureValues.Values[2], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
-                GUILayout.EndHorizontal();
+                //draws node data fields
+                FeatureExtractorEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractVelocity, m_ExtractVelocity.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractVelocity.ReceivingData));
             }
             else
             {
-                EditorGUILayout.LabelField("Connect a feature extractor", m_NodeSkin.GetStyle("Node Body Label"));
+                // draw alert to connect input
+                EditorGUILayout.LabelField("Connect an input", m_NodeSkin.GetStyle("Node Body Label"));
             }
-            
-           
-            
-        }
 
-        /// <summary>
-        /// Display help button
-        /// </summary>
-        private void ShowHelpButton()
-        {
-            m_HelpRect.x = m_HelpRect.x + 20;
-            m_HelpRect.y = m_HelpRect.y + 10;
-            m_HelpRect.width = m_HelpRect.width - 30;
-
-            GUILayout.BeginArea(m_HelpRect);
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("");
-            GUILayout.Button("Help", m_NodeSkin.GetStyle("Help Button"));
-            GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }
+
     }
 
 }

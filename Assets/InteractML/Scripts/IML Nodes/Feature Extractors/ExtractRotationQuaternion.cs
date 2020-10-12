@@ -73,14 +73,15 @@ namespace InteractML.FeatureExtractors
         // Use this for initialization
         protected override void Init()
         {
-            base.Init();
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation Quaternion");
+            // initialise local variables
             if (m_RotationExtracted == null)
-            {
                 m_RotationExtracted = new IMLVector4();
+            PreviousFeatureValues = new IMLVector4();
 
-            }
-            
+            // load node specific tooltips
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation Quaternion");
+
+            base.Init();
         }
 
         // Return the correct value of an output port when requested

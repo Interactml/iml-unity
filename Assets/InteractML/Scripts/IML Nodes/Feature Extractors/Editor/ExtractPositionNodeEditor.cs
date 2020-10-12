@@ -48,23 +48,21 @@ namespace InteractML.FeatureExtractors
 
         protected override void ShowBodyFields()
         {
-            DataInToggle(m_ExtractPosition.ReceivingData, m_InnerBodyRect, m_BodyRect);   
-        }
+            GUILayout.Space(60);
+            // set body space based on node editors rects 
+            GUILayout.BeginArea(m_BodyRect);
+            GUILayout.Space(20);
 
-        protected override void DrawFeatureValueTogglesAndLabels(GUIStyle style)
-        {
             //draws node data fields
-            //IMLNodeEditorMethods.DrawFeatureValueToggleAndLabel(m_ExtractPosition, this, style);
+            FeatureExtractorEditorMethods.DrawFeatureValueToggleAndLabel(this, m_ExtractPosition, m_ExtractPosition.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractPosition.ReceivingData));
 
-            GUILayout.Space(30);
+            GUILayout.Space(10);
+            //draw toggle to select whether to use localspace
+            m_ExtractPosition.LocalSpace = FeatureExtractorEditorMethods.DrawLocalSpaceToggle(this, m_ExtractPosition.LocalSpace);
 
-            GUILayout.BeginHorizontal();
-            GUILayout.Space(bodySpace);
-            m_ExtractPosition.LocalSpace = EditorGUILayout.Toggle(m_ExtractPosition.LocalSpace, m_NodeSkin.GetStyle("Local Space Toggle"));
-            GUILayout.Space(5);
-            EditorGUILayout.LabelField("Use local space for transform", m_NodeSkin.GetStyle("Node Local Space Label"));
-            GUILayout.EndHorizontal();
+            GUILayout.EndArea();
         }
+
 
     }
 

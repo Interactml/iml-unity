@@ -30,13 +30,6 @@ namespace InteractML.FeatureExtractors
         public bool LocalSpace = false;
 
         /// <summary>
-        /// Controls whether to use each axis values in output 
-        /// </summary>
-        public bool x_switch = true;
-        public bool y_switch = true;
-        public bool z_switch = true;
-
-        /// <summary>
         /// Feature Values extracted (ready to be read by a different node)
         /// </summary>
         public override IMLBaseDataType FeatureValues { get { return m_RotationExtracted; } }
@@ -69,6 +62,10 @@ namespace InteractML.FeatureExtractors
         int counter = 0;
         int count = 5;
 
+        public bool x_switch = true;
+        public bool y_switch = true;
+        public bool z_switch = true;
+
         // Use this for initialization
         protected override void Init()
         {
@@ -80,6 +77,7 @@ namespace InteractML.FeatureExtractors
 
             }
 
+            PreviousFeatureValues = new IMLVector3();
         }
 
         // Return the correct value of an output port when requested

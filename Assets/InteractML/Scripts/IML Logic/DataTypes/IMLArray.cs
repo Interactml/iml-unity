@@ -7,7 +7,7 @@ namespace InteractML
     /// Configurable data vector for configurable serial connections 
     /// </summary>
     [Serializable]
-    public class IMLSerialVector : IMLBaseDataType
+    public class IMLArray : IMLBaseDataType
     {
 
         [SerializeField]
@@ -15,35 +15,35 @@ namespace InteractML
 
         public override float[] Values { get { return m_Values; } set { if (value != null) SetValues(value); } }
 
-        private IMLSpecifications.DataTypes m_DataType = IMLSpecifications.DataTypes.SerialVector;
+        private IMLSpecifications.DataTypes m_DataType = IMLSpecifications.DataTypes.Array;
 
         public override IMLSpecifications.DataTypes DataType { get { return m_DataType; } }
 
-        public IMLSerialVector()
+        public IMLArray()
         {
             if (m_Values == null)
                 m_Values = new float[0];
 
-            m_DataType = IMLSpecifications.DataTypes.SerialVector;
+            m_DataType = IMLSpecifications.DataTypes.Array;
         }
 
-        public IMLSerialVector(int serialVectorSize)
+        public IMLArray(int serialVectorSize)
         {
-            m_DataType = IMLSpecifications.DataTypes.SerialVector;
+            m_DataType = IMLSpecifications.DataTypes.Array;
             m_Values = new float[serialVectorSize];
         }
 
-        public IMLSerialVector(IMLBaseDataType newData)
+        public IMLArray(IMLBaseDataType newData)
         {
-            m_DataType = IMLSpecifications.DataTypes.SerialVector;
+            m_DataType = IMLSpecifications.DataTypes.Array;
 
             if (newData.Values != null && newData.Values.Length > 0)
                 SetValues(newData.Values);
         }
 
-        public IMLSerialVector(float[] newData)
+        public IMLArray(float[] newData)
         {
-            m_DataType = IMLSpecifications.DataTypes.SerialVector;
+            m_DataType = IMLSpecifications.DataTypes.Array;
 
             if (newData != null && newData.Length > 0)
                 SetValues(newData);

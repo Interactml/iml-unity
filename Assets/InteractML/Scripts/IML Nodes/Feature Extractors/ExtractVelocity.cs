@@ -16,7 +16,7 @@ namespace InteractML.FeatureExtractors
         /// The feature that has been previously extracted and from which we are calculating the velocity (i.e. position, rotation, etc)
         /// </summary>
         [Input]
-        public Node FeatureToInput;
+        public IFeatureIML FeatureToInput;
 
         /// <summary>
         /// Node data sent outside of this node onwards
@@ -33,7 +33,7 @@ namespace InteractML.FeatureExtractors
         /// The private feature values extracted in a more specific data type
         /// </summary>
         [SerializeField]
-        private IMLSerialVector m_VelocityExtracted;
+        private IMLArray m_VelocityExtracted;
         private float[] m_CurrentVelocity;
         /// <summary>
         /// Used to calculate the velocity
@@ -69,7 +69,7 @@ namespace InteractML.FeatureExtractors
             base.Init();
             tooltips = IMLTooltipsSerialization.LoadTooltip("Velocity");
             // The velocity extractor expects any other feature extracted to make calculations
-            FeatureToInput = GetInputValue<Node>("FeatureToInput");
+            FeatureToInput = GetInputValue<IFeatureIML>("FeatureToInput");
             // If we managed to get the input
             if (FeatureToInput != null)
             {
@@ -98,9 +98,34 @@ namespace InteractML.FeatureExtractors
         /// <returns></returns>
         public object UpdateFeature()
         {
-            //Debug.Log("Extracting Velocity...");
-            // The velocity extractor expects any other feature extracted to make calculations
-            FeatureToInput = GetInputValue<Node>("FeatureToInput");
+            // Get values from the input list
+            List<Node> featureToInput = this.GetInputNodesConnected("FeatureToInput");
+
+            // if there are inputfestures connected 
+            if (featureToInput != null)
+            {
+                
+                // Go through all the nodes connected
+                for (int i = 0; i < featureToInput.Count; i++)
+                {
+                    // Cast the node checking if implements the feature interface (it is a featureExtractor)
+                    IFeatureIML inputFeature = featureToInput[i] as IFeatureIML;
+
+                    // If it is a feature extractor...
+                    if (inputFeature != null)
+                    {
+                        // We add the feature to the desired inputs config
+                        FeatureToInput = inputFeature;
+                    }
+                }
+
+            }
+            //else
+            //{
+            //    InputFeatures = new List<Node>();
+            //}
+            //// The velocity extractor expects any other feature extracted to make calculations
+            //FeatureToInput = GetInputValue<IFeatureIML>("FeatureToInput");
             // If we managed to get the input
             if (FeatureToInput != null)
             {
@@ -162,7 +187,7 @@ namespace InteractML.FeatureExtractors
                         // We make sure that the velocity extracted serial vector is not null
                         if (m_VelocityExtracted == null)
                         {
-                            m_VelocityExtracted = new IMLSerialVector(m_CurrentVelocity);
+                            m_VelocityExtracted = new IMLArray(m_CurrentVelocity);
                         }
 
                         // Set values for velocity extracted and for last frame feature value

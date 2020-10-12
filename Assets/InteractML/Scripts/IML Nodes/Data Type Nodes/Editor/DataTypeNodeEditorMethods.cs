@@ -15,7 +15,6 @@ namespace InteractML.DataTypeNodes
     /// </summary>
     public static class DataTypeNodeEditorMethods
     {
-
         /// <summary>
         /// Draws editable float field with toggle for each feature
         /// </summary>
@@ -55,8 +54,15 @@ namespace InteractML.DataTypeNodes
 
         }
 
+        /// <summary>
+        /// Draws each feature as either an editable field or a feature value and draws body rect
+        /// </summary>
+        /// <param name="node editor"></param>
+        /// <param name="data type node"></param>
+        /// <param name="bodyRect"></para
         public static void DrawFeatureOrEditableFields<T>(this IMLNodeEditor nodeEditor, BaseDataTypeNode<T> node, Rect bodyRect)
         {
+            // set body space based on node editors rects
             GUILayout.Space(60);
             GUILayout.BeginArea(bodyRect);
             GUILayout.Space(30);
@@ -65,16 +71,42 @@ namespace InteractML.DataTypeNodes
             if (node.InputConnected)
             {
                 //draws node data fields
-                IMLNodeEditorMethods.DrawFeatureValueToggleAndLabel(nodeEditor, node, IMLNodeEditorMethods.DataInToggle(nodeEditor, node.ReceivingData));
+                DrawFeatureValueToggleAndLabel(nodeEditor, node, IMLNodeEditorMethods.DataInToggle(nodeEditor, node.ReceivingData));
             }
             // If there is nothing connected to the input port show editable fields
             else
             {
                 //draws node editable fields
-                DataTypeNodeEditorMethods.DrawEditableFieldsAndToggles(nodeEditor, node, IMLNodeEditorMethods.DataInToggle(nodeEditor, node.ReceivingData));
+                DrawEditableFieldsAndToggles(nodeEditor, node, IMLNodeEditorMethods.DataInToggle(nodeEditor, node.ReceivingData));
             }
 
             GUILayout.EndArea();
+        }
+
+        /// <summary>
+        /// Draws toggle, feature label and value of input data for data type node
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="node editor"></param>
+        /// <param name="toggle GUIStyle"></param>
+        public static void DrawFeatureValueToggleAndLabel<T>(this IMLNodeEditor nodeEditor, BaseDataTypeNode<T> node, GUIStyle toggle_style)
+        {
+            // for each of the features in the data type
+            for (int i = 0; i < node.FeatureValues.Values.Length; i++)
+            {
+                // Draw each feature on a single line
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(nodeEditor.bodySpace);
+
+                //draw toggle
+                node.ToggleSwitches[i] = EditorGUILayout.Toggle(node.ToggleSwitches[i], toggle_style);
+
+                //draw label
+                EditorGUILayout.LabelField(nodeEditor.feature_labels[i] + System.Math.Round(node.FeatureValues.Values[i], 3).ToString(), nodeEditor.m_NodeSkin.GetStyle("Node Body Label Axis"));
+
+                GUILayout.EndHorizontal();
+                EditorGUILayout.Space();
+            }
         }
     }
 }

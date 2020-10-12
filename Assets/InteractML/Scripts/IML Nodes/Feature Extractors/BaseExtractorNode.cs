@@ -63,10 +63,23 @@ namespace InteractML.FeatureExtractors
             Counter = 0;
             Count = 5;
 
-            // create new array of boolean for each of the features in the data type and set all to true
-            ToggleSwitches = new bool[FeatureValues.Values.Length];
-            for (int i = 0; i < FeatureValues.Values.Length; i++)
-                ToggleSwitches[i] = true;
+            // check amount of feature values before creating toggle switch array of that size
+            if (FeatureValues != null)
+            {
+                if (FeatureValues.Values.Length > 0)
+                {
+                    // create new array of boolean for each of the features in the data type and set all to true
+                    ToggleSwitches = new bool[FeatureValues.Values.Length];
+                    for (int i = 0; i < FeatureValues.Values.Length; i++)
+                        ToggleSwitches[i] = true;
+                }
+            }
+            // for nodes with dynamically sized float arrays as features initialise to empty array
+            else
+            {
+                Debug.Log("Toggle switch array not initialised");
+            }
+            
 
             base.Init();
         }

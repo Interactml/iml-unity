@@ -22,8 +22,9 @@ namespace InteractML.FeatureExtractors
         /// Node data sent outside of this node onwards
         /// </summary>
         [Output]
-        public Vector3 LiveDataOut;
-
+        public Node LiveDataOut;
+        //private Vector3 m_LiveDataOut;
+        
         /// <summary>
         /// Controls whether to use local space or not
         /// </summary>
@@ -65,6 +66,8 @@ namespace InteractML.FeatureExtractors
             if (m_PositionExtracted == null)
                 m_PositionExtracted = new IMLVector3();
 
+            PreviousFeatureValues = new IMLVector3();
+
             tooltips = IMLTooltipsSerialization.LoadTooltip("Position");
 
             base.Init();
@@ -77,9 +80,11 @@ namespace InteractML.FeatureExtractors
         /// <returns></returns>
         public override object GetValue(NodePort port)
         {
-            var v = new Vector3(FeatureValues.Values[0], FeatureValues.Values[1], FeatureValues.Values[2]);
-            LiveDataOut = v;
-            return LiveDataOut;
+            return UpdateFeature();
+
+            // to change output type to Vector3
+            //LiveDataOut = m_LiveDataOut;
+            //return LiveDataOut;
         }
 
         /// <summary>
@@ -88,18 +93,8 @@ namespace InteractML.FeatureExtractors
         /// <returns></returns>
         public object UpdateFeature()
         {
-            //check if receiving data
-            if(Counter == Count)
-            {
-                Counter = 0;
-                if (PreviousFeatureValues == FeatureValues)
-                    ReceivingData = false;
-                else
-                    ReceivingData = true;
-
-                PreviousFeatureValues = FeatureValues; 
-            }
-            Counter++;
+            // update if node is receiving data
+            ReceivingData = FeatureExtractorMethods.IsReceivingData(this);
 
             var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
 
@@ -119,8 +114,12 @@ namespace InteractML.FeatureExtractors
             {
                 if (!ToggleSwitches[i]) { receivedValue[i] = 0; }
             }
-
+            
             FeatureValues.Values = receivedValue;
+
+            //m_LiveDataOut.x = FeatureValues.Values[0];
+            //m_LiveDataOut.y = FeatureValues.Values[1];
+            //m_LiveDataOut.z = FeatureValues.Values[2];
 
             return this;
 

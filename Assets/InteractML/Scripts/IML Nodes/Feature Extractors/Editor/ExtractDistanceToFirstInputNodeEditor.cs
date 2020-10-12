@@ -49,10 +49,40 @@ namespace InteractML.FeatureExtractors
 
         protected override void ShowBodyFields()
         {
-            nodeSpace = 110 + (m_ConnectedInputs * 20);
+            // DataInToggle(m_ExtractDistanceToFirstInput.ReceivingData, m_InnerBodyRect, m_BodyRect);
+
+
+            nodeSpace = 120 + (m_ConnectedInputs * 20);
             m_ConnectedInputs = m_ExtractDistanceToFirstInput.FeatureValues.Values.Length;
             m_BodyRect.height = 60 + (m_ConnectedInputs * 20);
-            ShowDistanceBetweenInputsValue();
+
+            m_InnerBodyRect.x = m_BodyRect.x + 20;
+            m_InnerBodyRect.y = m_BodyRect.y + 20;
+            m_InnerBodyRect.width = m_BodyRect.width - 20;
+            m_InnerBodyRect.height = m_BodyRect.height - 20;
+
+            GUILayout.BeginArea(m_InnerBodyRect);
+
+            ////nodeSpace = 110 + (m_ExtractDistanceToFirstInput.FeatureValues.Values.Length * 20);
+            ////GUILayout.Space(nodeSpace);
+            ////m_BodyRect.height = 110 + (m_ExtractDistanceToFirstInput.FeatureValues.Values.Length * 20);
+            ////// set body space based on node editors rects 
+            ////GUILayout.BeginArea(m_BodyRect);
+            ////GUILayout.Space(20);
+            
+            // check if there are any feature connected
+            if (m_ExtractDistanceToFirstInput.FeatureValues.Values != null && m_ExtractDistanceToFirstInput.FeatureValues.Values.Length != 0)
+            {
+                //draws node data fields
+                FeatureExtractorEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractDistanceToFirstInput, m_ExtractDistanceToFirstInput.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractDistanceToFirstInput.ReceivingData));
+                
+            }
+            else
+            {
+                EditorGUILayout.LabelField("Connect 2 inputs", m_NodeSkin.GetStyle("Node Body Label"));
+            }
+
+            GUILayout.EndArea();
         }
 
         /// <summary>

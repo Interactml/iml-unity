@@ -204,8 +204,8 @@ namespace InteractML
                                         return (PredictedOutput[i] as IMLVector3).GetValues();
                                     case IMLSpecifications.DataTypes.Vector4:
                                         return (PredictedOutput[i] as IMLVector4).GetValues();
-                                    case IMLSpecifications.DataTypes.SerialVector:
-                                        return (PredictedOutput[i] as IMLSerialVector).GetValues();
+                                    case IMLSpecifications.DataTypes.Array:
+                                        return (PredictedOutput[i] as IMLArray).GetValues();
                                     default:
                                         break;
                                 }
@@ -919,8 +919,8 @@ namespace InteractML
                         case IMLSpecifications.OutputsEnum.Vector4:
                             PredictedOutput.Add(new IMLVector4());
                             break;
-                        case IMLSpecifications.OutputsEnum.SerialVector:
-                            PredictedOutput.Add(new IMLSerialVector());
+                        case IMLSpecifications.OutputsEnum.Array:
+                            PredictedOutput.Add(new IMLArray());
                             break;
                         default:
                             break;
@@ -1108,7 +1108,7 @@ namespace InteractML
                 case IMLSpecifications.OutputsEnum.Vector4:
                     dynamicOutputPort = AddDynamicOutput(typeof(Vector4), fieldName: "Output " + outputPorts.Count);
                     break;
-                case IMLSpecifications.OutputsEnum.SerialVector:
+                case IMLSpecifications.OutputsEnum.Array:
                     dynamicOutputPort = AddDynamicOutput(typeof(float[]), fieldName: "Output " + outputPorts.Count);
                     break;
                 default:
@@ -1282,7 +1282,7 @@ namespace InteractML
                     if (outputPort.ValueType != typeof(Vector4))
                         outputPort.ValueType = typeof(Vector4);
                     break;
-                case IMLSpecifications.OutputsEnum.SerialVector:
+                case IMLSpecifications.OutputsEnum.Array:
                     if (outputPort.ValueType != typeof(float[]))
                         outputPort.ValueType = typeof(float[]);
                     break;

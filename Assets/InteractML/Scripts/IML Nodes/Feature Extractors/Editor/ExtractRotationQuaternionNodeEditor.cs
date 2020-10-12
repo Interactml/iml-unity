@@ -8,13 +8,13 @@ using XNodeEditor;
 
 namespace InteractML.FeatureExtractors
 {
-    [CustomNodeEditor(typeof(ExtractRotationEuler))]
-    public class ExtractRotationEulerNodeEditor : IMLNodeEditor
+    [CustomNodeEditor(typeof(ExtractRotationQuaternion))]
+    public class ExtractRotationQuaternionNodeEditor : IMLNodeEditor
     {
         /// <summary>
         /// Reference to the node itself
         /// </summary>
-        private ExtractRotationEuler m_ExtractRotationEuler;
+        private ExtractRotationQuaternion m_ExtractRotationQuaternion;
 
         /// <summary>
         /// Initialise node specific interface labels and parameters
@@ -22,15 +22,15 @@ namespace InteractML.FeatureExtractors
         public override void OnCreate()
         {
             // Get reference to the current node
-            m_ExtractRotationEuler = (target as ExtractRotationEuler);
+            m_ExtractRotationQuaternion = (target as ExtractRotationQuaternion);
 
             // Initialise node name
             NodeName = "LIVE ROTATION DATA";
-            NodeSubtitle = "Euler";
+            NodeSubtitle = "Quaternion";
 
             // Initialise node height
-            m_BodyRect.height = 150;
-            nodeSpace = 150;
+            m_BodyRect.height = 180;
+            nodeSpace = 180;
 
             // Initialise input port labels
             InputPortsNamesOverride = new Dictionary<string, string>();
@@ -41,11 +41,10 @@ namespace InteractML.FeatureExtractors
             base.OutputPortsNamesOverride.Add("LiveDataOut", "Rotation\nData Out");
 
             // Initialise node tooltips
-            base.nodeTips = m_ExtractRotationEuler.tooltips;
-
+            base.nodeTips = m_ExtractRotationQuaternion.tooltips;
+            
             // Initialise axis labels
-            feature_labels = new string[3] { "x: ", "y: ", "z: " };
-
+            feature_labels = new string[4] { "x: ", "y: ", "z: ", "w: " };
         }
 
 
@@ -57,16 +56,14 @@ namespace InteractML.FeatureExtractors
             GUILayout.Space(20);
 
             //draws node data fields
-            FeatureExtractorEditorMethods.DrawFeatureValueToggleAndLabel(this, m_ExtractRotationEuler, m_ExtractRotationEuler.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractRotationEuler.ReceivingData));
+            FeatureExtractorEditorMethods.DrawFeatureValueToggleAndLabel(this, m_ExtractRotationQuaternion, m_ExtractRotationQuaternion.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractRotationQuaternion.ReceivingData));
 
             GUILayout.Space(10);
             //draw toggle to select whether to use localspace
-            m_ExtractRotationEuler.LocalSpace = FeatureExtractorEditorMethods.DrawLocalSpaceToggle(this, m_ExtractRotationEuler.LocalSpace);
+            m_ExtractRotationQuaternion.LocalSpace = FeatureExtractorEditorMethods.DrawLocalSpaceToggle(this, m_ExtractRotationQuaternion.LocalSpace);
 
             GUILayout.EndArea();
         }
-
-        
 
     }
 

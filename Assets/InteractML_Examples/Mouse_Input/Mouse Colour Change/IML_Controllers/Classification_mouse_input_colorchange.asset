@@ -1,63 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9016431718341933165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1273181444add554da4a7af8f2464174, type: 3}
-  m_Name: Vector 4
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -776, y: -776}
-  ports:
-    keys:
-    - m_In
-    - m_Out
-    values:
-    - _fieldName: m_In
-      _node: {fileID: -9016431718341933165}
-      _typeQualifiedName: UnityEngine.Vector4, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: m_Out
-        node: {fileID: 818625671814626761}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: m_Out
-      _node: {fileID: -9016431718341933165}
-      _typeQualifiedName: UnityEngine.Vector4, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  id: 1d1af2ef-2f87-4ef7-bdbd-0a979d812a2a
-  numberInComponentList: -1
-  IsInitialized: 1
-  ValueName: 
-  m_In: {x: 0, y: 0, z: 0, w: 0}
-  m_Value: {x: 0, y: 4, z: 4, w: 0}
-  m_Out: {x: 0, y: 0, z: 0, w: 0}
-  ReceivingData: 0
-  InputConnected: 1
-  Counter: 1
-  Count: 5
-  ToggleSwitches: 01010101
-  ReceivedValue:
-  - 0
-  - 4
-  - 4
-  - 0
 --- !u!114 &-8914584667776746422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,7 +37,7 @@ MonoBehaviour:
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 0
-  GOHashCode: 17262
+  GOHashCode: 17270
   CreatedDuringPlaymode: 0
 --- !u!114 &-7194312582767240663
 MonoBehaviour:
@@ -110,7 +52,7 @@ MonoBehaviour:
   m_Name: Extract Position
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 24, y: -504}
+  position: {x: 8, y: -536}
   ports:
     keys:
     - GameObjectDataIn
@@ -130,11 +72,10 @@ MonoBehaviour:
       _dynamic: 0
     - _fieldName: LiveDataOut
       _node: {fileID: -7194312582767240663}
-      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: m_In
-        node: {fileID: 5095695781220236157}
+      - fieldName: InputFeatures
+        node: {fileID: 1450248094575614031}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -145,16 +86,16 @@ MonoBehaviour:
   numberInComponentList: -1
   IsInitialized: 1
   ReceivingData: 0
-  Counter: 1
+  Counter: 4
   Count: 5
   ToggleSwitches: 010101
   GameObjectDataIn: {fileID: 0}
-  LiveDataOut: {x: -256.57, y: 151.2, z: 18.13}
+  LiveDataOut: {fileID: 0}
   LocalSpace: 0
   m_PositionExtracted:
     m_Values:
-    - -256.57
-    - 151.2
+    - -472.05
+    - 149
     - 18.13
 --- !u!114 &-6267016618958553248
 MonoBehaviour:
@@ -281,67 +222,8 @@ MonoBehaviour:
   - {fileID: 7664542125311193265}
   - {fileID: -6267016618958553248}
   - {fileID: 5095695781220236157}
-  - {fileID: -9016431718341933165}
-  - {fileID: 818625671814626761}
+  - {fileID: 7486966759787654995}
   SceneComponent: {fileID: 0}
---- !u!114 &818625671814626761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1273181444add554da4a7af8f2464174, type: 3}
-  m_Name: Vector 4
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1160, y: -760}
-  ports:
-    keys:
-    - m_In
-    - m_Out
-    values:
-    - _fieldName: m_In
-      _node: {fileID: 818625671814626761}
-      _typeQualifiedName: UnityEngine.Vector4, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: m_Out
-      _node: {fileID: 818625671814626761}
-      _typeQualifiedName: UnityEngine.Vector4, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: m_In
-        node: {fileID: -9016431718341933165}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  id: d65e1df9-f3a5-4541-81df-a758e8ef88e3
-  numberInComponentList: -1
-  IsInitialized: 1
-  ValueName: 
-  m_In: {x: 0, y: 0, z: 0, w: 0}
-  m_Value: {x: 0, y: 4, z: 0, w: 4}
-  m_Out: {x: 0, y: 4, z: 0, w: 4}
-  ReceivingData: 0
-  InputConnected: 0
-  Counter: 1
-  Count: 5
-  ToggleSwitches: 01010101
-  ReceivedValue:
-  - 0
-  - 4
-  - 0
-  - 4
 --- !u!114 &1450248094575614031
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,8 +250,8 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: m_Out
-        node: {fileID: 5095695781220236157}
+      - fieldName: LiveDataOut
+        node: {fileID: -7194312582767240663}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -405,7 +287,7 @@ MonoBehaviour:
   numberInComponentList: 0
   IsInitialized: 1
   InputFeatures:
-  - {fileID: 5095695781220236157}
+  - {fileID: -7194312582767240663}
   TargetValues:
   - {fileID: 2814283000950002832}
   TrainingExamplesNodeToOutput: {fileID: 1450248094575614031}
@@ -472,7 +354,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  Counter: 1
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -490,7 +372,7 @@ MonoBehaviour:
   m_Name: Vector 3
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 408, y: -712}
+  position: {x: 424, y: -680}
   ports:
     keys:
     - m_In
@@ -500,10 +382,7 @@ MonoBehaviour:
       _node: {fileID: 5095695781220236157}
       _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: LiveDataOut
-        node: {fileID: -7194312582767240663}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -513,9 +392,6 @@ MonoBehaviour:
       _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: InputFeatures
-        node: {fileID: 1450248094575614031}
-        reroutePoints: []
       - fieldName: InputFeatures
         node: {fileID: -1982196098520229278}
         reroutePoints: []
@@ -529,17 +405,17 @@ MonoBehaviour:
   IsInitialized: 1
   ValueName: 
   m_In: {x: 0, y: 0, z: 23.5}
-  m_Value: {x: -256.57, y: 151.2, z: 18.13}
+  m_Value: {x: 35, y: 0, z: 0}
   m_Out: {x: 0, y: 0, z: 0}
   ReceivingData: 0
-  InputConnected: 1
-  Counter: 1
+  InputConnected: 0
+  Counter: 5
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue:
-  - -256.57
-  - 151.2
-  - 18.13
+  - 35
+  - 0
+  - 0
 --- !u!114 &6125476143715219942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -593,11 +469,68 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 1
-  Counter: 1
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
   - 0
+--- !u!114 &7486966759787654995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051a7e150efca304da37d460de663b87, type: 3}
+  m_Name: Extract Velocity
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 840, y: -808}
+  ports:
+    keys:
+    - FeatureToInput
+    - VelocityExtracted
+    values:
+    - _fieldName: FeatureToInput
+      _node: {fileID: 7486966759787654995}
+      _typeQualifiedName: InteractML.IFeatureIML, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: VelocityExtracted
+      _node: {fileID: 7486966759787654995}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  id: 3e4681d2-1241-467f-a8df-3fedf32f48ac
+  numberInComponentList: -1
+  IsInitialized: 1
+  ReceivingData: 0
+  Counter: 0
+  Count: 5
+  ToggleSwitches: 010101
+  VelocityExtracted: {fileID: 0}
+  m_VelocityExtracted:
+    m_Values:
+    - 0
+    - 0
+    - 0
+  m_LastFrameFeatureValue:
+  - 35
+  - 0
+  - 0
+  x_switch: 1
+  y_switch: 1
+  z_switch: 1
 --- !u!114 &7664542125311193265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -611,7 +544,7 @@ MonoBehaviour:
   m_Name: colorChanger (Script)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1672, y: -312}
+  position: {x: 1576, y: -312}
   ports:
     keys:
     - SetAbsoluteColour
@@ -633,7 +566,7 @@ MonoBehaviour:
   numberInComponentList: -1
   IsInitialized: 1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 17304
+  ScriptHashCode: 17312
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: SetAbsoluteColour

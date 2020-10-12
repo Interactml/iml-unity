@@ -8,13 +8,13 @@ using XNodeEditor;
 
 namespace InteractML.DataTypeNodes
 {
-    [CustomNodeEditor(typeof(SerialVectorNode))]
-    public class SerialVectorNodeEditor : IMLNodeEditor
+    [CustomNodeEditor(typeof(ArrayNode))]
+    public class ArrayNodeEditor : IMLNodeEditor
     {
         /// <summary>
         /// Reference to the node itself
         /// </summary>
-        private SerialVectorNode m_SerialVectorNode;
+        private ArrayNode m_ArrayNode;
 
         /// <summary>
         /// Initialise node specific interface values
@@ -22,7 +22,7 @@ namespace InteractML.DataTypeNodes
         public override void OnCreate()
         {
             // Get reference to the current node
-            m_SerialVectorNode = (target as SerialVectorNode);
+            m_ArrayNode = (target as ArrayNode);
 
             // Initialise node name
             NodeName = "LIVE ARRAY DATA";
@@ -36,7 +36,7 @@ namespace InteractML.DataTypeNodes
             base.OutputPortsNamesOverride.Add("m_Out", "Array \nData Out");
 
             // Initialise node tooltips
-            base.nodeTips = m_SerialVectorNode.tooltips;
+            base.nodeTips = m_ArrayNode.tooltips;
 
         }
 
@@ -46,7 +46,7 @@ namespace InteractML.DataTypeNodes
         protected override void ShowBodyFields()
         {
             nodeSpace = 120 + (m_ConnectedInputs * 20);
-            m_ConnectedInputs = m_SerialVectorNode.FeatureValues.Values.Length;
+            m_ConnectedInputs = m_ArrayNode.FeatureValues.Values.Length;
             m_BodyRect.height = 60 + (m_ConnectedInputs * 20);
 
             m_InnerBodyRect.x = m_BodyRect.x + 20;
@@ -56,15 +56,15 @@ namespace InteractML.DataTypeNodes
 
             GUILayout.BeginArea(m_InnerBodyRect);
 
-            if (m_SerialVectorNode.FeatureValues.Values.Length == 0 || m_SerialVectorNode.FeatureValues.Values == null)
+            if (m_ArrayNode.FeatureValues.Values.Length == 0 || m_ArrayNode.FeatureValues.Values == null)
             {
                 EditorGUILayout.LabelField("Connect an array", m_NodeSkin.GetStyle("Node Body Label"));
             }
             else
             { 
-                for (int i = 0; i < m_SerialVectorNode.FeatureValues.Values.Length; i++)
+                for (int i = 0; i < m_ArrayNode.FeatureValues.Values.Length; i++)
                 {
-                    EditorGUILayout.LabelField("Element " + i + ":  " + System.Math.Round(m_SerialVectorNode.FeatureValues.Values[i], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+                    EditorGUILayout.LabelField("Element " + i + ":  " + System.Math.Round(m_ArrayNode.FeatureValues.Values[i], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
                 }
             }
             GUILayout.EndArea();

@@ -398,7 +398,7 @@ namespace InteractML
                         case IMLSpecifications.DataTypes.Vector4:
                             prefabClone = Instantiate(dataUIPrefabs[4], parent);
                             break;
-                        case IMLSpecifications.DataTypes.SerialVector:
+                        case IMLSpecifications.DataTypes.Array:
                             throw new System.Exception("Serial Vector not yet supported in in-game UI!");
                             break;
                         default:
