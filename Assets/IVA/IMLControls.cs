@@ -41,7 +41,6 @@ public class IMLControls : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
 
         if (timeRemaining > 0)
         {
@@ -58,9 +57,13 @@ public class IMLControls : MonoBehaviour
                 if (directions[randomDirection].Contains("right"))
                 {
                     ikController.updateObjLookAt(ikController.right.transform);
-                } else if (directions[randomDirection].Contains("right"))
+                } else if (directions[randomDirection].Contains("left"))
                 {
                     ikController.updateObjLookAt(ikController.left.transform);
+                }
+                else
+                {
+                    ikController.updateObjLookAt(ikController.head.transform);
                 }
             }
             else
@@ -68,11 +71,11 @@ public class IMLControls : MonoBehaviour
                 animationSuccess++;
 
             }
-            agentAnimator.SetInteger("Understands", animationSuccess);
+            //agentAnimator.SetInteger("Understands", animationSuccess);
             timer.text = timeRemaining.ToString();
         } else
         {
-            agentAnimator.SetInteger("Understands", -1);
+            //agentAnimator.SetInteger("Understands", -1);
             directionsText.text = "Score: " + score;
             if (score <= 7)
             {
