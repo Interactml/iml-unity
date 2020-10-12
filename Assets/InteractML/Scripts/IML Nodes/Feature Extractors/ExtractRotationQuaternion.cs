@@ -66,6 +66,7 @@ namespace InteractML.FeatureExtractors
             if (m_RotationQuaternionExtracted == null)
                 m_RotationQuaternionExtracted = new IMLVector4();
 
+            // initialise helper variables
             PreviousFeatureValues = new IMLVector4();
 
             // load node specific tooltips
@@ -89,8 +90,10 @@ namespace InteractML.FeatureExtractors
             // update if node is receiving data
             ReceivingData = FeatureExtractorMethods.IsReceivingData(this);
 
+            // gameobject input
             var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
 
+            // check if there's a gameobject connected
             if (gameObjRef == null)
             {
                 if ((graph as IMLController).IsGraphRunning)

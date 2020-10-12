@@ -61,14 +61,17 @@ namespace InteractML.FeatureExtractors
         // Use this for initialization
         protected override void Init()
         {
-            base.Init();
-
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation Euler");
-            
+            // Make sure feature extractor value is never null
             if (m_RotationEulerExtracted == null)
                 m_RotationEulerExtracted = new IMLVector3();
-
+            
+            // initialise helper variables
             PreviousFeatureValues = new IMLVector3();
+
+            // load node specific tooltips
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation Euler");
+
+            base.Init();
         }
 
         // Return the correct value of an output port when requested
@@ -87,8 +90,10 @@ namespace InteractML.FeatureExtractors
             // update if node is receiving data
             ReceivingData = FeatureExtractorMethods.IsReceivingData(this);
 
+            // gameobject input
             var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
 
+            // check if there's a gameobject connected
             if (gameObjRef == null)
             {
                 if ((graph as IMLController).IsGraphRunning)
@@ -112,9 +117,7 @@ namespace InteractML.FeatureExtractors
             // check if each toggle is off and set feature value to 0, return float array of updated feature values
             m_RotationEulerExtracted.Values = FeatureExtractorMethods.CheckTogglesAndUpdateFeatures(this, m_RotationEulerExtracted.Values);
 
-           
             return this;
-
         }
 
         // Check that we are only connecting to a GameObject
