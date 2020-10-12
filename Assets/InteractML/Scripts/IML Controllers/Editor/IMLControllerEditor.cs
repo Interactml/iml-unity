@@ -138,7 +138,7 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.DataTypeNodes.SerialVectorNode")
+            if (type.PrettyName() == "InteractML.DataTypeNodes.ArrayNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
