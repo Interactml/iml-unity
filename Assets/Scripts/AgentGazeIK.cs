@@ -25,7 +25,7 @@ public class AgentGazeIK : MonoBehaviour
 
     public Transform position;
 
-    public Camera head;
+    public GameObject head;
     public GameObject left;
     public GameObject right;
 
