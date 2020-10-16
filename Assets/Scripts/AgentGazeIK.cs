@@ -23,8 +23,6 @@ public class AgentGazeIK : MonoBehaviour
     public float TransitionTime;
     public float ChangedLookAtPositionTime;
 
-    public Transform position;
-
     public GameObject head;
     public GameObject left;
     public GameObject right;
