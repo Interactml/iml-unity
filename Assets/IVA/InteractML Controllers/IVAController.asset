@@ -55,45 +55,6 @@ MonoBehaviour:
   InputConnected: 1
   m_UserInput: 0
   int_switch: 1
---- !u!114 &-4512403839395220328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: LeftControllerScriptAlias (GameObject)
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -376, y: 168}
-  ports:
-    keys:
-    - GameObjectDataOut
-    values:
-    - _fieldName: GameObjectDataOut
-      _node: {fileID: -4512403839395220328}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataIn
-        node: {fileID: -4476637151874763444}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  id: 5097145d-6bea-4b50-819e-41eeb9e3da45
-  numberInComponentList: -1
-  IsInitialized: 1
-  GameObjectDataOut: {fileID: 0}
-  GameObjMissing: 0
-  state: 1
-  GOHashCode: -193836
-  CreatedDuringPlaymode: 0
 --- !u!114 &-4476637151874763444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,10 +78,7 @@ MonoBehaviour:
       _node: {fileID: -4476637151874763444}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataOut
-        node: {fileID: -4512403839395220328}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -168,8 +126,6 @@ MonoBehaviour:
   m_Name: IVAController
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: -4512403839395220328}
-  - {fileID: 32215723495721893}
   - {fileID: 2013889028333852095}
   - {fileID: -4476637151874763444}
   - {fileID: 2912755994964002214}
@@ -178,45 +134,6 @@ MonoBehaviour:
   - {fileID: 8266599762771955530}
   - {fileID: -4762474335430499916}
   SceneComponent: {fileID: 0}
---- !u!114 &32215723495721893
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: RightControllerScriptAlias (GameObject)
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -376, y: -264}
-  ports:
-    keys:
-    - GameObjectDataOut
-    values:
-    - _fieldName: GameObjectDataOut
-      _node: {fileID: 32215723495721893}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataIn
-        node: {fileID: 2013889028333852095}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  id: 1bedc92f-14fa-416e-a3dd-1b2ac3ef737d
-  numberInComponentList: -1
-  IsInitialized: 1
-  GameObjectDataOut: {fileID: 0}
-  GameObjMissing: 0
-  state: 1
-  GOHashCode: -193838
-  CreatedDuringPlaymode: 0
 --- !u!114 &2013889028333852095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,10 +157,7 @@ MonoBehaviour:
       _node: {fileID: 2013889028333852095}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataOut
-        node: {fileID: 32215723495721893}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -448,7 +362,7 @@ MonoBehaviour:
   numberInComponentList: -1
   IsInitialized: 1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 84592
+  ScriptHashCode: 19374
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: direction
@@ -536,7 +450,7 @@ MonoBehaviour:
   - {fileID: -4476637151874763444}
   PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
-  m_NumExamplesTrainedOn: 1
+  m_NumExamplesTrainedOn: 8
   m_ExpectedInputList: 0300000003000000
   m_ExpectedOutputList: 01000000
   m_LearningType: 2
