@@ -36,6 +36,8 @@ public class IMLControls : MonoBehaviour
     void Start()
     {
         agentAudio.clip = feedbackSound;
+        randomDirection = Random.Range(1, directions.Length - 1);
+        ikController.updateObjLookAt(ikController.head.transform);
     }
 
     // Update is called once per frame
@@ -48,6 +50,7 @@ public class IMLControls : MonoBehaviour
 
             if (randomDirection == direction)
             {
+                Debug.Log("here");
                 agentAudio.Play();
                 animationSuccess = 0;
                 //success = true;
