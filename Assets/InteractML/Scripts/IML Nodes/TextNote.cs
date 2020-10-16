@@ -5,7 +5,7 @@ using XNode;
 
 namespace InteractML
 {
-    [NodeWidth(200)]
+    [NodeWidth(250)]
     public class TextNote : Node
     {
         public string note;

@@ -40,7 +40,7 @@ namespace InteractML
             NodeColor = GetColorTextureFromHexString("#3A3B5B");
 
             // Set node width
-            NodeWidth = 200;
+            NodeWidth = 250;
 
             // Draw header background Rect
             GUI.DrawTexture(HeaderRect, NodeColor);

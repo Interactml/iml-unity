@@ -30,13 +30,12 @@ public class IMLControls : MonoBehaviour
 
     private int score = 0;
 
-    float timeRemaining = 30;
+    float timeRemaining = -1;
 
     // Start is called before the first frame update
     void Start()
     {
         agentAudio.clip = feedbackSound;
-        randomDirection = Random.Range(1, directions.Length - 1);
         ikController.updateObjLookAt(ikController.head.transform);
     }
 
@@ -50,7 +49,6 @@ public class IMLControls : MonoBehaviour
 
             if (randomDirection == direction)
             {
-                Debug.Log("here");
                 agentAudio.Play();
                 animationSuccess = 0;
                 //success = true;
@@ -76,7 +74,7 @@ public class IMLControls : MonoBehaviour
             }
             //agentAnimator.SetInteger("Understands", animationSuccess);
             timer.text = timeRemaining.ToString();
-        } else
+        } else if (timeRemaining == 0)
         {
             //agentAnimator.SetInteger("Understands", -1);
             directionsText.text = "Score: " + score;
@@ -92,5 +90,13 @@ public class IMLControls : MonoBehaviour
 
         }
 
+    }
+
+    public void Restart()
+    {
+        randomDirection = Random.Range(1, directions.Length - 1);
+        directionsText.text = directions[randomDirection];
+        timeRemaining = 30; 
+        
     }
 }
