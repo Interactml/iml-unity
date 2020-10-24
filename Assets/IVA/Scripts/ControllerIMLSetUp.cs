@@ -13,13 +13,36 @@ public class ControllerIMLSetUp : MonoBehaviour
     public int MachineLearningSystemToControl;
     public TextMeshProUGUI debugText;
 
+    public bool UseKeyboard;
+    public KeyCode startGame;
+    public KeyCode toggleRecording;
+    public KeyCode train;
+    public KeyCode toggleRunning;
+    IMLControls controller;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        controller = FindObjectOfType<IMLControls>();
     } 
     void Update()
-    { 
+    {
+        if (UseKeyboard)
+        {
+            if (Input.GetKeyDown(startGame))
+            {
+                controller.Restart();
+            }
+
+            if (Input.GetKeyDown(toggleRecording))
+            {
+
+            }
+
+
+
+        }
+
 
     }
 
@@ -34,7 +57,7 @@ public class ControllerIMLSetUp : MonoBehaviour
                debugText.text = "running";
             } else
             {
-                debugText.text = "not running";
+                debugText.text = "not running\n Output:" + IMLToControl.IMLConfigurationNodesList[MachineLearningSystemToControl].PredictedOutput;
             }
         }
     }

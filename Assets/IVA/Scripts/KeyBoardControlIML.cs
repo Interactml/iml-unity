@@ -59,31 +59,9 @@ public class KeyBoardControlIML : MonoBehaviour
         }
         if (Input.GetKeyDown(toggleRecording))
         {
-            if(debugText != null)
+            for (int i = 0; i < teachTheMachineToControl.Length; i++)
             {
-                if (debugText.text == "start record")
-                {
-                    debugText.text = "stop record";
-                }
-                else
-                {
-                    debugText.text = "start record";
-                }
-            }
-            
-            if (controlAllTeachtheMachine)
-            {
-                foreach (TrainingExamplesNode tNode in IMLSystem.TrainingExamplesNodesList)
-                {
-                    tNode.ToggleCollectExamples();
-                }
-            }
-            else
-            {
-                for (int i = 0; i < teachTheMachineToControl.Length; i++)
-                {
-                    IMLSystem.TrainingExamplesNodesList[teachTheMachineToControl[i]].ToggleCollectExamples();
-                }
+                IMLSystem.TrainingExamplesNodesList[teachTheMachineToControl[i]].ToggleCollectExamples();
             }
         }
         if (Input.GetKeyDown(train))

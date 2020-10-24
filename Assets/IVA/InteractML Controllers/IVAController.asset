@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Series Training Examples
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1016, y: 216}
+  position: {x: 1000, y: 216}
   ports:
     keys:
     - InputFeatures
@@ -30,16 +30,7 @@ MonoBehaviour:
         node: {fileID: 2013889028333852095}
         reroutePoints: []
       - fieldName: LiveDataOut
-        node: {fileID: -4817715378271621974}
-        reroutePoints: []
-      - fieldName: LiveDataOut
-        node: {fileID: 1705990869052859375}
-        reroutePoints: []
-      - fieldName: LiveDataOut
-        node: {fileID: 8501643593567108342}
-        reroutePoints: []
-      - fieldName: LiveDataOut
-        node: {fileID: -1739156327122582280}
+        node: {fileID: 7308794064728154693}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -76,17 +67,14 @@ MonoBehaviour:
   IsInitialized: 1
   InputFeatures:
   - {fileID: 2013889028333852095}
-  - {fileID: -4817715378271621974}
-  - {fileID: 1705990869052859375}
-  - {fileID: 8501643593567108342}
-  - {fileID: -1739156327122582280}
+  - {fileID: 7308794064728154693}
   TargetValues:
   - {fileID: 5769076524264125522}
   TrainingExamplesNodeToOutput: {fileID: -9090803726306803990}
   ModeOfCollection: 1
   TrainingExamplesVector: []
   TrainingSeriesCollection: []
-  m_DesiredInputsConfig: 0300000003000000030000000300000003000000
+  m_DesiredInputsConfig: 0300000003000000
   m_DesiredOutputsConfig: 01000000
   IMLConfigurationNodesConnected:
   - {fileID: 8882030605474526726}
@@ -108,73 +96,12 @@ MonoBehaviour:
   m_Name: Text Note
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 648, y: 648}
+  position: {x: 680, y: 712}
   ports:
     keys: []
     values: []
   DevMode: 0
   note: 'Target value for the MLS model output '
---- !u!114 &-4817715378271621974
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
-  m_Name: Extract Position
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -24, y: 120}
-  ports:
-    keys:
-    - GameObjectDataIn
-    - LiveDataOut
-    values:
-    - _fieldName: GameObjectDataIn
-      _node: {fileID: -4817715378271621974}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataOut
-        node: {fileID: -2128173517551581817}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: LiveDataOut
-      _node: {fileID: -4817715378271621974}
-      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: InputFeatures
-        node: {fileID: -9090803726306803990}
-        reroutePoints: []
-      - fieldName: InputFeatures
-        node: {fileID: 8882030605474526726}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  id: 059ff38d-dfd1-4497-8c43-816078304ccf
-  numberInComponentList: -1
-  IsInitialized: 1
-  GameObjectDataIn: {fileID: 0}
-  LiveDataOut: {fileID: 0}
-  LocalSpace: 0
-  x_switch: 1
-  y_switch: 1
-  z_switch: 1
-  m_PositionExtracted:
-    m_Values:
-    - -113.64
-    - 0.16906996
-    - -0.103473954
-  ReceivingData: 0
 --- !u!114 &-4762474335430499916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,7 +170,7 @@ MonoBehaviour:
   m_Name: HeadsetAlias (GameObject)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -520, y: 184}
+  position: {x: -328, y: -584}
   ports:
     keys:
     - GameObjectDataOut
@@ -252,13 +179,7 @@ MonoBehaviour:
       _node: {fileID: -2128173517551581817}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataIn
-        node: {fileID: -4817715378271621974}
-        reroutePoints: []
-      - fieldName: GameObjectDataIn
-        node: {fileID: 8501643593567108342}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -270,70 +191,8 @@ MonoBehaviour:
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 1
-  GOHashCode: 18084
+  GOHashCode: 18102
   CreatedDuringPlaymode: 0
---- !u!114 &-1739156327122582280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14a4527b431d72944b42dd8d2f6b0fd7, type: 3}
-  m_Name: Extract Rotation Euler
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -22.555372, y: 846.2818}
-  ports:
-    keys:
-    - GameObjectDataIn
-    - LiveDataOut
-    values:
-    - _fieldName: GameObjectDataIn
-      _node: {fileID: -1739156327122582280}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataOut
-        node: {fileID: 4010640824705517111}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: LiveDataOut
-      _node: {fileID: -1739156327122582280}
-      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: InputFeatures
-        node: {fileID: -9090803726306803990}
-        reroutePoints: []
-      - fieldName: InputFeatures
-        node: {fileID: 8882030605474526726}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  id: 5e1eda6a-d76c-41d0-b5ab-512057d0dae5
-  numberInComponentList: -1
-  IsInitialized: 1
-  GameObjectDataIn: {fileID: 0}
-  LiveDataOut: {fileID: 0}
-  LocalSpace: 0
-  x_switch: 1
-  y_switch: 1
-  z_switch: 1
-  m_RotationExtracted:
-    m_Values:
-    - -0
-    - 0
-    - 0
-  GameObjInputMissing: 0
-  ReceivingData: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,75 +215,10 @@ MonoBehaviour:
   - {fileID: 6494261470066609639}
   - {fileID: -2128173517551581817}
   - {fileID: -9090803726306803990}
-  - {fileID: -4817715378271621974}
-  - {fileID: 1705990869052859375}
   - {fileID: 2454598660366719365}
   - {fileID: -8631880971937838470}
-  - {fileID: 8501643593567108342}
-  - {fileID: -1739156327122582280}
+  - {fileID: 7308794064728154693}
   SceneComponent: {fileID: 0}
---- !u!114 &1705990869052859375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14a4527b431d72944b42dd8d2f6b0fd7, type: 3}
-  m_Name: Extract Rotation Euler
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -56, y: -344}
-  ports:
-    keys:
-    - GameObjectDataIn
-    - LiveDataOut
-    values:
-    - _fieldName: GameObjectDataIn
-      _node: {fileID: 1705990869052859375}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataOut
-        node: {fileID: 2146629628231939847}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: LiveDataOut
-      _node: {fileID: 1705990869052859375}
-      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: InputFeatures
-        node: {fileID: -9090803726306803990}
-        reroutePoints: []
-      - fieldName: InputFeatures
-        node: {fileID: 8882030605474526726}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  id: 2acd000a-55e6-42fd-944e-e05681b84ee9
-  numberInComponentList: -1
-  IsInitialized: 1
-  GameObjectDataIn: {fileID: 0}
-  LiveDataOut: {fileID: 0}
-  LocalSpace: 0
-  x_switch: 1
-  y_switch: 1
-  z_switch: 1
-  m_RotationExtracted:
-    m_Values:
-    - -0
-    - 0
-    - 0
-  GameObjInputMissing: 0
-  ReceivingData: 0
 --- !u!114 &2013889028333852095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -438,7 +232,7 @@ MonoBehaviour:
   m_Name: Extract Position
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -56, y: -664}
+  position: {x: 472, y: -264}
   ports:
     keys:
     - GameObjectDataIn
@@ -499,7 +293,7 @@ MonoBehaviour:
   m_Name: RightControllerScriptAlias (GameObject)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -504, y: -488}
+  position: {x: 72, y: -264}
   ports:
     keys:
     - GameObjectDataOut
@@ -512,9 +306,6 @@ MonoBehaviour:
       - fieldName: GameObjectDataIn
         node: {fileID: 2013889028333852095}
         reroutePoints: []
-      - fieldName: GameObjectDataIn
-        node: {fileID: 1705990869052859375}
-        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -526,7 +317,7 @@ MonoBehaviour:
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 1
-  GOHashCode: 18938
+  GOHashCode: 18958
   CreatedDuringPlaymode: 0
 --- !u!114 &2454598660366719365
 MonoBehaviour:
@@ -561,7 +352,7 @@ MonoBehaviour:
   m_Name: LeftControllerScriptAlias (GameObject)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -408, y: 840}
+  position: {x: 8, y: 200}
   ports:
     keys:
     - GameObjectDataOut
@@ -572,7 +363,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectDataIn
-        node: {fileID: -1739156327122582280}
+        node: {fileID: 7308794064728154693}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -585,7 +376,7 @@ MonoBehaviour:
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 1
-  GOHashCode: 18684
+  GOHashCode: 18702
   CreatedDuringPlaymode: 0
 --- !u!114 &5769076524264125522
 MonoBehaviour:
@@ -600,7 +391,7 @@ MonoBehaviour:
   m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 648, y: 808}
+  position: {x: 696, y: 424}
   ports:
     keys:
     - m_In
@@ -633,11 +424,11 @@ MonoBehaviour:
   IsInitialized: 1
   ValueName: 
   m_In: 0
-  m_Value: 1
+  m_Value: 0
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  m_UserInput: 1
+  m_UserInput: 0
   int_switch: 1
 --- !u!114 &6494261470066609639
 MonoBehaviour:
@@ -674,7 +465,7 @@ MonoBehaviour:
   numberInComponentList: -1
   IsInitialized: 1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 19116
+  ScriptHashCode: 19138
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: direction
@@ -690,7 +481,7 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   CreatedDuringPlaymode: 0
---- !u!114 &8501643593567108342
+--- !u!114 &7308794064728154693
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -699,44 +490,44 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14a4527b431d72944b42dd8d2f6b0fd7, type: 3}
-  m_Name: Extract Rotation Euler
+  m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
+  m_Name: Extract Position
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -24, y: 440}
+  position: {x: 312, y: 200}
   ports:
     keys:
     - GameObjectDataIn
     - LiveDataOut
     values:
     - _fieldName: GameObjectDataIn
-      _node: {fileID: 8501643593567108342}
+      _node: {fileID: 7308794064728154693}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectDataOut
-        node: {fileID: -2128173517551581817}
+        node: {fileID: 4010640824705517111}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: LiveDataOut
-      _node: {fileID: 8501643593567108342}
+      _node: {fileID: 7308794064728154693}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
-        node: {fileID: -9090803726306803990}
+        node: {fileID: 8882030605474526726}
         reroutePoints: []
       - fieldName: InputFeatures
-        node: {fileID: 8882030605474526726}
+        node: {fileID: -9090803726306803990}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  id: 2154db54-5699-420f-9f14-1f5b90c90d68
+  id: 57376a09-7a1d-4216-b489-afa5e5655ed8
   numberInComponentList: -1
   IsInitialized: 1
   GameObjectDataIn: {fileID: 0}
@@ -745,12 +536,11 @@ MonoBehaviour:
   x_switch: 1
   y_switch: 1
   z_switch: 1
-  m_RotationExtracted:
+  m_PositionExtracted:
     m_Values:
-    - -0
-    - 0
-    - 0
-  GameObjInputMissing: 0
+    - -113.64
+    - -0.658
+    - -0.36931187
   ReceivingData: 0
 --- !u!114 &8882030605474526726
 MonoBehaviour:
@@ -795,16 +585,7 @@ MonoBehaviour:
         node: {fileID: 2013889028333852095}
         reroutePoints: []
       - fieldName: LiveDataOut
-        node: {fileID: -4817715378271621974}
-        reroutePoints: []
-      - fieldName: LiveDataOut
-        node: {fileID: 1705990869052859375}
-        reroutePoints: []
-      - fieldName: LiveDataOut
-        node: {fileID: -1739156327122582280}
-        reroutePoints: []
-      - fieldName: LiveDataOut
-        node: {fileID: 8501643593567108342}
+        node: {fileID: 7308794064728154693}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -830,14 +611,11 @@ MonoBehaviour:
   - {fileID: -9090803726306803990}
   InputFeatures:
   - {fileID: 2013889028333852095}
-  - {fileID: -4817715378271621974}
-  - {fileID: 1705990869052859375}
-  - {fileID: -1739156327122582280}
-  - {fileID: 8501643593567108342}
+  - {fileID: 7308794064728154693}
   PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
-  m_NumExamplesTrainedOn: 0
-  m_ExpectedInputList: 0300000003000000030000000300000003000000
+  m_NumExamplesTrainedOn: 19
+  m_ExpectedInputList: 0300000003000000
   m_ExpectedOutputList: 01000000
   m_LearningType: 2
   EnableKeyboardControl: 1
