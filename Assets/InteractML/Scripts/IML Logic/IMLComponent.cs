@@ -194,6 +194,7 @@ namespace InteractML
         {
             // We unsubscribe the component form the editor manager to avoid messing up with the list
             IMLEditorManager.UnsubscribeIMLComponent(this);
+            //Unsubscribe this from the event dispatcher 
             EventDispatcher.TrainMLSCallback -= Train;
         }
 #endregion
@@ -202,6 +203,7 @@ namespace InteractML
 
         private void Initialize()
         {
+            // subscribe to the event dispatcher for training (move all subscriptions to )
             EventDispatcher.TrainMLSCallback += Train;
             // Initialise list of nodes for the IML Controller
             if (Lists.IsNullOrEmpty(ref GameObjectsToUse))

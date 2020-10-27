@@ -22,15 +22,12 @@ namespace InteractML
         public bool IsInitialized { get {return m_IsInitialized; } }
         private bool m_IsInitialized = false;
 
-        protected override void Init()
-        {
-            if (!m_IsInitialized)
-            {
-                //NodeInitalize();
-                //Initialize();
-            }
-        }
-        // Use this for initialization
+       
+        /// <summary>
+        /// Initializes the nodes 
+        /// Called when the node is added in IMLController 
+        /// Also called in IMLComponent by event OnEnable 
+        /// </summary>
         public void NodeInitalize()
         {
             // if id not initalised use this to tell whether node has been properly added to the graph 
@@ -51,14 +48,17 @@ namespace InteractML
             //potentially delete checks if initalized has been called 
             m_IsInitialized = true;
             // load tooltips for the node using reference to the nodes class name
-            Debug.Log(this.GetType().Name);
             IMLTooltipsSerialization.LoadTooltip(this.GetType().Name + "Tooltips");
             //Debug.Log(this.GetType().Name);
             // all other initialize code needed for the node - to be overriden in the subclass if there more that needs to be added 
             Initialize();
 
         }
-
+        /// <summary>
+        /// Method which initializes node specific code 
+        /// Called from NodeInitialize
+        /// Should be overridden in all nodes 
+        /// </summary>
         public virtual void Initialize()
         {
             // to be overridden by all nodes

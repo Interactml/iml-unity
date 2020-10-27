@@ -24,7 +24,6 @@ namespace InteractML
             IMLNodeTooltips toolTips = new IMLNodeTooltips();
             if (File.Exists(SetUpFileNamesAndPaths(fileName)))
             {
-                Debug.Log(fileName);
                 string jsonFile = File.ReadAllText(SetUpFileNamesAndPaths(fileName));
                 toolTips = JsonConvert.DeserializeObject<IMLNodeTooltips>(jsonFile);
             }
