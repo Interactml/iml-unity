@@ -9,7 +9,7 @@ using XNodeEditor;
 namespace InteractML
 {
     [CustomNodeGraphEditor(typeof(IMLGraph))]
-    public class IMLControllerEditor : NodeGraphEditor
+    public class IMLGraphEditor : NodeGraphEditor
     {
 
         public override void OnOpen()
@@ -78,15 +78,15 @@ namespace InteractML
             //{
             //    return base.GetNodeMenuName(type).Replace("InteractML", "");
             //}
-            if (type.PrettyName() == "InteractML.CIMLConfiguration")
+            if (type.PrettyName() == "InteractML.ClassificationMLSystem")
             {
-                return base.GetNodeMenuName(type).Replace("InteractML.CIMLConfiguration", "Machine Learning System - Classification");
+                return base.GetNodeMenuName(type).Replace("InteractML.ClassificationMLSystem", "Machine Learning System - Classification");
             }
-            if (type.PrettyName() == "InteractML.RIMLConfiguration")
+            if (type.PrettyName() == "InteractML.RegressionMLSystem")
             {
-                return base.GetNodeMenuName(type).Replace("InteractML.RIMLConfiguration", "Machine Learning System - Regression");
+                return base.GetNodeMenuName(type).Replace("InteractML.RegressionMLSystem", "Machine Learning System - Regression");
             }
-            if (type.PrettyName() == "InteractML.DTWIMLConfiguration")
+            if (type.PrettyName() == "InteractML.DTWMLSystem")
             {
                 return base.GetNodeMenuName(type);
             }

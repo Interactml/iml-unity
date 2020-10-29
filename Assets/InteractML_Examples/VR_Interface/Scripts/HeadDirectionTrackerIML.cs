@@ -6,7 +6,7 @@ public class HeadDirectionTrackerIML : MonoBehaviour
     [Header("IML Setup")]
     public IMLComponent IMLSystem;
 
-    [SendToIMLController]
+    [SendToIMLGraph]
     public Vector3 HeadRotation;
 
     private void Start()

@@ -17,7 +17,7 @@ public class BoxForces : MonoBehaviour
     
     // Force vars
     public float PushStrength;
-    [PullFromIMLController]
+    [PullFromIMLGraph]
     public Vector3 PushDirection;
     
     // Memory on when can push

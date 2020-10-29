@@ -3,7 +3,7 @@
 namespace InteractML
 {
     [AttributeUsage(AttributeTargets.Field)]
-    public class PullFromIMLController : Attribute
+    public class SendToIMLGraph : Attribute
     {
 
     }
