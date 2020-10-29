@@ -502,9 +502,9 @@ namespace InteractML
             bool updatePortPairs = false;
             // DIRTY CODE
             // If the node is an mls node, check if the output ports have been updated
-            if (target is IMLConfiguration)
+            if (target is MLSystem)
             {
-                var mlsNode = (target as IMLConfiguration);
+                var mlsNode = (target as MLSystem);
                 updatePortPairs = mlsNode.OutputPortsChanged;
                 // Set flag to false in mls node to not redraw every frame
                 mlsNode.OutputPortsChanged = false;
@@ -766,7 +766,7 @@ namespace InteractML
                     showporthelper = true;
                     for (int i = 0; i < ports.Count; i++)
                     {
-                        if (window.hoveredPort == ports[i])
+                        if (window.hoveredPort == ports[i] && portTips.Length != 0)
                         {
                             // If there are more ports than tooltips show the last one in the list (asthe number of outputs in a mls node is undeterminanate)
                             if (i >= portTips.Length)
@@ -959,7 +959,7 @@ namespace InteractML
         /// Show and control run on awake toggle for IMLConfiguration node
         /// </summary>
         /// <param name="configNode">Node to be controlled</param>
-        protected void ShowRunOnAwakeToggle(IMLConfiguration configNode)
+        protected void ShowRunOnAwakeToggle(MLSystem configNode)
         {
             GUILayout.BeginHorizontal();
             GUILayout.Space(15);
@@ -995,7 +995,7 @@ namespace InteractML
         /// <summary>
         /// Show the load, delete and record buttons
         /// </summary>
-        protected void ShowButtons(IMLConfiguration node)
+        protected void ShowButtons(MLSystem node)
         {
             m_ButtonsRect.x = m_IconCenter.x + 20;
             m_ButtonsRect.y = m_IconCenter.y + m_IconCenter.height;

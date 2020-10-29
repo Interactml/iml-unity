@@ -10,7 +10,7 @@ namespace InteractML
 {
     [NodeWidth(300)]
     [CreateNodeMenuAttribute("Interact ML/Machine Learning System/MLS Classification Regression")]
-    public class CRIMLConfiguration: IMLConfiguration
+    public class CRIMLConfiguration: MLSystem
     {
 
         #region Variables

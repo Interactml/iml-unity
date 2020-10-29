@@ -40,7 +40,7 @@ namespace InteractML
         public void OnDestroy()
         {
             // Remove reference of this node in the IMLComponent controlling this node (if any)
-            var MLController = graph as IMLController;
+            var MLController = graph as IMLGraph;
             if (MLController.SceneComponent != null)
             {
                 MLController.SceneComponent.DeleteRealtimeIMLOutputNode(this);
@@ -53,7 +53,7 @@ namespace InteractML
         /// <returns></returns>
         public double[] GetIMLControllerOutputs()
         {
-            var IMLConfigNodeConnected = GetInputValue<Node>("IMLModelOutputs") as IMLConfiguration;
+            var IMLConfigNodeConnected = GetInputValue<Node>("IMLModelOutputs") as MLSystem;
             // If there is an IML node connected...
             if (IMLConfigNodeConnected != null)
             {

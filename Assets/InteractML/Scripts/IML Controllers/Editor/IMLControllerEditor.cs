@@ -8,7 +8,7 @@ using XNodeEditor;
 
 namespace InteractML
 {
-    [CustomNodeGraphEditor(typeof(IMLController))]
+    [CustomNodeGraphEditor(typeof(IMLGraph))]
     public class IMLControllerEditor : NodeGraphEditor
     {
 
@@ -35,7 +35,7 @@ namespace InteractML
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(List<XNode.Node>))] = hexToColor("#888EF7");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(TrainingExamplesNode))] = hexToColor("#74DF84");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(List<TrainingExamplesNode>))] = hexToColor("#74DF84");
-            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(IMLConfiguration))] = hexToColor("#5EB3F9");
+            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(MLSystem))] = hexToColor("#5EB3F9");
             NodeEditorPreferences.GetSettings().portTooltips = false;
         }
 

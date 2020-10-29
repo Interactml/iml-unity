@@ -108,7 +108,7 @@ namespace InteractML
         /// The list of IML Config nodes connected
         /// </summary>
         [HideInInspector]
-        public List<IMLConfiguration> IMLConfigurationNodesConnected;
+        public List<MLSystem> IMLConfigurationNodesConnected;
         /// <summary>
         /// Variables for setting delay in time for collecting data
         /// </summary>
@@ -206,7 +206,7 @@ namespace InteractML
                 }
 
                 // Go through MLS systems connected if any MLS are classification or DTW set MLSclassification to true
-                foreach (IMLConfiguration MLS in IMLConfigurationNodesConnected)
+                foreach (MLSystem MLS in IMLConfigurationNodesConnected)
                 {
                     if (MLS.LearningType == IMLSpecifications.LearningType.DTW || MLS.LearningType == IMLSpecifications.LearningType.Classification)
                     {
@@ -269,7 +269,7 @@ namespace InteractML
         protected void OnDestroy()
         {
             // Remove this node from IML Component controlling it (if any)
-            var MLController = graph as IMLController;
+            var MLController = graph as IMLGraph;
             if (MLController.SceneComponent != null)
             {
                 MLController.SceneComponent.DeleteTrainingExamplesNode(this);
@@ -306,7 +306,7 @@ namespace InteractML
                 TrainingSeriesCollection = new List<IMLTrainingSeries>();
 
             if (IMLConfigurationNodesConnected == null)
-                IMLConfigurationNodesConnected = new List<IMLConfiguration>();
+                IMLConfigurationNodesConnected = new List<MLSystem>();
 
             // set target value input list 
             UpdateTargetValueInput();

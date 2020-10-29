@@ -36,7 +36,7 @@ namespace InteractML
                 // method that loads uniqie id of this node
                 id = NodeID.CheckNodeID(id, this);
                 //load reference to the graph which this node is a member of 
-                var MLController = graph as IMLController;
+                var MLController = graph as IMLGraph;
                 // if that graph exists refresh the nodes in that graph 
                 if (MLController.SceneComponent != null)
                 {
@@ -49,7 +49,7 @@ namespace InteractML
             m_IsInitialized = true;
             // load tooltips for the node using reference to the nodes class name
             IMLTooltipsSerialization.LoadTooltip(this.GetType().Name + "Tooltips");
-            //Debug.Log(this.GetType().Name);
+            Debug.Log(this.GetType().Name);
             // all other initialize code needed for the node - to be overriden in the subclass if there more that needs to be added 
             Initialize();
 
@@ -72,7 +72,7 @@ namespace InteractML
 
         public IMLComponent FindController()
         {
-            IMLController MLController = graph as IMLController;
+            IMLGraph MLController = graph as IMLGraph;
             IMLComponent MLComponent = MLController.SceneComponent;
             return MLComponent;
         }

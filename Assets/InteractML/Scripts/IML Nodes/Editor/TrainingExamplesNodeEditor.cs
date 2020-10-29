@@ -105,7 +105,8 @@ namespace InteractML
             //show warning if there are training examples 
             if (m_TrainingExamplesNode.showWarning)
             {
-                ShowWarning(m_TrainingExamplesNode.tooltips.BottomError[0]);
+                if (m_TrainingExamplesNode.tooltips.BottomError.Length > 1)
+                    ShowWarning(m_TrainingExamplesNode.tooltips.BottomError[0]);
                 m_RecalculateRects = true;
             }
             GUILayout.EndArea();

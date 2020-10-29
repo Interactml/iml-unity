@@ -73,7 +73,7 @@ namespace InteractML.FeatureExtractors
         public void OnDestroy()
         {
             // Remove reference of this node in the IMLComponent controlling this node (if any)
-            var MLController = graph as IMLController;
+            var MLController = graph as IMLGraph;
             if (MLController.SceneComponent != null)
             {
                 MLController.SceneComponent.DeleteFeatureNode(this);
@@ -192,7 +192,7 @@ namespace InteractML.FeatureExtractors
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
             System.Type[] portTypesAccept = new System.Type[] { };
-            System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(IMLConfiguration) };
+            System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(MLSystem) };
             this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
         }
     }

@@ -27,8 +27,8 @@ namespace InteractML
         /// <summary>
         /// Reference to the IML Controller with nodes
         /// </summary>
-        public IMLController MLController;
-        private IMLController m_LastKnownIMLController;
+        public IMLGraph MLController;
+        private IMLGraph m_LastKnownIMLController;
 
         /// <summary>
         /// Scene where this IML Component belongs to
@@ -53,7 +53,7 @@ namespace InteractML
         /* Private Lists of nodes that we can have in the graph */
         private List<TextNote> m_TextNoteNodesList;
         private List<TrainingExamplesNode> m_TrainingExamplesNodesList;
-        private List<IMLConfiguration> m_IMLConfigurationNodesList;
+        private List<MLSystem> m_MLSystemNodeList;
         [SerializeField, HideInInspector]
         private List<GameObjectNode> m_GameObjectNodeList;
         private List<RealtimeIMLOutputNode> m_RealtimeIMLOutputNodesList;
@@ -79,14 +79,14 @@ namespace InteractML
         /// <summary>
         /// Lists of Model Nodes in the IML Controller
         /// </summary>
-        public List<IMLConfiguration> IMLConfigurationNodesList
+        public List<MLSystem> MLSystemNodeList
         {
             get
             {
-                if (m_IMLConfigurationNodesList != null)
-                    return m_IMLConfigurationNodesList;
+                if (m_MLSystemNodeList != null)
+                    return m_MLSystemNodeList;
                 else
-                    return new List<IMLConfiguration>();
+                    return new List<MLSystem>();
             }
         }
         #endregion
@@ -215,8 +215,8 @@ namespace InteractML
             if (Lists.IsNullOrEmpty<TrainingExamplesNode>(ref m_TrainingExamplesNodesList))
                 m_TrainingExamplesNodesList = new List<TrainingExamplesNode>();
 
-            if (Lists.IsNullOrEmpty<IMLConfiguration>(ref m_IMLConfigurationNodesList))
-                m_IMLConfigurationNodesList = new List<IMLConfiguration>();
+            if (Lists.IsNullOrEmpty<MLSystem>(ref m_MLSystemNodeList))
+                m_MLSystemNodeList = new List<MLSystem>();
 
             if (Lists.IsNullOrEmpty(ref m_GameObjectNodeList))
                 m_GameObjectNodeList = new List<GameObjectNode>();
@@ -252,22 +252,22 @@ namespace InteractML
 
             }
 
-            // Init logic for IML Config node
-            if (!Lists.IsNullOrEmpty(ref m_IMLConfigurationNodesList))
+            // Init logic for MLSystem nodes
+            if (!Lists.IsNullOrEmpty(ref m_MLSystemNodeList))
             {
 
-                for (int i = 0; i < m_IMLConfigurationNodesList.Count; i++)
+                for (int i = 0; i < m_MLSystemNodeList.Count; i++)
                 {
-                    var IMLConfigNode = m_IMLConfigurationNodesList[i];
+                    var MLSystemNode = m_MLSystemNodeList[i];
 
-                    if (IMLConfigNode == null)
+                    if (MLSystemNode == null)
                     {
-                        Debug.LogError("Null reference in IML Config Node list in IML System. The list is not calculated properly and has some null spaces!");
+                        Debug.LogError("Null reference in MLSystem Node list in IML System. The list is not calculated properly and has some null spaces!");
                     }
                     else
                     {
                         // Initialize Training Examples Node if not already initialized
-                        IMLConfigNode.Initialize();
+                        MLSystemNode.Initialize();
                     }
                 }
             }
@@ -305,8 +305,8 @@ namespace InteractML
             InitializeFeatureNode(FeatureNodesList);
             //Initialise Training Examples
             InitializeNodeType(TrainingExamplesNodesList);
-            //Initialise IMLConfiguration
-            InitializeNodeType(IMLConfigurationNodesList);
+            //Initialise MLSystemList
+            InitializeNodeType(MLSystemNodeList);
             //Initialise Script nodes
             InitializeNodeType(m_ScriptNodesList);
         }
@@ -418,8 +418,8 @@ namespace InteractML
                     // Training Examples nodes
                     CheckNodeIsTraining(node, ref m_TrainingExamplesNodesList);
 
-                    // IML Config Node
-                    CheckNodeIsConfiguration(node, ref m_IMLConfigurationNodesList);
+                    // MLSystem Node
+                    CheckNodeIsMLSystem(node, ref m_MLSystemNodeList);
 
                     // Export output node
                     CheckTypeAddNodeToList(node, ref m_RealtimeIMLOutputNodesList);
@@ -487,23 +487,23 @@ namespace InteractML
 
         }
 
-        private void CheckNodeIsConfiguration(XNode.Node nodeToAdd, ref List<IMLConfiguration> listToAddTo)
+        private void CheckNodeIsMLSystem(XNode.Node nodeToAdd, ref List<MLSystem> listToAddTo)
         {
             // We first check that the node ref is not null
             if (nodeToAdd != null)
             {
-                // Then check that the node is a configuratiton
-                var configNode = nodeToAdd as IMLConfiguration;
-                if (configNode != null)
+                // Then check that the node is a MLSystem
+                var mlSystemNode = nodeToAdd as MLSystem;
+                if (mlSystemNode != null)
                 {
                     // Make sure the list is init
                     if (listToAddTo == null)
-                        listToAddTo = new List<IMLConfiguration>();
+                        listToAddTo = new List<MLSystem>();
 
                     // If we got a feature, we add it to the list (if it is not there already)
-                    if (!listToAddTo.Contains(configNode))
+                    if (!listToAddTo.Contains(mlSystemNode))
                     {
-                        listToAddTo.Add(configNode);
+                        listToAddTo.Add(mlSystemNode);
                     }
 
                 }
@@ -577,16 +577,16 @@ namespace InteractML
             }
         }
 
-        private void RunIMLConfigurationsLogic()
+        private void RunMLSystemLogic()
         {
-            if(m_IMLConfigurationNodesList == null)
+            if(m_MLSystemNodeList == null)
             {
                 GetAllNodes();
             }
-            for (int i = 0; i < m_IMLConfigurationNodesList.Count; i++)
+            for (int i = 0; i < m_MLSystemNodeList.Count; i++)
             {
                 // If the node is null...
-                if (m_IMLConfigurationNodesList[i] == null)
+                if (m_MLSystemNodeList[i] == null)
                 {
                     // We call again GetAllNodes to make sure our list is updated
                     GetAllNodes();
@@ -596,7 +596,7 @@ namespace InteractML
                 else
                 {
                     // Call the update logic per node
-                    m_IMLConfigurationNodesList[i].UpdateLogic();
+                    m_MLSystemNodeList[i].UpdateLogic();
                 }
             }
 
@@ -1012,11 +1012,11 @@ namespace InteractML
             else
                 m_TrainingExamplesNodesList = new List<TrainingExamplesNode>();
 
-            // IML Config node List
-            if (m_IMLConfigurationNodesList != null)
-                m_IMLConfigurationNodesList.Clear();
+            // MLSystem node List
+            if (m_MLSystemNodeList != null)
+                m_MLSystemNodeList.Clear();
             else
-                m_IMLConfigurationNodesList = new List<IMLConfiguration>();
+                m_MLSystemNodeList = new List<MLSystem>();
 
             // RealtimeIMLOutPutNodes List
             if (m_RealtimeIMLOutputNodesList != null)
@@ -1089,8 +1089,8 @@ namespace InteractML
                 // Run logic for all training example nodes
                 RunTraininExamplesLogic();
 
-                // Run logic for all IML Config nodes
-                RunIMLConfigurationsLogic();
+                // Run logic for all MLSystem nodes
+                RunMLSystemLogic();
 
                 // Get all IML Controller outputs
                 ExtractOutputsIMLController();
@@ -1366,7 +1366,7 @@ namespace InteractML
         {
             //Debug.Log("Delete All Models Called");
 
-            // I tried deleting the IML Config nodes, but that gave errors when controlling Rapidlib! Avoiding to do that at all.
+            // I tried deleting the MLSystem nodes, but that gave errors when controlling Rapidlib! Avoiding to do that at all.
 
 //            // Destroy all rapidlib components attached to this gameobject (since we don't need them any more)
 //            var rapidlibsInGameObject = this.GetComponents<RapidLib>();
@@ -1387,10 +1387,10 @@ namespace InteractML
         /// </summary>
         public void LoadAllModelsFromDisk(bool reCreateModels = false)
         {
-            foreach (var IMLConfigNode in m_IMLConfigurationNodesList)
+            foreach (var MLSystemNode in m_MLSystemNodeList)
             {
-                // Loads the model in the IMLConfigNode
-                IMLConfigNode.LoadModelFromDisk(reCreateModels);
+                // Loads the model in the MLSystemNode
+                MLSystemNode.LoadModelFromDisk(reCreateModels);
             }
             
         }
@@ -1400,10 +1400,10 @@ namespace InteractML
         /// </summary>
         public void SaveAllModels()
         {
-            foreach (var IMLConfigNode in m_IMLConfigurationNodesList)
+            foreach (var MLSystemNode in m_MLSystemNodeList)
             {
                 // Save model to disk
-                IMLConfigNode.SaveModelToDisk();
+                MLSystemNode.SaveModelToDisk();
             }
 
         }
@@ -1413,16 +1413,16 @@ namespace InteractML
         /// </summary>
         public void StopAllModels()
         {
-            foreach (var IMLConfigNode in m_IMLConfigurationNodesList)
+            foreach (var MLSystemNode in m_MLSystemNodeList)
             {
                 // Stop model if they are running
-                if (IMLConfigNode.Running)
-                    IMLConfigNode.ToggleRunning();
+                if (MLSystemNode.Running)
+                    MLSystemNode.ToggleRunning();
             }
         }
 
         /// <summary>
-        /// Resets all models for the IML Config nodes (by destroying and re-creating them)
+        /// Resets all models for the MLSystem nodes (by destroying and re-creating them)
         /// </summary>
         public void ResetAllModels()
         {
@@ -1430,12 +1430,12 @@ namespace InteractML
 
             DeleteAllModels();
 
-            //// Go through the list of iml config nodes and instantiate new rapidlibs
-            //foreach (var imlConfigNode in IMLConfigurationNodesList)
+            //// Go through the list of MLSystem nodes and instantiate new rapidlibs
+            //foreach (var MLSystemNode in MLSystemNodesList)
             //{
-            //    if (imlConfigNode)
+            //    if (MLSystemNode)
             //    {
-            //        imlConfigNode.InstantiateRapidlibModel();                    
+            //        MLSystemNode.InstantiateRapidlibModel();                    
             //    }
             //}
         }
@@ -1458,43 +1458,43 @@ namespace InteractML
         public bool RunAllModels()
         {
             bool success = false;
-            foreach (var imlConfigNode in m_IMLConfigurationNodesList)
+            foreach (var MLSystemNode in m_MLSystemNodeList)
             {
-                if (imlConfigNode)
+                if (MLSystemNode)
                 {
                     // Only run if the flag is marked to do so
                     bool trainingExamples = false;
-                    if (imlConfigNode.RunOnAwake)
+                    if (MLSystemNode.RunOnAwake)
                     {
                         // Attempt to load/train if the model is untrained
-                        if (imlConfigNode.Untrained)
+                        if (MLSystemNode.Untrained)
                         {
                             // First try to load the model (unless is DTW)
-                            if (imlConfigNode.LearningType != IMLSpecifications.LearningType.DTW)
+                            if (MLSystemNode.LearningType != IMLSpecifications.LearningType.DTW)
                             {
-                                imlConfigNode.LoadModelFromDisk();
+                                MLSystemNode.LoadModelFromDisk();
                             }
                             // Only attempt to train if model is still untrained
-                            if (imlConfigNode.Untrained)
+                            if (MLSystemNode.Untrained)
                             {
                                 // Train if there are training examples available
-                                for (int i = 0; i < imlConfigNode.IMLTrainingExamplesNodes.Count; i++)
+                                for (int i = 0; i < MLSystemNode.IMLTrainingExamplesNodes.Count; i++)
                                 {
-                                    if (imlConfigNode.IMLTrainingExamplesNodes[i].TrainingExamplesVector.Count > 0)
+                                    if (MLSystemNode.IMLTrainingExamplesNodes[i].TrainingExamplesVector.Count > 0)
                                     {
                                         trainingExamples = true;
                                     }
                                 }
                                 if (trainingExamples)
                                 {
-                                    success = imlConfigNode.TrainModel();
+                                    success = MLSystemNode.TrainModel();
                                 }
                             }
                         }
                         // Toggle Run only if the model is trained (and it is not DTW, the user should do that)
-                        if (imlConfigNode.Trained && imlConfigNode.LearningType != IMLSpecifications.LearningType.DTW)
+                        if (MLSystemNode.Trained && MLSystemNode.LearningType != IMLSpecifications.LearningType.DTW)
                         {
-                            imlConfigNode.ToggleRunning();
+                            MLSystemNode.ToggleRunning();
                             success = true;
                         }
                     }
@@ -1511,13 +1511,13 @@ namespace InteractML
         IEnumerator ReTrainAllModelsCoroutine()
         {
             yield return new WaitForSeconds(0.05f);
-            foreach (var imlConfigNode in m_IMLConfigurationNodesList)
+            foreach (var MLSystemNode in m_MLSystemNodeList)
             {
-                if (imlConfigNode)
+                if (MLSystemNode)
                 {
                     // Only retrains if the flag is marked to do so
-                    if (imlConfigNode.TrainOnPlaymodeChange)
-                        imlConfigNode.TrainModel();
+                    if (MLSystemNode.TrainOnPlaymodeChange)
+                        MLSystemNode.TrainModel();
 
                     yield return null;
                 }
@@ -1532,23 +1532,23 @@ namespace InteractML
         private bool RetrainAllModelsPrivate()
         {
             bool success = false;
-            foreach (var imlConfigNode in m_IMLConfigurationNodesList)
+            foreach (var MLSystemNode in m_MLSystemNodeList)
             {
-                if (imlConfigNode)
+                if (MLSystemNode)
                 {
                     // Reset Model
-                    imlConfigNode.ResetModel();
+                    MLSystemNode.ResetModel();
                     // Attempt to load if not DTW
-                    if (imlConfigNode.LearningType != IMLSpecifications.LearningType.DTW)
+                    if (MLSystemNode.LearningType != IMLSpecifications.LearningType.DTW)
                     {
-                        success = imlConfigNode.LoadModelFromDisk();
+                        success = MLSystemNode.LoadModelFromDisk();
                     }
                     // If the model didn't succeed in loading
                     if (!success)
                     {
                         // Only retrains if the flag is marked to do so
-                        if (imlConfigNode.TrainOnPlaymodeChange)
-                            success = imlConfigNode.TrainModel();
+                        if (MLSystemNode.TrainOnPlaymodeChange)
+                            success = MLSystemNode.TrainModel();
                     }
                 }
             }
@@ -1787,13 +1787,13 @@ namespace InteractML
 
         }
         /// <summary>
-        /// Removes IMLConfigurationNode From IMLConfigurationNodeList 
+        /// Removes MLSystemNode From MLSystemNodeList 
         /// </summary>
         /// <param name="nodeToDelete"></param>
-        public void DeleteIMLConfigurationNode(IMLConfiguration nodeToDelete)
+        public void DeleteMLSystemNode(MLSystem nodeToDelete)
         {
-            if (m_IMLConfigurationNodesList.Contains(nodeToDelete))
-                m_IMLConfigurationNodesList.Remove(nodeToDelete);
+            if (m_MLSystemNodeList.Contains(nodeToDelete))
+                m_MLSystemNodeList.Remove(nodeToDelete);
         }
         /// <summary>
         /// Removes RealtimeOutputNode From RealtimeOutputNodeList 
@@ -1893,13 +1893,13 @@ namespace InteractML
         private bool Train(string nodeID)
         {
             bool success = false;
-            foreach (IMLConfiguration IMLConfigNode in IMLConfigurationNodesList)
+            foreach (MLSystem MLSNode in MLSystemNodeList)
             {
-                if (nodeID == IMLConfigNode.id)
+                if (nodeID == MLSNode.id)
                 {
-                    success = IMLConfigNode.TrainModel();
+                    success = MLSNode.TrainModel();
                     if (success)
-                        IMLConfigNode.SaveModelToDisk();
+                        MLSNode.SaveModelToDisk();
                 }
             }
             return success;
