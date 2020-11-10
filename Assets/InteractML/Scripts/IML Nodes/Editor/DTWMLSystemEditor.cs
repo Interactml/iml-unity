@@ -96,12 +96,13 @@ namespace InteractML
 
                 if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Train")))
                 {
+                    IMLEventDispatcher.TrainMLSCallback(m_DTWMLSystem.id);
                     // Train model
-                    if (m_DTWMLSystem.TrainModel())
+                   /* if (m_DTWMLSystem.TrainModel())
                     {
                         // Save model if succesfully trained
                         m_DTWMLSystem.SaveModelToDisk();
-                    }
+                    }*/
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;
@@ -179,7 +180,17 @@ namespace InteractML
 
                 if (GUILayout.Button(nameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Run")))
                 {
-                    m_DTWMLSystem.ToggleRunning();
+                    if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Run")))
+                    {
+                        if (m_DTWMLSystem.Running)
+                        {
+                            IMLEventDispatcher.StopRunCallback(m_DTWMLSystem.id);
+                        }
+                        else
+                        {
+                            IMLEventDispatcher.StartRunCallback(m_DTWMLSystem.id);
+                        }
+                    }
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;
@@ -189,11 +200,6 @@ namespace InteractML
             else
             {
                 GUI.enabled = false;
-                if (GUILayout.Button("Run", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Run")))
-                {
-                    //m_TrainingExamplesNode.ToggleCollectExamples();
-                }
-                GUI.enabled = true;
             }
 
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))

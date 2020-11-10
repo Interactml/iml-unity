@@ -766,7 +766,8 @@ namespace InteractML
                     showporthelper = true;
                     for (int i = 0; i < ports.Count; i++)
                     {
-                        if (window.hoveredPort == ports[i] && portTips.Length != 0)
+                        // must come back here to fix - pbroken with new init
+                        /*if (window.hoveredPort == ports[i] && portTips.Length != 0 && portTips.Length > 0)
                         {
                             // If there are more ports than tooltips show the last one in the list (asthe number of outputs in a mls node is undeterminanate)
                             if (i >= portTips.Length)
@@ -778,7 +779,7 @@ namespace InteractML
                                 TooltipText = portTips[i];
                             }
 
-                        }
+                        }*/
 
                     }
                 }

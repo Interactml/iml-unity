@@ -89,8 +89,8 @@ namespace InteractML
                 
                 if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Train")))
                 {
-                    EventDispatcher.TrainMLSCallback(m_ClassificationMLSystem.id);
-                    // Train model
+                    IMLEventDispatcher.TrainMLSCallback(m_ClassificationMLSystem.id);
+                    // old training model can delete when tested
                    /* if (m_CIMLConfiguration.TrainModel())
                     {
                         // Save model if succesfully trained
@@ -180,7 +180,13 @@ namespace InteractML
                 }
                 if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Run")))
                 {
-                    m_ClassificationMLSystem.ToggleRunning();
+                    if (m_ClassificationMLSystem.Running)
+                    {
+                        IMLEventDispatcher.StopRunCallback(m_ClassificationMLSystem.id);
+                    } else
+                    {
+                        IMLEventDispatcher.StartRunCallback(m_ClassificationMLSystem.id);
+                    }
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;

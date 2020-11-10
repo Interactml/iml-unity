@@ -55,7 +55,7 @@ namespace InteractML
                 m_SingleTrainingExamplesNode.AddSingleTrainingExample();
             }
             //button tooltip code 
-            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
+            if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition) && m_SingleTrainingExamplesNode.tooltips.BodyTooltip.Tips.Length > 2)
             {
                 buttonTipHelper = true;
                 TooltipText = m_SingleTrainingExamplesNode.tooltips.BodyTooltip.Tips[2];
