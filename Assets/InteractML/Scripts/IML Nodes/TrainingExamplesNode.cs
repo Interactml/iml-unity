@@ -108,7 +108,7 @@ namespace InteractML
         /// The list of IML Config nodes connected
         /// </summary>
         [HideInInspector]
-        public List<MLSystem> IMLConfigurationNodesConnected;
+        public List<MLSystem> MLSystemNodesConnected;
         /// <summary>
         /// Variables for setting delay in time for collecting data
         /// </summary>
@@ -124,8 +124,8 @@ namespace InteractML
         /// <summary>
         /// boolean for whether collecting data or not 
         /// </summary>
-        protected bool m_CollectData;
-        public bool CollectingData { get { return m_CollectData; } }
+        protected bool m_CollectingData;
+        public bool CollectingData { get { return m_CollectingData; } }
 
         /// <summary>
         /// Flag to have a shortcut to collect data (CTRL + Space)
@@ -155,23 +155,29 @@ namespace InteractML
         /// </summary>
         public bool showWarning;
 
+        public Event Train;
+
         #endregion
 
         #region XNode Messages
 
-      
+        
 
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
-            this.DisconnectIfNotType<TrainingExamplesNode, IFeatureIML>(from, to);
+            if (this.DisconnectIfNotType<TrainingExamplesNode, IFeatureIML>(from, to))
+            {
+                return;
+            }
             bool trainingExamplesRecorded = false;
             // if you have started training and this is not the system trying to stop you changing the connection and it is an output port 
             if (TrainingExamplesVector.Count > 0 || TrainingSeriesCollection.Count > 0 && !badRemove)
             {
-                trainingExamplesRecorded = true;
+                from.Disconnect(to);
+                return;
             }
+                
             // DIRTY CODE
-            // InputFeatures size check
             if (to.fieldName == "InputFeatures")
             {
                 // DIRTY CODE
@@ -190,11 +196,16 @@ namespace InteractML
                         if (newFeatureSize != knownFeatureSize)
                         {
                             from.Disconnect(to);
+                            return;
                         }
                     }
-                }
-                if (trainingExamplesRecorded)
-                    from.Disconnect(to);
+                    
+                 }
+                inputPortList = this.GetInputPort("InputFeatures").GetConnections();
+               
+                IMLEventDispatcher.InputConfigChange();
+
+
             }
             //if connected to target values 
             if(to.fieldName == "TargetValues")
@@ -206,7 +217,7 @@ namespace InteractML
                 }
 
                 // Go through MLS systems connected if any MLS are classification or DTW set MLSclassification to true
-                foreach (MLSystem MLS in IMLConfigurationNodesConnected)
+                foreach (MLSystem MLS in MLSystemNodesConnected)
                 {
                     if (MLS.LearningType == IMLSpecifications.LearningType.DTW || MLS.LearningType == IMLSpecifications.LearningType.Classification)
                     {
@@ -217,17 +228,20 @@ namespace InteractML
                 if (MLSClassification && TargetValues.Count >= 1 )
                 {
                     from.Disconnect(to);
+                    return;
                 }
                 else
                 {
                     UpdateTargetValueInput();
                 }
                 MLSClassification = false;
+                targetPortList = this.GetInputPort("TargetValues").GetConnections();
+                UpdateTargetValuesConfig();
+                IMLEventDispatcher.LabelsConfigChange();
+                return;
             }
+
             
-            UpdateTargetValuesConfig();
-            inputPortList = this.GetInputPort("InputFeatures").GetConnections();
-            targetPortList = this.GetInputPort("TargetValues").GetConnections();
         }
 
         public override void OnRemoveConnection(NodePort port)
@@ -244,6 +258,7 @@ namespace InteractML
             base.OnRemoveConnection(port);
             UpdateTargetValueInput();
             UpdateTargetValuesConfig();
+            
         }
 
 
@@ -285,6 +300,7 @@ namespace InteractML
         /// </summary>
         public override void Initialize()
         {
+            
             SetDataCollection();
             // Make sure internal feature lists are initialized
             if (m_DesiredInputsConfig == null)
@@ -305,8 +321,8 @@ namespace InteractML
             if (Lists.IsNullOrEmpty(ref TrainingSeriesCollection))
                 TrainingSeriesCollection = new List<IMLTrainingSeries>();
 
-            if (IMLConfigurationNodesConnected == null)
-                IMLConfigurationNodesConnected = new List<MLSystem>();
+            if (MLSystemNodesConnected == null)
+                MLSystemNodesConnected = new List<MLSystem>();
 
             // set target value input list 
             UpdateTargetValueInput();
@@ -328,14 +344,55 @@ namespace InteractML
             ToggleCollectingDataprotected();
         }
 
+        /// <summary>
+        /// Public method to start collecting data 
+        /// Called by start recording 
+        /// </summary>
+        /// <returns>boolean on whether we have started</returns>
+        public bool StartCollecting()
+        {
+            // if the node is set up with input features and it is not currently collecting data start collecting data
+            if(InputFeatures.Count > 0 && TargetValues.Count > 0 && !m_CollectingData)
+            {
+                StartCollectingData();
+                return true;
+            } else
+            {
+                return false;
+            }
+
+        }
+        /// <summary>
+        /// Public method for stopping recording data 
+        /// </summary>
+        /// <returns></returns>
+        public bool StopCollecting()
+        {
+            // if it is collecting data stop collecting data 
+            if (m_CollectingData)
+            {
+                StopCollectingData();
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
+
+
         // check move to single training examples node
         /// <summary>
         /// Adds a single training example to the node's list
         /// </summary>
-        public void AddSingleTrainingExample()
+        public bool AddSingleTrainingExample()
         {
-            AddTrainingExampleprotected();
-            CheckWarning();
+            if(!m_CollectingData && InputFeatures.Count > 0 && TargetValues.Count > 0)
+            {
+                AddTrainingExampleprotected();
+                CheckWarning();
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -503,11 +560,11 @@ namespace InteractML
         /// </summary>
         protected virtual void CollectExamplesLogic()
         {
-            if (m_CollectData)
+            if (m_CollectingData)
             {
                 if (Application.isPlaying && m_TimeToStopCapture > 0 && Time.time >= m_TimeToStopCapture)
                 {
-                    m_CollectData = false;
+                    m_CollectingData = false;
                     //Debug.Log("end recording");
                 }
                 else if (!Application.isPlaying || Time.time >= m_TimeToNextCapture)
@@ -589,7 +646,7 @@ namespace InteractML
         /// </summary>
         protected void ToggleCollectingDataprotected()
         {
-            if (m_CollectData)
+            if (m_CollectingData)
             {
                 StopCollectingData();
             }
@@ -607,8 +664,7 @@ namespace InteractML
         protected void StartCollectingData()
         {
 
-            m_CollectData = true;
-            Debug.Log("starting recording in " + StartDelay + " seconds");
+            m_CollectingData = true;
             m_TimeToNextCapture = Time.time + StartDelay;
             if (RecordTime > 0)
             {
@@ -626,7 +682,7 @@ namespace InteractML
         /// </summary>
         protected void StopCollectingData()
         {
-            m_CollectData = false;
+            m_CollectingData = false;
 
             // If we are in collect series mode...
             if (ModeOfCollection == CollectionMode.Series)

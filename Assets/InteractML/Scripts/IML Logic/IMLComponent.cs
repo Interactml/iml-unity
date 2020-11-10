@@ -195,7 +195,7 @@ namespace InteractML
             // We unsubscribe the component form the editor manager to avoid messing up with the list
             IMLEditorManager.UnsubscribeIMLComponent(this);
             //Unsubscribe this from the event dispatcher 
-            EventDispatcher.TrainMLSCallback -= Train;
+            UnsubscribeToDelegates();
         }
 #endregion
 
@@ -203,8 +203,8 @@ namespace InteractML
 
         private void Initialize()
         {
-            // subscribe to the event dispatcher for training (move all subscriptions to )
-            EventDispatcher.TrainMLSCallback += Train;
+
+            SubscribeToDelegates();
             // Initialise list of nodes for the IML Controller
             if (Lists.IsNullOrEmpty(ref GameObjectsToUse))
                 GameObjectsToUse = new List<GameObject>();
@@ -311,6 +311,13 @@ namespace InteractML
             InitializeNodeType(m_ScriptNodesList);
         }
 
+        private void InitializeDelegate()
+        {
+            IMLEventDispatcher.InputConfigChange();
+            IMLEventDispatcher.LabelsConfigChange();
+            IMLEventDispatcher.SetUpChange();
+        }
+
         /// <summary>
         /// Goes through all IMLnodes in list and initialises. Called in InitializeAllNodes
         /// </summary>
@@ -338,7 +345,38 @@ namespace InteractML
                 node.NodeInitalize();
             }
         }
+        /// <summary>
+        /// Subscribe to all delegates called in initialize
+        /// </summary>
+        private void SubscribeToDelegates() {
+            // dispatchers for MLSystem node events
+            IMLEventDispatcher.TrainMLSCallback += Train;
+            IMLEventDispatcher.StartRunCallback += StartRunning;
+            IMLEventDispatcher.StopRunCallback += StopRunning;
+            IMLEventDispatcher.ResetModelCallback += ResetModel;
 
+            // dispatchers for training examples node events
+            IMLEventDispatcher.RecordOneCallback += RecordOne;
+            IMLEventDispatcher.RecordStartCallback += StartRecording;
+            IMLEventDispatcher.RecordStopCallback += StopRecording;
+        }
+        /// <summary>
+        /// 
+        /// Unsubscribe to all delegates called on destroy
+        /// </summary>
+        private void UnsubscribeToDelegates()
+        {
+            // dispatchers for MLSystem node event
+            IMLEventDispatcher.TrainMLSCallback -= Train;
+            IMLEventDispatcher.StartRunCallback -= StartRunning;
+            IMLEventDispatcher.StopRunCallback -= StopRunning;
+            IMLEventDispatcher.ResetModelCallback -= ResetModel;
+
+            // dispatchers for training examples node events
+            IMLEventDispatcher.RecordOneCallback -= RecordOne;
+            IMLEventDispatcher.RecordStartCallback -= StartRecording;
+            IMLEventDispatcher.RecordStopCallback -= StopRecording;
+        }
         /// <summary>
         /// Checks if an IMLController is owned and properly updates it when needed
         /// </summary>
@@ -1889,20 +1927,160 @@ namespace InteractML
 
         #endregion
         #region Delegates
-        // Delegate to Train nodes - still being worked on 
+        /// <summary>
+        /// Delegate to train model from 
+        /// </summary>
+        /// <param name="nodeID">ID of the node to be trained</param>
+        /// <returns>returns boolean whether sucessfully trained</returns>
         private bool Train(string nodeID)
         {
             bool success = false;
+            //iterate through all mls nodes
             foreach (MLSystem MLSNode in MLSystemNodeList)
             {
+                //if nodeID matches
                 if (nodeID == MLSNode.id)
                 {
+                    // train model
                     success = MLSNode.TrainModel();
+                    // if this is successful save model to the disk
                     if (success)
                         MLSNode.SaveModelToDisk();
                 }
             }
+            // returns true if nodeID exists and whether training successful
             return success;
+        }
+        /// <summary>
+        ///  Start running delegate
+        /// </summary>
+        /// <param name="nodeID">nodeID for ls to start running</param>
+        /// <returns></returns>
+        private bool StartRunning(string nodeID)
+        {
+            bool success = false;
+            //iterate through all mls nodes
+            foreach (MLSystem MLSNode in MLSystemNodeList)
+            {
+                // if nodeID matches
+                if (nodeID == MLSNode.id)
+                {
+                    // attempt to run
+                    success = MLSNode.StartRunning();
+                }
+            }
+            // return true if nodeID exists and running started
+            return success; 
+        }
+        /// <summary>
+        /// Stopp runing delegate
+        /// </summary>
+        /// <param name="nodeID">id of the node to stop running</param>
+        /// <returns>bool whether successfully stopped</returns>
+        private bool StopRunning(string nodeID)
+        {
+            bool success = false;
+            //iterate through all mls nodes
+            foreach (MLSystem MLSNode in MLSystemNodeList)
+            {
+                // if nodeID matches
+                if (nodeID == MLSNode.id)
+                {
+                    // attempt to stop running
+                    success = MLSNode.StopRunning();
+                }
+            }
+            // return true if nodeID exists and running stopped
+            return success; 
+        }
+
+        /// <summary>
+        /// Reset model for delegate
+        /// </summary>
+        /// <param name="nodeID">node id of the MLS nide to reset</param>
+        private void ResetModel(string nodeID)
+        {
+            //iterate through all mls nodes
+            foreach (MLSystem MLSNode in MLSystemNodeList)
+            {
+                // if nodeID matches
+                if (nodeID == MLSNode.id)
+                {
+                    // Reset model
+                    MLSNode.ResetModel();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Record one example for delegate
+        /// </summary>
+        /// <param name="nodeID"></param>
+        /// <returns></returns>
+        private bool RecordOne(string nodeID)
+        {
+            //iterate through all training nodes
+            foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
+            {
+                // if node ID matches AND the node is a single training examples node
+                if (nodeID == TENode.id && TENode.GetType().ToString().Contains("InteractML.SingleTrainingExamplesNode"))
+                {
+                    // add single example
+                    if (TENode.AddSingleTrainingExample())
+                    {
+                        // iterate through all the mlsystem nodes connected 
+                        foreach (MLSystem MLSNode in TENode.MLSystemNodesConnected)
+                        {
+                            // update the number of training examples 
+                            MLSNode.UpdateTotalNumberTrainingExamples();
+                        }
+                        return true;
+                    }
+                    
+                }
+            }
+            return false; ;
+        }
+        /// <summary>
+        /// Start recording training examples for delegate
+        /// </summary>
+        /// <param name="nodeID">nodeID of the training examples node</param>
+        /// <returns>bool whether training has started</returns>
+        private bool StartRecording(string nodeID)
+        {
+            bool success = false;
+            foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
+            {
+                if (nodeID == TENode.id)
+                {
+                    success = TENode.StartCollecting();
+                }
+            }
+            return success;
+        }
+        /// <summary>
+        /// Stop recording training examples for delegate
+        /// </summary>
+        /// <param name="nodeID">nodeID of the training examples node</param>
+        /// <returns>bool whether training has stopped</returns>
+        private bool StopRecording(string nodeID)
+        {
+            foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
+            {
+                if (nodeID == TENode.id)
+                {
+                    if (TENode.StopCollecting())
+                    {
+                        foreach (MLSystem MLSNode in TENode.MLSystemNodesConnected)
+                        {
+                            MLSNode.UpdateTotalNumberTrainingExamples();
+                        }
+                        return true;
+                    }
+
+                }
+            }
+            return false; ;
         }
         #endregion
     }
