@@ -48,8 +48,8 @@ namespace InteractML
             //potentially delete checks if initalized has been called 
             m_IsInitialized = true;
             // load tooltips for the node using reference to the nodes class name
-            IMLTooltipsSerialization.LoadTooltip(this.GetType().Name + "Tooltips");
-            Debug.Log(this.GetType().Name);
+            tooltips = IMLTooltipsSerialization.LoadTooltip(this.GetType().Name + "Tooltips");
+            //Debug.Log(this.GetType().Name);
             // all other initialize code needed for the node - to be overriden in the subclass if there more that needs to be added 
             Initialize();
 
