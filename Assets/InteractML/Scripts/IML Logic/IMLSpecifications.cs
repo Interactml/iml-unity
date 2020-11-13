@@ -50,6 +50,8 @@ namespace InteractML
         /// </summary>
         public enum ModelStatus { Untrained, Training, Trained, Running }
 
+        public enum TrainingSetType {SingleTrainingExamples, SeriesTrainingExamples}
+
 
     }
 }
