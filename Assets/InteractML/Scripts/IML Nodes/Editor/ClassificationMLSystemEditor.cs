@@ -71,8 +71,6 @@ namespace InteractML
             // Only run button logic when rapidlib reference not null and training examples are not null
             if (m_ClassificationMLSystem.Model != null && m_ClassificationMLSystem.TotalNumTrainingData > 0)
             {
-
-
                 string nameButton = "";
 
                 if (m_ClassificationMLSystem.Training)

@@ -18,8 +18,15 @@ namespace InteractML
         protected override void SetLearningType()
         {
             m_LearningType = IMLSpecifications.LearningType.Classification;
+
         }
-       
+
+        public override RapidlibModel InstantiateRapidlibModel(IMLSpecifications.LearningType learningType)
+        {
+            RapidlibModel model;
+            model = new RapidlibModel(RapidlibModel.ModelType.kNN);
+            return model;
+        }
 
         /// <summary>
         /// Override training Examples to only check for the single training examples type
