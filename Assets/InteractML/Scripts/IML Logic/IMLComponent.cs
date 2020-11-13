@@ -56,7 +56,6 @@ namespace InteractML
         private List<MLSystem> m_MLSystemNodeList;
         [SerializeField, HideInInspector]
         private List<GameObjectNode> m_GameObjectNodeList;
-        private List<RealtimeIMLOutputNode> m_RealtimeIMLOutputNodesList;
         public List<IFeatureIML> FeatureNodesList;
         [SerializeField, HideInInspector]
         private List<ScriptNode> m_ScriptNodesList;
@@ -140,6 +139,7 @@ namespace InteractML
                 Initialize();
                 // initialize all nodes 
                 InitializeAllNodes();
+                InitializeEvent();
             }
         }
 
@@ -166,7 +166,6 @@ namespace InteractML
         // Start is called before the first frame update
         void Start()
         {
-            //Initialize();
         }
 
         // Update is called once per frame
@@ -310,11 +309,11 @@ namespace InteractML
             //Initialise Script nodes
             InitializeNodeType(m_ScriptNodesList);
         }
-
-        private void InitializeDelegate()
+        /// <summary>
+        /// Event to set up models when loading
+        /// </summary>
+        private void InitializeEvent()
         {
-            IMLEventDispatcher.InputConfigChange();
-            IMLEventDispatcher.LabelsConfigChange();
             IMLEventDispatcher.SetUpChange();
         }
 
@@ -458,9 +457,6 @@ namespace InteractML
 
                     // MLSystem Node
                     CheckNodeIsMLSystem(node, ref m_MLSystemNodeList);
-
-                    // Export output node
-                    CheckTypeAddNodeToList(node, ref m_RealtimeIMLOutputNodesList);
 
                     // ScriptNodes
                     CheckTypeAddNodeToList(node, ref m_ScriptNodesList);
@@ -815,57 +811,6 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Gets all the outputs coming from the list of ExportOutputNodes
-        /// </summary>
-        private void ExtractOutputsIMLController()
-        {
-            // If the list is not created, we create one
-            if (IMLControllerOutputs == null)
-            {
-                IMLControllerOutputs = new List<double[]>();
-            }
-
-            // If the list is not null or empty...
-            if (!Lists.IsNullOrEmpty(ref m_RealtimeIMLOutputNodesList))
-            {
-                // If the size of the IML Controller outputs and the nodes found doesn't match, we make it match
-                if (IMLControllerOutputs.Count != m_RealtimeIMLOutputNodesList.Count)
-                {
-                    // We clear all contents of the list
-                    IMLControllerOutputs.Clear();
-                    // We go through all the nodes exporting outputs
-                    foreach (var outputNode in m_RealtimeIMLOutputNodesList)
-                    {
-                        var output = outputNode.GetIMLControllerOutputs();
-                        // If the node has an output...
-                        if (output != null)
-                        {
-                            // We add that output to the list
-                            IMLControllerOutputs.Add(output);
-                        }
-                    }
-                }
-                // If it matches, we make sure to call the output node get method to update values
-                else
-                {
-                    // We go through all the nodes exporting outputs
-                    for (int i = 0; i < m_RealtimeIMLOutputNodesList.Count; i++)
-                    {
-                        var outputNode = m_RealtimeIMLOutputNodesList[i];
-                        IMLControllerOutputs[i] = outputNode.GetIMLControllerOutputs();
-
-                    }
-                }
-            }
-            // If the output nodes list is null...
-            else if (m_RealtimeIMLOutputNodesList == null)
-            {
-                // We create a new one
-                m_RealtimeIMLOutputNodesList = new List<RealtimeIMLOutputNode>();
-            }
-        }
-
-        /// <summary>
         /// Gets and sets the data marked with the "SendToIMLController" and "PullFromIMLController" attributes in Monobehaviours subscribed
         /// </summary>
         private void FetchDataFromMonobehavioursSubscribed()
@@ -1056,12 +1001,6 @@ namespace InteractML
             else
                 m_MLSystemNodeList = new List<MLSystem>();
 
-            // RealtimeIMLOutPutNodes List
-            if (m_RealtimeIMLOutputNodesList != null)
-                m_RealtimeIMLOutputNodesList.Clear();
-            else
-                m_RealtimeIMLOutputNodesList = new List<RealtimeIMLOutputNode>();
-
         }
 
         [ContextMenu("ClearScriptNodes")]
@@ -1130,8 +1069,6 @@ namespace InteractML
                 // Run logic for all MLSystem nodes
                 RunMLSystemLogic();
 
-                // Get all IML Controller outputs
-                ExtractOutputsIMLController();
 
             }
 
@@ -1833,15 +1770,7 @@ namespace InteractML
             if (m_MLSystemNodeList.Contains(nodeToDelete))
                 m_MLSystemNodeList.Remove(nodeToDelete);
         }
-        /// <summary>
-        /// Removes RealtimeOutputNode From RealtimeOutputNodeList 
-        /// </summary>
-        /// <param name="nodeToDelete"></param>
-        public void DeleteRealtimeIMLOutputNode(RealtimeIMLOutputNode nodeToDelete)
-        {
-            if (m_RealtimeIMLOutputNodesList.Contains(nodeToDelete))
-                m_RealtimeIMLOutputNodesList.Remove(nodeToDelete);
-        }
+        
         /// <summary>
         /// Removes TrainingExamplesNode From TrainingExamplesNodeList 
         /// </summary>
@@ -1941,6 +1870,7 @@ namespace InteractML
                 //if nodeID matches
                 if (nodeID == MLSNode.id)
                 {
+                    
                     // train model
                     success = MLSNode.TrainModel();
                     // if this is successful save model to the disk
@@ -1965,6 +1895,8 @@ namespace InteractML
                 // if nodeID matches
                 if (nodeID == MLSNode.id)
                 {
+                    //make sure output format is correct
+                    MLSNode.UpdateOutputFormat();
                     // attempt to run
                     success = MLSNode.StartRunning();
                 }
