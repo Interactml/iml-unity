@@ -13,14 +13,28 @@ namespace InteractML
     public class DTWMLSystem : MLSystem
     {
 
-     
 
+        public override RapidlibModel InstantiateRapidlibModel()
+        {
+            Debug.Log("here dtw");
+            RapidlibModel model;
+            model = new RapidlibModel(RapidlibModel.ModelType.DTW);
+            return model;
+        }
 
         #region Protected Methods
-
+        // to be deleted if new composition works
+        /*
         protected override void SetLearningType()
         {
             m_LearningType = IMLSpecifications.LearningType.DTW;
+        }*/
+
+        protected override void SetTrainingType()
+        {
+            Debug.Log("here dtw");
+            m_trainingType = IMLSpecifications.TrainingSetType.SeriesTrainingExamples;
+
         }
 
         /// <summary>

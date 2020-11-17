@@ -166,7 +166,7 @@ namespace InteractML
         private int lengthtrainingvector;
         public bool matchLiveDataInputs = true;
         //does the vector length match? to be deleted when new inputs implemented 
-        public bool matchVectorLength = false;
+        public bool matchVectorLength = true;
         public string warning;
         public bool error = false;
 
@@ -373,7 +373,7 @@ namespace InteractML
 
             // Make sure the model is initialised properly
             if (m_Model == null && (this.graph as IMLGraph).IsGraphRunning)
-                m_Model = InstantiateRapidlibModel(m_LearningType);
+                m_Model = InstantiateRapidlibModel();
 
             // Init lists
             if (Lists.IsNullOrEmpty(ref IMLTrainingExamplesNodes))
@@ -423,7 +423,7 @@ namespace InteractML
         /// Instantiates a rapidlibmodel
         /// </summary>
         /// <param name="learningType"></param>
-        public virtual RapidlibModel InstantiateRapidlibModel(IMLSpecifications.LearningType learningType)
+        public virtual RapidlibModel InstantiateRapidlibModel()
         {
             RapidlibModel model;
             model = new RapidlibModel();
@@ -440,10 +440,12 @@ namespace InteractML
 
         public bool TrainModel()
         {
+            Debug.Log(TotalNumTrainingData);
             bool isTrained = false;
             //if the MLS is not running, training and the model is not null and the total number of training data is bigger than 0
             if (!Running && !Training && Model != null && TotalNumTrainingData > 0)
             {
+                
                 //come back to this
                 RunningLogic();
                 // if there are no training examples in connected training nodes do not train 
@@ -453,7 +455,7 @@ namespace InteractML
                 }
                 else
                 {
-                    SetUpTrainingExamples();
+                    isTrained = SetUpTrainingExamples();
                 }
                 if (isTrained)
                 {
@@ -462,7 +464,6 @@ namespace InteractML
                     lengthtrainingvector = CheckLengthTrainingVector(tNode);
 
                 }
-                CheckLengthInputsVector();
             }
             return isTrained;
         }
@@ -470,7 +471,7 @@ namespace InteractML
         private bool SetUpTrainingExamples() {
 
             bool trained = false;
-            switch (TrainingType)
+            switch (m_trainingType)
             {
                 case IMLSpecifications.TrainingSetType.SingleTrainingExamples:
                     trained = SingleExamplesTrain();
@@ -510,7 +511,7 @@ namespace InteractML
         protected int CheckLengthTrainingVector(TrainingExamplesNode tNode)
         {
             int trainingVector = 0;
-            switch (TrainingType)
+            switch (m_trainingType)
             {
                 case IMLSpecifications.TrainingSetType.SingleTrainingExamples:
                     IMLTrainingExample singleExample = tNode.TrainingExamplesVector[0];
@@ -564,14 +565,16 @@ namespace InteractML
                         }
                     }
                 }
+                Debug.Log(vectorSize);
+                Debug.Log(lengthtrainingvector);
                 if (vectorSize == lengthtrainingvector)
                 {
                     matchVectorLength = true;
+                    Debug.Log("here");
                 }
                 else
                 {
-                    // uncommented because firing too often can be reinstated for debugging
-                    //Debug.LogWarning("mismatch in live inputs to trained data");
+                    Debug.LogWarning("mismatch in live inputs to trained data");
                 }
             } else {
                 matchVectorLength = false;
@@ -591,7 +594,7 @@ namespace InteractML
             }
         }
         /// <summary>
-        /// Start running the model
+        /// Sets running boolean to true 
         /// </summary>
         /// <returns>boolean on whether the model has started running</returns>
         public bool StartRunning()
@@ -599,13 +602,9 @@ namespace InteractML
             // If the system is not running and it is trained, it is not traing and the vectors match 
             if (!m_Running && Trained && !Training && matchLiveDataInputs && matchVectorLength)
             {
-                // Set flag to true if running inputs/outputs are not null and the model is trained!
-                if (((m_RapidlibInputVector != null && m_RapidlibOutputVector != null) || m_LearningType == IMLSpecifications.LearningType.DTW) && Trained)
+                // Set flag to true if running inputs/outputs are not null and the model is trained or it is a series 
+                if (((m_RapidlibInputVector != null && m_RapidlibOutputVector != null) || m_trainingType == IMLSpecifications.TrainingSetType.SeriesTrainingExamples))
                 {
-                    // If we are on classification or regression...
-                    if (m_LearningType != IMLSpecifications.LearningType.Classification || m_LearningType != IMLSpecifications.LearningType.Regression)
-                        UpdateInputVector();
-
                     m_Running = true;
                     return true;
                 }
@@ -626,7 +625,7 @@ namespace InteractML
             if (m_Running)
             {
                 // If we are on DTW, we run the iteration at the end of the data collection period
-                if (m_LearningType == IMLSpecifications.LearningType.DTW)
+                if (m_trainingType == IMLSpecifications.TrainingSetType.SeriesTrainingExamples)
                 {
                     string predictionDTW = RunModelDTW(m_RunningSeries);
                     // We clear running series for next run
@@ -666,7 +665,7 @@ namespace InteractML
         public void ResetModel()
         {
             // Take care of the RapidlibModel reference to this node     
-            m_Model = InstantiateRapidlibModel(m_LearningType);
+            m_Model = InstantiateRapidlibModel();
 
             // Reset numExamplesTrainedOn
             m_NumExamplesTrainedOn = 0;
@@ -694,7 +693,7 @@ namespace InteractML
 
             // Make sure to re-instantiate the model if null or flag is true
             if (m_Model == null || reCreateModel)
-                m_Model = InstantiateRapidlibModel(LearningType);
+                m_Model = InstantiateRapidlibModel();
 
             success = m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id, reCreateModel);
             // We update the node learning type to match the one from the loaded model
@@ -733,8 +732,13 @@ namespace InteractML
         #endregion
 
         #region protected Methods
-
+        // to be deleted if current implementation of composition works 
         protected virtual void SetLearningType()
+        {
+            Debug.LogError("Needs to be implemented in MLSystem subclass");
+        }
+
+        protected virtual void SetTrainingType()
         {
             Debug.LogError("Needs to be implemented in MLSystem subclass");
         }
@@ -872,10 +876,10 @@ namespace InteractML
         protected virtual void RunningLogic()
         {
             // Account for all learning types now
-            switch (m_LearningType)
+            switch (m_trainingType)
             {
                 // Classification and Regression
-                case IMLSpecifications.LearningType.Classification: case IMLSpecifications.LearningType.Regression:
+                case IMLSpecifications.TrainingSetType.SingleTrainingExamples:
                     // Get the output from rapidlib
                     PredictedRapidlibOutput = RunModel();
                     // Don't run when the predicteb rapidlib output is empty (this is a patch for some bug that broke the predictions)
@@ -884,7 +888,7 @@ namespace InteractML
                     // Transform rapidlib output to IMLTypes (calling straight after getting the output so that the UI can show properly)
                     TransformPredictedOuputToIMLTypes(PredictedRapidlibOutput, ref PredictedOutput);
                     break;
-                case IMLSpecifications.LearningType.DTW:
+                case IMLSpecifications.TrainingSetType.SeriesTrainingExamples:
                     CollectFeaturesInRunningSeries(InputFeatures, ref m_RunningSeries);
                     break;
                 default:
@@ -1385,8 +1389,8 @@ namespace InteractML
                 throw new Exception("The output port fieldName doesn't contain an index!");
             }
         }
-
-        protected virtual void OverrideModel(IMLSpecifications.LearningType learningType)
+        // ask carlos what this is for?
+      /*  protected virtual void OverrideModel(IMLSpecifications.LearningType learningType)
         {
             switch (learningType)
             {
@@ -1402,12 +1406,13 @@ namespace InteractML
                 default:
                     break;
             }
-        }
+        }*/
         /// <summary>
         /// Updates number of training examples 
         /// </summary>
         public void UpdateTotalNumberTrainingExamples()
         {
+            Debug.Log(m_trainingType +" " + this.id);
             // Get training examples from the connected examples nodes
             IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
 
@@ -1415,16 +1420,24 @@ namespace InteractML
             m_TotalNumTrainingData = 0;
             if (!Lists.IsNullOrEmpty(ref IMLTrainingExamplesNodes))
             {
+                
                 for (int i = 0; i < IMLTrainingExamplesNodes.Count; i++)
                 {
                     if (IMLTrainingExamplesNodes[i] != null)
                     {
-                        // DTW COMEBACK HERE 
-                        if (m_LearningType == IMLSpecifications.LearningType.DTW)
-                            m_TotalNumTrainingData += IMLTrainingExamplesNodes[i].TrainingSeriesCollection.Count;
-                        // classification/regression
-                        else
-                            m_TotalNumTrainingData += IMLTrainingExamplesNodes[i].TotalNumberOfTrainingExamples;
+                        switch (m_trainingType)
+                        {
+                            case IMLSpecifications.TrainingSetType.SingleTrainingExamples:
+                                m_TotalNumTrainingData += IMLTrainingExamplesNodes[i].TotalNumberOfTrainingExamples;
+                                break;
+                            case IMLSpecifications.TrainingSetType.SeriesTrainingExamples:
+                                m_TotalNumTrainingData += IMLTrainingExamplesNodes[i].TrainingSeriesCollection.Count;
+                                break;
+                            default:
+                                Debug.LogWarning("Training type not set");
+                                break;
+                        }
+                            
                     }
                     else
                     {
@@ -1796,6 +1809,7 @@ namespace InteractML
 
         public void OnDataInChanged()
         {
+            Debug.Log(this.id);
             // Update Input Config List
             UpdateInputConfigList();
 
@@ -1807,6 +1821,11 @@ namespace InteractML
 
         public void UpdateLogic()
         {
+            //Debug.Log(matchVectorLength);
+            //Debug.Log(matchLiveDataInputs);
+            Debug.Log(m_trainingType);
+            Debug.Log(m_Model.TypeOfModel);
+
             //set errors for ui
             //UIErrors();
             //Set Learning Type 

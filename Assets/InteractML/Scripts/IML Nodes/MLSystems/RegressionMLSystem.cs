@@ -14,11 +14,24 @@ namespace InteractML
     {
 
         #region Protected Methods
-        protected override void SetLearningType()
+        // to be deleted if new composition works
+        /*protected override void SetLearningType()
         {
             m_LearningType = IMLSpecifications.LearningType.Regression;
+        }*/
+        protected override void SetTrainingType()
+        {
+            Debug.Log("here regress");
+            //m_trainingType = IMLSpecifications.TrainingSetType.SingleTrainingExamples;
         }
 
+        public override RapidlibModel InstantiateRapidlibModel()
+        {
+            Debug.Log("here");
+            RapidlibModel model;
+            model = new RapidlibModel(RapidlibModel.ModelType.NeuralNetwork);
+            return model;
+        }
         /// <summary>
         /// Override training Examples to only check for the single training examples type
         /// </summary>

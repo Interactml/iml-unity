@@ -15,13 +15,21 @@ namespace InteractML
 
 
         #region Protected Methods
+        // to be deleted if new composition works
+        /*
         protected override void SetLearningType()
         {
             m_LearningType = IMLSpecifications.LearningType.Classification;
 
+        }*/
+
+        protected override void SetTrainingType()
+        {
+            Debug.Log("here class");
+            //m_trainingType = IMLSpecifications.TrainingSetType.SingleTrainingExamples;
         }
 
-        public override RapidlibModel InstantiateRapidlibModel(IMLSpecifications.LearningType learningType)
+        public override RapidlibModel InstantiateRapidlibModel()
         {
             RapidlibModel model;
             model = new RapidlibModel(RapidlibModel.ModelType.kNN);
