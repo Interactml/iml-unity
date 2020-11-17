@@ -1,0 +1,22 @@
+{
+  "HelpTooltip": "KEYBOARD SHORTCUTS: \n Train Model = T \n Run Model = P \n \n This node trains the machine learning model and runs the model to recognise inputs. This is the Regression MLS it takes in single inputs and outputs a continuous value.",
+  "PortTooltip": [ "Connect Recorded Data", "Connect Data Type Node or Feature Extractor", "Outputs the Output value/z of the machine learning system" ],
+  "BodyTooltip": {
+    "tips": [
+      "Reset Model",
+      "Train Model",
+      "Run Model"
+    ],
+    "error": [
+      "No training data",
+      "Model must be trained before running or live data inputs do not match",
+      "error 2"
+    ]
+  },
+  "BottomError": [
+    "No training data please connect a Recorded Data Node or Record Examples on the connected node. ",
+    "No live data please connect Live Data In to Data Type Nodes or Feature Extractor",
+    "The number of recorded training examples does not match the examples used to train the model. Do you need to retrain?",
+    "Live data in does not match the trained examples",
+    "Machine Learning system can only run in play mode" ]
+}
