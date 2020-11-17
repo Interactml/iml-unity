@@ -60,18 +60,15 @@ UnityPackages/
 Assets/Dependencies/OpenCVForUnity
 Assets/StreamingAssets
 Assets/Scripts/OpenCV_Trackers
-Assets/Oculus
 Assets/SteamVR
 Assets/SteamVR_Input
 Assets/SteamVR_Resources
-Assets/Oculus
 .collabignore
 .vs/IML_Goldsmiths/v15/Server/
 !Assets/InteractML/Resources/Icons
 # ===================================== #
 # Custom ignored metafiles for InteractML #
 # ===================================== #
-Assets/Oculus.meta
 Assets/SteamVR.meta
 Assets/SteamVR_Input.meta
 Assets/SteamVR_Resources.meta
