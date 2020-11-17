@@ -263,11 +263,6 @@ namespace InteractML
                     {
                         Debug.LogError("Null reference in MLSystem Node list in IML System. The list is not calculated properly and has some null spaces!");
                     }
-                    else
-                    {
-                        // Initialize Training Examples Node if not already initialized
-                        MLSystemNode.Initialize();
-                    }
                 }
             }
 
