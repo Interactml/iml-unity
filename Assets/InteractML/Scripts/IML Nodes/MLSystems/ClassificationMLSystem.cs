@@ -26,7 +26,7 @@ namespace InteractML
         protected override void SetTrainingType()
         {
             Debug.Log("here class");
-            //m_trainingType = IMLSpecifications.TrainingSetType.SingleTrainingExamples;
+            m_trainingType = IMLSpecifications.TrainingSetType.SingleTrainingExamples;
         }
 
         public override RapidlibModel InstantiateRapidlibModel()
