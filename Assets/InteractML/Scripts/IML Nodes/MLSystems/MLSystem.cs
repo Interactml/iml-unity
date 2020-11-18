@@ -256,10 +256,12 @@ namespace InteractML
                     temp.MLSystemNodesConnected.Add(this);
             }
             //if you connect a training examples or change live input 
-            if (from.fieldName == "TrainingExamplesNodeToOutput" || from.fieldName == "LiveDataOut")
+            if (from.fieldName == "TrainingExamplesNodeToOutput" || from.fieldName == "m_Out")
             {
+                Debug.Log("here");
                 IMLEventDispatcher.SetUpChange();
             }
+            
             
         }
 
@@ -1823,8 +1825,8 @@ namespace InteractML
         {
             //Debug.Log(matchVectorLength);
             //Debug.Log(matchLiveDataInputs);
-            Debug.Log(m_trainingType);
-            Debug.Log(m_Model.TypeOfModel);
+          //  Debug.Log(m_trainingType);
+            //Debug.Log(m_Model.TypeOfModel);
 
             //set errors for ui
             //UIErrors();
