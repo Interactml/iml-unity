@@ -80,6 +80,23 @@ namespace InteractML
         public delegate bool StopRecord(string nodeID);
         public static StopRecord RecordStopCallback;
 
+        // delete traiing examples events
+        /// <summary>
+        /// Event for deleting the last examples
+        /// </summary>
+        /// <param name="nodeID"></param>
+        /// <returns></returns>
+        public delegate bool DeleteLast(string nodeID);
+        public static DeleteLast DeleteLastCallback;
+
+        // delete traiing examples events
+        /// <summary>
+        /// Event for deleting the last examples
+        /// </summary>
+        /// <param name="nodeID"></param>
+        /// <returns></returns>
+        public delegate bool DeleteAll(string nodeID);
+        public static DeleteAll DeleteAllCallback;
 
         // Delete node event ???
 
