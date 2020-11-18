@@ -216,7 +216,7 @@ namespace InteractML
                 GUILayout.BeginArea(HeaderRect);
                 GUILayout.Label(NodeName, m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
                 //if(!String.IsNullOrEmpty(NodeSubtitle)) this causes the GUI to stutter 
-                GUILayout.Label(NodeSubtitle, m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
+                GUILayout.Label(/*NodeSubtitle*/ m_IMLNode.id, m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
                 GUILayout.EndArea();
 
                 GUILayout.Label("", GUILayout.MinHeight(60));
