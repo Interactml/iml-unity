@@ -25,7 +25,6 @@ namespace InteractML
 
         protected override void SetTrainingType()
         {
-            Debug.Log("here class");
             m_trainingType = IMLSpecifications.TrainingSetType.SingleTrainingExamples;
         }
 
