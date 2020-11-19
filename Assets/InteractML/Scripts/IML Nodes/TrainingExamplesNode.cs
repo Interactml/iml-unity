@@ -202,8 +202,7 @@ namespace InteractML
                     
                  }
                 inputPortList = this.GetInputPort("InputFeatures").GetConnections();
-               
-                IMLEventDispatcher.InputConfigChange();
+                IMLEventDispatcher.InputConfigChange?.Invoke();
 
 
             }
@@ -237,7 +236,7 @@ namespace InteractML
                 MLSClassification = false;
                 targetPortList = this.GetInputPort("TargetValues").GetConnections();
                 UpdateTargetValuesConfig();
-                IMLEventDispatcher.LabelsConfigChange();
+                IMLEventDispatcher.LabelsConfigChange?.Invoke();
                 return;
             }
 
@@ -334,6 +333,7 @@ namespace InteractML
             inputPortList = this.GetInputPort("InputFeatures").GetConnections();
             targetPortList = this.GetInputPort("TargetValues").GetConnections();
             CheckWarning();
+            UpdateInputConfigList();
             
         }
         /// <summary>
@@ -400,6 +400,7 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
+            
             if (numberInComponentList == -1)
             {
                 SetArrayNumber();
