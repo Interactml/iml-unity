@@ -74,10 +74,10 @@ namespace InteractML
         /// <summary>
         /// The learning type of this model
         /// </summary>
-        [SerializeField]
+        //[SerializeField]
         protected IMLSpecifications.TrainingSetType m_trainingType;
         [HideInInspector]
-        public IMLSpecifications.TrainingSetType TrainingType { get => m_trainingType; }
+        //public IMLSpecifications.TrainingSetType TrainingType { get => m_trainingType; }
 
 
         /// <summary>
@@ -251,18 +251,17 @@ namespace InteractML
             // if adding a training examples node connection add MLS system to that training nodes list of connected MLS systems
             if (from.fieldName == "TrainingExamplesNodeToOutput" && !m_WrongNumberOfTargetValues)
             {
+                IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
                 TrainingExamplesNode temp = from.node as TrainingExamplesNode;
                 if (!temp.MLSystemNodesConnected.Contains(this))
                     temp.MLSystemNodesConnected.Add(this);
             }
             //if you connect a training examples or change live input 
-            if (from.fieldName == "TrainingExamplesNodeToOutput" || from.fieldName == "m_Out")
+            if (from.fieldName == "TrainingExamplesNodeToOutput" || from.fieldName == "m_Out" || from.fieldName == "LiveDataOut")
             {
-                Debug.Log("here");
-                IMLEventDispatcher.SetUpChange();
+                IMLEventDispatcher.SetUpChange?.Invoke();
             }
-            
-            
+
         }
 
         public override void OnRemoveConnection(XNode.NodePort port)
@@ -459,13 +458,7 @@ namespace InteractML
                 {
                     isTrained = SetUpTrainingExamples();
                 }
-                if (isTrained)
-                {
-                    lengthtrainingvector = 0;
-                    TrainingExamplesNode tNode = IMLTrainingExamplesNodes[0];
-                    lengthtrainingvector = CheckLengthTrainingVector(tNode);
-
-                }
+                
             }
             return isTrained;
         }
@@ -516,6 +509,8 @@ namespace InteractML
             switch (m_trainingType)
             {
                 case IMLSpecifications.TrainingSetType.SingleTrainingExamples:
+                    if (tNode.TrainingExamplesVector.Count == 0)
+                        break;
                     IMLTrainingExample singleExample = tNode.TrainingExamplesVector[0];
 
                     foreach (IMLInput input in singleExample.Inputs)
@@ -529,6 +524,7 @@ namespace InteractML
                 case IMLSpecifications.TrainingSetType.SeriesTrainingExamples:
                     IMLTrainingSeries seriesExample = tNode.TrainingSeriesCollection[0];
                     List<IMLInput> tempList = seriesExample.Series[0];
+                    
                     foreach (IMLInput input in tempList)
                     {
                         for (int i = 0; i < input.InputData.Values.Length; i++)
@@ -550,6 +546,15 @@ namespace InteractML
         /// </summary>
         protected void CheckLengthInputsVector()
         {
+            IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
+            lengthtrainingvector = 0;
+            if (IMLTrainingExamplesNodes.Count == 0)
+            {
+                return;
+            }
+            TrainingExamplesNode tNode = IMLTrainingExamplesNodes[0];
+            lengthtrainingvector = CheckLengthTrainingVector(tNode);
+
             int vectorSize = 0;
             if (InputFeatures != null)
             {
@@ -582,7 +587,7 @@ namespace InteractML
                 matchVectorLength = false;
 
             }
-
+            
         }
 
         public void ToggleRunning()
@@ -1433,6 +1438,7 @@ namespace InteractML
                                 m_TotalNumTrainingData += IMLTrainingExamplesNodes[i].TotalNumberOfTrainingExamples;
                                 break;
                             case IMLSpecifications.TrainingSetType.SeriesTrainingExamples:
+                                Debug.Log("here");
                                 m_TotalNumTrainingData += IMLTrainingExamplesNodes[i].TrainingSeriesCollection.Count;
                                 break;
                             default:
@@ -1811,7 +1817,7 @@ namespace InteractML
 
         public void OnDataInChanged()
         {
-            Debug.Log(this.id);
+            
             // Update Input Config List
             UpdateInputConfigList();
 
@@ -1823,6 +1829,7 @@ namespace InteractML
 
         public void UpdateLogic()
         {
+            Debug.Log(m_trainingType);
             //Debug.Log(matchVectorLength);
             //Debug.Log(matchLiveDataInputs);
           //  Debug.Log(m_trainingType);
