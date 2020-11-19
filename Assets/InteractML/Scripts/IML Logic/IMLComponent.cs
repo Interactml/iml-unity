@@ -309,7 +309,7 @@ namespace InteractML
         /// </summary>
         private void InitializeEvent()
         {
-            IMLEventDispatcher.SetUpChange();
+            IMLEventDispatcher.SetUpChange?.Invoke();
         }
 
         /// <summary>
