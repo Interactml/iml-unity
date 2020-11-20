@@ -32,7 +32,6 @@ namespace InteractML
 
         protected override void SetTrainingType()
         {
-            Debug.Log("here dtw");
             m_trainingType = IMLSpecifications.TrainingSetType.SeriesTrainingExamples;
 
         }
