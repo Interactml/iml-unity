@@ -1440,7 +1440,7 @@ namespace InteractML
                         if (MLSystemNode.Untrained)
                         {
                             // First try to load the model (unless is DTW)
-                            if (MLSystemNode.LearningType != IMLSpecifications.LearningType.DTW)
+                            if (MLSystemNode.Model.TypeOfModel != RapidlibModel.ModelType.DTW)
                             {
                                 MLSystemNode.LoadModelFromDisk();
                             }
@@ -1462,7 +1462,7 @@ namespace InteractML
                             }
                         }
                         // Toggle Run only if the model is trained (and it is not DTW, the user should do that)
-                        if (MLSystemNode.Trained && MLSystemNode.LearningType != IMLSpecifications.LearningType.DTW)
+                        if (MLSystemNode.Trained && MLSystemNode.TrainingType != IMLSpecifications.TrainingSetType.SeriesTrainingExamples)
                         {
                             MLSystemNode.ToggleRunning();
                             success = true;
@@ -1509,7 +1509,7 @@ namespace InteractML
                     // Reset Model
                     MLSystemNode.ResetModel();
                     // Attempt to load if not DTW
-                    if (MLSystemNode.LearningType != IMLSpecifications.LearningType.DTW)
+                    if (MLSystemNode.Model.TypeOfModel != RapidlibModel.ModelType.DTW)
                     {
                         success = MLSystemNode.LoadModelFromDisk();
                     }

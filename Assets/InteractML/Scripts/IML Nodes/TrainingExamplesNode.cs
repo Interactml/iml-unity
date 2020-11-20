@@ -218,7 +218,7 @@ namespace InteractML
                 // Go through MLS systems connected if any MLS are classification or DTW set MLSclassification to true
                 foreach (MLSystem MLS in MLSystemNodesConnected)
                 {
-                    if (MLS.LearningType == IMLSpecifications.LearningType.DTW || MLS.LearningType == IMLSpecifications.LearningType.Classification)
+                    if (MLS.Model.TypeOfModel == RapidlibModel.ModelType.DTW || MLS.Model.TypeOfModel == RapidlibModel.ModelType.kNN)
                     {
                         MLSClassification = true;
                     }

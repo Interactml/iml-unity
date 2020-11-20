@@ -75,7 +75,6 @@ namespace InteractML
 
         protected override void TrainModelButton()
         {
-            Debug.Log(m_DTWMLSystem.TotalNumTrainingData);
             // Only run button logic when rapidlib reference not null and training examples are not null
             if (m_DTWMLSystem.Model != null && m_DTWMLSystem.TotalNumTrainingData > 0)
             {

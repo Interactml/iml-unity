@@ -19,6 +19,9 @@ namespace InteractML
         /// </summary>
         [Input]
         public List<TrainingExamplesNode> IMLTrainingExamplesNodes;
+        /// <summary>
+        /// Input list of live features for running model 
+        /// </summary>
         [Input]
         public List<Node> InputFeatures;
 
@@ -28,8 +31,12 @@ namespace InteractML
         [SerializeField]
         public List<IMLBaseDataType> PredictedOutput;
 
+        /// <summary>
+        /// Predicted Rapidlib Output 
+        /// </summary>
         [HideInInspector]
         public double[] PredictedRapidlibOutput;
+        // check with carlos what this is doing 
         [HideInInspector]
         public double[] DelayedPredictedOutput;
 
@@ -61,15 +68,6 @@ namespace InteractML
         public List<IMLSpecifications.OutputsEnum> ExpectedOutputList { get { return m_ExpectedOutputList; } }
         protected List<XNode.NodePort> m_DynamicOutputPorts;
         public bool OutputPortsChanged { get; set; }
-
-
-        /// <summary>
-        /// The learning type of this model
-        /// </summary>
-        [SerializeField]
-        protected IMLSpecifications.LearningType m_LearningType;
-        [HideInInspector]
-        public IMLSpecifications.LearningType LearningType { get => m_LearningType; }
         
         /// <summary>
         /// The learning type of this model
@@ -77,7 +75,7 @@ namespace InteractML
         [SerializeField]
         protected IMLSpecifications.TrainingSetType m_trainingType;
         [HideInInspector]
-        //public IMLSpecifications.TrainingSetType TrainingType { get => m_trainingType; }
+        public IMLSpecifications.TrainingSetType TrainingType { get => m_trainingType; }
 
 
         /// <summary>
@@ -89,10 +87,10 @@ namespace InteractML
         [HideInInspector]
         public KeyCode RunningKey;
 
-        protected IMLSpecifications.ModelStatus m_ModelStatus { get { return m_Model != null ? m_Model.ModelStatus : IMLSpecifications.ModelStatus.Untrained; } }
         /// <summary>
         /// The current status of the model
         /// </summary>
+        protected IMLSpecifications.ModelStatus m_ModelStatus { get { return m_Model != null ? m_Model.ModelStatus : IMLSpecifications.ModelStatus.Untrained; } }
         public IMLSpecifications.ModelStatus ModelStatus { get => m_ModelStatus; }
         /// <summary>
         /// Flags that controls if the model should run or not
@@ -324,19 +322,49 @@ namespace InteractML
             // Set error flags to false
             SetErrorFlags(false);
         }
+        private void SubscribeDelegates(){
 
-        public void OnDestroy()
+            // Methods for when the inputs of the training set are changed
+            IMLEventDispatcher.InputConfigChange += OnDataInChanged;
+            IMLEventDispatcher.InputConfigChange += UIErrors;
+
+            // Methods for when the label of the training set is changed
+            IMLEventDispatcher.LabelsConfigChange += OnLabelChanged;
+            IMLEventDispatcher.LabelsConfigChange += UIErrors;
+
+            // Methods for when the whole set up of the training set is changed 
+            IMLEventDispatcher.SetUpChange += OnDataInChanged;
+            IMLEventDispatcher.SetUpChange += OnLabelChanged;
+            IMLEventDispatcher.SetUpChange += UpdateTotalNumberTrainingExamples;
+            IMLEventDispatcher.SetUpChange += UIErrors;
+        }
+        /// <summary>
+        /// Method that subscribes relevant methods to events in the event dispatcher
+        /// </summary>
+        private void UnsubscribeDelegates()
         {
+            // Methods for when the inputs of the training set are changed
             IMLEventDispatcher.InputConfigChange -= OnDataInChanged;
             IMLEventDispatcher.InputConfigChange -= UIErrors;
 
+            // Methods for when the label of the training set is changed
             IMLEventDispatcher.LabelsConfigChange -= OnLabelChanged;
             IMLEventDispatcher.LabelsConfigChange -= UIErrors;
 
+            // Methods for when the whole set up of the training set is changed 
             IMLEventDispatcher.SetUpChange -= OnDataInChanged;
             IMLEventDispatcher.SetUpChange -= OnLabelChanged;
             IMLEventDispatcher.SetUpChange -= UpdateTotalNumberTrainingExamples;
             IMLEventDispatcher.SetUpChange -= UIErrors;
+        }
+
+        /// <summary>
+        /// When MLSystem object is destroyed 
+        /// </summary>
+        public void OnDestroy()
+        {
+            // Unscibscribe from all events
+            UnsubscribeDelegates();
 
             //remove this node from trainingexamplesnode list of MLSystem nodes when deleted
             foreach (TrainingExamplesNode tNode in IMLTrainingExamplesNodes) {
@@ -357,22 +385,14 @@ namespace InteractML
 
         public override void Initialize()
         {
-            IMLEventDispatcher.InputConfigChange += OnDataInChanged;
-            IMLEventDispatcher.InputConfigChange += UIErrors;
-
-            IMLEventDispatcher.LabelsConfigChange += OnLabelChanged;
-            IMLEventDispatcher.LabelsConfigChange += UIErrors;
-
-            IMLEventDispatcher.SetUpChange += OnDataInChanged;
-            IMLEventDispatcher.SetUpChange += OnLabelChanged;
-            IMLEventDispatcher.SetUpChange += UpdateTotalNumberTrainingExamples;
-            IMLEventDispatcher.SetUpChange += UIErrors;
+            // Scubscribe to all events 
+            SubscribeDelegates();
 
             // Set training type of the machine learning model
             SetTrainingType();
 
             // need to clarify what this is doing 
-            if (m_LearningType == IMLSpecifications.LearningType.DTW)
+            if (m_trainingType == IMLSpecifications.TrainingSetType.SeriesTrainingExamples)
                 TrainOnPlaymodeChange = true;
 
             // Make sure the model is initialised properly
