@@ -74,7 +74,7 @@ namespace InteractML
         /// <summary>
         /// The learning type of this model
         /// </summary>
-        //[SerializeField]
+        [SerializeField]
         protected IMLSpecifications.TrainingSetType m_trainingType;
         [HideInInspector]
         //public IMLSpecifications.TrainingSetType TrainingType { get => m_trainingType; }
@@ -367,6 +367,9 @@ namespace InteractML
             IMLEventDispatcher.SetUpChange += OnLabelChanged;
             IMLEventDispatcher.SetUpChange += UpdateTotalNumberTrainingExamples;
             IMLEventDispatcher.SetUpChange += UIErrors;
+
+            // Set training type of the machine learning model
+            SetTrainingType();
 
             // need to clarify what this is doing 
             if (m_LearningType == IMLSpecifications.LearningType.DTW)
