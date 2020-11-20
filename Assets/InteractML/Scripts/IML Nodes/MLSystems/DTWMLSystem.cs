@@ -16,7 +16,6 @@ namespace InteractML
 
         public override RapidlibModel InstantiateRapidlibModel()
         {
-            Debug.Log("here dtw");
             RapidlibModel model;
             model = new RapidlibModel(RapidlibModel.ModelType.DTW);
             return model;
