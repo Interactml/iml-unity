@@ -79,7 +79,7 @@ namespace InteractML
 
 
         /// <summary>
-        /// Keyboard flag to control node
+        /// Keyboard flag to control node - will be legacy soon 
         /// </summary>
         public bool EnableKeyboardControl = true;
         [HideInInspector]
@@ -93,16 +93,13 @@ namespace InteractML
         protected IMLSpecifications.ModelStatus m_ModelStatus { get { return m_Model != null ? m_Model.ModelStatus : IMLSpecifications.ModelStatus.Untrained; } }
         public IMLSpecifications.ModelStatus ModelStatus { get => m_ModelStatus; }
         /// <summary>
-        /// Flags that controls if the model should run or not
+        /// Public booleans to display the status of the mdoel 
         /// </summary>
         protected bool m_Running;
         public bool Running { get { return m_Running; } }
         public bool Training { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Training); } }
         public bool Trained { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Trained); } }
         public bool Untrained { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Untrained); } }
-
-        [HideInInspector]
-        public IMLNodeTooltips tips;
 
         /// <summary>
         /// Reference to the rapidlib model this node is holding
@@ -124,7 +121,7 @@ namespace InteractML
 
         
         /// <summary>
-        /// Series to run DTW on
+        /// Training series for MLSystem training in series 
         /// </summary>
         protected IMLTrainingSeries m_RunningSeries;
 
@@ -136,8 +133,12 @@ namespace InteractML
         /// Vector used to output the realtime predictions from rapidlib
         /// </summary>
         protected double[] m_RapidlibOutputVector;
+        //to be deleted when new events system totally tested
+        //private bool m_NodeConnectionChanged;
 
-        protected bool m_NodeConnectionChanged;
+        /// <summary>
+        /// Checks if label configuration changed - check with carlos if this is still needed 
+        /// </summary>
         protected int m_LastKnownRapidlibOutputVectorSize;
 
         /// <summary>
@@ -160,12 +161,24 @@ namespace InteractML
         protected bool m_ErrorWrongInputTrainingExamplesPort;
         protected bool m_WrongNumberOfTargetValues = false;
 
-        private List<TrainingExamplesNode> oldTrainingExamplesNodes;
-        private int lengthtrainingvector;
+        /// <summary>
+        /// boolean whether the training nodes connected match the number of live data input nodes connected - to be deleted when new inputs implemented 
+        /// </summary>
         public bool matchLiveDataInputs = true;
-        //does the vector length match? to be deleted when new inputs implemented 
+
+        /// <summary>
+        /// boolean whether the vector of inputs matches the training nodes conencted 
+        /// </summary>
         public bool matchVectorLength = true;
+
+        /// <summary>
+        /// string for the current warning tooltip displayed
+        /// </summary>
         public string warning;
+
+        /// <summary>
+        /// boolean for whether there is an error in the set up of the model 
+        /// </summary>
         public bool error = false;
 
         #endregion
@@ -232,7 +245,8 @@ namespace InteractML
             base.OnCreateConnection(from, to);
             m_WrongNumberOfTargetValues = false;
 
-            m_NodeConnectionChanged = true;
+            // to be deleted when new events completely tested 
+            //m_NodeConnectionChanged = true;
 
             // Evaluate the nodeport for training examples
             CheckTrainingExamplesConnections(from, to, m_TrainingExamplesNodeportName);
@@ -266,7 +280,8 @@ namespace InteractML
         {
             base.OnRemoveConnection(port);
 
-            m_NodeConnectionChanged = true;
+            // to be deleted when new events completely tested
+            //m_NodeConnectionChanged = true;
 
             //maybe remove here 
             //UpdateOutputConfigList();
@@ -292,6 +307,7 @@ namespace InteractML
             // Create rapidlib predicted output vector
             CreateRapidLibOutputVector();
 
+            // if we are diconnecting this from a training set remove this from the list of connected models
             if (port.fieldName == "IMLTrainingExamplesNodes")
             {
                 TrainingNodeConnectedRemoved();
@@ -322,6 +338,9 @@ namespace InteractML
             // Set error flags to false
             SetErrorFlags(false);
         }
+        /// <summary>
+        /// Method that subscribes relevant methods to events in the event dispatcher
+        /// </summary>
         private void SubscribeDelegates(){
 
             // Methods for when the inputs of the training set are changed
@@ -382,7 +401,9 @@ namespace InteractML
         #endregion
 
         #region Public Methods
-
+        /// <summary>
+        /// Initialize method called when a new MLSystem is created and when the graph this system is part of is enabled (when loading project/ switching edit play mode)
+        /// </summary>
         public override void Initialize()
         {
             // Scubscribe to all events 
@@ -417,8 +438,8 @@ namespace InteractML
 
             if (Lists.IsNullOrEmpty(ref m_DynamicOutputPorts))
                 m_DynamicOutputPorts = new List<XNode.NodePort>();
-
-            m_NodeConnectionChanged = false;
+            // to be deleted when new eevent system totally tested 
+            //m_NodeConnectionChanged = false;
 
             m_LastKnownRapidlibOutputVectorSize = 0;
 
@@ -429,6 +450,7 @@ namespace InteractML
             // Create rapidlib predicted output vector
             CreateRapidLibOutputVector();
 
+            // Set number of training examples 
             UpdateTotalNumberTrainingExamples();
 
             //Add this node to list of MLsystem nodes in all training nodes attached 
@@ -442,9 +464,9 @@ namespace InteractML
             m_LiveFeaturesNodeportName = "InputFeatures";
             
         }
-
+        #region Subclass Instatiation Methods
         /// <summary>
-        /// Instantiates a rapidlibmodel
+        /// Instantiates a rapidlibmodel - this should be done is subclass 
         /// </summary>
         /// <param name="learningType"></param>
         public virtual RapidlibModel InstantiateRapidlibModel()
@@ -455,13 +477,20 @@ namespace InteractML
             return model;
         }
 
-        protected virtual void SetModelAndTrainingType()
+        /// <summary>
+        /// Sets training set type for the model - called in initialize - implemented in subclass 
+        /// </summary>
+        protected virtual void SetTrainingType()
         {
-            Debug.Log("Needs to be implemented in subclass");
+            m_trainingType = IMLSpecifications.TrainingSetType.SingleTrainingExamples;
+            Debug.LogError("Needs to be implemented in MLSystem subclass");
         }
+        #endregion
 
-
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public bool TrainModel()
         {
             Debug.Log(TotalNumTrainingData);
@@ -570,7 +599,7 @@ namespace InteractML
         protected void CheckLengthInputsVector()
         {
             IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
-            lengthtrainingvector = 0;
+            int lengthtrainingvector = 0;
             if (IMLTrainingExamplesNodes.Count == 0)
             {
                 return;
@@ -595,8 +624,8 @@ namespace InteractML
                         }
                     }
                 }
-               // Debug.Log(vectorSize);
-               // Debug.Log(lengthtrainingvector);
+                Debug.Log(vectorSize);
+                Debug.Log(lengthtrainingvector);
                 if (vectorSize == lengthtrainingvector)
                 {
                     matchVectorLength = true;
@@ -767,10 +796,7 @@ namespace InteractML
             Debug.LogError("Needs to be implemented in MLSystem subclass");
         }
 
-        protected virtual void SetTrainingType()
-        {
-            Debug.LogError("Needs to be implemented in MLSystem subclass");
-        }
+       
 
         protected void KeyboardInput()
         {
@@ -1065,7 +1091,7 @@ namespace InteractML
         /// </summary>
         private void TrainingNodeConnectedRemoved()
         {
-            oldTrainingExamplesNodes = IMLTrainingExamplesNodes;
+            List<TrainingExamplesNode> oldTrainingExamplesNodes = IMLTrainingExamplesNodes;
             // Get values from the training example node
             IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
             // commented out when moving deleting this node from training examples to remove connection or delete node

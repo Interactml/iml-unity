@@ -400,7 +400,6 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
-            
             if (numberInComponentList == -1)
             {
                 SetArrayNumber();
