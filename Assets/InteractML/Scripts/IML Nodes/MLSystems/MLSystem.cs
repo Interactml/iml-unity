@@ -66,7 +66,15 @@ namespace InteractML
         [SerializeField, HideInInspector]
         protected List<IMLSpecifications.OutputsEnum> m_ExpectedOutputList;
         public List<IMLSpecifications.OutputsEnum> ExpectedOutputList { get { return m_ExpectedOutputList; } }
+
+        /// <summary>
+        /// Dynamic list of ourput ports configured by traning examples set up 
+        /// </summary>
         protected List<XNode.NodePort> m_DynamicOutputPorts;
+
+        /// <summary>
+        /// Bool have the outputs changed 
+        /// </summary>
         public bool OutputPortsChanged { get; set; }
         
         /// <summary>
