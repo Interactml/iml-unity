@@ -26,21 +26,12 @@ namespace InteractML
         #region Unity Messages
         #endregion
 
-        #region Public Methods
+        #region Protected Methods
 
-
-        protected override void Init()
-        {
-            base.Init();
-
-            Initialize();
-
-            tooltips = IMLTooltipsSerialization.LoadTooltip("SeriesTrainingExamples");
-        }
 
         #endregion
 
-        #region Protected Methods
+        
 
         /// <summary>
         /// Sets Data Collection Type 
@@ -50,12 +41,17 @@ namespace InteractML
             ModeOfCollection = CollectionMode.Series;
         }
 
-
+        #region Public Methods
+        /// <summary>
+        /// Save IML Training Data to Disk 
+        /// </summary>
         public override void SaveDataToDisk()
         {
             IMLDataSerialization.SaveTrainingSeriesCollectionToDisk(TrainingSeriesCollection, GetJSONFileName());
         }
-
+        /// <summary>
+        /// LoadsIML training data from disk 
+        /// </summary>
         public override void LoadDataFromDisk()
         {
             // Load IML Series Collection from disk

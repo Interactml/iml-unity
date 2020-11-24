@@ -5,7 +5,7 @@ using InteractML;
 
 public class DanceControl : MonoBehaviour
 {
-    [PullFromIMLController]
+    [PullFromIMLGraph]
     public int danceMove;
     public List<Animator> dancers; 
     // Start is called before the first frame update

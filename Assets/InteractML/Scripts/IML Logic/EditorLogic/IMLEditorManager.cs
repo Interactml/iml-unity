@@ -96,6 +96,11 @@ public class IMLEditorManager
     /// <param name="playModeStatus"></param>
     private static void PlayModeStateChangedLogic(PlayModeStateChange playModeStatus)
     {
+        foreach (IMLComponent MLComp in m_IMLComponents) {
+            foreach (MLSystem MLS in MLComp.MLSystemNodeList) {
+                MLS.UIErrors();
+            }
+        }
         #region Enter Events
 
         // We load models if we are entering a playmode (not required when leaving playmode)

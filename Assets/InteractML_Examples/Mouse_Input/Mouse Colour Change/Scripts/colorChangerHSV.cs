@@ -11,7 +11,7 @@ public class colorChangerHSV : MonoBehaviour
     Renderer renderer;
     private Color regressionColor;
     // IML values regression
-    [PullFromIMLController]
+    [PullFromIMLGraph]
     public float H, S, V;
 
     // Start is called before the first frame update

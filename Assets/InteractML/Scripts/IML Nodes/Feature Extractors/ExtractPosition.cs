@@ -23,26 +23,35 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         [Output]
         public Node LiveDataOut;
-        
+
         /// <summary>
         /// Controls whether to use local space or not
         /// </summary>
         public bool LocalSpace = false;
 
-        [HideInInspector]
-        public bool GameObjInputMissing;
+        /// <summary>
+        /// Controls whether to use each axis values in output 
+        /// </summary>
+        public bool x_switch = true;
+        public bool y_switch = true;
+        public bool z_switch = true;
+
 
         /// <summary>
         /// Feature Values extracted (ready to be read by a different node)
         /// </summary>
         [HideInInspector]
-        public override IMLBaseDataType FeatureValues { get { return m_PositionExtracted; } }
+        public IMLBaseDataType FeatureValues { get { return m_PositionExtracted; } }
 
         /// <summary>
         /// The private feature values extracted in a more specific data type
         /// </summary>
         [SerializeField]
         private IMLVector3 m_PositionExtracted;
+        private IMLVector3 old_PositionExtracted;
+        /// <summary>
+        /// Lets external classes see position data
+        /// </summary> 
 
         /// <summary>
         /// Lets external classes known if they should call UpdateFeature
@@ -59,28 +68,39 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         public bool isUpdated { get; set; }
 
+        public bool ReceivingData;
+
+        float x, y, z;
+        int counter = 0;
+        int count = 5;
+
 
         // Use this for initialization
         protected override void Init()
         {
-            // Make sure feature extractor value is never null
-            if (m_PositionExtracted == null)
-                m_PositionExtracted = new IMLVector3();
-
-            // initialise helper variables
-            PreviousFeatureValues = new IMLVector3();
-
-            // load node specific tooltips
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Position");
+            counter = 0;
+            count = 5;
 
             base.Init();
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Position");
+            if (m_PositionExtracted == null)
+            {
+                m_PositionExtracted = new IMLVector3();
+
+            }
+
         }
 
-
-        /// <summary>
-        /// Return the correct value of an output port when requested
-        /// </summary>
-        /// <returns></returns>
+        public void OnDestroy()
+        {
+            // Remove reference of this node in the IMLComponent controlling this node (if any)
+            var MLController = graph as IMLGraph;
+            if (MLController.SceneComponent != null)
+            {
+                MLController.SceneComponent.DeleteFeatureNode(this);
+            }
+        }
+        // Return the correct value of an output port when requested
         public override object GetValue(NodePort port)
         {
             return UpdateFeature();
@@ -92,34 +112,64 @@ namespace InteractML.FeatureExtractors
         /// <returns></returns>
         public object UpdateFeature()
         {
-            // update if node is receiving data
-            ReceivingData = FeatureExtractorMethods.IsReceivingData(this);
+            //check if receiving data
+            if(counter == count)
+            {
+                counter = 0;
+                if ((x == FeatureValues.Values[0]||!x_switch)&& y == FeatureValues.Values[1] && z == FeatureValues.Values[2])
+                {
+                    ReceivingData = false;
+                }
+                else
+                {
+                    ReceivingData = true; 
 
-            // gameobject input
+                }
+                x = FeatureValues.Values[0];
+                y = FeatureValues.Values[1];
+                z = FeatureValues.Values[2];
+                
+            }
+
+            counter++;
+            
+            if (m_PositionExtracted == null)
+            {
+                m_PositionExtracted = new IMLVector3();
+
+            }
+
             var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
 
-            // check if there's a gameobject connected
             if (gameObjRef == null)
             {
-                if ((graph as IMLController).IsGraphRunning)
-                {
-                    // If the gameobject is null, we throw an error on the editor console
-                    //Debug.LogWarning("GameObject missing in Extract Rotation Node!");
-                }
-                GameObjInputMissing = true;
+                // If the gameobject is null, we throw an error on the editor console
+                //Debug.LogWarning("GameObject missing in Extract Position Node!");
             }
             else
             {
+
                 // Set values of our feature extracted
                 if (LocalSpace)
+                { 
                     m_PositionExtracted.SetValues(gameObjRef.transform.localPosition);
-                else 
+                }
+                else
+                { 
                     m_PositionExtracted.SetValues(gameObjRef.transform.position);
-            } 
+                }
 
-            // check if each toggle is off and set feature value to 0, return float array of updated feature values
-            m_PositionExtracted.Values = FeatureExtractorMethods.CheckTogglesAndUpdateFeatures(this, m_PositionExtracted.Values);
-          
+            }
+
+            if (!x_switch)
+                FeatureValues.Values[0] = 0;
+
+            if (!y_switch)
+                FeatureValues.Values[1] = 0;
+
+            if (!z_switch)
+                FeatureValues.Values[2] = 0;
+
             return this;
 
         }
@@ -130,7 +180,7 @@ namespace InteractML.FeatureExtractors
             if (from.node.GetType() == this.GetType())
             {
                 System.Type[] portTypesAccept = new System.Type[] { };
-                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(IMLConfiguration) };
+                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(MLSystem) };
                 this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
             }
             else

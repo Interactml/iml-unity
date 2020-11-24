@@ -9,7 +9,7 @@ public class WaterControl : MonoBehaviour
     private GameObject water;
     private Transform waterScale;
 
-    [PullFromIMLController]     //Allow InteractML model to control the scale of water
+    [PullFromIMLGraph]     //Allow InteractML model to control the scale of water
     public float x, y, z;
 
     void Start()

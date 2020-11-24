@@ -60,7 +60,6 @@ UnityPackages/
 Assets/Dependencies/OpenCVForUnity
 Assets/StreamingAssets
 Assets/Scripts/OpenCV_Trackers
-Assets/Oculus
 Assets/SteamVR
 Assets/SteamVR_Input
 Assets/SteamVR_Resources
@@ -70,7 +69,6 @@ Assets/SteamVR_Resources
 # ===================================== #
 # Custom ignored metafiles for InteractML #
 # ===================================== #
-Assets/Oculus.meta
 Assets/SteamVR.meta
 Assets/SteamVR_Input.meta
 Assets/SteamVR_Resources.meta
@@ -86,3 +84,38 @@ Assets/SteamVR_Resources.meta
 *.ide-shm
 *.vs/
 Assets/LowPolyWater_Pack/Plane Meshes/Ocean50x50W750H750.asset
+Assets/Ludiq/Ludiq.meta
+Assets/Ludiq/Ludiq.Graphs/Generated.meta
+Assets/Ludiq/Ludiq.Graphs.meta
+Assets/Ludiq/Ludiq.Core/Generated.meta
+Assets/Ludiq/Ludiq.Core/DotNetDocumentation.meta
+Assets/Ludiq/Ludiq.Core.meta
+Assets/Ludiq/Bolt/Documentation/4. State Graphs.meta
+Assets/Ludiq/Bolt/Documentation/3. Flow Graphs.meta
+Assets/Ludiq/Assemblies/Ludiq.Core.Runtime.pdb.meta
+Assets/Ludiq/Assemblies/Ludiq.Core.Editor.pdb.meta
+Assets/Ludiq/Assemblies/Bolt.State.Runtime.pdb.meta
+Assets/Ludiq/Assemblies/Bolt.State.Editor.pdb.meta
+Assets/Ludiq/Assemblies/Bolt.Flow.Runtime.pdb.meta
+Assets/Ludiq/Assemblies/Bolt.Flow.Editor.pdb.meta
+Assets/Ludiq/Assemblies/Bolt.Core.Runtime.pdb.meta
+Assets/Ludiq/Assemblies/Bolt.Core.Editor.pdb.meta
+Assets/Ludiq/Assemblies.meta
+Assets/Ludiq/Bolt/Documentation/2. Basic Concepts.meta
+Assets/Ludiq/Bolt/Documentation/1. Introduction.meta
+Assets/Ludiq/Bolt/Documentation.meta
+Assets/Ludiq/Bolt.meta
+Assets/Ludiq/Bolt.State/IconMap.meta
+Assets/Ludiq/Bolt.State/Generated.meta
+Assets/Ludiq/Bolt.State.meta
+Assets/Ludiq/Bolt.Flow/IconMap.meta
+Assets/Ludiq/Bolt.Flow/Generated.meta
+Assets/Ludiq/Bolt.Flow.meta
+Assets/Ludiq/Bolt.Core/IconMap.meta
+Assets/Ludiq/Bolt.Core/Generated/Variables/Resources.meta
+Assets/Ludiq/Bolt.Core/Generated/Variables.meta
+Assets/Ludiq/Bolt.Core/Generated.meta
+Assets/Ludiq/Bolt.Core.meta
+Assets/Ludiq/Assemblies/Ludiq.Platforms.pdb.meta
+Assets/Ludiq/Assemblies/Ludiq.Graphs.Runtime.pdb.meta
+Assets/Ludiq/Assemblies/Ludiq.Graphs.Editor.pdb.meta

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using VRTK;
-using OVR;
+//using OVR;
 using InteractML;
 
 /// <summary>
@@ -17,7 +17,7 @@ public class BoxForces : MonoBehaviour
     
     // Force vars
     public float PushStrength;
-    [PullFromIMLController]
+    [PullFromIMLGraph]
     public Vector3 PushDirection;
     
     // Memory on when can push
@@ -52,9 +52,9 @@ public class BoxForces : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (UnityEngine.XR.XRSettings.enabled)
+        //if (UnityEngine.XR.XRSettings.enabled)
             // Update oculus input system
-            OVRInput.Update();
+            //OVRInput.Update();
 
     }
 
@@ -65,10 +65,10 @@ public class BoxForces : MonoBehaviour
         if (UnityEngine.XR.XRSettings.enabled)
         {
             // Update oculus input system
-            OVRInput.FixedUpdate();
+            //OVRInput.FixedUpdate();
 
             // Get any button
-            m_CanPush = OVRInput.Get(OVRInput.Button.Any);
+            //m_CanPush = OVRInput.Get(OVRInput.Button.Any);
 
         }
         // If we are on standalone...

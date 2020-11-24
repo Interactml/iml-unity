@@ -10,39 +10,39 @@ public class TestInOutDataIML : MonoBehaviour
 
     [Header("Values")]
     [Header("Floats")]
-    [SendToIMLController]
+    [SendToIMLGraph]
     public float ValueToSend;
-    [PullFromIMLController]
+    [PullFromIMLGraph]
     public float ValueToPull;
 
     [Header("Integers")]
-    [SendToIMLController]
+    [SendToIMLGraph]
     public int ValueToSendInt;
-    [PullFromIMLController]
+    [PullFromIMLGraph]
     public int ValueToPullInt;
 
     [Header("Vector 2")]
-    [SendToIMLController]
+    [SendToIMLGraph]
     public Vector2 ValueToSendV2;
-    [PullFromIMLController]
+    [PullFromIMLGraph]
     public Vector2 ValueToPullV2;
 
     [Header("Vector 3")]
-    [SendToIMLController]
+    [SendToIMLGraph]
     public Vector3 ValueToSendV3;
-    [PullFromIMLController]
+    [PullFromIMLGraph]
     public Vector3 ValueToPullV3;
 
     [Header("Vector 4")]
-    [SendToIMLController]
+    [SendToIMLGraph]
     public Vector4 ValueToSendV4;
-    [PullFromIMLController]
+    [PullFromIMLGraph]
     public Vector4 ValueToPullV4;
 
     [Header("Arrays")]
-    [SendToIMLController]
+    [SendToIMLGraph]
     public float[] ValueToSendArray;
-    [PullFromIMLController]
+    [PullFromIMLGraph]
     public float[] ValueToPullArray;
 
 

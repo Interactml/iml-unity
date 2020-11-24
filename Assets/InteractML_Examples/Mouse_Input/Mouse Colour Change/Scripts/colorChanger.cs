@@ -11,7 +11,7 @@ public class colorChanger : MonoBehaviour
     float transitionRate = 0;
 
     // IML values classification
-    [PullFromIMLController]
+    [PullFromIMLGraph]
     public int SetAbsoluteColour;
 
     // Start is called before the first frame update

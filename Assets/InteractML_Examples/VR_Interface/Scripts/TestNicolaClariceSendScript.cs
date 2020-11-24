@@ -5,10 +5,10 @@ using InteractML;
 
 public class TestNicolaClariceSendScript : MonoBehaviour
 {
-    [SendToIMLController]
+    [SendToIMLGraph]
     public Vector3 SendToGraph;
 
-    [PullFromIMLController]
+    [PullFromIMLGraph]
     public float ReceiveFromGraph;
     
     // Start is called before the first frame update

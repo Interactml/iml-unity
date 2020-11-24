@@ -7,10 +7,10 @@ public class LightController : MonoBehaviour
 {
     public Light light;
 
-    [PullFromIMLController]
+    [PullFromIMLGraph]
     public float SetLightIntensity;
 
-    [SendToIMLController]
+    [SendToIMLGraph]
     public Vector3 LightPosition;
 
     // Start is called before the first frame update

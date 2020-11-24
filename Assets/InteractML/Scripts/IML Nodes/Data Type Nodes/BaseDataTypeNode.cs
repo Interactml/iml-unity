@@ -120,7 +120,7 @@ namespace InteractML.DataTypeNodes
         public void OnDestroy()
         {
             // Remove reference of this node in the IMLComponent controlling this node (if any)
-            var MLController = graph as IMLController;
+            var MLController = graph as IMLGraph;
             if (MLController.SceneComponent != null)
             {
                 MLController.SceneComponent.DeleteFeatureNode(this);
@@ -153,7 +153,7 @@ namespace InteractML.DataTypeNodes
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
             System.Type[] portTypesAccept = new System.Type[] { typeof(T) };
-            System.Type[] nodeTypesAccept = new System.Type[] { this.GetType(), typeof(IFeatureIML), typeof(IMLConfiguration) };
+            System.Type[] nodeTypesAccept = new System.Type[] { this.GetType(), typeof(IFeatureIML), typeof(MLSystem) };
             this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
 
         }
