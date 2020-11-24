@@ -30,23 +30,15 @@ namespace InteractML.FeatureExtractors
         public bool LocalSpace = false;
 
         /// <summary>
-        /// Controls whether to use each axis values in output 
-        /// </summary>
-        public bool x_switch = true;
-        public bool y_switch = true;
-        public bool z_switch = true;
-        public bool w_switch = true;
-
-        /// <summary>
         /// Feature Values extracted (ready to be read by a different node)
         /// </summary>
-        public IMLBaseDataType FeatureValues { get { return m_RotationExtracted; } }
+        public override IMLBaseDataType FeatureValues { get { return m_RotationQuaternionExtracted; } }
 
         /// <summary>
         /// The private feature values extracted in a more specific data type
         /// </summary>
         [SerializeField]
-        private IMLVector4 m_RotationExtracted;
+        private IMLVector4 m_RotationQuaternionExtracted;
 
         [HideInInspector]
         public bool GameObjInputMissing;
@@ -66,23 +58,21 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         public bool isUpdated { get; set; }
 
-        public bool ReceivingData;
-
-        float x, y, z, w;
-        int counter = 0;
-        int count = 5;
 
         // Use this for initialization
         protected override void Init()
         {
-            base.Init();
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation Quaternion");
-            if (m_RotationExtracted == null)
-            {
-                m_RotationExtracted = new IMLVector4();
+            // initialise local variables
+            if (m_RotationQuaternionExtracted == null)
+                m_RotationQuaternionExtracted = new IMLVector4();
 
-            }
-            
+            // initialise helper variables
+            PreviousFeatureValues = new IMLVector4();
+
+            // load node specific tooltips
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation Quaternion");
+
+            base.Init();
         }
 
         // Return the correct value of an output port when requested
@@ -90,50 +80,20 @@ namespace InteractML.FeatureExtractors
         {
             return UpdateFeature();
         }
-        public void OnDestroy()
-        {
-            // Remove reference of this node in the IMLComponent controlling this node (if any)
-            var MLController = graph as IMLGraph;
-            if (MLController.SceneComponent != null)
-            {
-                MLController.SceneComponent.DeleteFeatureNode(this);
-            }
-        }
+
         /// <summary>
         /// Updates Feature values
         /// </summary>
         /// <returns></returns>
         public object UpdateFeature()
         {
-            //check if receiving data
-            if (counter == count)
-            {
-                counter = 0;
-                if (x == FeatureValues.Values[0] && y == FeatureValues.Values[1] && z == FeatureValues.Values[2])
-                {
-                    ReceivingData = false;
-                }
-                else
-                {
-                    ReceivingData = true;
+            // update if node is receiving data
+            ReceivingData = FeatureExtractorMethods.IsReceivingData(this);
 
-                }
-                x = FeatureValues.Values[0];
-                y = FeatureValues.Values[1];
-                z = FeatureValues.Values[2];
-                w = FeatureValues.Values[3];
-            }
-
-            counter++;
-
-            if (m_RotationExtracted == null)
-            {
-                m_RotationExtracted = new IMLVector4();
-
-            }
-
+            // gameobject input
             var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
 
+            // check if there's a gameobject connected
             if (gameObjRef == null)
             {
                 if ((graph as IMLGraph).IsGraphRunning)
@@ -147,25 +107,15 @@ namespace InteractML.FeatureExtractors
             {
                 // Set values of our feature extracted
                 if(LocalSpace)
-                    m_RotationExtracted.SetValues(gameObjRef.transform.localRotation);
+                    m_RotationQuaternionExtracted.SetValues(gameObjRef.transform.localRotation);
                 else
-                    m_RotationExtracted.SetValues(gameObjRef.transform.rotation);
+                    m_RotationQuaternionExtracted.SetValues(gameObjRef.transform.rotation);
 
                 GameObjInputMissing = false;
             }
 
-            if (!x_switch)
-                FeatureValues.Values[0] = 0;
-
-            if (!y_switch)
-                FeatureValues.Values[1] = 0;
-
-            if (!z_switch)
-                FeatureValues.Values[2] = 0;
-
-            if (!w_switch)
-                FeatureValues.Values[3] = 0;
-
+            // check if each toggle is off and set feature value to 0, return float array of updated feature values
+            m_RotationQuaternionExtracted.Values = FeatureExtractorMethods.CheckTogglesAndUpdateFeatures(this, m_RotationQuaternionExtracted.Values);
             return this;
 
         }

@@ -96,10 +96,10 @@ namespace InteractML.FeatureExtractors
         public void OnDestroy()
         {
             // Remove reference of this node in the IMLComponent controlling this node (if any)
-            var MLController = graph as IMLController;
-            if (MLController.SceneComponent != null)
+            var MLGraph = graph as IMLGraph;
+            if (MLGraph.SceneComponent != null)
             {
-                MLController.SceneComponent.DeleteFeatureNode(this);
+                MLGraph.SceneComponent.DeleteFeatureNode(this);
             }
         }
 
