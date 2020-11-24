@@ -39,9 +39,16 @@ namespace Oculus.Platform
       NetSync_Connect                               = 0x646D855F,
       NetSync_Disconnect                            = 0x1569FEB5,
       NetSync_GetSessions                           = 0x6ED60A35,
+      NetSync_GetVoipAttenuation                    = 0x112ACA17,
+      NetSync_GetVoipAttenuationDefault             = 0x577BA8A0,
+      NetSync_SetVoipAttenuation                    = 0x3497D7F6,
+      NetSync_SetVoipAttenuationModel               = 0x6A94AD8E,
+      NetSync_SetVoipChannelCfg                     = 0x5C95A4F3,
       NetSync_SetVoipGroup                          = 0x58129C8E,
+      NetSync_SetVoipListentoChannels               = 0x5ED0EA32,
       NetSync_SetVoipMicSource                      = 0x3302F770,
       NetSync_SetVoipSessionMuted                   = 0x5585FF0A,
+      NetSync_SetVoipSpeaktoChannels                = 0x2DAFCDD5,
       NetSync_SetVoipStreamMode                     = 0x67E19D37,
       Party_Create                                  = 0x1AD31B4F,
       Party_GatherInApplication                     = 0x7287C183,
@@ -97,8 +104,13 @@ namespace Oculus.Platform
         case MessageTypeInternal.Colocation_ShareMap:
         case MessageTypeInternal.Livestreaming_StopPartyStream:
         case MessageTypeInternal.Livestreaming_UpdateMicStatus:
+        case MessageTypeInternal.NetSync_SetVoipAttenuation:
+        case MessageTypeInternal.NetSync_SetVoipAttenuationModel:
+        case MessageTypeInternal.NetSync_SetVoipChannelCfg:
         case MessageTypeInternal.NetSync_SetVoipGroup:
+        case MessageTypeInternal.NetSync_SetVoipListentoChannels:
         case MessageTypeInternal.NetSync_SetVoipMicSource:
+        case MessageTypeInternal.NetSync_SetVoipSpeaktoChannels:
         case MessageTypeInternal.Party_Leave:
         case MessageTypeInternal.User_CancelRecordingForReportFlow:
         case MessageTypeInternal.User_TestUserCreateDeviceManifest:
@@ -154,6 +166,11 @@ namespace Oculus.Platform
         case MessageTypeInternal.NetSync_SetVoipSessionMuted:
         case MessageTypeInternal.NetSync_SetVoipStreamMode:
           message = new MessageWithNetSyncSetSessionPropertyResult(messageHandle);
+          break;
+
+        case MessageTypeInternal.NetSync_GetVoipAttenuation:
+        case MessageTypeInternal.NetSync_GetVoipAttenuationDefault:
+          message = new MessageWithNetSyncVoipAttenuationValueList(messageHandle);
           break;
 
         case MessageTypeInternal.Party_Get:

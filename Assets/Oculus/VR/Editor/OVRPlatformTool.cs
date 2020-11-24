@@ -15,10 +15,18 @@ namespace Assets.Oculus.VR.Editor
 	{
 		public enum TargetPlatform
 		{
-			Rift,
-			OculusGoGearVR,
-			Quest,
-			None,
+			Rift = 0,
+			//OculusGoGearVR = 1, // DEPRECATED
+			Quest = 2,
+			None = 3,
+		};
+
+		public enum GamepadType
+		{
+			OFF,
+			TWINSTICK,
+			RIGHT_D_PAD,
+			LEFT_D_PAD,
 		};
 
 		const string urlPlatformUtil =
@@ -50,21 +58,6 @@ namespace Assets.Oculus.VR.Editor
 
 		private static GUIStyle boldFoldoutStyle;
 
-		string[] platformOptions = new string[]
-		{
-			"Oculus Rift",
-			"Oculus Go | Gear VR",
-			"Oculus Quest"
-		};
-
-		string[] gamepadOptions = new string[]
-		{
-			"Off",
-			"Twinstick",
-			"Right D Pad",
-			"Left D Pad"
-		};
-
 		[MenuItem("Oculus/Tools/Oculus Platform Tool")]
 		static void Init()
 		{
@@ -74,13 +67,9 @@ namespace Assets.Oculus.VR.Editor
 
 			// Populate initial target platform value based on OVRDeviceSelector
 #if UNITY_ANDROID
-			if (OVRDeviceSelector.isTargetDeviceQuest)
+			if (OVRDeviceSelector.isTargetDeviceQuestFamily)
 			{
 				OVRPlatformToolSettings.TargetPlatform = TargetPlatform.Quest;
-			}
-			else
-			{
-				OVRPlatformToolSettings.TargetPlatform = TargetPlatform.OculusGoGearVR;
 			}
 #else
 			OVRPlatformToolSettings.TargetPlatform = TargetPlatform.Rift;
@@ -112,7 +101,11 @@ namespace Assets.Oculus.VR.Editor
 			this.titleContent.text = "OVR Platform Tool";
 
 			GUIContent TargetPlatformLabel = new GUIContent("Target Oculus Platform");
-			OVRPlatformToolSettings.TargetPlatform = (TargetPlatform)MakePopup(TargetPlatformLabel, (int)OVRPlatformToolSettings.TargetPlatform, platformOptions);
+			OVRPlatformToolSettings.TargetPlatform = (TargetPlatform)MakeEnumPopup(TargetPlatformLabel, OVRPlatformToolSettings.TargetPlatform);
+
+			if (OVRPlatformToolSettings.TargetPlatform == TargetPlatform.None)
+				return;
+
 			SetOVRProjectConfig(OVRPlatformToolSettings.TargetPlatform);
 			SetDirtyOnGUIChange();
 
@@ -165,11 +158,7 @@ namespace Assets.Oculus.VR.Editor
 					OVRPlatformToolSettings.ApkBuildPath = MakeFileDirectoryField(ApkPathLabel, OVRPlatformToolSettings.ApkBuildPath,
 						"Choose APK File", true, "apk");
 
-					if (OVRPlatformToolSettings.TargetPlatform == TargetPlatform.OculusGoGearVR)
-					{
-						// Go and Gear VR specific fields
-					}
-					else if (OVRPlatformToolSettings.TargetPlatform == TargetPlatform.Quest)
+					if (OVRPlatformToolSettings.TargetPlatform == TargetPlatform.Quest)
 					{
 						// Quest specific fields
 					}
@@ -193,7 +182,7 @@ namespace Assets.Oculus.VR.Editor
 
 						GUIContent GamepadEmulationLabel = new GUIContent("Gamepad Emulation [?]: ",
 							"Specifies the type of gamepad emulation used by the Oculus Touch controllers.");
-						OVRPlatformToolSettings.RiftGamepadEmulation = (OVRPlatformToolSettings.GamepadType)MakePopup(GamepadEmulationLabel, (int)OVRPlatformToolSettings.RiftGamepadEmulation, gamepadOptions);
+						OVRPlatformToolSettings.RiftGamepadEmulation = (GamepadType)MakeEnumPopup(GamepadEmulationLabel, OVRPlatformToolSettings.RiftGamepadEmulation);
 
 						show2DCommands = EditorGUILayout.Foldout(show2DCommands, "2D", boldFoldoutStyle);
 						if (show2DCommands)
@@ -242,11 +231,7 @@ namespace Assets.Oculus.VR.Editor
 					}
 					else
 					{
-						if (OVRPlatformToolSettings.TargetPlatform == TargetPlatform.OculusGoGearVR)
-						{
-							// Go and Gear VR specific optional fields
-						}
-						else if (OVRPlatformToolSettings.TargetPlatform == TargetPlatform.Quest)
+						if (OVRPlatformToolSettings.TargetPlatform == TargetPlatform.Quest)
 						{
 							// Quest specific optional fields
 						}
@@ -366,16 +351,12 @@ namespace Assets.Oculus.VR.Editor
 		private void SetOVRProjectConfig(TargetPlatform targetPlatform)
 		{
 #if UNITY_ANDROID
-
 			var targetDeviceTypes = new List<OVRProjectConfig.DeviceType>();
 
-			if (targetPlatform == TargetPlatform.Quest && !OVRDeviceSelector.isTargetDeviceQuest)
+			if (targetPlatform == TargetPlatform.Quest && !OVRDeviceSelector.isTargetDeviceQuestFamily)
 			{
 				targetDeviceTypes.Add(OVRProjectConfig.DeviceType.Quest);
-			}
-			else if (targetPlatform == TargetPlatform.OculusGoGearVR && !OVRDeviceSelector.isTargetDeviceGearVrOrGo)
-			{
-				targetDeviceTypes.Add(OVRProjectConfig.DeviceType.GearVrOrGo);
+				targetDeviceTypes.Add(OVRProjectConfig.DeviceType.Quest2);
 			}
 
 			if (targetDeviceTypes.Count != 0)
@@ -438,16 +419,25 @@ namespace Assets.Oculus.VR.Editor
 				updateThread.Start();
 			}
 
-			var thread = new Thread(delegate () {
-				// Wait for update process to finish before starting upload process
-				while (activeProcess)
+			string uploadCommand;
+			if (genUploadCommand(targetPlatform, out uploadCommand))
+			{
+				var thread = new Thread(delegate ()
 				{
-					Thread.Sleep(100);
-				}
-				retryCount = 0;
-				Command(targetPlatform, dataPath);
-			});
-			thread.Start();
+					// Wait for update process to finish before starting upload process
+					while (activeProcess)
+					{
+						Thread.Sleep(100);
+					}
+					retryCount = 0;
+					Command(targetPlatform, dataPath, uploadCommand);
+				});
+				thread.Start();
+			}
+			else
+			{
+				UnityEngine.Debug.LogError("Failed to generated upload command.");
+			}
 		}
 
 		private static string CheckForPlatformUtil(string dataPath)
@@ -587,51 +577,47 @@ namespace Assets.Oculus.VR.Editor
 			}
 		}
 
-		static void Command(TargetPlatform targetPlatform, string dataPath)
+		static void Command(TargetPlatform targetPlatform, string dataPath, string uploadCommand)
 		{
 			string platformUtilPath = CheckForPlatformUtil(dataPath);
 
-			string args;
-			if (genUploadCommand(targetPlatform, out args))
-			{
-				activeProcess = true;
-				InitializePlatformUtilProcess(platformUtilPath, args);
+			activeProcess = true;
+			InitializePlatformUtilProcess(platformUtilPath, uploadCommand);
 
-				ovrPlatUtilProcess.Exited += new EventHandler(
-					(s, e) =>
-					{
-						activeProcess = false;
-					}
-				);
+			ovrPlatUtilProcess.Exited += new EventHandler(
+				(s, e) =>
+				{
+					activeProcess = false;
+				}
+			);
 
-				ovrPlatUtilProcess.OutputDataReceived += new DataReceivedEventHandler(
-					(s, e) =>
-					{
-						if (e.Data != null && e.Data.Length != 0 && !e.Data.Contains("\u001b"))
-						{
-							OVRPlatformTool.log += e.Data + "\n";
-						}
-					}
-				);
-				ovrPlatUtilProcess.ErrorDataReceived += new DataReceivedEventHandler(
-					(s, e) =>
+			ovrPlatUtilProcess.OutputDataReceived += new DataReceivedEventHandler(
+				(s, e) =>
+				{
+					if (e.Data != null && e.Data.Length != 0 && !e.Data.Contains("\u001b"))
 					{
 						OVRPlatformTool.log += e.Data + "\n";
 					}
-				);
-
-				try
-				{
-					ovrPlatUtilProcess.Start();
-					ovrPlatUtilProcess.BeginOutputReadLine();
-					ovrPlatUtilProcess.BeginErrorReadLine();
 				}
-				catch
+			);
+			ovrPlatUtilProcess.ErrorDataReceived += new DataReceivedEventHandler(
+				(s, e) =>
 				{
-					if (ThrowPlatformUtilStartupError(platformUtilPath))
-					{
-						Command(targetPlatform, dataPath);
-					}
+					OVRPlatformTool.log += e.Data + "\n";
+				}
+			);
+
+			try
+			{
+				ovrPlatUtilProcess.Start();
+				ovrPlatUtilProcess.BeginOutputReadLine();
+				ovrPlatUtilProcess.BeginErrorReadLine();
+			}
+			catch
+			{
+				if (ThrowPlatformUtilStartupError(platformUtilPath))
+				{
+					Command(targetPlatform, dataPath, uploadCommand);
 				}
 			}
 		}
@@ -645,9 +631,6 @@ namespace Assets.Oculus.VR.Editor
 			{
 				case TargetPlatform.Rift:
 					command = "upload-rift-build";
-					break;
-				case TargetPlatform.OculusGoGearVR:
-					command = "upload-mobile-build";
 					break;
 				case TargetPlatform.Quest:
 					command = "upload-quest-build";
@@ -722,15 +705,15 @@ namespace Assets.Oculus.VR.Editor
 				}
 
 				// Add Gamepad Emulation
-				if (OVRPlatformToolSettings.RiftGamepadEmulation > OVRPlatformToolSettings.GamepadType.OFF && 
-					OVRPlatformToolSettings.RiftGamepadEmulation <= OVRPlatformToolSettings.GamepadType.LEFT_D_PAD)
+				if (OVRPlatformToolSettings.RiftGamepadEmulation > GamepadType.OFF && 
+					OVRPlatformToolSettings.RiftGamepadEmulation <= GamepadType.LEFT_D_PAD)
 				{
 					command += " --gamepad-emulation ";
 					switch (OVRPlatformToolSettings.RiftGamepadEmulation)
 					{
-						case OVRPlatformToolSettings.GamepadType.TWINSTICK:		command += "TWINSTICK";		break;
-						case OVRPlatformToolSettings.GamepadType.RIGHT_D_PAD:	command += "RIGHT_D_PAD";	break;
-						case OVRPlatformToolSettings.GamepadType.LEFT_D_PAD:	command += "LEFT_D_PAD";	break;
+						case GamepadType.TWINSTICK:		command += "TWINSTICK";		break;
+						case GamepadType.RIGHT_D_PAD:	command += "RIGHT_D_PAD";	break;
+						case GamepadType.LEFT_D_PAD:	command += "LEFT_D_PAD";	break;
 						default:												command += "OFF";			break;
 					}
 				}
@@ -755,11 +738,7 @@ namespace Assets.Oculus.VR.Editor
 					command += " --obb \"" + OVRPlatformToolSettings.ObbFilePath + "\"";
 				}
 
-				if (OVRPlatformToolSettings.TargetPlatform == TargetPlatform.OculusGoGearVR)
-				{
-					// Go and Gear VR specific commands
-				}
-				else if (OVRPlatformToolSettings.TargetPlatform == TargetPlatform.Quest)
+				if (OVRPlatformToolSettings.TargetPlatform == TargetPlatform.Quest)
 				{
 					// Quest specific commands
 				}
@@ -966,13 +945,13 @@ namespace Assets.Oculus.VR.Editor
 			return result;
 		}
 
-		private int MakePopup(GUIContent label, int variable, string[] options)
+		private Enum MakeEnumPopup(GUIContent label, Enum selected)
 		{
-			int result = 0;
+			Enum result;
 
 			EditorGUILayout.BeginHorizontal();
 			EditorGUILayout.LabelField(label, GUILayout.ExpandWidth(false));
-			result = EditorGUILayout.Popup(variable, options);
+			result = EditorGUILayout.EnumPopup(selected);
 			EditorGUILayout.EndHorizontal();
 
 			return result;
@@ -1044,7 +1023,6 @@ namespace Assets.Oculus.VR.Editor
 		private static IEnumerator ProvisionPlatformUtil(string dataPath)
 		{
 			UnityEngine.Debug.Log("Started Provisioning Oculus Platform Util");
-#if UNITY_2018_3_OR_NEWER
 			var webRequest = new UnityWebRequest(urlPlatformUtil, UnityWebRequest.kHttpVerbGET);
 			string path = dataPath;
 			webRequest.downloadHandler = new DownloadHandlerFile(path);
@@ -1064,32 +1042,6 @@ namespace Assets.Oculus.VR.Editor
 			}
 			SetDirtyOnGUIChange();
 			yield return webOp;
-#else
-			using (WWW www = new WWW(urlPlatformUtil))
-			{
-				float timer = 0;
-				float timeOut = 60;
-				yield return www;
-				while (!www.isDone && timer < timeOut)
-				{
-					timer += Time.deltaTime;
-					if (www.error != null)
-					{
-						UnityEngine.Debug.Log("Download error: " + www.error);
-						break;
-					}
-					OVRPlatformTool.log = string.Format("Downloading.. {0:P1}", www.progress);
-					SetDirtyOnGUIChange();
-					yield return new WaitForSeconds(1f);
-				}
-				if (www.isDone)
-				{
-					System.IO.File.WriteAllBytes(dataPath, www.bytes);
-					OVRPlatformTool.log = "Completed Provisioning Oculus Platform Util\n";
-					SetDirtyOnGUIChange();
-				}
-			}
-#endif
 		}
 
 		private static void DrawAssetConfigList(Rect rect)
