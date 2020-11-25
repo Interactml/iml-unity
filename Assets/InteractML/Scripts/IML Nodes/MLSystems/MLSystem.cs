@@ -319,6 +319,14 @@ namespace InteractML
             if (port.fieldName == "IMLTrainingExamplesNodes")
             {
                 TrainingNodeConnectedRemoved();
+            } 
+
+            if(port.fieldName == "InputFeatures")
+            {
+                InputFeatures = this.GetInputNodesConnected("InputFeatures");
+                CheckLiveDataInputMatchesTrainingExamples();
+                CheckLengthInputsVector();
+                UIErrors();
             }
 
         }
@@ -566,37 +574,11 @@ namespace InteractML
         protected int CheckLengthTrainingVector(TrainingExamplesNode tNode)
         {
             int trainingVector = 0;
-            switch (m_trainingType)
+            foreach (Node node in tNode.InputFeatures)
             {
-                case IMLSpecifications.TrainingSetType.SingleTrainingExamples:
-                    if (tNode.TrainingExamplesVector.Count == 0)
-                        break;
-                    IMLTrainingExample singleExample = tNode.TrainingExamplesVector[0];
-
-                    foreach (IMLInput input in singleExample.Inputs)
-                    {
-                        for (int i = 0; i < input.InputData.Values.Length; i++)
-                        {
-                            trainingVector++;
-                        }
-                    }
-                    break;
-                case IMLSpecifications.TrainingSetType.SeriesTrainingExamples:
-                    IMLTrainingSeries seriesExample = tNode.TrainingSeriesCollection[0];
-                    List<IMLInput> tempList = seriesExample.Series[0];
-                    
-                    foreach (IMLInput input in tempList)
-                    {
-                        for (int i = 0; i < input.InputData.Values.Length; i++)
-                        {
-                            trainingVector++;
-                        }
-                    }
-                    break;
-                default:
-                    break;
+                IFeatureIML feature = node as IFeatureIML;
+                trainingVector += feature.FeatureValues.Values.Length;
             }
-
             return trainingVector;
         }
 
@@ -606,6 +588,7 @@ namespace InteractML
         /// </summary>
         protected void CheckLengthInputsVector()
         {
+            Debug.Log("here");
             IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
             int lengthtrainingvector = 0;
             if (IMLTrainingExamplesNodes.Count == 0)
@@ -641,6 +624,7 @@ namespace InteractML
                 else
                 {
                     Debug.LogWarning("mismatch in live inputs to trained data");
+                    matchVectorLength = false;
                 }
             } else {
                 matchVectorLength = false;
@@ -1802,7 +1786,7 @@ namespace InteractML
                 }
             }
         }
-
+/*
         protected bool CheckTrainingExamplesConfigMatch(List<TrainingExamplesNode> trainingNodesIML)
         {
             bool match = true;
@@ -1823,7 +1807,7 @@ namespace InteractML
 
             }
             return match;
-        }
+        }*/
         /// <summary>
         /// Checks whether the lives data matches or the application is currently playing and sets errors boolean to true
         /// also sets what the tooltips should be for the error. The boolean and tooltip are used by the editor script to show and set error message
@@ -1882,8 +1866,9 @@ namespace InteractML
         public void UpdateLogic()
         {
             //Debug.Log(m_trainingType);
-            //Debug.Log(matchVectorLength);
-            //Debug.Log(matchLiveDataInputs);
+            Debug.Log(matchVectorLength);
+            
+            Debug.Log(matchLiveDataInputs);
           //  Debug.Log(m_trainingType);
             //Debug.Log(m_Model.TypeOfModel);
 
