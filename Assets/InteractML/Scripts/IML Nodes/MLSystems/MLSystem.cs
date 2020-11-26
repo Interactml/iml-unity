@@ -588,7 +588,6 @@ namespace InteractML
         /// </summary>
         protected void CheckLengthInputsVector()
         {
-            Debug.Log("here");
             IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
             int lengthtrainingvector = 0;
             if (IMLTrainingExamplesNodes.Count == 0)
@@ -615,8 +614,8 @@ namespace InteractML
                         }
                     }
                 }
-                Debug.Log(vectorSize);
-                Debug.Log(lengthtrainingvector);
+                //Debug.Log(vectorSize);
+                //Debug.Log(lengthtrainingvector);
                 if (vectorSize == lengthtrainingvector)
                 {
                     matchVectorLength = true;
@@ -1865,10 +1864,13 @@ namespace InteractML
 
         public void UpdateLogic()
         {
+            Debug.Log(Model.ModelAddress);
+            Debug.Log(Model.ModelStatus);
+            Debug.Log(Trained);
             //Debug.Log(m_trainingType);
-            Debug.Log(matchVectorLength);
+            //Debug.Log(matchVectorLength);
             
-            Debug.Log(matchLiveDataInputs);
+            //Debug.Log(matchLiveDataInputs);
           //  Debug.Log(m_trainingType);
             //Debug.Log(m_Model.TypeOfModel);
 
