@@ -1867,11 +1867,7 @@ namespace InteractML
             Debug.Log(Model.ModelAddress);
             Debug.Log(Model.ModelStatus);
             Debug.Log(Trained);
-            //Debug.Log(m_trainingType);
-            //Debug.Log(matchVectorLength);
-            
-            //Debug.Log(matchLiveDataInputs);
-          //  Debug.Log(m_trainingType);
+            Debug.Log(m_trainingType);
             //Debug.Log(m_Model.TypeOfModel);
 
             //set errors for ui

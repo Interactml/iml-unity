@@ -270,7 +270,7 @@ MonoBehaviour:
   m_GameObjectNodeList:
   - {fileID: -8914584667776746422, guid: 9e2fe998361fad74b9687f803bfa59ef, type: 2}
   m_ScriptNodesList:
-  - {fileID: 7664542125311193265, guid: 9e2fe998361fad74b9687f803bfa59ef, type: 2}
+  - {fileID: -949560571666818954, guid: 9e2fe998361fad74b9687f803bfa59ef, type: 2}
   FeaturesUpdated: 1
   ComponentsWithIMLData:
   - GameComponent: {fileID: 2057764850}
@@ -279,7 +279,7 @@ MonoBehaviour:
     m_keys:
     - {fileID: 2057764850}
     m_values:
-    - {fileID: 7664542125311193265, guid: 9e2fe998361fad74b9687f803bfa59ef, type: 2}
+    - {fileID: -949560571666818954, guid: 9e2fe998361fad74b9687f803bfa59ef, type: 2}
   m_MonobehaviourClones: []
 --- !u!4 &266555835
 Transform:
