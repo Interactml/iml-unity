@@ -449,6 +449,8 @@ namespace InteractML
                 default:
                     break;
             }
+            // clear data on disk
+            SaveDataToDisk();
             //set false to show warning about training 
             CheckWarning();
             
