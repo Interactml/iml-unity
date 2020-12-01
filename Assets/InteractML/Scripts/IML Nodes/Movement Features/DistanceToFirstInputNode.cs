@@ -5,13 +5,13 @@ using XNode;
 using InteractML;
 using System.Linq;
 
-namespace InteractML.FeatureExtractors
+namespace InteractML.MovementFeatures
 {
     /// <summary>
     /// Extracts the distance from one or several features to another one (i.e. fingers to the palm of the hand)
     /// </summary>
     [NodeWidth(250)]
-    public class ExtractDistanceToFirstInput : BaseExtractorNode, IFeatureIML
+    public class DistanceToFirstInputNode : BaseMovementFeatureNode, IFeatureIML
     {
         /// <summary>
         /// The feature that has been previously extracted and from which we are calculating the distance from (i.e. position, rotation, etc)

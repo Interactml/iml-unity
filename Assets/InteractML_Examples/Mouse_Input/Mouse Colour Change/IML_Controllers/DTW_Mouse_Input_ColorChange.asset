@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47cdcd0c7325cbb4080e00c6ddcac560, type: 3}
   m_Name: Series Training Examples
   m_EditorClassIdentifier: 
-  id: 9086deab-97fe-4e24-ab36-c863662023ed
   graph: {fileID: 11400000}
   position: {x: 1032, y: -184}
   ports:
@@ -26,10 +25,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: LiveDataOut
-        node: {fileID: -5672025770827786827}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -60,9 +56,9 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  IsInitialized: 1
-  InputFeatures:
-  - {fileID: -5672025770827786827}
+  id: 9086deab-97fe-4e24-ab36-c863662023ed
+  numberInComponentList: 0
+  InputFeatures: []
   TargetValues:
   - {fileID: -4001488984950691715}
   TrainingExamplesNodeToOutput: {fileID: -7499883729234944769}
@@ -71,13 +67,14 @@ MonoBehaviour:
   TrainingSeriesCollection: []
   m_DesiredInputsConfig: 03000000
   m_DesiredOutputsConfig: 01000000
-  IMLConfigurationNodesConnected:
+  MLSystemNodesConnected:
   - {fileID: -7185948775889766281}
   StartDelay: 0
   CaptureRate: 10
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 0
+  showWarning: 1
 --- !u!114 &-7185948775889766281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,7 +87,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65dd80174b0761e4aa18b9293d4d4839, type: 3}
   m_Name: DTWIML Configuration
   m_EditorClassIdentifier: 
-  id: 58164a29-d238-4d5e-a53a-2b8fea136f7c
   graph: {fileID: 11400000}
   position: {x: 1416, y: -184}
   ports:
@@ -117,10 +113,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: LiveDataOut
-        node: {fileID: -5672025770827786827}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -138,23 +131,26 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   DevMode: 0
-  IsInitialized: 1
+  id: 58164a29-d238-4d5e-a53a-2b8fea136f7c
+  numberInComponentList: -1
   IMLTrainingExamplesNodes:
   - {fileID: -7499883729234944769}
-  InputFeatures:
-  - {fileID: -5672025770827786827}
+  InputFeatures: []
   PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
   m_NumExamplesTrainedOn: 14
-  m_ExpectedInputList: 03000000
+  m_ExpectedInputList: 
   m_ExpectedOutputList: 01000000
-  m_LearningType: 2
+  m_trainingType: 1
   EnableKeyboardControl: 0
   TrainingKey: 0
   RunningKey: 0
   TrainOnPlaymodeChange: 1
   RunOnAwake: 1
   matchLiveDataInputs: 1
+  matchVectorLength: 0
+  warning: Live data in does not match the trained examples
+  error: 1
 --- !u!114 &-5672025770827786827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
   m_Name: Extract Position
   m_EditorClassIdentifier: 
-  id: bdc0ba9e-9fa1-4b2b-b740-e7e1d30de790
   graph: {fileID: 11400000}
   position: {x: 648, y: -200}
   ports:
@@ -190,33 +185,28 @@ MonoBehaviour:
     - _fieldName: LiveDataOut
       _node: {fileID: -5672025770827786827}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: InputFeatures
-        node: {fileID: -7185948775889766281}
-        reroutePoints:
-        - {x: 992.619, y: -279.21494}
-        - {x: 1363.0364, y: -296.78412}
-      - fieldName: InputFeatures
-        node: {fileID: -7499883729234944769}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  IsInitialized: 1
+  id: bdc0ba9e-9fa1-4b2b-b740-e7e1d30de790
+  numberInComponentList: -1
+  ReceivingData: 0
+  Counter: 5
+  Count: 5
+  ToggleSwitches: 010101
+  ReceivedValue: []
   GameObjectDataIn: {fileID: 0}
   LiveDataOut: {fileID: 0}
   LocalSpace: 0
-  x_switch: 1
-  y_switch: 1
-  z_switch: 1
+  GameObjInputMissing: 0
   m_PositionExtracted:
     m_Values:
     - -7.36
     - 2.07
     - 3.9
-  ReceivingData: 0
 --- !u!114 &-5020083817285506259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,7 +219,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
   m_Name: colorChanger (Script)
   m_EditorClassIdentifier: 
-  id: 713cd1d3-f011-4638-9104-c9c8fd9382fc
   graph: {fileID: 11400000}
   position: {x: 2296, y: -24}
   ports:
@@ -249,9 +238,10 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   DevMode: 0
-  IsInitialized: 1
+  id: 713cd1d3-f011-4638-9104-c9c8fd9382fc
+  numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 24910
+  ScriptHashCode: 16426
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: SetAbsoluteColour
@@ -279,7 +269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
   m_Name: Capsule (GameObject)
   m_EditorClassIdentifier: 
-  id: fe563f64-6001-43c9-b370-abe9ffd9a33f
   graph: {fileID: 11400000}
   position: {x: 281.06638, y: -131.3408}
   ports:
@@ -290,20 +279,18 @@ MonoBehaviour:
       _node: {fileID: -4667354009457295448}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataIn
-        node: {fileID: -5672025770827786827}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  IsInitialized: 1
+  id: fe563f64-6001-43c9-b370-abe9ffd9a33f
+  numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
-  state: 1
-  GOHashCode: 24868
+  state: 0
+  GOHashCode: 16384
   CreatedDuringPlaymode: 0
 --- !u!114 &-4001488984950691715
 MonoBehaviour:
@@ -317,7 +304,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d534d44a87f50e4f80bf8cd2142328f, type: 3}
   m_Name: Integer
   m_EditorClassIdentifier: 
-  id: 54b6cb67-94dd-4a17-b4f1-2418b641ab7e
   graph: {fileID: 11400000}
   position: {x: 648, y: 232}
   ports:
@@ -347,15 +333,19 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  IsInitialized: 1
+  id: 54b6cb67-94dd-4a17-b4f1-2418b641ab7e
+  numberInComponentList: -1
   ValueName: 
   m_In: 0
-  m_Value: 3
+  m_Value: 0
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  m_UserInput: 3
-  int_switch: 1
+  Counter: 5
+  Count: 5
+  ToggleSwitches: 01
+  ReceivedValue:
+  - 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,12 +360,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodes:
   - {fileID: -4667354009457295448}
-  - {fileID: -5672025770827786827}
   - {fileID: -7499883729234944769}
   - {fileID: -4001488984950691715}
   - {fileID: -7185948775889766281}
   - {fileID: 848793323497249020}
   - {fileID: -5020083817285506259}
+  - {fileID: -5672025770827786827}
   SceneComponent: {fileID: 0}
 --- !u!114 &848793323497249020
 MonoBehaviour:
@@ -389,7 +379,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d534d44a87f50e4f80bf8cd2142328f, type: 3}
   m_Name: Integer
   m_EditorClassIdentifier: 
-  id: 9268ba68-3741-419d-8608-174fd97f1d73
   graph: {fileID: 11400000}
   position: {x: 1896, y: -40}
   ports:
@@ -422,12 +411,16 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  IsInitialized: 1
+  id: 9268ba68-3741-419d-8608-174fd97f1d73
+  numberInComponentList: -1
   ValueName: 
   m_In: 0
-  m_Value: 3
-  m_Out: 3
+  m_Value: 0
+  m_Out: 0
   ReceivingData: 0
   InputConnected: 1
-  m_UserInput: 0
-  int_switch: 1
+  Counter: 5
+  Count: 5
+  ToggleSwitches: 01
+  ReceivedValue:
+  - 0

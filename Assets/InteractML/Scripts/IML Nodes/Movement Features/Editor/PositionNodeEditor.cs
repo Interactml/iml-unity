@@ -6,15 +6,15 @@ using UnityEditor;
 using XNodeEditor;
 #endif
 
-namespace InteractML.FeatureExtractors
+namespace InteractML.MovementFeatures
 {
-    [CustomNodeEditor(typeof(ExtractRotationEuler))]
-    public class ExtractRotationEulerNodeEditor : IMLNodeEditor
+    [CustomNodeEditor(typeof(PositionNode))]
+    public class ExtractPositionNodeEditor : IMLNodeEditor
     {
         /// <summary>
         /// Reference to the node itself
         /// </summary>
-        private ExtractRotationEuler m_ExtractRotationEuler;
+        private PositionNode m_ExtractPosition;
 
         /// <summary>
         /// Initialise node specific interface labels and parameters
@@ -22,11 +22,10 @@ namespace InteractML.FeatureExtractors
         public override void OnCreate()
         {
             // Get reference to the current node
-            m_ExtractRotationEuler = (target as ExtractRotationEuler);
+            m_ExtractPosition = (target as PositionNode);
 
             // Initialise node name
-            NodeName = "LIVE ROTATION DATA";
-            NodeSubtitle = "Euler";
+            NodeName = "LIVE POSITION DATA";
 
             // Initialise node height
             m_BodyRect.height = 150;
@@ -38,16 +37,14 @@ namespace InteractML.FeatureExtractors
 
             // Initialise output port labels
             OutputPortsNamesOverride = new Dictionary<string, string>();
-            base.OutputPortsNamesOverride.Add("LiveDataOut", "Rotation\nData Out");
+            base.OutputPortsNamesOverride.Add("LiveDataOut", "Position\nData Out");
 
             // Initialise node tooltips
-            base.nodeTips = m_ExtractRotationEuler.tooltips;
+            base.nodeTips = m_ExtractPosition.tooltips;
 
             // Initialise axis labels
             feature_labels = new string[3] { "x: ", "y: ", "z: " };
-
         }
-
 
         protected override void ShowBodyFields()
         {
@@ -57,16 +54,15 @@ namespace InteractML.FeatureExtractors
             GUILayout.Space(20);
 
             //draws node data fields
-            FeatureExtractorEditorMethods.DrawFeatureValueToggleAndLabel(this, m_ExtractRotationEuler, m_ExtractRotationEuler.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractRotationEuler.ReceivingData));
+            MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabel(this, m_ExtractPosition, m_ExtractPosition.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractPosition.ReceivingData));
 
             GUILayout.Space(10);
             //draw toggle to select whether to use localspace
-            m_ExtractRotationEuler.LocalSpace = FeatureExtractorEditorMethods.DrawLocalSpaceToggle(this, m_ExtractRotationEuler.LocalSpace);
+            m_ExtractPosition.LocalSpace = MovementFeatureEditorMethods.DrawLocalSpaceToggle(this, m_ExtractPosition.LocalSpace);
 
             GUILayout.EndArea();
         }
 
-        
 
     }
 

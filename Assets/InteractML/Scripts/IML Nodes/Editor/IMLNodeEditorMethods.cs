@@ -7,7 +7,7 @@ using UnityEditor;
 using XNodeEditor;
 #endif
 using InteractML.DataTypeNodes;
-using InteractML.FeatureExtractors;
+using InteractML.MovementFeatures;
 
 namespace InteractML
 {

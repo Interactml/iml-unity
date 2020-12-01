@@ -7,9 +7,9 @@ using UnityEditor;
 using XNodeEditor;
 #endif
 
-namespace InteractML.FeatureExtractors
+namespace InteractML.MovementFeatures
 {
-    public static class FeatureExtractorEditorMethods
+    public static class MovementFeatureEditorMethods
     {
         /// <summary>
         /// Draws toggle, feature label and value of input data for feature extractor and data type nodes
@@ -18,7 +18,7 @@ namespace InteractML.FeatureExtractors
         /// <param name="node editor"></param>
         /// <param name="int number of features"></param>
         /// <param name="toggle GUIStyle"></param>
-        public static void DrawFeatureValueToggleAndLabel(this IMLNodeEditor nodeEditor, BaseExtractorNode node, int numberOfFeatures, GUIStyle toggle_style)
+        public static void DrawFeatureValueToggleAndLabel(this IMLNodeEditor nodeEditor, BaseMovementFeatureNode node, int numberOfFeatures, GUIStyle toggle_style)
         {
             GUILayout.Space(10);
 
@@ -50,7 +50,7 @@ namespace InteractML.FeatureExtractors
         /// <param name="node editor"></param>
         /// <param name="int number of features"></param>
         /// <param name="toggle GUIStyle"></param>
-        public static void DrawFeatureValueToggleAndLabelDynamic(this IMLNodeEditor nodeEditor, BaseExtractorNode node, int numberOfFeatures, GUIStyle toggle_style)
+        public static void DrawFeatureValueToggleAndLabelDynamic(this IMLNodeEditor nodeEditor, BaseMovementFeatureNode node, int numberOfFeatures, GUIStyle toggle_style)
         {
             // check number of feature values sent as parameter matches the amount of feature values in the node
             if (numberOfFeatures == node.FeatureValues.Values.Length)

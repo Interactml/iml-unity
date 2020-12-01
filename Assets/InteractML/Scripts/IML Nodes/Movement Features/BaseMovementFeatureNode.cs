@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using XNode;
 
-namespace InteractML.FeatureExtractors
+namespace InteractML.MovementFeatures
 {
     /// <summary>
     /// Base Class for Feature Extractor Nodes
     /// </summary>
-    public abstract class BaseExtractorNode : IMLNode, IFeatureIML
+    public abstract class BaseMovementFeatureNode : IMLNode, IFeatureIML
     {
 
         #region Variables
@@ -106,7 +106,7 @@ namespace InteractML.FeatureExtractors
         //// Check that we are only connecting to a GameObject
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
-            this.DisconnectIfNotType<BaseExtractorNode, GameObjectNode>(from, to);
+            this.DisconnectIfNotType<BaseMovementFeatureNode, GameObjectNode>(from, to);
         }
 
         /// <summary>

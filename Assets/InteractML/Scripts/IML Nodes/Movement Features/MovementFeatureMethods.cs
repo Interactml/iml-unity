@@ -7,12 +7,12 @@ using UnityEditor;
 using XNodeEditor;
 #endif
 
-namespace InteractML.FeatureExtractors
+namespace InteractML.MovementFeatures
 {
     /// </summary>
     /// Contains extension methods for data type node classes
     /// </summary>
-    public static class FeatureExtractorMethods
+    public static class MovementFeatureMethods
     {
         
         /// </summary>
@@ -20,7 +20,7 @@ namespace InteractML.FeatureExtractors
      /// </summary>
      /// <param name="data type node"></param>
      /// <return></return>
-        public static bool IsReceivingData(this BaseExtractorNode node)
+        public static bool IsReceivingData(this BaseMovementFeatureNode node)
         {
 
             //Check if count has counted to Counter
@@ -62,7 +62,7 @@ namespace InteractML.FeatureExtractors
         /// <param name="data type node"></param>
         /// <param name="float array"></param>
         /// <return></return>
-        public static float[] CheckTogglesAndUpdateFeatures(this BaseExtractorNode node, float[] value)
+        public static float[] CheckTogglesAndUpdateFeatures(this BaseMovementFeatureNode node, float[] value)
         {
             // checks the amount of feature values matches the size of the amount of toggles and items in the float array, throws an error otherwise
             if (node.ToggleSwitches.Length == node.FeatureValues.Values.Length && value.Length == node.FeatureValues.Values.Length)

@@ -4,13 +4,13 @@ using UnityEngine;
 using System.Linq;
 using XNode;
 
-namespace InteractML.FeatureExtractors
+namespace InteractML.MovementFeatures
 {
     /// <summary>
-    /// Feature extractor for rotations
+    /// Feature extractor for euler rotations
     /// </summary>
     [NodeWidth(250)]
-    public class ExtractRotationQuaternion : BaseExtractorNode, IFeatureIML
+    public class RotationEulerNode : BaseMovementFeatureNode, IFeatureIML
     {
         /// <summary>
         /// GameObject from which we extract a feature
@@ -32,13 +32,13 @@ namespace InteractML.FeatureExtractors
         /// <summary>
         /// Feature Values extracted (ready to be read by a different node)
         /// </summary>
-        public override IMLBaseDataType FeatureValues { get { return m_RotationQuaternionExtracted; } }
+        public override IMLBaseDataType FeatureValues { get { return m_RotationEulerExtracted; } }
 
         /// <summary>
         /// The private feature values extracted in a more specific data type
         /// </summary>
         [SerializeField]
-        private IMLVector4 m_RotationQuaternionExtracted;
+        private IMLVector3 m_RotationEulerExtracted;
 
         [HideInInspector]
         public bool GameObjInputMissing;
@@ -58,19 +58,18 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         public bool isUpdated { get; set; }
 
-
         // Use this for initialization
         protected override void Init()
         {
-            // initialise local variables
-            if (m_RotationQuaternionExtracted == null)
-                m_RotationQuaternionExtracted = new IMLVector4();
-
+            // Make sure feature extractor value is never null
+            if (m_RotationEulerExtracted == null)
+                m_RotationEulerExtracted = new IMLVector3();
+            
             // initialise helper variables
-            PreviousFeatureValues = new IMLVector4();
+            PreviousFeatureValues = new IMLVector3();
 
             // load node specific tooltips
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation Quaternion");
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation Euler");
 
             base.Init();
         }
@@ -87,8 +86,9 @@ namespace InteractML.FeatureExtractors
         /// <returns></returns>
         public object UpdateFeature()
         {
+
             // update if node is receiving data
-            ReceivingData = FeatureExtractorMethods.IsReceivingData(this);
+            ReceivingData = MovementFeatureMethods.IsReceivingData(this);
 
             // gameobject input
             var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
@@ -106,18 +106,18 @@ namespace InteractML.FeatureExtractors
             else
             {
                 // Set values of our feature extracted
-                if(LocalSpace)
-                    m_RotationQuaternionExtracted.SetValues(gameObjRef.transform.localRotation);
+                if (LocalSpace)
+                    m_RotationEulerExtracted.SetValues(gameObjRef.transform.localEulerAngles);
                 else
-                    m_RotationQuaternionExtracted.SetValues(gameObjRef.transform.rotation);
+                    m_RotationEulerExtracted.SetValues(gameObjRef.transform.eulerAngles);
 
                 GameObjInputMissing = false;
             }
 
             // check if each toggle is off and set feature value to 0, return float array of updated feature values
-            m_RotationQuaternionExtracted.Values = FeatureExtractorMethods.CheckTogglesAndUpdateFeatures(this, m_RotationQuaternionExtracted.Values);
-            return this;
+            m_RotationEulerExtracted.Values = MovementFeatureMethods.CheckTogglesAndUpdateFeatures(this, m_RotationEulerExtracted.Values);
 
+            return this;
         }
 
         // Check that we are only connecting to a GameObject
@@ -131,7 +131,7 @@ namespace InteractML.FeatureExtractors
             }
             else
             {
-                this.DisconnectIfNotType<BaseExtractorNode, GameObjectNode>(from, to);
+                this.DisconnectIfNotType<BaseMovementFeatureNode, GameObjectNode>(from, to);
 
             }
         }

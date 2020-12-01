@@ -6,15 +6,15 @@ using UnityEditor;
 using XNodeEditor;
 #endif
 
-namespace InteractML.FeatureExtractors
+namespace InteractML.MovementFeatures
 {
-    [CustomNodeEditor(typeof(ExtractVelocity))]
+    [CustomNodeEditor(typeof(VelocityNode))]
     public class ExtractVelocityNodeEditor : IMLNodeEditor
     {
         /// <summary>
         /// Reference to the node itself
         /// </summary>
-        private ExtractVelocity m_ExtractVelocity;
+        private VelocityNode m_ExtractVelocity;
 
         /// <summary>
         /// Initialise node specific interface labels and parameters
@@ -22,7 +22,7 @@ namespace InteractML.FeatureExtractors
         public override void OnCreate()
         {
             // Get reference to the current node
-            m_ExtractVelocity = (target as ExtractVelocity);
+            m_ExtractVelocity = (target as VelocityNode);
 
             // Initialise node name
             NodeName = "LIVE VELOCITY DATA";
@@ -57,7 +57,7 @@ namespace InteractML.FeatureExtractors
             if (m_ExtractVelocity.FeatureValues.Values != null || m_ExtractVelocity.FeatureValues.Values.Length != 0)
             {
                 //draws node data fields
-                FeatureExtractorEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractVelocity, m_ExtractVelocity.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractVelocity.ReceivingData));
+                MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractVelocity, m_ExtractVelocity.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractVelocity.ReceivingData));
             }
             else
             {

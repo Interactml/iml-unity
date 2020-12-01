@@ -6,15 +6,15 @@ using UnityEditor;
 using XNodeEditor;
 #endif
 
-namespace InteractML.FeatureExtractors
+namespace InteractML.MovementFeatures
 {
-    [CustomNodeEditor(typeof(ExtractPosition))]
-    public class ExtractPositionNodeEditor : IMLNodeEditor
+    [CustomNodeEditor(typeof(RotationQuaternionNode))]
+    public class ExtractRotationQuaternionNodeEditor : IMLNodeEditor
     {
         /// <summary>
         /// Reference to the node itself
         /// </summary>
-        private ExtractPosition m_ExtractPosition;
+        private RotationQuaternionNode m_ExtractRotationQuaternion;
 
         /// <summary>
         /// Initialise node specific interface labels and parameters
@@ -22,14 +22,15 @@ namespace InteractML.FeatureExtractors
         public override void OnCreate()
         {
             // Get reference to the current node
-            m_ExtractPosition = (target as ExtractPosition);
+            m_ExtractRotationQuaternion = (target as RotationQuaternionNode);
 
             // Initialise node name
-            NodeName = "LIVE POSITION DATA";
+            NodeName = "LIVE ROTATION DATA";
+            NodeSubtitle = "Quaternion";
 
             // Initialise node height
-            m_BodyRect.height = 150;
-            nodeSpace = 150;
+            m_BodyRect.height = 180;
+            nodeSpace = 180;
 
             // Initialise input port labels
             InputPortsNamesOverride = new Dictionary<string, string>();
@@ -37,14 +38,15 @@ namespace InteractML.FeatureExtractors
 
             // Initialise output port labels
             OutputPortsNamesOverride = new Dictionary<string, string>();
-            base.OutputPortsNamesOverride.Add("LiveDataOut", "Position\nData Out");
+            base.OutputPortsNamesOverride.Add("LiveDataOut", "Rotation\nData Out");
 
             // Initialise node tooltips
-            base.nodeTips = m_ExtractPosition.tooltips;
-
+            base.nodeTips = m_ExtractRotationQuaternion.tooltips;
+            
             // Initialise axis labels
-            feature_labels = new string[3] { "x: ", "y: ", "z: " };
+            feature_labels = new string[4] { "x: ", "y: ", "z: ", "w: " };
         }
+
 
         protected override void ShowBodyFields()
         {
@@ -54,15 +56,14 @@ namespace InteractML.FeatureExtractors
             GUILayout.Space(20);
 
             //draws node data fields
-            FeatureExtractorEditorMethods.DrawFeatureValueToggleAndLabel(this, m_ExtractPosition, m_ExtractPosition.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractPosition.ReceivingData));
+            MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabel(this, m_ExtractRotationQuaternion, m_ExtractRotationQuaternion.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractRotationQuaternion.ReceivingData));
 
             GUILayout.Space(10);
             //draw toggle to select whether to use localspace
-            m_ExtractPosition.LocalSpace = FeatureExtractorEditorMethods.DrawLocalSpaceToggle(this, m_ExtractPosition.LocalSpace);
+            m_ExtractRotationQuaternion.LocalSpace = MovementFeatureEditorMethods.DrawLocalSpaceToggle(this, m_ExtractRotationQuaternion.LocalSpace);
 
             GUILayout.EndArea();
         }
-
 
     }
 

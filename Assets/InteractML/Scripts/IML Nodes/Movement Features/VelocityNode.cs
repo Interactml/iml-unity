@@ -4,13 +4,13 @@ using UnityEngine;
 using System.Linq;
 using XNode;
 
-namespace InteractML.FeatureExtractors
+namespace InteractML.MovementFeatures
 {
     /// <summary>
     /// Extract the velocity from any other Feature
     /// </summary>
     [NodeWidth(250)]
-    public class ExtractVelocity : BaseExtractorNode, IFeatureIML
+    public class VelocityNode : BaseMovementFeatureNode, IFeatureIML
     {
         /// <summary>
         /// The feature that has been previously extracted and from which we are calculating the velocity (i.e. position, rotation, etc)

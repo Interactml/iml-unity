@@ -4,13 +4,13 @@ using UnityEngine;
 using System.Linq;
 using XNode;
 
-namespace InteractML.FeatureExtractors
+namespace InteractML.MovementFeatures
 {
     /// <summary>
-    /// Feature extractor for positions
+    /// Feature extractor for rotations
     /// </summary>
     [NodeWidth(250)]
-    public class ExtractPosition : BaseExtractorNode, IFeatureIML
+    public class RotationQuaternionNode : BaseMovementFeatureNode, IFeatureIML
     {
         /// <summary>
         /// GameObject from which we extract a feature
@@ -23,26 +23,25 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         [Output]
         public Node LiveDataOut;
-        
+
         /// <summary>
         /// Controls whether to use local space or not
         /// </summary>
         public bool LocalSpace = false;
 
-        [HideInInspector]
-        public bool GameObjInputMissing;
-
         /// <summary>
         /// Feature Values extracted (ready to be read by a different node)
         /// </summary>
-        [HideInInspector]
-        public override IMLBaseDataType FeatureValues { get { return m_PositionExtracted; } }
+        public override IMLBaseDataType FeatureValues { get { return m_RotationQuaternionExtracted; } }
 
         /// <summary>
         /// The private feature values extracted in a more specific data type
         /// </summary>
         [SerializeField]
-        private IMLVector3 m_PositionExtracted;
+        private IMLVector4 m_RotationQuaternionExtracted;
+
+        [HideInInspector]
+        public bool GameObjInputMissing;
 
         /// <summary>
         /// Lets external classes known if they should call UpdateFeature
@@ -63,24 +62,20 @@ namespace InteractML.FeatureExtractors
         // Use this for initialization
         protected override void Init()
         {
-            // Make sure feature extractor value is never null
-            if (m_PositionExtracted == null)
-                m_PositionExtracted = new IMLVector3();
+            // initialise local variables
+            if (m_RotationQuaternionExtracted == null)
+                m_RotationQuaternionExtracted = new IMLVector4();
 
             // initialise helper variables
-            PreviousFeatureValues = new IMLVector3();
+            PreviousFeatureValues = new IMLVector4();
 
             // load node specific tooltips
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Position");
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation Quaternion");
 
             base.Init();
         }
 
-
-        /// <summary>
-        /// Return the correct value of an output port when requested
-        /// </summary>
-        /// <returns></returns>
+        // Return the correct value of an output port when requested
         public override object GetValue(NodePort port)
         {
             return UpdateFeature();
@@ -93,7 +88,7 @@ namespace InteractML.FeatureExtractors
         public object UpdateFeature()
         {
             // update if node is receiving data
-            ReceivingData = FeatureExtractorMethods.IsReceivingData(this);
+            ReceivingData = MovementFeatureMethods.IsReceivingData(this);
 
             // gameobject input
             var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
@@ -111,15 +106,16 @@ namespace InteractML.FeatureExtractors
             else
             {
                 // Set values of our feature extracted
-                if (LocalSpace)
-                    m_PositionExtracted.SetValues(gameObjRef.transform.localPosition);
-                else 
-                    m_PositionExtracted.SetValues(gameObjRef.transform.position);
-            } 
+                if(LocalSpace)
+                    m_RotationQuaternionExtracted.SetValues(gameObjRef.transform.localRotation);
+                else
+                    m_RotationQuaternionExtracted.SetValues(gameObjRef.transform.rotation);
+
+                GameObjInputMissing = false;
+            }
 
             // check if each toggle is off and set feature value to 0, return float array of updated feature values
-            m_PositionExtracted.Values = FeatureExtractorMethods.CheckTogglesAndUpdateFeatures(this, m_PositionExtracted.Values);
-          
+            m_RotationQuaternionExtracted.Values = MovementFeatureMethods.CheckTogglesAndUpdateFeatures(this, m_RotationQuaternionExtracted.Values);
             return this;
 
         }
@@ -135,10 +131,9 @@ namespace InteractML.FeatureExtractors
             }
             else
             {
-                this.DisconnectIfNotType<BaseExtractorNode, GameObjectNode>(from, to);
+                this.DisconnectIfNotType<BaseMovementFeatureNode, GameObjectNode>(from, to);
 
             }
         }
     }
 }
-

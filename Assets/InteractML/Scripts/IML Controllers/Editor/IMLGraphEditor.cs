@@ -94,10 +94,7 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.RealtimeIMLOutputNode")
-            {
-                return base.GetNodeMenuName(type).Replace("InteractML", "");
-            }
+
             if (type.PrettyName() == "InteractML.SeriesTrainingExamplesNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
@@ -110,23 +107,23 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.FeatureExtractors.ExtractDistanceToFirstInput")
+            if (type.PrettyName() == "InteractML.MovementFeatures.DistanceToFirstInputNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.FeatureExtractors.ExtractPosition")
+            if (type.PrettyName() == "InteractML.MovementFeatures.PositionNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.FeatureExtractors.ExtractRotationQuaternion")
+            if (type.PrettyName() == "InteractML.MovementFeatures.RotationQuaternionNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.FeatureExtractors.ExtractRotationEuler")
+            if (type.PrettyName() == "InteractML.MovementFeatures.RotationEulerNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.FeatureExtractors.ExtractVelocity")
+            if (type.PrettyName() == "InteractML.MovementFeatures.VelocityNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }

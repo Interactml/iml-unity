@@ -6,15 +6,15 @@ using UnityEditor;
 using XNodeEditor;
 #endif
 
-namespace InteractML.FeatureExtractors
+namespace InteractML.MovementFeatures
 {
-    [CustomNodeEditor(typeof(ExtractDistanceToFirstInput))]
+    [CustomNodeEditor(typeof(DistanceToFirstInputNode))]
     public class ExtractDistanceToFirstInputNodeEditor : IMLNodeEditor
     {
         /// <summary>
         /// Reference to the node itself
         /// </summary>
-        private ExtractDistanceToFirstInput m_ExtractDistanceToFirstInput;
+        private DistanceToFirstInputNode m_ExtractDistanceToFirstInput;
 
         /// <summary>
         /// Initialise node specific interface labels and parameters
@@ -22,7 +22,7 @@ namespace InteractML.FeatureExtractors
         public override void OnCreate()
         {
             // Get reference to the current node
-            m_ExtractDistanceToFirstInput = (target as ExtractDistanceToFirstInput);
+            m_ExtractDistanceToFirstInput = (target as DistanceToFirstInputNode);
 
             // Initialise node name
             NodeName = "DISTANCE BETWEEN INPUTS";
@@ -74,7 +74,7 @@ namespace InteractML.FeatureExtractors
             if (m_ExtractDistanceToFirstInput.FeatureValues.Values != null && m_ExtractDistanceToFirstInput.FeatureValues.Values.Length != 0)
             {
                 //draws node data fields
-                FeatureExtractorEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractDistanceToFirstInput, m_ExtractDistanceToFirstInput.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractDistanceToFirstInput.ReceivingData));
+                MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractDistanceToFirstInput, m_ExtractDistanceToFirstInput.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractDistanceToFirstInput.ReceivingData));
                 
             }
             else

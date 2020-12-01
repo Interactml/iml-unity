@@ -4,13 +4,13 @@ using UnityEngine;
 using System.Linq;
 using XNode;
 
-namespace InteractML.FeatureExtractors
+namespace InteractML.MovementFeatures
 {
     /// <summary>
-    /// Feature extractor for euler rotations
+    /// Feature extractor for positions
     /// </summary>
     [NodeWidth(250)]
-    public class ExtractRotationEuler : BaseExtractorNode, IFeatureIML
+    public class PositionNode : BaseMovementFeatureNode, IFeatureIML
     {
         /// <summary>
         /// GameObject from which we extract a feature
@@ -23,25 +23,26 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         [Output]
         public Node LiveDataOut;
-
+        
         /// <summary>
         /// Controls whether to use local space or not
         /// </summary>
         public bool LocalSpace = false;
 
+        [HideInInspector]
+        public bool GameObjInputMissing;
+
         /// <summary>
         /// Feature Values extracted (ready to be read by a different node)
         /// </summary>
-        public override IMLBaseDataType FeatureValues { get { return m_RotationEulerExtracted; } }
+        [HideInInspector]
+        public override IMLBaseDataType FeatureValues { get { return m_PositionExtracted; } }
 
         /// <summary>
         /// The private feature values extracted in a more specific data type
         /// </summary>
         [SerializeField]
-        private IMLVector3 m_RotationEulerExtracted;
-
-        [HideInInspector]
-        public bool GameObjInputMissing;
+        private IMLVector3 m_PositionExtracted;
 
         /// <summary>
         /// Lets external classes known if they should call UpdateFeature
@@ -58,23 +59,28 @@ namespace InteractML.FeatureExtractors
         /// </summary>
         public bool isUpdated { get; set; }
 
+
         // Use this for initialization
         protected override void Init()
         {
             // Make sure feature extractor value is never null
-            if (m_RotationEulerExtracted == null)
-                m_RotationEulerExtracted = new IMLVector3();
-            
+            if (m_PositionExtracted == null)
+                m_PositionExtracted = new IMLVector3();
+
             // initialise helper variables
             PreviousFeatureValues = new IMLVector3();
 
             // load node specific tooltips
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation Euler");
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Position");
 
             base.Init();
         }
 
-        // Return the correct value of an output port when requested
+
+        /// <summary>
+        /// Return the correct value of an output port when requested
+        /// </summary>
+        /// <returns></returns>
         public override object GetValue(NodePort port)
         {
             return UpdateFeature();
@@ -86,9 +92,8 @@ namespace InteractML.FeatureExtractors
         /// <returns></returns>
         public object UpdateFeature()
         {
-
             // update if node is receiving data
-            ReceivingData = FeatureExtractorMethods.IsReceivingData(this);
+            ReceivingData = MovementFeatureMethods.IsReceivingData(this);
 
             // gameobject input
             var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
@@ -107,17 +112,16 @@ namespace InteractML.FeatureExtractors
             {
                 // Set values of our feature extracted
                 if (LocalSpace)
-                    m_RotationEulerExtracted.SetValues(gameObjRef.transform.localEulerAngles);
-                else
-                    m_RotationEulerExtracted.SetValues(gameObjRef.transform.eulerAngles);
-
-                GameObjInputMissing = false;
-            }
+                    m_PositionExtracted.SetValues(gameObjRef.transform.localPosition);
+                else 
+                    m_PositionExtracted.SetValues(gameObjRef.transform.position);
+            } 
 
             // check if each toggle is off and set feature value to 0, return float array of updated feature values
-            m_RotationEulerExtracted.Values = FeatureExtractorMethods.CheckTogglesAndUpdateFeatures(this, m_RotationEulerExtracted.Values);
-
+            m_PositionExtracted.Values = MovementFeatureMethods.CheckTogglesAndUpdateFeatures(this, m_PositionExtracted.Values);
+          
             return this;
+
         }
 
         // Check that we are only connecting to a GameObject
@@ -131,9 +135,10 @@ namespace InteractML.FeatureExtractors
             }
             else
             {
-                this.DisconnectIfNotType<BaseExtractorNode, GameObjectNode>(from, to);
+                this.DisconnectIfNotType<BaseMovementFeatureNode, GameObjectNode>(from, to);
 
             }
         }
     }
 }
+
