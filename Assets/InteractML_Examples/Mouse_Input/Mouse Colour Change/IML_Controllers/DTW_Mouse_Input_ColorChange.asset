@@ -194,7 +194,7 @@ MonoBehaviour:
   id: bdc0ba9e-9fa1-4b2b-b740-e7e1d30de790
   numberInComponentList: -1
   ReceivingData: 0
-  Counter: 5
+  Counter: 3
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  Counter: 5
+  Counter: 3
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -419,7 +419,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 1
-  Counter: 5
+  Counter: 3
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
