@@ -18,5 +18,5 @@
     "No live data please connect Live Data In to Data Type Nodes or Feature Extractor",
     "The number of recorded training examples does not match the examples used to train the model. Do you need to retrain?",
     "Live data in does not match the trained examples",
-    "Machine Learning system can only run in play mode"]
+    "You are in edit mode live data in from objects will only workin play mode"]
 }
