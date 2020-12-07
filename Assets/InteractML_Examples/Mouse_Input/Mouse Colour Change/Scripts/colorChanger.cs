@@ -5,10 +5,10 @@ using InteractML;
 
 public class colorChanger : MonoBehaviour
 {
-    Renderer renderer;
+    Renderer m_Renderer;
     Color[] colors;
-    float transitionTime = 5f;
-    float transitionRate = 0;
+   // float transitionTime = 5f;
+    //float transitionRate = 0;
 
     // IML values classification
     [PullFromIMLGraph]
@@ -17,7 +17,7 @@ public class colorChanger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        renderer = GetComponent<Renderer>(); // grab the renderer component
+        m_Renderer = GetComponent<Renderer>(); // grab the renderer component
 
         colors = new Color[3]; // We will randomize through this array
 
@@ -48,13 +48,13 @@ public class colorChanger : MonoBehaviour
                 yield return null; // wait for a frame then loop again
 
         } */
-                renderer.material.SetColor("_Color", colors[1]);
+                m_Renderer.material.SetColor("_Color", colors[1]);
                 break;
             case 2:
-                renderer.material.SetColor("_Color", colors[2]);
+                m_Renderer.material.SetColor("_Color", colors[2]);
                 break;
             case 3:
-                renderer.material.SetColor("_Color", colors[0]);
+                m_Renderer.material.SetColor("_Color", colors[0]);
                 break;
             default:
                 break;

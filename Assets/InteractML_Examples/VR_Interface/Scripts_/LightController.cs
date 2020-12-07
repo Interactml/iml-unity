@@ -5,7 +5,7 @@ using InteractML;
 
 public class LightController : MonoBehaviour
 {
-    public Light light;
+    public Light m_Light;
 
     [PullFromIMLGraph]
     public float SetLightIntensity;
@@ -23,13 +23,13 @@ public class LightController : MonoBehaviour
     void Update()
     {
         
-        if (light != null)
+        if (m_Light != null)
         {
             // Pull data from IML Controller
-            light.intensity = SetLightIntensity;
+            m_Light.intensity = SetLightIntensity;
 
             // Send data to IML Controller
-            LightPosition = light.transform.position;   
+            LightPosition = m_Light.transform.position;   
 
         }
 

@@ -19,7 +19,7 @@ namespace InteractML
         /// <summary>
         /// Rects for node layout
         /// </summary>
-        Rect m_BodyRect;
+       // Rect m_BodyRect;
 
 
         Vector2 scrollWindow;

@@ -8,7 +8,7 @@ using InteractML;
 /// </summary>
 public class colorChangerRGB : MonoBehaviour
 {
-    Renderer renderer;
+    Renderer m_Renderer;
 
     private Color regressionColor;
 
@@ -23,7 +23,7 @@ public class colorChangerRGB : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        renderer = GetComponent<Renderer>(); // grab the renderer component
+        m_Renderer = GetComponent<Renderer>(); // grab the renderer component
 
         if (regressionColor == null)
             new Color();
@@ -37,7 +37,7 @@ public class colorChangerRGB : MonoBehaviour
         regressionColor.g = SetG;
         regressionColor.b = SetB;
 
-        renderer.material.SetColor("_Color", regressionColor);
+        m_Renderer.material.SetColor("_Color", regressionColor);
         
     }
 }

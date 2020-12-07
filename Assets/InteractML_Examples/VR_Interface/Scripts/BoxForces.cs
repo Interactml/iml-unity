@@ -32,7 +32,7 @@ public class BoxForces : MonoBehaviour
     [SerializeField]
     private Material m_OriginalMat;
     [SerializeField]
-    private Material m_HighlightMat;
+    public Material m_HighlightMat;
 
     // Start is called before the first frame update
     void Start()

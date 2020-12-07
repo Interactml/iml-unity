@@ -70,16 +70,6 @@ namespace InteractML.MovementFeatures
 
         }
 
-        public void OnDestroy()
-        {
-            // Remove reference of this node in the IMLComponent controlling this node (if any)
-            var MLGraph = graph as IMLGraph;
-            if (MLGraph.SceneComponent != null)
-            {
-                MLGraph.SceneComponent.DeleteFeatureNode(this);
-            }
-        }
-
         // Return the correct value of an output port when requested
         public override object GetValue(NodePort port)
         {
