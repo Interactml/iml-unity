@@ -265,11 +265,11 @@ namespace InteractML
                     }
                 }
             }
-
+            // comented to fix opening window problem - delete when sure this has not caused issues 
             // Inject GameObjects to GameObject nodes
-            SendGameObjectsToIMLController();
+            //SendGameObjectsToIMLController();
 
-            updateGameObjectImage();
+            //updateGameObjectImage();
 
 #if !UNITY_EDITOR
             // If we are not on the editor...
@@ -318,16 +318,20 @@ namespace InteractML
         /// <param name="ListToInitalize">IMLNode List to initiliaze</param>
         private void InitializeNodeType(IEnumerable<IMLNode> ListToInitalize)
         {
-            // loop through all nodes in list
-            foreach (IMLNode node in ListToInitalize)
+            if(ListToInitalize != null)
             {
-                if(node != null)
+                // loop through all nodes in list
+                foreach (IMLNode node in ListToInitalize)
                 {
-                    //Initialize node 
-                    node.NodeInitalize();
+                    if (node != null)
+                    {
+                        //Initialize node 
+                        node.NodeInitalize();
+                    }
+
                 }
-                
             }
+            
         }
         
         private void InitializeFeatureNode(List<IFeatureIML> ListToInitalize)
