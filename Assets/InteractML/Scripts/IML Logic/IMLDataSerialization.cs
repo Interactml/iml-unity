@@ -555,14 +555,26 @@ namespace InteractML
                 // We check if the file is there before reading from it
                 if (File.Exists(auxFilePath))
                 {
-                    //Debug.Log("The file exists and we read from it!");
-                    string jsonTrainingExamplesList = File.ReadAllText(auxFilePath);
-                    if (jsonTrainingExamplesList != null)
+                    try
                     {
-                        //Debug.Log("Examples are not null, loading the text");
-                        //Debug.Log(jsonTrainingExamplesList);
-                        auxList = JsonConvert.DeserializeObject<List<T>>(jsonTrainingExamplesList);
+                        string jsonTrainingExamplesList = File.ReadAllText(auxFilePath);
+                        if (jsonTrainingExamplesList != null)
+                        {
+                            //Debug.Log("Examples are not null, loading the text");
+                            //Debug.Log(jsonTrainingExamplesList);
+                            auxList = JsonConvert.DeserializeObject<List<T>>(jsonTrainingExamplesList);
+                        }
                     }
+                    catch (FileNotFoundException e)
+                    {
+                        Debug.Log(e.Message);
+                    }
+                    catch (IOException e)
+                    {
+                        Debug.LogError(e.Message);
+                    }
+                    //Debug.Log("The file exists and we read from it!");
+                    
 
                     //Debug.Log("What we read is: " + jsonTrainingExamplesList);
                 }
