@@ -729,9 +729,13 @@ namespace InteractML
         /// <returns></returns>
         public virtual string GetJSONFileName ()
         {
-            string graphName = this.graph.name;
-            string fileName = graphName + "TrainingExamplesNode" + this.id;
-            return fileName;
+            if(this.graph != null)
+            {
+                string graphName = this.graph.name;
+                string fileName = graphName + "TrainingExamplesNode" + this.id;
+                return fileName;
+            }
+            return null;
         }
 
         public void SetArrayNumber()

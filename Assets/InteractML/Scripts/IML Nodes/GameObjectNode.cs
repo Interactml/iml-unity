@@ -50,7 +50,7 @@ namespace InteractML
         {
             // Remove reference of this node in the IMLComponent controlling this node (if any)
             var MLController = graph as IMLGraph;
-            if (MLController.SceneComponent != null)
+            if (MLController != null)
             {
                 MLController.SceneComponent.DeleteGameObjectNode(this);
             }
@@ -66,10 +66,10 @@ namespace InteractML
             }
             else
             {
-                if ((graph as IMLGraph).IsGraphRunning)
+                /*if ((graph as IMLGraph).IsGraphRunning)
                 {
                     Debug.LogWarning("GameObject missing from GameObjectNode!!");
-                }
+                }*/
                 GameObjMissing = true;
                 return null;
             }

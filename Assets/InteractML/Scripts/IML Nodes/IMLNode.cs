@@ -73,8 +73,16 @@ namespace InteractML
         public IMLComponent FindController()
         {
             IMLGraph MLController = graph as IMLGraph;
-            IMLComponent MLComponent = MLController.SceneComponent;
-            return MLComponent;
+            if(MLController != null)
+            {
+                IMLComponent MLComponent = MLController.SceneComponent;
+                return MLComponent;
+            } else
+            {
+                Debug.Log("could not find graph");
+                return null;
+            }
+            
         }
 
         public void FindComponentListNumber<T>(List<T> list, IMLComponent MLComponent)
