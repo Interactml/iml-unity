@@ -38,7 +38,7 @@ namespace InteractML.DataTypeNodes
 
         protected override void Init()
         {
-            tooltips = IMLTooltipsSerialization.LoadTooltip("SerialVector");
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Array");
             base.Init();
         }
         // Check that a feature connected is of the right type
