@@ -59,7 +59,7 @@ namespace InteractML.MovementFeatures
         public bool isUpdated { get; set; }
 
         // Use this for initialization
-        protected override void Init()
+        public override void Initialize()
         {
             // Make sure feature extractor value is never null
             if (m_RotationEulerExtracted == null)
@@ -68,10 +68,6 @@ namespace InteractML.MovementFeatures
             // initialise helper variables
             PreviousFeatureValues = new IMLVector3();
 
-            // load node specific tooltips
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Rotation Euler");
-
-            base.Init();
         }
 
         // Return the correct value of an output port when requested
