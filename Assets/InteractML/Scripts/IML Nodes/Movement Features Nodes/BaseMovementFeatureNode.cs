@@ -82,7 +82,7 @@ namespace InteractML.MovementFeatures
             // for nodes with dynamically sized float arrays as features initialise to empty array
             else
             {
-                Debug.Log("Toggle switch array not initialised");
+                ToggleSwitches = new bool[0];
             }
             
 

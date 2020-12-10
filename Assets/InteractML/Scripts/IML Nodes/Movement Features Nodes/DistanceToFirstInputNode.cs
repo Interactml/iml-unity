@@ -181,9 +181,58 @@ namespace InteractML.MovementFeatures
         }
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
-            System.Type[] portTypesAccept = new System.Type[] { };
-            System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(MLSystem) };
-            this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
+            // control what connections the input port accepts (not output port)
+            if (to.node == this)
+            {
+                System.Type[] portTypesAccept = new System.Type[] { };
+                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(MLSystem) };
+                this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
+
+                // control what connections the first port accepts
+                if (to.fieldName == "FirstInput")
+                {
+                    // only allow 1 connection (but don't override the original - user must disconnect original input to connect a different one)
+                    if (this.GetInputNodesConnected("FirstInput").Count > 1) { from.Disconnect(to); }
+
+                    // check if there is a connection to the second input
+                    if (this.GetInputPort("SecondInputs").IsConnected)
+                    {
+                        // check if the two inputted types have the same number of features, otherwise disconnect
+                        if ((SecondInputs[0] as IFeatureIML).FeatureValues.Values.Length != (to.GetInputValue() as IFeatureIML).FeatureValues.Values.Length)
+                        {
+                            from.Disconnect(to);
+                        }
+
+                    }
+                }
+
+                // control what connections the first port accepts
+                if (to.fieldName == "SecondInputs")
+                {
+                    // check if there is a connection to the first input
+                    if (this.GetInputPort("FirstInput").IsConnected)
+                    {
+                        // check if the two inputted types have the same number of features, otherwise disconnect
+                        if ((FirstInput as IFeatureIML).FeatureValues.Values.Length != (to.node.GetInputNodesConnected("SecondInputs")[0] as IFeatureIML).FeatureValues.Values.Length)
+                        {
+                            from.Disconnect(to);
+                        }
+
+                    }
+
+                    // check if there is a connection to the second input
+                    if (this.GetInputPort("SecondInputs").IsConnected && (this.GetInputNodesConnected("SecondInputs").Count > 1) )
+                    {
+                        // check if the two inputted types have the same number of features, otherwise disconnect
+                        if ((this.GetInputNodesConnected("SecondInputs")[0] as IFeatureIML).FeatureValues.Values.Length != (to.node.GetInputNodesConnected("SecondInputs")[this.GetInputNodesConnected("SecondInputs").Count - 1] as IFeatureIML).FeatureValues.Values.Length)
+                        {
+                            from.Disconnect(to);
+                        }
+
+                    }
+                }
+
+            }
         }
     }
 }

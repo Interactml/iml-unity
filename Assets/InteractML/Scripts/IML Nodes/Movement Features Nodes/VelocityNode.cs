@@ -15,7 +15,7 @@ namespace InteractML.MovementFeatures
         /// <summary>
         /// The feature that has been previously extracted and from which we are calculating the velocity (i.e. position, rotation, etc)
         /// </summary>
-        [Input(connectionType = ConnectionType.Override)]
+        [Input]
         public IFeatureIML FeatureToInput;
 
         /// <summary>
@@ -236,6 +236,9 @@ namespace InteractML.MovementFeatures
             // control what connections the input port accepts (not output port)
             if (to.node == this)
             {
+                // only allow 1 connection (but don't override the original - user must disconnect original input to connect a different one)
+                if (this.GetInputNodesConnected("FeatureToInput").Count > 1) { from.Disconnect(to); }
+
                 System.Type[] portTypesAccept = new System.Type[] { };
                 System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(MLSystem), typeof(ScriptNode) };
                 this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);

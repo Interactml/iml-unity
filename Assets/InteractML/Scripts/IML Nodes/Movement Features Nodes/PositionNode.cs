@@ -15,7 +15,7 @@ namespace InteractML.MovementFeatures
         /// <summary>
         /// GameObject from which we extract a feature
         /// </summary>
-        [Input(connectionType = ConnectionType.Override)]
+        [Input]
         public GameObject GameObjectDataIn;
 
         /// <summary>
@@ -130,6 +130,9 @@ namespace InteractML.MovementFeatures
             // control what connections the input port accepts (not output port)
             if (to.node == this)
             {
+                // only allow 1 connection (but don't override the original - user must disconnect original input to connect a different one)
+                if (this.GetInputNodesConnected("GameObjectDataIn").Count > 1) { from.Disconnect(to); }
+
                 // only accept gameobject node, disconnect otherwise
                 this.DisconnectIfNotType<BaseMovementFeatureNode, GameObjectNode>(from, to);
             }
