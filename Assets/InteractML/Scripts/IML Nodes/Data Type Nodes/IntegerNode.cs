@@ -53,7 +53,7 @@ namespace InteractML.DataTypeNodes
 
                 // check incoming node type and port data type is accepted by input port
                 System.Type[] portTypesAccept = new System.Type[] { typeof(float), typeof(int), typeof(float[]) };
-                System.Type[] nodeTypesAccept = new System.Type[] { typeof(FloatNode), typeof(IntegerNode), typeof(ArrayNode), typeof(MLSystem), typeof(ScriptNode) };
+                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(MLSystem), typeof(ScriptNode) };
                 this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
             }
 
