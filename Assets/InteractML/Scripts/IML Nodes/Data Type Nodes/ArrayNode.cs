@@ -44,10 +44,17 @@ namespace InteractML.DataTypeNodes
         // Check that a feature connected is of the right type
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
-            base.OnCreateConnection(from, to);
+            // control what connections the input port accepts 
+            if (to.node == this)
+            {
+                // only allow 1 connection (but don't override the original - user must disconnect original input to connect a different one)
+                if (this.GetInputNodesConnected("m_In").Count > 1) { from.Disconnect(to); }
 
-            // Make sure that the IFeatureIML connected is matching our type
-            this.DisconnectFeatureNotSameIMLDataType(from, to, IMLSpecifications.DataTypes.Array);
+                // check incoming node type and port data type is accepted by input port
+                System.Type[] portTypesAccept = new System.Type[] { typeof(float), typeof(int), typeof(Vector2), typeof(Vector3), typeof(Vector4), typeof(float[]) };
+                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(MLSystem), typeof(ScriptNode) };
+                this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
+            }
 
         }
 
