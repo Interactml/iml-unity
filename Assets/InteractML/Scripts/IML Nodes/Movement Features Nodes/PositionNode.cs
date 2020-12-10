@@ -61,7 +61,7 @@ namespace InteractML.MovementFeatures
 
 
         // Use this for initialization
-        protected override void Init()
+        public override void Initialize()
         {
             // Make sure feature extractor value is never null
             if (m_PositionExtracted == null)
@@ -70,10 +70,6 @@ namespace InteractML.MovementFeatures
             // initialise helper variables
             PreviousFeatureValues = new IMLVector3();
 
-            // load node specific tooltips
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Position");
-
-            base.Init();
         }
 
 
