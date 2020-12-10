@@ -60,14 +60,11 @@ namespace InteractML.MovementFeatures
 
 
         // Use this for initialization
-        protected override void Init()
+        public override void Initialize()
         {
-            base.Init();
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Distance");
             // This extractor expects any other feature extracted to make calculations
             FirstInput = GetInputValue<Node>("FirstInput");
             SecondInputs = GetInputValues<Node>("SecondInputs").ToList();
-
         }
 
         // Return the correct value of an output port when requested
