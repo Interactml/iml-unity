@@ -62,31 +62,11 @@ namespace InteractML.MovementFeatures
         /// Initialise node
         /// </summary>
         /// <returns></returns>
-        protected override void Init()
+        public override void Initialize()
         {
             // initialise counters to change toggle colour
             Counter = 0;
-            Count = 5;
-
-            // check amount of feature values before creating toggle switch array of that size
-            if (FeatureValues != null)
-            {
-                if (FeatureValues.Values.Length > 0)
-                {
-                    // create new array of boolean for each of the features in the data type and set all to true
-                    ToggleSwitches = new bool[FeatureValues.Values.Length];
-                    for (int i = 0; i < FeatureValues.Values.Length; i++)
-                        ToggleSwitches[i] = true;
-                }
-            }
-            // for nodes with dynamically sized float arrays as features initialise to empty array
-            else
-            {
-                ToggleSwitches = new bool[0];
-            }
-            
-
-            base.Init();
+            Count = 5;    
         }
 
         /// <summary>

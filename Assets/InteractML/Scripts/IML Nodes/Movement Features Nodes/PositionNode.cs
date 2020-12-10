@@ -63,6 +63,7 @@ namespace InteractML.MovementFeatures
         // Use this for initialization
         public override void Initialize()
         {
+
             // Make sure feature extractor value is never null
             if (m_PositionExtracted == null)
                 m_PositionExtracted = new IMLVector3();
@@ -70,6 +71,24 @@ namespace InteractML.MovementFeatures
             // initialise helper variables
             PreviousFeatureValues = new IMLVector3();
 
+            // check amount of feature values before creating toggle switch array of that size
+            if (m_PositionExtracted != null)
+            {
+                if (m_PositionExtracted.Values.Length > 0)
+                {
+                    // create new array of boolean for each of the features in the data type and set all to true
+                    ToggleSwitches = new bool[m_PositionExtracted.Values.Length];
+                    for (int i = 0; i < m_PositionExtracted.Values.Length; i++)
+                        ToggleSwitches[i] = true;
+                }
+            }
+            // for nodes with dynamically sized float arrays as features initialise to empty array
+            else
+            {
+                ToggleSwitches = new bool[0];
+            }
+
+            base.Initialize();
         }
 
 

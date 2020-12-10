@@ -65,6 +65,25 @@ namespace InteractML.MovementFeatures
             // This extractor expects any other feature extracted to make calculations
             FirstInput = GetInputValue<Node>("FirstInput");
             SecondInputs = GetInputValues<Node>("SecondInputs").ToList();
+
+            // check amount of feature values before creating toggle switch array of that size
+            if (m_DistancesToFirstInput != null)
+            {
+                if (m_DistancesToFirstInput.Length > 0)
+                {
+                    // create new array of boolean for each of the features in the data type and set all to true
+                    ToggleSwitches = new bool[m_DistancesToFirstInput.Length];
+                    for (int i = 0; i < m_DistancesToFirstInput.Length; i++)
+                        ToggleSwitches[i] = true;
+                }
+            }
+            // for nodes with dynamically sized float arrays as features initialise to empty array
+            else
+            {
+                ToggleSwitches = new bool[0];
+            }
+
+            base.Initialize();
         }
 
         // Return the correct value of an output port when requested
@@ -79,7 +98,7 @@ namespace InteractML.MovementFeatures
             // This extractor expects any other feature extracted to make calculations
             FirstInput = GetInputValue<Node>("FirstInput");
             SecondInputs = GetInputValues<Node>("SecondInputs").ToList();
-
+            
             
 
             if (!isUpdated)
@@ -176,6 +195,14 @@ namespace InteractML.MovementFeatures
             }
 
         }
+
+        public override void OnRemoveConnection(NodePort port)
+        {
+            base.OnRemoveConnection(port);
+
+            UpdateToggleArray();
+        }
+
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
             // control what connections the input port accepts (not output port)
@@ -228,7 +255,18 @@ namespace InteractML.MovementFeatures
 
                     }
                 }
+                UpdateToggleArray();
+            }
+        }
 
+        private void UpdateToggleArray()
+        {
+            if (m_DistancesToFirstInput.Length != ToggleSwitches.Length)
+            {
+                // create new array of boolean for each of the features in the data type and set all to true
+                ToggleSwitches = new bool[m_DistancesToFirstInput.Length];
+                for (int i = 0; i < m_DistancesToFirstInput.Length; i++)
+                    ToggleSwitches[i] = true;
             }
         }
     }
