@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 #if UNITY_EDITOR
 using UnityEditor;
 using XNodeEditor;
+using XNode;
 #endif
 
 namespace InteractML.DataTypeNodes
@@ -95,6 +96,21 @@ namespace InteractML.DataTypeNodes
             return value;
         }
 
-
+        /// </summary>
+        /// Checks if input to input port is an array, if so check that the size of the array is the same as the number of features 
+        /// </summary>
+        /// <param name="data type node"></param>
+        /// <param name="to port"></param>
+        /// <param name="from port"></param>
+        /// <return></return>
+        public static void CheckArraySizeAgainstFeatureValues<T>(this BaseDataTypeNode<T> node, NodePort from, NodePort to)
+        {
+            // if connected a float array to input port
+            if (to.GetInputValue().GetType() == typeof(float[]))
+            {
+                // check that it size matches features in data type otherwise disconnect float array
+                if (to.node.GetInputValue<float[]>("m_In").Length != node.FeatureValues.Values.Length) { from.Disconnect(to); }
+            }
+        }
     }
 }
