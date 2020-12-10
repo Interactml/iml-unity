@@ -27,16 +27,13 @@ namespace InteractML.DataTypeNodes
         private IMLInteger m_FeatureValues;
 
         // Use this for initialization
-        protected override void Init()
+        public override void Initialize()
         {
             // initialise variables
             PreviousFeatureValues = new IMLInteger();
             UserInput = new IMLInteger();
 
-            // load node specific tooltips
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Int");
-
-            base.Init();
+            base.Initialize();
         }
 
         // Check that a feature connected is of the right type

@@ -96,7 +96,7 @@ namespace InteractML.DataTypeNodes
         /// Initialise node
         /// </summary>
         /// <returns></returns>
-        protected override void Init()
+        public override void Initialize()
         {
             // initialise counters to change toggle colour
             Counter = 0;
@@ -110,7 +110,6 @@ namespace InteractML.DataTypeNodes
             // set float array to size matching amount of features
             ReceivedValue = new float[FeatureValues.Values.Length];
 
-            base.Init();
         }
 
         /// <summary>

@@ -33,16 +33,13 @@ namespace InteractML.DataTypeNodes
         /// Initialise node
         /// </summary>
         /// <returns></returns>
-        protected override void Init()
+        public override void Initialize()
         {
             // initialise variables
             PreviousFeatureValues = new IMLFloat();
             UserInput = new IMLFloat();
 
-            // load node specific tooltips
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Float");
-
-            base.Init();
+            base.Initialize();
         }
 
         // Check that a feature connected is of the right type

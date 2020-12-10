@@ -32,17 +32,14 @@ namespace InteractML.DataTypeNodes
         private Vector4 m_UpdatedValue;
 
         // Use this for initialization
-        protected override void Init()
+        public override void Initialize()
         {
             // initialise variables
             PreviousFeatureValues = new IMLVector4();
             UserInput = new IMLVector4();
             m_UpdatedValue = new Vector4();
 
-            // load node specific tooltips
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Vector3");
-
-            base.Init();
+            base.Initialize();
         }
 
         // Check that a feature connected is of the right type

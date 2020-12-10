@@ -35,12 +35,6 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private IMLArray m_FeatureValues;
 
-
-        protected override void Init()
-        {
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Array");
-            base.Init();
-        }
         // Check that a feature connected is of the right type
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
