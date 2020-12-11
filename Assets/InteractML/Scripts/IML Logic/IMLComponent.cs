@@ -1468,6 +1468,7 @@ namespace InteractML
                         // Toggle Run only if the model is trained (and it is not DTW, the user should do that)
                         if (MLSystemNode.Trained && MLSystemNode.TrainingType != IMLSpecifications.TrainingSetType.SeriesTrainingExamples)
                         {
+                            MLSystemNode.UpdateOutputFormat();
                             MLSystemNode.ToggleRunning();
                             success = true;
                         }
