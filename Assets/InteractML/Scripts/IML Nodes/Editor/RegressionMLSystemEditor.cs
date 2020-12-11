@@ -169,15 +169,7 @@ namespace InteractML
                 }
                 if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Run")))
                 {
-                    Debug.Log("run");
-                    if (m_RegressionMLSystem.Running)
-                    {
-                        IMLEventDispatcher.StopRunCallback(m_RegressionMLSystem.id);
-                    }
-                    else
-                    {
-                        IMLEventDispatcher.StartRunCallback(m_RegressionMLSystem.id);
-                    }
+                    IMLEventDispatcher.ToggleRunCallback(m_RegressionMLSystem.id);
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;

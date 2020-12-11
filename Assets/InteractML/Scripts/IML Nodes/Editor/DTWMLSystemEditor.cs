@@ -180,17 +180,7 @@ namespace InteractML
 
                 if (GUILayout.Button(nameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Run")))
                 {
-                    
-                        if (m_DTWMLSystem.Running)
-                        {
-                            IMLEventDispatcher.StopRunCallback(m_DTWMLSystem.id);
-                        }
-                        else
-                        {
-                            Debug.Log("here");
-                            IMLEventDispatcher.StartRunCallback(m_DTWMLSystem.id);
-                        }
-                    
+                    IMLEventDispatcher.ToggleRunCallback(m_DTWMLSystem.id);
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;

@@ -349,14 +349,12 @@ namespace InteractML
         private void SubscribeToDelegates() {
             // dispatchers for MLSystem node events
             IMLEventDispatcher.TrainMLSCallback += Train;
-            IMLEventDispatcher.StartRunCallback += StartRunning;
-            IMLEventDispatcher.StopRunCallback += StopRunning;
+            IMLEventDispatcher.ToggleRunCallback += ToggleRunning;
             IMLEventDispatcher.ResetModelCallback += ResetModel;
 
             // dispatchers for training examples node events
             IMLEventDispatcher.RecordOneCallback += RecordOne;
-            IMLEventDispatcher.RecordStartCallback += StartRecording;
-            IMLEventDispatcher.RecordStopCallback += StopRecording;
+            IMLEventDispatcher.ToggleRecordCallback += StartRecording;
         }
         /// <summary>
         /// 
@@ -366,14 +364,12 @@ namespace InteractML
         {
             // dispatchers for MLSystem node event
             IMLEventDispatcher.TrainMLSCallback -= Train;
-            IMLEventDispatcher.StartRunCallback -= StartRunning;
-            IMLEventDispatcher.StopRunCallback -= StopRunning;
+            IMLEventDispatcher.ToggleRunCallback -= ToggleRunning;
             IMLEventDispatcher.ResetModelCallback -= ResetModel;
 
             // dispatchers for training examples node events
             IMLEventDispatcher.RecordOneCallback -= RecordOne;
-            IMLEventDispatcher.RecordStartCallback -= StartRecording;
-            IMLEventDispatcher.RecordStopCallback -= StopRecording;
+            IMLEventDispatcher.ToggleRecordCallback -= StartRecording;
         }
         /// <summary>
         /// Checks if an IMLController is owned and properly updates it when needed
@@ -1468,7 +1464,6 @@ namespace InteractML
                         // Toggle Run only if the model is trained (and it is not DTW, the user should do that)
                         if (MLSystemNode.Trained && MLSystemNode.TrainingType != IMLSpecifications.TrainingSetType.SeriesTrainingExamples)
                         {
-                            MLSystemNode.UpdateOutputFormat();
                             MLSystemNode.ToggleRunning();
                             success = true;
                         }
@@ -1886,7 +1881,7 @@ namespace InteractML
         /// </summary>
         /// <param name="nodeID">nodeID for ls to start running</param>
         /// <returns></returns>
-        private bool StartRunning(string nodeID)
+        private bool ToggleRunning(string nodeID)
         {
             bool success = false;
             //iterate through all mls nodes
@@ -1895,36 +1890,14 @@ namespace InteractML
                 // if nodeID matches
                 if (nodeID == MLSNode.id)
                 {
-                    //make sure output format is correct
-                    MLSNode.UpdateOutputFormat();
                     // attempt to run
-                    success = MLSNode.StartRunning();
+                    success = MLSNode.ToggleRunning();
                 }
             }
             // return true if nodeID exists and running started
             return success; 
         }
-        /// <summary>
-        /// Stopp runing delegate
-        /// </summary>
-        /// <param name="nodeID">id of the node to stop running</param>
-        /// <returns>bool whether successfully stopped</returns>
-        private bool StopRunning(string nodeID)
-        {
-            bool success = false;
-            //iterate through all mls nodes
-            foreach (MLSystem MLSNode in MLSystemNodeList)
-            {
-                // if nodeID matches
-                if (nodeID == MLSNode.id)
-                {
-                    // attempt to stop running
-                    success = MLSNode.StopRunning();
-                }
-            }
-            // return true if nodeID exists and running stopped
-            return success; 
-        }
+        
 
         /// <summary>
         /// Reset model for delegate

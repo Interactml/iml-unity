@@ -178,13 +178,7 @@ namespace InteractML
                 }
                 if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Run")))
                 {
-                    if (m_ClassificationMLSystem.Running)
-                    {
-                        IMLEventDispatcher.StopRunCallback(m_ClassificationMLSystem.id);
-                    } else
-                    {
-                        IMLEventDispatcher.StartRunCallback(m_ClassificationMLSystem.id);
-                    }
+                    IMLEventDispatcher.ToggleRunCallback(m_ClassificationMLSystem.id);
                 }
                 // Always enable it back at the end
                 GUI.enabled = true;

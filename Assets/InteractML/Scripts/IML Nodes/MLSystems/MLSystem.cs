@@ -632,22 +632,23 @@ namespace InteractML
             
         }
 
-        public void ToggleRunning()
+        public bool ToggleRunning()
         {
             if (!m_Running)
             {
-                StartRunning();
+                return StartRunning();
             } else
             {
-                StopRunning();
+                return StopRunning();
             }
         }
         /// <summary>
         /// Sets running boolean to true 
         /// </summary>
         /// <returns>boolean on whether the model has started running</returns>
-        public bool StartRunning()
+        private bool StartRunning()
         {
+            UpdateOutputFormat();
             // If the system is not running and it is trained, it is not traing and the vectors match 
             if (!m_Running && Trained && !Training && matchLiveDataInputs && matchVectorLength)
             {
@@ -669,7 +670,7 @@ namespace InteractML
         /// Stop running
         /// </summary>
         /// <returns>boolean on whether the model has stopped running</returns>
-        public bool StopRunning()
+        private bool StopRunning()
         {
             if (m_Running)
             {
@@ -1864,10 +1865,10 @@ namespace InteractML
 
         public void UpdateLogic()
         {
-            Debug.Log(Model.ModelAddress);
+            //Debug.Log(Model.ModelAddress);
             Debug.Log(Model.ModelStatus);
             Debug.Log(Trained);
-            Debug.Log(m_trainingType);
+            //Debug.Log(m_trainingType);
             //Debug.Log(m_Model.TypeOfModel);
 
             //set errors for ui

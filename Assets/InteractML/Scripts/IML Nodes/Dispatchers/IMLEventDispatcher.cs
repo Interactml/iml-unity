@@ -21,15 +21,8 @@ namespace InteractML
         /// <param name="nodeID">id for the model to run</param>
         /// <returns></returns>
         public delegate bool StartRunningModel(string nodeID);
-        public static StartRunningModel StartRunCallback;
+        public static StartRunningModel ToggleRunCallback;
 
-        /// <summary>
-        /// Event for stopping run the model
-        /// </summary>
-        /// <param name="nodeID">id for the model to stop runnning</param>
-        /// <returns></returns>
-        public delegate bool StopRunningModel(string nodeID);
-        public static StopRunningModel StopRunCallback;
 
         /// <summary>
         /// Event for reseting the model
@@ -70,15 +63,7 @@ namespace InteractML
         /// <param name="nodeID"></param>
         /// <returns></returns>
         public delegate bool StartRecord(string nodeID);
-        public static StartRecord RecordStartCallback;
-
-        /// <summary>
-        /// Event for when recording data stops 
-        /// </summary>
-        /// <param name="nodeID"></param>
-        /// <returns></returns>
-        public delegate bool StopRecord(string nodeID);
-        public static StopRecord RecordStopCallback;
+        public static StartRecord ToggleRecordCallback;
 
         // delete traiing examples events
         /// <summary>
