@@ -78,12 +78,20 @@ namespace InteractML
         public bool OutputPortsChanged { get; set; }
         
         /// <summary>
-        /// The learning type of this model
+        /// The training example type of this model
         /// </summary>
         [SerializeField]
         protected IMLSpecifications.TrainingSetType m_trainingType;
         [HideInInspector]
         public IMLSpecifications.TrainingSetType TrainingType { get => m_trainingType; }
+
+        /// <summary>
+        /// The learning type of this model
+        /// </summary>
+        [SerializeField]
+        protected IMLSpecifications.LearningType m_LearningType;
+        [HideInInspector]
+        public IMLSpecifications.LearningType LearningType { get => m_LearningType; }
 
 
         /// <summary>
@@ -428,6 +436,9 @@ namespace InteractML
             // Set training type of the machine learning model
             SetTrainingType();
 
+            // Set training type of the machine learning model
+            SetLearningType();
+
             // need to clarify what this is doing 
             if (m_trainingType == IMLSpecifications.TrainingSetType.SeriesTrainingExamples)
                 TrainOnPlaymodeChange = true;
@@ -484,7 +495,6 @@ namespace InteractML
         /// <summary>
         /// Instantiates a rapidlibmodel - this should be done is subclass 
         /// </summary>
-        /// <param name="learningType"></param>
         public virtual RapidlibModel InstantiateRapidlibModel()
         {
             RapidlibModel model;
@@ -750,7 +760,6 @@ namespace InteractML
             switch (m_Model.TypeOfModel)
             {
                 case RapidlibModel.ModelType.kNN:
-                   // m_LearningType = IMLSpecifications.LearningType.Classification;
                     // Configure inputs and outputs
                     PredictedOutput = new List<IMLBaseDataType>(m_Model.GetNumExpectedOutputs());
                     // TO DO
@@ -758,7 +767,6 @@ namespace InteractML
                     // Still left to configure the type of the inputs and outputs
                     break;
                 case RapidlibModel.ModelType.NeuralNetwork:
-                    //m_LearningType = IMLSpecifications.LearningType.Regression;
                     // Configure inputs and outputs
                     PredictedOutput = new List<IMLBaseDataType>(m_Model.GetNumExpectedOutputs());
                     // TO DO
@@ -766,7 +774,6 @@ namespace InteractML
                     // Still left to configure the type of the inputs and outputs
                     break;
                 case RapidlibModel.ModelType.DTW:
-                   // m_LearningType = IMLSpecifications.LearningType.DTW;
                     // DTW model will need to retrain!
                     Debug.Log("DTW RETRAINING WHEN LOADING MODEL NOT IMPLEMENTED YET!");
                     break;
@@ -1866,8 +1873,9 @@ namespace InteractML
         public void UpdateLogic()
         {
             //Debug.Log(Model.ModelAddress);
-            Debug.Log(Model.ModelStatus);
-            Debug.Log(Trained);
+            //Debug.Log(id);
+            //Debug.Log(Model.ModelStatus);
+            //Debug.Log(Trained);
             //Debug.Log(m_trainingType);
             //Debug.Log(m_Model.TypeOfModel);
 

@@ -14,11 +14,11 @@ namespace InteractML
     {
 
         #region Protected Methods
-        // to be deleted if new composition works
-        /*protected override void SetLearningType()
+        // used for UI set what the user facing machine learning algorithm is called
+        protected override void SetLearningType()
         {
             m_LearningType = IMLSpecifications.LearningType.Regression;
-        }*/
+        }
         protected override void SetTrainingType()
         {
             Debug.Log("here regress");
