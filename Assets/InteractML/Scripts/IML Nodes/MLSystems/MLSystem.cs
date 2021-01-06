@@ -197,6 +197,8 @@ namespace InteractML
         /// </summary>
         public bool error = false;
 
+        private bool modelLoaded;
+
         #endregion
 
         #region XNode Messages
@@ -287,7 +289,7 @@ namespace InteractML
             //if you connect a training examples or change live input 
             if (from.fieldName == "TrainingExamplesNodeToOutput" || from.fieldName == "m_Out" || from.fieldName == "LiveDataOut")
             {
-                IMLEventDispatcher.SetUpChange?.Invoke();
+                IMLEventDispatcher.ModelSetUpChangeCallback?.Invoke();
             }
 
         }
@@ -368,18 +370,20 @@ namespace InteractML
         private void SubscribeDelegates(){
 
             // Methods for when the inputs of the training set are changed
-            IMLEventDispatcher.InputConfigChange += OnDataInChanged;
-            IMLEventDispatcher.InputConfigChange += UIErrors;
+            IMLEventDispatcher.InputConfigChangeCallback += OnDataInChanged;
+            IMLEventDispatcher.InputConfigChangeCallback += UIErrors;
 
             // Methods for when the label of the training set is changed
-            IMLEventDispatcher.LabelsConfigChange += OnLabelChanged;
-            IMLEventDispatcher.LabelsConfigChange += UIErrors;
+            IMLEventDispatcher.LabelsConfigChangeCallback += OnLabelChanged;
+            IMLEventDispatcher.LabelsConfigChangeCallback += UIErrors;
 
             // Methods for when the whole set up of the training set is changed 
-            IMLEventDispatcher.SetUpChange += OnDataInChanged;
-            IMLEventDispatcher.SetUpChange += OnLabelChanged;
-            IMLEventDispatcher.SetUpChange += UpdateTotalNumberTrainingExamples;
-            IMLEventDispatcher.SetUpChange += UIErrors;
+            IMLEventDispatcher.ModelSetUpChangeCallback += OnDataInChanged;
+            IMLEventDispatcher.ModelSetUpChangeCallback += OnLabelChanged;
+            IMLEventDispatcher.ModelSetUpChangeCallback += UpdateTotalNumberTrainingExamples;
+            IMLEventDispatcher.ModelSetUpChangeCallback += UIErrors;
+
+            IMLEventDispatcher.LoadModelsCallback += LoadOrTrain; 
         }
         /// <summary>
         /// Method that subscribes relevant methods to events in the event dispatcher
@@ -387,18 +391,20 @@ namespace InteractML
         private void UnsubscribeDelegates()
         {
             // Methods for when the inputs of the training set are changed
-            IMLEventDispatcher.InputConfigChange -= OnDataInChanged;
-            IMLEventDispatcher.InputConfigChange -= UIErrors;
+            IMLEventDispatcher.InputConfigChangeCallback -= OnDataInChanged;
+            IMLEventDispatcher.InputConfigChangeCallback -= UIErrors;
 
             // Methods for when the label of the training set is changed
-            IMLEventDispatcher.LabelsConfigChange -= OnLabelChanged;
-            IMLEventDispatcher.LabelsConfigChange -= UIErrors;
+            IMLEventDispatcher.LabelsConfigChangeCallback -= OnLabelChanged;
+            IMLEventDispatcher.LabelsConfigChangeCallback -= UIErrors;
 
             // Methods for when the whole set up of the training set is changed 
-            IMLEventDispatcher.SetUpChange -= OnDataInChanged;
-            IMLEventDispatcher.SetUpChange -= OnLabelChanged;
-            IMLEventDispatcher.SetUpChange -= UpdateTotalNumberTrainingExamples;
-            IMLEventDispatcher.SetUpChange -= UIErrors;
+            IMLEventDispatcher.ModelSetUpChangeCallback -= OnDataInChanged;
+            IMLEventDispatcher.ModelSetUpChangeCallback -= OnLabelChanged;
+            IMLEventDispatcher.ModelSetUpChangeCallback -= UpdateTotalNumberTrainingExamples;
+            IMLEventDispatcher.ModelSetUpChangeCallback -= UIErrors;
+
+            IMLEventDispatcher.LoadModelsCallback -= LoadOrTrain;
         }
 
         /// <summary>
@@ -489,7 +495,10 @@ namespace InteractML
             // Specify the names for the nodeports
             m_TrainingExamplesNodeportName = "IMLTrainingExamplesNodes";
             m_LiveFeaturesNodeportName = "InputFeatures";
+
             
+
+
         }
         #region Subclass Instatiation Methods
         /// <summary>
@@ -1872,7 +1881,7 @@ namespace InteractML
 
         public void UpdateLogic()
         {
-            //Debug.Log(Model.ModelAddress);
+            Debug.Log(Model.ModelAddress);
             //Debug.Log(id);
             //Debug.Log(Model.ModelStatus);
             //Debug.Log(Trained);
@@ -1923,7 +1932,22 @@ namespace InteractML
 
         }
 
-       
+        private bool LoadOrTrain()
+        {
+            ResetModel();
+
+            if (Model.TypeOfModel == RapidlibModel.ModelType.DTW)
+            {
+
+                return TrainModel();
+
+            } else
+            {
+                return LoadModelFromDisk();
+            }
+            
+        }
+
         #endregion
 
     }

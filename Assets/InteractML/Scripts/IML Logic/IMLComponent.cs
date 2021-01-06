@@ -48,6 +48,10 @@ namespace InteractML
         [SerializeField, HideInInspector]
         private GOPerGONodeDictionary m_GOsPerGONodes;
 
+        /// <summary>
+        /// bool to check whether MLS nodes are loaded before running
+        /// </summary>
+        private bool nodesLoaded; 
 
         #region Private Lists of Nodes (Fields)
         /* Private Lists of nodes that we can have in the graph */
@@ -140,8 +144,16 @@ namespace InteractML
                 // initialize all nodes 
                 InitializeAllNodes();
                 InitializeEvent();
+                // train models
+                LoadDataForModels();
             }
         }
+
+        private void Reset()
+        {
+            Debug.Log("reset");
+        }
+
 
         // Called when something changes in the scene
         private void OnValidate()
@@ -309,7 +321,7 @@ namespace InteractML
         /// </summary>
         private void InitializeEvent()
         {
-            IMLEventDispatcher.SetUpChange?.Invoke();
+            IMLEventDispatcher.ModelSetUpChangeCallback?.Invoke();
         }
 
         /// <summary>
@@ -1245,10 +1257,11 @@ namespace InteractML
         /// <summary>
         /// Loads and runs (or retrains if needed) models from disk on awake
         /// </summary>
-        public void LoadDataAndRunOnAwakeModels()
+        private void LoadDataForModels()
         {
+            Debug.Log("load data and run");
             // There will be waits for things to init. Take into account
-            IEnumerator coroutine = LoadDataAndRunOnAwakeModelsCoroutine();
+            IEnumerator coroutine = LoadDataForModelsCoroutine();
             StartCoroutine(coroutine);
 
         }
@@ -1257,9 +1270,12 @@ namespace InteractML
         /// Coroutine to load and run (or retrain if needed) models from disk on awake
         /// </summary>
         /// <returns></returns>
-        private IEnumerator LoadDataAndRunOnAwakeModelsCoroutine()
+        private IEnumerator LoadDataForModelsCoroutine()
         {
-            yield return new WaitForSeconds(0.05f);
+            nodesLoaded = false;
+            //Debug.Log("RESET AND RETRAIN CALLED FROM IML COMPONENT");
+
+            //yield return new WaitForSeconds(0.05f);
 
             Debug.Log("RESET AND RETRAIN CALLED FROM IML COMPONENT");
 
@@ -1273,13 +1289,14 @@ namespace InteractML
                 yield return null;
             }
 
+            Debug.Log("trained");
             // Wait for another frame
             yield return null;
 
             // Retrain them
             //ReTrainAllModelsCoroutine();
 
-            while(!RetrainAllModelsPrivate())
+            while(!(bool)IMLEventDispatcher.LoadModelsCallback?.Invoke())
             {
                 // wait for a frame until models are retrained
                 yield return null;
@@ -1288,21 +1305,51 @@ namespace InteractML
             // Wait for another frame
             yield return null;
 
-            // Run the models
-            while(!RunAllModels() )
+            nodesLoaded = true; 
+
+            yield break;
+
+        }
+        /// <summary>
+        /// Starts run models on play coroutine
+        /// </summary>
+        public void RunModelsOnPlay()
+        {
+            // There will be waits for things to init. Take into account
+            IEnumerator coroutine = RunModelsOnPlayCoroutine();
+            StartCoroutine(coroutine);
+
+        }
+        /// <summary>
+        /// Coroutine for running models checks to see if loaded and then runs models
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator RunModelsOnPlayCoroutine()
+        {
+            yield return null;
+
+            Debug.Log(nodesLoaded);
+
+            while (!nodesLoaded)
+            {
+                yield return null;
+            }
+
+            
+           while (!RunAllModels())
             {
                 yield return null;
             }
 
             yield break;
-
+              
         }
-
         /// <summary>
         /// Loads training data from disk and forces an init on the training examples node if not init
         /// </summary>
         public bool LoadAllTrainingExamples()
         {
+            Debug.Log("loading data");
             bool success = false;
             // Only run if we got trainnig examples
             if (m_TrainingExamplesNodesList == null && m_TrainingExamplesNodesList.Count == 0)
@@ -1323,7 +1370,7 @@ namespace InteractML
                 }
 
                 // Load Data
-                trainingExamplesNode.LoadDataFromDisk();
+                //trainingExamplesNode.LoadDataFromDisk();
 
                 success = true;
             }
@@ -1427,6 +1474,7 @@ namespace InteractML
         /// </summary>
         public bool RunAllModels()
         {
+            Debug.Log("run all models");
             bool success = false;
             foreach (var MLSystemNode in m_MLSystemNodeList)
             {
@@ -1501,6 +1549,7 @@ namespace InteractML
         /// <returns></returns>
         private bool RetrainAllModelsPrivate()
         {
+            Debug.Log("retraining");
             bool success = false;
             foreach (var MLSystemNode in m_MLSystemNodeList)
             {
@@ -1520,6 +1569,11 @@ namespace InteractML
                         if (MLSystemNode.TrainOnPlaymodeChange)
                             success = MLSystemNode.TrainModel();
                     }
+                    if (!success && MLSystemNode.TotalNumTrainingData == 0)
+                    {
+                        success = true;
+                    }
+                    
                 }
             }
             return success;

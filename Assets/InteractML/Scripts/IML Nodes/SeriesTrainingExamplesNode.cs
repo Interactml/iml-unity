@@ -49,18 +49,7 @@ namespace InteractML
         {
             IMLDataSerialization.SaveTrainingSeriesCollectionToDisk(TrainingSeriesCollection, GetJSONFileName());
         }
-        /// <summary>
-        /// LoadsIML training data from disk 
-        /// </summary>
-        public override void LoadDataFromDisk()
-        {
-            // Load IML Series Collection from disk
-            var auxTrainingSeriesCollection = IMLDataSerialization.LoadTrainingSeriesCollectionFromDisk(GetJSONFileName());
-            if (!Lists.IsNullOrEmpty(ref auxTrainingSeriesCollection))
-            {
-                TrainingSeriesCollection = auxTrainingSeriesCollection;
-            }
-        }
+        
 
         #endregion
 

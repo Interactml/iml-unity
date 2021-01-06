@@ -155,7 +155,6 @@ namespace InteractML
         /// </summary>
         public bool showWarning;
 
-        public Event Train;
 
         #endregion
 
@@ -202,7 +201,7 @@ namespace InteractML
                     
                  }
                 inputPortList = this.GetInputPort("InputFeatures").GetConnections();
-                IMLEventDispatcher.InputConfigChange?.Invoke();
+                IMLEventDispatcher.InputConfigChangeCallback?.Invoke();
 
 
             }
@@ -236,7 +235,7 @@ namespace InteractML
                 MLSClassification = false;
                 targetPortList = this.GetInputPort("TargetValues").GetConnections();
                 UpdateTargetValuesConfig();
-                IMLEventDispatcher.LabelsConfigChange?.Invoke();
+                IMLEventDispatcher.LabelsConfigChangeCallback?.Invoke();
                 return;
             }
 
@@ -334,7 +333,7 @@ namespace InteractML
             targetPortList = this.GetInputPort("TargetValues").GetConnections();
             CheckWarning();
             UpdateInputConfigList();
-            
+
         }
         /// <summary>
         /// Starts/Stops collecting examples when called
@@ -705,7 +704,9 @@ namespace InteractML
             //implemented in subclass
         }
 
-        public virtual void LoadDataFromDisk()
+        
+
+        private void LoadDataFromDisk()
         {
             //Load training data from disk
             var auxTrainingExamplesVector = IMLDataSerialization.LoadTrainingSetFromDisk(GetJSONFileName());

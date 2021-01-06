@@ -35,19 +35,19 @@ namespace InteractML
         /// Event for type / or number of inputs in training examples
         /// </summary>
         public delegate void TrainingInputsConfigChanged();
-        public static TrainingInputsConfigChanged InputConfigChange;
+        public static TrainingInputsConfigChanged InputConfigChangeCallback;
 
         /// <summary>
         /// Event for type and/ or number of labels 
         /// </summary>
         public delegate void TrainingLabelConfigChanged();
-        public static TrainingLabelConfigChanged LabelsConfigChange;
+        public static TrainingLabelConfigChanged LabelsConfigChangeCallback;
 
         /// <summary>
         /// Event for type and/ or number of labels 
         /// </summary>
         public delegate void ModelSetUpChanged();
-        public static ModelSetUpChanged SetUpChange;
+        public static ModelSetUpChanged ModelSetUpChangeCallback;
 
         /// <summary>
         /// Event for recording one frame of example
@@ -83,7 +83,32 @@ namespace InteractML
         public delegate bool DeleteAll(string nodeID);
         public static DeleteAll DeleteAllCallback;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodeID"></param>
+        /// <returns></returns>
+        public delegate bool LoadTrainingExamples();
+        public static LoadTrainingExamples LoadTrainingExamplesCallback;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodeID"></param>
+        /// <returns></returns>
+        public delegate bool LoadModels();
+        public static LoadModels LoadModelsCallback;
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nodeID"></param>
+        /// <returns></returns>
+        public delegate void RunOnPlay();
+        public static RunOnPlay RunOnPlayCallback;
         // Delete node event ???
+
 
 
 

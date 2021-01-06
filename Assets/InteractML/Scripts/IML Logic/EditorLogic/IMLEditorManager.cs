@@ -36,6 +36,9 @@ public class IMLEditorManager
 
         // Subscribe manager event to the playModeStateChanged event
         EditorApplication.playModeStateChanged += PlayModeStateChangedLogic;
+
+
+        
 #endif
     }
 
@@ -72,7 +75,7 @@ public class IMLEditorManager
     /// <param name="mode"></param>
     private static void SceneOpenedLogic(UnityEngine.SceneManagement.Scene scene, UnityEditor.SceneManagement.OpenSceneMode mode)
     {
-        //Debug.Log("SceneOpened");
+        
         ClearIMLComponents();
         FindIMLComponents();
         // Reload all models (if we can) when we enter playmode or when we come back to the editor
@@ -80,8 +83,6 @@ public class IMLEditorManager
         {
             // Get all nodes
             MLComponent.GetAllNodes();
-
-            MLComponent.LoadDataAndRunOnAwakeModels();
             //// Reload models
             //MLComponent.LoadAllModelsFromDisk(reCreateModels: true);
             //// Run them (if marked with RunOnAwake)
@@ -89,6 +90,7 @@ public class IMLEditorManager
         }
 
     }
+
 
     /// <summary>
     /// When we change playmode, we make sure to reset all iml models
@@ -109,8 +111,9 @@ public class IMLEditorManager
             // Reload all models (if we can) when we enter playmode or when we come back to the editor
             foreach (var MLComponent in m_IMLComponents)
             {
-                MLComponent.LoadDataAndRunOnAwakeModels();
-                
+                Debug.Log("Play mode state changed");
+                //MLComponent.LoadDataAndRunOnAwakeModels();
+                MLComponent.RunModelsOnPlay();
                 //// Reload models
                 //MLComponent.LoadAllModelsFromDisk(reCreateModels: true);
                 //// Run them (if marked with RunOnAwake)

@@ -23,7 +23,7 @@ namespace InteractML
         {
             // Get reference to the current node
             m_MLSystem = (target as MLSystem);
-            nodeSpace = 60;
+            nodeSpace = 10;
             string arrayNo = "";
             if (m_MLSystem.numberInComponentList != -1)
                 arrayNo = m_MLSystem.numberInComponentList.ToString();
@@ -201,12 +201,12 @@ namespace InteractML
             // If rapidlib reference is null we draw a disabled button
             if ((m_MLSystem.Model == null || m_MLSystem.Model.ModelAddress == (IntPtr)0 || m_MLSystem.Training || m_MLSystem.Untrained || !m_MLSystem.matchLiveDataInputs || !m_MLSystem.matchVectorLength) && !m_MLSystem.Running)
             {
-                Debug.Log(m_MLSystem.Model == null);
+               /* Debug.Log(m_MLSystem.Model == null);
                 Debug.Log(m_MLSystem.Model.ModelAddress != (IntPtr)0);
                 Debug.Log(m_MLSystem.Training);
                 Debug.Log(m_MLSystem.Untrained);
                 Debug.Log(!m_MLSystem.matchLiveDataInputs);
-                Debug.Log(!m_MLSystem.matchVectorLength);
+                Debug.Log(!m_MLSystem.matchVectorLength);*/
                 // Disable button if model is Trainig OR Untrained 
                 GUI.enabled = false;
             }

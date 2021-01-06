@@ -34,19 +34,7 @@ namespace InteractML
         {
            IMLDataSerialization.SaveTrainingSetToDisk(TrainingExamplesVector, GetJSONFileName());
         }
-        /// <summary>
-        /// LoadsIML training data from disk 
-        /// </summary>
-        public override void LoadDataFromDisk()
-        {
-            //Load training data from disk
-            var auxTrainingExamplesVector = IMLDataSerialization.LoadTrainingSetFromDisk(GetJSONFileName());
-            if (!Lists.IsNullOrEmpty(ref auxTrainingExamplesVector))
-            {
-                TrainingExamplesVector = auxTrainingExamplesVector;
-                //Debug.Log("Training Examples Vector loaded!");
-            }
-        }
+        
 
         #endregion
 
