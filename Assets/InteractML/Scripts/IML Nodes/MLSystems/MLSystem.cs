@@ -347,6 +347,8 @@ namespace InteractML
 
         public void OnValidate()
         {
+            Debug.Log("here");
+
             // Checks that the rapidlib model is instanced (only if model is null)
             if (m_Model == null && (this.graph as IMLGraph).IsGraphRunning)
             {
@@ -1938,11 +1940,10 @@ namespace InteractML
 
             if (Model.TypeOfModel == RapidlibModel.ModelType.DTW)
             {
-
                 return TrainModel();
 
-            } else
-            {
+            } else {
+                m_NumExamplesTrainedOn = m_TotalNumTrainingData;
                 return LoadModelFromDisk();
             }
             

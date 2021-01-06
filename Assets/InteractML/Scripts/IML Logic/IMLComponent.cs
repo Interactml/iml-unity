@@ -149,10 +149,6 @@ namespace InteractML
             }
         }
 
-        private void Reset()
-        {
-            Debug.Log("reset");
-        }
 
 
         // Called when something changes in the scene
@@ -1828,10 +1824,6 @@ namespace InteractML
         {
             if (m_TrainingExamplesNodesList.Contains(nodeToDelete))
                 m_TrainingExamplesNodesList.Remove(nodeToDelete);
-            foreach (TrainingExamplesNode tNode in m_TrainingExamplesNodesList)
-            {
-                tNode.SetArrayNumber();
-            }
         }
         /// <summary>
         /// Removes TextNoteNode From TextNoteNodeList 

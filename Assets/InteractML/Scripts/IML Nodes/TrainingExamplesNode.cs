@@ -201,6 +201,8 @@ namespace InteractML
                     
                  }
                 inputPortList = this.GetInputPort("InputFeatures").GetConnections();
+                UpdateInputConfigList();
+                UpdateDesiredInputFeatures();
                 IMLEventDispatcher.InputConfigChangeCallback?.Invoke();
 
 
@@ -235,6 +237,7 @@ namespace InteractML
                 MLSClassification = false;
                 targetPortList = this.GetInputPort("TargetValues").GetConnections();
                 UpdateTargetValuesConfig();
+                UpdateDesiredOutputFeatures();
                 IMLEventDispatcher.LabelsConfigChangeCallback?.Invoke();
                 return;
             }
@@ -256,7 +259,10 @@ namespace InteractML
             base.OnRemoveConnection(port);
             UpdateTargetValueInput();
             UpdateTargetValuesConfig();
-            
+
+            UpdateInputConfigList();
+            UpdateDesiredInputFeatures();
+            UpdateDesiredOutputFeatures();
         }
 
 
@@ -335,6 +341,17 @@ namespace InteractML
             UpdateInputConfigList();
 
         }
+
+        private void SubscribeToDelegates()
+        {
+
+        }
+        
+        private void UnsubscribeToDelegates()
+        {
+
+        }
+
         /// <summary>
         /// Starts/Stops collecting examples when called
         /// </summary>
@@ -399,32 +416,11 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
-            if (numberInComponentList == -1)
-            {
-                SetArrayNumber();
-            }
-            //Debug.Log(IMLConfigurationNodesConnected.Count);
-            // Handle Input
-            KeyboardInput();
             if (badRemove)
-                StopDisconnection();
-            // Keep input config list updated
-            UpdateInputConfigList();
-
-            //Update target values 
-            UpdateDesiredOutputFeatures();
-            //Update input values
-            UpdateDesiredInputFeatures();
-            //Update 
-            UpdateInputConfigList();
+                //StopDisconnection();
 
             // Run examples logic in case we need to start/stop collecting examples
             CollectExamplesLogic();
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                ToggleCollectExamples();
-            }
             
         }
 
@@ -485,15 +481,16 @@ namespace InteractML
         {
             // Get values from the input list
             InputFeatures = this.GetInputNodesConnected("InputFeatures");
-            // if there are inputfestures connected 
-             if (InputFeatures != null)
-            {
-                // Make sure that the list is initialised
-                if (m_DesiredInputsConfig == null)
-                    m_DesiredInputsConfig = new List<IMLSpecifications.InputsEnum>();
 
-                // Adjust the desired inputs list based on nodes connected
-                m_DesiredInputsConfig.Clear();
+            // Make sure that the list is initialised
+            if (m_DesiredInputsConfig == null)
+                m_DesiredInputsConfig = new List<IMLSpecifications.InputsEnum>();
+
+            // Adjust the desired inputs list based on nodes connected
+            m_DesiredInputsConfig.Clear();
+            // if there are inputfestures connected 
+            if (InputFeatures != null)
+            {
                 // Go through all the nodes connected
                 for (int i = 0; i < InputFeatures.Count; i++)
                 {
@@ -737,16 +734,6 @@ namespace InteractML
                 return fileName;
             }
             return null;
-        }
-
-        public void SetArrayNumber()
-        {
-            //Set array number
-            IMLComponent MLComponent = this.FindController();
-            List<TrainingExamplesNode> tNodes = new List<TrainingExamplesNode>();
-            if (MLComponent.TrainingExamplesNodesList != null)
-                tNodes = MLComponent.TrainingExamplesNodesList;
-            FindComponentListNumber<TrainingExamplesNode>(tNodes, MLComponent);
         }
 
         protected void KeyboardInput()
