@@ -306,6 +306,22 @@ namespace InteractML
 
         }
 
+        public static void DeleteRapidlibModelFromDisk(string fileName)
+        {
+            SetUpFileNamesAndPaths(fileName);
+
+            string subFolderPath = CheckOrCreateFoldersAndSubfoldersModel();
+
+            // We save the entire input/output list as a JSON
+            string auxFilePath = subFolderPath + "/" + m_FileModelName + m_FileExtension;
+            // Check if there is already a JSON file created for this training example
+            if (File.Exists(auxFilePath))
+            {
+                // We delete it to make sure we override it
+                File.Delete(auxFilePath);
+            }
+        }
+
         public static string LoadRapidlibModelFromDisk(string fileName)
         {
             SetUpFileNamesAndPaths(fileName);

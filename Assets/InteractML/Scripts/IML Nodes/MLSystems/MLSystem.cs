@@ -43,8 +43,8 @@ namespace InteractML
         /// <summary>
         /// Total updated number of training examples connected to this IML Configuration Node
         /// </summary>
-        protected int m_TotalNumTrainingData;
-        public int TotalNumTrainingData { get { return m_TotalNumTrainingData; } }
+        protected int m_TotalNumTrainingDataConnected;
+        public int TotalNumTrainingDataConnected { get { return m_TotalNumTrainingDataConnected; } }
 
         [SerializeField, HideInInspector]
         protected int m_NumExamplesTrainedOn;
@@ -385,6 +385,7 @@ namespace InteractML
             IMLEventDispatcher.ModelSetUpChangeCallback += UpdateTotalNumberTrainingExamples;
             IMLEventDispatcher.ModelSetUpChangeCallback += UIErrors;
 
+
             IMLEventDispatcher.LoadModelsCallback += LoadOrTrain; 
         }
         /// <summary>
@@ -530,16 +531,16 @@ namespace InteractML
         /// <returns></returns>
         public bool TrainModel()
         {
-            Debug.Log(TotalNumTrainingData);
+            Debug.Log(TotalNumTrainingDataConnected);
             bool isTrained = false;
             //if the MLS is not running, training and the model is not null and the total number of training data is bigger than 0
-            if (!Running && !Training && Model != null && TotalNumTrainingData > 0)
+            if (!Running && !Training && Model != null && TotalNumTrainingDataConnected > 0)
             {
                 
                 //come back to this
                 RunningLogic();
                 // if there are no training examples in connected training nodes do not train 
-                if (m_TotalNumTrainingData == 0)
+                if (m_TotalNumTrainingDataConnected == 0)
                 {
                     Debug.Log("no training examples");
                 }
@@ -691,7 +692,7 @@ namespace InteractML
         /// Stop running
         /// </summary>
         /// <returns>boolean on whether the model has stopped running</returns>
-        private bool StopRunning()
+        public bool StopRunning()
         {
             if (m_Running)
             {
@@ -743,6 +744,9 @@ namespace InteractML
 
             // We reset the running flag
             m_Running = false;
+
+            // delete the model from disk 
+            DeleteModelFromDisk();
         }
 
         /// <summary>
@@ -752,6 +756,15 @@ namespace InteractML
         public void SaveModelToDisk()
         {
             m_Model.SaveModelToDisk(this.graph.name + "_IMLConfiguration" + this.id);
+        }
+        
+        /// <summary>
+        /// Saves current model to disk (dataPath specified in IMLDataSerialization)
+        /// </summary>
+        /// <param name="fileName"></param>
+        private void DeleteModelFromDisk()
+        {
+            IMLDataSerialization.DeleteRapidlibModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id);
         }
 
         /// <summary>
@@ -1479,7 +1492,7 @@ namespace InteractML
             IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
 
             // The total number will start from 0 and keep adding the total amount of training examples from nodes connected
-            m_TotalNumTrainingData = 0;
+            m_TotalNumTrainingDataConnected = 0;
             if (!Lists.IsNullOrEmpty(ref IMLTrainingExamplesNodes))
             {
                 
@@ -1490,10 +1503,10 @@ namespace InteractML
                         switch (m_trainingType)
                         {
                             case IMLSpecifications.TrainingSetType.SingleTrainingExamples:
-                                m_TotalNumTrainingData += IMLTrainingExamplesNodes[i].TotalNumberOfTrainingExamples;
+                                m_TotalNumTrainingDataConnected += IMLTrainingExamplesNodes[i].TotalNumberOfTrainingExamples;
                                 break;
                             case IMLSpecifications.TrainingSetType.SeriesTrainingExamples:
-                                m_TotalNumTrainingData += IMLTrainingExamplesNodes[i].TrainingSeriesCollection.Count;
+                                m_TotalNumTrainingDataConnected += IMLTrainingExamplesNodes[i].TrainingSeriesCollection.Count;
                                 break;
                             default:
                                 Debug.LogWarning("Training type not set");
@@ -1943,7 +1956,7 @@ namespace InteractML
                 return TrainModel();
 
             } else {
-                m_NumExamplesTrainedOn = m_TotalNumTrainingData;
+                m_NumExamplesTrainedOn = m_TotalNumTrainingDataConnected;
                 return LoadModelFromDisk();
             }
             

@@ -151,7 +151,7 @@ namespace InteractML
                 GUI.enabled = false;
             if (GUILayout.Button("Record Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button")))
             {
-                m_TrainingExamplesNode.ToggleCollectExamples();
+                IMLEventDispatcher.ToggleRecordCallback(m_TrainingExamplesNode.id);
             }
 
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))

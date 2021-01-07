@@ -362,7 +362,11 @@ namespace InteractML
 
             // dispatchers for training examples node events
             IMLEventDispatcher.RecordOneCallback += RecordOne;
+            IMLEventDispatcher.ToggleRecordCallback += ToggleRecording;
             IMLEventDispatcher.ToggleRecordCallback += StartRecording;
+            IMLEventDispatcher.ToggleRecordCallback += StopRecording;
+            IMLEventDispatcher.DeleteAllCallback += DeleteAllTrainingExamples;
+           // IMLEventDispatcher.DeleteLastCallback +=
         }
         /// <summary>
         /// 
@@ -377,7 +381,10 @@ namespace InteractML
 
             // dispatchers for training examples node events
             IMLEventDispatcher.RecordOneCallback -= RecordOne;
+            IMLEventDispatcher.ToggleRecordCallback -= ToggleRecording;
             IMLEventDispatcher.ToggleRecordCallback -= StartRecording;
+            IMLEventDispatcher.ToggleRecordCallback -= StopRecording;
+            IMLEventDispatcher.DeleteAllCallback -= DeleteAllTrainingExamples;
         }
         /// <summary>
         /// Checks if an IMLController is owned and properly updates it when needed
@@ -1430,7 +1437,7 @@ namespace InteractML
             {
                 // Stop model if they are running
                 if (MLSystemNode.Running)
-                    MLSystemNode.ToggleRunning();
+                    MLSystemNode.StopRunning();
             }
         }
 
@@ -1565,7 +1572,7 @@ namespace InteractML
                         if (MLSystemNode.TrainOnPlaymodeChange)
                             success = MLSystemNode.TrainModel();
                     }
-                    if (!success && MLSystemNode.TotalNumTrainingData == 0)
+                    if (!success && MLSystemNode.TotalNumTrainingDataConnected == 0)
                     {
                         success = true;
                     }
@@ -1977,14 +1984,9 @@ namespace InteractML
                 if (nodeID == TENode.id && TENode.GetType().ToString().Contains("InteractML.SingleTrainingExamplesNode"))
                 {
                     // add single example
+                    
                     if (TENode.AddSingleTrainingExample())
                     {
-                        // iterate through all the mlsystem nodes connected 
-                        foreach (MLSystem MLSNode in TENode.MLSystemNodesConnected)
-                        {
-                            // update the number of training examples 
-                            MLSNode.UpdateTotalNumberTrainingExamples();
-                        }
                         return true;
                     }
                     
@@ -1992,6 +1994,26 @@ namespace InteractML
             }
             return false; ;
         }
+
+        /// <summary>
+        /// Start recording training examples for delegate
+        /// </summary>
+        /// <param name="nodeID">nodeID of the training examples node</param>
+        /// <returns>bool whether training has started</returns>
+        private bool ToggleRecording(string nodeID)
+        {
+            bool success = false;
+            foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
+            {
+                if (nodeID == TENode.id)
+                {
+                    success = TENode.StartCollecting();
+                }
+            }
+            return success;
+        }
+
+
         /// <summary>
         /// Start recording training examples for delegate
         /// </summary>
@@ -2022,10 +2044,6 @@ namespace InteractML
                 {
                     if (TENode.StopCollecting())
                     {
-                        foreach (MLSystem MLSNode in TENode.MLSystemNodesConnected)
-                        {
-                            MLSNode.UpdateTotalNumberTrainingExamples();
-                        }
                         return true;
                     }
 
@@ -2033,6 +2051,21 @@ namespace InteractML
             }
             return false; ;
         }
+        /// <summary>
+        /// Delete all training exmples for delefate
+        /// </summary>
+        /// <param name="nodeID">nodeID of the training examples to delete</param>
+        private void DeleteAllTrainingExamples(string nodeID)
+        {
+            foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
+            {
+                if (nodeID == TENode.id)
+                {
+                   TENode.ClearTrainingExamples();
+                }
+            }
+        }
+
         #endregion
     }
 

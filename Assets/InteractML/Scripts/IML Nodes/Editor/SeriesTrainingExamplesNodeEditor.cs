@@ -33,7 +33,7 @@ namespace InteractML
             string arrayNo = "";
             if (m_SeriesTrainingExamplesNode.numberInComponentList != -1)
                 arrayNo = m_SeriesTrainingExamplesNode.numberInComponentList.ToString();
-            NodeName = "TEACH THE MACHINE " + arrayNo;
+            NodeName = "TEACH THE MACHINE ";
             NodeSubtitle = "DTW Training Examples";
 
             base.OnHeaderGUI();

@@ -141,7 +141,7 @@ namespace InteractML
             else
                 nameButton = "Train Model";
 
-            if (m_MLSystem.Model != null && m_MLSystem.TotalNumTrainingData > 0 && !m_MLSystem.Running && !m_MLSystem.Training)
+            if (m_MLSystem.Model != null && m_MLSystem.TotalNumTrainingDataConnected > 0 && !m_MLSystem.Running && !m_MLSystem.Training)
             {
                 // Enable UI
                 GUI.enabled = true;
@@ -149,6 +149,7 @@ namespace InteractML
             // If rapidlib reference is null we draw a disabled button or if it is running or training
             else
             {
+                Debug.Log(m_MLSystem.TotalNumTrainingDataConnected);
                 GUI.enabled = false;
 
             }

@@ -35,7 +35,7 @@ namespace InteractML
             //array number of training node 
             if (m_SingleTrainingExamplesNode.numberInComponentList != -1)
                 arrayNo = m_SingleTrainingExamplesNode.numberInComponentList.ToString();
-            NodeName = "TEACH THE MACHINE " + arrayNo;
+            NodeName = "TEACH THE MACHINE ";
             NodeSubtitle = "Classification & Regression Training Examples";
         }
 
@@ -52,7 +52,7 @@ namespace InteractML
             GUILayout.Space(spacing);
             if (GUILayout.Button(new GUIContent("Record One \n example"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record One Button")))
             {
-                m_SingleTrainingExamplesNode.AddSingleTrainingExample();
+                IMLEventDispatcher.RecordOneCallback?.Invoke(m_SingleTrainingExamplesNode.id);
             }
             //button tooltip code 
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition) && m_SingleTrainingExamplesNode.tooltips.BodyTooltip.Tips.Length > 2)

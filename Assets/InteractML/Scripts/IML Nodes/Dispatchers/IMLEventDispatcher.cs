@@ -16,12 +16,28 @@ namespace InteractML
         public static TrainMLS TrainMLSCallback;
 
         /// <summary>
+        /// Event for toggle run model
+        /// </summary>
+        /// <param name="nodeID">id for the model to run</param>
+        /// <returns></returns>
+        public delegate bool ToggleRunModel(string nodeID);
+        public static ToggleRunModel ToggleRunCallback;
+        
+        /// <summary>
         /// Event for starting to run a model
         /// </summary>
         /// <param name="nodeID">id for the model to run</param>
         /// <returns></returns>
         public delegate bool StartRunningModel(string nodeID);
-        public static StartRunningModel ToggleRunCallback;
+        public static StartRunningModel StartRunCallback;
+        
+        /// <summary>
+        /// Event for stopping to run a model
+        /// </summary>
+        /// <param name="nodeID">id for the model to run</param>
+        /// <returns></returns>
+        public delegate bool StopRunningModel(string nodeID);
+        public static StopRunningModel StopRunCallback;
 
 
         /// <summary>
@@ -62,8 +78,31 @@ namespace InteractML
         /// </summary>
         /// <param name="nodeID"></param>
         /// <returns></returns>
-        public delegate bool StartRecord(string nodeID);
+        public delegate bool ToggleRecord(string nodeID);
         public static StartRecord ToggleRecordCallback;
+        /// <summary>
+        /// Event for when recording data starts
+        /// </summary>
+        /// <param name="nodeID"></param>
+        /// <returns></returns>
+        public delegate bool StartRecord(string nodeID);
+        public static StartRecord StartRecordCallback;
+        
+        /// <summary>
+        /// Event for when recording data starts
+        /// </summary>
+        /// <param name="nodeID"></param>
+        /// <returns></returns>
+        public delegate bool StopRecord(string nodeID);
+        public static StopRecord StopRecordCallback; 
+        
+        /// <summary>
+        /// Event for when recording data starts
+        /// </summary>
+        /// <param name="nodeID"></param>
+        /// <returns></returns>
+        public delegate void TrainingExamplesUpdated(string[] nodeID);
+        public static TrainingExamplesUpdated TrainingExamplesUpdatedCallback;
 
         // delete traiing examples events
         /// <summary>
@@ -71,7 +110,7 @@ namespace InteractML
         /// </summary>
         /// <param name="nodeID"></param>
         /// <returns></returns>
-        public delegate bool DeleteLast(string nodeID);
+        public delegate void DeleteLast(string nodeID);
         public static DeleteLast DeleteLastCallback;
 
         // delete traiing examples events
@@ -80,7 +119,7 @@ namespace InteractML
         /// </summary>
         /// <param name="nodeID"></param>
         /// <returns></returns>
-        public delegate bool DeleteAll(string nodeID);
+        public delegate void DeleteAll(string nodeID);
         public static DeleteAll DeleteAllCallback;
 
         /// <summary>

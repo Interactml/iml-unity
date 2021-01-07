@@ -155,6 +155,8 @@ namespace InteractML
         /// </summary>
         public bool showWarning;
 
+        private int lastNoOfRecordings = 0;
+        private bool deleteLast = false;
 
         #endregion
 
@@ -355,9 +357,9 @@ namespace InteractML
         /// <summary>
         /// Starts/Stops collecting examples when called
         /// </summary>
-        public void ToggleCollectExamples()
+        public bool ToggleCollectExamples()
         {
-            ToggleCollectingDataprotected();
+            return ToggleCollectingDataprotected();
         }
 
         /// <summary>
@@ -448,6 +450,8 @@ namespace InteractML
             SaveDataToDisk();
             //set false to show warning about training 
             CheckWarning();
+            //Update MLsystems connected with new number of training data 
+            UpdateConnectMLSystems();
             
             // I AM GOING TO KEEP THE DESIRED OUTPUTS UNCHANGED FOR THE MOMENT
 
@@ -455,6 +459,15 @@ namespace InteractML
             //DesiredOutputFeatures.Clear();
 
         }
+
+        public void DeleteLastRecording()
+        {
+            if (deleteLast)
+            {
+
+            }
+        }
+
 
         public void Terminate()
         {
@@ -614,6 +627,8 @@ namespace InteractML
             // Add the training example to the vector
             TrainingExamplesVector.Add(newExample);
             SaveDataToDisk();
+            //update connected MLSystem node with no of training examples
+            UpdateConnectMLSystems();
 
         }
 
@@ -642,17 +657,20 @@ namespace InteractML
         /// <summary>
         /// Starts/Stops Collecting data
         /// </summary>
-        protected void ToggleCollectingDataprotected()
+        protected bool ToggleCollectingDataprotected()
         {
+            bool success = false;
             if (m_CollectingData)
             {
-                StopCollectingData();
+                success = StopCollecting();
             }
             else
             {
-                StartCollectingData();
+                success = StartCollecting();
             }
             CheckWarning();
+
+            return success;
 
         }
 
@@ -688,6 +706,8 @@ namespace InteractML
                 // We add our series to the series collection
                 TrainingSeriesCollection.Add(new IMLTrainingSeries(m_SingleSeries));
                 m_SingleSeries.ClearSerie();
+                //update the number of training examples connected in mlsystem
+                UpdateConnectMLSystems();
 
             }
 
@@ -811,6 +831,14 @@ namespace InteractML
             } else
             {
                 showWarning = true;
+            }
+        }
+
+        private void UpdateConnectMLSystems()
+        {
+            foreach (MLSystem MLN in MLSystemNodesConnected)
+            {
+                MLN.UpdateTotalNumberTrainingExamples();
             }
         }
 
