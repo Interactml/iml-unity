@@ -418,12 +418,13 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
-            if (badRemove)
-                //StopDisconnection();
-
             // Run examples logic in case we need to start/stop collecting examples
             CollectExamplesLogic();
             
+            //come back here
+            //if (badRemove)
+                //StopDisconnection();
+
         }
 
         /// <summary>
@@ -569,14 +570,13 @@ namespace InteractML
         /// <summary>
         /// Logic to collect examples. Needs to be called in an Update loop
         /// </summary>
-        protected virtual void CollectExamplesLogic()
+        protected void CollectExamplesLogic()
         {
             if (m_CollectingData)
             {
                 if (Application.isPlaying && m_TimeToStopCapture > 0 && Time.time >= m_TimeToStopCapture)
                 {
                     m_CollectingData = false;
-                    //Debug.Log("end recording");
                 }
                 else if (!Application.isPlaying || Time.time >= m_TimeToNextCapture)
                 {

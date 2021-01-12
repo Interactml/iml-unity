@@ -238,7 +238,7 @@ namespace InteractML
             // Get all th nodes which are in the graph
             GetAllNodes();
 
-            // Init logic for training examples
+          /*  // Init logic for training examples
             if (!Lists.IsNullOrEmpty(ref m_TrainingExamplesNodesList))
             {
                 for (int i = 0; i < m_TrainingExamplesNodesList.Count; i++)
@@ -257,7 +257,7 @@ namespace InteractML
 
                 }
 
-            }
+            }*/
 
             // Init logic for MLSystem nodes
             if (!Lists.IsNullOrEmpty(ref m_MLSystemNodeList))
@@ -363,8 +363,8 @@ namespace InteractML
             // dispatchers for training examples node events
             IMLEventDispatcher.RecordOneCallback += RecordOne;
             IMLEventDispatcher.ToggleRecordCallback += ToggleRecording;
-            IMLEventDispatcher.ToggleRecordCallback += StartRecording;
-            IMLEventDispatcher.ToggleRecordCallback += StopRecording;
+            IMLEventDispatcher.StartRecordCallback += StartRecording;
+            IMLEventDispatcher.StopRecordCallback += StopRecording;
             IMLEventDispatcher.DeleteAllCallback += DeleteAllTrainingExamples;
            // IMLEventDispatcher.DeleteLastCallback +=
         }
@@ -382,8 +382,8 @@ namespace InteractML
             // dispatchers for training examples node events
             IMLEventDispatcher.RecordOneCallback -= RecordOne;
             IMLEventDispatcher.ToggleRecordCallback -= ToggleRecording;
-            IMLEventDispatcher.ToggleRecordCallback -= StartRecording;
-            IMLEventDispatcher.ToggleRecordCallback -= StopRecording;
+            IMLEventDispatcher.StartRecordCallback -= StartRecording;
+            IMLEventDispatcher.StopRecordCallback -= StopRecording;
             IMLEventDispatcher.DeleteAllCallback -= DeleteAllTrainingExamples;
         }
         /// <summary>
@@ -1291,8 +1291,6 @@ namespace InteractML
                 // wait for a frame until the data is loaded
                 yield return null;
             }
-
-            Debug.Log("trained");
             // Wait for another frame
             yield return null;
 
@@ -1331,18 +1329,14 @@ namespace InteractML
         {
             yield return null;
 
-            Debug.Log(nodesLoaded);
-
+            // wait for nodes to load
             while (!nodesLoaded)
             {
                 yield return null;
             }
 
-            
-           while (!RunAllModels())
-            {
-                yield return null;
-            }
+            // run models marked run n awake
+            RunAllModels();
 
             yield break;
               
@@ -2007,7 +2001,7 @@ namespace InteractML
             {
                 if (nodeID == TENode.id)
                 {
-                    success = TENode.StartCollecting();
+                    success = TENode.ToggleCollectExamples();
                 }
             }
             return success;
@@ -2061,6 +2055,7 @@ namespace InteractML
             {
                 if (nodeID == TENode.id)
                 {
+                    // clear training examples from this node 
                    TENode.ClearTrainingExamples();
                 }
             }
