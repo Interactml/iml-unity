@@ -341,6 +341,8 @@ namespace InteractML
             targetPortList = this.GetInputPort("TargetValues").GetConnections();
             CheckWarning();
             UpdateInputConfigList();
+            UpdateDesiredInputFeatures();
+            UpdateDesiredOutputFeatures();
 
         }
 
@@ -418,6 +420,7 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
+            Debug.Log(DesiredOutputFeatures.Count);
             // Run examples logic in case we need to start/stop collecting examples
             CollectExamplesLogic();
             
