@@ -18,6 +18,7 @@ namespace InteractML
         protected override void SetLearningType()
         {
             m_LearningType = IMLSpecifications.LearningType.Regression;
+            isKNN = false;
         }
         protected override void SetTrainingType()
         {
@@ -38,7 +39,7 @@ namespace InteractML
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <param name="portName"></param>
-        protected override void CheckTrainingExamplesConnections(XNode.NodePort from, XNode.NodePort to, string portName)
+       /* protected override void CheckTrainingExamplesConnections(XNode.NodePort from, XNode.NodePort to, string portName)
         {
             // Evaluate the nodeport for training examples
             if (to.fieldName == portName)
@@ -67,7 +68,7 @@ namespace InteractML
 
             }
 
-        }
+        }*/
 
         #endregion
 

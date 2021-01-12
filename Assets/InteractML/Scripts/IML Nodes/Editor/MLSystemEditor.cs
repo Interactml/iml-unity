@@ -149,7 +149,6 @@ namespace InteractML
             // If rapidlib reference is null we draw a disabled button or if it is running or training
             else
             {
-                Debug.Log(m_MLSystem.TotalNumTrainingDataConnected);
                 GUI.enabled = false;
 
             }

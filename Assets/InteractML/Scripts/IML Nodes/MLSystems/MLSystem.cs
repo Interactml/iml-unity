@@ -176,6 +176,7 @@ namespace InteractML
         /* ERROR FLAGS */
         protected bool m_ErrorWrongInputTrainingExamplesPort;
         protected bool m_WrongNumberOfTargetValues = false;
+        protected bool m_TrainingExamplesConflict = false;
 
         /// <summary>
         /// boolean whether the training nodes connected match the number of live data input nodes connected - to be deleted when new inputs implemented 
@@ -198,6 +199,8 @@ namespace InteractML
         public bool error = false;
 
         public bool trainOnLoad = false;
+
+        protected bool  isKNN;
 
         #endregion
 
@@ -262,6 +265,7 @@ namespace InteractML
         {
             base.OnCreateConnection(from, to);
             m_WrongNumberOfTargetValues = false;
+            m_TrainingExamplesConflict = false;
 
             // to be deleted when new events completely tested 
             //m_NodeConnectionChanged = true;
@@ -1754,13 +1758,24 @@ namespace InteractML
             m_ErrorWrongInputTrainingExamplesPort = value;
         }
 
-        protected virtual void CheckTrainingExamplesConnections(XNode.NodePort from, XNode.NodePort to, string portName)
+        protected void CheckTrainingExamplesConnections(XNode.NodePort from, XNode.NodePort to, string portName)
         {
             // Evaluate the nodeport for training examples
             if (to.fieldName == portName)
             {
-                // Check if the node connected was a training examples node
-                bool isNotTrainingExamplesNode = this.DisconnectIfNotType<MLSystem, TrainingExamplesNode>(from, to);
+                bool isNotTrainingExamplesNode = false;
+                if (m_trainingType == IMLSpecifications.TrainingSetType.SingleTrainingExamples)
+                {
+                    // Check if the node connected was a training examples node
+                    isNotTrainingExamplesNode = this.DisconnectIfNotType<MLSystem, SingleTrainingExamplesNode>(from, to);
+
+                }
+                else
+                {
+                    // Check if the node connected was a training examples node
+                    isNotTrainingExamplesNode = this.DisconnectIfNotType<MLSystem, SeriesTrainingExamplesNode>(from, to);
+
+                }
 
                 // If we broke the connection...
                 if (isNotTrainingExamplesNode)
@@ -1772,13 +1787,32 @@ namespace InteractML
                 else
                 {
                     TrainingExamplesNode examplesNode = from.node as TrainingExamplesNode;
+                    // if there is already a training examples node attached
+                    if (IMLTrainingExamplesNodes.Count > 0)
+                    {
+                        TrainingExamplesNode connectedNode = IMLTrainingExamplesNodes[0];
+                        // if the desired
+                        if (!Enumerable.SequenceEqual(connectedNode.DesiredInputsConfig, examplesNode.DesiredInputsConfig) && !Enumerable.SequenceEqual(connectedNode.DesiredInputsConfig, examplesNode.DesiredInputsConfig))
+                        {
+                            
+                            m_TrainingExamplesConflict = true;
+                            from.Disconnect(to);
+                        }
+                    }
+
+                    if (examplesNode.TargetValues.Count > 1 && isKNN)
+                    {
+                        from.Disconnect(to);
+                        m_WrongNumberOfTargetValues = true;
+                    }
                     // We check that the connection is from a training examples node
-                    if (examplesNode != null)
+                    if (examplesNode != null && !m_WrongNumberOfTargetValues && !m_TrainingExamplesConflict)
                     {
                         // Update dynamic ports for output
                         AddDynamicOutputPorts(examplesNode, ref m_DynamicOutputPorts);
                     }
                 }
+
             }
         }
 

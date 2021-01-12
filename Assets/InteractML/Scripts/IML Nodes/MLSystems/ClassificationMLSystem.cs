@@ -19,6 +19,7 @@ namespace InteractML
         protected override void SetLearningType()
         {
             m_LearningType = IMLSpecifications.LearningType.Classification;
+            isKNN = true;
 
         }
 
@@ -40,41 +41,11 @@ namespace InteractML
         /// <param name="from"></param>
         /// <param name="to"></param>
         /// <param name="portName"></param>
-        protected override void CheckTrainingExamplesConnections(XNode.NodePort from, XNode.NodePort to, string portName)
+        /*protected override void CheckTrainingExamplesConnections(XNode.NodePort from, XNode.NodePort to, string portName)
         {
-            // Evaluate the nodeport for training examples
-            if (to.fieldName == portName)
-            {
-                // Check if the node connected was a training examples node
-                bool isNotTrainingExamplesNode = this.DisconnectIfNotType<ClassificationMLSystem, SingleTrainingExamplesNode>(from, to);
+            
 
-                // If we broke the connection...
-                if (isNotTrainingExamplesNode)
-                {
-                    // Prepare flag to show error regarding training examples
-                    m_ErrorWrongInputTrainingExamplesPort = true;
-                }
-                // If we accept the connection...
-                else
-                {
-                    SingleTrainingExamplesNode examplesNode = from.node as SingleTrainingExamplesNode;
-                    if(examplesNode.TargetValues.Count > 1)
-                    {
-                        from.Disconnect(to);
-                        m_WrongNumberOfTargetValues = true; 
-                    }
-                    // We check that the connection is from a training examples node
-                    if (examplesNode != null && !m_WrongNumberOfTargetValues)
-                    {
-                        // Update dynamic ports for output
-                        AddDynamicOutputPorts(examplesNode, ref m_DynamicOutputPorts);
-                    }
-
-                }
-
-            }
-
-        }
+        }*/
 
         #endregion
     }
