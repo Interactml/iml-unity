@@ -66,7 +66,6 @@ namespace InteractML
         /// <param name="modelToCreate"></param>
         public RapidlibModel(ModelType modelToCreate)
         {
-            Debug.Log("here zero");
             // Set default values
             m_ModelAddress = (IntPtr)0;
             m_ModelJSONString = "";
@@ -348,7 +347,6 @@ namespace InteractML
                     RapidlibLinkerDLL.DestroyModel(m_ModelAddress);
                 }
             }
-            Debug.Log("here zero");
             // We set the pointer to none
             m_ModelAddress = (IntPtr)0;
             // We set the json string to nothing

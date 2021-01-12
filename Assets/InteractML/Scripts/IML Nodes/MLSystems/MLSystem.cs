@@ -197,7 +197,7 @@ namespace InteractML
         /// </summary>
         public bool error = false;
 
-        private bool modelLoaded;
+        public bool trainOnLoad = false;
 
         #endregion
 
@@ -347,8 +347,6 @@ namespace InteractML
 
         public void OnValidate()
         {
-            Debug.Log("here");
-
             // Checks that the rapidlib model is instanced (only if model is null)
             if (m_Model == null && (this.graph as IMLGraph).IsGraphRunning)
             {
@@ -531,7 +529,6 @@ namespace InteractML
         /// <returns></returns>
         public bool TrainModel()
         {
-            Debug.Log(TotalNumTrainingDataConnected);
             bool isTrained = false;
             //if the MLS is not running, training and the model is not null and the total number of training data is bigger than 0
             if (!Running && !Training && Model != null && TotalNumTrainingDataConnected > 0)
@@ -670,6 +667,7 @@ namespace InteractML
         /// <returns>boolean on whether the model has started running</returns>
         private bool StartRunning()
         {
+            Debug.Log("here");
             UpdateOutputFormat();
             // If the system is not running and it is trained, it is not traing and the vectors match 
             if (!m_Running && Trained && !Training && matchLiveDataInputs && matchVectorLength)
@@ -704,10 +702,10 @@ namespace InteractML
                     m_RunningSeries.ClearSerie();
                     // We parse json into iml output
                     PredictedOutput = IMLDataSerialization.ParseJSONToIMLFeature(predictionDTW);
-
+                    Debug.Log(predictionDTW.Length);
                     if (PredictedOutput != null && PredictedOutput.Count > 0)
                     {
-                        //Debug.Log("Predicted output is: " + PredictedOutput[0].Values[0]);
+                        Debug.Log("Predicted output is: " + PredictedOutput[0].Values[0]);
                     }
                 }
                 // Set flag to false
@@ -1465,24 +1463,6 @@ namespace InteractML
                 throw new Exception("The output port fieldName doesn't contain an index!");
             }
         }
-        // ask carlos what this is for?
-      /*  protected virtual void OverrideModel(IMLSpecifications.LearningType learningType)
-        {
-            switch (learningType)
-            {
-                case IMLSpecifications.LearningType.Classification:
-                    m_Model = new RapidlibModel(RapidlibModel.ModelType.kNN);
-                    break;
-                case IMLSpecifications.LearningType.Regression:
-                    m_Model = new RapidlibModel(RapidlibModel.ModelType.NeuralNetwork);
-                    break;
-                case IMLSpecifications.LearningType.DTW:
-                    m_Model = new RapidlibModel(RapidlibModel.ModelType.DTW);
-                    break;
-                default:
-                    break;
-            }
-        }*/
         /// <summary>
         /// Updates number of training examples 
         /// </summary>
@@ -1630,11 +1610,11 @@ namespace InteractML
                         }
                         // Increase counter of series
                         numSeries += trainingNodesIML[i].TrainingSeriesCollection.Count;
-
+                        Debug.Log(trainingNodesIML[i].TrainingSeriesCollection.Count);
                     }
                 }
             }
-
+            
             return seriesToReturn;
         }
 
@@ -1896,7 +1876,8 @@ namespace InteractML
 
         public void UpdateLogic()
         {
-            Debug.Log(Model.ModelAddress);
+            //test
+            //Debug.Log(Model.ModelAddress);
             //Debug.Log(id);
             //Debug.Log(Model.ModelStatus);
             //Debug.Log(Trained);
@@ -1951,13 +1932,18 @@ namespace InteractML
         {
             ResetModel();
 
-            if (Model.TypeOfModel == RapidlibModel.ModelType.DTW)
+            if (Model.TypeOfModel == RapidlibModel.ModelType.DTW && trainOnLoad)
             {
                 return TrainModel();
 
-            } else {
+            } else if(Model.TypeOfModel == RapidlibModel.ModelType.NeuralNetwork || Model.TypeOfModel == RapidlibModel.ModelType.kNN)  
+            {
                 m_NumExamplesTrainedOn = m_TotalNumTrainingDataConnected;
                 return LoadModelFromDisk();
+            }
+            else
+            {
+                return true;
             }
             
         }
