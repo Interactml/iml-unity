@@ -1297,11 +1297,16 @@ namespace InteractML
             // Retrain them
             //ReTrainAllModelsCoroutine();
 
-            while(!(bool)IMLEventDispatcher.LoadModelsCallback?.Invoke())
+            // if there are mlsystem nodes in the graph
+            if (MLSystemNodeList.Count > 0)
             {
-                // wait for a frame until models are retrained
-                yield return null;
+                while (!(bool)IMLEventDispatcher.LoadModelsCallback?.Invoke())
+                {
+                    // wait for a frame until models are retrained
+                    yield return null;
+                }
             }
+            
 
             // Wait for another frame
             yield return null;
