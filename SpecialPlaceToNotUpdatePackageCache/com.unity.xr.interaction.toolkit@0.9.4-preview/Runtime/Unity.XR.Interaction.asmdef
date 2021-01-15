@@ -1,0 +1,40 @@
+{
+    "name": "Unity.XR.Interaction.Toolkit",
+    "references": [
+        "Unity.ugui",
+        "UnityEngine.SpatialTracking",
+        "Unity.XR.ARSubsystems",
+        "Unity.XR.ARFoundation",
+        "UnityEngine.XR.LegacyInputHelpers"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.xr.arfoundation",
+            "expression": "2.0.2",
+            "define": "AR_FOUNDATION_PRESENT"
+        },
+        {
+            "name": "com.unity.xr.legacyinputhelpers",
+            "expression": "[1.3.0,1.9.9]",
+            "define": "LIH_PRESENT_V1API"
+        },
+        {
+            "name": "com.unity.xr.legacyinputhelpers",
+            "expression": "2.0.0",
+            "define": "LIH_PRESENT_V2API"
+        },
+        {
+            "name": "com.unity.xr.legacyinputhelpers",
+            "expression": "1.3.0",
+            "define": "LIH_PRESENT"
+        }
+    ],
+    "noEngineReferences": false
+}

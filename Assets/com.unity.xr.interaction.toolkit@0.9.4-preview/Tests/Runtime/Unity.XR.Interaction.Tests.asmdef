@@ -1,0 +1,48 @@
+{
+    "name": "Unity.XR.Interaction.Toolkit.Tests",
+    "references": [
+        "Unity.XR.Interaction.Toolkit",
+        "Unity.ugui",
+        "Unity.XR.ARSubsystems",
+        "Unity.XR.ARFoundation",
+        "UnityEngine.SpatialTracking",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "nunit.framework.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS",
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.xr.arfoundation",
+            "expression": "2.0.2",
+            "define": "AR_FOUNDATION_PRESENT"
+        },
+        {
+            "name": "com.unity.xr.legacyinputhelpers",
+            "expression": "1.3.0",
+            "define": "LIH_PRESENT"
+        },
+        {
+            "name": "com.unity.xr.legacyinputhelpers",
+            "expression": "[1.3.0,1.9.9]",
+            "define": "LIH_PRESENT_V1API"
+        },
+        {
+            "name": "com.unity.xr.legacyinputhelpers",
+            "expression": "2.0.0",
+            "define": "LIH_PRESENT_V2API"
+        }
+    ],
+    "noEngineReferences": false
+}
