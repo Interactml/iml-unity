@@ -140,16 +140,8 @@ namespace InteractML
         /// boolean for whether the MLS node connecting is a classification algorithm
         /// </summary>
         private bool MLSClassification = false;
-        /// <summary>
-        /// Lists of input ports 
-        /// </summary>
-        private List<NodePort> inputPortList;
-        private List<NodePort> targetPortList;
-        /// <summary>
-        /// boolean to hold whether the user removed a target value/input port connection when there were trained examples
-        /// </summary>
-        private bool badRemove = false;
-        private string portName = "";
+       
+        
         /// <summary>
         /// boolean for whether the node should be showing a warning 
         /// </summary>
