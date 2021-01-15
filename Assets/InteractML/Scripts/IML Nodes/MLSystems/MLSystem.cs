@@ -747,8 +747,6 @@ namespace InteractML
             // We reset the running flag
             m_Running = false;
 
-            // delete the model from disk 
-            DeleteModelFromDisk();
         }
 
         /// <summary>

@@ -28,7 +28,6 @@ namespace InteractML
 
         public override RapidlibModel InstantiateRapidlibModel()
         {
-            Debug.Log("here");
             RapidlibModel model;
             model = new RapidlibModel(RapidlibModel.ModelType.NeuralNetwork);
             return model;

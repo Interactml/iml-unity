@@ -52,7 +52,6 @@ namespace InteractML
         /// </summary>
         public RapidlibModel()
         {
-            Debug.Log("here construct");
             // Set default values
             m_ModelAddress = (IntPtr)0;
             m_ModelJSONString = "";

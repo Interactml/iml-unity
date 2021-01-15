@@ -139,11 +139,11 @@ namespace InteractML
                 nameButton = "start \n recording";
             }
 
-            bool disableButton = false;
-
-            // Draw button record examples
-            if (disableButton)
+            if (!m_TrainingExamplesNode.canCollect)
+            {
                 GUI.enabled = false;
+            }
+                
             if (GUILayout.Button("Record Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button")))
             {
                 IMLEventDispatcher.ToggleRecordCallback(m_TrainingExamplesNode.id);
@@ -382,10 +382,6 @@ namespace InteractML
                 // show record examples button
                 GUILayout.Space(spacing);
             }
-            else
-            {
-
-            }
             
             string recordNameButton = ShowRecordExamplesButton();
 
@@ -453,7 +449,7 @@ namespace InteractML
                 EditorGUI.indentLevel++;
 
 
-                if (ReusableMethods.Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.TrainingExamplesVector))
+                if (ReusableMethods.Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.TrainingExamplesVector)&& ReusableMethods.Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.TrainingSeriesCollection))
                 {
                     EditorGUILayout.LabelField("Training Examples List is empty", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("foldoutempty"));
                 }

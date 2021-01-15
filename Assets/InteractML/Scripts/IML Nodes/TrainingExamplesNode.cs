@@ -150,6 +150,8 @@ namespace InteractML
         private int lastNoOfRecordings = 0;
         private bool deleteLast = false;
 
+        public bool canCollect;
+
         #endregion
 
         #region XNode Messages
@@ -158,21 +160,46 @@ namespace InteractML
 
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
+            // bool for tracking whether there are training examples recorded
+            bool trainingExamplesExist = false;
+            // if you are not connecting a ifeatureiml node then disconnect
             if (this.DisconnectIfNotType<TrainingExamplesNode, IFeatureIML>(from, to))
-            {
-                return;
-            }
-            bool trainingExamplesRecorded = false;
-            // if you have started training and this is not the system trying to stop you changing the connection and it is an output port 
-            if (TrainingExamplesVector.Count > 0 || TrainingSeriesCollection.Count > 0 && !badRemove)
             {
                 from.Disconnect(to);
                 return;
             }
-                
-            // DIRTY CODE
+            // if there are training examples set the bool to true 
+            if (TrainingExamplesVector.Count > 0 || TrainingSeriesCollection.Count > 0)
+            {
+                trainingExamplesExist = true;
+            }
+
+            // if you are connecting to input port 
             if (to.fieldName == "InputFeatures")
             {
+                // if there are training examples
+                if (trainingExamplesExist)
+                {
+                    // int for number of input features currently connected
+                    int noOfInputFeatures = 0;
+                    // if there are features set tp that number if there are none leave as 0 
+                    if (!Lists.IsNullOrEmpty(ref InputFeatures))
+                    {
+                        noOfInputFeatures = InputFeatures.Count;
+                    }
+
+                    // get the data type of the feature being connected
+                    IFeatureIML node = from.node as IFeatureIML;
+                    IMLSpecifications.InputsEnum datatype = (IMLSpecifications.InputsEnum)node.FeatureValues.DataType;
+                    
+                    if (DesiredInputsConfig.Count == noOfInputFeatures||datatype != DesiredInputsConfig[noOfInputFeatures])
+                    {
+                        Debug.Log("here");
+                        from.Disconnect(to);
+                        return;
+                    }
+                    
+                }
                 // DIRTY CODE
                 // Since there is a bug in DTW rapidlib, we don't allow features of different size connected
                 // If we are a training examples node for DTW...
@@ -188,13 +215,14 @@ namespace InteractML
                         // Disconnect if sizes don't match
                         if (newFeatureSize != knownFeatureSize)
                         {
+                            Debug.Log("here");
                             from.Disconnect(to);
                             return;
                         }
                     }
                     
                  }
-                inputPortList = this.GetInputPort("InputFeatures").GetConnections();
+
                 UpdateInputConfigList();
                 UpdateDesiredInputFeatures();
                 IMLEventDispatcher.InputConfigChangeCallback?.Invoke();
@@ -204,12 +232,22 @@ namespace InteractML
             //if connected to target values 
             if(to.fieldName == "TargetValues")
             {
-                if (trainingExamplesRecorded)
+                if (trainingExamplesExist)
                 {
-                    from.Disconnect(to);
-                    return;
+                    int noOfTargetValues = 0;
+                    if (!Lists.IsNullOrEmpty(ref TargetValues))
+                    {
+                        noOfTargetValues = TargetValues.Count;
+                    }
+                    IFeatureIML node = from.node as IFeatureIML;
+                    IMLSpecifications.OutputsEnum datatype = (IMLSpecifications.OutputsEnum)node.FeatureValues.DataType;
+                    if (datatype != DesiredOutputsConfig[noOfTargetValues])
+                    {
+                        from.Disconnect(to);
+                        return;
+                    }
+                    
                 }
-
                 // Go through MLS systems connected if any MLS are classification or DTW set MLSclassification to true
                 foreach (MLSystem MLS in MLSystemNodesConnected)
                 {
@@ -229,34 +267,53 @@ namespace InteractML
                     UpdateTargetValueInput();
                 }
                 MLSClassification = false;
-                targetPortList = this.GetInputPort("TargetValues").GetConnections();
+                //targetPortList = this.GetInputPort("TargetValues").GetConnections();
                 UpdateTargetValuesConfig();
                 UpdateDesiredOutputFeatures();
                 IMLEventDispatcher.LabelsConfigChangeCallback?.Invoke();
-                return;
+                
             }
+            CheckSetUp();
 
-            
         }
 
         public override void OnRemoveConnection(NodePort port)
         {
-            if(TrainingExamplesVector.Count  > 0 || TrainingSeriesCollection.Count > 0)
+            base.OnRemoveConnection(port);
+            
+
+            if (TrainingExamplesVector.Count == 0 && TrainingSeriesCollection.Count == 0)
             {
-                badRemove = true;
-                portName = port.fieldName;
+                UpdateTargetValuesConfig();
+                UpdateInputConfigList();
+                UpdateTargetValueInput();
+
+                UpdateDesiredInputFeatures();
+                UpdateDesiredOutputFeatures();
             } else
             {
-                inputPortList = this.GetInputPort("InputFeatures").GetConnections();
-                targetPortList = this.GetInputPort("TargetValues").GetConnections();
+                InputFeatures = this.GetInputNodesConnected("InputFeatures");
+                TargetValues = this.GetInputNodesConnected("TargetValues");
             }
-            base.OnRemoveConnection(port);
-            UpdateTargetValueInput();
-            UpdateTargetValuesConfig();
 
-            UpdateInputConfigList();
-            UpdateDesiredInputFeatures();
-            UpdateDesiredOutputFeatures();
+            CheckSetUp();
+        }
+
+        private void CheckSetUp()
+        {
+            canCollect = true;
+            if (Lists.IsNullOrEmpty(ref InputFeatures) || Lists.IsNullOrEmpty(ref TargetValues))
+            {
+                canCollect = false;
+                return;
+            }
+            if (TrainingExamplesVector.Count > 0 || TrainingSeriesCollection.Count > 0)
+            {
+                if (DesiredInputsConfig.Count != InputFeatures.Count || DesiredOutputsConfig.Count != TargetValues.Count)
+                {
+                    canCollect = false;
+                }
+            }
         }
 
 
@@ -328,25 +385,19 @@ namespace InteractML
             UpdateTargetValuesConfig();
             // Load training data from disk
             LoadDataFromDisk();
-            
-            inputPortList = this.GetInputPort("InputFeatures").GetConnections();
-            targetPortList = this.GetInputPort("TargetValues").GetConnections();
             CheckWarning();
-            UpdateInputConfigList();
+            if (TrainingSeriesCollection.Count == 0 && TrainingExamplesVector.Count == 0)
+           {
+                UpdateInputConfigList();
+                UpdateTargetValuesConfig();
+           }
+            
             UpdateDesiredInputFeatures();
             UpdateDesiredOutputFeatures();
+            CheckSetUp();
 
         }
 
-        private void SubscribeToDelegates()
-        {
-
-        }
-        
-        private void UnsubscribeToDelegates()
-        {
-
-        }
 
         /// <summary>
         /// Starts/Stops collecting examples when called
@@ -364,7 +415,7 @@ namespace InteractML
         public bool StartCollecting()
         {
             // if the node is set up with input features and it is not currently collecting data start collecting data
-            if(InputFeatures.Count > 0 && TargetValues.Count > 0 && !m_CollectingData)
+            if(InputFeatures.Count > 0 && TargetValues.Count > 0 && !m_CollectingData && canCollect)
             {
                 StartCollectingData();
                 return true;
@@ -398,7 +449,7 @@ namespace InteractML
         /// </summary>
         public bool AddSingleTrainingExample()
         {
-            if(!m_CollectingData && InputFeatures.Count > 0 && TargetValues.Count > 0)
+            if(!m_CollectingData && InputFeatures.Count > 0 && TargetValues.Count > 0 && canCollect)
             {
                 AddTrainingExampleprotected();
                 CheckWarning();
@@ -414,10 +465,6 @@ namespace InteractML
         {
             // Run examples logic in case we need to start/stop collecting examples
             CollectExamplesLogic();
-            
-            //come back here
-            //if (badRemove)
-                //StopDisconnection();
 
         }
 
@@ -447,12 +494,15 @@ namespace InteractML
             CheckWarning();
             //Update MLsystems connected with new number of training data 
             UpdateConnectMLSystems();
-            
+
+            UpdateTargetValuesConfig();
+            UpdateInputConfigList();
+
             // I AM GOING TO KEEP THE DESIRED OUTPUTS UNCHANGED FOR THE MOMENT
 
             // Clear list of desired outputs (which is also fed to the training examples vector when adding a single training example)
             //DesiredOutputFeatures.Clear();
-
+            CheckSetUp();
         }
 
         public void DeleteLastRecording()
@@ -487,6 +537,7 @@ namespace InteractML
         /// </summary>
         protected void UpdateInputConfigList()
         {
+            Debug.Log("inputconfiglist");
             // Get values from the input list
             InputFeatures = this.GetInputNodesConnected("InputFeatures");
 
@@ -519,6 +570,65 @@ namespace InteractML
             }
             
         }
+
+        /// <summary>
+        /// Updates the configuration list of inputs
+        /// </summary>
+        protected void UpdateInputConfigListLoadedData()
+        {
+            // Make sure that the list is initialised
+            if (m_DesiredInputsConfig == null)
+                m_DesiredInputsConfig = new List<IMLSpecifications.InputsEnum>();
+
+            // Adjust the desired inputs list based on nodes connected
+            m_DesiredInputsConfig.Clear();
+            m_DesiredOutputsConfig.Clear();
+            // if there are inputfestures connected 
+            if (TrainingSeriesCollection != null||TrainingExamplesVector != null)
+            {
+                if (this is SeriesTrainingExamplesNode)
+                {
+                    for (int i = 0; i < TrainingSeriesCollection[0].Series[0].Count; i++)
+                    {
+                        m_DesiredInputsConfig.Add((IMLSpecifications.InputsEnum)TrainingSeriesCollection[0].Series[0][i].InputData.DataType);
+                        
+                    }
+                    //inputFeaturesInSeries[j][k].InputData.Values.Length
+                    //Debug.Log(TrainingSeriesCollection[0].LabelSeries);
+                    List<IMLBaseDataType> labels = IMLDataSerialization.ParseJSONToIMLFeature(TrainingSeriesCollection[0].LabelSeries);
+                    //Debug.Log(labels.Count);
+                    for (int i = 0; i < labels.Count; i++)
+                    {
+                        Debug.Log(labels[i].DataType.ToString());
+                        m_DesiredOutputsConfig.Add((IMLSpecifications.OutputsEnum)labels[i].DataType);
+                        
+                    }
+                }
+                else
+                {
+                    Debug.Log("training");
+                    var inputFeatures = TrainingExamplesVector[0].Inputs;
+                    for (int i = 0; i < TrainingExamplesVector[0].Inputs.Count; i++)
+                    {
+                        Debug.Log((IMLSpecifications.InputsEnum)inputFeatures[i].InputData.DataType);
+                        m_DesiredInputsConfig.Add((IMLSpecifications.InputsEnum)inputFeatures[i].InputData.DataType);
+
+                    }
+                    var outputFeatures = TrainingExamplesVector[0].Outputs;
+                    for (int i = 0; i < outputFeatures.Count; i++)
+                    {
+                        m_DesiredOutputsConfig.Add((IMLSpecifications.OutputsEnum)outputFeatures[i].OutputData.DataType);
+
+                    }
+                }
+                
+            }
+            else
+            {
+                InputFeatures = new List<Node>();
+            }
+
+        }
         /// <summary>
         /// Updates the list of Feature Extractprs / Data type nodes connected to the Target Value port 
         /// </summary>
@@ -541,6 +651,7 @@ namespace InteractML
         protected void UpdateTargetValuesConfig()
         {
             m_DesiredOutputsConfig.Clear();
+           
             if (m_DesiredOutputsConfig.Count != TargetValues.Count)
             {
                 for (int i = 0; i < TargetValues.Count; i++)
@@ -667,6 +778,7 @@ namespace InteractML
             return success;
 
         }
+        
 
         /// <summary>
         /// Sets the collecting data flag to true and configures the class to collect data
@@ -719,19 +831,29 @@ namespace InteractML
 
         private void LoadDataFromDisk()
         {
-            //Load training data from disk
-            var auxTrainingExamplesVector = IMLDataSerialization.LoadTrainingSetFromDisk(GetJSONFileName());
-            if (!Lists.IsNullOrEmpty(ref auxTrainingExamplesVector))
+            if (this is SeriesTrainingExamplesNode)
             {
-                TrainingExamplesVector = auxTrainingExamplesVector;
-                //Debug.Log("Training Examples Vector loaded!");
+                // Load IML Series Collection from disk
+                var auxTrainingSeriesCollection = IMLDataSerialization.LoadTrainingSeriesCollectionFromDisk(GetJSONFileName());
+                if (!Lists.IsNullOrEmpty(ref auxTrainingSeriesCollection))
+                {
+                    TrainingSeriesCollection = auxTrainingSeriesCollection;
+                }
+            }
+            else
+            {
+                //Load training data from disk
+                var auxTrainingExamplesVector = IMLDataSerialization.LoadTrainingSetFromDisk(GetJSONFileName());
+                if (!Lists.IsNullOrEmpty(ref auxTrainingExamplesVector))
+                {
+                    TrainingExamplesVector = auxTrainingExamplesVector;
+                    //Debug.Log("Training Examples Vector loaded!");
+                }
             }
 
-            // Load IML Series Collection from disk
-            var auxTrainingSeriesCollection = IMLDataSerialization.LoadTrainingSeriesCollectionFromDisk(GetJSONFileName());
-            if (!Lists.IsNullOrEmpty(ref auxTrainingSeriesCollection))
+            if (TrainingExamplesVector.Count > 0 || TrainingSeriesCollection.Count > 0)
             {
-                TrainingSeriesCollection = auxTrainingSeriesCollection;
+                UpdateInputConfigListLoadedData();
             }
         }
 
@@ -789,6 +911,17 @@ namespace InteractML
 
         protected void StopDisconnection()
         {
+           /* if (portName == "InputFeatures")
+            {
+                NodePort portConnect = GetInputPort(portName);
+                for (int i = 0; i < inputPortList.Count; i++)
+                {
+                    portConnect.Connect(inputPortList[i]);
+                    inputPortList[i].Connect(portConnect);
+
+                }
+            }
+
             if (portName == "TargetValues")
             {
                 NodePort portConnect = GetInputPort(portName);
@@ -797,20 +930,11 @@ namespace InteractML
                     portConnect.Connect(targetPortList[i]);
                     targetPortList[i].Connect(portConnect);
                 }
-            }
+            }*/
 
-            if (portName == "InputFeatures")
-            {
-                NodePort portConnect = GetInputPort(portName);
-                for (int i = 0; i < inputPortList.Count; i++)
-                {
-                    portConnect.Connect(inputPortList[i]);
-                    inputPortList[i].Connect(portConnect);
-                    
-                }
-            }
+            
 
-            badRemove = false;
+            //badRemove = false;
 
         }
         /// <summary>

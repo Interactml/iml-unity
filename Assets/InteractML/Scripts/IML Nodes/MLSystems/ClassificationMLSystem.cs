@@ -18,9 +18,10 @@ namespace InteractML
         // used for UI set what the user facing machine learning algorithm is called
         protected override void SetLearningType()
         {
+            // set learning type
             m_LearningType = IMLSpecifications.LearningType.Classification;
+            // bool whether is kNN algorithm
             isKNN = true;
-
         }
 
         protected override void SetTrainingType()

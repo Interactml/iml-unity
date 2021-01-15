@@ -1284,13 +1284,17 @@ namespace InteractML
 
             // Reset all models
             //ResetAllModels();
-
-            // Reload Training Data Set
-            while (!LoadAllTrainingExamples())
+            // if there are training examples nodes
+            if (TrainingExamplesNodesList.Count > 0)
             {
-                // wait for a frame until the data is loaded
-                yield return null;
+                // Reload Training Data Set
+                while (!LoadAllTrainingExamples())
+                {
+                    // wait for a frame until the data is loaded
+                    yield return null;
+                }
             }
+            
             // Wait for another frame
             yield return null;
 
