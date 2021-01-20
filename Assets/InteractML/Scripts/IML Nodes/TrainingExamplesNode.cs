@@ -15,7 +15,6 @@ namespace InteractML
     {
 
         #region Variables
-
         /// <summary>
         /// The input features passed in to the node
         /// </summary>
@@ -163,7 +162,7 @@ namespace InteractML
             // bool for tracking whether there are training examples recorded
             bool trainingExamplesExist = false;
             // if you are not connecting a ifeatureiml node then disconnect
-            if (this.DisconnectIfNotType<TrainingExamplesNode, IFeatureIML>(from, to))
+            if (this.DisconnectIfNotType<TrainingExamplesNode, IFeatureIML>(from, to) && from.fieldName != "TrainingExamplesNodeToOutput")
             {
                 from.Disconnect(to);
                 return;

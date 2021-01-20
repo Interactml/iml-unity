@@ -5,6 +5,7 @@ using XNode;
 using System.Linq;
 using ReusableMethods;
 using System;
+using System.IO;
 
 namespace InteractML
 {
@@ -776,36 +777,39 @@ namespace InteractML
             bool success = false;
 
             // Make sure to re-instantiate the model if null or flag is true
-            if (m_Model == null || reCreateModel)
+            if (m_Model == null || reCreateModel || m_Model.ModelAddress == (IntPtr)0)
                 m_Model = InstantiateRapidlibModel();
-
             success = m_Model.LoadModelFromDisk(this.graph.name + "_IMLConfiguration" + this.id, reCreateModel);
             // We update the node learning type to match the one from the loaded model
-            switch (m_Model.TypeOfModel)
+            if (success)
             {
-                case RapidlibModel.ModelType.kNN:
-                    // Configure inputs and outputs
-                    PredictedOutput = new List<IMLBaseDataType>(m_Model.GetNumExpectedOutputs());
-                    // TO DO
-                    // Still left to configure inputs
-                    // Still left to configure the type of the inputs and outputs
-                    break;
-                case RapidlibModel.ModelType.NeuralNetwork:
-                    // Configure inputs and outputs
-                    PredictedOutput = new List<IMLBaseDataType>(m_Model.GetNumExpectedOutputs());
-                    // TO DO
-                    // Still left to configure inputs
-                    // Still left to configure the type of the inputs and outputs
-                    break;
-                case RapidlibModel.ModelType.DTW:
-                    // DTW model will need to retrain!
-                    Debug.Log("DTW RETRAINING WHEN LOADING MODEL NOT IMPLEMENTED YET!");
-                    break;
-                case RapidlibModel.ModelType.None:
-                    break;
-                default:
-                    break;
+                switch (m_Model.TypeOfModel)
+                {
+                    case RapidlibModel.ModelType.kNN:
+                        // Configure inputs and outputs
+                        PredictedOutput = new List<IMLBaseDataType>(m_Model.GetNumExpectedOutputs());
+                        // TO DO
+                        // Still left to configure inputs
+                        // Still left to configure the type of the inputs and outputs
+                        break;
+                    case RapidlibModel.ModelType.NeuralNetwork:
+                        // Configure inputs and outputs
+                        PredictedOutput = new List<IMLBaseDataType>(m_Model.GetNumExpectedOutputs());
+                        // TO DO
+                        // Still left to configure inputs
+                        // Still left to configure the type of the inputs and outputs
+                        break;
+                    case RapidlibModel.ModelType.DTW:
+                        // DTW model will need to retrain!
+                        Debug.Log("DTW RETRAINING WHEN LOADING MODEL NOT IMPLEMENTED YET!");
+                        break;
+                    case RapidlibModel.ModelType.None:
+                        break;
+                    default:
+                        break;
+                }
             }
+            
 
             return success;
         }
@@ -1766,7 +1770,7 @@ namespace InteractML
                 {
                     // Check if the node connected was a training examples node
                     isNotTrainingExamplesNode = this.DisconnectIfNotType<MLSystem, SingleTrainingExamplesNode>(from, to);
-
+                    Debug.Log(isNotTrainingExamplesNode);
                 }
                 else
                 {
@@ -1792,7 +1796,6 @@ namespace InteractML
                         // if the desired
                         if (!Enumerable.SequenceEqual(connectedNode.DesiredInputsConfig, examplesNode.DesiredInputsConfig) && !Enumerable.SequenceEqual(connectedNode.DesiredInputsConfig, examplesNode.DesiredInputsConfig))
                         {
-                            
                             m_TrainingExamplesConflict = true;
                             from.Disconnect(to);
                         }
