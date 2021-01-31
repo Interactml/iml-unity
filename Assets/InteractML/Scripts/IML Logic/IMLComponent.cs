@@ -206,7 +206,7 @@ namespace InteractML
         }
 #endregion
 
-#region Private Methods
+        #region Private Methods
 
         private void Initialize()
         {
@@ -283,7 +283,7 @@ namespace InteractML
             // If we are not on the editor...
             if (Application.isPlaying)
             {
-                LoadDataAndRunOnAwakeModels();
+                LoadDataForModels();
             }
 
 #endif

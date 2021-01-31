@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.CompilerServices;
+using XNode;
 #if UNITY_EDITOR
 using UnityEditor;
 using XNodeEditor;
-using XNode;
 #endif
 
 namespace InteractML.DataTypeNodes
