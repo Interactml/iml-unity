@@ -81,19 +81,6 @@ public class IMLBuildManager
         //FileUtil.CopyFileOrDirectory("Assets/InteractML/Data/Models", buildDataPath + "/InteractML/Data");
         //FileUtil.CopyFileOrDirectory("Assets/InteractML/Data/Training_Examples", buildDataPath + "/InteractML/Data");
 
-        UnityEngine.Debug.Log("Models in build: ");
-        modelNames = Directory.GetFiles(buildDataPath + "/InteractML/Data/Models");
-        foreach (string modelName in modelNames)
-        {
-            UnityEngine.Debug.Log(modelName);
-        }
-        UnityEngine.Debug.Log("Training Examples in build: ");
-        trainingExamplesNames = Directory.GetFiles(buildDataPath + "/InteractML/Data/Training_Examples");
-        foreach (string name in trainingExamplesNames)
-        {
-            UnityEngine.Debug.Log(name);
-        }
-
         UnityEngine.Debug.Log("=========END OF CUSTOM BUILD CODE==========");
 
         // Run the game (Process class from System.Diagnostics).

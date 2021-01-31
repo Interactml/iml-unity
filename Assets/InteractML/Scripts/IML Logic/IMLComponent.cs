@@ -174,6 +174,10 @@ namespace InteractML
         // Start is called before the first frame update
         void Start()
         {
+#if !UNITY_EDITOR
+                // Run Models on Play if we are on a build
+                RunModelsOnPlay();
+#endif
         }
 
         // Update is called once per frame
@@ -1344,7 +1348,7 @@ namespace InteractML
                 yield return null;
             }
 
-            // run models marked run n awake
+            // run models marked run on awake
             RunAllModels();
 
             yield break;
