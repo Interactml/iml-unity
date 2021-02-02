@@ -13,6 +13,7 @@ public class IMLBuildManager
     [InitializeOnLoadMethod]
     private static void Initialize()
     {
+        // Subscribe to event that fires when a build is produced
         BuildPlayerWindow.RegisterBuildPlayerHandler(BuildPlayerHandler);
     }
 
@@ -31,8 +32,8 @@ public class IMLBuildManager
         string executableName = Path.GetFileNameWithoutExtension(buildPath);
         buildPath = Path.GetDirectoryName(buildPath);
         string buildDataPath = Path.Combine(buildPath, executableName + "_Data");
-        UnityEngine.Debug.Log("=========CUSTOM BUILD CODE==========");
-        UnityEngine.Debug.Log("The app will be built at: " + buildPath);
+        //UnityEngine.Debug.Log("=========CUSTOM BUILD CODE==========");
+        //UnityEngine.Debug.Log("The app will be built at: " + buildPath);
 
         // Copy models and training data from the project folder to the build folder, alongside the built game.
         // Create IML directory
@@ -77,11 +78,7 @@ public class IMLBuildManager
             
         }
 
-
-        //FileUtil.CopyFileOrDirectory("Assets/InteractML/Data/Models", buildDataPath + "/InteractML/Data");
-        //FileUtil.CopyFileOrDirectory("Assets/InteractML/Data/Training_Examples", buildDataPath + "/InteractML/Data");
-
-        UnityEngine.Debug.Log("=========END OF CUSTOM BUILD CODE==========");
+        //UnityEngine.Debug.Log("=========END OF CUSTOM BUILD CODE==========");
 
         // Run the game (Process class from System.Diagnostics).
         Process proc = new Process();
@@ -89,25 +86,6 @@ public class IMLBuildManager
         proc.Start();
     }
 
-    [MenuItem("InteractML/Windows Build With Postprocess")]
-    public static void BuildGame()
-    {
-        // Get filename.
-        string path = EditorUtility.SaveFolderPanel("Choose Location of Built Game", "", "");
-        string[] levels = new string[] { "Assets/Scene1.unity", "Assets/Scene2.unity" };
-
-        // Build player.
-        BuildPipeline.BuildPlayer(levels, path + "/BuiltGame.exe", BuildTarget.StandaloneWindows, BuildOptions.None);
-
-        // Copy a models and training data from the project folder to the build folder, alongside the built game.
-        FileUtil.CopyFileOrDirectory("Assets/InteractML/Data/Models", path + "InteractML/Data/Models");
-        FileUtil.CopyFileOrDirectory("Assets/InteractML/Data/Training_Examples", path + "InteractML/Data/Training_Examples");
-
-        // Run the game (Process class from System.Diagnostics).
-        Process proc = new Process();
-        proc.StartInfo.FileName = path + "/BuiltGame.exe";
-        proc.Start();
-    }
 
  
 }
