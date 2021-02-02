@@ -21,43 +21,18 @@ namespace InteractML.ControllerCustomisers
         [Output]
         public bool ControllerOutput;
 
-        public InputHelpers.Button button = InputHelpers.Button.None;
+        private VRButtonHandler triggerButton;
+        public IMLSides hand;
+
 
         private bool previousPress = false;
 
-        private string attachedID;
 
-        private List<InputDevice> inputDevices = new List<InputDevice>();
-
-
-        public override void OnCreateConnection(NodePort from, NodePort to)
+        public override void Initialize()
         {
-            base.OnCreateConnection(from, to);
-            IMLNode node = (IMLNode)from.node;
-            attachedID = node.id;
+             
         }
 
-        public void HandleState(XRController controller)
-        {
-            // Debug.Log(button);
-            //Debug.Log(controller.axisToPressThreshold);
-            if (controller.inputDevice.IsPressed(button, out bool pressed, controller.axisToPressThreshold))
-            {
-                if (previousPress != pressed)
-                {
-                    previousPress = pressed;
-                    if (pressed)
-                    {
-                        Debug.Log("here");
-                        //OnButtonDown?.Invoke(controller);
-                    }
-                    else
-                    {
-                        //OnButtonUp?.Invoke(controller);
-                    }
-                }
-            }
-        }
 
 
     }

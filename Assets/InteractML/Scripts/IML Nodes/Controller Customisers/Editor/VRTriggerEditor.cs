@@ -50,8 +50,10 @@ namespace InteractML.ControllerCustomisers
         /// </summary>
         protected override void ShowBodyFields()
         {
-           selectedButton = (InputHelpers.Button)EditorGUILayout.EnumPopup(selectedButton);
-            m_VRTrigger.button = selectedButton;
+            // show hand choice method from inputsetupeditor using m_VRTrigger.hand
+            
+            //show button method from InputSetUpEditor using m_VRTrigger.triggerButton
+
         }
 
 
