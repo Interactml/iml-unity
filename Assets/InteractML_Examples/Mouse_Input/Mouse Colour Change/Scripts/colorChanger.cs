@@ -14,9 +14,30 @@ public class colorChanger : MonoBehaviour
     [PullFromIMLGraph]
     public int SetAbsoluteColour;
 
+    // IML values classification
+    [SendToIMLGraph]
+    public float[] array1;
+
+    // IML values classification
+    [SendToIMLGraph]
+    public float[] array2;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        array1 = new float[3];
+        array1[0] = 100;
+        array1[1] = 100;
+        array1[2] = 100;
+
+        array2 = new float[5];
+        array2[0] = 100;
+        array2[1] = 100;
+        array2[2] = 100;
+        array2[3] = 100;
+        array2[4] = 100;
+
         m_Renderer = GetComponent<Renderer>(); // grab the renderer component
 
         colors = new Color[3]; // We will randomize through this array

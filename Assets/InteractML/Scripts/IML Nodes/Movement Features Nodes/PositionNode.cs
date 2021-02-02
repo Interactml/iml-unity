@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Linq;
 using UnityEngine;
-using System.Linq;
 using XNode;
 
 namespace InteractML.MovementFeatures
@@ -78,14 +76,13 @@ namespace InteractML.MovementFeatures
                 {
                     // create new array of boolean for each of the features in the data type and set all to true
                     ToggleSwitches = new bool[m_PositionExtracted.Values.Length];
+                    FeatureValueReceivingData = new bool[m_PositionExtracted.Values.Length];
                     for (int i = 0; i < m_PositionExtracted.Values.Length; i++)
+                    {
                         ToggleSwitches[i] = true;
+                        FeatureValueReceivingData[i] = false;
+                    }
                 }
-            }
-            // for nodes with dynamically sized float arrays as features initialise to empty array
-            else
-            {
-                ToggleSwitches = new bool[0];
             }
 
             base.Initialize();
@@ -109,6 +106,7 @@ namespace InteractML.MovementFeatures
         {
             // update if node is receiving data
             ReceivingData = MovementFeatureMethods.IsReceivingData(this);
+
 
             // gameobject input
             var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);

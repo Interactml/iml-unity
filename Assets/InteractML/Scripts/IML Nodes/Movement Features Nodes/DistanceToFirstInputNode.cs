@@ -66,22 +66,9 @@ namespace InteractML.MovementFeatures
             FirstInput = GetInputValue<Node>("FirstInput");
             SecondInputs = GetInputValues<Node>("SecondInputs").ToList();
 
-            // check amount of feature values before creating toggle switch array of that size
-            if (m_DistancesToFirstInput != null)
-            {
-                if (m_DistancesToFirstInput.Length > 0)
-                {
-                    // create new array of boolean for each of the features in the data type and set all to true
-                    ToggleSwitches = new bool[m_DistancesToFirstInput.Length];
-                    for (int i = 0; i < m_DistancesToFirstInput.Length; i++)
-                        ToggleSwitches[i] = true;
-                }
-            }
-            // for nodes with dynamically sized float arrays as features initialise to empty array
-            else
-            {
-                ToggleSwitches = new bool[0];
-            }
+            ToggleSwitches = new bool[0];
+            FeatureValueReceivingData = new bool[0];
+            
 
             base.Initialize();
         }
@@ -123,7 +110,7 @@ namespace InteractML.MovementFeatures
                                 // We make sure that the features to calculate are the same
                                 if (firstInputIMLFeature.DataType == secondInputIMLFeature.DataType)
                                 {
-                                    // We make sure that the extracted serial vector is not null
+                                    // We make sure that the extracted value is not null
                                     if (m_DistancesExtracted == null)
                                     {
                                         m_DistancesExtracted = new IMLArray(m_DistancesToFirstInput);
@@ -230,12 +217,15 @@ namespace InteractML.MovementFeatures
                     }
                 }
 
-                // control what connections the first port accepts
+                // control what connections the second port accepts
                 if (to.fieldName == "SecondInputs")
                 {
                     // check if there is a connection to the first input
                     if (this.GetInputPort("FirstInput").IsConnected)
                     {
+                        Debug.Log(to.node.GetInputNodesConnected("SecondInputs")[0]);
+                        Debug.Log((FirstInput as IFeatureIML).FeatureValues.Values.Length);
+
                         // check if the two inputted types have the same number of features, otherwise disconnect
                         if ((FirstInput as IFeatureIML).FeatureValues.Values.Length != (to.node.GetInputNodesConnected("SecondInputs")[0] as IFeatureIML).FeatureValues.Values.Length)
                         {
@@ -265,8 +255,12 @@ namespace InteractML.MovementFeatures
             {
                 // create new array of boolean for each of the features in the data type and set all to true
                 ToggleSwitches = new bool[m_DistancesToFirstInput.Length];
-                for (int i = 0; i < m_DistancesToFirstInput.Length; i++)
+                FeatureValueReceivingData = new bool[m_DistancesToFirstInput.Length];
+
+                for (int i = 0; i < m_DistancesToFirstInput.Length; i++) { 
                     ToggleSwitches[i] = true;
+                    FeatureValueReceivingData[i] = true;
+                }
             }
         }
     }
