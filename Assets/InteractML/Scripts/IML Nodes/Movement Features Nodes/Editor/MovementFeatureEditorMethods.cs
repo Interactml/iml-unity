@@ -18,21 +18,21 @@ namespace InteractML.MovementFeatures
         /// <param name="node editor"></param>
         /// <param name="int number of features"></param>
         /// <param name="toggle GUIStyle"></param>
-        public static void DrawFeatureValueToggleAndLabel(this IMLNodeEditor nodeEditor, BaseMovementFeatureNode node)
+        public static void DrawFeatureValueToggleAndLabel(this IMLNodeEditor nodeEditor, BaseMovementFeatureNode node, int numberOfFeatures, GUIStyle toggle_style)
         {
             GUILayout.Space(10);
 
-            if (node.FeatureValues.Values.Length == node.ToggleSwitches.Length)
+            if (numberOfFeatures == node.ToggleSwitches.Length)
             {
                 // for each of the features in the data type
-                for (int i = 0; i < node.FeatureValues.Values.Length; i++)
+                for (int i = 0; i < numberOfFeatures; i++)
                 {
                     // Draw each feature on a single line
                     GUILayout.BeginHorizontal();
                     GUILayout.Space(nodeEditor.bodySpace);
 
                     //draw toggle
-                    node.ToggleSwitches[i] = EditorGUILayout.Toggle(node.ToggleSwitches[i], IMLNodeEditorMethods.DataInToggle(nodeEditor, node.FeatureValueReceivingData[i]));
+                    node.ToggleSwitches[i] = EditorGUILayout.Toggle(node.ToggleSwitches[i], toggle_style);
 
                     //draw label
                     EditorGUILayout.LabelField(nodeEditor.feature_labels[i] + System.Math.Round(node.FeatureValues.Values[i], 3).ToString(), nodeEditor.m_NodeSkin.GetStyle("Node Body Label Axis"));
@@ -43,7 +43,6 @@ namespace InteractML.MovementFeatures
             }
         }
 
-
         /// <summary>
         /// Draws toggle, feature label and value of input data for feature extractor and data type nodes
         /// </summary>
@@ -51,21 +50,22 @@ namespace InteractML.MovementFeatures
         /// <param name="node editor"></param>
         /// <param name="int number of features"></param>
         /// <param name="toggle GUIStyle"></param>
-        public static void DrawFeatureValueToggleAndLabelDynamic(this IMLNodeEditor nodeEditor, BaseMovementFeatureNode node)
+        public static void DrawFeatureValueToggleAndLabelDynamic(this IMLNodeEditor nodeEditor, BaseMovementFeatureNode node, int numberOfFeatures, GUIStyle toggle_style)
         {
             // check number of feature values sent as parameter matches the amount of feature values in the node
-            if (node.ToggleSwitches.Length == node.FeatureValues.Values.Length)
+            if (numberOfFeatures == node.FeatureValues.Values.Length)
             {
                 
                 // for each of the features in the data type
-                for (int i = 0; i < node.FeatureValues.Values.Length; i++)
+                for (int i = 0; i < numberOfFeatures; i++)
                 {
                     // Draw each feature on a single line
                     GUILayout.BeginHorizontal();
                     GUILayout.Space(nodeEditor.bodySpace);
 
                     //draw toggle
-                    node.ToggleSwitches[i] = EditorGUILayout.Toggle(node.ToggleSwitches[i], IMLNodeEditorMethods.DataInToggle(nodeEditor, node.FeatureValueReceivingData[i]));
+                    if (numberOfFeatures == node.ToggleSwitches.Length) 
+                        node.ToggleSwitches[i] = EditorGUILayout.Toggle(node.ToggleSwitches[i], toggle_style);
 
                     //draw label
                     EditorGUILayout.LabelField(System.Math.Round(node.FeatureValues.Values[i], 3).ToString(), nodeEditor.m_NodeSkin.GetStyle("Node Body Label Axis"));

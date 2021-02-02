@@ -56,7 +56,7 @@ namespace InteractML.MovementFeatures
             GUILayout.Space(20);
 
             //draws node data fields
-            MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabel(this, m_ExtractRotationQuaternion);
+            MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabel(this, m_ExtractRotationQuaternion, m_ExtractRotationQuaternion.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractRotationQuaternion.ReceivingData));
 
             GUILayout.Space(10);
             //draw toggle to select whether to use localspace

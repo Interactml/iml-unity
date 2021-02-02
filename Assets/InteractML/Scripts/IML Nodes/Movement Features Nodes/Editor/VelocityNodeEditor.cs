@@ -57,7 +57,7 @@ namespace InteractML.MovementFeatures
             if (m_ExtractVelocity.FeatureValues.Values != null || m_ExtractVelocity.FeatureValues.Values.Length != 0)
             {
                 //draws node data fields
-                MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractVelocity);
+                MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractVelocity, m_ExtractVelocity.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractVelocity.ReceivingData));
             }
             else
             {

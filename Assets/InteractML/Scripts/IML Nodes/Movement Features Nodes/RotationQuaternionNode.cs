@@ -76,13 +76,14 @@ namespace InteractML.MovementFeatures
                 {
                     // create new array of boolean for each of the features in the data type and set all to true
                     ToggleSwitches = new bool[m_RotationQuaternionExtracted.Values.Length];
-                    FeatureValueReceivingData = new bool[m_RotationQuaternionExtracted.Values.Length];
                     for (int i = 0; i < m_RotationQuaternionExtracted.Values.Length; i++)
-                    {
                         ToggleSwitches[i] = true;
-                        FeatureValueReceivingData[i] = true;
-                    }
                 }
+            }
+            // for nodes with dynamically sized float arrays as features initialise to empty array
+            else
+            {
+                ToggleSwitches = new bool[0];
             }
 
             base.Initialize();

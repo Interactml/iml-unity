@@ -38,13 +38,12 @@ namespace InteractML.MovementFeatures
                         //check if previously stored features values match current feature values and set ReceivingData boolean fields accordingly
                         if (node.FeatureValues.Values[i] == node.PreviousFeatureValues.Values[i])
                         {
-                            node.FeatureValueReceivingData[i] = false;
                             node.ReceivingData = false;
                         }
                         else
                         {
-                            node.FeatureValueReceivingData[i] = true;
                             node.ReceivingData = true;
+                            break;
                         }
                     }
                 }

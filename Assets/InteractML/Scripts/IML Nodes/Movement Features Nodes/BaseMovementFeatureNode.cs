@@ -33,7 +33,6 @@ namespace InteractML.MovementFeatures
         /// Is the node currently receiving input data
         /// </summary>
         public bool ReceivingData;
-        public bool[] FeatureValueReceivingData;
 
         /// <summary>
         /// Variables to count the number of frames the input values stay the same 
@@ -46,7 +45,7 @@ namespace InteractML.MovementFeatures
         public bool[] ToggleSwitches;
 
         /// <summary>
-        /// Local float array to store received values for when converting from float array to IMLBaseDataType
+        /// Local float array to store received values
         /// </summary>
         public float[] ReceivedValue;
 
@@ -109,7 +108,7 @@ namespace InteractML.MovementFeatures
         /// <returns></returns>
         object IFeatureIML.UpdateFeature()
         {
-            return null; // Replace this??
+            return null; // Replace this
         }
 
         #endregion

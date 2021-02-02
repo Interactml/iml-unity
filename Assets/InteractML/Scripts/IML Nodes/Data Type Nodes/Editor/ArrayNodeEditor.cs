@@ -49,6 +49,11 @@ namespace InteractML.DataTypeNodes
             m_ConnectedInputs = m_ArrayNode.FeatureValues.Values.Length;
             m_BodyRect.height = 60 + (m_ConnectedInputs * 20);
 
+            m_InnerBodyRect.x = m_BodyRect.x + 20;
+            m_InnerBodyRect.y = m_BodyRect.y + 20;
+            m_InnerBodyRect.width = m_BodyRect.width - 20;
+            m_InnerBodyRect.height = m_BodyRect.height - 20;
+
             GUILayout.BeginArea(m_InnerBodyRect);
 
             if (m_ArrayNode.FeatureValues.Values.Length == 0 || m_ArrayNode.FeatureValues.Values == null)
@@ -56,9 +61,11 @@ namespace InteractML.DataTypeNodes
                 EditorGUILayout.LabelField("Connect an array", m_NodeSkin.GetStyle("Node Body Label"));
             }
             else
-            {
-                // draws each feature in the node
-                DataTypeNodeEditorMethods.DrawFeatureOrEditableFields(this, m_ArrayNode, m_BodyRect);
+            { 
+                for (int i = 0; i < m_ArrayNode.FeatureValues.Values.Length; i++)
+                {
+                    EditorGUILayout.LabelField("Element " + i + ":  " + System.Math.Round(m_ArrayNode.FeatureValues.Values[i], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+                }
             }
             GUILayout.EndArea();
 

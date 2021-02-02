@@ -35,16 +35,7 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private IMLArray m_FeatureValues;
 
-        /// <summary>
-        /// Initialise node
-        /// </summary>
-        /// <returns></returns>
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
-        // Check that a feature connected is of the right type, refill toggleswitch array if array size changes
+        // Check that a feature connected is of the right type
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
             // control what connections the input port accepts 
@@ -57,37 +48,6 @@ namespace InteractML.DataTypeNodes
                 System.Type[] portTypesAccept = new System.Type[] { typeof(float), typeof(int), typeof(Vector2), typeof(Vector3), typeof(Vector4), typeof(float[]) };
                 System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(MLSystem), typeof(ScriptNode) };
                 this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
-
-                // check if toggle switch array is a different size to number of features
-                if (ToggleSwitches.Length != FeatureValues.Values.Length) {
-
-                    // create new array of boolean for each of the features in the data type and set all to true
-                    ToggleSwitches = new bool[FeatureValues.Values.Length];
-                    for (int i = 0; i < FeatureValues.Values.Length; i++)
-                        ToggleSwitches[i] = true;
-
-                    // set float array to size matching amount of features
-                    ReceivedValue = new float[FeatureValues.Values.Length];
-                }
-                
-            }
-
-        }
-
-        public override void OnRemoveConnection(NodePort port)
-        {
-            base.OnRemoveConnection(port);
-
-            // check if toggle switch array is a different size to number of features
-            if (ToggleSwitches.Length != FeatureValues.Values.Length)
-            {
-                // create new array of boolean for each of the features in the data type and set all to true
-                ToggleSwitches = new bool[FeatureValues.Values.Length];
-                for (int i = 0; i < FeatureValues.Values.Length; i++)
-                    ToggleSwitches[i] = true;
-
-                // set float array to size matching amount of features
-                ReceivedValue = new float[FeatureValues.Values.Length];
             }
 
         }
@@ -101,9 +61,9 @@ namespace InteractML.DataTypeNodes
         {
             // Null checks
             if (arrayIn == null)
-                throw new System.Exception("Array In is null when attempting to copy in Array node.");
+                throw new System.Exception("Array In is null when attempting to copy in SerialVector node.");
             if (arrayOut == null)
-                throw new System.Exception("Array out is null when attempting to copy in Array node.");
+                throw new System.Exception("Array out is null when attempting to copy in SerialVector node.");
             // Length check
             if (arrayIn.Length != arrayOut.Length)
                 arrayOut = new float[arrayIn.Length];
