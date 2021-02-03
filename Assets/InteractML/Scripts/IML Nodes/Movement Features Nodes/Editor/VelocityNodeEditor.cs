@@ -46,26 +46,35 @@ namespace InteractML.MovementFeatures
 
         protected override void ShowBodyFields()
         {
-            nodeSpace = 60 + (m_ExtractVelocity.FeatureValues.Values.Length * 20);
-            GUILayout.Space(nodeSpace);
-            m_BodyRect.height = 60 + (m_ExtractVelocity.FeatureValues.Values.Length * 20);
-            // set body space based on node editors rects 
-            GUILayout.BeginArea(m_BodyRect);
-            GUILayout.Space(20);
-
-            // check if there are any feature connected
-            if (m_ExtractVelocity.FeatureValues.Values != null || m_ExtractVelocity.FeatureValues.Values.Length != 0)
+            if (m_ExtractVelocity.FeatureValues.Values != null)
             {
-                //draws node data fields
+                nodeSpace = 60 + (m_ExtractVelocity.FeatureValues.Values.Length * 20);
+                m_BodyRect.height = 60 + (m_ExtractVelocity.FeatureValues.Values.Length * 20);
+                GUILayout.Space(nodeSpace);
+
+                // set body space based on node editors rects 
+                GUILayout.BeginArea(m_BodyRect);
+                GUILayout.Space(20);
                 MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractVelocity);
+                GUILayout.EndArea();
             }
             else
             {
+                nodeSpace = 60;
+                m_BodyRect.height = 60;
+                GUILayout.Space(60);
+
+                // set body space based on node editors rects 
+                GUILayout.BeginArea(m_BodyRect);
+                GUILayout.Space(20);
                 // draw alert to connect input
                 EditorGUILayout.LabelField("Connect an input", m_NodeSkin.GetStyle("Node Body Label"));
+                GUILayout.EndArea();
             }
-
-            GUILayout.EndArea();
+                
+        
+            
+            
         }
 
     }

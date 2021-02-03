@@ -30,27 +30,32 @@ namespace InteractML.MovementFeatures
                 node.Counter = 0;
 
                 // check if storage types for new feature values and previous values hold the same number of values to compare
-                if (node.PreviousFeatureValues.Values.Length == node.FeatureValues.Values.Length)
+                if (node.FeatureValues != null && node.PreviousFeatureValues != null)
                 {
-                    // for each of the feature values
-                    for (int i = 0; i < node.FeatureValues.Values.Length; i++)
+                    Debug.Log(node);
+                    if (node.PreviousFeatureValues.Values.Length == node.FeatureValues.Values.Length)
                     {
-                        //check if previously stored features values match current feature values and set ReceivingData boolean fields accordingly
-                        if (node.FeatureValues.Values[i] == node.PreviousFeatureValues.Values[i])
+                        // for each of the feature values
+                        for (int i = 0; i < node.FeatureValues.Values.Length; i++)
                         {
-                            node.FeatureValueReceivingData[i] = false;
-                            node.ReceivingData = false;
-                        }
-                        else
-                        {
-                            node.FeatureValueReceivingData[i] = true;
-                            node.ReceivingData = true;
+                            //check if previously stored features values match current feature values and set ReceivingData boolean fields accordingly
+                            if (node.FeatureValues.Values[i] == node.PreviousFeatureValues.Values[i])
+                            {
+                                node.FeatureValueReceivingData[i] = false;
+                                node.ReceivingData = false;
+                            }
+                            else
+                            {
+                                node.FeatureValueReceivingData[i] = true;
+                                node.ReceivingData = true;
+                            }
                         }
                     }
-                }
 
-                //reset previous values stored for feature values
-                node.PreviousFeatureValues.Values = node.FeatureValues.Values;
+
+                    //reset previous values stored for feature values
+                    node.PreviousFeatureValues.Values = node.FeatureValues.Values;
+                }
             }
             //Increment Counter
             node.Counter++;
@@ -66,18 +71,22 @@ namespace InteractML.MovementFeatures
         public static float[] CheckTogglesAndUpdateFeatures(this BaseMovementFeatureNode node, float[] value)
         {
             // checks the amount of feature values matches the size of the amount of toggles and items in the float array, throws an error otherwise
-            if (node.ToggleSwitches.Length == node.FeatureValues.Values.Length && value.Length == node.FeatureValues.Values.Length)
+            // check if storage types for new feature values and previous values hold the same number of values to compare
+            if (node.FeatureValues != null && node.ToggleSwitches != null)
             {
-                // for each of the feature values 
-                for (int i = 0; i < node.FeatureValues.Values.Length; i++)
+                if (node.ToggleSwitches.Length == node.FeatureValues.Values.Length && value.Length == node.FeatureValues.Values.Length)
                 {
-                    // set any values where the toggle is off to 0
-                    if (!node.ToggleSwitches[i]) { value[i] = 0; }
+                    // for each of the feature values 
+                    for (int i = 0; i < node.FeatureValues.Values.Length; i++)
+                    {
+                        // set any values where the toggle is off to 0
+                        if (!node.ToggleSwitches[i]) { value[i] = 0; }
+                    }
                 }
-            }
-            else
-            {
-                Debug.Log("The number of feature values in the node does not match the number of items in the boolean array for toggle switches: Cannot update values");
+                else
+                {
+                    Debug.Log("The number of feature values in the node does not match the number of items in the boolean array for toggle switches: Cannot update values");
+                }
             }
             return value;
         }

@@ -67,7 +67,7 @@ namespace InteractML.MovementFeatures
         {
             // initialise counters to change toggle colour
             Counter = 0;
-            Count = 5;    
+            Count = 5; 
         }
 
         /// <summary>

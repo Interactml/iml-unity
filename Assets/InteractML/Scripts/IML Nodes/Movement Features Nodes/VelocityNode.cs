@@ -56,20 +56,13 @@ namespace InteractML.MovementFeatures
         /// </summary>
         public bool isUpdated { get; set; }
 
-        /// <summary>
-        /// Controls whether to use each axis values in output 
-        /// </summary>
-        public bool x_switch = true;
-        public bool y_switch = true;
-        public bool z_switch = true;
-
         // Use this for initialization
-        protected override void Init()
+        public override void Initialize()
         {
-            base.Init();
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Velocity");
+            
             // The velocity extractor expects any other feature extracted to make calculations
             FeatureToInput = GetInputValue<IFeatureIML>("FeatureToInput");
+            
             // If we managed to get the input
             if (FeatureToInput != null)
             {
@@ -77,13 +70,38 @@ namespace InteractML.MovementFeatures
                 var featureToUse = (FeatureToInput as IFeatureIML).FeatureValues;
                 if (featureToUse != null)
                 {
+
                     // Calculate the velocity arrays size
                     m_CurrentVelocity = new float[featureToUse.Values.Length];
                     m_LastFrameFeatureValue = new float[m_CurrentVelocity.Length];
+                    FeatureValueReceivingData = new bool[m_CurrentVelocity.Length];
+                    ToggleSwitches = new bool[m_CurrentVelocity.Length];
+                    m_VelocityExtracted = new IMLArray(m_CurrentVelocity);
+                    PreviousFeatureValues = new IMLArray(m_CurrentVelocity);
 
+                    for (int i = 0; i < m_CurrentVelocity.Length; i++)
+                    {
+                        ToggleSwitches[i] = true;
+                        FeatureValueReceivingData[i] = false;
+                    }
+
+
+                    
                 }
+                
+            }
+            else
+            {
+                m_CurrentVelocity = new float[0];
+                m_LastFrameFeatureValue = new float[0];
+                FeatureValueReceivingData = new bool[0];
+                ToggleSwitches = new bool[0];
+                m_VelocityExtracted = new IMLArray(m_CurrentVelocity);
+                PreviousFeatureValues = new IMLArray(m_CurrentVelocity);
             }
 
+            base.Initialize();
+            
         }
 
         // Return the correct value of an output port when requested
@@ -139,18 +157,9 @@ namespace InteractML.MovementFeatures
                     // If the velocity hasn't been updated yet... (unlocked externally in the IML Component)
                     if (!isUpdated)
                     {
-                        ReceivingData = false;
-                        // is the GameObject moving 
-                        if (m_LastFrameFeatureValue != null)
-                        {
-                            for (int i = 0; i < m_LastFrameFeatureValue.Length; i++)
-                            {
-                                if (m_LastFrameFeatureValue[i] != featureToUse.Values[i])
-                                {
-                                    ReceivingData = true;
-                                }
-                            }
-                        }
+                        // update if node is receiving data
+                        Debug.Log(PreviousFeatureValues.Values.Length);
+                        ReceivingData = MovementFeatureMethods.IsReceivingData(this);
 
                         // We check in case the input feature length changed
                         if (m_CurrentVelocity == null || m_CurrentVelocity.Length != featureToUse.Values.Length)
@@ -158,6 +167,9 @@ namespace InteractML.MovementFeatures
                             // If it did, we resize the current vel vector and lastframe vector
                             m_CurrentVelocity = new float[featureToUse.Values.Length];
                             m_LastFrameFeatureValue = null;
+                            FeatureValueReceivingData = new bool[m_CurrentVelocity.Length];
+                            ToggleSwitches = new bool[m_CurrentVelocity.Length];
+
                         }
 
                         if (m_LastFrameFeatureValue == null || m_LastFrameFeatureValue.Length != m_CurrentVelocity.Length)
@@ -172,9 +184,8 @@ namespace InteractML.MovementFeatures
                         // Calculate velocity itself
                         for (int i = 0; i < m_CurrentVelocity.Length; i++)
                         {
-                            if ((i == 0 && !x_switch) || (i == 1 && !y_switch) || (i == 2 && !z_switch))
+                            if (!ToggleSwitches[i])
                             {
-                                Debug.Log("here");
                                 m_CurrentVelocity[i] = 0;
                             }
                             else
@@ -184,11 +195,7 @@ namespace InteractML.MovementFeatures
 
 
                         }
-                        // We make sure that the velocity extracted serial vector is not null
-                        if (m_VelocityExtracted == null)
-                        {
-                            m_VelocityExtracted = new IMLArray(m_CurrentVelocity);
-                        }
+                        
 
                         // Set values for velocity extracted and for last frame feature value
                         m_VelocityExtracted.SetValues(m_CurrentVelocity);
@@ -242,6 +249,8 @@ namespace InteractML.MovementFeatures
                 System.Type[] portTypesAccept = new System.Type[] { };
                 System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(MLSystem), typeof(ScriptNode) };
                 this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
+
+                Initialize();
             }
         }
 
@@ -250,7 +259,7 @@ namespace InteractML.MovementFeatures
             base.OnRemoveConnection(port);
             if (port.IsInput) {
                 // need to reset
-                Init();
+                Initialize();
             }
            
         }

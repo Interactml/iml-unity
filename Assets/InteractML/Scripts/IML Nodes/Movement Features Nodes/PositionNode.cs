@@ -64,28 +64,26 @@ namespace InteractML.MovementFeatures
 
             // Make sure feature extractor value is never null
             if (m_PositionExtracted == null)
+            {
                 m_PositionExtracted = new IMLVector3();
 
-            // initialise helper variables
-            PreviousFeatureValues = new IMLVector3();
-
-            // check amount of feature values before creating toggle switch array of that size
-            if (m_PositionExtracted != null)
-            {
-                if (m_PositionExtracted.Values.Length > 0)
+                // create new boolean arrays for toggles and receiving data values for each of the features
+                ToggleSwitches = new bool[m_PositionExtracted.Values.Length];
+                FeatureValueReceivingData = new bool[m_PositionExtracted.Values.Length];
+                for (int i = 0; i < m_PositionExtracted.Values.Length; i++)
                 {
-                    // create new array of boolean for each of the features in the data type and set all to true
-                    ToggleSwitches = new bool[m_PositionExtracted.Values.Length];
-                    FeatureValueReceivingData = new bool[m_PositionExtracted.Values.Length];
-                    for (int i = 0; i < m_PositionExtracted.Values.Length; i++)
-                    {
-                        ToggleSwitches[i] = true;
-                        FeatureValueReceivingData[i] = false;
-                    }
+                    ToggleSwitches[i] = true;
+                    FeatureValueReceivingData[i] = false;
                 }
+
+            }
+            // initialise helper variables
+            if (PreviousFeatureValues == null)
+            {
+                PreviousFeatureValues = new IMLVector3();
             }
 
-            base.Initialize();
+            base.Init();
         }
 
 
@@ -104,21 +102,13 @@ namespace InteractML.MovementFeatures
         /// <returns></returns>
         public object UpdateFeature()
         {
-            // update if node is receiving data
-            ReceivingData = MovementFeatureMethods.IsReceivingData(this);
-
-
+            
             // gameobject input
             var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
 
             // check if there's a gameobject connected
             if (gameObjRef == null)
             {
-                if ((graph as IMLGraph).IsGraphRunning)
-                {
-                    // If the gameobject is null, we throw an error on the editor console
-                    //Debug.LogWarning("GameObject missing in Extract Rotation Node!");
-                }
                 GameObjInputMissing = true;
             }
             else
@@ -128,7 +118,10 @@ namespace InteractML.MovementFeatures
                     m_PositionExtracted.SetValues(gameObjRef.transform.localPosition);
                 else 
                     m_PositionExtracted.SetValues(gameObjRef.transform.position);
-            } 
+            }
+
+            // update if node is receiving data
+            ReceivingData = MovementFeatureMethods.IsReceivingData(this);
 
             // check if each toggle is off and set feature value to 0, return float array of updated feature values
             m_PositionExtracted.Values = MovementFeatureMethods.CheckTogglesAndUpdateFeatures(this, m_PositionExtracted.Values);
