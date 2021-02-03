@@ -83,7 +83,7 @@ namespace InteractML.MovementFeatures
                 PreviousFeatureValues = new IMLVector3();
             }
 
-            base.Init();
+            base.Initialize();
         }
 
 

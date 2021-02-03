@@ -53,10 +53,9 @@ namespace InteractML.MovementFeatures
         /// <param name="toggle GUIStyle"></param>
         public static void DrawFeatureValueToggleAndLabelDynamic(this IMLNodeEditor nodeEditor, BaseMovementFeatureNode node)
         {
-            // check number of feature values sent as parameter matches the amount of feature values in the node
+            // check number of feature values sent as parameter matches the amount of feature values in the node    
             if (node.ToggleSwitches.Length == node.FeatureValues.Values.Length)
             {
-                
                 // for each of the features in the data type
                 for (int i = 0; i < node.FeatureValues.Values.Length; i++)
                 {

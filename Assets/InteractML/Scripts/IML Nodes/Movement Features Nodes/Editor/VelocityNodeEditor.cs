@@ -46,35 +46,34 @@ namespace InteractML.MovementFeatures
 
         protected override void ShowBodyFields()
         {
+            m_InnerBodyRect.x = m_BodyRect.x + 20;
+            m_InnerBodyRect.y = m_BodyRect.y + 20;
+            m_InnerBodyRect.width = m_BodyRect.width - 20;
+            m_InnerBodyRect.height = m_BodyRect.height - 20;
+
+            GUILayout.BeginArea(m_InnerBodyRect);
+
             if (m_ExtractVelocity.FeatureValues.Values != null)
             {
-                nodeSpace = 60 + (m_ExtractVelocity.FeatureValues.Values.Length * 20);
+                // dynamically adjust node length based on amount of velocity features
+                nodeSpace = 120 + (m_ExtractVelocity.FeatureValues.Values.Length * 20);
                 m_BodyRect.height = 60 + (m_ExtractVelocity.FeatureValues.Values.Length * 20);
-                GUILayout.Space(nodeSpace);
 
-                // set body space based on node editors rects 
-                GUILayout.BeginArea(m_BodyRect);
-                GUILayout.Space(20);
+                // draw each velocity values
                 MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractVelocity);
-                GUILayout.EndArea();
             }
             else
             {
-                nodeSpace = 60;
+                // set node length
+                nodeSpace = 120;
                 m_BodyRect.height = 60;
-                GUILayout.Space(60);
 
-                // set body space based on node editors rects 
-                GUILayout.BeginArea(m_BodyRect);
-                GUILayout.Space(20);
-                // draw alert to connect input
+                // print alert on node
                 EditorGUILayout.LabelField("Connect an input", m_NodeSkin.GetStyle("Node Body Label"));
-                GUILayout.EndArea();
             }
+
+            GUILayout.EndArea();
                 
-        
-            
-            
         }
 
     }

@@ -126,8 +126,6 @@ namespace InteractML.MovementFeatures
                 var featureToUse = (FeatureToInput as IFeatureIML).FeatureValues;
                 if (featureToUse != null)
                 {
-                    // Calculate the velocity arrays size
-                    //m_CurrentVelocity = new float[featureToUse.Values.Length];
 
                     // If the velocity hasn't been updated yet... (unlocked externally in the IML Component)
                     if (!isUpdated)
@@ -135,54 +133,38 @@ namespace InteractML.MovementFeatures
                         // update if node is receiving data
                         ReceivingData = MovementFeatureMethods.IsReceivingData(this);
 
-                        // We check in case the input feature length changed
-                        if (m_CurrentVelocity == null || m_CurrentVelocity.Length != featureToUse.Values.Length)
-                        {
-                            // If it did, we resize the current vel vector and lastframe vector
-                            m_CurrentVelocity = new float[featureToUse.Values.Length];
-                            m_LastFrameFeatureValue = null;
-                            FeatureValueReceivingData = new bool[m_CurrentVelocity.Length];
-                            ToggleSwitches = new bool[m_CurrentVelocity.Length];
+                        //// We check in case the input feature length changed
+                        //if (m_CurrentVelocity == null || m_CurrentVelocity.Length != featureToUse.Values.Length)
+                        //{
+                        //    // If it did, we resize the current vel vector and lastframe vector
+                        //    m_CurrentVelocity = new float[featureToUse.Values.Length];
+                        //    m_LastFrameFeatureValue = null;
+                        //    FeatureValueReceivingData = new bool[m_CurrentVelocity.Length];
+                        //    ToggleSwitches = new bool[m_CurrentVelocity.Length];
 
-                        }
+                        //}
 
-                        if (m_LastFrameFeatureValue == null || m_LastFrameFeatureValue.Length != m_CurrentVelocity.Length)
-                        {
-                            if (m_CurrentVelocity == null)
-                            {
-                                Debug.Log("Current Velocity is null");
-                            }
-                            m_LastFrameFeatureValue = new float[m_CurrentVelocity.Length];
-                        }
+                        //if (m_LastFrameFeatureValue == null || m_LastFrameFeatureValue.Length != m_CurrentVelocity.Length)
+                        //{
+                        //    if (m_CurrentVelocity == null)
+                        //    {
+                        //        Debug.Log("Current Velocity is null");
+                        //    }
+                        //    m_LastFrameFeatureValue = new float[m_CurrentVelocity.Length];
+                        //}
 
                         // Calculate velocity itself
                         for (int i = 0; i < m_CurrentVelocity.Length; i++)
-                        {
-                            if (!ToggleSwitches[i])
-                            {
-                                m_CurrentVelocity[i] = 0;
-                            }
-                            else
-                            {
-                                m_CurrentVelocity[i] = (featureToUse.Values[i] - m_LastFrameFeatureValue[i]) / Time.smoothDeltaTime;
-                            }
+                            m_CurrentVelocity[i] = (featureToUse.Values[i] - m_LastFrameFeatureValue[i]) / Time.smoothDeltaTime;
 
-
-                        }
-                        
-
-                        // Set values for velocity extracted and for last frame feature value
+                        // Set values for velocity extracted
                         m_VelocityExtracted.SetValues(m_CurrentVelocity);
 
+                        // check if each toggle is off and set feature value to 0, return float array of updated feature values
+                        m_VelocityExtracted.Values = MovementFeatureMethods.CheckTogglesAndUpdateFeatures(this, m_VelocityExtracted.Values);
+
+                        // Set values for last frame feature value
                         featureToUse.Values.CopyTo(m_LastFrameFeatureValue, 0);
-
-                        //for (int i = 0; i < m_CurrentVelocity.Length; i++)
-                        //{
-                        //    //Debug.Log(i + " = " + m_CurrentVelocity[i]);
-
-                        //    // Store last known feature values for next frame
-                        //    //m_LastFrameFeatureValue[i] = featureToUse.Values[i];
-                        //}
 
                         // Make sure to mark the feature as updated to avoid calculating twice
                         isUpdated = true;
@@ -192,20 +174,12 @@ namespace InteractML.MovementFeatures
                 }
                 else
                 {
-                    //// Dispose of arrays to avoid carrying on any configs
-                    //m_CurrentVelocity = null;
-                    //m_LastFrameFeatureValue = null;
-
                     return null;
                 }
             }
             // If we couldn't get an input, we return null
             else
             {
-                //// Dispose of arrays to avoid carrying on any configs
-                //m_CurrentVelocity = null;
-                //m_LastFrameFeatureValue = null;
-
                 return null;
             }
 
