@@ -20,8 +20,7 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         /// <param name="data type node"></param>
         /// <param name="node editor"></param>
-        /// <param name="GUIStyle of toggle"></param>
-        public static void DrawEditableFieldsAndToggles<T>(this IMLNodeEditor nodeEditor, BaseDataTypeNode<T> node, GUIStyle toggleStyle)
+        public static void DrawEditableFieldsAndToggles<T>(this IMLNodeEditor nodeEditor, BaseDataTypeNode<T> node)
         {
             // checks the amount of feature values matches the size of the amount of toggles and items in the float array, throws an error otherwise
             if (node.ToggleSwitches.Length == node.FeatureValues.Values.Length && nodeEditor.feature_labels.Length == node.FeatureValues.Values.Length)
@@ -34,20 +33,13 @@ namespace InteractML.DataTypeNodes
                     GUILayout.Space(nodeEditor.bodySpace);
 
                     //draw toggle
-                    node.ToggleSwitches[i] = EditorGUILayout.Toggle(node.ToggleSwitches[i], toggleStyle, GUILayout.MaxWidth(40));
+                    node.ToggleSwitches[i] = EditorGUILayout.Toggle(node.ToggleSwitches[i], IMLNodeEditorMethods.DataInToggle(nodeEditor, node.FeatureValueReceivingData[i]), GUILayout.MaxWidth(40));
                 
                     //draw label
                     EditorGUILayout.LabelField(nodeEditor.feature_labels[i], nodeEditor.m_NodeSkin.GetStyle("Node Body Label Axis"), GUILayout.MaxWidth(20));
                 
                     // draw editable float field for each feature
                     node.UserInput.Values[i] = EditorGUILayout.FloatField(node.UserInput.Values[i], GUILayout.MaxWidth(60));
-                    if (GUI.changed)
-                    {
-                        Debug.Log("here");
-                        EditorUtility.SetDirty(node);
-                    }
-
-                    GUI.changed = false;
                 
                     GUILayout.EndHorizontal(); 
                     EditorGUILayout.Space();
@@ -78,13 +70,13 @@ namespace InteractML.DataTypeNodes
             if (node.InputConnected)
             {
                 //draws node data fields
-                DrawFeatureValueToggleAndLabel(nodeEditor, node, IMLNodeEditorMethods.DataInToggle(nodeEditor, node.ReceivingData));
+                DrawFeatureValueToggleAndLabel(nodeEditor, node);
             }
             // If there is nothing connected to the input port show editable fields
             else
             {
                 //draws node editable fields
-                DrawEditableFieldsAndToggles(nodeEditor, node, IMLNodeEditorMethods.DataInToggle(nodeEditor, node.ReceivingData));
+                DrawEditableFieldsAndToggles(nodeEditor, node);
             }
 
             GUILayout.EndArea();
@@ -95,8 +87,7 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         /// <param name="node"></param>
         /// <param name="node editor"></param>
-        /// <param name="toggle GUIStyle"></param>
-        public static void DrawFeatureValueToggleAndLabel<T>(this IMLNodeEditor nodeEditor, BaseDataTypeNode<T> node, GUIStyle toggle_style)
+        public static void DrawFeatureValueToggleAndLabel<T>(this IMLNodeEditor nodeEditor, BaseDataTypeNode<T> node)
         {
             // for each of the features in the data type
             for (int i = 0; i < node.FeatureValues.Values.Length; i++)
@@ -106,7 +97,7 @@ namespace InteractML.DataTypeNodes
                 GUILayout.Space(nodeEditor.bodySpace);
 
                 //draw toggle
-                node.ToggleSwitches[i] = EditorGUILayout.Toggle(node.ToggleSwitches[i], toggle_style);
+                node.ToggleSwitches[i] = EditorGUILayout.Toggle(node.ToggleSwitches[i], IMLNodeEditorMethods.DataInToggle(nodeEditor, node.FeatureValueReceivingData[i]));
 
                 //draw label
                 EditorGUILayout.LabelField(nodeEditor.feature_labels[i] + System.Math.Round(node.FeatureValues.Values[i], 3).ToString(), nodeEditor.m_NodeSkin.GetStyle("Node Body Label Axis"));

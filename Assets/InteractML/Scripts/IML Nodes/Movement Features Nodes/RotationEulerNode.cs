@@ -103,13 +103,10 @@ namespace InteractML.MovementFeatures
             else
             {
                 // Set values of our feature extracted
-                m_RotationEulerExtracted.SetValues(gameObjRef.transform.eulerAngles);
-
-                // commented out as not using local space toggle
-                //if (LocalSpace)
-                //    m_RotationEulerExtracted.SetValues(gameObjRef.transform.localEulerAngles);
-                //else
-                //    m_RotationEulerExtracted.SetValues(gameObjRef.transform.eulerAngles);
+                if (LocalSpace)
+                    m_RotationEulerExtracted.SetValues(gameObjRef.transform.localEulerAngles);
+                else
+                    m_RotationEulerExtracted.SetValues(gameObjRef.transform.eulerAngles);
 
                 GameObjInputMissing = false;
             }

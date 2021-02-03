@@ -103,13 +103,10 @@ namespace InteractML.MovementFeatures
             else
             {
                 // Set values of our feature extracted
-                m_RotationQuaternionExtracted.SetValues(gameObjRef.transform.rotation);
-
-                // commented out as not using local space toggle
-                //if (LocalSpace)
-                //    m_RotationQuaternionExtracted.SetValues(gameObjRef.transform.localRotation);
-                //else
-                //    m_RotationQuaternionExtracted.SetValues(gameObjRef.transform.rotation);
+                if(LocalSpace)
+                    m_RotationQuaternionExtracted.SetValues(gameObjRef.transform.localRotation);
+                else
+                    m_RotationQuaternionExtracted.SetValues(gameObjRef.transform.rotation);
 
                 GameObjInputMissing = false;
             }

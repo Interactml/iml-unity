@@ -22,39 +22,41 @@ namespace InteractML.MovementFeatures
      /// <return></return>
         public static bool IsReceivingData(this BaseMovementFeatureNode node)
         {
-
-            //Check if count has counted to Counter
-            if (node.Counter == node.Count)
+            if (node.FeatureValueReceivingData != null)
             {
-                //reset counter
-                node.Counter = 0;
-
-                // check if storage types for new feature values and previous values hold the same number of values to compare
-                if (node.FeatureValues != null && node.PreviousFeatureValues != null)
+                //Check if count has counted to Counter
+                if (node.Counter == node.Count)
                 {
+                    //reset counter
+                    node.Counter = 0;
 
-                    if (node.PreviousFeatureValues.Values.Length == node.FeatureValues.Values.Length)
+                    // check if storage types for new feature values and previous values hold the same number of values to compare
+                    if (node.FeatureValues != null && node.PreviousFeatureValues != null)
                     {
-                        // for each of the feature values
-                        for (int i = 0; i < node.FeatureValues.Values.Length; i++)
+
+                        if (node.PreviousFeatureValues.Values.Length == node.FeatureValues.Values.Length)
                         {
-                            //check if previously stored features values match current feature values and set ReceivingData boolean fields accordingly
-                            if (node.FeatureValues.Values[i] == node.PreviousFeatureValues.Values[i])
+                            // for each of the feature values
+                            for (int i = 0; i < node.FeatureValues.Values.Length; i++)
                             {
-                                node.FeatureValueReceivingData[i] = false;
-                                node.ReceivingData = false;
-                            }
-                            else
-                            {
-                                node.FeatureValueReceivingData[i] = true;
-                                node.ReceivingData = true;
+                                //check if previously stored features values match current feature values and set ReceivingData boolean fields accordingly
+                                if (node.FeatureValues.Values[i] == node.PreviousFeatureValues.Values[i])
+                                {
+                                    node.FeatureValueReceivingData[i] = false;
+                                    node.ReceivingData = false;
+                                }
+                                else
+                                {
+                                    node.FeatureValueReceivingData[i] = true;
+                                    node.ReceivingData = true;
+                                }
                             }
                         }
+
+
+                        //reset previous values stored for feature values
+                        node.PreviousFeatureValues.Values = node.FeatureValues.Values;
                     }
-
-
-                    //reset previous values stored for feature values
-                    node.PreviousFeatureValues.Values = node.FeatureValues.Values;
                 }
             }
             //Increment Counter
@@ -89,6 +91,39 @@ namespace InteractML.MovementFeatures
                 }
             }
             return value;
+        }
+
+        /// </summary>
+        /// Initialise size of boolean array storing toggle switch value to match amount of feature values 
+        /// </summary>
+        /// <param name="movement feature node"></param>
+        /// <param name="new array size"></param>
+        /// <return></return>
+        public static void UpdateToggleSwitchArray(this BaseMovementFeatureNode node, int size)
+        {
+            
+            if (node.ToggleSwitches != null && node.ToggleSwitches.Length != size)
+            {
+                // create new array of boolean for each of the features in the data type and set all to true
+                node.ToggleSwitches = new bool[size];
+                for (int i = 0; i < size; i++) { node.ToggleSwitches[i] = true; }
+            }
+        }
+
+        /// </summary>
+        /// Initialise size of array storing boolean value if feature value is receiving data to match amount of feature values 
+        /// </summary>
+        /// <param name="movement feature node"></param>
+        /// <param name="new array size"></param>
+        /// <return></return>
+        public static void UpdateReceivingDataArray(this BaseMovementFeatureNode node, int size)
+        {
+            if (node.FeatureValueReceivingData != null && node.FeatureValueReceivingData.Length != size)
+            {
+                // create new array of boolean for each of the features in the data type and set all to false
+                node.FeatureValueReceivingData = new bool[size];
+                for (int i = 0; i < size; i++) { node.FeatureValueReceivingData[i] = false; }
+            }
         }
     }
 }

@@ -342,11 +342,7 @@ namespace InteractML
             {
                 //initialize node
                 m_inputSetUp.NodeInitalize();
-            } else
-            {
-                if(graph != null)
-                    m_inputSetUp = graph.AddNode<InteractML.CustomControllers.InputSetUp>();
-            }
+            } 
             
         }
         /// <summary>

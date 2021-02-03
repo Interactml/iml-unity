@@ -45,7 +45,6 @@ namespace InteractML.DataTypeNodes
         // Check that a feature connected is of the right type
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
-            Debug.Log("here");
             // control what connections the input port accepts 
             if (to.node == this)
             {

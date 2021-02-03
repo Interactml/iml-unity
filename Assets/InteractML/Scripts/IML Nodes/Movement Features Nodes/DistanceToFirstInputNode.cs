@@ -64,26 +64,18 @@ namespace InteractML.MovementFeatures
         {
             // Make sure feature extractor value is never null
             if (m_DistancesExtracted == null)
+            {
                 m_DistancesExtracted = new IMLArray();
+                ToggleSwitches = new bool[0];
+                FeatureValueReceivingData = new bool[0];
+            }
+
+            // check if inputs have changed and update size of toggle bool array and receiving data bool array
+            MovementFeatureMethods.UpdateToggleSwitchArray(this, m_DistancesExtracted.Values.Length);
+            MovementFeatureMethods.UpdateReceivingDataArray(this, m_DistancesExtracted.Values.Length);
 
             // initialise helper variables
-            PreviousFeatureValues = new IMLArray(m_DistancesToFirstInput);
-
-            // Get  amount of connections to second input port and set Toggle switch and reicving data bool array sizes
-            SecondInputs = GetInputValues<Node>("SecondInputs").ToList();
-
-            // only initialise if there are connections to second input port
-            if (this.SecondInputs.Count > 0)
-            {
-                ToggleSwitches = new bool[this.SecondInputs.Count];
-                FeatureValueReceivingData = new bool[this.SecondInputs.Count];
-
-                for (int i = 0; i < this.SecondInputs.Count; i++)
-                {
-                    ToggleSwitches[i] = true;
-                    FeatureValueReceivingData[i] = false;
-                }
-            }
+            PreviousFeatureValues = new IMLArray(m_DistancesExtracted);
 
             // initialise counters to change toggle colour
             Counter = 0;
@@ -105,9 +97,7 @@ namespace InteractML.MovementFeatures
 
             if (!isUpdated)
             {
-                // update if node is receiving data
-                ReceivingData = MovementFeatureMethods.IsReceivingData(this);
-
+               
                 // If there are connections for both input ports
                 if (FirstInput != null && SecondInputs.Count > 0)
                 {
@@ -118,45 +108,32 @@ namespace InteractML.MovementFeatures
                         // Clear distances vector with new vector based on the number of second inputs
                         m_DistancesToFirstInput = new float[SecondInputs.Count];
 
-                        
                         for (int i = 0; i < SecondInputs.Count; i++)
                         {
                             // We check that the second inputs are also iml features
                             var secondInputIMLFeature = (SecondInputs[i] as IFeatureIML).FeatureValues;
                             if (secondInputIMLFeature != null)
                             {
-                                // We make sure that the features to calculate are the same
-                                if (firstInputIMLFeature.DataType == secondInputIMLFeature.DataType)
+                                // We make sure that the extracted value is not null
+                                if (m_DistancesExtracted == null)
+                                    m_DistancesExtracted = new IMLArray(m_DistancesToFirstInput);
+                                    
+                                // Calculate distance between each of the entries in the values vector
+                                float[] distancesVectorBetweenEachFeature = new float[firstInputIMLFeature.Values.Length];
+
+                                for (int j = 0; j < firstInputIMLFeature.Values.Length; j++)
                                 {
-                                    // We make sure that the extracted value is not null
-                                    if (m_DistancesExtracted == null)
-                                    {
-                                        m_DistancesExtracted = new IMLArray(m_DistancesToFirstInput);
-                                    }
-
-                                    // Calculate distance between each of the entries in the values vector
-                                    float[] distancesVectorBetweenEachFeature = new float[firstInputIMLFeature.Values.Length];
-
-                                    for (int j = 0; j < firstInputIMLFeature.Values.Length; j++)
-                                    {
-                                        distancesVectorBetweenEachFeature[j] = (secondInputIMLFeature.Values[j] - firstInputIMLFeature.Values[j]);
-                                    }
-
-
-                                    // Follow the euclidean formula for distance: square and add together all distances
-                                    for (int j = 0; j < firstInputIMLFeature.Values.Length; j++)
-                                    {
-                                        m_DistancesToFirstInput[i] += (distancesVectorBetweenEachFeature[j] * distancesVectorBetweenEachFeature[j]);
-                                    }
-
-                                    m_DistancesToFirstInput[i] = Mathf.Sqrt(m_DistancesToFirstInput[i]);
-
+                                    distancesVectorBetweenEachFeature[j] = secondInputIMLFeature.Values[j] - firstInputIMLFeature.Values[j];
                                 }
-                                else
+
+                                // Follow the euclidean formula for distance: square and add together all distances
+                                for (int j = 0; j < firstInputIMLFeature.Values.Length; j++)
                                 {
-                                    Debug.LogError("Features Types to measure distance are different!");
-                                    return null;
+                                    m_DistancesToFirstInput[i] += (distancesVectorBetweenEachFeature[j] * distancesVectorBetweenEachFeature[j]);
                                 }
+
+                                m_DistancesToFirstInput[i] = Mathf.Sqrt(m_DistancesToFirstInput[i]);
+
                             }
                             // If we couldn't get an input (in the second input), we return null
                             else
@@ -165,8 +142,7 @@ namespace InteractML.MovementFeatures
                                 m_DistancesExtracted = null;
                                 return null;
                             }
-
-                            
+    
                         }
 
                         // Set values for distance extracted and for last frame feature value
@@ -179,7 +155,15 @@ namespace InteractML.MovementFeatures
                         isUpdated = true;
 
                         // check if inputs have changed and update size of toggle bool array and receiving data bool array
-                        UpdateToggleArray();
+                        MovementFeatureMethods.UpdateToggleSwitchArray(this, m_DistancesExtracted.Values.Length);
+                        MovementFeatureMethods.UpdateReceivingDataArray(this, m_DistancesExtracted.Values.Length);
+
+                        // initialise helper variables
+                        if (PreviousFeatureValues.Values == null)
+                            PreviousFeatureValues = new IMLArray(m_DistancesExtracted);
+
+                        // update if node is receiving data
+                        ReceivingData = MovementFeatureMethods.IsReceivingData(this);
 
                         return this;
                     }
@@ -263,21 +247,6 @@ namespace InteractML.MovementFeatures
             }
         }
 
-        private void UpdateToggleArray()
-        {
-            if (ToggleSwitches.Length != SecondInputs.Count)
-            {
-                // create new array of boolean for each of the features in the data type and set all to true
-                ToggleSwitches = new bool[SecondInputs.Count];
-                FeatureValueReceivingData = new bool[SecondInputs.Count];
-
-                for (int i = 0; i < SecondInputs.Count; i++)
-                {
-                    ToggleSwitches[i] = true;
-                    FeatureValueReceivingData[i] = false;
-                }
-            }    
-        }
     }
 }
 

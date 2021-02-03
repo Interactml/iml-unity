@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -38,30 +38,61 @@ namespace InteractML.DataTypeNodes
             // Initialise node tooltips
             base.nodeTips = m_ArrayNode.tooltips;
 
+            // Initialise axis labels
+            feature_labels = new string[0];
+
         }
 
-        /// <summary>
-        /// Show the serial value fields with attribute name
-        /// </summary>
+
         protected override void ShowBodyFields()
         {
-            nodeSpace = 120 + (m_ConnectedInputs * 20);
-            m_ConnectedInputs = m_ArrayNode.FeatureValues.Values.Length;
-            m_BodyRect.height = 60 + (m_ConnectedInputs * 20);
+            
+            m_InnerBodyRect.x = m_BodyRect.x + 20;
+            m_InnerBodyRect.y = m_BodyRect.y + 20;
+            m_InnerBodyRect.width = m_BodyRect.width - 20;
+            m_InnerBodyRect.height = m_BodyRect.height - 20;
 
             GUILayout.BeginArea(m_InnerBodyRect);
 
-            if (m_ArrayNode.FeatureValues.Values.Length == 0 || m_ArrayNode.FeatureValues.Values == null)
+            UpdateFeatureLabelArray();
+
+            // check if there are any feature connected
+            if (m_ArrayNode.FeatureValues.Values != null && m_ArrayNode.FeatureValues.Values.Length != 0)
             {
-                EditorGUILayout.LabelField("Connect an array", m_NodeSkin.GetStyle("Node Body Label"));
+
+                    // dynamically adjust node length based on amount of velocity features
+                    nodeSpace = 120 + (m_ArrayNode.FeatureValues.Values.Length * 20);
+                    m_BodyRect.height = 60 + (m_ArrayNode.FeatureValues.Values.Length * 20);
+
+                    // draws each feature in the node
+                    DataTypeNodeEditorMethods.DrawFeatureValueToggleAndLabel(this, m_ArrayNode);
+                
+
             }
             else
             {
-                // draws each feature in the node
-                DataTypeNodeEditorMethods.DrawFeatureOrEditableFields(this, m_ArrayNode, m_BodyRect);
+                
+                // set node length
+                nodeSpace = 120;
+                m_BodyRect.height = 60;
+
+                EditorGUILayout.LabelField("Connect an array", m_NodeSkin.GetStyle("Node Body Label"));
+                
             }
             GUILayout.EndArea();
 
+            
+        }
+
+
+        protected void UpdateFeatureLabelArray()
+        {
+            if (feature_labels.Length != m_ArrayNode.FeatureValues.Values.Length)
+            {
+                feature_labels = new string[m_ArrayNode.FeatureValues.Values.Length];
+                for (int i = 0; i < feature_labels.Length; i++)
+                    feature_labels[i] = " ";           
+            }
         }
     }
 }

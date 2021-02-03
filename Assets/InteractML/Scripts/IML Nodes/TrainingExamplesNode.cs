@@ -901,7 +901,7 @@ namespace InteractML
                     //Debug.Log("Training Examples Vector loaded!");
                 }
             }
-            Debug.Log(TrainingExamplesVector.Count);
+            //Debug.Log(TrainingExamplesVector.Count);
 
             if (TrainingExamplesVector.Count > 0 || TrainingSeriesCollection.Count > 0)
             {
@@ -1007,7 +1007,8 @@ namespace InteractML
         {
             foreach (MLSystem MLN in MLSystemNodesConnected)
             {
-                MLN.UpdateTotalNumberTrainingExamples();
+                if(MLN != null)
+                    MLN.UpdateTotalNumberTrainingExamples();
             }
         }
 

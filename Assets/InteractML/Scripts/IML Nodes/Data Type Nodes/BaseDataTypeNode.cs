@@ -50,6 +50,7 @@ namespace InteractML.DataTypeNodes
         /// Is the node currently receiving input data
         /// </summary>
         public bool ReceivingData;
+        public bool[] FeatureValueReceivingData;
 
         /// <summary>
         /// Does the node currently have connections in the input port
@@ -107,10 +108,16 @@ namespace InteractML.DataTypeNodes
             {
                 // create new array of boolean for each of the features in the data type and set all to true
                 ToggleSwitches = new bool[FeatureValues.Values.Length];
+                FeatureValueReceivingData = new bool[FeatureValues.Values.Length];
                 for (int i = 0; i < FeatureValues.Values.Length; i++)
+                {
                     ToggleSwitches[i] = true;
+                    FeatureValueReceivingData[i] = false;
+                }
+
+                PreviousFeatureValues.Values = FeatureValues.Values;
             }
-            // set float array to size matching amount of features
+
             ReceivedValue = new float[FeatureValues.Values.Length];
 
         }
