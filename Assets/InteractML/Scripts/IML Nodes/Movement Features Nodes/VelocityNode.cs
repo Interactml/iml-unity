@@ -59,7 +59,6 @@ namespace InteractML.MovementFeatures
         // Use this for initialization
         public override void Initialize()
         {
-            
             // The velocity extractor expects any other feature extracted to make calculations
             FeatureToInput = GetInputValue<IFeatureIML>("FeatureToInput");
             
@@ -126,32 +125,11 @@ namespace InteractML.MovementFeatures
                 var featureToUse = (FeatureToInput as IFeatureIML).FeatureValues;
                 if (featureToUse != null)
                 {
-
-                    // If the velocity hasn't been updated yet... (unlocked externally in the IML Component)
+                    // If the velocity hasn't been updated yet
                     if (!isUpdated)
                     {
                         // update if node is receiving data
                         ReceivingData = MovementFeatureMethods.IsReceivingData(this);
-
-                        //// We check in case the input feature length changed
-                        //if (m_CurrentVelocity == null || m_CurrentVelocity.Length != featureToUse.Values.Length)
-                        //{
-                        //    // If it did, we resize the current vel vector and lastframe vector
-                        //    m_CurrentVelocity = new float[featureToUse.Values.Length];
-                        //    m_LastFrameFeatureValue = null;
-                        //    FeatureValueReceivingData = new bool[m_CurrentVelocity.Length];
-                        //    ToggleSwitches = new bool[m_CurrentVelocity.Length];
-
-                        //}
-
-                        //if (m_LastFrameFeatureValue == null || m_LastFrameFeatureValue.Length != m_CurrentVelocity.Length)
-                        //{
-                        //    if (m_CurrentVelocity == null)
-                        //    {
-                        //        Debug.Log("Current Velocity is null");
-                        //    }
-                        //    m_LastFrameFeatureValue = new float[m_CurrentVelocity.Length];
-                        //}
 
                         // Calculate velocity itself
                         for (int i = 0; i < m_CurrentVelocity.Length; i++)
@@ -174,6 +152,7 @@ namespace InteractML.MovementFeatures
                 }
                 else
                 {
+                    // If input is not an IML feature, return null
                     return null;
                 }
             }
