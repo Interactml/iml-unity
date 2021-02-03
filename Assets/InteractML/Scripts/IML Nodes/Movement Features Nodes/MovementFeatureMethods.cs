@@ -32,7 +32,7 @@ namespace InteractML.MovementFeatures
                 // check if storage types for new feature values and previous values hold the same number of values to compare
                 if (node.FeatureValues != null && node.PreviousFeatureValues != null)
                 {
-                    Debug.Log(node);
+
                     if (node.PreviousFeatureValues.Values.Length == node.FeatureValues.Values.Length)
                     {
                         // for each of the feature values

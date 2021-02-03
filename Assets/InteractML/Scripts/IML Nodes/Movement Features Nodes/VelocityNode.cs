@@ -117,33 +117,8 @@ namespace InteractML.MovementFeatures
         public object UpdateFeature()
         {
             // Get values from the input list
-            List<Node> featureToInput = this.GetInputNodesConnected("FeatureToInput");
+            FeatureToInput = GetInputValue<IFeatureIML>("FeatureToInput");
 
-            // if there are inputfestures connected 
-            if (featureToInput != null)
-            {
-                
-                // Go through all the nodes connected
-                for (int i = 0; i < featureToInput.Count; i++)
-                {
-                    // Cast the node checking if implements the feature interface (it is a featureExtractor)
-                    IFeatureIML inputFeature = featureToInput[i] as IFeatureIML;
-
-                    // If it is a feature extractor...
-                    if (inputFeature != null)
-                    {
-                        // We add the feature to the desired inputs config
-                        FeatureToInput = inputFeature;
-                    }
-                }
-
-            }
-            //else
-            //{
-            //    InputFeatures = new List<Node>();
-            //}
-            //// The velocity extractor expects any other feature extracted to make calculations
-            //FeatureToInput = GetInputValue<IFeatureIML>("FeatureToInput");
             // If we managed to get the input
             if (FeatureToInput != null)
             {
@@ -158,7 +133,6 @@ namespace InteractML.MovementFeatures
                     if (!isUpdated)
                     {
                         // update if node is receiving data
-                        Debug.Log(PreviousFeatureValues.Values.Length);
                         ReceivingData = MovementFeatureMethods.IsReceivingData(this);
 
                         // We check in case the input feature length changed
