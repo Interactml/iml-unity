@@ -168,6 +168,10 @@ namespace InteractML.MovementFeatures
                         // Make sure to mark the feature as updated to avoid calculating twice
                         isUpdated = true;
 
+
+
+                        UpdateToggleArray();
+
                         return this;
                     }
                     // If we couldn't get an input (in the first input), we return null
@@ -191,16 +195,7 @@ namespace InteractML.MovementFeatures
             {
                 return this;
             }
-
-        }
-
-        public override void OnRemoveConnection(NodePort port)
-        {
-            base.OnRemoveConnection(port);
-
-            UpdateToggleArray();
-
-
+            
         }
 
         public override void OnCreateConnection(NodePort from, NodePort to)
@@ -236,7 +231,6 @@ namespace InteractML.MovementFeatures
                     // check if there is a connection to the first input
                     if (this.GetInputPort("FirstInput").IsConnected)
                     {
-
                         // check if the two inputted types have the same number of features, otherwise disconnect
                         if ((FirstInput as IFeatureIML).FeatureValues.Values.Length != (to.node.GetInputNodesConnected("SecondInputs")[0] as IFeatureIML).FeatureValues.Values.Length)
                         {
@@ -245,36 +239,35 @@ namespace InteractML.MovementFeatures
 
                     }
 
-                    // check if there is a connection to the second input
-                    if (this.GetInputPort("SecondInputs").IsConnected && (this.GetInputNodesConnected("SecondInputs").Count > 1) )
+                    // check if there is another connection to the second input
+                    if (this.GetInputNodesConnected("SecondInputs").Count > 1)
                     {
-                        // check if the two inputted types have the same number of features, otherwise disconnect
+                        // check if the inputted type has the same number of features as connected types, otherwise disconnect
                         if ((this.GetInputNodesConnected("SecondInputs")[0] as IFeatureIML).FeatureValues.Values.Length != (to.node.GetInputNodesConnected("SecondInputs")[this.GetInputNodesConnected("SecondInputs").Count - 1] as IFeatureIML).FeatureValues.Values.Length)
                         {
                             from.Disconnect(to);
                         }
 
                     }
-                    UpdateToggleArray();
+                    
                 }
-                
             }
         }
 
         private void UpdateToggleArray()
         {
-            Debug.Log(this.SecondInputs.Count);
-            Debug.Log(ToggleSwitches.Length);
-            // create new array of boolean for each of the features in the data type and set all to true
-            ToggleSwitches = new bool[this.SecondInputs.Count];
-            FeatureValueReceivingData = new bool[this.SecondInputs.Count];
-
-            for (int i = 0; i < this.SecondInputs.Count; i++)
+            if (ToggleSwitches.Length != SecondInputs.Count)
             {
-                ToggleSwitches[i] = true;
-                FeatureValueReceivingData[i] = false;
-            }
-            
+                // create new array of boolean for each of the features in the data type and set all to true
+                ToggleSwitches = new bool[SecondInputs.Count];
+                FeatureValueReceivingData = new bool[SecondInputs.Count];
+
+                for (int i = 0; i < SecondInputs.Count; i++)
+                {
+                    ToggleSwitches[i] = true;
+                    FeatureValueReceivingData[i] = false;
+                }
+            }    
         }
     }
 }
