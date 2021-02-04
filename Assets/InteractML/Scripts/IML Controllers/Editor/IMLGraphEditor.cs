@@ -164,6 +164,10 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
+            if (type.PrettyName() == "InteractML.ControllerCustomisers.InputSetUp")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
             else return null;
         }
 

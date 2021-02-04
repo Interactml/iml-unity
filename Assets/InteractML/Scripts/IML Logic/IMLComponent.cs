@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor.SceneManagement;
 using UnityEditor;
+using InteractML.ControllerCustomisers;
 #endif
 
 namespace InteractML
@@ -23,6 +24,7 @@ namespace InteractML
     {
 
         #region Variables
+        private List<UnityEngine.XR.InputDevice> xrInputDevices = new List<UnityEngine.XR.InputDevice>();
 
         /// <summary>
         /// Reference to the IML Controller with nodes
@@ -63,9 +65,11 @@ namespace InteractML
         public List<IFeatureIML> FeatureNodesList;
         [SerializeField, HideInInspector]
         private List<ScriptNode> m_ScriptNodesList;
+        private InputSetUp m_inputSetUpNode;
         #endregion
 
         #region Public Lists of Nodes (Properties)
+        public InputSetUp inputSetUpNode {get => m_inputSetUpNode; } 
         /// <summary>
         /// List of Training Example Nodes in the IML Controller
         /// </summary>
@@ -146,6 +150,7 @@ namespace InteractML
                 InitializeEvent();
                 // train models
                 LoadDataForModels();
+                
             }
         }
 
@@ -174,11 +179,24 @@ namespace InteractML
         // Start is called before the first frame update
         void Start()
         {
+            //Set up connected devices 
+            UpdateConnectedDevices();
         }
 
         // Update is called once per frame
         void Update()
         {
+            bool triggerValue;
+
+            //Debug.Log(xrInputDevices.Count);
+            foreach (UnityEngine.XR.InputDevice device in xrInputDevices)
+            {
+                if (device.TryGetFeatureValue(UnityEngine.XR.CommonUsages.triggerButton, out triggerValue) && triggerValue)
+                {
+                    Debug.Log("Trigger button is pressed.");
+                }
+            }
+            
             // If the app is running in the editor...
 #if UNITY_EDITOR
             // Run logic only when the app is running. Otherwise the editor manager will handle it
@@ -311,6 +329,17 @@ namespace InteractML
             InitializeNodeType(MLSystemNodeList);
             //Initialise Script nodes
             InitializeNodeType(m_ScriptNodesList);
+            if(m_inputSetUpNode != null)
+            {
+                m_inputSetUpNode.NodeInitalize();
+
+            } else 
+            {
+                MLController.AddNode(m_inputSetUpNode.GetType());
+            }
+            
+
+
         }
         /// <summary>
         /// Event to set up models when loading
@@ -366,7 +395,11 @@ namespace InteractML
             IMLEventDispatcher.StartRecordCallback += StartRecording;
             IMLEventDispatcher.StopRecordCallback += StopRecording;
             IMLEventDispatcher.DeleteAllCallback += DeleteAllTrainingExamples;
-           // IMLEventDispatcher.DeleteLastCallback +=
+            // IMLEventDispatcher.DeleteLastCallback +=
+
+            UnityEngine.XR.InputDevices.deviceConnected += DeviceChange;
+            UnityEngine.XR.InputDevices.deviceDisconnected += DeviceChange;
+
         }
         /// <summary>
         /// 
@@ -471,6 +504,8 @@ namespace InteractML
                     // ScriptNodes
                     CheckTypeAddNodeToList(node, ref m_ScriptNodesList);
 
+                    // VR set up nodes
+                    CheckNodeIsInput(node, ref m_inputSetUpNode);
                 }
 
             }
@@ -583,6 +618,23 @@ namespace InteractML
             }
 
         
+        }
+
+        private void CheckNodeIsInput(XNode.Node nodeToAdd, ref InputSetUp setUpNode)
+        {
+            // We first check that the node ref is not null
+            if (nodeToAdd != null)
+            {
+                // Then check that the node is a feature
+                var inputNode = nodeToAdd as InputSetUp;
+                if (inputNode != null && m_inputSetUpNode == null)
+                {
+                    setUpNode = inputNode;
+
+                }
+            }
+
+
         }
 
         private void RunFeaturesLogic()
@@ -1480,7 +1532,7 @@ namespace InteractML
         /// </summary>
         public bool RunAllModels()
         {
-            Debug.Log("run all models");
+           // Debug.Log("run all models");
             bool success = false;
             foreach (var MLSystemNode in m_MLSystemNodeList)
             {
@@ -1892,6 +1944,17 @@ namespace InteractML
                 GONode.state = true;
             }
         }
+
+        public void UpdateConnectedDevices()
+        {
+            UnityEngine.XR.InputDevices.GetDevices(xrInputDevices);
+        }
+
+        private void DeviceChange(UnityEngine.XR.InputDevice device)
+        {
+            UpdateConnectedDevices();
+        }
+
 
         #endregion
 
