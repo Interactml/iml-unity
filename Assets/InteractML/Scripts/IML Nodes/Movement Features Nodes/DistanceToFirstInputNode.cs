@@ -70,6 +70,7 @@ namespace InteractML.MovementFeatures
             {
                 ToggleSwitches = new bool[this.SecondInputs.Count];
                 FeatureValueReceivingData = new bool[this.SecondInputs.Count];
+                PreviousFeatureValues = new IMLArray(m_DistancesToFirstInput);
 
                 for (int i = 0; i < this.SecondInputs.Count; i++)
                 {
@@ -81,6 +82,7 @@ namespace InteractML.MovementFeatures
             {
                 ToggleSwitches = new bool[0];
                 FeatureValueReceivingData = new bool[0];
+                PreviousFeatureValues = new IMLArray(m_DistancesToFirstInput);
             }
 
             base.Initialize();
@@ -99,8 +101,13 @@ namespace InteractML.MovementFeatures
             FirstInput = GetInputValue<Node>("FirstInput");
             SecondInputs = GetInputValues<Node>("SecondInputs").ToList();
 
+            
+
             if (!isUpdated)
             {
+                // update if node is receiving data
+                ReceivingData = MovementFeatureMethods.IsReceivingData(this);
+
                 // If there are connections for both input ports
                 if (FirstInput != null && SecondInputs.Count > 0)
                 {
@@ -168,8 +175,7 @@ namespace InteractML.MovementFeatures
                         // Make sure to mark the feature as updated to avoid calculating twice
                         isUpdated = true;
 
-
-
+                        // check if inputs have changed and update size of toggle bool array and receiving data bool array
                         UpdateToggleArray();
 
                         return this;
