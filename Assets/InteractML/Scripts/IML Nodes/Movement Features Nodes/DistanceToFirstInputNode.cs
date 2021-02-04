@@ -172,6 +172,9 @@ namespace InteractML.MovementFeatures
                         // Set values for distance extracted and for last frame feature value
                         m_DistancesExtracted.SetValues(m_DistancesToFirstInput);
 
+                        // check if each toggle is off and set feature value to 0, return float array of updated feature values
+                        m_DistancesExtracted.Values = MovementFeatureMethods.CheckTogglesAndUpdateFeatures(this, m_DistancesExtracted.Values);
+
                         // Make sure to mark the feature as updated to avoid calculating twice
                         isUpdated = true;
 
