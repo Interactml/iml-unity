@@ -67,7 +67,20 @@ namespace InteractML.MovementFeatures
         {
             // initialise counters to change toggle colour
             Counter = 0;
-            Count = 5; 
+            Count = 5;
+
+            // check amount of feature values before creating toggle switch array of that size
+            if (FeatureValues.Values!=null && FeatureValues.Values.Length > 0)
+            {
+                // create new array of boolean for each of the features in the data type and set all to true
+                ToggleSwitches = new bool[FeatureValues.Values.Length];
+                FeatureValueReceivingData = new bool[FeatureValues.Values.Length];
+                for (int i = 0; i < FeatureValues.Values.Length; i++)
+                {
+                    ToggleSwitches[i] = true;
+                    FeatureValueReceivingData[i] = true;
+                }
+            }
         }
 
         /// <summary>

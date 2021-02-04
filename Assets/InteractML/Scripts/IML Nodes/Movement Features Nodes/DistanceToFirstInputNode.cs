@@ -62,15 +62,21 @@ namespace InteractML.MovementFeatures
         // Use this for initialization
         public override void Initialize()
         {
-            // This extractor expects any other feature extracted to make calculations
-            FirstInput = GetInputValue<Node>("FirstInput");
+            // Make sure feature extractor value is never null
+            if (m_DistancesExtracted == null)
+                m_DistancesExtracted = new IMLArray();
+
+            // initialise helper variables
+            PreviousFeatureValues = new IMLArray(m_DistancesToFirstInput);
+
+            // Get  amount of connections to second input port and set Toggle switch and reicving data bool array sizes
             SecondInputs = GetInputValues<Node>("SecondInputs").ToList();
 
+            // only initialise if there are connections to second input port
             if (this.SecondInputs.Count > 0)
             {
                 ToggleSwitches = new bool[this.SecondInputs.Count];
                 FeatureValueReceivingData = new bool[this.SecondInputs.Count];
-                PreviousFeatureValues = new IMLArray(m_DistancesToFirstInput);
 
                 for (int i = 0; i < this.SecondInputs.Count; i++)
                 {
@@ -78,14 +84,10 @@ namespace InteractML.MovementFeatures
                     FeatureValueReceivingData[i] = false;
                 }
             }
-            else
-            {
-                ToggleSwitches = new bool[0];
-                FeatureValueReceivingData = new bool[0];
-                PreviousFeatureValues = new IMLArray(m_DistancesToFirstInput);
-            }
 
-            base.Initialize();
+            // initialise counters to change toggle colour
+            Counter = 0;
+            Count = 5;
         }
 
         // Return the correct value of an output port when requested
@@ -100,8 +102,6 @@ namespace InteractML.MovementFeatures
             // This extractor expects any other feature extracted to make calculations
             FirstInput = GetInputValue<Node>("FirstInput");
             SecondInputs = GetInputValues<Node>("SecondInputs").ToList();
-
-            
 
             if (!isUpdated)
             {

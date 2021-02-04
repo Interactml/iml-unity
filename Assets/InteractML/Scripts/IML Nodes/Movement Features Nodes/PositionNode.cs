@@ -64,24 +64,10 @@ namespace InteractML.MovementFeatures
 
             // Make sure feature extractor value is never null
             if (m_PositionExtracted == null)
-            {
                 m_PositionExtracted = new IMLVector3();
 
-                // create new boolean arrays for toggles and receiving data values for each of the features
-                ToggleSwitches = new bool[m_PositionExtracted.Values.Length];
-                FeatureValueReceivingData = new bool[m_PositionExtracted.Values.Length];
-                for (int i = 0; i < m_PositionExtracted.Values.Length; i++)
-                {
-                    ToggleSwitches[i] = true;
-                    FeatureValueReceivingData[i] = false;
-                }
-
-            }
             // initialise helper variables
-            if (PreviousFeatureValues == null)
-            {
-                PreviousFeatureValues = new IMLVector3();
-            }
+            PreviousFeatureValues = new IMLVector3();
 
             base.Initialize();
         }

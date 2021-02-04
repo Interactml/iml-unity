@@ -69,38 +69,41 @@ namespace InteractML.MovementFeatures
                 var featureToUse = (FeatureToInput as IFeatureIML).FeatureValues;
                 if (featureToUse != null)
                 {
-
                     // Calculate the velocity arrays size
                     m_CurrentVelocity = new float[featureToUse.Values.Length];
                     m_LastFrameFeatureValue = new float[m_CurrentVelocity.Length];
-                    FeatureValueReceivingData = new bool[m_CurrentVelocity.Length];
-                    ToggleSwitches = new bool[m_CurrentVelocity.Length];
                     m_VelocityExtracted = new IMLArray(m_CurrentVelocity);
+
+                    // initialise helper variables
                     PreviousFeatureValues = new IMLArray(m_CurrentVelocity);
 
+                    FeatureValueReceivingData = new bool[m_CurrentVelocity.Length];
+                    ToggleSwitches = new bool[m_CurrentVelocity.Length];
                     for (int i = 0; i < m_CurrentVelocity.Length; i++)
                     {
                         ToggleSwitches[i] = true;
                         FeatureValueReceivingData[i] = false;
-                    }
-
-
-                    
-                }
-                
+                    }    
+                }    
             }
             else
             {
+                // Initialise velocity arrays
                 m_CurrentVelocity = new float[0];
                 m_LastFrameFeatureValue = new float[0];
+                m_VelocityExtracted = new IMLArray(m_CurrentVelocity);
+
+                // initialise toggle and receiving data bool arrays
                 FeatureValueReceivingData = new bool[0];
                 ToggleSwitches = new bool[0];
-                m_VelocityExtracted = new IMLArray(m_CurrentVelocity);
+                
+                // initialise helper variables
                 PreviousFeatureValues = new IMLArray(m_CurrentVelocity);
             }
 
-            base.Initialize();
-            
+            // initialise counters to change toggle colour
+            Counter = 0;
+            Count = 5;
         }
 
         // Return the correct value of an output port when requested

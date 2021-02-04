@@ -69,22 +69,6 @@ namespace InteractML.MovementFeatures
             // initialise helper variables
             PreviousFeatureValues = new IMLVector4();
 
-            // check amount of feature values before creating toggle switch array of that size
-            if (m_RotationQuaternionExtracted != null)
-            {
-                if (m_RotationQuaternionExtracted.Values.Length > 0)
-                {
-                    // create new array of boolean for each of the features in the data type and set all to true
-                    ToggleSwitches = new bool[m_RotationQuaternionExtracted.Values.Length];
-                    FeatureValueReceivingData = new bool[m_RotationQuaternionExtracted.Values.Length];
-                    for (int i = 0; i < m_RotationQuaternionExtracted.Values.Length; i++)
-                    {
-                        ToggleSwitches[i] = true;
-                        FeatureValueReceivingData[i] = true;
-                    }
-                }
-            }
-
             base.Initialize();
         }
 
