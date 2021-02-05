@@ -46,26 +46,34 @@ namespace InteractML.MovementFeatures
 
         protected override void ShowBodyFields()
         {
-            nodeSpace = 60 + (m_ExtractVelocity.FeatureValues.Values.Length * 20);
-            GUILayout.Space(nodeSpace);
-            m_BodyRect.height = 60 + (m_ExtractVelocity.FeatureValues.Values.Length * 20);
-            // set body space based on node editors rects 
-            GUILayout.BeginArea(m_BodyRect);
-            GUILayout.Space(20);
+            m_InnerBodyRect.x = m_BodyRect.x + 20;
+            m_InnerBodyRect.y = m_BodyRect.y + 20;
+            m_InnerBodyRect.width = m_BodyRect.width - 20;
+            m_InnerBodyRect.height = m_BodyRect.height - 20;
 
-            // check if there are any feature connected
-            if (m_ExtractVelocity.FeatureValues.Values != null || m_ExtractVelocity.FeatureValues.Values.Length != 0)
+            GUILayout.BeginArea(m_InnerBodyRect);
+
+            if (m_ExtractVelocity.FeatureValues.Values != null)
             {
-                //draws node data fields
-                MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractVelocity, m_ExtractVelocity.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractVelocity.ReceivingData));
+                // dynamically adjust node length based on amount of velocity features
+                nodeSpace = 120 + (m_ExtractVelocity.FeatureValues.Values.Length * 20);
+                m_BodyRect.height = 60 + (m_ExtractVelocity.FeatureValues.Values.Length * 20);
+
+                // draw each velocity values
+                MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractVelocity);
             }
             else
             {
-                // draw alert to connect input
+                // set node length
+                nodeSpace = 120;
+                m_BodyRect.height = 60;
+
+                // print alert on node
                 EditorGUILayout.LabelField("Connect an input", m_NodeSkin.GetStyle("Node Body Label"));
             }
 
             GUILayout.EndArea();
+                
         }
 
     }

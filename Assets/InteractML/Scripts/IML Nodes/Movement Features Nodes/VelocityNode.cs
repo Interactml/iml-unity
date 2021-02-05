@@ -56,20 +56,12 @@ namespace InteractML.MovementFeatures
         /// </summary>
         public bool isUpdated { get; set; }
 
-        /// <summary>
-        /// Controls whether to use each axis values in output 
-        /// </summary>
-        public bool x_switch = true;
-        public bool y_switch = true;
-        public bool z_switch = true;
-
         // Use this for initialization
-        protected override void Init()
+        public override void Initialize()
         {
-            base.Init();
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Velocity");
             // The velocity extractor expects any other feature extracted to make calculations
             FeatureToInput = GetInputValue<IFeatureIML>("FeatureToInput");
+            
             // If we managed to get the input
             if (FeatureToInput != null)
             {
@@ -80,10 +72,38 @@ namespace InteractML.MovementFeatures
                     // Calculate the velocity arrays size
                     m_CurrentVelocity = new float[featureToUse.Values.Length];
                     m_LastFrameFeatureValue = new float[m_CurrentVelocity.Length];
+                    m_VelocityExtracted = new IMLArray(m_CurrentVelocity);
 
-                }
+                    // initialise helper variables
+                    PreviousFeatureValues = new IMLArray(m_CurrentVelocity);
+
+                    FeatureValueReceivingData = new bool[m_CurrentVelocity.Length];
+                    ToggleSwitches = new bool[m_CurrentVelocity.Length];
+                    for (int i = 0; i < m_CurrentVelocity.Length; i++)
+                    {
+                        ToggleSwitches[i] = true;
+                        FeatureValueReceivingData[i] = false;
+                    }    
+                }    
+            }
+            else
+            {
+                // Initialise velocity arrays
+                m_CurrentVelocity = new float[0];
+                m_LastFrameFeatureValue = new float[0];
+                m_VelocityExtracted = new IMLArray(m_CurrentVelocity);
+
+                // initialise toggle and receiving data bool arrays
+                FeatureValueReceivingData = new bool[0];
+                ToggleSwitches = new bool[0];
+                
+                // initialise helper variables
+                PreviousFeatureValues = new IMLArray(m_CurrentVelocity);
             }
 
+            // initialise counters to change toggle colour
+            Counter = 0;
+            Count = 5;
         }
 
         // Return the correct value of an output port when requested
@@ -99,33 +119,8 @@ namespace InteractML.MovementFeatures
         public object UpdateFeature()
         {
             // Get values from the input list
-            List<Node> featureToInput = this.GetInputNodesConnected("FeatureToInput");
+            FeatureToInput = GetInputValue<IFeatureIML>("FeatureToInput");
 
-            // if there are inputfestures connected 
-            if (featureToInput != null)
-            {
-                
-                // Go through all the nodes connected
-                for (int i = 0; i < featureToInput.Count; i++)
-                {
-                    // Cast the node checking if implements the feature interface (it is a featureExtractor)
-                    IFeatureIML inputFeature = featureToInput[i] as IFeatureIML;
-
-                    // If it is a feature extractor...
-                    if (inputFeature != null)
-                    {
-                        // We add the feature to the desired inputs config
-                        FeatureToInput = inputFeature;
-                    }
-                }
-
-            }
-            //else
-            //{
-            //    InputFeatures = new List<Node>();
-            //}
-            //// The velocity extractor expects any other feature extracted to make calculations
-            //FeatureToInput = GetInputValue<IFeatureIML>("FeatureToInput");
             // If we managed to get the input
             if (FeatureToInput != null)
             {
@@ -133,75 +128,24 @@ namespace InteractML.MovementFeatures
                 var featureToUse = (FeatureToInput as IFeatureIML).FeatureValues;
                 if (featureToUse != null)
                 {
-                    // Calculate the velocity arrays size
-                    //m_CurrentVelocity = new float[featureToUse.Values.Length];
-
-                    // If the velocity hasn't been updated yet... (unlocked externally in the IML Component)
+                    // If the velocity hasn't been updated yet
                     if (!isUpdated)
                     {
-                        ReceivingData = false;
-                        // is the GameObject moving 
-                        if (m_LastFrameFeatureValue != null)
-                        {
-                            for (int i = 0; i < m_LastFrameFeatureValue.Length; i++)
-                            {
-                                if (m_LastFrameFeatureValue[i] != featureToUse.Values[i])
-                                {
-                                    ReceivingData = true;
-                                }
-                            }
-                        }
-
-                        // We check in case the input feature length changed
-                        if (m_CurrentVelocity == null || m_CurrentVelocity.Length != featureToUse.Values.Length)
-                        {
-                            // If it did, we resize the current vel vector and lastframe vector
-                            m_CurrentVelocity = new float[featureToUse.Values.Length];
-                            m_LastFrameFeatureValue = null;
-                        }
-
-                        if (m_LastFrameFeatureValue == null || m_LastFrameFeatureValue.Length != m_CurrentVelocity.Length)
-                        {
-                            if (m_CurrentVelocity == null)
-                            {
-                                Debug.Log("Current Velocity is null");
-                            }
-                            m_LastFrameFeatureValue = new float[m_CurrentVelocity.Length];
-                        }
+                        // update if node is receiving data
+                        ReceivingData = MovementFeatureMethods.IsReceivingData(this);
 
                         // Calculate velocity itself
                         for (int i = 0; i < m_CurrentVelocity.Length; i++)
-                        {
-                            if ((i == 0 && !x_switch) || (i == 1 && !y_switch) || (i == 2 && !z_switch))
-                            {
-                                Debug.Log("here");
-                                m_CurrentVelocity[i] = 0;
-                            }
-                            else
-                            {
-                                m_CurrentVelocity[i] = (featureToUse.Values[i] - m_LastFrameFeatureValue[i]) / Time.smoothDeltaTime;
-                            }
+                            m_CurrentVelocity[i] = (featureToUse.Values[i] - m_LastFrameFeatureValue[i]) / Time.smoothDeltaTime;
 
-
-                        }
-                        // We make sure that the velocity extracted serial vector is not null
-                        if (m_VelocityExtracted == null)
-                        {
-                            m_VelocityExtracted = new IMLArray(m_CurrentVelocity);
-                        }
-
-                        // Set values for velocity extracted and for last frame feature value
+                        // Set values for velocity extracted
                         m_VelocityExtracted.SetValues(m_CurrentVelocity);
 
+                        // check if each toggle is off and set feature value to 0, return float array of updated feature values
+                        m_VelocityExtracted.Values = MovementFeatureMethods.CheckTogglesAndUpdateFeatures(this, m_VelocityExtracted.Values);
+
+                        // Set values for last frame feature value
                         featureToUse.Values.CopyTo(m_LastFrameFeatureValue, 0);
-
-                        //for (int i = 0; i < m_CurrentVelocity.Length; i++)
-                        //{
-                        //    //Debug.Log(i + " = " + m_CurrentVelocity[i]);
-
-                        //    // Store last known feature values for next frame
-                        //    //m_LastFrameFeatureValue[i] = featureToUse.Values[i];
-                        //}
 
                         // Make sure to mark the feature as updated to avoid calculating twice
                         isUpdated = true;
@@ -211,20 +155,13 @@ namespace InteractML.MovementFeatures
                 }
                 else
                 {
-                    //// Dispose of arrays to avoid carrying on any configs
-                    //m_CurrentVelocity = null;
-                    //m_LastFrameFeatureValue = null;
-
+                    // If input is not an IML feature, return null
                     return null;
                 }
             }
             // If we couldn't get an input, we return null
             else
             {
-                //// Dispose of arrays to avoid carrying on any configs
-                //m_CurrentVelocity = null;
-                //m_LastFrameFeatureValue = null;
-
                 return null;
             }
 
@@ -242,6 +179,8 @@ namespace InteractML.MovementFeatures
                 System.Type[] portTypesAccept = new System.Type[] { };
                 System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(MLSystem), typeof(ScriptNode) };
                 this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
+
+                Initialize();
             }
         }
 
@@ -250,7 +189,7 @@ namespace InteractML.MovementFeatures
             base.OnRemoveConnection(port);
             if (port.IsInput) {
                 // need to reset
-                Init();
+                Initialize();
             }
            
         }

@@ -33,6 +33,7 @@ namespace InteractML.MovementFeatures
         /// Is the node currently receiving input data
         /// </summary>
         public bool ReceivingData;
+        public bool[] FeatureValueReceivingData;
 
         /// <summary>
         /// Variables to count the number of frames the input values stay the same 
@@ -45,7 +46,7 @@ namespace InteractML.MovementFeatures
         public bool[] ToggleSwitches;
 
         /// <summary>
-        /// Local float array to store received values
+        /// Local float array to store received values for when converting from float array to IMLBaseDataType
         /// </summary>
         public float[] ReceivedValue;
 
@@ -66,7 +67,20 @@ namespace InteractML.MovementFeatures
         {
             // initialise counters to change toggle colour
             Counter = 0;
-            Count = 5;    
+            Count = 5;
+
+            // check amount of feature values before creating toggle switch array of that size
+            if (FeatureValues.Values!=null && FeatureValues.Values.Length > 0)
+            {
+                // create new array of boolean for each of the features in the data type and set all to true
+                ToggleSwitches = new bool[FeatureValues.Values.Length];
+                FeatureValueReceivingData = new bool[FeatureValues.Values.Length];
+                for (int i = 0; i < FeatureValues.Values.Length; i++)
+                {
+                    ToggleSwitches[i] = true;
+                    FeatureValueReceivingData[i] = true;
+                }
+            }
         }
 
         /// <summary>
@@ -108,7 +122,7 @@ namespace InteractML.MovementFeatures
         /// <returns></returns>
         object IFeatureIML.UpdateFeature()
         {
-            return null; // Replace this
+            return null; // Replace this??
         }
 
         #endregion

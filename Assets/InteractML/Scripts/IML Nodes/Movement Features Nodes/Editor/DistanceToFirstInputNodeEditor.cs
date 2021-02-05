@@ -48,13 +48,7 @@ namespace InteractML.MovementFeatures
         #region Methods
 
         protected override void ShowBodyFields()
-        {
-            // DataInToggle(m_ExtractDistanceToFirstInput.ReceivingData, m_InnerBodyRect, m_BodyRect);
-
-
-            nodeSpace = 120 + (m_ConnectedInputs * 20);
-            m_ConnectedInputs = m_ExtractDistanceToFirstInput.FeatureValues.Values.Length;
-            m_BodyRect.height = 60 + (m_ConnectedInputs * 20);
+        { 
 
             m_InnerBodyRect.x = m_BodyRect.x + 20;
             m_InnerBodyRect.y = m_BodyRect.y + 20;
@@ -62,59 +56,30 @@ namespace InteractML.MovementFeatures
             m_InnerBodyRect.height = m_BodyRect.height - 20;
 
             GUILayout.BeginArea(m_InnerBodyRect);
-
-            ////nodeSpace = 110 + (m_ExtractDistanceToFirstInput.FeatureValues.Values.Length * 20);
-            ////GUILayout.Space(nodeSpace);
-            ////m_BodyRect.height = 110 + (m_ExtractDistanceToFirstInput.FeatureValues.Values.Length * 20);
-            ////// set body space based on node editors rects 
-            ////GUILayout.BeginArea(m_BodyRect);
-            ////GUILayout.Space(20);
             
             // check if there are any feature connected
             if (m_ExtractDistanceToFirstInput.FeatureValues.Values != null && m_ExtractDistanceToFirstInput.FeatureValues.Values.Length != 0)
             {
+                // dynamically adjust node length based on amount of velocity features
+                nodeSpace = 120 + (m_ExtractDistanceToFirstInput.FeatureValues.Values.Length * 20);
+                m_BodyRect.height = 60 + (m_ExtractDistanceToFirstInput.FeatureValues.Values.Length * 20);
+                
                 //draws node data fields
-                MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractDistanceToFirstInput, m_ExtractDistanceToFirstInput.FeatureValues.Values.Length, IMLNodeEditorMethods.DataInToggle(this, m_ExtractDistanceToFirstInput.ReceivingData));
+                MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractDistanceToFirstInput);
                 
             }
             else
             {
+                // set node length
+                nodeSpace = 120;
+                m_BodyRect.height = 60;
+
+                // print alert on node
                 EditorGUILayout.LabelField("Connect 2 inputs", m_NodeSkin.GetStyle("Node Body Label"));
             }
 
             GUILayout.EndArea();
         }
-
-        /// <summary>
-        /// Show the position value fields 
-        /// </summary>
-        private void ShowDistanceBetweenInputsValue()
-        {
-            m_InnerBodyRect.x = m_BodyRect.x + 20;
-            m_InnerBodyRect.y = m_BodyRect.y + 20;
-            m_InnerBodyRect.width = m_BodyRect.width - 20;
-            m_InnerBodyRect.height = m_BodyRect.height - 20;
-
-            GUILayout.BeginArea(m_InnerBodyRect);
-
-
-            if (m_ExtractDistanceToFirstInput.FeatureValues.Values == null || m_ExtractDistanceToFirstInput.FeatureValues.Values.Length == 0)
-            {
-                EditorGUILayout.LabelField("Connect 2 inputs", m_NodeSkin.GetStyle("Node Body Label"));
-            }
-            else
-            {
-                // Go through the list of output distances
-                EditorGUILayout.LabelField("Distance between first input", m_NodeSkin.GetStyle("Node Body Label"));
-                for (int i = 0; i < m_ExtractDistanceToFirstInput.FeatureValues.Values.Length; i++)
-                {
-                    EditorGUILayout.LabelField("and input " + (i + 1) + ": " + m_ExtractDistanceToFirstInput.FeatureValues.Values[i], m_NodeSkin.GetStyle("Node Body Label"));
-                }
-            }
-            GUILayout.EndArea();
-
-        }
-
 
         #endregion
 
