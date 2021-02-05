@@ -335,7 +335,8 @@ namespace InteractML
 
             } else 
             {
-                MLController.AddNode(m_inputSetUpNode.GetType());
+
+                MLController.AddNode<InputSetUp>();
             }
             
 
