@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.XR.Interaction.Toolkit;
+﻿using UnityEngine.InputSystem;
 
 namespace InteractML.ControllerCustomisers
 {
@@ -10,6 +6,8 @@ namespace InteractML.ControllerCustomisers
     {
         // whether this is accessible during the game 
         public bool enableUniversalInterface;
+        // whether the interface is active
+        public bool activeUniversalInterface;
 
         // private List<InputDevice> inputDevices = new List<InputDevice>();
         //public string[] inputDevicesArray;
@@ -21,38 +19,20 @@ namespace InteractML.ControllerCustomisers
 
         public string[] buttonOptions;
 
-        public int deleteLastButtonNo;
-        public IMLTriggerTypes deleteLastTriggerType;
-        public int deleteAllButtonNo;
-        public IMLTriggerTypes deleteAllTriggerType;
-        public int toggleRecordButtonNo;
-        public IMLTriggerTypes toggleRecordTriggerType;
-        public int trainButtonNo;
-        public IMLTriggerTypes trainTriggerType;
-        public int toggleRunButtonNo;
-        public IMLTriggerTypes toggleRunTriggerType;
-
-        public string deleteLastButton;
-        public string deleteAllButton;
-        public string toggleRecordButton;
-        public string trainButton;
-        public string toggleRecord;
-        
-
         // which 
-        private ButtonHandler DeleteLast;
-        private ButtonHandler DeleteAll;
-        private ButtonHandler ToggleRecord;
-        
-        private ButtonHandler Train;
-        private ButtonHandler ToggleRun;
+        public InputHandler DeleteLast;
+        public InputHandler DeleteAll;
+        public InputHandler ToggleRecord;
+
+        public InputHandler Train;
+        public InputHandler ToggleRun;
 
         public string currentMLS;
         public string currentTraining;
 
         public override void Initialize()
         {
-            
+            InstantiateVRButtonHandlers();
             
         }
 
@@ -67,14 +47,34 @@ namespace InteractML.ControllerCustomisers
                     buttonOptions = System.Enum.GetNames(typeof(UnityEngine.InputSystem.LowLevel.MouseButton));
                     break;
                 case IMLInputDevices.VRControllers:
+                    InstantiateVRButtonHandlers();
                     buttonOptions = System.Enum.GetNames(typeof(InputHelpers.Button));
                     break;
                 default:
                     buttonOptions = new string[] { "none" };
                     break;
             }
+
+            
         }
         
+        private void InstantiateVRButtonHandlers()
+        {
+            DeleteAll = new VRButtonHandler();
+            DeleteLast = new VRButtonHandler();
+            ToggleRecord = new VRButtonHandler();
+            Train = new VRButtonHandler();
+            ToggleRun= new VRButtonHandler();
+        }
+        public void SubscribeToEvents()
+        {
+            
+        }
+
+        public void UnsubscribeFromEvents()
+        {
+
+        }
         
 
         public void OnChangeButton()
