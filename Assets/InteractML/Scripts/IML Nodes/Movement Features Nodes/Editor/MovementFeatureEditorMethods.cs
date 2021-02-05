@@ -54,28 +54,31 @@ namespace InteractML.MovementFeatures
         public static void DrawFeatureValueToggleAndLabelDynamic(this IMLNodeEditor nodeEditor, BaseMovementFeatureNode node)
         {
             // check number of feature values sent as parameter matches the amount of feature values in the node    
-            if (node.ToggleSwitches.Length == node.FeatureValues.Values.Length)
+            if (node.ToggleSwitches != null && node.FeatureValues.Values != null)
             {
-                // for each of the features in the data type
-                for (int i = 0; i < node.FeatureValues.Values.Length; i++)
+                if (node.ToggleSwitches.Length == node.FeatureValues.Values.Length)
                 {
-                    // Draw each feature on a single line
-                    GUILayout.BeginHorizontal();
-                    GUILayout.Space(nodeEditor.bodySpace);
+                    // for each of the features in the data type
+                    for (int i = 0; i < node.FeatureValues.Values.Length; i++)
+                    {
+                        // Draw each feature on a single line
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Space(nodeEditor.bodySpace);
 
-                    //draw toggle
-                    node.ToggleSwitches[i] = EditorGUILayout.Toggle(node.ToggleSwitches[i], IMLNodeEditorMethods.DataInToggle(nodeEditor, node.FeatureValueReceivingData[i]));
+                        //draw toggle
+                        node.ToggleSwitches[i] = EditorGUILayout.Toggle(node.ToggleSwitches[i], IMLNodeEditorMethods.DataInToggle(nodeEditor, node.FeatureValueReceivingData[i]));
 
-                    //draw label
-                    EditorGUILayout.LabelField(System.Math.Round(node.FeatureValues.Values[i], 3).ToString(), nodeEditor.m_NodeSkin.GetStyle("Node Body Label Axis"));
+                        //draw label
+                        EditorGUILayout.LabelField(System.Math.Round(node.FeatureValues.Values[i], 3).ToString(), nodeEditor.m_NodeSkin.GetStyle("Node Body Label Axis"));
 
-                    GUILayout.EndHorizontal();
-                    EditorGUILayout.Space();
+                        GUILayout.EndHorizontal();
+                        EditorGUILayout.Space();
+                    }
                 }
-            }
-            else
-            {
-                Debug.Log("Number of feature values sent as parameter does not match the amount of feature values in the node");
+                else
+                {
+                    Debug.Log("Number of feature values sent as parameter does not match the amount of feature values in the node");
+                }
             }
             
         }

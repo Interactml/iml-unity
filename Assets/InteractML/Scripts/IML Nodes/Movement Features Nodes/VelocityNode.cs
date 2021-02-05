@@ -77,13 +77,10 @@ namespace InteractML.MovementFeatures
                     // initialise helper variables
                     PreviousFeatureValues = new IMLArray(m_CurrentVelocity);
 
-                    FeatureValueReceivingData = new bool[m_CurrentVelocity.Length];
-                    ToggleSwitches = new bool[m_CurrentVelocity.Length];
-                    for (int i = 0; i < m_CurrentVelocity.Length; i++)
-                    {
-                        ToggleSwitches[i] = true;
-                        FeatureValueReceivingData[i] = false;
-                    }    
+                    // check if inputs have changed and update size of toggle bool array and receiving data bool array
+                    MovementFeatureMethods.UpdateToggleSwitchArray(this, m_CurrentVelocity.Length);
+                    MovementFeatureMethods.UpdateReceivingDataArray(this, m_CurrentVelocity.Length);
+   
                 }    
             }
             else
