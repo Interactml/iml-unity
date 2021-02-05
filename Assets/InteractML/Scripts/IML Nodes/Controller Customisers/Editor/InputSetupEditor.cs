@@ -50,13 +50,21 @@ namespace InteractML.ControllerCustomisers
         /// </summary>
         protected override void ShowBodyFields()
         {
+            // sets the device
             ShowDeviceOptions();
+            //sets the controller side for the training examples whether left right or both 
             ShowHandChoice(m_InputSetUp.trainingHand);
+            // choose delete last button
             ShowButtonChoice(m_InputSetUp.DeleteLast);
+            // choose delete all button 
             ShowButtonChoice(m_InputSetUp.DeleteAll);
+            // choose toggle record button 
             ShowButtonChoice(m_InputSetUp.ToggleRecord);
+            // sets the controller side for the training
             ShowHandChoice(m_InputSetUp.mlsHand);
+            // sets the button for training 
             ShowButtonChoice(m_InputSetUp.Train);
+            // sets the button for running
             ShowButtonChoice(m_InputSetUp.ToggleRun);
         }
 
