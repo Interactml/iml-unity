@@ -95,6 +95,7 @@ namespace InteractML.ControllerCustomisers
         private void ShowButtonChoice(InputHandler handler)
         {
             GUI.changed = false;
+            Debug.Log(handler);
             // set button choice for delete last
             handler.buttonNo = EditorGUILayout.Popup(handler.buttonNo, m_InputSetUp.buttonOptions);
             if (GUI.changed)

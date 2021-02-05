@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor.SceneManagement;
 using UnityEditor;
+using InteractML.ControllerCustomisers;
 #endif
 
 namespace InteractML
@@ -63,9 +64,11 @@ namespace InteractML
         public List<IFeatureIML> FeatureNodesList;
         [SerializeField, HideInInspector]
         private List<ScriptNode> m_ScriptNodesList;
+        private InputSetUp m_inputSetUp;
         #endregion
 
         #region Public Lists of Nodes (Properties)
+        public InputSetUp inputSetUp { get => m_inputSetUp; }
         /// <summary>
         /// List of Training Example Nodes in the IML Controller
         /// </summary>
@@ -315,6 +318,14 @@ namespace InteractML
             InitializeNodeType(MLSystemNodeList);
             //Initialise Script nodes
             InitializeNodeType(m_ScriptNodesList);
+            //Initialize input set up
+            if (m_inputSetUp != null)
+            {
+                m_inputSetUp.NodeInitalize();
+            } else
+            {
+                MLController.AddNode<InputSetUp>();
+            }
         }
         /// <summary>
         /// Event to set up models when loading
@@ -475,6 +486,8 @@ namespace InteractML
                     // ScriptNodes
                     CheckTypeAddNodeToList(node, ref m_ScriptNodesList);
 
+                    // input set up nodes 
+                    CheckNodeIsInput(node, ref m_inputSetUp);
                 }
 
             }
@@ -509,6 +522,20 @@ namespace InteractML
                     listToAddTo.Add(nodeToAddTyped);
                 }
             }
+        }
+
+        private void CheckNodeIsInput(XNode.Node nodetoAdd, ref InputSetUp setUpNode)
+        {
+            //check node not null
+            if(nodetoAdd != null){
+                var inputNode = nodetoAdd as InputSetUp;
+                // if input node is not null and inputsetup node is null
+                if (inputNode != null && m_inputSetUp == null)
+                {
+                    setUpNode = inputNode;
+                }
+            }
+            
         }
 
         private void CheckNodeIsTraining(XNode.Node nodeToAdd, ref List<TrainingExamplesNode> listToAddTo)
