@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  Counter: 3
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -87,7 +87,7 @@ MonoBehaviour:
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 1
-  GOHashCode: 14782
+  GOHashCode: 14572
   CreatedDuringPlaymode: 0
 --- !u!114 &-2505509211119847011
 MonoBehaviour:
@@ -138,7 +138,7 @@ MonoBehaviour:
   id: a1d7fd45-f19d-42b9-9db2-a641d01e16d6
   numberInComponentList: -1
   ReceivingData: 0
-  Counter: 3
+  Counter: 5
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -386,7 +386,7 @@ MonoBehaviour:
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 1
-  GOHashCode: 14802
+  GOHashCode: 14592
   CreatedDuringPlaymode: 0
 --- !u!114 &3238365560739477877
 MonoBehaviour:
@@ -437,7 +437,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 1
-  Counter: 3
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -455,7 +455,7 @@ MonoBehaviour:
   m_Name: Input Set Up
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 620.0094, y: 68.553444}
+  position: {x: -520, y: -200}
   ports:
     keys: []
     values: []
@@ -463,6 +463,7 @@ MonoBehaviour:
   id: 9c1dd8f4-6a34-4424-8afa-c7713c1396f2
   numberInComponentList: -1
   enableUniversalInterface: 0
+  activeUniversalInterface: 0
   device: 3
   trainingHand: 0
   mlsHand: 0
@@ -489,21 +490,6 @@ MonoBehaviour:
   - SecondaryAxis2DDown
   - SecondaryAxis2DLeft
   - SecondaryAxis2DRight
-  deleteLastButtonNo: 0
-  deleteLastTriggerType: 1
-  deleteAllButtonNo: 24
-  deleteAllTriggerType: 0
-  toggleRecordButtonNo: 0
-  toggleRecordTriggerType: 0
-  trainButtonNo: 21
-  trainTriggerType: 1
-  toggleRunButtonNo: 0
-  toggleRunTriggerType: 0
-  deleteLastButton: 
-  deleteAllButton: 
-  toggleRecordButton: 
-  trainButton: 
-  toggleRecord: 
   currentMLS: 
   currentTraining: 
 --- !u!114 &6246109564004983651
@@ -539,5 +525,5 @@ MonoBehaviour:
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 1
-  GOHashCode: 14820
+  GOHashCode: 14610
   CreatedDuringPlaymode: 0

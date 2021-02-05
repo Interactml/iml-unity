@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 #if UNITY_EDITOR
 using UnityEditor;
 using XNodeEditor;
@@ -24,6 +25,9 @@ namespace InteractML.ControllerCustomisers
         /// </summary>
         protected Vector2 m_ScrollPos;
 
+        private InputHelpers.Button selectedButton;
+
+
         /// <summary>
         /// Initialise node specific interface labels and parameters
         /// </summary>
@@ -46,7 +50,8 @@ namespace InteractML.ControllerCustomisers
         /// </summary>
         protected override void ShowBodyFields()
         {
-
+           selectedButton = (InputHelpers.Button)EditorGUILayout.EnumPopup(selectedButton);
+            m_VRTrigger.button = selectedButton;
         }
 
 

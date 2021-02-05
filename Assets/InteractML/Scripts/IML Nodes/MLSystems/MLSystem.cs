@@ -32,6 +32,9 @@ namespace InteractML
         [SerializeField]
         public List<IMLBaseDataType> PredictedOutput;
 
+        [Input]
+        public List<Node> TriggerTrain; 
+
         /// <summary>
         /// Predicted Rapidlib Output 
         /// </summary>

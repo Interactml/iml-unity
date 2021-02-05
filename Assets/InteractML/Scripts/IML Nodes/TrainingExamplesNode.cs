@@ -353,8 +353,7 @@ namespace InteractML
         /// Initialises nodes values and vars
         /// </summary>
         public override void Initialize()
-        {
-            
+        { 
             SetDataCollection();
             // Make sure internal feature lists are initialized
             if (m_DesiredInputsConfig == null)
@@ -605,11 +604,11 @@ namespace InteractML
                 }
                 else
                 {
-                    Debug.Log("training");
+                   // Debug.Log("training");
                     var inputFeatures = TrainingExamplesVector[0].Inputs;
                     for (int i = 0; i < TrainingExamplesVector[0].Inputs.Count; i++)
                     {
-                        Debug.Log((IMLSpecifications.InputsEnum)inputFeatures[i].InputData.DataType);
+                        //Debug.Log((IMLSpecifications.InputsEnum)inputFeatures[i].InputData.DataType);
                         m_DesiredInputsConfig.Add((IMLSpecifications.InputsEnum)inputFeatures[i].InputData.DataType);
 
                     }

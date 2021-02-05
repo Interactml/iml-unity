@@ -111,7 +111,7 @@ public class IMLEditorManager
             // Reload all models (if we can) when we enter playmode or when we come back to the editor
             foreach (var MLComponent in m_IMLComponents)
             {
-                Debug.Log("Play mode state changed");
+                //Debug.Log("Play mode state changed");
                 //MLComponent.LoadDataAndRunOnAwakeModels();
                 MLComponent.RunModelsOnPlay();
                 //// Reload models
