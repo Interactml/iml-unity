@@ -108,45 +108,32 @@ namespace InteractML.MovementFeatures
                         // Clear distances vector with new vector based on the number of second inputs
                         m_DistancesToFirstInput = new float[SecondInputs.Count];
 
-                        
                         for (int i = 0; i < SecondInputs.Count; i++)
                         {
                             // We check that the second inputs are also iml features
                             var secondInputIMLFeature = (SecondInputs[i] as IFeatureIML).FeatureValues;
                             if (secondInputIMLFeature != null)
                             {
-                                // We make sure that the features to calculate are the same
-                                if (firstInputIMLFeature.DataType == secondInputIMLFeature.DataType)
+                                // We make sure that the extracted value is not null
+                                if (m_DistancesExtracted == null)
+                                    m_DistancesExtracted = new IMLArray(m_DistancesToFirstInput);
+                                    
+                                // Calculate distance between each of the entries in the values vector
+                                float[] distancesVectorBetweenEachFeature = new float[firstInputIMLFeature.Values.Length];
+
+                                for (int j = 0; j < firstInputIMLFeature.Values.Length; j++)
                                 {
-                                    // We make sure that the extracted value is not null
-                                    if (m_DistancesExtracted == null)
-                                    {
-                                        m_DistancesExtracted = new IMLArray(m_DistancesToFirstInput);
-                                    }
-
-                                    // Calculate distance between each of the entries in the values vector
-                                    float[] distancesVectorBetweenEachFeature = new float[firstInputIMLFeature.Values.Length];
-
-                                    for (int j = 0; j < firstInputIMLFeature.Values.Length; j++)
-                                    {
-                                        distancesVectorBetweenEachFeature[j] = (secondInputIMLFeature.Values[j] - firstInputIMLFeature.Values[j]);
-                                    }
-
-
-                                    // Follow the euclidean formula for distance: square and add together all distances
-                                    for (int j = 0; j < firstInputIMLFeature.Values.Length; j++)
-                                    {
-                                        m_DistancesToFirstInput[i] += (distancesVectorBetweenEachFeature[j] * distancesVectorBetweenEachFeature[j]);
-                                    }
-
-                                    m_DistancesToFirstInput[i] = Mathf.Sqrt(m_DistancesToFirstInput[i]);
-
+                                    distancesVectorBetweenEachFeature[j] = secondInputIMLFeature.Values[j] - firstInputIMLFeature.Values[j];
                                 }
-                                else
+
+                                // Follow the euclidean formula for distance: square and add together all distances
+                                for (int j = 0; j < firstInputIMLFeature.Values.Length; j++)
                                 {
-                                    Debug.LogError("Features Types to measure distance are different!");
-                                    return null;
+                                    m_DistancesToFirstInput[i] += (distancesVectorBetweenEachFeature[j] * distancesVectorBetweenEachFeature[j]);
                                 }
+
+                                m_DistancesToFirstInput[i] = Mathf.Sqrt(m_DistancesToFirstInput[i]);
+
                             }
                             // If we couldn't get an input (in the second input), we return null
                             else
@@ -155,8 +142,7 @@ namespace InteractML.MovementFeatures
                                 m_DistancesExtracted = null;
                                 return null;
                             }
-
-                            
+    
                         }
 
                         // Set values for distance extracted and for last frame feature value

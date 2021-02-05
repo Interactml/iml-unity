@@ -79,19 +79,22 @@ namespace InteractML.DataTypeNodes
         /// <return></return>
         public static float[] CheckTogglesAndUpdateFeatures<T>(this BaseDataTypeNode<T> node, float[] value)
         {
-            // checks the amount of feature values matches the size of the amount of toggles and items in the float array, throws an error otherwise
-            if (node.ToggleSwitches.Length == node.FeatureValues.Values.Length && value.Length == node.FeatureValues.Values.Length)
+            if (node.ToggleSwitches != null && node.FeatureValues.Values != null)
             {
-                // for each of the feature values 
-                for (int i = 0; i < node.FeatureValues.Values.Length; i++)
+                // checks the amount of feature values matches the size of the amount of toggles and items in the float array, throws an error otherwise
+                if (node.ToggleSwitches.Length == node.FeatureValues.Values.Length && value.Length == node.FeatureValues.Values.Length)
                 {
-                    // set any values where the toggle is off to 0
-                    if (!node.ToggleSwitches[i]) { value[i] = 0; }
+                    // for each of the feature values 
+                    for (int i = 0; i < node.FeatureValues.Values.Length; i++)
+                    {
+                        // set any values where the toggle is off to 0
+                        if (!node.ToggleSwitches[i]) { value[i] = 0; }
+                    }
                 }
-            }
-            else
-            {
-                Debug.Log("The number of feature values in the node does not match the number of items in the boolean array for toggle switches: Cannot update values");
+                else
+                {
+                    Debug.Log("The number of feature values in the node does not match the number of items in the boolean array for toggle switches: Cannot update values");
+                }
             }
             return value;
         }
@@ -110,6 +113,39 @@ namespace InteractML.DataTypeNodes
             {
                 // check that it size matches features in data type otherwise disconnect float array
                 if (to.node.GetInputValue<float[]>("m_In").Length != node.FeatureValues.Values.Length) { from.Disconnect(to); }
+            }
+        }
+
+        /// </summary>
+        /// Initialise size of boolean array storing toggle switch value to match amount of feature values 
+        /// </summary>
+        /// <param name="movement feature node"></param>
+        /// <param name="new array size"></param>
+        /// <return></return>
+        public static void UpdateToggleSwitchArray<T>(this BaseDataTypeNode<T> node, int size)
+        {
+
+            if (node.ToggleSwitches != null && node.ToggleSwitches.Length != size)
+            {
+                // create new array of boolean for each of the features in the data type and set all to true
+                node.ToggleSwitches = new bool[size];
+                for (int i = 0; i < size; i++) { node.ToggleSwitches[i] = true; }
+            }
+        }
+
+        /// </summary>
+        /// Initialise size of array storing boolean value if feature value is receiving data to match amount of feature values 
+        /// </summary>
+        /// <param name="movement feature node"></param>
+        /// <param name="new array size"></param>
+        /// <return></return>
+        public static void UpdateReceivingDataArray<T>(this BaseDataTypeNode<T> node, int size)
+        {
+            if (node.FeatureValueReceivingData != null && node.FeatureValueReceivingData.Length != size)
+            {
+                // create new array of boolean for each of the features in the data type and set all to false
+                node.FeatureValueReceivingData = new bool[size];
+                for (int i = 0; i < size; i++) { node.FeatureValueReceivingData[i] = false; }
             }
         }
     }

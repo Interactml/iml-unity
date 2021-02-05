@@ -62,9 +62,8 @@ namespace InteractML.DataTypeNodes
                 if (ToggleSwitches.Length != FeatureValues.Values.Length) {
 
                     // create new array of boolean for each of the features in the data type and set all to true
-                    ToggleSwitches = new bool[FeatureValues.Values.Length];
-                    for (int i = 0; i < FeatureValues.Values.Length; i++)
-                        ToggleSwitches[i] = true;
+                    DataTypeNodeMethods.UpdateToggleSwitchArray(this, FeatureValues.Values.Length);
+                    DataTypeNodeMethods.UpdateReceivingDataArray(this, FeatureValues.Values.Length);
 
                     // set float array to size matching amount of features
                     ReceivedValue = new float[FeatureValues.Values.Length];
@@ -82,9 +81,8 @@ namespace InteractML.DataTypeNodes
             if (ToggleSwitches.Length != FeatureValues.Values.Length)
             {
                 // create new array of boolean for each of the features in the data type and set all to true
-                ToggleSwitches = new bool[FeatureValues.Values.Length];
-                for (int i = 0; i < FeatureValues.Values.Length; i++)
-                    ToggleSwitches[i] = true;
+                DataTypeNodeMethods.UpdateToggleSwitchArray(this, FeatureValues.Values.Length);
+                DataTypeNodeMethods.UpdateReceivingDataArray(this, FeatureValues.Values.Length);
 
                 // set float array to size matching amount of features
                 ReceivedValue = new float[FeatureValues.Values.Length];
