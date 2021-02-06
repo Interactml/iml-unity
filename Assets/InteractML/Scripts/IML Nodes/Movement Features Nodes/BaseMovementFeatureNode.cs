@@ -80,6 +80,8 @@ namespace InteractML.MovementFeatures
                     ToggleSwitches[i] = true;
                     FeatureValueReceivingData[i] = true;
                 }
+
+                PreviousFeatureValues.Values = FeatureValues.Values;
             }
         }
 

@@ -103,13 +103,10 @@ namespace InteractML.DataTypeNodes
             Counter = 0;
             Count = 5;
 
-            // check amount of feature values before creating toggle switch array of that size
-            if (FeatureValues.Values != null)
-            {
-                // check if inputs have changed and update size of toggle bool array and receiving data bool array
-                DataTypeNodeMethods.UpdateToggleSwitchArray(this, FeatureValues.Values.Length);
-                DataTypeNodeMethods.UpdateReceivingDataArray(this, FeatureValues.Values.Length);
-            }
+            // check if inputs have changed and update size of toggle bool array and receiving data bool array
+            DataTypeNodeMethods.UpdateToggleSwitchArray(this, FeatureValues.Values.Length);
+            DataTypeNodeMethods.UpdateReceivingDataArray(this, FeatureValues.Values.Length);
+
             // set float array to size matching amount of features
             ReceivedValue = new float[FeatureValues.Values.Length];
         }

@@ -39,10 +39,12 @@ namespace InteractML.DataTypeNodes
                         if (node.FeatureValues.Values[i] == node.PreviousFeatureValues.Values[i])
                         {
                             node.ReceivingData = false;
+                            node.FeatureValueReceivingData[i] = false;
                         }
                         else
                         {
                             node.ReceivingData = true;
+                            node.FeatureValueReceivingData[i] = true;
                             break;
                         }
                     }
@@ -82,13 +84,16 @@ namespace InteractML.DataTypeNodes
             if (node.ToggleSwitches != null && node.FeatureValues.Values != null)
             {
                 // checks the amount of feature values matches the size of the amount of toggles and items in the float array, throws an error otherwise
-                if (node.ToggleSwitches.Length == node.FeatureValues.Values.Length && value.Length == node.FeatureValues.Values.Length)
+                if (node.ToggleSwitches.Length == node.FeatureValues.Values.Length)
                 {
-                    // for each of the feature values 
-                    for (int i = 0; i < node.FeatureValues.Values.Length; i++)
+                    if (value.Length == node.FeatureValues.Values.Length)
                     {
-                        // set any values where the toggle is off to 0
-                        if (!node.ToggleSwitches[i]) { value[i] = 0; }
+                        // for each of the feature values 
+                        for (int i = 0; i < node.FeatureValues.Values.Length; i++)
+                        {
+                            // set any values where the toggle is off to 0
+                            if (!node.ToggleSwitches[i]) { value[i] = 0; }
+                        }
                     }
                 }
                 else
