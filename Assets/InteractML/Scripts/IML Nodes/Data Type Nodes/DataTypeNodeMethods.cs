@@ -15,7 +15,6 @@ namespace InteractML.DataTypeNodes
     /// </summary>
     public static class DataTypeNodeMethods
     {
-
         /// </summary>
         /// Checks if receiving data within an amount of frames (Count)
         /// </summary>

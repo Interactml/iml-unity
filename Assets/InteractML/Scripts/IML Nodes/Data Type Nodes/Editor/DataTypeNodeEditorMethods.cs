@@ -20,7 +20,6 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         /// <param name="data type node"></param>
         /// <param name="node editor"></param>
-        /// <param name="GUIStyle of toggle"></param>
         public static void DrawEditableFieldsAndToggles<T>(this IMLNodeEditor nodeEditor, BaseDataTypeNode<T> node)
         {
             // checks the amount of feature values matches the size of the amount of toggles and items in the float array, throws an error otherwise
@@ -88,7 +87,6 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         /// <param name="node"></param>
         /// <param name="node editor"></param>
-        /// <param name="toggle GUIStyle"></param>
         public static void DrawFeatureValueToggleAndLabel<T>(this IMLNodeEditor nodeEditor, BaseDataTypeNode<T> node)
         {
             // for each of the features in the data type

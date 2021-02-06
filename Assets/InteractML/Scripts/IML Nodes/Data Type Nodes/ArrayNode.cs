@@ -58,12 +58,8 @@ namespace InteractML.DataTypeNodes
             // update if node is receiving data
             ReceivingData = DataTypeNodeMethods.IsReceivingData(this);
 
-            ReceivedValue = Value;
-
             // check if each toggle is off and set feature value to 0, return float array of updated feature values
-            ReceivedValue = DataTypeNodeMethods.CheckTogglesAndUpdateFeatures(this, ReceivedValue);
-
-            Value = ReceivedValue;
+            Value = DataTypeNodeMethods.CheckTogglesAndUpdateFeatures(this, Value);
 
             // check arrays and create new array of boolean for each of the features in the data type and set all to true
             DataTypeNodeMethods.UpdateToggleSwitchArray(this, FeatureValues.Values.Length);
@@ -86,10 +82,8 @@ namespace InteractML.DataTypeNodes
                 System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(MLSystem), typeof(ScriptNode) };
 
                 if (!this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept)) { 
-
-                // set float array to size matching amount of features
-                ReceivedValue = new float[FeatureValues.Values.Length];
-
+                    // set float array to size matching amount of features
+                    ReceivedValue = new float[FeatureValues.Values.Length];
                 }
             }
 
@@ -99,9 +93,12 @@ namespace InteractML.DataTypeNodes
         {
             base.OnRemoveConnection(port);
 
-            // set float array to size matching amount of features
-            Initialize();
-
+            if (port.IsInput)
+            {
+                // reset feature 
+                Value = new float[0];
+                m_FeatureValues.SetValues(Value);
+            }
         }
 
         /// <summary>

@@ -22,10 +22,12 @@ public class colorChanger : MonoBehaviour
     [SendToIMLGraph]
     public float[] array2;
 
+    int count;
 
     // Start is called before the first frame update
     void Start()
     {
+        count = 100;
         array1 = new float[3];
         array1[0] = 100;
         array1[1] = 100;
@@ -50,6 +52,11 @@ public class colorChanger : MonoBehaviour
 
     void Update()
     {
+        array1[0] = count;
+        count++;
+        if (count > 200)
+            count = 100;
+
         // Depending on the value from IML Controller, we have a different predefined colour
         switch (SetAbsoluteColour)
         {
