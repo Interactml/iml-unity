@@ -22,8 +22,9 @@ namespace InteractML.DataTypeNodes
             get
             {
                 // Make sure feature value is never null
-                if (m_FeatureValues == null)
+                if (m_FeatureValues == null) 
                     m_FeatureValues = new IMLArray();
+                    
 
                 // Update local IML Data copy
                 m_FeatureValues.SetValues(Value);
@@ -46,8 +47,8 @@ namespace InteractML.DataTypeNodes
             if (m_FeatureValues == null)
                 m_FeatureValues = new IMLArray();
 
-            // initialise variables
             PreviousFeatureValues = new IMLArray();
+
             base.Initialize();
         }
 
@@ -58,8 +59,11 @@ namespace InteractML.DataTypeNodes
             // update if node is receiving data
             ReceivingData = DataTypeNodeMethods.IsReceivingData(this);
 
+            ReceivedValue = Value;
             // check if each toggle is off and set feature value to 0, return float array of updated feature values
-            Value = DataTypeNodeMethods.CheckTogglesAndUpdateFeatures(this, Value);
+            ReceivedValue = DataTypeNodeMethods.CheckTogglesAndUpdateFeatures(this, ReceivedValue);
+
+            Value = ReceivedValue;
 
             // check arrays and create new array of boolean for each of the features in the data type and set all to true
             DataTypeNodeMethods.UpdateToggleSwitchArray(this, FeatureValues.Values.Length);
@@ -95,7 +99,8 @@ namespace InteractML.DataTypeNodes
 
             if (port.IsInput)
             {
-                // reset feature 
+                // reset feature
+                ReceivedValue = new float[0];
                 Value = new float[0];
                 m_FeatureValues.SetValues(Value);
             }

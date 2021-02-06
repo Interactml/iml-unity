@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Capsule (GameObject)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -328, y: -136}
+  position: {x: -264, y: -136}
   ports:
     keys:
     - GameObjectDataOut
@@ -39,7 +39,7 @@ MonoBehaviour:
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 0
-  GOHashCode: 15948
+  GOHashCode: 14436
   CreatedDuringPlaymode: 0
 --- !u!114 &-6267016618958553248
 MonoBehaviour:
@@ -62,7 +62,7 @@ MonoBehaviour:
   id: 
   numberInComponentList: -1
   note: 
---- !u!114 &-6254829774051106422
+--- !u!114 &-4619933724579260808
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,18 +71,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cd80d6ec5a1f7540bcf4649926cc13f, type: 3}
-  m_Name: Keyboard Press
+  m_Script: {fileID: 11500000, guid: 351ff2cba85462e48acea45efdae4312, type: 3}
+  m_Name: Array
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -168, y: -648}
+  position: {x: 1324.2799, y: 39.377403}
   ports:
     keys:
-    - ControllerOutput
+    - m_In
+    - m_Out
     values:
-    - _fieldName: ControllerOutput
-      _node: {fileID: -6254829774051106422}
-      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+    - _fieldName: m_In
+      _node: {fileID: -4619933724579260808}
+      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: m_Out
+      _node: {fileID: -4619933724579260808}
+      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections: []
       _direction: 1
@@ -90,9 +100,19 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
-  id: e70e5033-6060-45f1-ac71-1ee4673cfcef
+  id: 03d690c9-d83a-493e-89fa-fadf1bf58077
   numberInComponentList: -1
-  ControllerOutput: 0
+  ValueName: 
+  m_In: []
+  m_Value: []
+  m_Out: []
+  ReceivingData: 0
+  FeatureValueReceivingData: 
+  InputConnected: 0
+  Counter: 2
+  Count: 5
+  ToggleSwitches: 
+  ReceivedValue: []
 --- !u!114 &-4054044754050795943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,7 +126,7 @@ MonoBehaviour:
   m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1144, y: -344}
+  position: {x: 1208, y: -344}
   ports:
     keys:
     - m_In
@@ -144,8 +164,9 @@ MonoBehaviour:
   m_Value: 0
   m_Out: 0
   ReceivingData: 0
+  FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 2
+  Counter: 1
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -163,7 +184,7 @@ MonoBehaviour:
   m_Name: Classification ML System
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 776, y: -392}
+  position: {x: 840, y: -392}
   ports:
     keys:
     - IMLTrainingExamplesNodes
@@ -222,6 +243,7 @@ MonoBehaviour:
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_trainingType: 0
+  m_LearningType: 0
   EnableKeyboardControl: 1
   TrainingKey: 116
   RunningKey: 0
@@ -231,6 +253,7 @@ MonoBehaviour:
   matchVectorLength: 1
   warning: You are in edit mode live data in from objects will only workin play mode
   error: 1
+  trainOnLoad: 0
 --- !u!114 &-949560571666818954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,10 +267,12 @@ MonoBehaviour:
   m_Name: colorChanger (Script)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1448, y: -392}
+  position: {x: 1512, y: -392}
   ports:
     keys:
     - SetAbsoluteColour
+    - array1
+    - array2
     values:
     - _fieldName: SetAbsoluteColour
       _node: {fileID: -949560571666818954}
@@ -261,11 +286,29 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+    - _fieldName: array1
+      _node: {fileID: -949560571666818954}
+      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: array2
+      _node: {fileID: -949560571666818954}
+      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   DevMode: 0
   id: 72e29da8-845d-42a3-99ab-719f3263a7f3
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 15990
+  ScriptHashCode: 14478
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: SetAbsoluteColour
@@ -277,6 +320,24 @@ MonoBehaviour:
         node: {fileID: -4054044754050795943}
         reroutePoints: []
       _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: array1
+      _node: {fileID: -949560571666818954}
+      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: array2
+      _node: {fileID: -949560571666818954}
+      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
@@ -302,9 +363,8 @@ MonoBehaviour:
   - {fileID: -4054044754050795943}
   - {fileID: -949560571666818954}
   - {fileID: -3812136178271786840}
-  - {fileID: 6079770633428097327}
-  - {fileID: -6254829774051106422}
-  - {fileID: 9004356105479629708}
+  - {fileID: 0}
+  - {fileID: -4619933724579260808}
   SceneComponent: {fileID: 0}
 --- !u!114 &1936933182950531085
 MonoBehaviour:
@@ -319,7 +379,7 @@ MonoBehaviour:
   m_Name: Single Training Examples
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 408, y: -392}
+  position: {x: 472, y: -392}
   ports:
     keys:
     - InputFeatures
@@ -385,6 +445,7 @@ MonoBehaviour:
   EnableKeyboardControl: 0
   RecordDataKey: 0
   showWarning: 1
+  canCollect: 1
 --- !u!114 &3935821938320227337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,7 +459,7 @@ MonoBehaviour:
   m_Name: Extract Position
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 44.12684, y: -341.44284}
+  position: {x: 40, y: -392}
   ports:
     keys:
     - GameObjectDataIn
@@ -413,7 +474,7 @@ MonoBehaviour:
         node: {fileID: -8914584667776746422}
         reroutePoints: []
       _direction: 0
-      _connectionType: 1
+      _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: LiveDataOut
@@ -434,7 +495,8 @@ MonoBehaviour:
   id: 64f91b27-ce13-4ea0-9695-f865100a7b02
   numberInComponentList: -1
   ReceivingData: 0
-  Counter: 2
+  FeatureValueReceivingData: 000000
+  Counter: 1
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -447,37 +509,6 @@ MonoBehaviour:
     - -77.77
     - 151.2
     - 18.13
---- !u!114 &6079770633428097327
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49ee76c7729b16c459df7e9333767c57, type: 3}
-  m_Name: Mouse Click
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -440, y: -648}
-  ports:
-    keys:
-    - ControllerOutput
-    values:
-    - _fieldName: ControllerOutput
-      _node: {fileID: 6079770633428097327}
-      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  id: 3c8fec75-bd35-4c02-84b4-13dec6f1ec14
-  numberInComponentList: -1
-  ControllerOutput: 0
 --- !u!114 &6320538586565438956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,40 +557,10 @@ MonoBehaviour:
   m_Value: 0
   m_Out: 0
   ReceivingData: 0
+  FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 2
+  Counter: 1
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
   - 0
---- !u!114 &9004356105479629708
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29b45ca37a7890249aac9d31c20aa50d, type: 3}
-  m_Name: VR Trigger
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 104, y: -648}
-  ports:
-    keys:
-    - ControllerOutput
-    values:
-    - _fieldName: ControllerOutput
-      _node: {fileID: 9004356105479629708}
-      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  id: dae616b9-a370-4edd-a99a-1a4f5be03992
-  numberInComponentList: -1
-  ControllerOutput: 0
