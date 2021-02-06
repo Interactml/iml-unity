@@ -36,7 +36,11 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private IMLArray m_FeatureValues;
 
-    
+        /// <summary>
+        /// Set maximum length of array accepted
+        /// </summary>
+        private int m_MaximumArraySize;
+
         /// <summary>
         /// Initialise node
         /// </summary>
@@ -48,6 +52,8 @@ namespace InteractML.DataTypeNodes
                 m_FeatureValues = new IMLArray();
 
             PreviousFeatureValues = new IMLArray();
+
+            m_MaximumArraySize = 35;
 
             base.Initialize();
         }
@@ -89,6 +95,9 @@ namespace InteractML.DataTypeNodes
                     // set float array to size matching amount of features
                     ReceivedValue = new float[FeatureValues.Values.Length];
                 }
+
+                if ((to.node.GetInputNodeConnected("m_In") as IFeatureIML).FeatureValues.Values.Length > m_MaximumArraySize)
+                    from.Disconnect(to);
             }
 
         }

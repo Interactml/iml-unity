@@ -59,12 +59,21 @@ namespace InteractML.DataTypeNodes
             // check if there are any feature connected
             if (m_ArrayNode.FeatureValues.Values != null && m_ArrayNode.FeatureValues.Values.Length != 0)
             {
-                // dynamically adjust node length based on amount of velocity features
-                nodeSpace = 120 + (m_ArrayNode.FeatureValues.Values.Length * 20);
-                m_BodyRect.height = 60 + (m_ArrayNode.FeatureValues.Values.Length * 20);
+                if (m_ArrayNode.FeatureValues.Values.Length < 7 ) { 
+                    // dynamically adjust node length based on amount of velocity features
+                    nodeSpace = 120 + (m_ArrayNode.FeatureValues.Values.Length * 20);
+                    m_BodyRect.height = 60 + (m_ArrayNode.FeatureValues.Values.Length * 20);
 
-                // draws each feature in the node
-                DataTypeNodeEditorMethods.DrawFeatureValueToggleAndLabel(this, m_ArrayNode);
+                    // draws each feature in the node
+                    DataTypeNodeEditorMethods.DrawFeatureValueToggleAndLabel(this, m_ArrayNode);
+                }
+                else
+                {
+                    // set node length
+                    nodeSpace = 120;
+                    m_BodyRect.height = 60;
+                    SetDropdownStyle();
+                }
             }
             else
             {
@@ -79,6 +88,31 @@ namespace InteractML.DataTypeNodes
             GUILayout.EndArea();
 
             
+        }
+
+        /// <summary>
+        /// Set style for dropdown for training examples nodes
+        /// </summary>
+        protected void SetDropdownStyle()
+        {
+            GUI.skin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+            GUIStyle myFoldoutStyle = new GUIStyle(EditorStyles.foldout);
+            Color myStyleColor = Color.white;
+            myFoldoutStyle.fontStyle = FontStyle.Bold;
+            myFoldoutStyle.normal.textColor = myStyleColor;
+            myFoldoutStyle.onNormal.textColor = myStyleColor;
+            myFoldoutStyle.hover.textColor = myStyleColor;
+            myFoldoutStyle.onHover.textColor = myStyleColor;
+            myFoldoutStyle.focused.textColor = myStyleColor;
+            myFoldoutStyle.onFocused.textColor = myStyleColor;
+            myFoldoutStyle.active.textColor = myStyleColor;
+            myFoldoutStyle.onActive.textColor = myStyleColor;
+            myFoldoutStyle.fontStyle = FontStyle.Bold;
+            myFoldoutStyle.normal.textColor = myStyleColor;
+            myFoldoutStyle.fontStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview").fontStyle;
+            EditorGUILayout.Foldout(false, "View Array Values", myFoldoutStyle);
+
+            //m_ShowTrainingDataDropdown = EditorGUILayout.Foldout(m_ShowTrainingDataDropdown, "View Training Pairs", myFoldoutStyle);
         }
 
         protected void UpdateFeatureLabelArray()
