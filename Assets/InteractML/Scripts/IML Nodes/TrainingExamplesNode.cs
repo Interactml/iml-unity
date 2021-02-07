@@ -863,8 +863,7 @@ namespace InteractML
         {
             if(this.graph != null)
             {
-                string graphName = this.graph.name;
-                string fileName = graphName + "TrainingExamplesNode" + this.id;
+                string fileName = "TrainingExamplesNode" + this.id;
                 return fileName;
             }
             return null;

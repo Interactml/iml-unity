@@ -731,9 +731,7 @@ namespace InteractML
         /// <returns></returns>
         public string GetJSONFileName()
         {
-            string graphName = this.graph.name;
-            string nodeIndex = this.graph.nodes.FindIndex(a => a == this).ToString();
-            string fileName = graphName + "_node_" + nodeIndex + "_" + "IMLConfiguration";
+            string fileName = "MLSystem" + this.id;
             return fileName;
         }
 
