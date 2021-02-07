@@ -2,8 +2,11 @@
 using UnityEngine.InputSystem;
 using System;
 using System.Collections.Generic;
+using XNode;
+using InteractML.ControllerCustomisers;
 
-namespace InteractML.ControllerCustomisers
+
+namespace InteractML.CustomControllers
 {
     public class InputSetUp : IMLNode
     {
@@ -15,7 +18,6 @@ namespace InteractML.ControllerCustomisers
         // private List<InputDevice> inputDevices = new List<InputDevice>();
         //public string[] inputDevicesArray;
         public IMLInputDevices device;
-
 
         public IMLSides trainingHand;
         public IMLSides mlsHand;
@@ -47,9 +49,11 @@ namespace InteractML.ControllerCustomisers
         public string currentMLS;
         public string currentTraining;
 
+
         public override void Initialize()
         {
             InstantiateVRButtonHandlers();
+            SubscribeToEvents();
             SetButtonNames();
             LoadFromFile();
             trainingHandlers = new List<InputHandler>();
@@ -66,45 +70,35 @@ namespace InteractML.ControllerCustomisers
             OnInputDeviceChange();
             ButtonSetUp();
             //set up triggers
-            TriggerSetUp();
-            
+            TriggerTypeSetUp();
+
         }
 
         public void UpdateLogic()
         {
             foreach (InputHandler handler in allHandlers)
             {
-                /*if(handler.buttonSet == false)
-                {
-                    ButtonSetUp();
-                    TriggerSetUp();
-                }*/
-                    
                 handler.HandleState();
             }
         }
 
-        
 
         public void OnInputDeviceChange()
         {
             switch (device)
             {
                 case IMLInputDevices.Keyboard:
-                    buttonOptions = System.Enum.GetNames(typeof(Keyboard));
                     break;
                 case IMLInputDevices.Mouse:
-                    buttonOptions = System.Enum.GetNames(typeof(UnityEngine.InputSystem.LowLevel.MouseButton));
                     break;
                 case IMLInputDevices.VRControllers:
                     InstantiateVRButtonHandlers();
-                    buttonOptions = System.Enum.GetNames(typeof(IMLControllerInputs));
                     break;
                 default:
-                    buttonOptions = new string[] { "none" };
                     break;
             }
-            SaveToFile();
+            buttonOptions = InputHelperMethods.deviceEnumSetUp(device);
+
 
         }
         /// <summary>
@@ -118,7 +112,7 @@ namespace InteractML.ControllerCustomisers
                 handlers = mlsHandlers;
             else
                 handlers = trainingHandlers;
-            
+
             foreach (InputHandler handler in handlers)
             {
                 VRButtonHandler vrHandler = handler as VRButtonHandler;
@@ -135,7 +129,8 @@ namespace InteractML.ControllerCustomisers
         {
             foreach (InputHandler handler in trainingHandlers)
             {
-                if (handlerName == handler.buttonName){
+                if (handlerName == handler.buttonName)
+                {
                     handler.SetButtonNo(button);
                 }
             }
@@ -145,7 +140,8 @@ namespace InteractML.ControllerCustomisers
         {
             foreach (InputHandler handler in trainingHandlers)
             {
-                if (handlerName == handler.buttonName){
+                if (handlerName == handler.buttonName)
+                {
                     handler.SetTriggerType(triggerT);
                 }
             }
@@ -161,8 +157,8 @@ namespace InteractML.ControllerCustomisers
             DeleteLast = new VRButtonHandler();
             ToggleRecord = new VRButtonHandler();
             Train = new VRButtonHandler();
-            ToggleRun= new VRButtonHandler();
-            
+            ToggleRun = new VRButtonHandler();
+
         }
         /// <summary>
         /// Set the names of the handlers used to set button types from editor
@@ -183,8 +179,6 @@ namespace InteractML.ControllerCustomisers
         /// <param name="button">number from enum in editor</param>
         private void ButtonSetUp()
         {
-            Debug.Log(deleteAllButtonNo);
-
             DeleteLast.SetButtonNo(deleteLastButtonNo);
             DeleteAll.SetButtonNo(deleteAllButtonNo);
             ToggleRecord.SetButtonNo(toggleRecordButtonNo);
@@ -194,9 +188,8 @@ namespace InteractML.ControllerCustomisers
         /// <summary>
         /// set up triggers
         /// </summary>
-        private void TriggerSetUp()
+        private void TriggerTypeSetUp()
         {
-            Debug.Log(deleteLastButtonTT);
             DeleteLast.SetTriggerType(deleteLastButtonTT);
             DeleteAll.SetTriggerType(deleteAllButtonTT);
             ToggleRecord.SetTriggerType(toggleRecordButtonTT);
@@ -243,18 +236,19 @@ namespace InteractML.ControllerCustomisers
             mlsHand = setUP.mlsSide;
         }
 
-        
+
 
         public void SubscribeToEvents()
         {
-            
+            DeleteAll.ButtonFire += testDown;
         }
 
         public void UnsubscribeFromEvents()
         {
+            DeleteAll.ButtonFire -= testDown;
 
         }
-        
+
 
 
         //method for getting inputs from system come back for future
@@ -305,6 +299,10 @@ namespace InteractML.ControllerCustomisers
         {
             Debug.Log("hold ");
             return true;
+        }
+        private void OnDestroy()
+        {
+            UnsubscribeFromEvents();
         }
     }
 }

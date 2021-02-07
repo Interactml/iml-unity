@@ -21,7 +21,6 @@ public class IMLEditorManager
 #if UNITY_EDITOR
         // Subscribe this manager to the editor update loop
         EditorApplication.update += UpdateLogic;
-
         // Make sure the list is init
         if (m_IMLComponents == null)
             m_IMLComponents = new List<IMLComponent>();

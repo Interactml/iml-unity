@@ -64,11 +64,14 @@ namespace InteractML
         public List<IFeatureIML> FeatureNodesList;
         [SerializeField, HideInInspector]
         private List<ScriptNode> m_ScriptNodesList;
-        private InputSetUp m_inputSetUp;
+        [SerializeField]
+        private InteractML.CustomControllers.InputSetUp m_inputSetUp;
+        [SerializeField, HideInInspector]
+        private List<CustomController> m_CustomControllerList;
         #endregion
 
         #region Public Lists of Nodes (Properties)
-        public InputSetUp inputSetUp { get => m_inputSetUp; }
+        public InteractML.CustomControllers.InputSetUp inputSetUp { get => m_inputSetUp; }
         /// <summary>
         /// List of Training Example Nodes in the IML Controller
         /// </summary>
@@ -207,6 +210,7 @@ namespace InteractML
 #endif
         }
 
+
         // On Destroy gets called before the component is removed
         private void OnDestroy()
         {
@@ -244,6 +248,9 @@ namespace InteractML
 
             if (Lists.IsNullOrEmpty(ref FeatureNodesList))
                 FeatureNodesList = new List<IFeatureIML>();
+            
+            if (Lists.IsNullOrEmpty(ref m_CustomControllerList))
+                m_CustomControllerList = new List<CustomController>();
 
 
             // Get all th nodes which are in the graph
@@ -322,13 +329,15 @@ namespace InteractML
             InitializeNodeType(MLSystemNodeList);
             //Initialise Script nodes
             InitializeNodeType(m_ScriptNodesList);
+            //Initialise Script nodes
+            InitializeNodeType(m_CustomControllerList);
             //Initialize input set up
             if (m_inputSetUp != null)
             {
                 m_inputSetUp.NodeInitalize();
             } else
             {
-                MLController.AddNode<InputSetUp>();
+                MLController.AddNode<InteractML.CustomControllers.InputSetUp>();
             }
         }
         /// <summary>
@@ -492,6 +501,9 @@ namespace InteractML
 
                     // input set up nodes 
                     CheckNodeIsInput(node, ref m_inputSetUp);
+
+                    // check node is custom controller 
+                    CheckNodeIsCustomController(node, ref m_CustomControllerList);
                 }
 
             }
@@ -528,11 +540,11 @@ namespace InteractML
             }
         }
 
-        private void CheckNodeIsInput(XNode.Node nodetoAdd, ref InputSetUp setUpNode)
+        private void CheckNodeIsInput(XNode.Node nodetoAdd, ref InteractML.CustomControllers.InputSetUp setUpNode)
         {
             //check node not null
             if (nodetoAdd != null) {
-                var inputNode = nodetoAdd as InputSetUp;
+                var inputNode = nodetoAdd as InteractML.CustomControllers.InputSetUp;
                 // if input node is not null and inputsetup node is null
                 if (inputNode != null && m_inputSetUp == null)
                 {
@@ -540,6 +552,30 @@ namespace InteractML
                 }
             }
 
+        }
+        
+        private void CheckNodeIsCustomController(XNode.Node nodeToAdd, ref List<CustomController> listToAddTo)
+        {
+
+            // We first check that the node ref is not null
+            if (nodeToAdd != null)
+            {
+                // Then check that the node is a training examples node
+                var customNode = nodeToAdd as CustomController;
+                if (customNode != null)
+                {
+                    // Make sure the list is init
+                    if (listToAddTo == null)
+                        listToAddTo = new List<CustomController>();
+
+                    // If we got a feature, we add it to the list (if it is not there already)
+                    if (!listToAddTo.Contains(customNode))
+                    {
+                        listToAddTo.Add(customNode);
+                    }
+
+                }
+            }
         }
 
         private void CheckNodeIsTraining(XNode.Node nodeToAdd, ref List<TrainingExamplesNode> listToAddTo)
@@ -1119,6 +1155,7 @@ namespace InteractML
             InputLogic();
 
         }
+
 
         public void InputLogic(){
             if(universalInputEnabled && universalInputActive)

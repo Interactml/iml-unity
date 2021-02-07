@@ -16,13 +16,13 @@ namespace InteractML.ControllerCustomisers
     /// <summary>
     /// 
     /// </summary>
-    [CustomNodeEditor(typeof(InputSetUp))]
+    [CustomNodeEditor(typeof(InteractML.CustomControllers.InputSetUp))]
     public class InputSetUpEditor : IMLNodeEditor
     {
         /// <summary>
         /// Reference to the node itself
         /// </summary>
-        private InputSetUp m_InputSetUp;
+        private InteractML.CustomControllers.InputSetUp m_InputSetUp;
 
         /// <summary>
         /// Position of scroll for dropdown
@@ -38,7 +38,7 @@ namespace InteractML.ControllerCustomisers
         public override void OnCreate()
         {
             // Get reference to the current node
-            m_InputSetUp = (target as InputSetUp);
+            m_InputSetUp = (target as InteractML.CustomControllers.InputSetUp);
 
             // Initialise node name
             NodeName = "Input Set Up";
@@ -108,6 +108,7 @@ namespace InteractML.ControllerCustomisers
             GUI.changed = false;
             // set button choice for delete last
             buttonNumOut = EditorGUILayout.Popup(buttonnum, m_InputSetUp.buttonOptions);
+            //Event.current.type == EventType.Repaint
             if (GUI.changed)
             {
                 m_InputSetUp.OnButtonChange(handler, buttonNumOut);
@@ -115,7 +116,7 @@ namespace InteractML.ControllerCustomisers
                 EditorUtility.SetDirty(m_InputSetUp);
             }
             triggerTypeOut = (IMLTriggerTypes)EditorGUILayout.EnumPopup(triggerType);
-            if (GUI.changed )
+            if (GUI.changed)
             {
                 m_InputSetUp.OnTriggerChange(handler, triggerType);
             }

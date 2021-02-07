@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  Counter: 4
+  Counter: 3
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -101,7 +101,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 4
+  Counter: 3
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -133,6 +133,7 @@ MonoBehaviour:
   - {fileID: -3535876307280181274}
   - {fileID: 3238365560739477877}
   - {fileID: 5422160176306859556}
+  - {fileID: 5873715976797203045}
   SceneComponent: {fileID: 0}
 --- !u!114 &1388760095177576042
 MonoBehaviour:
@@ -359,7 +360,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 1
-  Counter: 4
+  Counter: 3
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -399,15 +400,47 @@ MonoBehaviour:
   ToggleRecord: {fileID: 0}
   Train: {fileID: 0}
   ToggleRun: {fileID: 0}
-  deleteLastButtonNo: 0
+  deleteLastButtonNo: 1
   deleteLastButtonTT: 1
-  deleteAllButtonNo: 1
+  deleteAllButtonNo: 2
   deleteAllButtonTT: 2
-  toggleRecordButtonNo: 0
+  toggleRecordButtonNo: 2
   toggleRecordButtonTT: 1
-  trainButtonNo: 2
+  trainButtonNo: 0
   trainButtonTT: 1
-  toggleRunButtonNo: 3
+  toggleRunButtonNo: 2
   toggleRunButtonTT: 1
   currentMLS: 
   currentTraining: 
+--- !u!114 &5873715976797203045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29b45ca37a7890249aac9d31c20aa50d, type: 3}
+  m_Name: VR Trigger
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 543.9878, y: 154.94344}
+  ports:
+    keys:
+    - ControllerOutput
+    values:
+    - _fieldName: ControllerOutput
+      _node: {fileID: 5873715976797203045}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  DevMode: 0
+  id: fb96417d-b294-4b44-adee-bf9bdb125085
+  numberInComponentList: -1
+  ControllerOutput: 0
+  hand: 0

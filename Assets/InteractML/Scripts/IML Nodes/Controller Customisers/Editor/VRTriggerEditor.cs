@@ -28,6 +28,7 @@ namespace InteractML.ControllerCustomisers
         private InputHelpers.Button selectedButton;
 
 
+
         /// <summary>
         /// Initialise node specific interface labels and parameters
         /// </summary>
@@ -50,9 +51,31 @@ namespace InteractML.ControllerCustomisers
         /// </summary>
         protected override void ShowBodyFields()
         {
-            // show hand choice method from inputsetupeditor using m_VRTrigger.hand
+            GUI.changed = false
+            m_VRTrigger.hand = (IMLSides)EditorGUILayout.EnumPopup(m_VRTrigger.hand);
             
-            //show button method from InputSetUpEditor using m_VRTrigger.triggerButton
+            if (GUI.changed)
+            {
+                m_VRTrigger.OnHandChange();
+            }
+            // show hand choice method from inputsetupeditor using m_VRTrigger.hand
+            GUI.changed = false;
+            // set button choice for delete last
+            m_VRTrigger.inputs = (IMLControllerInputs)EditorGUILayout.EnumPopup(m_VRTrigger.inputs);
+            //Event.current.type == EventType.Repaint
+            if (GUI.changed)
+            {
+                m_VRTrigger.OnButtonChange();
+                //mark as changed
+                EditorUtility.SetDirty(m_VRTrigger);
+            }
+            m_VRTrigger.triggerType = (IMLTriggerTypes)EditorGUILayout.EnumPopup(m_VRTrigger.triggerType);
+            if (GUI.changed)
+            {
+                m_VRTrigger.OnTriggerChange();
+                EditorUtility.SetDirty(m_VRTrigger);
+            }
+            //show button method from InputSetUpEditor using m_VRTrigger.triggerButton*/
 
         }
 

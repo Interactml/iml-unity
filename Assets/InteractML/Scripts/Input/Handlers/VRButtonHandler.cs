@@ -16,9 +16,7 @@ namespace InteractML
         public List<XRController> controllers;
         public List<UnityEngine.XR.InputDevice> _controllers;
 
-        public override event StateChange ButtonDown;
-        public override event StateChange ButtonUp;
-        public override event StateChange ButtonHold;
+        public override event StateChange ButtonFire;
 
         int test;
 
@@ -29,7 +27,7 @@ namespace InteractML
 
         public override void HandleState()
         {
-            Debug.Log(buttonName + ": " + _button.name);
+            //Debug.Log(buttonName + ": " + _button.name);
             if(_button.name == null)
             {
                 buttonSet = false;
@@ -51,16 +49,16 @@ namespace InteractML
                             if (triggerValue)
                             {
                                 if(triggerType == IMLTriggerTypes.Down)
-                                    ButtonDown?.Invoke();
+                                    ButtonFire?.Invoke();
                                 if (triggerType == IMLTriggerTypes.Hold)
-                                    ButtonHold?.Invoke();
+                                    ButtonFire?.Invoke();
                             }
                             else
                             {
                                 if (triggerType == IMLTriggerTypes.Up)
-                                    ButtonUp?.Invoke();
+                                    ButtonFire?.Invoke();
                                 if (triggerType == IMLTriggerTypes.Hold)
-                                    ButtonDown?.Invoke();
+                                    ButtonFire?.Invoke();
                             }
                         }
                     }
@@ -101,6 +99,7 @@ namespace InteractML
         public override void SetButtonNo(int buttonNum)
         {
             buttonNo = buttonNum;
+            triggerButton = (IMLControllerInputs)buttonNo;
             SetButton();
         }
         public override void SetTriggerType(IMLTriggerTypes triggerT)
@@ -108,10 +107,8 @@ namespace InteractML
             triggerType = triggerT;
         }
         
-        private void SetButton()
+        public void SetButton()
         {
-
-            triggerButton = (IMLControllerInputs)buttonNo;
             switch (triggerButton)
             {
                 case IMLControllerInputs.Trigger:
@@ -130,7 +127,6 @@ namespace InteractML
                     Debug.Log("none");
                     break;
             }
-            //Debug.Log(_button.name);
         }
 
     }

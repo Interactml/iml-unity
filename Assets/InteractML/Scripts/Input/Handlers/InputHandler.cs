@@ -15,9 +15,7 @@ namespace InteractML
         protected bool previousPress;
 
         public delegate bool StateChange();
-        public abstract event StateChange ButtonDown;
-        public abstract event StateChange ButtonUp;
-        public abstract event StateChange ButtonHold;
+        public abstract event StateChange ButtonFire;
 
         public abstract void HandleState();
         public abstract void SetButtonNo(int button);
