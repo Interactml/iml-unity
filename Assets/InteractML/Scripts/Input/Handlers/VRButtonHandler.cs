@@ -8,8 +8,9 @@ namespace InteractML
     public class VRButtonHandler : InputHandler
     {
         //public InputHelpers.Button button = InputHelpers.Button.Trigger;
+        public UnityEngine.XR.InputFeatureUsage<bool> button { get => _button; }
         [SerializeField]
-        private UnityEngine.XR.InputFeatureUsage<bool> button;
+        private UnityEngine.XR.InputFeatureUsage<bool> _button;
         public IMLControllerInputs triggerButton;
         public IMLSides controllerSide;
         public List<XRController> controllers;
@@ -28,27 +29,38 @@ namespace InteractML
 
         public override void HandleState()
         {
-            Debug.Log(buttonName + ": " + button.name);
+            Debug.Log(buttonName + ": " + _button.name);
+            if(_button.name == null)
+            {
+                buttonSet = false;
+            } else
+            {
+                buttonSet = true;
+            }
             if (_controllers.Count > 0)
             {
                 Debug.Log(_controllers.Count);
                 foreach (UnityEngine.XR.InputDevice controller in _controllers)
                 {
                     bool triggerValue;
-                    if (controller.TryGetFeatureValue(button, out triggerValue) && triggerValue)
+                    if (controller.TryGetFeatureValue(_button, out triggerValue) && triggerValue)
                     {
                         if (previousPress != triggerValue)
                         {
                             previousPress = triggerValue;
                             if (triggerValue)
                             {
-                                ButtonDown?.Invoke();
-                                ButtonHold?.Invoke();
+                                if(triggerType == IMLTriggerTypes.Down)
+                                    ButtonDown?.Invoke();
+                                if (triggerType == IMLTriggerTypes.Hold)
+                                    ButtonHold?.Invoke();
                             }
                             else
                             {
-                                ButtonUp?.Invoke();
-                                ButtonDown?.Invoke();
+                                if (triggerType == IMLTriggerTypes.Up)
+                                    ButtonUp?.Invoke();
+                                if (triggerType == IMLTriggerTypes.Hold)
+                                    ButtonDown?.Invoke();
                             }
                         }
                     }
@@ -98,26 +110,27 @@ namespace InteractML
         
         private void SetButton()
         {
-            Debug.Log(buttonNo);
+
             triggerButton = (IMLControllerInputs)buttonNo;
             switch (triggerButton)
             {
                 case IMLControllerInputs.Trigger:
-                    button = UnityEngine.XR.CommonUsages.triggerButton;
+                    _button = UnityEngine.XR.CommonUsages.triggerButton;
                     break;
                 case IMLControllerInputs.Grip:
-                    button = UnityEngine.XR.CommonUsages.gripButton;
+                    _button = UnityEngine.XR.CommonUsages.gripButton;
                     break;
                 case IMLControllerInputs.Primary:
-                    button = UnityEngine.XR.CommonUsages.primaryButton;
+                    _button = UnityEngine.XR.CommonUsages.primaryButton;
                     break;
                 case IMLControllerInputs.Secondary:
-                    button = UnityEngine.XR.CommonUsages.secondaryButton;
+                    _button = UnityEngine.XR.CommonUsages.secondaryButton;
                     break;
                 default:
                     Debug.Log("none");
                     break;
             }
+            //Debug.Log(_button.name);
         }
 
     }

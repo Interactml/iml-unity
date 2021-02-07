@@ -31,17 +31,6 @@ namespace InteractML.ControllerCustomisers
 
         IMLSides trainingSide;
         IMLSides mlsSide;
-
-        int deleteLastButtonNo;
-        IMLTriggerTypes deleteLastButtonTT;
-        int deleteAllButtonNo;
-        IMLTriggerTypes deleteAllButtonTT;
-        int toggleRecordButtonNo;
-        IMLTriggerTypes toggleRecordButtonTT;
-        int trainButtonNo;
-        IMLTriggerTypes trainButtonTT;
-        int toggleRunButtonNo;
-        IMLTriggerTypes toggleRunButtonTT;
        
         /// <summary>
         /// Initialise node specific interface labels and parameters
@@ -53,9 +42,6 @@ namespace InteractML.ControllerCustomisers
 
             // Initialise node name
             NodeName = "Input Set Up";
-            
-
-
         }
 
         /// <summary>
@@ -80,11 +66,11 @@ namespace InteractML.ControllerCustomisers
             GUI.changed = false;
             // set button choice for delete last
             // delete last
-            ShowButtonChoice("deleteLast", deleteLastButtonNo, out deleteLastButtonNo, deleteLastButtonTT, out deleteLastButtonTT);
+            ShowButtonChoice("deleteLast", m_InputSetUp.deleteLastButtonNo, out m_InputSetUp.deleteLastButtonNo, m_InputSetUp.deleteLastButtonTT, out m_InputSetUp.deleteLastButtonTT);
             // choose delete all button 
-            ShowButtonChoice("deleteAll", deleteAllButtonNo, out deleteAllButtonNo, deleteAllButtonTT, out deleteAllButtonTT);
+            ShowButtonChoice("deleteAll", m_InputSetUp.deleteAllButtonNo, out m_InputSetUp.deleteAllButtonNo, m_InputSetUp.deleteAllButtonTT, out m_InputSetUp.deleteAllButtonTT);
             // choose toggle record button 
-            ShowButtonChoice("toggleRecord", toggleRecordButtonNo, out toggleRecordButtonNo, toggleRecordButtonTT, out toggleRecordButtonTT);
+            ShowButtonChoice("toggleRecord", m_InputSetUp.toggleRecordButtonNo, out m_InputSetUp.toggleRecordButtonNo, m_InputSetUp.toggleRecordButtonTT, out m_InputSetUp.toggleRecordButtonTT);
             // sets the controller side for the training
             GUI.changed = false;
             // if the input is from vr controllers or hands show choice for training examples related buttons to be on the left hand or right hand or both
@@ -97,9 +83,9 @@ namespace InteractML.ControllerCustomisers
                 m_InputSetUp.OnHandChange(trainingSide);
             }
             // sets the button for training 
-            ShowButtonChoice("train", trainButtonNo, out trainButtonNo, trainButtonTT, out trainButtonTT);
+            ShowButtonChoice("train", m_InputSetUp.trainButtonNo, out m_InputSetUp.trainButtonNo, m_InputSetUp.trainButtonTT, out m_InputSetUp.trainButtonTT);
             // sets the button for running
-            ShowButtonChoice("toggleRun", toggleRunButtonNo, out toggleRunButtonNo, toggleRunButtonTT, out toggleRunButtonTT);
+            ShowButtonChoice("toggleRun", m_InputSetUp.toggleRunButtonNo, out m_InputSetUp.toggleRunButtonNo, m_InputSetUp.toggleRunButtonTT, out m_InputSetUp.toggleRunButtonTT);
         }
 
         private void ShowDeviceOptions()
@@ -117,8 +103,6 @@ namespace InteractML.ControllerCustomisers
             }
         }
 
-       
-
         private void ShowButtonChoice(string handler, int buttonnum, out int buttonNumOut, IMLTriggerTypes triggerType, out IMLTriggerTypes triggerTypeOut)
         {
             GUI.changed = false;
@@ -127,9 +111,11 @@ namespace InteractML.ControllerCustomisers
             if (GUI.changed)
             {
                 m_InputSetUp.OnButtonChange(handler, buttonNumOut);
+                //mark as changed
+                EditorUtility.SetDirty(m_InputSetUp);
             }
             triggerTypeOut = (IMLTriggerTypes)EditorGUILayout.EnumPopup(triggerType);
-            if (GUI.changed)
+            if (GUI.changed )
             {
                 m_InputSetUp.OnTriggerChange(handler, triggerType);
             }

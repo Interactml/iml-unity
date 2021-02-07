@@ -32,6 +32,17 @@ namespace InteractML.ControllerCustomisers
         private List<InputHandler> mlsHandlers;
         private List<InputHandler> allHandlers;
 
+        public int deleteLastButtonNo;
+        public IMLTriggerTypes deleteLastButtonTT;
+        public int deleteAllButtonNo;
+        public IMLTriggerTypes deleteAllButtonTT;
+        public int toggleRecordButtonNo;
+        public IMLTriggerTypes toggleRecordButtonTT;
+        public int trainButtonNo;
+        public IMLTriggerTypes trainButtonTT;
+        public int toggleRunButtonNo;
+        public IMLTriggerTypes toggleRunButtonTT;
+
 
         public string currentMLS;
         public string currentTraining;
@@ -40,6 +51,7 @@ namespace InteractML.ControllerCustomisers
         {
             InstantiateVRButtonHandlers();
             SetButtonNames();
+            LoadFromFile();
             trainingHandlers = new List<InputHandler>();
             trainingHandlers.Add(DeleteLast);
             trainingHandlers.Add(DeleteAll);
@@ -49,22 +61,25 @@ namespace InteractML.ControllerCustomisers
             mlsHandlers.Add(ToggleRun);
             allHandlers = trainingHandlers;
             allHandlers.AddRange(mlsHandlers);
-            foreach (InputHandler handler in allHandlers)
-            {
-                handler.ButtonDown += testDown;
-            }
-            
-            OnInputDeviceChange();
             OnHandChange(trainingHand);
             OnHandChange(mlsHand);
+            OnInputDeviceChange();
+            ButtonSetUp();
+            //set up triggers
+            TriggerSetUp();
             
         }
 
         public void UpdateLogic()
         {
-            
             foreach (InputHandler handler in allHandlers)
             {
+                /*if(handler.buttonSet == false)
+                {
+                    ButtonSetUp();
+                    TriggerSetUp();
+                }*/
+                    
                 handler.HandleState();
             }
         }
@@ -89,10 +104,8 @@ namespace InteractML.ControllerCustomisers
                     buttonOptions = new string[] { "none" };
                     break;
             }
+            SaveToFile();
 
-            
-
-            
         }
         /// <summary>
         /// Changes hand type in handler 
@@ -111,6 +124,7 @@ namespace InteractML.ControllerCustomisers
                 VRButtonHandler vrHandler = handler as VRButtonHandler;
                 vrHandler.SetController(side);
             }
+            SaveToFile();
         }
         /// <summary>
         /// Set the button type in the handler 
@@ -125,6 +139,7 @@ namespace InteractML.ControllerCustomisers
                     handler.SetButtonNo(button);
                 }
             }
+            SaveToFile();
         }
         public void OnTriggerChange(string handlerName, IMLTriggerTypes triggerT)
         {
@@ -134,6 +149,7 @@ namespace InteractML.ControllerCustomisers
                     handler.SetTriggerType(triggerT);
                 }
             }
+            SaveToFile();
         }
         /// <summary>
         /// Create instances of VR button handlers
@@ -159,6 +175,76 @@ namespace InteractML.ControllerCustomisers
             Train.buttonName = "train";
             ToggleRun.buttonName = "toggleRun";
         }
+
+        /// <summary>
+        /// Set the button type in the handler 
+        /// </summary>
+        /// <param name="handlerName">name of the handler to be set</param>
+        /// <param name="button">number from enum in editor</param>
+        private void ButtonSetUp()
+        {
+            Debug.Log(deleteAllButtonNo);
+
+            DeleteLast.SetButtonNo(deleteLastButtonNo);
+            DeleteAll.SetButtonNo(deleteAllButtonNo);
+            ToggleRecord.SetButtonNo(toggleRecordButtonNo);
+            Train.SetButtonNo(trainButtonNo);
+            ToggleRun.SetButtonNo(toggleRunButtonNo);
+        }
+        /// <summary>
+        /// set up triggers
+        /// </summary>
+        private void TriggerSetUp()
+        {
+            Debug.Log(deleteLastButtonTT);
+            DeleteLast.SetTriggerType(deleteLastButtonTT);
+            DeleteAll.SetTriggerType(deleteAllButtonTT);
+            ToggleRecord.SetTriggerType(toggleRecordButtonTT);
+            Train.SetTriggerType(trainButtonTT);
+            ToggleRun.SetTriggerType(toggleRunButtonTT);
+        }
+
+        private void SaveToFile()
+        {
+            InputSetUpVRSettings setUP = new InputSetUpVRSettings();
+            setUP.isEnabled = enableUniversalInterface;
+            setUP.device = device;
+            setUP.deleteLastButtonNo = deleteAllButtonNo;
+            setUP.deleteLastButtonTT = deleteAllButtonTT;
+            setUP.deleteAllButtonNo = deleteAllButtonNo;
+            setUP.deleteAllButtonTT = deleteAllButtonTT;
+            setUP.toggleRecordButtonNo = toggleRecordButtonNo;
+            setUP.toggleRecordButtonTT = toggleRecordButtonTT;
+            setUP.trainButtonNo = trainButtonNo;
+            setUP.trainButtonTT = trainButtonTT;
+            setUP.toggleRunButtonNo = toggleRunButtonNo;
+            setUP.toggleRunButtonTT = toggleRunButtonTT;
+            setUP.trainingSide = trainingHand;
+            setUP.mlsSide = mlsHand;
+            IMLInputSetUpSerialization.SaveInputSettingToDisk(setUP);
+        }
+
+        private void LoadFromFile()
+        {
+            InputSetUpVRSettings setUP = IMLInputSetUpSerialization.LoadInputSettings();
+            enableUniversalInterface = setUP.isEnabled;
+            device = setUP.device;
+            deleteAllButtonNo = setUP.deleteLastButtonNo;
+            deleteAllButtonTT = setUP.deleteLastButtonTT;
+            deleteAllButtonNo = setUP.deleteAllButtonNo;
+            deleteAllButtonTT = setUP.deleteAllButtonTT;
+            toggleRecordButtonNo = setUP.toggleRecordButtonNo;
+            toggleRecordButtonTT = setUP.toggleRecordButtonTT;
+            trainButtonNo = setUP.trainButtonNo;
+            trainButtonTT = setUP.trainButtonTT;
+            toggleRunButtonNo = setUP.toggleRunButtonNo;
+            toggleRunButtonTT = setUP.toggleRunButtonTT;
+            trainingHand = setUP.trainingSide;
+            mlsHand = setUP.mlsSide;
+        }
+
+        
+
         public void SubscribeToEvents()
         {
             

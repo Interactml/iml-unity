@@ -5,6 +5,7 @@ namespace InteractML
 {
     public abstract class InputHandler : ScriptableObject
     {
+        public bool buttonSet = false;
         public int buttonNo { get { return m_buttonNo; } set { m_buttonNo = value; } }
         [SerializeField]
         private int m_buttonNo;

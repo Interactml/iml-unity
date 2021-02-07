@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  Counter: 5
+  Counter: 4
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -101,7 +101,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 5
+  Counter: 4
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -359,7 +359,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 1
-  Counter: 5
+  Counter: 4
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -399,5 +399,15 @@ MonoBehaviour:
   ToggleRecord: {fileID: 0}
   Train: {fileID: 0}
   ToggleRun: {fileID: 0}
+  deleteLastButtonNo: 0
+  deleteLastButtonTT: 1
+  deleteAllButtonNo: 1
+  deleteAllButtonTT: 2
+  toggleRecordButtonNo: 0
+  toggleRecordButtonTT: 1
+  trainButtonNo: 2
+  trainButtonTT: 1
+  toggleRunButtonNo: 3
+  toggleRunButtonTT: 1
   currentMLS: 
   currentTraining: 
