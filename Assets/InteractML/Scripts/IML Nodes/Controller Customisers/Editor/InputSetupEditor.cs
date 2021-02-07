@@ -29,7 +29,20 @@ namespace InteractML.ControllerCustomisers
         /// </summary>
         protected Vector2 m_ScrollPos;
 
+        IMLSides trainingSide;
+        IMLSides mlsSide;
 
+        int deleteLastButtonNo;
+        IMLTriggerTypes deleteLastButtonTT;
+        int deleteAllButtonNo;
+        IMLTriggerTypes deleteAllButtonTT;
+        int toggleRecordButtonNo;
+        IMLTriggerTypes toggleRecordButtonTT;
+        int trainButtonNo;
+        IMLTriggerTypes trainButtonTT;
+        int toggleRunButtonNo;
+        IMLTriggerTypes toggleRunButtonTT;
+       
         /// <summary>
         /// Initialise node specific interface labels and parameters
         /// </summary>
@@ -53,19 +66,40 @@ namespace InteractML.ControllerCustomisers
             // sets the device
             ShowDeviceOptions();
             //sets the controller side for the training examples whether left right or both 
-            ShowHandChoice(m_InputSetUp.trainingHand);
+            GUI.changed = false;
+            // if the input is from vr controllers or hands show choice for training examples related buttons to be on the left hand or right hand or both
+            if (m_InputSetUp.device == IMLInputDevices.VRControllers || m_InputSetUp.device == IMLInputDevices.VRHands)
+            {
+                trainingSide = (IMLSides)EditorGUILayout.EnumPopup(trainingSide);
+            }
+            if (GUI.changed)
+            {
+                m_InputSetUp.OnHandChange(trainingSide);
+            }
             // choose delete last button
-            ShowButtonChoice(m_InputSetUp.DeleteLast);
+            GUI.changed = false;
+            // set button choice for delete last
+            // delete last
+            ShowButtonChoice("deleteLast", deleteLastButtonNo, out deleteLastButtonNo, deleteLastButtonTT, out deleteLastButtonTT);
             // choose delete all button 
-            ShowButtonChoice(m_InputSetUp.DeleteAll);
+            ShowButtonChoice("deleteAll", deleteAllButtonNo, out deleteAllButtonNo, deleteAllButtonTT, out deleteAllButtonTT);
             // choose toggle record button 
-            ShowButtonChoice(m_InputSetUp.ToggleRecord);
+            ShowButtonChoice("toggleRecord", toggleRecordButtonNo, out toggleRecordButtonNo, toggleRecordButtonTT, out toggleRecordButtonTT);
             // sets the controller side for the training
-            ShowHandChoice(m_InputSetUp.mlsHand);
+            GUI.changed = false;
+            // if the input is from vr controllers or hands show choice for training examples related buttons to be on the left hand or right hand or both
+            if (m_InputSetUp.device == IMLInputDevices.VRControllers || m_InputSetUp.device == IMLInputDevices.VRHands)
+            {
+                mlsSide = (IMLSides)EditorGUILayout.EnumPopup(mlsSide);
+            }
+            if (GUI.changed)
+            {
+                m_InputSetUp.OnHandChange(trainingSide);
+            }
             // sets the button for training 
-            ShowButtonChoice(m_InputSetUp.Train);
+            ShowButtonChoice("train", trainButtonNo, out trainButtonNo, trainButtonTT, out trainButtonTT);
             // sets the button for running
-            ShowButtonChoice(m_InputSetUp.ToggleRun);
+            ShowButtonChoice("toggleRun", toggleRunButtonNo, out toggleRunButtonNo, toggleRunButtonTT, out toggleRunButtonTT);
         }
 
         private void ShowDeviceOptions()
@@ -83,26 +117,22 @@ namespace InteractML.ControllerCustomisers
             }
         }
 
-        private void ShowHandChoice(IMLSides side)
-        {
-            // if the input is from vr controllers or hands show choice for training examples related buttons to be on the left hand or right hand or both
-            if (m_InputSetUp.device == IMLInputDevices.VRControllers || m_InputSetUp.device == IMLInputDevices.VRHands)
-            {
-                m_InputSetUp.trainingHand = (IMLSides)EditorGUILayout.EnumPopup(m_InputSetUp.trainingHand);
-            }
-        }
+       
 
-        private void ShowButtonChoice(InputHandler handler)
+        private void ShowButtonChoice(string handler, int buttonnum, out int buttonNumOut, IMLTriggerTypes triggerType, out IMLTriggerTypes triggerTypeOut)
         {
             GUI.changed = false;
-            Debug.Log(handler);
             // set button choice for delete last
-            handler.buttonNo = EditorGUILayout.Popup(handler.buttonNo, m_InputSetUp.buttonOptions);
+            buttonNumOut = EditorGUILayout.Popup(buttonnum, m_InputSetUp.buttonOptions);
             if (GUI.changed)
             {
-                handler.SetButton();
+                m_InputSetUp.OnButtonChange(handler, buttonNumOut);
             }
-            handler.triggerType = (IMLTriggerTypes)EditorGUILayout.EnumPopup(handler.triggerType);
+            triggerTypeOut = (IMLTriggerTypes)EditorGUILayout.EnumPopup(triggerType);
+            if (GUI.changed)
+            {
+                m_InputSetUp.OnTriggerChange(handler, triggerType);
+            }
 
         }
 

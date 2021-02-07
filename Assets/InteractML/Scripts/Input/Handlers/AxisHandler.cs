@@ -3,7 +3,7 @@ using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace InteractML {
-    public class AxisHandler : InputHandler, ISerializationCallbackReceiver
+   /* public class AxisHandler : InputHandler, ISerializationCallbackReceiver
     {
         XRController controller;
         public enum Axis
@@ -52,6 +52,6 @@ namespace InteractML {
 
             return 0.0f;
         }
-    }
+    }*/
 }
 

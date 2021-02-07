@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -101,7 +101,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -359,7 +359,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 1
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Name: Input Set Up
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 840, y: 104}
+  position: {x: 216, y: -24}
   ports:
     keys: []
     values: []
@@ -388,29 +388,16 @@ MonoBehaviour:
   activeUniversalInterface: 0
   device: 3
   trainingHand: 0
-  mlsHand: 0
+  mlsHand: 2
   buttonOptions:
-  - None
-  - MenuButton
   - Trigger
   - Grip
-  - TriggerPressed
-  - GripPressed
-  - PrimaryButton
-  - PrimaryTouch
-  - SecondaryButton
-  - SecondaryTouch
-  - Primary2DAxisTouch
-  - Primary2DAxisClick
-  - Secondary2DAxisTouch
-  - Secondary2DAxisClick
-  - PrimaryAxis2DUp
-  - PrimaryAxis2DDown
-  - PrimaryAxis2DLeft
-  - PrimaryAxis2DRight
-  - SecondaryAxis2DUp
-  - SecondaryAxis2DDown
-  - SecondaryAxis2DLeft
-  - SecondaryAxis2DRight
+  - Primary
+  - Secondary
+  DeleteLast: {fileID: 0}
+  DeleteAll: {fileID: 0}
+  ToggleRecord: {fileID: 0}
+  Train: {fileID: 0}
+  ToggleRun: {fileID: 0}
   currentMLS: 
   currentTraining: 

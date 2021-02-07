@@ -1,4 +1,7 @@
-﻿using UnityEngine.InputSystem;
+﻿using UnityEngine;
+using UnityEngine.InputSystem;
+using System;
+using System.Collections.Generic;
 
 namespace InteractML.ControllerCustomisers
 {
@@ -23,9 +26,12 @@ namespace InteractML.ControllerCustomisers
         public InputHandler DeleteLast;
         public InputHandler DeleteAll;
         public InputHandler ToggleRecord;
-
         public InputHandler Train;
         public InputHandler ToggleRun;
+        private List<InputHandler> trainingHandlers;
+        private List<InputHandler> mlsHandlers;
+        private List<InputHandler> allHandlers;
+
 
         public string currentMLS;
         public string currentTraining;
@@ -33,8 +39,37 @@ namespace InteractML.ControllerCustomisers
         public override void Initialize()
         {
             InstantiateVRButtonHandlers();
+            SetButtonNames();
+            trainingHandlers = new List<InputHandler>();
+            trainingHandlers.Add(DeleteLast);
+            trainingHandlers.Add(DeleteAll);
+            trainingHandlers.Add(ToggleRecord);
+            mlsHandlers = new List<InputHandler>();
+            mlsHandlers.Add(Train);
+            mlsHandlers.Add(ToggleRun);
+            allHandlers = trainingHandlers;
+            allHandlers.AddRange(mlsHandlers);
+            foreach (InputHandler handler in allHandlers)
+            {
+                handler.ButtonDown += testDown;
+            }
+            
+            OnInputDeviceChange();
+            OnHandChange(trainingHand);
+            OnHandChange(mlsHand);
             
         }
+
+        public void UpdateLogic()
+        {
+            
+            foreach (InputHandler handler in allHandlers)
+            {
+                handler.HandleState();
+            }
+        }
+
+        
 
         public void OnInputDeviceChange()
         {
@@ -48,7 +83,7 @@ namespace InteractML.ControllerCustomisers
                     break;
                 case IMLInputDevices.VRControllers:
                     InstantiateVRButtonHandlers();
-                    buttonOptions = System.Enum.GetNames(typeof(InputHelpers.Button));
+                    buttonOptions = System.Enum.GetNames(typeof(IMLControllerInputs));
                     break;
                 default:
                     buttonOptions = new string[] { "none" };
@@ -56,15 +91,73 @@ namespace InteractML.ControllerCustomisers
             }
 
             
+
+            
         }
-        
+        /// <summary>
+        /// Changes hand type in handler 
+        /// </summary>
+        /// <param name="side">which side it is being changed to</param>
+        public void OnHandChange(IMLSides side)
+        {
+            List<InputHandler> handlers = new List<InputHandler>();
+            if (side == mlsHand)
+                handlers = mlsHandlers;
+            else
+                handlers = trainingHandlers;
+            
+            foreach (InputHandler handler in handlers)
+            {
+                VRButtonHandler vrHandler = handler as VRButtonHandler;
+                vrHandler.SetController(side);
+            }
+        }
+        /// <summary>
+        /// Set the button type in the handler 
+        /// </summary>
+        /// <param name="handlerName">name of the handler to be set</param>
+        /// <param name="button">number from enum in editor</param>
+        public void OnButtonChange(string handlerName, int button)
+        {
+            foreach (InputHandler handler in trainingHandlers)
+            {
+                if (handlerName == handler.buttonName){
+                    handler.SetButtonNo(button);
+                }
+            }
+        }
+        public void OnTriggerChange(string handlerName, IMLTriggerTypes triggerT)
+        {
+            foreach (InputHandler handler in trainingHandlers)
+            {
+                if (handlerName == handler.buttonName){
+                    handler.SetTriggerType(triggerT);
+                }
+            }
+        }
+        /// <summary>
+        /// Create instances of VR button handlers
+        /// </summary>
         private void InstantiateVRButtonHandlers()
         {
+            //Debug.Log("here");
             DeleteAll = new VRButtonHandler();
             DeleteLast = new VRButtonHandler();
             ToggleRecord = new VRButtonHandler();
             Train = new VRButtonHandler();
             ToggleRun= new VRButtonHandler();
+            
+        }
+        /// <summary>
+        /// Set the names of the handlers used to set button types from editor
+        /// </summary>
+        private void SetButtonNames()
+        {
+            DeleteLast.buttonName = "deleteLast";
+            DeleteAll.buttonName = "deleteAll";
+            ToggleRecord.buttonName = "toggleRecord";
+            Train.buttonName = "train";
+            ToggleRun.buttonName = "toggleRun";
         }
         public void SubscribeToEvents()
         {
@@ -77,19 +170,6 @@ namespace InteractML.ControllerCustomisers
         }
         
 
-        public void OnChangeButton()
-        {
-
-        }
-        private void OnDestroy()
-        {
-            
-        }
-
-        public void UpdateInputDevices()
-        {
-
-        }
 
         //method for getting inputs from system come back for future
         /*
@@ -124,6 +204,22 @@ namespace InteractML.ControllerCustomisers
              Debug.Log(inputDevices.Count);
 
          }*/
+
+        public bool testDown()
+        {
+            Debug.Log("down ");
+            return true;
+        }
+        public bool testUp()
+        {
+            Debug.Log("up ");
+            return true;
+        }
+        public bool testPress()
+        {
+            Debug.Log("hold ");
+            return true;
+        }
     }
 }
 

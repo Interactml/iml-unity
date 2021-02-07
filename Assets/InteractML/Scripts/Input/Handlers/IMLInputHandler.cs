@@ -7,10 +7,9 @@ namespace InteractML
     public class IMLInputHandler : InputHandler
     {
         public InputDevice device;
-        public delegate bool StateChange();
-        public event StateChange ButtonDown;
-        public event StateChange ButtonUp;
-        public event StateChange ButtonHold;
+        public override event StateChange ButtonDown;
+        public override event StateChange ButtonUp;
+        public override event StateChange ButtonHold;
      
         public override void HandleState()
         {
@@ -35,10 +34,14 @@ namespace InteractML
             }*/
         }
 
-        public override void SetButton()
+        public override void SetButtonNo(int no)
         {
             //device.
         }
 
+        public override void SetTriggerType(IMLTriggerTypes triggerT)
+        {
+            
+        }
     }
 }

@@ -24,7 +24,7 @@ namespace InteractML
         Trigger,
         Grip,
         Primary,
-        Secondary,
+        Secondary
     }
     public enum IMLHandInputs
     {

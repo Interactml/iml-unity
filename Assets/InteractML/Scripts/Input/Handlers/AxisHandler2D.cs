@@ -3,7 +3,7 @@ using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace InteractML {
-    public class AxisHandler2D : InputHandler, ISerializationCallbackReceiver
+    /*public class AxisHandler2D : InputHandler, ISerializationCallbackReceiver
     {
         public enum Axis2d
         {
@@ -53,6 +53,6 @@ namespace InteractML {
 
             return Vector2.zero;
         }
-    }
+    }*/
 }
 
