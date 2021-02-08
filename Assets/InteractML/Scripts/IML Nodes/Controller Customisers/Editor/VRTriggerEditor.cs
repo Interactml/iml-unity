@@ -51,7 +51,7 @@ namespace InteractML.ControllerCustomisers
         /// </summary>
         protected override void ShowBodyFields()
         {
-            GUI.changed = false
+            GUI.changed = false;
             m_VRTrigger.hand = (IMLSides)EditorGUILayout.EnumPopup(m_VRTrigger.hand);
             
             if (GUI.changed)

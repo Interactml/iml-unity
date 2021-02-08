@@ -50,7 +50,6 @@ namespace InteractML {
                     {
                         string json = File.ReadAllText(auxFilePath);
                         settings = JsonConvert.DeserializeObject<InputSetUpVRSettings>(json);
-                        Debug.Log("herre");
                     }
                 }
                 catch (FileNotFoundException e)

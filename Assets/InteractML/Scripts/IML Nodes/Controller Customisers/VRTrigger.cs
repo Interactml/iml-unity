@@ -31,11 +31,17 @@ namespace InteractML.ControllerCustomisers
 
         public override void Initialize()
         {
-            button = new VRButtonHandler();
+            int input = (int)inputs;
+            button = new VRButtonHandler(input, hand, triggerType, "VRTrigger");
+        }
+
+        public void UpdateLogic()
+        {
+            button.HandleState();
         }
         public void OnButtonChange()
         {
-            button.triggerButton = inputs; 
+            //button.imlButton = inputs; 
             button.SetButton();
         }
         

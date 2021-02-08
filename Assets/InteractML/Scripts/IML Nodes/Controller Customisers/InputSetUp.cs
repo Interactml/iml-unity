@@ -52,10 +52,10 @@ namespace InteractML.CustomControllers
 
         public override void Initialize()
         {
-            InstantiateVRButtonHandlers();
-            SubscribeToEvents();
-            SetButtonNames();
+            
             LoadFromFile();
+            OnInputDeviceChange();
+            InstantiateVRButtonHandlers();
             trainingHandlers = new List<InputHandler>();
             trainingHandlers.Add(DeleteLast);
             trainingHandlers.Add(DeleteAll);
@@ -63,15 +63,10 @@ namespace InteractML.CustomControllers
             mlsHandlers = new List<InputHandler>();
             mlsHandlers.Add(Train);
             mlsHandlers.Add(ToggleRun);
-            allHandlers = trainingHandlers;
+            allHandlers = new List<InputHandler>();
             allHandlers.AddRange(mlsHandlers);
-            OnHandChange(trainingHand);
-            OnHandChange(mlsHand);
-            OnInputDeviceChange();
-            ButtonSetUp();
-            //set up triggers
-            TriggerTypeSetUp();
-
+            allHandlers.AddRange(trainingHandlers);
+            SubscribeToEvents();
         }
 
         public void UpdateLogic()
@@ -92,7 +87,7 @@ namespace InteractML.CustomControllers
                 case IMLInputDevices.Mouse:
                     break;
                 case IMLInputDevices.VRControllers:
-                    InstantiateVRButtonHandlers();
+                    //InstantiateVRButtonHandlers();
                     break;
                 default:
                     break;
@@ -105,10 +100,10 @@ namespace InteractML.CustomControllers
         /// Changes hand type in handler 
         /// </summary>
         /// <param name="side">which side it is being changed to</param>
-        public void OnHandChange(IMLSides side)
+        public void OnHandChange(IMLSides side, string group)
         {
             List<InputHandler> handlers = new List<InputHandler>();
-            if (side == mlsHand)
+            if (group == "mlsHand")
                 handlers = mlsHandlers;
             else
                 handlers = trainingHandlers;
@@ -152,26 +147,13 @@ namespace InteractML.CustomControllers
         /// </summary>
         private void InstantiateVRButtonHandlers()
         {
-            //Debug.Log("here");
-            DeleteAll = new VRButtonHandler();
-            DeleteLast = new VRButtonHandler();
-            ToggleRecord = new VRButtonHandler();
-            Train = new VRButtonHandler();
-            ToggleRun = new VRButtonHandler();
-
+            DeleteAll = new VRButtonHandler(deleteAllButtonNo, trainingHand, deleteAllButtonTT, "deleteLast");
+            DeleteLast = new VRButtonHandler(deleteLastButtonNo, trainingHand, deleteLastButtonTT, "deleteAll");
+            ToggleRecord = new VRButtonHandler(toggleRecordButtonNo, trainingHand, toggleRecordButtonTT, "toggleRecord");
+            Train = new VRButtonHandler(trainButtonNo, mlsHand, trainButtonTT, "train");
+            ToggleRun = new VRButtonHandler(toggleRunButtonNo, mlsHand, toggleRunButtonTT, "toggleRun");
         }
-        /// <summary>
-        /// Set the names of the handlers used to set button types from editor
-        /// </summary>
-        private void SetButtonNames()
-        {
-            DeleteLast.buttonName = "deleteLast";
-            DeleteAll.buttonName = "deleteAll";
-            ToggleRecord.buttonName = "toggleRecord";
-            Train.buttonName = "train";
-            ToggleRun.buttonName = "toggleRun";
-        }
-
+        
         /// <summary>
         /// Set the button type in the handler 
         /// </summary>
@@ -202,8 +184,8 @@ namespace InteractML.CustomControllers
             InputSetUpVRSettings setUP = new InputSetUpVRSettings();
             setUP.isEnabled = enableUniversalInterface;
             setUP.device = device;
-            setUP.deleteLastButtonNo = deleteAllButtonNo;
-            setUP.deleteLastButtonTT = deleteAllButtonTT;
+            setUP.deleteLastButtonNo = deleteLastButtonNo;
+            setUP.deleteLastButtonTT = deleteLastButtonTT;
             setUP.deleteAllButtonNo = deleteAllButtonNo;
             setUP.deleteAllButtonTT = deleteAllButtonTT;
             setUP.toggleRecordButtonNo = toggleRecordButtonNo;
@@ -222,8 +204,8 @@ namespace InteractML.CustomControllers
             InputSetUpVRSettings setUP = IMLInputSetUpSerialization.LoadInputSettings();
             enableUniversalInterface = setUP.isEnabled;
             device = setUP.device;
-            deleteAllButtonNo = setUP.deleteLastButtonNo;
-            deleteAllButtonTT = setUP.deleteLastButtonTT;
+            deleteLastButtonNo = setUP.deleteLastButtonNo;
+            deleteLastButtonTT = setUP.deleteLastButtonTT;
             deleteAllButtonNo = setUP.deleteAllButtonNo;
             deleteAllButtonTT = setUP.deleteAllButtonTT;
             toggleRecordButtonNo = setUP.toggleRecordButtonNo;
@@ -287,19 +269,10 @@ namespace InteractML.CustomControllers
 
         public bool testDown()
         {
-            Debug.Log("down ");
+            Debug.Log("down");
             return true;
         }
-        public bool testUp()
-        {
-            Debug.Log("up ");
-            return true;
-        }
-        public bool testPress()
-        {
-            Debug.Log("hold ");
-            return true;
-        }
+       
         private void OnDestroy()
         {
             UnsubscribeFromEvents();

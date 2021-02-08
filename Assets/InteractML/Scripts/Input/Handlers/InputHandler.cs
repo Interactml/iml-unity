@@ -12,7 +12,7 @@ namespace InteractML
         public string buttonName;
         
         public IMLTriggerTypes triggerType;
-        protected bool previousPress;
+        protected bool previousPress = false;
 
         public delegate bool StateChange();
         public abstract event StateChange ButtonFire;

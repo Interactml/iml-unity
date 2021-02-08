@@ -229,7 +229,7 @@ MonoBehaviour:
   matchLiveDataInputs: 1
   matchVectorLength: 1
   warning: You are in edit mode live data in from objects will only workin play mode
-  error: 1
+  error: 0
   trainOnLoad: 0
 --- !u!114 &1957865102308329510
 MonoBehaviour:
@@ -388,8 +388,8 @@ MonoBehaviour:
   enableUniversalInterface: 0
   activeUniversalInterface: 0
   device: 3
-  trainingHand: 0
-  mlsHand: 2
+  trainingHand: 2
+  mlsHand: 1
   buttonOptions:
   - Trigger
   - Grip
@@ -401,14 +401,14 @@ MonoBehaviour:
   Train: {fileID: 0}
   ToggleRun: {fileID: 0}
   deleteLastButtonNo: 1
-  deleteLastButtonTT: 1
-  deleteAllButtonNo: 2
+  deleteLastButtonTT: 0
+  deleteAllButtonNo: 0
   deleteAllButtonTT: 2
-  toggleRecordButtonNo: 2
+  toggleRecordButtonNo: 0
   toggleRecordButtonTT: 1
   trainButtonNo: 0
   trainButtonTT: 1
-  toggleRunButtonNo: 2
+  toggleRunButtonNo: 0
   toggleRunButtonTT: 1
   currentMLS: 
   currentTraining: 
@@ -444,3 +444,5 @@ MonoBehaviour:
   numberInComponentList: -1
   ControllerOutput: 0
   hand: 0
+  inputs: 2
+  triggerType: 0
