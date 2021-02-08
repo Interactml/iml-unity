@@ -45,9 +45,11 @@ namespace InteractML.CustomControllers
         public int toggleRunButtonNo;
         public IMLTriggerTypes toggleRunButtonTT;
 
-
         public string currentMLS;
         public string currentTraining;
+
+        public string selectedMLS;
+        public string selectedTraining;
 
 
         public override void Initialize()
@@ -68,6 +70,8 @@ namespace InteractML.CustomControllers
             allHandlers.AddRange(trainingHandlers);
             SubscribeToEvents();
         }
+
+
 
         public void UpdateLogic()
         {
@@ -147,37 +151,14 @@ namespace InteractML.CustomControllers
         /// </summary>
         private void InstantiateVRButtonHandlers()
         {
-            DeleteAll = new VRButtonHandler(deleteAllButtonNo, trainingHand, deleteAllButtonTT, "deleteLast");
-            DeleteLast = new VRButtonHandler(deleteLastButtonNo, trainingHand, deleteLastButtonTT, "deleteAll");
+            DeleteAll = new VRButtonHandler(deleteAllButtonNo, trainingHand, deleteAllButtonTT, "deleteAll");
+            DeleteLast = new VRButtonHandler(deleteLastButtonNo, trainingHand, deleteLastButtonTT, "deleteLast");
             ToggleRecord = new VRButtonHandler(toggleRecordButtonNo, trainingHand, toggleRecordButtonTT, "toggleRecord");
             Train = new VRButtonHandler(trainButtonNo, mlsHand, trainButtonTT, "train");
             ToggleRun = new VRButtonHandler(toggleRunButtonNo, mlsHand, toggleRunButtonTT, "toggleRun");
         }
         
-        /// <summary>
-        /// Set the button type in the handler 
-        /// </summary>
-        /// <param name="handlerName">name of the handler to be set</param>
-        /// <param name="button">number from enum in editor</param>
-        private void ButtonSetUp()
-        {
-            DeleteLast.SetButtonNo(deleteLastButtonNo);
-            DeleteAll.SetButtonNo(deleteAllButtonNo);
-            ToggleRecord.SetButtonNo(toggleRecordButtonNo);
-            Train.SetButtonNo(trainButtonNo);
-            ToggleRun.SetButtonNo(toggleRunButtonNo);
-        }
-        /// <summary>
-        /// set up triggers
-        /// </summary>
-        private void TriggerTypeSetUp()
-        {
-            DeleteLast.SetTriggerType(deleteLastButtonTT);
-            DeleteAll.SetTriggerType(deleteAllButtonTT);
-            ToggleRecord.SetTriggerType(toggleRecordButtonTT);
-            Train.SetTriggerType(trainButtonTT);
-            ToggleRun.SetTriggerType(toggleRunButtonTT);
-        }
+       
 
         private void SaveToFile()
         {
@@ -222,6 +203,7 @@ namespace InteractML.CustomControllers
 
         public void SubscribeToEvents()
         {
+            Debug.Log("here");
             DeleteAll.ButtonFire += testDown;
         }
 
@@ -267,11 +249,6 @@ namespace InteractML.CustomControllers
 
          }*/
 
-        public bool testDown()
-        {
-            Debug.Log("down");
-            return true;
-        }
        
         private void OnDestroy()
         {

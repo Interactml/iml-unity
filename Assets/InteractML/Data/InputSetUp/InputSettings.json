@@ -1,9 +1,9 @@
 {
   "isEnabled": false,
   "device": 3,
-  "deleteLastButtonNo": 1,
+  "deleteLastButtonNo": 2,
   "deleteLastButtonTT": 2,
-  "deleteAllButtonNo": 0,
+  "deleteAllButtonNo": 3,
   "deleteAllButtonTT": 2,
   "toggleRecordButtonNo": 0,
   "toggleRecordButtonTT": 1,
@@ -11,6 +11,6 @@
   "trainButtonTT": 1,
   "toggleRunButtonNo": 0,
   "toggleRunButtonTT": 1,
-  "trainingSide": 2,
+  "trainingSide": 1,
   "mlsSide": 1
 }

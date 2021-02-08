@@ -15,14 +15,8 @@ namespace InteractML.ControllerCustomisers
     [NodeWidth(250)]
     public class VRTrigger : CustomController
     {
-        //public ButtonHandler primaryAxis
-        /// <summary>
-        /// Node data sent outside of this node onwards
-        /// </summary>
-        [Output]
-        public bool ControllerOutput;
 
-        private VRButtonHandler button;
+        public VRButtonHandler button;
         public IMLSides hand;
         public IMLControllerInputs inputs;
         public IMLTriggerTypes triggerType;
@@ -33,9 +27,10 @@ namespace InteractML.ControllerCustomisers
         {
             int input = (int)inputs;
             button = new VRButtonHandler(input, hand, triggerType, "VRTrigger");
+            button.ButtonFire += SetBool;
         }
 
-        public void UpdateLogic()
+        public override void UpdateLogic()
         {
             button.HandleState();
         }
@@ -53,6 +48,21 @@ namespace InteractML.ControllerCustomisers
         public void OnHandChange()
         {
             button.SetController(hand);
+        }
+        private bool SetBool()
+        {
+            Debug.Log("fire");
+            return true;
+        }
+
+        public void OnDestroy()
+        {
+            var MLController = graph as IMLGraph;
+            if (MLController.SceneComponent != null)
+            {
+                MLController.SceneComponent.DeleteCustomControllerNode(this);
+            }
+            button.ButtonFire -= SetBool;
         }
     }
 }

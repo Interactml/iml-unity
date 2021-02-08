@@ -67,6 +67,7 @@ namespace InteractML.ControllerCustomisers
             GUI.changed = false;
             // set button choice for delete last
             // delete last
+            Debug.Log(m_InputSetUp);
             ShowButtonChoice(m_InputSetUp.DeleteLast.buttonName, m_InputSetUp.deleteLastButtonNo, out m_InputSetUp.deleteLastButtonNo, m_InputSetUp.deleteLastButtonTT, out m_InputSetUp.deleteLastButtonTT);
             // choose delete all button 
             ShowButtonChoice(m_InputSetUp.DeleteAll.buttonName, m_InputSetUp.deleteAllButtonNo, out m_InputSetUp.deleteAllButtonNo, m_InputSetUp.deleteAllButtonTT, out m_InputSetUp.deleteAllButtonTT);

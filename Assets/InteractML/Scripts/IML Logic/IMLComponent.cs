@@ -334,10 +334,11 @@ namespace InteractML
             //Initialize input set up
             if (m_inputSetUp != null)
             {
+                //initialize node
                 m_inputSetUp.NodeInitalize();
             } else
             {
-                MLController.AddNode<InteractML.CustomControllers.InputSetUp>();
+                Debug.Log("no input set up node");
             }
         }
         /// <summary>
@@ -1166,7 +1167,10 @@ namespace InteractML
                 }
             } else
             {
-
+                foreach(CustomController controller in m_CustomControllerList)
+                {
+                    controller.UpdateLogic();
+                }
             }
 
         }
@@ -1911,6 +1915,12 @@ namespace InteractML
         {
             if (m_MLSystemNodeList.Contains(nodeToDelete))
                 m_MLSystemNodeList.Remove(nodeToDelete);
+        }
+        
+        public void DeleteCustomControllerNode(CustomController nodeToDelete)
+        {
+            if (m_CustomControllerList.Contains(nodeToDelete))
+                m_CustomControllerList.Remove(nodeToDelete);
         }
         
         /// <summary>

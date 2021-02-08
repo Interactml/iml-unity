@@ -74,7 +74,6 @@ namespace InteractML
         /// </summary>
         public override string GetNodeMenuName(System.Type type)
         {
-
             //if (type.Namespace == "InteractML")
             //{
             //    return base.GetNodeMenuName(type).Replace("InteractML", "");
@@ -165,6 +164,14 @@ namespace InteractML
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
             if (type.PrettyName() == "InteractML.ControllerCustomisers.InputSetUp")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.CustomControllers.InputSetUp")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.ControllerCustomisers.InputSetUp1")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }

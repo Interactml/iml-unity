@@ -37,7 +37,7 @@ namespace InteractML
 
         public override void HandleState()
         {
-            //Debug.Log(buttonName + ": " +_button.name);
+            Debug.Log(buttonName + ": " +_button.name);
             if (_controllers.Count > 0)
             {
                 foreach (UnityEngine.XR.InputDevice controller in _controllers)

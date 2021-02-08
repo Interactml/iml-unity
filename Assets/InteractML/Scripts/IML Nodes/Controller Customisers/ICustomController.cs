@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public interface ICustomController 
-{
-    public void OnButtonChange();
+namespace InteractML {
+    public interface ICustomController
+    {
+        void OnButtonChange();
+    }
 }
+
+
