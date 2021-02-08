@@ -54,7 +54,6 @@ namespace InteractML.CustomControllers
 
         public override void Initialize()
         {
-            
             LoadFromFile();
             OnInputDeviceChange();
             InstantiateVRButtonHandlers();
@@ -197,6 +196,7 @@ namespace InteractML.CustomControllers
             toggleRunButtonTT = setUP.toggleRunButtonTT;
             trainingHand = setUP.trainingSide;
             mlsHand = setUP.mlsSide;
+            
         }
 
 
@@ -204,12 +204,10 @@ namespace InteractML.CustomControllers
         public void SubscribeToEvents()
         {
             Debug.Log("here");
-            DeleteAll.ButtonFire += testDown;
         }
 
         public void UnsubscribeFromEvents()
         {
-            DeleteAll.ButtonFire -= testDown;
 
         }
 

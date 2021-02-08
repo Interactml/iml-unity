@@ -81,6 +81,7 @@ namespace InteractML
             else
             {
                 Debug.LogError("You can't add nodes to an IMLGraph that is not attached to an IMLComponent!");
+                
             }
             return node;
         }

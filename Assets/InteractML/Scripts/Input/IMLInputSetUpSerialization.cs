@@ -64,7 +64,7 @@ namespace InteractML {
 
 
                 //Debug.Log("What we read is: " + jsonTrainingExamplesList);
-            }
+            } 
             return settings;
         }
     }

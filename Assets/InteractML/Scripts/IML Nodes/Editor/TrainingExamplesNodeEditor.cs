@@ -73,7 +73,8 @@ namespace InteractML
             InputPortsNamesOverride.Add("TargetValues", "Target Values");
 
             base.nodeTips = m_TrainingExamplesNode.tooltips;
-            //if (m_TrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_TrainingExamplesNode.DesiredOutputFeatures.Count || lastShowWarning != m_TrainingExamplesNode.showWarning)
+            Debug.Log(m_TrainingExamplesNode.DesiredInputFeatures.Count);
+            if (m_TrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_TrainingExamplesNode.DesiredOutputFeatures.Count || lastShowWarning != m_TrainingExamplesNode.showWarning)
                 m_RecalculateRects = true;
             m_ConnectedInputs = m_TrainingExamplesNode.DesiredInputFeatures.Count;
             m_ConnectedTargets = m_TrainingExamplesNode.DesiredOutputFeatures.Count;

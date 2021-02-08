@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  Counter: 5
+  Counter: 2
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -101,7 +101,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 5
+  Counter: 2
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 1
-  Counter: 5
+  Counter: 2
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -378,7 +378,7 @@ MonoBehaviour:
   m_Name: VR Trigger
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 8, y: 8}
+  position: {x: -24, y: -56}
   ports:
     keys:
     - m_inputEvent
@@ -413,7 +413,7 @@ MonoBehaviour:
   m_Name: Input Set Up
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 392, y: -24}
+  position: {x: 296, y: -72}
   ports:
     keys: []
     values: []
@@ -423,7 +423,7 @@ MonoBehaviour:
   enableUniversalInterface: 0
   activeUniversalInterface: 0
   device: 3
-  trainingHand: 2
+  trainingHand: 1
   mlsHand: 1
   buttonOptions:
   - Trigger
@@ -447,3 +447,5 @@ MonoBehaviour:
   toggleRunButtonTT: 1
   currentMLS: 
   currentTraining: 
+  selectedMLS: 
+  selectedTraining: 

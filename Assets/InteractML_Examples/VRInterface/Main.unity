@@ -249,7 +249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c477b3f40f547843930edfdcbde5951, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MLController: {fileID: 11400000, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
+  graph: {fileID: 11400000, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
   GameObjectsToUse:
   - {fileID: 963194225}
   - {fileID: 334660865}
@@ -265,6 +265,10 @@ MonoBehaviour:
     - {fileID: 0}
   m_GameObjectNodeList: []
   m_ScriptNodesList: []
+  m_inputSetUp: {fileID: 6617459786147632998, guid: 93b32fd0d0cc4a242ac69382929594e6,
+    type: 2}
+  m_CustomControllerList:
+  - {fileID: 5873715976797203045, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
   FeaturesUpdated: 0
   ComponentsWithIMLData: []
   m_MonoBehavioursPerScriptNode:

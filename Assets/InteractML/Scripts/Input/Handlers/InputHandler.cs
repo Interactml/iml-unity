@@ -3,7 +3,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 namespace InteractML
 {
-    public abstract class InputHandler : ScriptableObject
+    public abstract class InputHandler
     {
         public bool buttonSet = false;
         public int buttonNo { get { return m_buttonNo; } set { m_buttonNo = value; } }

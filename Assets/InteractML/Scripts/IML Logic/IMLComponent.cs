@@ -28,8 +28,8 @@ namespace InteractML
         /// <summary>
         /// Reference to the IML Controller with nodes
         /// </summary>
-        public IMLGraph MLController;
-        private IMLGraph m_LastKnownIMLController;
+        public IMLGraph graph;
+        private IMLGraph m_LastKnownGraph;
 
         /// <summary>
         /// Scene where this IML Component belongs to
@@ -135,8 +135,6 @@ namespace InteractML
 
         public bool universalInputEnabled = true;
         public bool universalInputActive = true;
-
-
 
         #endregion
 
@@ -308,8 +306,8 @@ namespace InteractML
 
 
             // We make sure that all null nodes in list are removed from the list
-            if (MLController)
-                MLController.nodes.RemoveAll(node => node == null);
+            if (graph)
+                graph.nodes.RemoveAll(node => node == null);
 
 
         }
@@ -364,6 +362,9 @@ namespace InteractML
                     {
                         //Initialize node 
                         node.NodeInitalize();
+                    } else
+                    {
+                        graph.AddNode<InteractML.CustomControllers.InputSetUp>();
                     }
 
                 }
@@ -436,33 +437,33 @@ namespace InteractML
             }
 
             // If there is an IML Controller assigned
-            if (MLController != null)
+            if (graph != null)
             {
                 // If we don't have a memory a previous controller, we remember this one
-                if (m_LastKnownIMLController == null)
+                if (m_LastKnownGraph == null)
                 {
-                    m_LastKnownIMLController = MLController;
+                    m_LastKnownGraph = graph;
                     // We also make sure to assign this IML Component as the one referenced in the IML controller
                     // So that nodes in the graph can know who updates them in the scene
-                    MLController.SceneComponent = this;
+                    graph.SceneComponent = this;
                 }
                 // If the controller has changed, we make sure to flush wrong information
-                else if (m_LastKnownIMLController != MLController)
+                else if (m_LastKnownGraph != graph)
                 {
                     // We make sure we free the scene component reference in the previous controller to avoid information sent to the wrong place
-                    m_LastKnownIMLController.SceneComponent = null;
+                    m_LastKnownGraph.SceneComponent = null;
                     // We remember the current controller
-                    m_LastKnownIMLController = MLController;
+                    m_LastKnownGraph = graph;
                 }
                 // If the controller matches what we remember...
-                else if (m_LastKnownIMLController == MLController)
+                else if (m_LastKnownGraph == graph)
                 {
                     // We make sure the current controller is the right one
-                    if (MLController.SceneComponent != this)
+                    if (graph.SceneComponent != this)
                     {
                         // Warn in the editor that the controller is being used by several IMLComponents
                         Debug.LogError("The referenced IML Controller is being used by more than one IML Component!");
-                        MLController.SceneComponent = this;
+                        graph.SceneComponent = this;
                     }
                 }
             }
@@ -481,9 +482,9 @@ namespace InteractML
         public void GetAllNodes()
         {
             // Keep lists of nodes found updated
-            if (MLController != null)
+            if (graph != null)
             {
-                foreach (var node in MLController.nodes)
+                foreach (var node in graph.nodes)
                 {
                     // Feature nodes
                     CheckNodeIsFeature(node, ref FeatureNodesList);
@@ -610,6 +611,11 @@ namespace InteractML
             {
                 // Then check that the node is a MLSystem
                 var mlSystemNode = nodeToAdd as MLSystem;
+
+                if(m_MLSystemNodeList.Count > 0)
+                {
+                    Debug.LogWarning("Only one machine learning system node allowed per graph when using VR interface you will not be able to control this in the headset");
+                }
                 if (mlSystemNode != null)
                 {
                     // Make sure the list is init
@@ -623,6 +629,7 @@ namespace InteractML
                     }
 
                 }
+
             }
 
         }
@@ -685,7 +692,7 @@ namespace InteractML
             // Only run if we have the list of training examples
             if (m_TrainingExamplesNodesList == null)
                 return;
-
+            
             for (int i = 0; i < m_TrainingExamplesNodesList.Count; i++)
             {
                 // Call the update logic per node
@@ -822,7 +829,7 @@ namespace InteractML
                     if (goNode == null)
                     {
                         // Create a new script node into the graph
-                        goNode = MLController.AddNode<GameObjectNode>();
+                        goNode = graph.AddNode<GameObjectNode>();
                     }
 
                     // Configure our node appropiately
@@ -980,7 +987,7 @@ namespace InteractML
                 if (!m_MonoBehavioursPerScriptNode.ContainsKey(IMLGameComponentContainer.GameComponent))
                 {
                     // First, we try and see if the graph already contains an empty node we can use
-                    foreach (var node in MLController.nodes)
+                    foreach (var node in graph.nodes)
                     {
                         // We see if this node is of the right type
                         if (node.GetType() == typeof(ScriptNode))
@@ -1017,7 +1024,7 @@ namespace InteractML
                     if (scriptNode == null)
                     {
                         // Create a new script node into the graph
-                        scriptNode = MLController.AddNode<ScriptNode>();
+                        scriptNode = graph.AddNode<ScriptNode>();
                     }
 
                     // Configure our node appropiately
@@ -1134,7 +1141,7 @@ namespace InteractML
             // Keep lists of nodes found updated
             //GetAllNodes();
 
-            if (MLController != null)
+            if (graph != null)
             {
                 // Fetch data from the Monobehaviours we have subscribed into and out of the IML Controller
                 FetchDataFromMonobehavioursSubscribed();
@@ -1152,6 +1159,9 @@ namespace InteractML
                 RunMLSystemLogic();
 
 
+            } else
+            {
+                IMLControllerOwnershipLogic();
             }
             InputLogic();
 
@@ -1199,7 +1209,7 @@ namespace InteractML
                 else if (changingPlayMode && goNode.CreatedDuringPlaymode)
                 {
                     // Destroy node
-                    MLController.RemoveNode(goNode);
+                    graph.RemoveNode(goNode);
                     // Decrease counter to not delete the wrong element later
                     i--;
                     // Force scriptNode reference to null
@@ -1213,7 +1223,7 @@ namespace InteractML
                     if (!m_GOsPerGONodes.ContainsValue(goNode))
                     {
                         // Destroy node
-                        MLController.RemoveNode(goNode);
+                        graph.RemoveNode(goNode);
                         // Decrease counter to not delete the wrong element later
                         i--;
                         // Force scriptNode reference to null
@@ -1285,7 +1295,7 @@ namespace InteractML
                 else if (changingPlayMode && scriptNode.CreatedDuringPlaymode)
                 {
                     // Destroy node
-                    MLController.RemoveNode(scriptNode);
+                    graph.RemoveNode(scriptNode);
                     // Decrease counter to not delete the wrong element later
                     i--;
                     // Force scriptNode reference to null
@@ -1299,7 +1309,7 @@ namespace InteractML
                     if (!m_MonoBehavioursPerScriptNode.ContainsValue(scriptNode))
                     {
                         // Destroy node
-                        MLController.RemoveNode(scriptNode);
+                        graph.RemoveNode(scriptNode);
                         // Decrease counter to not delete the wrong element later
                         i--;
                         // Force scriptNode reference to null
@@ -1789,7 +1799,7 @@ namespace InteractML
                                         if (entry2.Key == fieldInfoToDelete)
                                         {
                                             // Remove Node from IML Controller before deleting the entry
-                                            MLController.RemoveNode(entry2.Value.nodeForField);
+                                            graph.RemoveNode(entry2.Value.nodeForField);
                                             // Remove fieldInfo/DataContainer entry from dictionary
                                             m_DataContainersPerFieldInfo.Remove(entry2.Key);
                                         }
@@ -1833,9 +1843,9 @@ namespace InteractML
                     if (EditorApplication.isPlaying) node.CreatedDuringPlaymode = true;
 
                     // Save newnode to graph on disk                              
-                    AssetDatabase.AddObjectToAsset(node, MLController);
+                    AssetDatabase.AddObjectToAsset(node, graph);
                     // Reload graph into memory since we have modified it on disk
-                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(graph));
 #endif
 
                 }
@@ -1863,9 +1873,9 @@ namespace InteractML
                     if (EditorApplication.isPlaying) node.CreatedDuringPlaymode = true;
 
                     // Save newnode to graph on disk                              
-                    AssetDatabase.AddObjectToAsset(node, MLController);
+                    AssetDatabase.AddObjectToAsset(node, graph);
                     // Reload graph into memory since we have modified it on disk
-                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(graph));
 #endif
                 }
 
