@@ -285,7 +285,11 @@ namespace InteractML.CustomControllers
 
         public void UnsubscribeFromEvents()
         {
-
+            DeleteLast.ButtonFire -= IMLEventDispatcher.DeleteLastCallback;
+            DeleteAll.ButtonFire -= IMLEventDispatcher.DeleteAllCallback;
+            ToggleRecord.ButtonFire -= IMLEventDispatcher.ToggleRecordCallback;
+            Train.ButtonFire -= IMLEventDispatcher.TrainMLSCallback;
+            ToggleRun.ButtonFire -= IMLEventDispatcher.ToggleRunCallback;
         }
 
 
