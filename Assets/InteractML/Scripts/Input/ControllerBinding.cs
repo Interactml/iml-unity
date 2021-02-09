@@ -8,9 +8,9 @@ namespace InteractML
     {
         None,
         Keyboard,
-        Mouse, 
+        /*Mouse, */
         VRControllers,
-        VRHands
+        /*VRHands*/
     }
 
     public enum IMLSides

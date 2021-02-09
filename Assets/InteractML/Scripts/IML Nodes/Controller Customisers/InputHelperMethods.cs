@@ -13,11 +13,11 @@ namespace InteractML.ControllerCustomisers
             switch (device)
             {
                 case IMLInputDevices.Keyboard:
-                    buttonOptions = System.Enum.GetNames(typeof(Keyboard));
+                    buttonOptions = System.Enum.GetNames(typeof(KeyCode));
                     break;
-                case IMLInputDevices.Mouse:
+                /*case IMLInputDevices.Mouse:
                     buttonOptions = System.Enum.GetNames(typeof(UnityEngine.InputSystem.LowLevel.MouseButton));
-                    break;
+                    break;*/
                 case IMLInputDevices.VRControllers:
                     buttonOptions = System.Enum.GetNames(typeof(IMLControllerInputs));
                     break;

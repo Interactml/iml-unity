@@ -134,7 +134,7 @@ namespace InteractML
         private Dictionary<FieldInfo, IMLFieldInfoContainer> m_DataContainersPerFieldInfo;
         private Dictionary<FieldInfo, MonoBehaviour> m_DataMonobehavioursPerFieldInfo;
 
-        public bool universalInputEnabled = true;
+        private bool universalInputEnabled = true;
         public bool universalInputActive = false;
 
         public GameObject prefab;
@@ -1193,7 +1193,8 @@ namespace InteractML
             {
                 foreach(CustomController controller in m_CustomControllerList)
                 {
-                    controller.UpdateLogic();
+                    //controller.UpdateLogic();
+                    m_inputSetUp.UpdateLogic();
                 }
             }
 
@@ -2228,6 +2229,11 @@ namespace InteractML
                    TENode.ClearTrainingExamples();
                 }
             }
+        }
+
+        private void EnableUniversalInterface(bool value)
+        {
+            universalInputEnabled = value;
         }
 
         #endregion

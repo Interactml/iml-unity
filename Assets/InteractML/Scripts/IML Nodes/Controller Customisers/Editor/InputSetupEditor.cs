@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -68,7 +68,7 @@ namespace InteractML.ControllerCustomisers
 
             
             // if the input is from vr controllers or hands show choice for training examples related buttons to be on the left hand or right hand or both
-            if (m_InputSetUp.device == IMLInputDevices.VRControllers || m_InputSetUp.device == IMLInputDevices.VRHands)
+            if (m_InputSetUp.device == IMLInputDevices.VRControllers)
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Label("Hand", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
@@ -112,7 +112,7 @@ namespace InteractML.ControllerCustomisers
             // sets the controller side for the training
             GUI.changed = false;
             // if the input is from vr controllers or hands show choice for training examples related buttons to be on the left hand or right hand or both
-            if (m_InputSetUp.device == IMLInputDevices.VRControllers || m_InputSetUp.device == IMLInputDevices.VRHands)
+            if (m_InputSetUp.device == IMLInputDevices.VRControllers)
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Label("Hand", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
@@ -154,6 +154,7 @@ namespace InteractML.ControllerCustomisers
             if (GUI.changed)
             {
                 m_InputSetUp.OnInputDeviceChange();
+                EditorUtility.SetDirty(m_InputSetUp);
             }
         }
 
@@ -181,8 +182,15 @@ namespace InteractML.ControllerCustomisers
         {
             GUILayout.BeginHorizontal();
             GUILayout.Space(10);
+            GUI.changed = false;
             m_InputSetUp.enableUniversalInterface = EditorGUILayout.Toggle(m_InputSetUp.enableUniversalInterface, m_NodeSkin.GetStyle("Local Space Toggle"), GUILayout.MaxWidth(50));
             EditorGUILayout.LabelField("Enable Universal Interface", m_NodeSkin.GetStyle("Port Label"));
+            if (GUI.changed)
+            {
+                m_InputSetUp.SetUniversalSetUp();
+                //mark as changed
+                EditorUtility.SetDirty(m_InputSetUp);
+            }
             GUILayout.EndHorizontal();
         }
     }

@@ -49,18 +49,26 @@ namespace InteractML.CustomControllers
         public int toggleRunButtonNo;
         public IMLTriggerTypes toggleRunButtonTT;
 
+        private string deleteAllName = "deleteAll";
+        private string deleteLastName = "deleteLast";
+        private string toggleRecordName = "toggleRecord";
+        private string trainName = "train";
+        private string toggleRunName = "toggleRun";
+
         public string currentMLS;
         public string currentTraining;
 
         public string selectedMLS;
         public string selectedTraining;
 
+        public delegate bool UniversalSetUp(bool value);
+        public event UniversalSetUp setUpChange;
+
 
         public override void Initialize()
         {
             LoadFromFile();
             OnInputDeviceChange();
-            InstantiateVRButtonHandlers();
             trainingHandlers = new List<InputHandler>();
             trainingHandlers.Add(DeleteLast);
             trainingHandlers.Add(DeleteAll);
@@ -84,19 +92,28 @@ namespace InteractML.CustomControllers
             }
         }
 
-
+        //let rest of code know that the 
+        public void SetUniversalSetUp()
+        {
+            setUpChange?.Invoke(enableUniversalInterface);
+            SaveToFile();
+        }
         public void OnInputDeviceChange()
         {
             switch (device)
             {
                 case IMLInputDevices.Keyboard:
+                    InstantiateKeyboardButtonHandlers();
+                    Debug.Log("here");
                     break;
-                case IMLInputDevices.Mouse:
-                    break;
+                /*case IMLInputDevices.Mouse:
+                    
+                    break;*/
                 case IMLInputDevices.VRControllers:
-                    //InstantiateVRButtonHandlers();
+                    InstantiateVRButtonHandlers();
                     break;
                 default:
+                    Debug.Log("device not set");
                     break;
             }
             buttonOptions = InputHelperMethods.deviceEnumSetUp(device);
@@ -134,6 +151,7 @@ namespace InteractML.CustomControllers
                 if (handlerName == handler.buttonName)
                 {
                     handler.SetButtonNo(button);
+                    Debug.Log(button);
                 }
             }
             SaveToFile();
@@ -154,11 +172,22 @@ namespace InteractML.CustomControllers
         /// </summary>
         private void InstantiateVRButtonHandlers()
         {
-            DeleteAll = new VRButtonHandler(deleteAllButtonNo, trainingHand, deleteAllButtonTT, "deleteAll");
-            DeleteLast = new VRButtonHandler(deleteLastButtonNo, trainingHand, deleteLastButtonTT, "deleteLast");
-            ToggleRecord = new VRButtonHandler(toggleRecordButtonNo, trainingHand, toggleRecordButtonTT, "toggleRecord");
-            Train = new VRButtonHandler(trainButtonNo, mlsHand, trainButtonTT, "train");
-            ToggleRun = new VRButtonHandler(toggleRunButtonNo, mlsHand, toggleRunButtonTT, "toggleRun");
+            Debug.Log("here");
+            DeleteAll = new VRButtonHandler(deleteAllButtonNo, trainingHand, deleteAllButtonTT, deleteAllName);
+            DeleteLast = new VRButtonHandler(deleteLastButtonNo, trainingHand, deleteLastButtonTT, deleteLastName);
+            ToggleRecord = new VRButtonHandler(toggleRecordButtonNo, trainingHand, toggleRecordButtonTT, toggleRecordName);
+            Train = new VRButtonHandler(trainButtonNo, mlsHand, trainButtonTT, trainName);
+            ToggleRun = new VRButtonHandler(toggleRunButtonNo, mlsHand, toggleRunButtonTT, toggleRunName);
+        }
+        private void InstantiateKeyboardButtonHandlers()
+        {
+            Debug.Log(deleteAllButtonNo);
+            DeleteAll = new KeyboardHandler(deleteAllButtonNo, deleteAllButtonTT, "deleteAll");
+            DeleteLast = new KeyboardHandler(deleteLastButtonNo, deleteLastButtonTT, "deleteLast");
+            ToggleRecord = new KeyboardHandler(toggleRecordButtonNo, toggleRecordButtonTT, "toggleRecord");
+            Train = new KeyboardHandler(trainButtonNo, trainButtonTT, "train");
+            ToggleRun = new KeyboardHandler(toggleRunButtonNo, toggleRunButtonTT, "toggleRun");
+            Debug.Log(DeleteAll.GetType());
         }
         
        
@@ -200,6 +229,27 @@ namespace InteractML.CustomControllers
             toggleRunButtonTT = setUP.toggleRunButtonTT;
             trainingHand = setUP.trainingSide;
             mlsHand = setUP.mlsSide;
+
+            Debug.Log(deleteLastButtonNo);
+
+            if (device == IMLInputDevices.None)
+            {
+                device = IMLInputDevices.Keyboard;
+                deleteLastButtonNo = 1;
+                deleteLastButtonTT = IMLTriggerTypes.Hold;
+                deleteAllButtonNo = 2;
+                deleteAllButtonTT = IMLTriggerTypes.Hold;
+                toggleRecordButtonNo = 3;
+                toggleRecordButtonTT = IMLTriggerTypes.Hold;
+                trainButtonNo = 4;
+                trainButtonTT = IMLTriggerTypes.Hold;
+                toggleRunButtonNo = 5;
+                toggleRunButtonTT = IMLTriggerTypes.Hold;
+                mlsHand = setUP.mlsSide;
+                trainingHand = IMLSides.Left;
+                mlsHand = IMLSides.Right;
+            }
+           
             
         }
 
