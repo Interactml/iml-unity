@@ -1,125 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6569647306543947642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47cdcd0c7325cbb4080e00c6ddcac560, type: 3}
-  m_Name: Series Training Examples
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 408, y: -248}
-  ports:
-    keys:
-    - InputFeatures
-    - TargetValues
-    - RecordOneInputBool
-    - ToggleRecordingInputBool
-    - DeleteLastInputBool
-    - DeleteAllInputBool
-    - TrainingExamplesNodeToOutput
-    values:
-    - _fieldName: InputFeatures
-      _node: {fileID: -6569647306543947642}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: LiveDataOut
-        node: {fileID: 263246564138106412}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: TargetValues
-      _node: {fileID: -6569647306543947642}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_Out
-        node: {fileID: -3395777794266668603}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: RecordOneInputBool
-      _node: {fileID: -6569647306543947642}
-      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: ToggleRecordingInputBool
-      _node: {fileID: -6569647306543947642}
-      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: DeleteLastInputBool
-      _node: {fileID: -6569647306543947642}
-      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: DeleteAllInputBool
-      _node: {fileID: -6569647306543947642}
-      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: TrainingExamplesNodeToOutput
-      _node: {fileID: -6569647306543947642}
-      _typeQualifiedName: InteractML.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  id: 517c6a55-4c96-495e-9b5b-d0076958b47b
-  numberInComponentList: -1
-  InputFeatures:
-  - {fileID: 263246564138106412}
-  TargetValues:
-  - {fileID: -3395777794266668603}
-  RecordOneInputBool: 0
-  ToggleRecordingInputBool: 0
-  DeleteLastInputBool: 0
-  DeleteAllInputBool: 0
-  TrainingExamplesNodeToOutput: {fileID: 0}
-  ModeOfCollection: 1
-  TrainingExamplesVector: []
-  TrainingSeriesCollection: []
-  m_DesiredInputsConfig: 03000000
-  m_DesiredOutputsConfig: 02000000
-  MLSystemNodesConnected: []
-  StartDelay: 0
-  CaptureRate: 10
-  RecordTime: -1
-  EnableKeyboardControl: 0
-  RecordDataKey: 0
-  showWarning: 0
-  canCollect: 1
 --- !u!114 &-3395777794266668603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,10 +32,7 @@ MonoBehaviour:
       _node: {fileID: -3395777794266668603}
       _typeQualifiedName: UnityEngine.Vector2, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: TargetValues
-        node: {fileID: -6569647306543947642}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -169,7 +46,7 @@ MonoBehaviour:
   m_Out: {x: 0, y: 0}
   ReceivingData: 0
   InputConnected: 0
-  Counter: 2
+  Counter: 3
   Count: 5
   ToggleSwitches: 0101
   ReceivedValue:
@@ -197,7 +74,6 @@ MonoBehaviour:
   - {fileID: 6961063729125857254}
   - {fileID: -3395777794266668603}
   - {fileID: 263246564138106412}
-  - {fileID: -6569647306543947642}
   SceneComponent: {fileID: 0}
 --- !u!114 &68639161952360228
 MonoBehaviour:
@@ -248,7 +124,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  Counter: 2
+  Counter: 3
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -288,9 +164,6 @@ MonoBehaviour:
       - fieldName: InputFeatures
         node: {fileID: 7592529042347431095}
         reroutePoints: []
-      - fieldName: InputFeatures
-        node: {fileID: -6569647306543947642}
-        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -300,7 +173,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 2
+  Counter: 3
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -326,7 +199,7 @@ MonoBehaviour:
   m_Name: colorChanger (Script)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 808, y: -328}
+  position: {x: 504, y: -456}
   ports:
     keys:
     - SetAbsoluteColour
@@ -346,16 +219,7 @@ MonoBehaviour:
   m_ScriptInternal: {fileID: 0}
   ScriptHashCode: 17236
   m_PortsPerFieldInfo:
-    m_keys:
-    - _fieldName: SetAbsoluteColour
-      _node: {fileID: 922839754973757486}
-      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
+    m_keys: []
   CreatedDuringPlaymode: 0
 --- !u!114 &1223671937687019496
 MonoBehaviour:
@@ -419,7 +283,8 @@ MonoBehaviour:
     keys:
     - IMLTrainingExamplesNodes
     - InputFeatures
-    - TriggerTrain
+    - ToggleTrainInputBool
+    - ToggleRunInputBool
     values:
     - _fieldName: IMLTrainingExamplesNodes
       _node: {fileID: 6961063729125857254}
@@ -441,10 +306,18 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: TriggerTrain
+    - _fieldName: ToggleTrainInputBool
       _node: {fileID: 6961063729125857254}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: ToggleRunInputBool
+      _node: {fileID: 6961063729125857254}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections: []
       _direction: 0
@@ -456,7 +329,8 @@ MonoBehaviour:
   numberInComponentList: -1
   IMLTrainingExamplesNodes: []
   InputFeatures: []
-  TriggerTrain: []
+  ToggleTrainInputBool: 0
+  ToggleRunInputBool: 0
   PredictedRapidlibOutput:
   - 0
   DelayedPredictedOutput: []
@@ -646,7 +520,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 2
+  Counter: 3
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []

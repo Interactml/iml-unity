@@ -517,7 +517,7 @@ namespace InteractML
             // Get number of ports to avoid reserving memory twice
             if (updatePortPairs)
             {
-                if (!(target is TrainingExamplesNode))
+                if (!(target is TrainingExamplesNode)&&!(target is MLSystem))
                 {
                     // Update known number of ports
                     m_NumInputs = target.Inputs.Count();

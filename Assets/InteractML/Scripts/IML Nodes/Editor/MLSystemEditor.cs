@@ -99,28 +99,45 @@ namespace InteractML
         /// </summary>
         protected void ShowButtons(MLSystem node)
         {
-            m_ButtonsRect.x = m_IconCenter.x + 20;
+            m_ButtonsRect.x = m_BodyRect.x -5 ;
             m_ButtonsRect.y = m_IconCenter.y + m_IconCenter.height;
-            m_ButtonsRect.width = m_BodyRect.width - 40;
+            m_ButtonsRect.width = m_BodyRect.width -10;
             m_ButtonsRect.height = 150;
 
 
             GUILayout.BeginArea(m_ButtonsRect);
 
+            GUILayout.BeginHorizontal();
+            // Draw port
+            GUILayout.Space(15);
+            IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("ToggleTrainInputBool"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+
             // if button contains mouse position
             TrainModelButton();
-            GUILayout.Space(15);
-            RunModelButton();
+            GUILayout.EndHorizontal();
+
+        
             GUILayout.Space(15);
             GUILayout.BeginHorizontal();
-            GUILayout.Space(NodeWidth / 2 - 40);
+            // Draw port
+            GUILayout.Space(15);
+            IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("ToggleRunInputBool"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+
+            RunModelButton();
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(20);
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(NodeWidth / 2 - 20);
             if (GUILayout.Button("", m_NodeSkin.GetStyle("Reset")))
             {
                 node.ResetModel();
                 numberOfExamplesTrained = 0;
             }
             GUILayout.EndHorizontal();
+            GUILayout.Space(5);
             GUILayout.BeginHorizontal();
+            GUILayout.Space(20);
             GUILayout.Label("reset model", m_NodeSkin.GetStyle("Reset Pink Label"));
             GUILayout.EndHorizontal();
             GUILayout.Space(15);
