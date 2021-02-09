@@ -184,7 +184,7 @@ namespace InteractML.ControllerCustomisers
             GUILayout.Space(10);
             GUI.changed = false;
             m_InputSetUp.enableUniversalInterface = EditorGUILayout.Toggle(m_InputSetUp.enableUniversalInterface, m_NodeSkin.GetStyle("Local Space Toggle"), GUILayout.MaxWidth(50));
-            EditorGUILayout.LabelField("Enable Universal Interface", m_NodeSkin.GetStyle("Port Label"));
+            EditorGUILayout.LabelField("Turn on", m_NodeSkin.GetStyle("Port Label"));
             if (GUI.changed)
             {
                 m_InputSetUp.SetUniversalSetUp();

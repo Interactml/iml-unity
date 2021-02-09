@@ -26,7 +26,7 @@ namespace InteractML
         /// Texture2D for node color
         /// </summary>
         /// <returns></returns>
-        protected Texture2D NodeColor { get; set; }
+        protected Texture2D NodeColor { get; set; }  
 
         /// <summary>
         /// Float value for line weight
@@ -215,7 +215,8 @@ namespace InteractML
                 GUILayout.BeginArea(HeaderRect);
                 GUILayout.Label(NodeName, m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
                 //if(!String.IsNullOrEmpty(NodeSubtitle)) this causes the GUI to stutter 
-                GUILayout.Label(/*NodeSubtitle*/ m_IMLNode.id, m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
+                //commented out nodeid in subtitle for debugging
+                //GUILayout.Label(/*NodeSubtitle*/ m_IMLNode.id, m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
                 GUILayout.EndArea();
 
                 GUILayout.Label("", GUILayout.MinHeight(60));

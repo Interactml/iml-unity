@@ -48,7 +48,7 @@ namespace InteractML
         #region XNode messages
         public override void OnHeaderGUI()
         {
-            baseNodeBodyHeight = 360;
+            baseNodeBodyHeight = 320;
             // Get reference to the current node
             m_TrainingExamplesNode = (target as TrainingExamplesNode);
             NodeName = "TEACH THE MACHINE ";
@@ -364,18 +364,16 @@ namespace InteractML
                 GUILayout.Space(15);
                 IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("RecordOneInputBool"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
                 GUILayout.Space(offset);
-                GUILayout.BeginVertical();
                 if (GUILayout.Button(new GUIContent(""), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record One Button")))
                 {
                     IMLEventDispatcher.RecordOneCallback?.Invoke(m_TrainingExamplesNode.id);
                 }
                 GUILayout.Space(5);
                 GUILayout.BeginHorizontal();
-                GUILayout.Space(-10);
+                GUILayout.Space(10);
                 GUILayout.Label("record one \nexample", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
                 GUILayout.Label("");
                 GUILayout.EndHorizontal();
-                GUILayout.EndVertical();
                 
                 //button tooltip code 
                 if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition) && m_TrainingExamplesNode.tooltips.BodyTooltip.Tips.Length > 2)
@@ -404,17 +402,17 @@ namespace InteractML
             GUILayout.Space(15);
             IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("ToggleRecordingInputBool"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
             GUILayout.Space(offset);
-            GUILayout.BeginVertical();
+
             // draw record button
             string recordNameButton = ShowRecordExamplesButton();
             GUILayout.Space(5);
             // draw record label
             GUILayout.BeginHorizontal();
-            GUILayout.Space(-10);
+            GUILayout.Space(10);
             GUILayout.Label(recordNameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
             GUILayout.Label("");
             GUILayout.EndHorizontal();
-            GUILayout.EndVertical();
+
 
             GUILayout.EndHorizontal();
 
@@ -427,16 +425,15 @@ namespace InteractML
             IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("ToggleRecordingInputBool"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
             GUILayout.Space(offset);
             // draw delete all button
-            GUILayout.BeginVertical();
+
             ShowClearAllExamplesButton();
             
             GUILayout.Space(10);
             GUILayout.BeginHorizontal();
-            GUILayout.Space(-10);
+            GUILayout.Space(10);
             GUILayout.Label("delete all \n recordings", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button Pink"));
             GUILayout.Label("");
             GUILayout.EndHorizontal();
-            GUILayout.EndVertical();
             GUILayout.EndHorizontal();
 
             GUILayout.Space(20);
