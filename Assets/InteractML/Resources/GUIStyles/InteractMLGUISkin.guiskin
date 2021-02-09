@@ -2488,35 +2488,35 @@ MonoBehaviour:
     m_Normal:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
-      m_TextColor: {r: 1, g: 0.6745098, b: 0.12156863, a: 1}
+      m_TextColor: {r: 0.9647059, g: 0.76862746, b: 0.43529412, a: 1}
     m_Hover:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
-      m_TextColor: {r: 1, g: 0.6745098, b: 0.12156863, a: 1}
+      m_TextColor: {r: 0.9647059, g: 0.76862746, b: 0.43529412, a: 1}
     m_Active:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
-      m_TextColor: {r: 1, g: 0.6745098, b: 0.12156863, a: 1}
+      m_TextColor: {r: 0.9647059, g: 0.76862746, b: 0.43529412, a: 1}
     m_Focused:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
-      m_TextColor: {r: 1, g: 0.6745098, b: 0.12156863, a: 1}
+      m_TextColor: {r: 0.9647059, g: 0.76862746, b: 0.43529412, a: 1}
     m_OnNormal:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
-      m_TextColor: {r: 1, g: 0.6745098, b: 0.12156863, a: 1}
+      m_TextColor: {r: 0.9647059, g: 0.76862746, b: 0.43529412, a: 1}
     m_OnHover:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
-      m_TextColor: {r: 1, g: 0.6745098, b: 0.12156863, a: 1}
+      m_TextColor: {r: 0.9647059, g: 0.76862746, b: 0.43529412, a: 1}
     m_OnActive:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
-      m_TextColor: {r: 1, g: 0.6745098, b: 0.12156863, a: 1}
+      m_TextColor: {r: 0.9647059, g: 0.76862746, b: 0.43529412, a: 1}
     m_OnFocused:
       m_Background: {fileID: 0}
       m_ScaledBackgrounds: []
-      m_TextColor: {r: 1, g: 0.6745098, b: 0.12156863, a: 1}
+      m_TextColor: {r: 0.9647059, g: 0.76862746, b: 0.43529412, a: 1}
     m_Border:
       m_Left: 0
       m_Right: 0
@@ -2540,7 +2540,7 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 876c259da463d0c438b296c2a2b4c8b4, type: 3}
     m_FontSize: 12
     m_FontStyle: 0
-    m_Alignment: 4
+    m_Alignment: 3
     m_WordWrap: 0
     m_RichText: 0
     m_TextClipping: 0

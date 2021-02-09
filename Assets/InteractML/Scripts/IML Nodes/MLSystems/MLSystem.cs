@@ -32,8 +32,20 @@ namespace InteractML
         [SerializeField]
         public List<IMLBaseDataType> PredictedOutput;
 
+        //[Input]
+        //public List<Node> TriggerTrain;
+
+        /// <summary>
+        /// Toggle Train Button Input Customiser Boolean
+        /// </summary>
         [Input]
-        public List<Node> TriggerTrain; 
+        public bool ToggleTrainInputBool;
+
+        /// <summary>
+        /// Toggle Run Button Input Customiser Boolean
+        /// </summary>
+        [Input]
+        public bool ToggleRunInputBool;
 
         /// <summary>
         /// Predicted Rapidlib Output 
