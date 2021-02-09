@@ -68,6 +68,7 @@ namespace InteractML
         private InteractML.CustomControllers.InputSetUp m_inputSetUp;
         [SerializeField, HideInInspector]
         private List<CustomController> m_CustomControllerList;
+
         #endregion
 
         #region Public Lists of Nodes (Properties)
@@ -134,7 +135,10 @@ namespace InteractML
         private Dictionary<FieldInfo, MonoBehaviour> m_DataMonobehavioursPerFieldInfo;
 
         public bool universalInputEnabled = true;
-        public bool universalInputActive = true;
+        public bool universalInputActive = false;
+
+        public GameObject prefab;
+        private IMLGrab icon;
 
         #endregion
 
@@ -142,7 +146,7 @@ namespace InteractML
 
         private void OnEnable()
         {
-
+            universalInputActive = false;
             // if this componenet is in the open scene 
             if (this.gameObject.scene.IsValid())
             {
@@ -223,7 +227,7 @@ namespace InteractML
 
         private void Initialize()
         {
-
+            InitializeIMLIndicator();
             SubscribeToDelegates();
             // Initialise list of nodes for the IML Controller
             if (Lists.IsNullOrEmpty(ref GameObjectsToUse))
@@ -338,6 +342,7 @@ namespace InteractML
             {
                 Debug.Log("no input set up node");
             }
+            
         }
         /// <summary>
         /// Event to set up models when loading
@@ -380,6 +385,15 @@ namespace InteractML
                 //Initialize node 
                 node.NodeInitalize();
             }
+        }
+
+        private void InitializeIMLIndicator()
+        {
+            if(icon == null)
+            {
+                icon = GameObject.Instantiate(prefab, this.transform).GetComponent<IMLGrab>();
+            }
+            
         }
         /// <summary>
         /// Subscribe to all delegates called in initialize
@@ -1619,8 +1633,11 @@ namespace InteractML
                         // Toggle Run only if the model is trained (and it is not DTW, the user should do that)
                         if (MLSystemNode.Trained && MLSystemNode.TrainingType != IMLSpecifications.TrainingSetType.SeriesTrainingExamples)
                         {
-                            MLSystemNode.ToggleRunning();
-                            success = true;
+                            success = MLSystemNode.StartRunning();
+                            if (success)
+                            {
+                                icon.SetBody(icon.runningColour);
+                            }
                         }
                     }
 
@@ -2036,6 +2053,8 @@ namespace InteractML
                         MLSNode.SaveModelToDisk();
                 }
             }
+            if(success)
+                icon.SetColourHighlight(icon.trainedHighlight);
             // returns true if nodeID exists and whether training successful
             return success;
         }
@@ -2053,13 +2072,33 @@ namespace InteractML
                 // if nodeID matches
                 if (nodeID == MLSNode.id)
                 {
-                    // attempt to run
-                    success = MLSNode.ToggleRunning();
+                    if (MLSNode.Running)
+                    {
+                        success = MLSNode.StopRunning();
+                        if(success)
+                            icon.SetBody(icon.baseColour);
+                    }
+                    else
+                    {
+                        success = MLSNode.StartRunning();
+                        if (success)
+                            icon.SetBody(icon.runningColour);
+                        else
+                            icon.SetBody(icon.current);
+                    }
+                        
+
                 }
             }
+            if (success)
+                icon.SetBody(icon.runningColour);
+            else
+                icon.SetBody(icon.current);
             // return true if nodeID exists and running started
             return success; 
         }
+        
+       
         
 
         /// <summary>
@@ -2078,6 +2117,7 @@ namespace InteractML
                     MLSNode.ResetModel();
                 }
             }
+            icon.SetColourHighlight(icon.selectedHighlight);
         }
 
         /// <summary>
@@ -2117,7 +2157,20 @@ namespace InteractML
             {
                 if (nodeID == TENode.id)
                 {
-                    success = TENode.ToggleCollectExamples();
+                    if (TENode.CollectingData)
+                    {
+                        success = TENode.StopCollecting();
+                        if (success)
+                            icon.SetBody(icon.baseColour);
+                    } else
+                    {
+                        success = TENode.StartCollecting();
+                        if (success)
+                            icon.SetBody(icon.recordingColour);
+                        else
+                            icon.SetBody(icon.current);
+                    }
+                        
                 }
             }
             return success;

@@ -24,6 +24,9 @@ namespace InteractML.CustomControllers
 
         public string[] buttonOptions;
 
+        public string mlsID;
+        public string trainingID;
+
         // which 
         public InputHandler DeleteLast;
         public InputHandler DeleteAll;
@@ -203,14 +206,12 @@ namespace InteractML.CustomControllers
 
         public void SubscribeToEvents()
         {
-            Debug.Log("here");
         }
 
         public void UnsubscribeFromEvents()
         {
 
         }
-
 
 
         //method for getting inputs from system come back for future

@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  Counter: 2
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -101,7 +101,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 2
+  Counter: 5
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -229,7 +229,7 @@ MonoBehaviour:
   matchLiveDataInputs: 1
   matchVectorLength: 1
   warning: You are in edit mode live data in from objects will only workin play mode
-  error: 1
+  error: 0
   trainOnLoad: 0
 --- !u!114 &1957865102308329510
 MonoBehaviour:
@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 1
-  Counter: 2
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -396,7 +396,6 @@ MonoBehaviour:
   id: fb96417d-b294-4b44-adee-bf9bdb125085
   numberInComponentList: -1
   m_inputEvent: 0
-  button: {fileID: 0}
   hand: 2
   inputs: 2
   triggerType: 2
@@ -423,19 +422,14 @@ MonoBehaviour:
   enableUniversalInterface: 0
   activeUniversalInterface: 0
   device: 3
-  trainingHand: 1
+  trainingHand: 0
   mlsHand: 1
   buttonOptions:
   - Trigger
   - Grip
   - Primary
   - Secondary
-  DeleteLast: {fileID: 0}
-  DeleteAll: {fileID: 0}
-  ToggleRecord: {fileID: 0}
-  Train: {fileID: 0}
-  ToggleRun: {fileID: 0}
-  deleteLastButtonNo: 2
+  deleteLastButtonNo: 0
   deleteLastButtonTT: 2
   deleteAllButtonNo: 3
   deleteAllButtonTT: 2

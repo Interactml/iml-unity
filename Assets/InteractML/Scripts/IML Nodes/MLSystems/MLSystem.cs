@@ -673,25 +673,28 @@ namespace InteractML
         /// Sets running boolean to true 
         /// </summary>
         /// <returns>boolean on whether the model has started running</returns>
-        private bool StartRunning()
+        public bool StartRunning()
         {
-            Debug.Log("here");
-            UpdateOutputFormat();
-            // If the system is not running and it is trained, it is not traing and the vectors match 
-            if (!m_Running && Trained && !Training && matchLiveDataInputs && matchVectorLength)
+            if (!m_Running)
             {
-                // Set flag to true if running inputs/outputs are not null and the model is trained or it is a series 
-                if (((m_RapidlibInputVector != null && m_RapidlibOutputVector != null) || m_trainingType == IMLSpecifications.TrainingSetType.SeriesTrainingExamples))
+                UpdateOutputFormat();
+                // If the system is not running and it is trained, it is not traing and the vectors match 
+                if (!m_Running && Trained && !Training && matchLiveDataInputs && matchVectorLength)
                 {
-                    m_Running = true;
-                    return true;
-                }
-                else
-                {
-                    Debug.LogError("Rapidlib vectors for realtime predictions are null!");
-                    return false;
+                    // Set flag to true if running inputs/outputs are not null and the model is trained or it is a series 
+                    if (((m_RapidlibInputVector != null && m_RapidlibOutputVector != null) || m_trainingType == IMLSpecifications.TrainingSetType.SeriesTrainingExamples))
+                    {
+                        m_Running = true;
+                        return true;
+                    }
+                    else
+                    {
+                        Debug.LogError("Rapidlib vectors for realtime predictions are null!");
+                        return false;
+                    }
                 }
             }
+            
             return false; 
         }
         /// <summary>
