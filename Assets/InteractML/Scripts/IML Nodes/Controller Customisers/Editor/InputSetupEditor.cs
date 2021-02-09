@@ -40,6 +40,10 @@ namespace InteractML.ControllerCustomisers
             // Get reference to the current node
             m_InputSetUp = (target as InteractML.CustomControllers.InputSetUp);
 
+            // Initialise node height
+            m_BodyRect.height = 400;
+            nodeSpace = 120;
+
             // Initialise node name
             NodeName = "Input Set Up";
         }

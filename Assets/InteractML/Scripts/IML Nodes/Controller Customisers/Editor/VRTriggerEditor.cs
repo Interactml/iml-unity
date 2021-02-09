@@ -40,9 +40,13 @@ namespace InteractML.ControllerCustomisers
             // Initialise node name
             NodeName = "VR TRIGGER";
 
+            // Initialise node height
+            m_BodyRect.height = 100;
+            nodeSpace = 80;
+
             // Initialise output port labels
             OutputPortsNamesOverride = new Dictionary<string, string>();
-            base.OutputPortsNamesOverride.Add("ControllerOutput", "Controller\nOut");
+            base.OutputPortsNamesOverride.Add("m_inputEvent", "Controller\nOut");
 
         }
 
@@ -51,15 +55,21 @@ namespace InteractML.ControllerCustomisers
         /// </summary>
         protected override void ShowBodyFields()
         {
+            GUILayout.Space(50);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Hand", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(100));
             GUI.changed = false;
             m_VRTrigger.hand = (IMLSides)EditorGUILayout.EnumPopup(m_VRTrigger.hand);
-            
+            GUILayout.EndHorizontal();
             if (GUI.changed)
             {
                 m_VRTrigger.OnHandChange();
             }
             // show hand choice method from inputsetupeditor using m_VRTrigger.hand
             GUI.changed = false;
+            GUILayout.Space(10);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Button", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(100));
             // set button choice for delete last
             m_VRTrigger.inputs = (IMLControllerInputs)EditorGUILayout.EnumPopup(m_VRTrigger.inputs);
             //Event.current.type == EventType.Repaint
@@ -75,6 +85,7 @@ namespace InteractML.ControllerCustomisers
                 m_VRTrigger.OnTriggerChange();
                 EditorUtility.SetDirty(m_VRTrigger);
             }
+            GUILayout.EndHorizontal();
             //show button method from InputSetUpEditor using m_VRTrigger.triggerButton*/
 
         }
