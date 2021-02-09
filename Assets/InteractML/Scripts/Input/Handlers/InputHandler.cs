@@ -14,11 +14,13 @@ namespace InteractML
         public IMLTriggerTypes triggerType;
         protected bool previousPress = false;
 
-        public delegate bool StateChange();
-        public abstract event StateChange ButtonFire;
+        public abstract event IMLEventDispatcher.IMLEvent ButtonFire;
 
         public abstract void HandleState();
         public abstract void SetButtonNo(int button);
         public abstract void SetTriggerType(IMLTriggerTypes triggerT);
+
+        public string nodeID;
+
     }
 }

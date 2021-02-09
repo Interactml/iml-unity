@@ -21,7 +21,7 @@ namespace InteractML
         [SerializeField]
         private UnityEngine.XR.InputDevice currentController;
 
-        public override event StateChange ButtonFire;
+        public override event IMLEventDispatcher.IMLEvent ButtonFire;
 
         public VRButtonHandler(int butNo, IMLSides side, IMLTriggerTypes type, string name)
         {
@@ -31,6 +31,7 @@ namespace InteractML
             SetButtonNo(buttonNo);
             SetButton();
             this.controllerSide = side;
+            this.nodeID = "";
             _controllers = new List<UnityEngine.XR.InputDevice>();
             SetController(controllerSide);
         }
@@ -54,12 +55,12 @@ namespace InteractML
                             previousPress = true;
                             if (triggerType == IMLTriggerTypes.Down)
                             {
-                                ButtonFire?.Invoke();
+                                ButtonFire?.Invoke(nodeID);
                                 Debug.Log("down" + controller.characteristics + " " + buttonName);
                             }
                             if (triggerType == IMLTriggerTypes.Hold)
                             {
-                                ButtonFire?.Invoke();
+                                ButtonFire?.Invoke(nodeID);
                                 //Debug.Log("hold " + controller.characteristics + " " + buttonName);
                             }
                         } 
@@ -73,12 +74,12 @@ namespace InteractML
                             previousPress = false;
                             if (triggerType == IMLTriggerTypes.Up)
                             {
-                                ButtonFire?.Invoke();
+                                ButtonFire?.Invoke(nodeID);
                                 Debug.Log("up" + buttonName);
                             }
                             if (triggerType == IMLTriggerTypes.Hold)
                             {
-                                ButtonFire?.Invoke();
+                                ButtonFire?.Invoke(nodeID);
                                 Debug.Log("hold " + controller.characteristics + " " + buttonName);
                             }
                         }

@@ -7,7 +7,7 @@ namespace InteractML
     public class IMLInputHandler : InputHandler
     {
         public InputDevice device;
-        public override event StateChange ButtonFire;
+        public override event IMLEventDispatcher.IMLEvent ButtonFire;
      
         public override void HandleState()
         {

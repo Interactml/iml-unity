@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -101,7 +101,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -226,7 +226,7 @@ MonoBehaviour:
   - 0
   DelayedPredictedOutput:
   - 0.1196349441458362
-  m_NumExamplesTrainedOn: 2
+  m_NumExamplesTrainedOn: 1
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 00000000
   m_trainingType: 0
@@ -239,7 +239,7 @@ MonoBehaviour:
   matchLiveDataInputs: 1
   matchVectorLength: 1
   warning: You are in edit mode live data in from objects will only workin play mode
-  error: 1
+  error: 0
   trainOnLoad: 0
 --- !u!114 &1957865102308329510
 MonoBehaviour:
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Name: Single Training Examples
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 596.9375, y: 264.86478}
+  position: {x: 600, y: 472}
   ports:
     keys:
     - InputFeatures
@@ -363,7 +363,7 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 0
-  showWarning: 1
+  showWarning: 0
   canCollect: 1
 --- !u!114 &3238365560739477877
 MonoBehaviour:
@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 1
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -807,15 +807,15 @@ MonoBehaviour:
   - Joystick8Button19
   mlsID: 
   trainingID: 
-  deleteLastButtonNo: 62
+  deleteLastButtonNo: 46
   deleteLastButtonTT: 0
-  deleteAllButtonNo: 68
+  deleteAllButtonNo: 47
   deleteAllButtonTT: 1
-  toggleRecordButtonNo: 50
+  toggleRecordButtonNo: 48
   toggleRecordButtonTT: 2
-  trainButtonNo: 33
+  trainButtonNo: 62
   trainButtonTT: 2
-  toggleRunButtonNo: 26
+  toggleRunButtonNo: 52
   toggleRunButtonTT: 2
   currentMLS: 
   currentTraining: 

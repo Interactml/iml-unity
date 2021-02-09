@@ -27,7 +27,6 @@ namespace InteractML.ControllerCustomisers
         {
             int input = (int)inputs;
             button = new VRButtonHandler(input, hand, triggerType, "VRTrigger");
-            button.ButtonFire += SetBool;
         }
 
         public override void UpdateLogic()
@@ -62,7 +61,6 @@ namespace InteractML.ControllerCustomisers
             {
                 MLController.SceneComponent.DeleteCustomControllerNode(this);
             }
-            button.ButtonFire -= SetBool;
         }
     }
 }

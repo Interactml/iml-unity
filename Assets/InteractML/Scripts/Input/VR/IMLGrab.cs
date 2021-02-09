@@ -31,7 +31,7 @@ namespace InteractML
 
         public void SetColourHighlight(Color colour)
         {
-            this.GetComponent<Renderer>().material.SetColor("_OutlineColor", colour);
+            this.GetComponent<Renderer>().sharedMaterial.SetColor("_OutlineColor", colour);
         }
         
         public void SetBody(Texture2D texture)

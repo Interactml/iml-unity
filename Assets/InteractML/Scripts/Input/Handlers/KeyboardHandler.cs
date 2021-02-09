@@ -21,7 +21,7 @@ namespace InteractML
         //[SerializeField]
         //private IMLSides controllerSide;
 
-        public override event StateChange ButtonFire;
+        public override event IMLEventDispatcher.IMLEvent ButtonFire;
 
         public KeyboardHandler(int butNo, IMLTriggerTypes type, string name)
         {
@@ -30,24 +30,22 @@ namespace InteractML
             this.buttonName = name;
             keyOptions = InputHelperMethods.deviceEnumSetUp(IMLInputDevices.Keyboard);
             SetButtonNo(buttonNo);
+            this.nodeID = "";
         }
         /// <summary>
         /// Handle button state fires events
         /// </summary>
         public override void HandleState()
         {
-            Debug.Log(_button);
-            
-            
             // if the button is held and the trigger type is hold
-            if (Input.GetKey(KeyCode.Q) && triggerType == IMLTriggerTypes.Hold)
+            if (Input.GetKey(_button) && triggerType == IMLTriggerTypes.Hold)
             {
                 // if it hasn't been pressed previously
                 if (!previousPress)
                 {
-                    Debug.Log("hold");
+                    Debug.Log("hold " + buttonName);
                     // fire event 
-                    ButtonFire?.Invoke();
+                    ButtonFire?.Invoke(nodeID);
                     // set previous press to true
                     previousPress = true;
                 }
@@ -58,7 +56,7 @@ namespace InteractML
                 {
                     Debug.Log("hold");
                     // fire 
-                    ButtonFire?.Invoke();
+                    ButtonFire?.Invoke(nodeID);
                     previousPress = false;
                 }
             }
@@ -66,13 +64,13 @@ namespace InteractML
             if (Input.GetKeyDown(_button) && triggerType == IMLTriggerTypes.Down)
             {
                 Debug.Log("down");
-                ButtonFire?.Invoke();
+                ButtonFire?.Invoke(nodeID);
             }
             // if button key is up and trigger type is up
             if (Input.GetKeyUp(_button) && triggerType == IMLTriggerTypes.Up)
             {
-                Debug.Log("up");
-                ButtonFire?.Invoke();
+                Debug.Log("up" + buttonName);
+                ButtonFire?.Invoke(nodeID);
             }
             
         }

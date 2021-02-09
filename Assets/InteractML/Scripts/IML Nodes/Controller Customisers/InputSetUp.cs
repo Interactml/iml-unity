@@ -80,6 +80,8 @@ namespace InteractML.CustomControllers
             allHandlers.AddRange(mlsHandlers);
             allHandlers.AddRange(trainingHandlers);
             SubscribeToEvents();
+            SetTrainingID("2bb91d0b-b696-42a0-9d49-cb6d063fce92");
+            SetMLSID("b3fecfdb-895b-428e-9584-7fc246c1d7c0");
         }
 
 
@@ -190,7 +192,22 @@ namespace InteractML.CustomControllers
             Debug.Log(DeleteAll.GetType());
         }
         
-       
+        public void SetTrainingID(string id)
+        {
+            foreach (InputHandler handler in trainingHandlers)
+            {
+                handler.nodeID = id;
+            }
+
+        }
+        public void SetMLSID(string id)
+        {
+            foreach (InputHandler handler in mlsHandlers)
+            {
+                handler.nodeID = id;
+            }
+
+        }
 
         private void SaveToFile()
         {
@@ -257,7 +274,14 @@ namespace InteractML.CustomControllers
 
         public void SubscribeToEvents()
         {
+            DeleteLast.ButtonFire += IMLEventDispatcher.DeleteLastCallback;
+            DeleteAll.ButtonFire += IMLEventDispatcher.DeleteAllCallback;
+            ToggleRecord.ButtonFire += IMLEventDispatcher.ToggleRecordCallback;
+            Train.ButtonFire += IMLEventDispatcher.TrainMLSCallback;
+            ToggleRun.ButtonFire += IMLEventDispatcher.ToggleRunCallback;
         }
+
+        
 
         public void UnsubscribeFromEvents()
         {

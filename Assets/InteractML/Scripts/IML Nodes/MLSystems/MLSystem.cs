@@ -1929,7 +1929,7 @@ namespace InteractML
         {
             //test
             //Debug.Log(Model.ModelAddress);
-            //Debug.Log(id);
+            Debug.Log(id);
             //Debug.Log(Model.ModelStatus);
             //Debug.Log(Trained);
             //Debug.Log(m_trainingType);

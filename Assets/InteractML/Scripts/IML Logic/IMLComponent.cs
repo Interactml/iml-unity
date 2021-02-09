@@ -185,6 +185,7 @@ namespace InteractML
         // Start is called before the first frame update
         void Start()
         {
+            InitializeIMLIndicator();
 #if !UNITY_EDITOR
                 // Run Models on Play if we are on a build
                 RunModelsOnPlay();
@@ -227,7 +228,6 @@ namespace InteractML
 
         private void Initialize()
         {
-            InitializeIMLIndicator();
             SubscribeToDelegates();
             // Initialise list of nodes for the IML Controller
             if (Lists.IsNullOrEmpty(ref GameObjectsToUse))
@@ -1635,7 +1635,7 @@ namespace InteractML
                         if (MLSystemNode.Trained && MLSystemNode.TrainingType != IMLSpecifications.TrainingSetType.SeriesTrainingExamples)
                         {
                             success = MLSystemNode.StartRunning();
-                            if (success)
+                            if (success && icon != null)
                             {
                                 icon.SetBody(icon.runningColour);
                             }
@@ -2054,7 +2054,7 @@ namespace InteractML
                         MLSNode.SaveModelToDisk();
                 }
             }
-            if(success)
+            if(success && icon != null)
                 icon.SetColourHighlight(icon.trainedHighlight);
             // returns true if nodeID exists and whether training successful
             return success;
@@ -2076,13 +2076,13 @@ namespace InteractML
                     if (MLSNode.Running)
                     {
                         success = MLSNode.StopRunning();
-                        if(success)
+                        if(success && icon != null)
                             icon.SetBody(icon.baseColour);
                     }
                     else
                     {
                         success = MLSNode.StartRunning();
-                        if (success)
+                        if (success && icon != null)
                             icon.SetBody(icon.runningColour);
                         else
                             icon.SetBody(icon.current);
@@ -2091,10 +2091,6 @@ namespace InteractML
 
                 }
             }
-            if (success)
-                icon.SetBody(icon.runningColour);
-            else
-                icon.SetBody(icon.current);
             // return true if nodeID exists and running started
             return success; 
         }
@@ -2106,7 +2102,7 @@ namespace InteractML
         /// Reset model for delegate
         /// </summary>
         /// <param name="nodeID">node id of the MLS nide to reset</param>
-        private void ResetModel(string nodeID)
+        private bool ResetModel(string nodeID)
         {
             //iterate through all mls nodes
             foreach (MLSystem MLSNode in MLSystemNodeList)
@@ -2119,6 +2115,7 @@ namespace InteractML
                 }
             }
             icon.SetColourHighlight(icon.selectedHighlight);
+            return true;
         }
 
         /// <summary>
@@ -2219,8 +2216,9 @@ namespace InteractML
         /// Delete all training exmples for delefate
         /// </summary>
         /// <param name="nodeID">nodeID of the training examples to delete</param>
-        private void DeleteAllTrainingExamples(string nodeID)
+        private bool DeleteAllTrainingExamples(string nodeID)
         {
+            Debug.Log(nodeID);
             foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
             {
                 if (nodeID == TENode.id)
@@ -2229,6 +2227,7 @@ namespace InteractML
                    TENode.ClearTrainingExamples();
                 }
             }
+            return true;
         }
 
         private void EnableUniversalInterface(bool value)
