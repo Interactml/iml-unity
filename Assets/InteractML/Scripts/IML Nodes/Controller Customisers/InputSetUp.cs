@@ -8,6 +8,7 @@ using InteractML.ControllerCustomisers;
 
 namespace InteractML.CustomControllers
 {
+    [NodeWidth(420)]
     public class InputSetUp : IMLNode
     {
         // whether this is accessible during the game 

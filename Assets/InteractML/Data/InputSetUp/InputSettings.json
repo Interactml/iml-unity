@@ -1,9 +1,9 @@
 {
   "isEnabled": false,
-  "device": 3,
+  "device": 4,
   "deleteLastButtonNo": 2,
   "deleteLastButtonTT": 2,
-  "deleteAllButtonNo": 3,
+  "deleteAllButtonNo": 0,
   "deleteAllButtonTT": 2,
   "toggleRecordButtonNo": 0,
   "toggleRecordButtonTT": 1,

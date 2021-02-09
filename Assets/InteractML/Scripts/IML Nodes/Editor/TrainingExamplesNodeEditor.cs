@@ -72,12 +72,6 @@ namespace InteractML
             InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
             InputPortsNamesOverride.Add("TargetValues", "Target Values");
 
-            //CustomInputPortsNamesOverride = new Dictionary<string, string>();
-            InputPortsNamesOverride.Add("RecordOneInputBool", "Record One Custom Input");
-            InputPortsNamesOverride.Add("ToggleRecordingInputBool", "Toggle Record Custom Input");
-            InputPortsNamesOverride.Add("DeleteLastInputBool", "Delete Last Custom Input");
-            InputPortsNamesOverride.Add("DeleteAllInputBool", "Delete All Values");
-
             base.nodeTips = m_TrainingExamplesNode.tooltips;
             Debug.Log(m_TrainingExamplesNode.DesiredInputFeatures.Count);
             if (m_TrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_TrainingExamplesNode.DesiredOutputFeatures.Count || lastShowWarning != m_TrainingExamplesNode.showWarning)

@@ -49,14 +49,32 @@ namespace InteractML.ControllerCustomisers
         /// </summary>
         protected override void ShowBodyFields()
         {
+            GUILayout.Space(10);
+            ShowEnableUniversalInterfaceToggle();
+            GUILayout.Space(20);
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Choose Input Device", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
             // sets the device
             ShowDeviceOptions();
+            GUILayout.EndHorizontal();
+
             //sets the controller side for the training examples whether left right or both 
             GUI.changed = false;
+
+            GUILayout.Space(20);
+            GUILayout.Label("Training Controls", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"));
+            GUILayout.Space(10);
+
+            
             // if the input is from vr controllers or hands show choice for training examples related buttons to be on the left hand or right hand or both
             if (m_InputSetUp.device == IMLInputDevices.VRControllers || m_InputSetUp.device == IMLInputDevices.VRHands)
             {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Hand", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
                 m_InputSetUp.trainingHand = (IMLSides)EditorGUILayout.EnumPopup(m_InputSetUp.trainingHand);
+                GUILayout.EndHorizontal();
+                GUILayout.Space(10);
             }
             if (GUI.changed)
             {
@@ -68,27 +86,60 @@ namespace InteractML.ControllerCustomisers
             // set button choice for delete last
             // delete last
             Debug.Log(m_InputSetUp);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Delete Last", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
             ShowButtonChoice(m_InputSetUp.DeleteLast.buttonName, m_InputSetUp.deleteLastButtonNo, out m_InputSetUp.deleteLastButtonNo, m_InputSetUp.deleteLastButtonTT, out m_InputSetUp.deleteLastButtonTT);
-            // choose delete all button 
+            GUILayout.EndHorizontal();
+
+            // choose delete all button
+            GUILayout.Space(10);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Delete All", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
             ShowButtonChoice(m_InputSetUp.DeleteAll.buttonName, m_InputSetUp.deleteAllButtonNo, out m_InputSetUp.deleteAllButtonNo, m_InputSetUp.deleteAllButtonTT, out m_InputSetUp.deleteAllButtonTT);
+            GUILayout.EndHorizontal();
+
             // choose toggle record button 
+            GUILayout.Space(10);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Toggle Record", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
             ShowButtonChoice(m_InputSetUp.ToggleRecord.buttonName, m_InputSetUp.toggleRecordButtonNo, out m_InputSetUp.toggleRecordButtonNo, m_InputSetUp.toggleRecordButtonTT, out m_InputSetUp.toggleRecordButtonTT);
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(30);
+            GUILayout.Label("Machine Learning System Controls", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"));
+            GUILayout.Space(10);
+
             // sets the controller side for the training
             GUI.changed = false;
             // if the input is from vr controllers or hands show choice for training examples related buttons to be on the left hand or right hand or both
             if (m_InputSetUp.device == IMLInputDevices.VRControllers || m_InputSetUp.device == IMLInputDevices.VRHands)
             {
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Hand", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
                 m_InputSetUp.mlsHand = (IMLSides)EditorGUILayout.EnumPopup(m_InputSetUp.mlsHand);
+                GUILayout.EndHorizontal();
             }
             if (GUI.changed)
             {
                 m_InputSetUp.OnHandChange(m_InputSetUp.mlsHand, "mlsSide");
                 EditorUtility.SetDirty(m_InputSetUp);
             }
-            // sets the button for training 
+            // sets the button for training
+            GUILayout.Space(10);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Toggle Train", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
             ShowButtonChoice(m_InputSetUp.Train.buttonName, m_InputSetUp.trainButtonNo, out m_InputSetUp.trainButtonNo, m_InputSetUp.trainButtonTT, out m_InputSetUp.trainButtonTT);
+            GUILayout.EndHorizontal();
+
+
             // sets the button for running
+            GUILayout.Space(10);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Toggle Run", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
             ShowButtonChoice(m_InputSetUp.ToggleRun.buttonName, m_InputSetUp.toggleRunButtonNo, out m_InputSetUp.toggleRunButtonNo, m_InputSetUp.toggleRunButtonTT, out m_InputSetUp.toggleRunButtonTT);
+            GUILayout.EndHorizontal();
+
+
         }
 
         private void ShowDeviceOptions()
@@ -126,6 +177,14 @@ namespace InteractML.ControllerCustomisers
 
         }
 
+        protected void ShowEnableUniversalInterfaceToggle()
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(10);
+            m_InputSetUp.enableUniversalInterface = EditorGUILayout.Toggle(m_InputSetUp.enableUniversalInterface, m_NodeSkin.GetStyle("Local Space Toggle"), GUILayout.MaxWidth(50));
+            EditorGUILayout.LabelField("Enable Universal Interface", m_NodeSkin.GetStyle("Port Label"));
+            GUILayout.EndHorizontal();
+        }
     }
 }
 
