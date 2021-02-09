@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ReusableMethods;
+using XNode;
 #if UNITY_EDITOR
 using UnityEditor;
 using XNodeEditor;
@@ -113,6 +114,8 @@ namespace InteractML
             DrawValues(m_TrainingExamplesNode.DesiredInputFeatures, "Input Values");
             GUILayout.Space(bodySpace);
             DrawValues(m_TrainingExamplesNode.DesiredOutputFeatures, "Target Values");
+
+
 
             ShowButtons();
             //show warning if there are training examples 
@@ -359,10 +362,14 @@ namespace InteractML
             //if it is a single training examples node 
             if (m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
             {
+
+
                 GUILayout.BeginHorizontal();
                 // Draw port
                 GUILayout.Space(15);
-                IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("RecordOneInputBool"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+                ///// DIRTY CODE! IF YOU DEBUG THIS PORT VARAIBLE YOU CAN SEE THAT IT FINDS THE PORT!!! WHY IS IT NOT WORKING??
+                NodePort port = m_TrainingExamplesNode.GetPort("RecordOneInputBoolPort");
+                IMLNodeEditor.PortField(new GUIContent(""), port, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
                 GUILayout.Space(offset);
                 if (GUILayout.Button(new GUIContent(""), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record One Button")))
                 {
@@ -400,7 +407,7 @@ namespace InteractML
             GUILayout.BeginHorizontal();
             // Draw port
             GUILayout.Space(15);
-            IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("ToggleRecordingInputBool"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+            IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("ToggleRecordingInputBoolPort"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
             GUILayout.Space(offset);
 
             // draw record button
@@ -422,7 +429,7 @@ namespace InteractML
             //GUILayout.Space(spacing);
             // Draw port
             GUILayout.Space(15);
-            IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("ToggleRecordingInputBool"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+            IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("DeleteAllExamplesBoolPort"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
             GUILayout.Space(offset);
             // draw delete all button
 

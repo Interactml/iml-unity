@@ -518,7 +518,11 @@ namespace InteractML
             m_TrainingExamplesNodeportName = "IMLTrainingExamplesNodes";
             m_LiveFeaturesNodeportName = "InputFeatures";
 
-            
+            // Add all required dynamic ports
+            // ToggleTrainInputBoolPort           
+            this.GetOrCreateDynamicPort("ToggleTrainInputBoolPort", typeof(bool), NodePort.IO.Input);
+            // ToggleRunInputBoolPort
+            this.GetOrCreateDynamicPort("ToggleRunInputBoolPort", typeof(bool), NodePort.IO.Input);
 
 
         }
@@ -1941,7 +1945,7 @@ namespace InteractML
             //SetLearningType();
 
             //if (Trained && !matchVectorLength)
-              //CheckLengthInputsVector();
+            //CheckLengthInputsVector();
 
 
             //Check if live data input matches training examples 
@@ -1960,7 +1964,13 @@ namespace InteractML
             //UpdateOutputFormat();
 
             // Make sure dynamic output ports match the expected output format
+            
             //UpdateDynamicOutputPorts(IMLTrainingExamplesNodes, m_ExpectedOutputList, ref m_DynamicOutputPorts);
+            // Pull inputs from bool event nodeports
+            if (GetInputValue<bool>("ToggleTrainInputBoolPort"))
+                IMLEventDispatcher.TrainMLSCallback(this.id);
+            if (GetInputValue<bool>("ToggleRunInputBoolPort"))
+                IMLEventDispatcher.ToggleRunCallback(this.id);
 
             // Perform running logic (it will account for DTW and Classification/Regression) only if there is a predicted output            
             RunningLogic();

@@ -450,5 +450,35 @@ namespace InteractML
                 return false;
             }
         }
+    
+        /// <summary>
+        /// Check if a nodeport exists and if not creates it
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="portFieldName"></param>
+        /// <param name="fieldType"></param>
+        /// <param name="portIOType"></param>
+        /// <param name="portConnectionType"></param>
+        /// <param name="portTypeConstraint"></param>
+        /// <returns></returns>
+        public static NodePort GetOrCreateDynamicPort(this Node node, string portFieldName, Type fieldType, NodePort.IO portIOType, Node.ConnectionType portConnectionType = Node.ConnectionType.Multiple, Node.TypeConstraint portTypeConstraint = Node.TypeConstraint.None)
+        {
+            // Check if nodeport exists
+            NodePort auxPort = node.GetPort(portFieldName);
+            // If not, create input or ouput depending on option
+            if (auxPort == null)
+            {
+                if (portIOType == NodePort.IO.Input)
+                {
+                    auxPort = node.AddDynamicInput(fieldType, portConnectionType, portTypeConstraint, portFieldName);
+                }
+                else if (portIOType == NodePort.IO.Output)
+                {
+                    auxPort = node.AddDynamicOutput(fieldType, portConnectionType, portTypeConstraint, portFieldName);
+                }
+            }
+            // Return nodeport
+            return auxPort;
+        }
     }
 }

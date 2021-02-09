@@ -421,6 +421,14 @@ namespace InteractML
             UpdateDesiredOutputFeatures();
             CheckSetUp();
 
+            // Add all required dynamic ports
+            // RecordOneInputBoolPort           
+            this.GetOrCreateDynamicPort("RecordOneInputBoolPort", typeof(bool), NodePort.IO.Input);
+            // ToggleRecordingInputBool
+            this.GetOrCreateDynamicPort("ToggleRecordingInputBoolPort", typeof(bool), NodePort.IO.Input);
+            // DeleteAllExamplesBoolPort
+            this.GetOrCreateDynamicPort("DeleteAllExamplesBoolPort", typeof(bool), NodePort.IO.Input);
+
         }
 
 
@@ -488,6 +496,14 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
+            // Pull inputs from bool event nodeports
+            if (GetInputValue<bool>("RecordOneInputBoolPort"))
+                IMLEventDispatcher.RecordOneCallback(this.id); 
+            if (GetInputValue<bool>("ToggleRecordingInputBoolPort"))
+                IMLEventDispatcher.ToggleRecordCallback(this.id);
+            if (GetInputValue<bool>("DeleteAllExamplesBoolPort"))
+                IMLEventDispatcher.DeleteAllCallback(this.id);            
+
             // Run examples logic in case we need to start/stop collecting examples
             CollectExamplesLogic();
 

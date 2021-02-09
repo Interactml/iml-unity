@@ -127,6 +127,10 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
+            if (type.PrettyName() == "InteractML.DataTypeNodes.BooleanNode")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
             if (type.PrettyName() == "InteractML.DataTypeNodes.FloatNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");

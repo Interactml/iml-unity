@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Float
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 56, y: 552}
+  position: {x: -296, y: 584}
   ports:
     keys:
     - m_In
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  Counter: 3
+  Counter: 1
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -101,7 +101,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 3
+  Counter: 1
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: Regression ML System
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 984.7654, y: 323.11002}
+  position: {x: 1048, y: 344}
   ports:
     keys:
     - IMLTrainingExamplesNodes
@@ -156,6 +156,8 @@ MonoBehaviour:
     - ToggleTrainInputBool
     - Output 0
     - ToggleRunInputBool
+    - ToggleTrainInputBoolPort
+    - ToggleRunInputBoolPort
     values:
     - _fieldName: IMLTrainingExamplesNodes
       _node: {fileID: 1388760095177576042}
@@ -213,6 +215,24 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: ToggleTrainInputBoolPort
+      _node: {fileID: 1388760095177576042}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: ToggleRunInputBoolPort
+      _node: {fileID: 1388760095177576042}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   DevMode: 0
   id: b3fecfdb-895b-428e-9584-7fc246c1d7c0
   numberInComponentList: -1
@@ -226,7 +246,7 @@ MonoBehaviour:
   - 0
   DelayedPredictedOutput:
   - 0
-  m_NumExamplesTrainedOn: 26
+  m_NumExamplesTrainedOn: 97
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 00000000
   m_trainingType: 0
@@ -264,6 +284,9 @@ MonoBehaviour:
     - ToggleRecordingInputBool
     - DeleteLastInputBool
     - DeleteAllInputBool
+    - RecordOneInputBoolPort
+    - ToggleRecordingInputBoolPort
+    - DeleteAllExamplesBoolPort
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 1957865102308329510}
@@ -339,6 +362,33 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+    - _fieldName: RecordOneInputBoolPort
+      _node: {fileID: 1957865102308329510}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: ToggleRecordingInputBoolPort
+      _node: {fileID: 1957865102308329510}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: DeleteAllExamplesBoolPort
+      _node: {fileID: 1957865102308329510}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   DevMode: 0
   id: 2bb91d0b-b696-42a0-9d49-cb6d063fce92
   numberInComponentList: -1
@@ -414,7 +464,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 1
-  Counter: 3
+  Counter: 1
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -432,7 +482,7 @@ MonoBehaviour:
   m_Name: VR Trigger
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 72, y: 856}
+  position: {x: 136, y: 840}
   ports:
     keys:
     - m_inputEvent
