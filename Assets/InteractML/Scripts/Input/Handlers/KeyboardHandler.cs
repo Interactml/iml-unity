@@ -36,16 +36,18 @@ namespace InteractML
         /// </summary>
         public override void HandleState()
         {
-            Debug.Log(_button.ToString());
+            Debug.Log(_button);
+            
+            
             // if the button is held and the trigger type is hold
-            if (Input.GetKey(_button) && triggerType == IMLTriggerTypes.Hold)
+            if (Input.GetKey(KeyCode.Q) && triggerType == IMLTriggerTypes.Hold)
             {
                 // if it hasn't been pressed previously
                 if (!previousPress)
                 {
                     Debug.Log("hold");
                     // fire event 
-                    ButtonFire.Invoke();
+                    ButtonFire?.Invoke();
                     // set previous press to true
                     previousPress = true;
                 }
