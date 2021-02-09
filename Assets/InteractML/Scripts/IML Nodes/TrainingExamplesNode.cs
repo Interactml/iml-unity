@@ -15,6 +15,8 @@ namespace InteractML
     {
 
         #region Variables
+
+
         /// <summary>
         /// The input features passed in to the node
         /// </summary>
@@ -25,6 +27,31 @@ namespace InteractML
         /// </summary>
         [Input]
         public List<Node> TargetValues;
+
+        /// <summary>
+        /// Record One Button Input Customiser Boolean
+        /// </summary>
+        [Input]
+        public bool RecordOneInputBool;
+
+        /// <summary>
+        /// Toggle Record Button Input Customiser Boolean
+        /// </summary>
+        [Input]
+        public bool ToggleRecordingInputBool;
+
+        /// <summary>
+        /// Delete Last Button Input Customiser Boolean
+        /// </summary>
+        [Input]
+        public bool DeleteLastInputBool;
+
+        /// <summary>
+        /// Delet All Button Input Customiser Boolean
+        /// </summary>
+        [Input]
+        public bool DeleteAllInputBool;
+
 
         /// <summary>
         /// The training examples node that we are sending as output 

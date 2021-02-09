@@ -139,6 +139,8 @@ namespace InteractML
         // Dictionaries to allow the override of portFields
         protected Dictionary<string, string> InputPortsNamesOverride;
         protected Dictionary<string, string> OutputPortsNamesOverride;
+        
+        protected Dictionary<string, string> CustomInputPortsNamesOverride;
         protected bool OverridePortNames = false;
         /// <summary>
         /// List of nodetips 
@@ -506,20 +508,46 @@ namespace InteractML
                 // Set flag to false in mls node to not redraw every frame
                 mlsNode.OutputPortsChanged = false;
             }
+
+
+
             // Generic check if the number ports changes to reduce the times we reserve memory
             if (m_NumInputs != target.Inputs.Count() || m_NumOutputs != target.Outputs.Count()) updatePortPairs = true;
 
             // Get number of ports to avoid reserving memory twice
             if (updatePortPairs)
             {
-                // Update known number of ports
-                m_NumInputs = target.Inputs.Count();
-                m_NumOutputs = target.Outputs.Count();
-                // Get inputs and outputs ports
-                IEnumerator<NodePort> inputs = target.Inputs.GetEnumerator();
-                IEnumerator<NodePort> outputs = target.Outputs.GetEnumerator();
-                // Add them to the list
-                AddPairsToList(inputs, outputs, ref m_PortPairs);
+                if (!(target is TrainingExamplesNode))
+                {
+                    // Update known number of ports
+                    m_NumInputs = target.Inputs.Count();
+                    m_NumOutputs = target.Outputs.Count();
+                    // Get inputs and outputs ports
+                    IEnumerator<NodePort> inputs = target.Inputs.GetEnumerator();
+                    IEnumerator<NodePort> outputs = target.Outputs.GetEnumerator();
+                    // Add them to the list
+                    AddPairsToList(inputs, outputs, ref m_PortPairs);
+                }
+                else
+                {
+                    // Update known number of ports
+                    m_NumInputs = 2;
+                    m_NumOutputs = target.Outputs.Count();
+
+                    // Get inputs and outputs ports
+                    IEnumerator<NodePort> inputs = target.Outputs.GetEnumerator();
+
+                    // Get first 2 input ports and add to new IEnumerator
+                    List<NodePort> ttminputslist = new List<NodePort> { target.Inputs.ElementAt(0), target.Inputs.ElementAt(1) };
+                    IEnumerable<NodePort> TTMInputs = ttminputslist;
+                    IEnumerator<NodePort> ttminputs = ttminputslist.GetEnumerator();
+
+                    IEnumerator<NodePort> outputs = target.Outputs.GetEnumerator();
+                    // Add them to the list
+                    AddPairsToList(ttminputs, outputs, ref m_PortPairs);
+
+                }
+                
             }
 
 
