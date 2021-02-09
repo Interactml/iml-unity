@@ -247,8 +247,6 @@ namespace InteractML.CustomControllers
             trainingHand = setUP.trainingSide;
             mlsHand = setUP.mlsSide;
 
-            Debug.Log(deleteLastButtonNo);
-
             if (device == IMLInputDevices.None)
             {
                 device = IMLInputDevices.Keyboard;

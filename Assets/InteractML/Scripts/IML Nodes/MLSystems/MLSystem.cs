@@ -279,6 +279,7 @@ namespace InteractML
         /// <param name="to"></param>
         public override void OnCreateConnection(XNode.NodePort from, XNode.NodePort to)
         {
+            Debug.Log(from.GetType().ToString());
             base.OnCreateConnection(from, to);
             m_WrongNumberOfTargetValues = false;
             m_TrainingExamplesConflict = false;
@@ -1929,7 +1930,6 @@ namespace InteractML
         {
             //test
             //Debug.Log(Model.ModelAddress);
-            Debug.Log(id);
             //Debug.Log(Model.ModelStatus);
             //Debug.Log(Trained);
             //Debug.Log(m_trainingType);

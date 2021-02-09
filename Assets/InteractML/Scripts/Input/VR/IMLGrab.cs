@@ -14,7 +14,7 @@ namespace InteractML
         public IMLComponent graph;
         
         public Color selectedHighlight;
-        public Color trainedHighlight;
+        public Texture2D trainedColor;
         
         public Texture2D baseColour;
         public Texture2D recordingColour;
@@ -22,6 +22,11 @@ namespace InteractML
         [HideInInspector]
         public Texture2D current;
 
+        public void Start()
+        {
+            Deselected();
+            SetBody(baseColour);
+        }
         public void Selected()
         {
             this.GetComponent<Renderer>().material.SetFloat("_OutlineWidth", 0.01f);
@@ -38,6 +43,11 @@ namespace InteractML
         {
             this.GetComponent<Renderer>().material.SetTexture("_MainTex", texture);
             current = texture;
+        }
+        
+        public void Deselected()
+        {
+            this.GetComponent<Renderer>().material.SetFloat("_OutlineWidth", 0.00f);
         }
        
 

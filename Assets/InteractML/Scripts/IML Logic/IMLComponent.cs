@@ -185,7 +185,6 @@ namespace InteractML
         // Start is called before the first frame update
         void Start()
         {
-            InitializeIMLIndicator();
 #if !UNITY_EDITOR
                 // Run Models on Play if we are on a build
                 RunModelsOnPlay();
@@ -293,6 +292,8 @@ namespace InteractML
                     }
                 }
             }
+
+            InitializeIMLIndicator();
             // comented to fix opening window problem - delete when sure this has not caused issues 
             // Inject GameObjects to GameObject nodes
             //SendGameObjectsToIMLController();
@@ -389,9 +390,15 @@ namespace InteractML
 
         private void InitializeIMLIndicator()
         {
-            if(icon == null)
+            //comeback
+            if(transform.childCount == 0 && icon == null)
             {
                 icon = GameObject.Instantiate(prefab, this.transform).GetComponent<IMLGrab>();
+                icon.graph = this;
+            }
+            if (icon == null)
+            {
+                icon = this.transform.Find("IMLIcon(Clone)").GetComponent<IMLGrab>();
             }
             
         }
@@ -1119,6 +1126,7 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
+            Debug.Log(this.transform.childCount);
             //Debug.Log("Running IMLComponent update...");
 
 
@@ -2054,8 +2062,8 @@ namespace InteractML
                         MLSNode.SaveModelToDisk();
                 }
             }
-            if(success && icon != null)
-                icon.SetColourHighlight(icon.trainedHighlight);
+            if (success && icon != null)
+                icon.SetBody(icon.trainedColor);
             // returns true if nodeID exists and whether training successful
             return success;
         }

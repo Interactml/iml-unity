@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7492513218258782110
+--- !u!1 &7444281257571340905
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,26 +8,26 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7492513218258782106}
-  - component: {fileID: 7492513218258782105}
-  - component: {fileID: 7492513218258782104}
-  - component: {fileID: 7492513218258782111}
-  - component: {fileID: 7492513218258782100}
-  - component: {fileID: 7492513218258782107}
+  - component: {fileID: 7444281257571340911}
+  - component: {fileID: 7444281257571340910}
+  - component: {fileID: 7444281257571340909}
+  - component: {fileID: 7444281257571340908}
+  - component: {fileID: 7444281257571340907}
+  - component: {fileID: 7444281257571340906}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: IMLIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7492513218258782106
+--- !u!4 &7444281257571340911
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7492513218258782110}
+  m_GameObject: {fileID: 7444281257571340905}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.55, y: 1.07, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
@@ -35,21 +35,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7492513218258782105
+--- !u!33 &7444281257571340910
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7492513218258782110}
+  m_GameObject: {fileID: 7444281257571340905}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7492513218258782104
+--- !u!23 &7444281257571340909
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7492513218258782110}
+  m_GameObject: {fileID: 7444281257571340905}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -82,26 +82,26 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &7492513218258782111
+--- !u!135 &7444281257571340908
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7492513218258782110}
+  m_GameObject: {fileID: 7444281257571340905}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &7492513218258782100
+--- !u!54 &7444281257571340907
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7492513218258782110}
+  m_GameObject: {fileID: 7444281257571340905}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -111,13 +111,13 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7492513218258782107
+--- !u!114 &7444281257571340906
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7492513218258782110}
+  m_GameObject: {fileID: 7444281257571340905}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b9158b678fd7f994caf28762f33405ed, type: 3}
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_OnSelectEnter:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7492513218258782107}
+      - m_Target: {fileID: 7444281257571340906}
         m_MethodName: Selected
         m_Mode: 1
         m_Arguments:
@@ -154,7 +154,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 7492513218258782107}
+      - m_Target: {fileID: 7444281257571340906}
         m_MethodName: ActivateVRInterface
         m_Mode: 1
         m_Arguments:
@@ -176,8 +176,9 @@ MonoBehaviour:
       m_Calls: []
   m_CustomReticle: {fileID: 0}
   graph: {fileID: 0}
-  selectedHighlight: {r: 0, g: 0, b: 0, a: 0}
-  trainedHighlight: {r: 0, g: 0, b: 0, a: 0}
-  baseColour: {fileID: 0}
-  recordingColour: {fileID: 0}
-  runningColour: {fileID: 0}
+  selectedHighlight: {r: 0.72156864, g: 0.73333335, b: 0.98039216, a: 0}
+  trainedColor: {fileID: 2800000, guid: d3009154998b11144992a6c5be9cc1f7, type: 3}
+  baseColour: {fileID: 2800000, guid: c4c3665142c39b4459c779bd443b9776, type: 3}
+  recordingColour: {fileID: 2800000, guid: ac209d0e15a2d9845be67e3cfbf3b5a1, type: 3}
+  runningColour: {fileID: 2800000, guid: 30413b4f7df15104981d0905b45a5d3c, type: 3}
+  current: {fileID: 0}
