@@ -28,7 +28,20 @@ namespace InteractML.ControllerCustomisers
             int input = (int)inputs;
             button = new VRButtonHandler(input, hand, triggerType, "VRTrigger");
         }
+        public override void OnCreateConnection(NodePort from, NodePort to)
+        {
+            IMLNode node = to.node as IMLNode;
+            button.nodeID = node.id;
 
+        }
+
+        // Return the correct value of an output port when requested
+        public override object GetValue(NodePort port)
+        {
+            m_inputEvent = true;
+
+            return this;
+        }
         public override void UpdateLogic()
         {
             button.HandleState();
