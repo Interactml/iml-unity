@@ -154,7 +154,9 @@ namespace InteractML
         public static IMLEvent UnSetUniversalTrainingID;
         public static IMLEvent UnSetUniversalMLSID;
 
-
+        public delegate string GetText(string id);
+        public static GetText getText;
+        public static IMLEvent listenText;
 
     }
 }

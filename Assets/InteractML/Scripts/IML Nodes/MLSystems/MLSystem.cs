@@ -405,7 +405,9 @@ namespace InteractML
             IMLEventDispatcher.ModelSetUpChangeCallback += UIErrors;
 
 
-            IMLEventDispatcher.LoadModelsCallback += LoadOrTrain; 
+            IMLEventDispatcher.LoadModelsCallback += LoadOrTrain;
+
+            IMLEventDispatcher.listenText += ListenText;
         }
         /// <summary>
         /// Method that subscribes relevant methods to events in the event dispatcher
@@ -427,6 +429,8 @@ namespace InteractML
             IMLEventDispatcher.ModelSetUpChangeCallback -= UIErrors;
 
             IMLEventDispatcher.LoadModelsCallback -= LoadOrTrain;
+
+            IMLEventDispatcher.listenText -= ListenText;
         }
 
         /// <summary>
@@ -2007,6 +2011,41 @@ namespace InteractML
                 return true;
             }
             
+        }
+
+        private bool ListenText(string nodeid)
+        {
+            bool listening;
+            if (this.id == nodeid)
+                IMLEventDispatcher.getText += GetStatus;
+            else
+                IMLEventDispatcher.getText -= GetStatus;
+            return true;
+        }
+        private string GetStatus(string nodeid)
+        {
+            if (nodeid == this.id)
+            {
+                string status = "";
+                if (Trained)
+                    status = "Trained " + m_NumExamplesTrainedOn.ToString() + "\n";
+                else if (Running)
+                {
+                    status += "Running \n";
+                    int i = 0;
+                    foreach (IMLBaseDataType dataType in PredictedOutput)
+                    {
+                        status += "Output 1: " + i;
+                        i++;
+                        foreach(float f in dataType.Values)
+                            status += f.ToString() + "\n";
+                    }
+                }
+                    
+
+                return status;
+            }
+            return null;
         }
 
         #endregion

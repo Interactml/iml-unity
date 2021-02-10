@@ -364,6 +364,7 @@ namespace InteractML
         //check 
         protected void OnDestroy()
         {
+            UnsubscribeDelegates();
             // Remove this node from IML Component controlling it (if any)
             var MLController = graph as IMLGraph;
             if (MLController.SceneComponent != null)
@@ -380,7 +381,8 @@ namespace InteractML
         /// Initialises nodes values and vars
         /// </summary>
         public override void Initialize()
-        { 
+        {
+            SubscribeDelegates();
             SetDataCollection();
             // Make sure internal feature lists are initialized
             if (m_DesiredInputsConfig == null)
@@ -998,6 +1000,45 @@ namespace InteractML
             {
                 MLN.UpdateTotalNumberTrainingExamples();
             }
+        }
+
+        private void SubscribeDelegates()
+        {
+            IMLEventDispatcher.listenText += ListenText;
+        }
+
+        private void UnsubscribeDelegates()
+        {
+            IMLEventDispatcher.listenText -= ListenText;
+        }
+
+        private bool ListenText(string nodeid)
+        {
+            bool listening;
+            if (this.id == nodeid)
+                IMLEventDispatcher.getText += GetStatus;
+            else
+                IMLEventDispatcher.getText -= GetStatus;
+            return true;
+        }
+        private string GetStatus(string nodeid)
+        {
+            
+            if (nodeid == this.id)
+            {
+                Debug.Log("here");
+                string status = "";
+                if (CollectingData)
+                    status = "Recording \n";
+                else
+                    status = "Not Recording \n";
+
+                status += "Examples: ";
+                status += TotalNumberOfTrainingExamples.ToString();
+                Debug.Log(status);
+                return status;
+            }
+            return "here";
         }
 
         #endregion

@@ -96,7 +96,6 @@ namespace InteractML.CustomControllers
             Debug.Log(trainingEnabled);
             if (trainingEnabled)
             {
-                Debug.Log("training");
                 foreach (InputHandler handler in trainingHandlers)
                 {
                     handler.HandleState();

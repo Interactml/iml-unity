@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace InteractML
 {
@@ -30,6 +31,15 @@ namespace InteractML
         public RadialSectionNode trainingNode5 = null;
         public RadialSectionNode trainingNode6 = null;
 
+        public SpriteRenderer trainingicon1 = null;
+        public SpriteRenderer trainingicon2 = null;
+        public SpriteRenderer trainingicon3 = null;
+        public SpriteRenderer trainingicon4 = null;
+        public SpriteRenderer trainingicon5 = null;
+        public SpriteRenderer trainingicon6 = null;
+        private SpriteRenderer[] renderers;
+
+
         private string trainingSelected;
         private string mlsSelected;
 
@@ -44,7 +54,18 @@ namespace InteractML
 
         private bool secondOn = false;
         private bool on = false;
+        private bool training = false;
 
+        public Sprite teachTheMachine;
+        public Sprite emptyTTM;
+
+        public TextMeshProUGUI status;
+
+        private int count = 0;
+
+        private int counter = 60;
+
+        
         private void Awake()
         {
 
@@ -97,11 +118,15 @@ namespace InteractML
             {
                 //section.iconRenderer.sprite = section.icon;
             }
+            renderers = new SpriteRenderer[6]{
+            trainingicon1,
+            trainingicon2,
+            trainingicon3,
+            trainingicon4,
+            trainingicon5,
+            trainingicon6
+            };
 
-            foreach (RadialSection section in secondSelections)
-            {
-                //section.iconRenderer.sprite = section.icon;
-            }
         }
 
 
@@ -115,7 +140,28 @@ namespace InteractML
                 SetCursorPosition();
                 //SetSelectionRotation(rotation);
                 SetSelectedEvent(rotation);
+                if(count >= counter)
+                {
+                    if (training)
+                    {
+                        if (trainingSelected != null)
+                        {
+                            IMLEventDispatcher.listenText?.Invoke(trainingSelected);
+                            status.text = IMLEventDispatcher.getText?.Invoke(trainingSelected);
+                        }
+
+                    }
+                    else
+                    {
+                        IMLEventDispatcher.listenText?.Invoke(mlsSelected);
+                        status.text = IMLEventDispatcher.getText?.Invoke(mlsSelected);
+                    }
+                    count = 0;
+                }
+                count++;
             }
+
+            
             
         }
 
@@ -179,14 +225,10 @@ namespace InteractML
             if (secondOn)
             {
                 highlightedSelection = secondSelections[index];
-                Debug.Log("highlightSelection" + highlightedSelection);
-                Debug.Log(secondSelections.Count);
             }
             else
             {
                 highlightedSelection = firstSelections[index];
-                Debug.Log("highlightSelection" + highlightedSelection.icon);
-                Debug.Log(firstSelections.Count);
             }
 
         }
@@ -205,7 +247,6 @@ namespace InteractML
                     if (graph.TrainingExamplesNodesList.Count > i)
                     {
                         trainingSelected = graph.TrainingExamplesNodesList[i].id;
-                        Debug.Log(trainingSelected + "id");
                     }
                 }
                 highlightedSelection.onPress?.Invoke();
@@ -231,7 +272,6 @@ namespace InteractML
 
         private void OnactivateEvents()
         {
-            Debug.Log("activateEvents");
             int noOfExamples = graph.TrainingExamplesNodesList.Count;
             
             for(int i = 0; i < noOfExamples; i++)
@@ -282,6 +322,7 @@ namespace InteractML
             {
                 outer.SetActive(true);
             }
+            training = true;
             IMLEventDispatcher.EnableTraining?.Invoke();
             IEnumerator coroutine = EnableOuter();
             StartCoroutine(coroutine);
@@ -289,6 +330,7 @@ namespace InteractML
         }
         private void backMenu()
         {
+            training = false;
             if (outer.activeSelf)
             {
                 outer.SetActive(false);
@@ -330,6 +372,17 @@ namespace InteractML
             {
                 mlsSelected = graph.MLSystemNodeList[0].id;
             }
+            for (int i = 0; i < trainingSelections.Count-1; i ++)
+            {
+                Debug.Log(i);
+                if(i < graph.TrainingExamplesNodesList.Count)
+                {
+                    renderers[i].sprite = teachTheMachine;
+                } else
+                {
+                    renderers[i].sprite = emptyTTM;
+                }
+            }
 
             IEnumerator coroutine = SlowSubscribe();
             StartCoroutine(coroutine);
@@ -345,6 +398,8 @@ namespace InteractML
 
         private void MLSNodeSelected()
         {
+            training = false;
+            IMLEventDispatcher.DisableTraining?.Invoke();
             IMLEventDispatcher.SetUniversalMLSID?.Invoke(mlsSelected);
         }
 
