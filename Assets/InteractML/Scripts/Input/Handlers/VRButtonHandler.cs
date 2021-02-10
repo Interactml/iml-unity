@@ -38,8 +38,10 @@ namespace InteractML
 
         public override void HandleState()
         {
+            //Debug.Log(buttonName);
             if (_controllers.Count > 0)
             {
+
                 foreach (UnityEngine.XR.InputDevice controller in _controllers)
                 {
                     ///Debug.Log("found controllers " + _controllers.Count);
@@ -61,7 +63,7 @@ namespace InteractML
                             if (triggerType == IMLTriggerTypes.Hold)
                             {
                                 ButtonFire?.Invoke(nodeID);
-                                //Debug.Log("hold " + controller.characteristics + " " + buttonName);
+                                Debug.Log("hold " + controller.characteristics + " " + buttonName);
                             }
                         } 
                     }

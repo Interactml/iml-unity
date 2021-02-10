@@ -1,10 +1,10 @@
 {
   "isEnabled": true,
   "device": 2,
-  "deleteLastButtonNo": 2,
-  "deleteLastButtonTT": 0,
   "deleteAllButtonNo": 3,
   "deleteAllButtonTT": 1,
+  "recordOneButtonNo": 1,
+  "recordOneButtonTT": 0,
   "toggleRecordButtonNo": 0,
   "toggleRecordButtonTT": 2,
   "trainButtonNo": 0,

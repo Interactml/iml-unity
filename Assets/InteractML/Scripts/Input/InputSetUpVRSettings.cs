@@ -7,10 +7,12 @@ namespace InteractML
     {
         public bool isEnabled;
         public IMLInputDevices device;
-        public int deleteLastButtonNo;
-        public IMLTriggerTypes deleteLastButtonTT;
+        /*public int deleteLastButtonNo;
+        public IMLTriggerTypes deleteLastButtonTT;*/
         public int deleteAllButtonNo;
         public IMLTriggerTypes deleteAllButtonTT;
+        public int recordOneButtonNo;
+        public IMLTriggerTypes recordOneButtonTT;
         public int toggleRecordButtonNo;
         public IMLTriggerTypes toggleRecordButtonTT;
         public int trainButtonNo;

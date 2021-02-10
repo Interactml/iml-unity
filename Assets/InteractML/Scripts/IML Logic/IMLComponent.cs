@@ -1126,7 +1126,6 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
-            Debug.Log(this.transform.childCount);
             //Debug.Log("Running IMLComponent update...");
 
 

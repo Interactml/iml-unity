@@ -85,10 +85,12 @@ namespace InteractML
             trainingNode6
             };
             mlsInteraction.nodeType = RadialSectionNode.nodeTypes.mlsNode;
-
+            int i = 0;
             foreach (RadialSectionNode section in trainingSelections)
             {
                 section.nodeType = RadialSectionNode.nodeTypes.trainingNode;
+                section.no = i;
+                i++;
             }
             
             foreach (RadialSection section in firstSelections)
@@ -177,13 +179,13 @@ namespace InteractML
             if (secondOn)
             {
                 highlightedSelection = secondSelections[index];
-                Debug.Log(highlightedSelection);
+                Debug.Log("highlightSelection" + highlightedSelection);
                 Debug.Log(secondSelections.Count);
             }
             else
             {
                 highlightedSelection = firstSelections[index];
-                Debug.Log(highlightedSelection);
+                Debug.Log("highlightSelection" + highlightedSelection.icon);
                 Debug.Log(firstSelections.Count);
             }
 
@@ -191,14 +193,24 @@ namespace InteractML
 
         public void ActivateHighlightedSection()
         {
-            if (trainingSelections.Contains(highlightedSelection as RadialSectionNode)){
-                int i = trainingSelections.IndexOf(highlightedSelection as RadialSectionNode);
-                if (graph.TrainingExamplesNodesList.Count > i)
+            if (highlightedSelection != null)
+            {
+                RadialSectionNode section = highlightedSelection as RadialSectionNode;
+                if (trainingSelections.Contains(section))
                 {
-                    trainingSelected = graph.TrainingExamplesNodesList[i].id; 
+                    int i = section.no;
+                    if (graph.TrainingExamplesNodesList.Count > i)
+                    {
+                        trainingSelected = graph.TrainingExamplesNodesList[i].id;
+                        Debug.Log(trainingSelected + "id");
+                    }
                 }
+                highlightedSelection.onPress?.Invoke();
+            } else
+            {
+                Debug.Log(highlightedSelection + " null");
             }
-            highlightedSelection.onPress?.Invoke();
+            
         }
 
         private void SubscribeToEvents()

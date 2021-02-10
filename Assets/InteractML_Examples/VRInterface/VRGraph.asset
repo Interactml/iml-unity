@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  Counter: 1
+  Counter: 4
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -101,7 +101,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 1
+  Counter: 4
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -463,7 +463,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 1
-  Counter: 1
+  Counter: 4
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -489,7 +489,7 @@ MonoBehaviour:
   id: f40c5be7-7a51-499c-b791-9e5029eba6b5
   numberInComponentList: -1
   enableUniversalInterface: 1
-  activeUniversalInterface: 0
+  activeUniversalInterface: 1
   device: 2
   trainingHand: 0
   mlsHand: 1
@@ -505,6 +505,8 @@ MonoBehaviour:
   deleteAllButtonNo: 3
   deleteAllButtonTT: 1
   toggleRecordButtonNo: 0
+  recordOneButtonTT: 0
+  recordOneButtonNo: 1
   toggleRecordButtonTT: 2
   trainButtonNo: 0
   trainButtonTT: 2

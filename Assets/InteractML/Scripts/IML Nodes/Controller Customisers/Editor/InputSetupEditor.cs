@@ -88,18 +88,26 @@ namespace InteractML.ControllerCustomisers
             // choose delete last button
             GUI.changed = false;
             // set button choice for delete last
-            // delete last
+           /* // delete last
             Debug.Log(m_InputSetUp);
             GUILayout.BeginHorizontal();
             GUILayout.Label("Delete Last", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
             ShowButtonChoice(m_InputSetUp.DeleteLast.buttonName, m_InputSetUp.deleteLastButtonNo, out m_InputSetUp.deleteLastButtonNo, m_InputSetUp.deleteLastButtonTT, out m_InputSetUp.deleteLastButtonTT);
-            GUILayout.EndHorizontal();
+            GUILayout.EndHorizontal();*/
 
             // choose delete all button
             GUILayout.Space(10);
             GUILayout.BeginHorizontal();
             GUILayout.Label("Delete All", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
             ShowButtonChoice(m_InputSetUp.DeleteAll.buttonName, m_InputSetUp.deleteAllButtonNo, out m_InputSetUp.deleteAllButtonNo, m_InputSetUp.deleteAllButtonTT, out m_InputSetUp.deleteAllButtonTT);
+            GUILayout.EndHorizontal();
+
+            // record one
+            GUILayout.Space(10);
+            Debug.Log(m_InputSetUp);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Record One", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
+            ShowButtonChoice(m_InputSetUp.RecordOne.buttonName, m_InputSetUp.recordOneButtonNo, out m_InputSetUp.recordOneButtonNo, m_InputSetUp.recordOneButtonTT, out m_InputSetUp.recordOneButtonTT);
             GUILayout.EndHorizontal();
 
             // choose toggle record button 

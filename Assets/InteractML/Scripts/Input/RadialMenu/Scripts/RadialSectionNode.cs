@@ -11,4 +11,6 @@ public class RadialSectionNode : RadialSection
         trainingNode
     }
     public nodeTypes nodeType;
+    public int no;
+
 }
