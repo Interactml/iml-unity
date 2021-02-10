@@ -395,7 +395,7 @@ namespace InteractML
             //comeback
             if(transform.childCount == 0 && icon == null)
             {
-                icon = GameObject.Instantiate(prefab, this.transform).GetComponent<IMLGrab>();
+                icon = GameObject.Instantiate(Resources.Load("Prefabs/IMLIcon") as GameObject, this.transform).GetComponent<IMLGrab>();
                 icon.graph = this;
             }
             if (icon == null)
@@ -1386,7 +1386,6 @@ namespace InteractML
         /// </summary>
         private void LoadDataForModels()
         {
-            Debug.Log("load data and run");
             // There will be waits for things to init. Take into account
             IEnumerator coroutine = LoadDataForModelsCoroutine();
             StartCoroutine(coroutine);

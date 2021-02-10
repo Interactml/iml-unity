@@ -2026,6 +2026,7 @@ namespace InteractML
         {
             if (nodeid == this.id)
             {
+                
                 string status = "";
                 if (Trained)
                     status = "Trained " + m_NumExamplesTrainedOn.ToString() + "\n";
@@ -2040,8 +2041,20 @@ namespace InteractML
                         foreach(float f in dataType.Values)
                             status += f.ToString() + "\n";
                     }
+                } else
+                {
+                    if(LearningType == IMLSpecifications.LearningType.DTW)
+                    {
+                        int i = 0;
+                        foreach (IMLBaseDataType dataType in PredictedOutput)
+                        {
+                            status += "Output 1: " + i;
+                            i++;
+                            foreach (float f in dataType.Values)
+                                status += f.ToString() + "\n";
+                        }
+                    }
                 }
-                    
 
                 return status;
             }

@@ -93,7 +93,6 @@ namespace InteractML.CustomControllers
 
         public void UpdateLogic()
         {
-            Debug.Log(trainingEnabled);
             if (trainingEnabled)
             {
                 foreach (InputHandler handler in trainingHandlers)
@@ -208,7 +207,6 @@ namespace InteractML.CustomControllers
         }
         private void EnableTraining()
         {
-            Debug.Log("enable training");
             trainingEnabled = true;
         }
         private void DisableTraining()

@@ -33,10 +33,8 @@ namespace InteractML
         }
         public void Selected()
         {
-            Debug.Log("selected");
             this.GetComponent<Renderer>().material.SetFloat("_OutlineWidth", 0.01f);
             //cubeRenderer.material.SetColor("_OutlineColor", selectedHighlight);
-            Debug.Log("selected");
             IMLEventDispatcher.selectGraph?.Invoke(graph);
 
         }

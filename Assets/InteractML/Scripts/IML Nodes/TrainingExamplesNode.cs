@@ -642,7 +642,6 @@ namespace InteractML
                     //Debug.Log(labels.Count);
                     for (int i = 0; i < labels.Count; i++)
                     {
-                        Debug.Log(labels[i].DataType.ToString());
                         m_DesiredOutputsConfig.Add((IMLSpecifications.OutputsEnum)labels[i].DataType);
                         
                     }
@@ -1026,7 +1025,6 @@ namespace InteractML
             
             if (nodeid == this.id)
             {
-                Debug.Log("here");
                 string status = "";
                 if (CollectingData)
                     status = "Recording \n";
@@ -1035,7 +1033,6 @@ namespace InteractML
 
                 status += "Examples: ";
                 status += TotalNumberOfTrainingExamples.ToString();
-                Debug.Log(status);
                 return status;
             }
             return "here";

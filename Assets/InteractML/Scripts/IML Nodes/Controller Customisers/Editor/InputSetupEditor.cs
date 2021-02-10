@@ -104,7 +104,6 @@ namespace InteractML.ControllerCustomisers
 
             // record one
             GUILayout.Space(10);
-            Debug.Log(m_InputSetUp);
             GUILayout.BeginHorizontal();
             GUILayout.Label("Record One", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
             ShowButtonChoice(m_InputSetUp.RecordOne.buttonName, m_InputSetUp.recordOneButtonNo, out m_InputSetUp.recordOneButtonNo, m_InputSetUp.recordOneButtonTT, out m_InputSetUp.recordOneButtonTT);

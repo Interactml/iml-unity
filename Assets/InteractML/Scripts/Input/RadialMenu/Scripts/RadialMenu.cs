@@ -251,10 +251,7 @@ namespace InteractML
                 }
                 highlightedSelection.onPress?.Invoke();
 
-            } else
-            {
-                Debug.Log(highlightedSelection + " null");
-            }
+            } 
             
         }
 
@@ -303,7 +300,6 @@ namespace InteractML
 
         private void exitMenu()
         {
-            Debug.Log("exiting");
             on = false;
             IMLEventDispatcher.deselectGraph?.Invoke(graph);
             graph = null;
@@ -374,7 +370,6 @@ namespace InteractML
             }
             for (int i = 0; i < trainingSelections.Count-1; i ++)
             {
-                Debug.Log(i);
                 if(i < graph.TrainingExamplesNodesList.Count)
                 {
                     renderers[i].sprite = teachTheMachine;

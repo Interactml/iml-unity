@@ -48,7 +48,6 @@ namespace InteractML
                     bool triggerValue;
                     if (controller.TryGetFeatureValue(_button, out triggerValue) && triggerValue)
                     {
-                        Debug.Log("found event " + buttonName + controller.characteristics.ToString());
                         
                         if (!previousPress)
                         {
@@ -58,12 +57,12 @@ namespace InteractML
                             if (triggerType == IMLTriggerTypes.Down)
                             {
                                 ButtonFire?.Invoke(nodeID);
-                                Debug.Log("down" + controller.characteristics + " " + buttonName);
+                               // Debug.Log("down" + controller.characteristics + " " + buttonName);
                             }
                             if (triggerType == IMLTriggerTypes.Hold)
                             {
                                 ButtonFire?.Invoke(nodeID);
-                                Debug.Log("hold " + controller.characteristics + " " + buttonName);
+                               // Debug.Log("hold " + controller.characteristics + " " + buttonName);
                             }
                         } 
                     }
@@ -77,12 +76,12 @@ namespace InteractML
                             if (triggerType == IMLTriggerTypes.Up)
                             {
                                 ButtonFire?.Invoke(nodeID);
-                                Debug.Log("up" + buttonName);
+                                //Debug.Log("up" + buttonName);
                             }
                             if (triggerType == IMLTriggerTypes.Hold)
                             {
                                 ButtonFire?.Invoke(nodeID);
-                                Debug.Log("hold " + controller.characteristics + " " + buttonName);
+                                //Debug.Log("hold " + controller.characteristics + " " + buttonName);
                             }
                         }
                     }
