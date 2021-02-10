@@ -113,7 +113,7 @@ namespace InteractML
                 float rotation = GetDegree(direction);
 
                 SetCursorPosition();
-                SetSelectionRotation(rotation);
+                //SetSelectionRotation(rotation);
                 SetSelectedEvent(rotation);
             }
             
@@ -193,6 +193,9 @@ namespace InteractML
 
         public void ActivateHighlightedSection()
         {
+            Vector2 direction = Vector2.zero + touchPosition;
+            float rotation = GetDegree(direction);
+            SetSelectionRotation(rotation);
             if (highlightedSelection != null)
             {
                 RadialSectionNode section = highlightedSelection as RadialSectionNode;
@@ -206,6 +209,7 @@ namespace InteractML
                     }
                 }
                 highlightedSelection.onPress?.Invoke();
+
             } else
             {
                 Debug.Log(highlightedSelection + " null");
