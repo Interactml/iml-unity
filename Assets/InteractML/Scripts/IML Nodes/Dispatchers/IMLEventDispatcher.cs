@@ -136,7 +136,25 @@ namespace InteractML
         /// <returns></returns>
         public delegate void RunOnPlay();
         public static RunOnPlay RunOnPlayCallback;
+
+
         // Delete node event ???
+
+        public delegate void GraphSelection(IMLComponent graph);
+        public static GraphSelection selectGraph;
+        public static GraphSelection deselectGraph;
+
+        public delegate void EnableRaidal();
+        public static EnableRaidal EnableTraining;
+        public static EnableRaidal DisableTraining;
+
+        public static IMLEvent SetUniversalTrainingID;
+        public static IMLEvent SetUniversalMLSID;
+        
+        public static IMLEvent UnSetUniversalTrainingID;
+        public static IMLEvent UnSetUniversalMLSID;
+
+
 
     }
 }

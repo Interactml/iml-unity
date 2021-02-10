@@ -27,7 +27,7 @@ namespace InteractML
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(GameObject))] = hexToColor("#E24680");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(float))] = hexToColor("#888EF7");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(int))] = hexToColor("#888EF7");
-            NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(bool))] = hexToColor("#F6C46F");
+            //NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(bool))] = hexToColor("#F6C46F");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(float[]))] = hexToColor("#888EF7");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(Vector2))] = hexToColor("#888EF7");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(Vector3))] = hexToColor("#888EF7");
@@ -127,10 +127,10 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.DataTypeNodes.BooleanNode")
+           /* if (type.PrettyName() == "InteractML.DataTypeNodes.BooleanNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
-            }
+            }*/
             if (type.PrettyName() == "InteractML.DataTypeNodes.FloatNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
@@ -155,7 +155,7 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.ControllerCustomisers.MouseClick")
+           /* if (type.PrettyName() == "InteractML.ControllerCustomisers.MouseClick")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
@@ -166,7 +166,7 @@ namespace InteractML
             if (type.PrettyName() == "InteractML.ControllerCustomisers.KeyboardPress")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
-            }
+            }*/
             if (type.PrettyName() == "InteractML.ControllerCustomisers.InputSetUp")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
@@ -175,10 +175,7 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.ControllerCustomisers.InputSetUp1")
-            {
-                return base.GetNodeMenuName(type).Replace("InteractML", "");
-            }
+            
             else return null;
         }
 

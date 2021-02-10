@@ -363,13 +363,12 @@ namespace InteractML
             if (m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
             {
 
-
                 GUILayout.BeginHorizontal();
                 // Draw port
                 GUILayout.Space(15);
                 ///// DIRTY CODE! IF YOU DEBUG THIS PORT VARAIBLE YOU CAN SEE THAT IT FINDS THE PORT!!! WHY IS IT NOT WORKING??
-                NodePort port = m_TrainingExamplesNode.GetPort("RecordOneInputBoolPort");
-                IMLNodeEditor.PortField(new GUIContent(""), port, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+               /* NodePort port = m_TrainingExamplesNode.GetPort("RecordOneInputBoolPort");
+                IMLNodeEditor.PortField(new GUIContent(""), port, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));*/
                 GUILayout.Space(offset);
                 if (GUILayout.Button(new GUIContent(""), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record One Button")))
                 {
@@ -407,7 +406,7 @@ namespace InteractML
             GUILayout.BeginHorizontal();
             // Draw port
             GUILayout.Space(15);
-            IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("ToggleRecordingInputBoolPort"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+            //IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("ToggleRecordingInputBoolPort"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
             GUILayout.Space(offset);
 
             // draw record button
@@ -429,7 +428,7 @@ namespace InteractML
             //GUILayout.Space(spacing);
             // Draw port
             GUILayout.Space(15);
-            IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("DeleteAllExamplesBoolPort"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+           // IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("DeleteAllExamplesBoolPort"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
             GUILayout.Space(offset);
             // draw delete all button
 

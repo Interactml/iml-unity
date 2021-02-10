@@ -110,7 +110,7 @@ namespace InteractML
             GUILayout.BeginHorizontal();
             // Draw port
             GUILayout.Space(15);
-            IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("ToggleTrainInputBoolPort"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+            //IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("ToggleTrainInputBoolPort"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
 
             // if button contains mouse position
             TrainModelButton();
@@ -121,7 +121,7 @@ namespace InteractML
             GUILayout.BeginHorizontal();
             // Draw port
             GUILayout.Space(15);
-            IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("ToggleRunInputBoolPort"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+            //IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("ToggleRunInputBoolPort"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
 
             RunModelButton();
             GUILayout.EndHorizontal();

@@ -3,7 +3,7 @@ using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
 namespace InteractML {
-    /*public class AxisHandler2D : InputHandler, ISerializationCallbackReceiver
+    public class AxisHandler2D : MonoBehaviour, ISerializationCallbackReceiver
     {
         public enum Axis2d
         {
@@ -11,7 +11,9 @@ namespace InteractML {
             Primary2DAxis,
             Secondary2DAxis
         }
-        XRController controller;
+        
+        public XRController controller;
+        
         public delegate void ValueChange(XRController controller, Vector2 value);
         public event ValueChange OnValueChange;
 
@@ -19,6 +21,12 @@ namespace InteractML {
 
         private InputFeatureUsage<Vector2> inputFeature;
         private Vector2 previousValue = Vector2.zero;
+
+        public RadialMenu innerMenu = null;
+        public void Update()
+        {
+            HandleState();
+        }
         public void OnAfterDeserialize()
         {
             inputFeature = new InputFeatureUsage<Vector2>();
@@ -29,13 +37,8 @@ namespace InteractML {
 
         }
 
-        public override void SetButton()
-        {
-            throw new System.NotImplementedException();
-        }
-
-
-        public override void HandleState()
+      
+        public void HandleState()
           {
             
               Vector2 value = GetValue(controller);
@@ -48,11 +51,27 @@ namespace InteractML {
 
         public Vector2 GetValue(XRController controller)
         {
-            if (controller.inputDevice.TryGetFeatureValue(inputFeature, out Vector2 value))
-                return value;
+            if (controller.inputDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out Vector2 value))
+            {
+                innerMenu.SetTouchPosition(value);
+            }
+            
+            if (controller.inputDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out bool click))
+            {
+                if (click)
+                {
+                    innerMenu.ActivateHighlightedSection();
+                }
+            }
+            
+            if (controller.inputDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisTouch, out bool touch))
+            {
+                
+            }
+                
 
-            return Vector2.zero;
+            return value;
         }
-    }*/
+    }
 }
 

@@ -7,12 +7,7 @@ namespace InteractML
 {
     public class IMLGrab : XRBaseInteractable
     {
-        // Interactor
-        XRBaseInteractor m_SelectingInteractor;
-        /// <summary>Get the current selecting interactor for this interactable.
-        public XRBaseInteractor selectingInteractor { get { return m_SelectingInteractor; } }
         public IMLComponent graph;
-        
         public Color selectedHighlight;
         public Texture2D trainedColor;
         
@@ -24,15 +19,28 @@ namespace InteractML
 
         public void Start()
         {
+            IMLEventDispatcher.deselectGraph += DeactivateVRInterface;
             Deselected();
             SetBody(baseColour);
         }
+
+        public void Update()
+        {
+            if (interactionManager == null)
+            {
+                interactionManager = FindObjectOfType<XRInteractionManager>();
+            }
+        }
         public void Selected()
         {
+            Debug.Log("selected");
             this.GetComponent<Renderer>().material.SetFloat("_OutlineWidth", 0.01f);
             //cubeRenderer.material.SetColor("_OutlineColor", selectedHighlight);
+            Debug.Log("selected");
+            IMLEventDispatcher.selectGraph?.Invoke(graph);
 
         }
+
 
         public void SetColourHighlight(Color colour)
         {
@@ -48,6 +56,7 @@ namespace InteractML
         public void Deselected()
         {
             this.GetComponent<Renderer>().material.SetFloat("_OutlineWidth", 0.00f);
+
         }
        
 
@@ -61,9 +70,13 @@ namespace InteractML
             graph.universalInputActive = true;
         }
         
-        public void DeactivateVRInterface()
+        public void DeactivateVRInterface(IMLComponent deselectedGraph)
         {
-            graph.universalInputActive = false;
+            if (graph = deselectedGraph)
+            {
+                Deselected();
+                graph.universalInputActive = false;
+            }
         }
         void Detach()
         {

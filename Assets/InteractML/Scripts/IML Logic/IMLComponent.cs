@@ -1201,8 +1201,7 @@ namespace InteractML
             {
                 foreach(CustomController controller in m_CustomControllerList)
                 {
-                    //controller.UpdateLogic();
-                    m_inputSetUp.UpdateLogic();
+                    controller.UpdateLogic();
                 }
             }
 

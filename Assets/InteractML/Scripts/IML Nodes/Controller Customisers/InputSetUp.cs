@@ -80,8 +80,6 @@ namespace InteractML.CustomControllers
             allHandlers.AddRange(mlsHandlers);
             allHandlers.AddRange(trainingHandlers);
             SubscribeToEvents();
-            SetTrainingID("2bb91d0b-b696-42a0-9d49-cb6d063fce92");
-            SetMLSID("b3fecfdb-895b-428e-9584-7fc246c1d7c0");
         }
 
 
@@ -192,21 +190,21 @@ namespace InteractML.CustomControllers
             Debug.Log(DeleteAll.GetType());
         }
         
-        public void SetTrainingID(string id)
+        public bool SetTrainingID(string id)
         {
             foreach (InputHandler handler in trainingHandlers)
             {
                 handler.nodeID = id;
             }
-
+            return true;
         }
-        public void SetMLSID(string id)
+        public bool SetMLSID(string id)
         {
             foreach (InputHandler handler in mlsHandlers)
             {
                 handler.nodeID = id;
             }
-
+            return true;
         }
 
         private void SaveToFile()
@@ -277,8 +275,22 @@ namespace InteractML.CustomControllers
             ToggleRecord.ButtonFire += IMLEventDispatcher.ToggleRecordCallback;
             Train.ButtonFire += IMLEventDispatcher.TrainMLSCallback;
             ToggleRun.ButtonFire += IMLEventDispatcher.ToggleRunCallback;
+
+            IMLEventDispatcher.selectGraph += ActivateInput;
+            IMLEventDispatcher.deselectGraph += DeactivateInput;
+            IMLEventDispatcher.SetUniversalTrainingID += SetTrainingID;
+            IMLEventDispatcher.SetUniversalMLSID += SetMLSID;
         }
 
+        private void ActivateInput(IMLComponent graph)
+        {
+            activeUniversalInterface = true;
+        }
+        
+        private void DeactivateInput(IMLComponent graph)
+        {
+            activeUniversalInterface = false;
+        }
         
 
         public void UnsubscribeFromEvents()
@@ -288,6 +300,11 @@ namespace InteractML.CustomControllers
             ToggleRecord.ButtonFire -= IMLEventDispatcher.ToggleRecordCallback;
             Train.ButtonFire -= IMLEventDispatcher.TrainMLSCallback;
             ToggleRun.ButtonFire -= IMLEventDispatcher.ToggleRunCallback;
+
+            IMLEventDispatcher.selectGraph -= ActivateInput;
+            IMLEventDispatcher.deselectGraph -= DeactivateInput;
+            IMLEventDispatcher.SetUniversalTrainingID -= SetTrainingID;
+            IMLEventDispatcher.SetUniversalMLSID -= SetMLSID;
         }
 
 
