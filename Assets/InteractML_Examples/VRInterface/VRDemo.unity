@@ -275,10 +275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
-  GameObjectsToUse:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  GameObjectsToUse: []
   m_GOsPerGONodes:
     m_keys:
     - {fileID: 0}
