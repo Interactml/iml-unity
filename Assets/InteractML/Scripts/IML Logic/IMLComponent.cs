@@ -135,6 +135,7 @@ namespace InteractML
         private Dictionary<FieldInfo, MonoBehaviour> m_DataMonobehavioursPerFieldInfo;
 
         private bool universalInputEnabled = true;
+        [HideInInspector]
         public bool universalInputActive = false;
 
         public GameObject prefab;
@@ -146,6 +147,7 @@ namespace InteractML
 
         private void OnEnable()
         {
+            
             universalInputActive = false;
             // if this componenet is in the open scene 
             if (this.gameObject.scene.IsValid())
