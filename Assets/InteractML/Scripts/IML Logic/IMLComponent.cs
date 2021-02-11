@@ -138,7 +138,7 @@ namespace InteractML
         [HideInInspector]
         public bool universalInputActive = false;
 
-        public GameObject prefab;
+
         private IMLGrab icon;
 
         #endregion
@@ -167,6 +167,7 @@ namespace InteractML
         // Called when something changes in the scene
         private void OnValidate()
         {
+            
             IMLControllerOwnershipLogic();
         }
 
@@ -343,7 +344,7 @@ namespace InteractML
                 m_inputSetUp.NodeInitalize();
             } else
             {
-                Debug.Log("no input set up node");
+                m_inputSetUp = graph.AddNode<InteractML.CustomControllers.InputSetUp>();
             }
             
         }
@@ -370,10 +371,7 @@ namespace InteractML
                     {
                         //Initialize node 
                         node.NodeInitalize();
-                    } else
-                    {
-                        graph.AddNode<InteractML.CustomControllers.InputSetUp>();
-                    }
+                    } 
 
                 }
             }
@@ -573,7 +571,7 @@ namespace InteractML
                 // if input node is not null and inputsetup node is null
                 if (inputNode != null && m_inputSetUp == null)
                 {
-                    setUpNode = inputNode;
+                    m_inputSetUp = inputNode;
                 }
             }
 

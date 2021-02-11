@@ -13,11 +13,11 @@ public class colorChangerRGB : MonoBehaviour
     private Color regressionColor;
 
     // IML values regression
-    [PullFromIMLGraph]
+    [PullFromIMLGraph, Range(0, 1)]
     public float SetR;
-    [PullFromIMLGraph]
+    [PullFromIMLGraph, Range(0, 1)]
     public float SetG;
-    [PullFromIMLGraph]
+    [PullFromIMLGraph, Range(0, 1)]
     public float SetB;
 
     // Start is called before the first frame update

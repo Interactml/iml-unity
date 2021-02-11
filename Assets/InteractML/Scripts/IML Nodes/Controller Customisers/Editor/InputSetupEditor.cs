@@ -98,6 +98,7 @@ namespace InteractML.ControllerCustomisers
             // choose delete all button
             GUILayout.Space(10);
             GUILayout.BeginHorizontal();
+            Debug.Log(m_InputSetUp.DeleteAll + "m_InputSetUp");
             GUILayout.Label("Delete All", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
             ShowButtonChoice(m_InputSetUp.DeleteAll.buttonName, m_InputSetUp.deleteAllButtonNo, out m_InputSetUp.deleteAllButtonNo, m_InputSetUp.deleteAllButtonTT, out m_InputSetUp.deleteAllButtonTT);
             GUILayout.EndHorizontal();
