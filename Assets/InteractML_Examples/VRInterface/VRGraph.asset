@@ -36,7 +36,7 @@ MonoBehaviour:
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 0
-  GOHashCode: 14958
+  GOHashCode: 22086
   CreatedDuringPlaymode: 0
 --- !u!114 &-4952908079997644971
 MonoBehaviour:
@@ -242,7 +242,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 4
+  Counter: 1
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -449,7 +449,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 1
-  Counter: 4
+  Counter: 1
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -551,7 +551,7 @@ MonoBehaviour:
   m_Out: 0
   ReceivingData: 0
   InputConnected: 0
-  Counter: 4
+  Counter: 1
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:

@@ -269,17 +269,26 @@ namespace InteractML
 
         private void OnactivateEvents()
         {
-            int noOfExamples = graph.TrainingExamplesNodesList.Count;
-            
-            for(int i = 0; i < noOfExamples; i++)
-            {
-                trainingSelections[i].onPress += TrainingNodeSelected;
-            }
+            // direty code need to figure out why this is happening
 
-            exit.onPress += exitMenu;
-            trainingMenu.onPress += secondMenu;
-            back.onPress += backMenu;
-            mlsInteraction.onPress += MLSNodeSelected;
+            if(graph == null)
+            {
+                exitMenu();
+            } else
+            {
+                int noOfExamples = graph.TrainingExamplesNodesList.Count;
+
+                for (int i = 0; i < noOfExamples; i++)
+                {
+                    trainingSelections[i].onPress += TrainingNodeSelected;
+                }
+
+                exit.onPress += exitMenu;
+                trainingMenu.onPress += secondMenu;
+                back.onPress += backMenu;
+                mlsInteraction.onPress += MLSNodeSelected;
+            }
+            
         }
 
         private void OndeactivateUnsubscribe()
@@ -302,7 +311,7 @@ namespace InteractML
         {
             on = false;
             IMLEventDispatcher.deselectGraph?.Invoke(graph);
-            graph = null;
+            //graph = null;
             RemoveMenuSetUp();
             OndeactivateUnsubscribe();
             transform.Find("radial").gameObject.SetActive(false); 

@@ -1126,6 +1126,10 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
+            if (icon.graph == null)
+            {
+                icon.graph = this;
+            }
             //Debug.Log("Running IMLComponent update...");
 
 
