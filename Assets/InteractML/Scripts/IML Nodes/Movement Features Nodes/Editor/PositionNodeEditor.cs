@@ -56,9 +56,10 @@ namespace InteractML.MovementFeatures
             //draws node data fields
             MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabel(this, m_ExtractPosition);
 
-            GUILayout.Space(10);
+            // commented out as not using local space toggle
+            //GUILayout.Space(10);
             //draw toggle to select whether to use localspace
-            m_ExtractPosition.LocalSpace = MovementFeatureEditorMethods.DrawLocalSpaceToggle(this, m_ExtractPosition.LocalSpace);
+            //m_ExtractPosition.LocalSpace = MovementFeatureEditorMethods.DrawLocalSpaceToggle(this, m_ExtractPosition.LocalSpace);
 
             GUILayout.EndArea();
         }
