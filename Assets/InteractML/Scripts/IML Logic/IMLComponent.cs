@@ -147,7 +147,7 @@ namespace InteractML
 
         private void OnEnable()
         {
-            
+            Debug.Log("on enable iml component");
             universalInputActive = false;
             // if this componenet is in the open scene 
             if (this.gameObject.scene.IsValid())

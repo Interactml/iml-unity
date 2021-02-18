@@ -255,7 +255,6 @@ namespace InteractML.CustomControllers
 
         private void LoadFromFile()
         {
-            Debug.Log("here");
             InputSetUpVRSettings setUP = IMLInputSetUpSerialization.LoadInputSettings();
             enableUniversalInterface = setUP.isEnabled;
             device = setUP.device;

@@ -276,17 +276,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
   GameObjectsToUse:
-  - {fileID: 1076660641}
+  - {fileID: 1195285047}
   m_GOsPerGONodes:
     m_keys:
     - {fileID: 0}
-    - {fileID: 1076660641}
+    - {fileID: 1195285047}
     m_values:
     - {fileID: 0}
-    - {fileID: -8199044395471601300, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
+    - {fileID: 7776260847769485038, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
   m_GameObjectNodeList:
-  - {fileID: -8199044395471601300, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
-  m_ScriptNodesList: []
+  - {fileID: 7776260847769485038, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
+  m_ScriptNodesList:
+  - {fileID: 8948996071717161829, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
   m_inputSetUp: {fileID: 6617459786147632998, guid: 93b32fd0d0cc4a242ac69382929594e6,
     type: 2}
   m_CustomControllerList: []
@@ -298,7 +299,7 @@ MonoBehaviour:
     m_keys:
     - {fileID: 2117627209}
     m_values:
-    - {fileID: 0}
+    - {fileID: 8948996071717161829, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
   m_MonobehaviourClones: []
   universalInputActive: 0
 --- !u!4 &196579071
@@ -2664,10 +2665,10 @@ MonoBehaviour:
   m_CustomReticle: {fileID: 0}
   graph: {fileID: 196579070}
   selectedHighlight: {r: 0.72156864, g: 0.73333335, b: 0.98039216, a: 0}
-  trainedColor: {fileID: 2800000, guid: d3009154998b11144992a6c5be9cc1f7, type: 3}
+  trainedColor: {fileID: 2800000, guid: c417d3fdbb88654449462abbdc48680c, type: 3}
   baseColour: {fileID: 2800000, guid: c4c3665142c39b4459c779bd443b9776, type: 3}
-  recordingColour: {fileID: 2800000, guid: ac209d0e15a2d9845be67e3cfbf3b5a1, type: 3}
-  runningColour: {fileID: 2800000, guid: 996eac35cd99e76488e01a9c06a55b0a, type: 3}
+  recordingColour: {fileID: 2800000, guid: 243854e302a54c04082cefa189303fc6, type: 3}
+  runningColour: {fileID: 2800000, guid: 7886c868007defe40ba0a0cc1ebfc46b, type: 3}
   current: {fileID: 0}
 --- !u!54 &1443634899
 Rigidbody:
@@ -3424,12 +3425,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2117627208}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7fd86cc1b4711042ae04c66d932f764, type: 3}
+  m_Script: {fileID: 11500000, guid: bdbd2a755098f5f46814744bfc36b3e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SetR: 0
-  SetG: 0
-  SetB: 0
+  SetAbsoluteColour: 0
 --- !u!65 &2117627210
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3529,14 +3528,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2127190909}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.08715578, y: 0, z: 0, w: 0.9961947}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_Children:
   - {fileID: 1777504672}
   m_Father: {fileID: 1195285048}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 10, y: 0, z: 0}
 --- !u!114 &2127190911
 MonoBehaviour:
   m_ObjectHideFlags: 0

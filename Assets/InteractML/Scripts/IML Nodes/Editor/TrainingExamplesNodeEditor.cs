@@ -66,20 +66,25 @@ namespace InteractML
 
         public override void OnBodyGUI()
         {
-            OutputPortsNamesOverride = new Dictionary<string, string>();
-            OutputPortsNamesOverride.Add("TrainingExamplesNodeToOutput", "Recorded\nExamples");
+            IMLGraph graph = this.target.graph as IMLGraph;
+            if (graph.IsGraphRunning)
+            {
+                OutputPortsNamesOverride = new Dictionary<string, string>();
+                OutputPortsNamesOverride.Add("TrainingExamplesNodeToOutput", "Recorded\nExamples");
 
-            InputPortsNamesOverride = new Dictionary<string, string>();
-            InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
-            InputPortsNamesOverride.Add("TargetValues", "Target Values");
+                InputPortsNamesOverride = new Dictionary<string, string>();
+                InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
+                InputPortsNamesOverride.Add("TargetValues", "Target Values");
 
-            base.nodeTips = m_TrainingExamplesNode.tooltips;
-            if (m_TrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_TrainingExamplesNode.DesiredOutputFeatures.Count || lastShowWarning != m_TrainingExamplesNode.showWarning)
-                m_RecalculateRects = true;
-            m_ConnectedInputs = m_TrainingExamplesNode.DesiredInputFeatures.Count;
-            m_ConnectedTargets = m_TrainingExamplesNode.DesiredOutputFeatures.Count;
-            lastShowWarning = m_TrainingExamplesNode.showWarning;
-            base.OnBodyGUI();
+                base.nodeTips = m_TrainingExamplesNode.tooltips;
+                if (m_TrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_TrainingExamplesNode.DesiredOutputFeatures.Count || lastShowWarning != m_TrainingExamplesNode.showWarning)
+                    m_RecalculateRects = true;
+                m_ConnectedInputs = m_TrainingExamplesNode.DesiredInputFeatures.Count;
+                m_ConnectedTargets = m_TrainingExamplesNode.DesiredOutputFeatures.Count;
+                lastShowWarning = m_TrainingExamplesNode.showWarning;
+                base.OnBodyGUI();
+            }
+            
         }
 
         #endregion
@@ -466,7 +471,12 @@ namespace InteractML
                 m_Dropdown.y = m_HelpRect.y + m_HelpRect.height;
                 m_Dropdown.width = m_HelpRect.width;
                 m_Dropdown.height = 200;
-                GUI.DrawTexture(m_Dropdown, NodeColor);
+                if (Event.current.type == EventType.Layout)
+                {
+                    GUI.DrawTexture(m_Dropdown, NodeColor);
+                    Resources.UnloadAsset(NodeColor);
+                }
+                    
 
                 GUILayout.BeginArea(m_Dropdown);
 
