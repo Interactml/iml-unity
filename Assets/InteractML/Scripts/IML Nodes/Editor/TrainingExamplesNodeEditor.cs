@@ -74,7 +74,7 @@ namespace InteractML
 
                 InputPortsNamesOverride = new Dictionary<string, string>();
                 InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
-                InputPortsNamesOverride.Add("TargetValues", "Target Values");
+                InputPortsNamesOverride.Add("TargetValues", "Labels");
 
                 base.nodeTips = m_TrainingExamplesNode.tooltips;
                 if (m_TrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_TrainingExamplesNode.DesiredOutputFeatures.Count || lastShowWarning != m_TrainingExamplesNode.showWarning)

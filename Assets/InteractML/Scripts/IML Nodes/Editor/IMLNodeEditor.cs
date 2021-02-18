@@ -208,7 +208,6 @@ namespace InteractML
                 m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
 
             IMLGraph m_IMLGraph = target.graph as IMLGraph;
-            Debug.Log(m_IMLGraph.IsGraphRunning);
             if (!m_IMLGraph.IsGraphRunning)
             {
                 HeaderRect.height = 500;

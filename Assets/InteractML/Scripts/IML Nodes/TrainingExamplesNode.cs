@@ -1026,13 +1026,28 @@ namespace InteractML
             if (nodeid == this.id)
             {
                 string status = "";
+                int i = 0;
+                foreach (IFeatureIML node in TargetValues)
+                {
+                    status += "Label: " + i;
+                    foreach (float value in node.FeatureValues.Values)
+                    {
+                        status += value + ", ";
+                    }
+                    i++;
+                }
                 if (CollectingData)
-                    status = "Recording \n";
-                else
-                    status = "Not Recording \n";
+                    status += "Recording \n";
 
                 status += "Examples: ";
-                status += TotalNumberOfTrainingExamples.ToString();
+                if (ModeOfCollection == CollectionMode.SingleExample)
+                {
+
+                   status += TotalNumberOfTrainingExamples.ToString();
+                } else
+                {
+                    status += TrainingSeriesCollection.Count.ToString();
+                }
                 return status;
             }
             return "here";

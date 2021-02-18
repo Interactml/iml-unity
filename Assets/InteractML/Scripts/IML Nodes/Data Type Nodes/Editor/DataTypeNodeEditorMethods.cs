@@ -41,6 +41,13 @@ namespace InteractML.DataTypeNodes
                 
                     // draw editable float field for each feature
                     node.UserInput.Values[i] = EditorGUILayout.FloatField(node.UserInput.Values[i], GUILayout.MaxWidth(60));
+                    if (GUI.changed)
+                    {
+                        Debug.Log("here");
+                        EditorUtility.SetDirty(node);
+                    }
+
+                    GUI.changed = false;
                 
                     GUILayout.EndHorizontal(); 
                     EditorGUILayout.Space();
