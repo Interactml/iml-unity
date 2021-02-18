@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XNode;
@@ -2029,18 +2030,26 @@ namespace InteractML
                 
                 string status = "";
                 if (Trained)
+                {
                     status = "Trained " + m_NumExamplesTrainedOn.ToString() + "\n";
-                else if (Running)
+                }
+                
+                if (Running)
                 {
                     status += "Running \n";
-                    int i = 0;
-                    foreach (IMLBaseDataType dataType in PredictedOutput)
+                    if(LearningType != IMLSpecifications.LearningType.DTW)
                     {
-                        status += "Output 1: " + i;
-                        i++;
-                        foreach(float f in dataType.Values)
-                            status += f.ToString() + "\n";
+                        int i = 0;
+                        foreach (IMLBaseDataType dataType in PredictedOutput)
+                        {
+                            status += "Output: " + i;
+                            i++;
+                            foreach (float f in dataType.Values)
+                                status += f.ToString() + "\n";
+                        }
+
                     }
+                    
                 } else
                 {
                     if(LearningType == IMLSpecifications.LearningType.DTW)
@@ -2048,7 +2057,7 @@ namespace InteractML
                         int i = 0;
                         foreach (IMLBaseDataType dataType in PredictedOutput)
                         {
-                            status += "Output 1: " + i;
+                            status += "Output: " + i;
                             i++;
                             foreach (float f in dataType.Values)
                                 status += f.ToString() + "\n";
