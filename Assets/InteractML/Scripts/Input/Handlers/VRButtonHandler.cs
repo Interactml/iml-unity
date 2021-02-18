@@ -54,8 +54,7 @@ namespace InteractML
                         controller.TryGetFeatureValue(_buttonFloat, out fValue);
 
                         if (fValue == 0)
-                            fValue = 0.5f;
-
+                            fValue = 0.6f;
 
                         if (!previousPress && fValue > 0.5f)
                         {
