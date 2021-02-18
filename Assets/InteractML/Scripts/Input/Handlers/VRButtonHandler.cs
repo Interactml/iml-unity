@@ -13,6 +13,8 @@ namespace InteractML
         [SerializeField]
         private UnityEngine.XR.InputFeatureUsage<bool> _button;
         [SerializeField]
+        private UnityEngine.XR.InputFeatureUsage<float> _buttonFloat;
+        [SerializeField]
         private IMLControllerInputs imlButton;
         [SerializeField]
         private IMLSides controllerSide;
@@ -48,8 +50,14 @@ namespace InteractML
                     bool triggerValue;
                     if (controller.TryGetFeatureValue(_button, out triggerValue) && triggerValue)
                     {
-                        
-                        if (!previousPress)
+                        float fValue;
+                        controller.TryGetFeatureValue(_buttonFloat, out fValue);
+
+                        if (fValue == 0)
+                            fValue = 0.5f;
+
+
+                        if (!previousPress && fValue > 0.5f)
                         {
                             currentController = controller;
                             //Debug.Log("previous press");
@@ -57,16 +65,16 @@ namespace InteractML
                             if (triggerType == IMLTriggerTypes.Down)
                             {
                                 ButtonFire?.Invoke(nodeID);
-                               // Debug.Log("down" + controller.characteristics + " " + buttonName);
+                                //Debug.Log("down" + controller.characteristics + " " + buttonName);
                             }
                             if (triggerType == IMLTriggerTypes.Hold)
                             {
                                 ButtonFire?.Invoke(nodeID);
-                               // Debug.Log("hold " + controller.characteristics + " " + buttonName);
+                                //Debug.Log("hold " + controller.characteristics + " " + buttonName);
                             }
                         } 
                     }
-                    else 
+                    else
                     {
                         
                         //Debug.Log("not event " + buttonName + controller.characteristics.ToString());
@@ -134,15 +142,19 @@ namespace InteractML
             {
                 case IMLControllerInputs.Trigger:
                     this._button = UnityEngine.XR.CommonUsages.triggerButton;
+                    this._buttonFloat = UnityEngine.XR.CommonUsages.trigger;
                     break;
                 case IMLControllerInputs.Grip:
                     this._button = UnityEngine.XR.CommonUsages.gripButton;
+                    this._buttonFloat = UnityEngine.XR.CommonUsages.grip;
                     break;
                 case IMLControllerInputs.Primary:
                     this._button = UnityEngine.XR.CommonUsages.primaryButton;
+                    this._buttonFloat = new UnityEngine.XR.InputFeatureUsage<float>();
                     break;
                 case IMLControllerInputs.Secondary:
                    this._button = UnityEngine.XR.CommonUsages.secondaryButton;
+                    this._buttonFloat = new UnityEngine.XR.InputFeatureUsage<float>();
                     break;
                 default:
                     Debug.Log("none");

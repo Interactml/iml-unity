@@ -41,21 +41,40 @@ namespace InteractML {
         public void HandleState()
           {
             
+
               Vector2 value = GetValue(controller);
               if (value != previousValue)
               {
                   previousValue = value;
                   OnValueChange?.Invoke(controller, value);
               }
+            GetClick();
           }
 
         public Vector2 GetValue(XRController controller)
         {
+
             if (controller.inputDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxis, out Vector2 value))
             {
                 innerMenu.SetTouchPosition(value);
+                return value;
             }
             
+            
+            if (controller.inputDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.secondary2DAxis, out Vector2 value2))
+            {
+                innerMenu.SetTouchPosition(value);
+                return value2;
+            }
+
+            return new Vector2(0, 0);
+            
+            
+        }
+
+        private void GetClick()
+        {
+
             if (controller.inputDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out bool click))
             {
                 if (click)
@@ -63,14 +82,15 @@ namespace InteractML {
                     innerMenu.ActivateHighlightedSection();
                 }
             }
-            
-            if (controller.inputDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisTouch, out bool touch))
-            {
-                
-            }
-                
 
-            return value;
+
+            if (controller.inputDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out bool click2))
+            {
+                if (click2)
+                {
+                    innerMenu.ActivateHighlightedSection();
+                }
+            }
         }
     }
 }

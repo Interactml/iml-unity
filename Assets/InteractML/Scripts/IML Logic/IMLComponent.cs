@@ -147,7 +147,6 @@ namespace InteractML
 
         private void OnEnable()
         {
-            Debug.Log("on enable iml component");
             universalInputActive = false;
             // if this componenet is in the open scene 
             if (this.gameObject.scene.IsValid())
@@ -1166,7 +1165,7 @@ namespace InteractML
             // Keep lists of nodes found updated
             //GetAllNodes();
 
-            if (graph != null)
+            if (graph != null || graph.IsGraphRunning == false)
             {
                 // Fetch data from the Monobehaviours we have subscribed into and out of the IML Controller
                 FetchDataFromMonobehavioursSubscribed();
