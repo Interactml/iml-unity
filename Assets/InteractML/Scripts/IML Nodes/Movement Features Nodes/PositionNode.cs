@@ -100,10 +100,13 @@ namespace InteractML.MovementFeatures
             else
             {
                 // Set values of our feature extracted
-                if (LocalSpace)
-                    m_PositionExtracted.SetValues(gameObjRef.transform.localPosition);
-                else 
-                    m_PositionExtracted.SetValues(gameObjRef.transform.position);
+                m_PositionExtracted.SetValues(gameObjRef.transform.position);
+
+                // commented out as not using local space toggle
+                //if (LocalSpace)
+                //    m_PositionExtracted.SetValues(gameObjRef.transform.localPosition);
+                //else 
+                //    m_PositionExtracted.SetValues(gameObjRef.transform.position);
             }
 
             // update if node is receiving data
