@@ -52,7 +52,7 @@ namespace InteractML
             baseNodeBodyHeight = 320;
             // Get reference to the current node
             m_TrainingExamplesNode = (target as TrainingExamplesNode);
-            NodeName = "TEACH THE MACHINE ";
+            NodeName = "TEACH THE MACHINE " + m_TrainingExamplesNode.listNo;
             if (m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
             {
                 NodeSubtitle = "Classification and Regression trainging examples";

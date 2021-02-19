@@ -58,7 +58,7 @@ namespace InteractML
                     IMLNode imlNode = node as IMLNode;
                     imlNode.NodeInitalize();
                 }
-                
+                SceneComponent.GetAllNodes();
 
                 if (isCustomType)
                 {

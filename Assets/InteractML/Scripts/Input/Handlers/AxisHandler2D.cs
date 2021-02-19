@@ -77,6 +77,7 @@ namespace InteractML {
 
             if (controller.inputDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out bool click))
             {
+
                 if (click)
                 {
                     innerMenu.ActivateHighlightedSection();

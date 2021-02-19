@@ -329,7 +329,7 @@ namespace InteractML
             //Initialise Features
             InitializeFeatureNode(FeatureNodesList);
             //Initialise Training Examples
-            InitializeNodeType(TrainingExamplesNodesList);
+            InitializeTrainingNodes(TrainingExamplesNodesList);
             //Initialise MLSystemList
             InitializeNodeType(MLSystemNodeList);
             //Initialise Script nodes
@@ -370,6 +370,28 @@ namespace InteractML
                     {
                         //Initialize node 
                         node.NodeInitalize();
+                    } 
+
+                }
+            }
+
+        }
+        /// <summary>
+        /// Goes through all IMLnodes in list and initialises. Called in InitializeAllNodes
+        /// </summary>
+        /// <param name="ListToInitalize">IMLNode List to initiliaze</param>
+        private void InitializeTrainingNodes(List<TrainingExamplesNode> ListToInitalize)
+        {
+            if (ListToInitalize != null)
+            {
+                // loop through all nodes in list
+                for(int i = 0; i < ListToInitalize.Count; i++)
+                {
+                    if (ListToInitalize[i] != null)
+                    {
+                        //Initialize node 
+                        ListToInitalize[i].NodeInitalize();
+                        ListToInitalize[i].listNo = i;
                     } 
 
                 }
@@ -618,6 +640,7 @@ namespace InteractML
                     {
                         listToAddTo.Add(trainingNode);
                     }
+                    trainingNode.listNo = listToAddTo.Count - 1;
 
                 }
             }
@@ -1967,6 +1990,7 @@ namespace InteractML
         {
             if (m_TrainingExamplesNodesList.Contains(nodeToDelete))
                 m_TrainingExamplesNodesList.Remove(nodeToDelete);
+            UpdateTrainingExamplesListNo();
         }
         /// <summary>
         /// Removes TextNoteNode From TextNoteNodeList 
@@ -2241,6 +2265,13 @@ namespace InteractML
         private void EnableUniversalInterface(bool value)
         {
             universalInputEnabled = value;
+        }
+
+        private void UpdateTrainingExamplesListNo()
+        {
+            for(int i = 0; i < TrainingExamplesNodesList.Count; i++){
+                TrainingExamplesNodesList[i].listNo = i;
+            }
         }
 
         #endregion

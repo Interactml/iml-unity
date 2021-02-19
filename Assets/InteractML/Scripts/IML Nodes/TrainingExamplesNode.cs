@@ -178,6 +178,8 @@ namespace InteractML
 
         public bool canCollect;
 
+        public int listNo;
+
         #endregion
 
         #region XNode Messages

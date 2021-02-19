@@ -158,5 +158,8 @@ namespace InteractML
         public static GetText getText;
         public static IMLEvent listenText;
 
+        public delegate void TrainingNodeChange();
+        public static TrainingNodeChange tNodeChange;
+
     }
 }

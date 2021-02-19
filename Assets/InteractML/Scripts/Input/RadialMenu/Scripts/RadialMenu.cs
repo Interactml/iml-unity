@@ -31,13 +31,14 @@ namespace InteractML
         public RadialSectionNode trainingNode5 = null;
         public RadialSectionNode trainingNode6 = null;
 
-        public SpriteRenderer trainingicon1 = null;
-        public SpriteRenderer trainingicon2 = null;
-        public SpriteRenderer trainingicon3 = null;
-        public SpriteRenderer trainingicon4 = null;
-        public SpriteRenderer trainingicon5 = null;
-        public SpriteRenderer trainingicon6 = null;
-        private SpriteRenderer[] renderers;
+        
+        public TMP_Text trainingicon1 = null;
+        public TMP_Text trainingicon2 = null;
+        public TMP_Text trainingicon3 = null;
+        public TMP_Text trainingicon4 = null;
+        public TMP_Text trainingicon5 = null;
+        public TMP_Text trainingicon6 = null;
+        private TMP_Text[] renderers;
 
 
         private string trainingSelected;
@@ -55,9 +56,6 @@ namespace InteractML
         private bool secondOn = false;
         private bool on = false;
         private bool training = false;
-
-        public Sprite teachTheMachine;
-        public Sprite emptyTTM;
 
         public TextMeshProUGUI status;
 
@@ -114,11 +112,8 @@ namespace InteractML
                 i++;
             }
             
-            foreach (RadialSection section in firstSelections)
-            {
-                //section.iconRenderer.sprite = section.icon;
-            }
-            renderers = new SpriteRenderer[6]{
+          
+            renderers = new TMP_Text[6]{
             trainingicon1,
             trainingicon2,
             trainingicon3,
@@ -358,7 +353,7 @@ namespace InteractML
 
         IEnumerator EnableOuter()
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(1.5f);
             secondOn = true;
         }
 
@@ -381,11 +376,8 @@ namespace InteractML
             {
                 if(i < graph.TrainingExamplesNodesList.Count)
                 {
-                    renderers[i].sprite = teachTheMachine;
-                } else
-                {
-                    renderers[i].sprite = emptyTTM;
-                }
+                    renderers[i].text = "TTM\n " + i;
+                } 
             }
 
             IEnumerator coroutine = SlowSubscribe();

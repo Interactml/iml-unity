@@ -8,21 +8,44 @@ namespace InteractML
 {
     public class VRButtonHandler : InputHandler
     {
-        //public InputHelpers.Button button = InputHelpers.Button.Trigger;
+        /// <summary>
+        /// public reference to VR button 
+        /// </summary>
         public UnityEngine.XR.InputFeatureUsage<bool> button { get => _button; }
+        /// <summary>
+        /// private reference to button 
+        /// </summary>
         [SerializeField]
         private UnityEngine.XR.InputFeatureUsage<bool> _button;
+        /// <summary>
+        /// float which hold the float output of the button 
+        /// </summary>
         [SerializeField]
         private UnityEngine.XR.InputFeatureUsage<float> _buttonFloat;
+        /// <summary>
+        /// reference to IML button used to set UnityEngine.XR.InutFeatureUsage _button
+        /// </summary>
         [SerializeField]
         private IMLControllerInputs imlButton;
+        /// <summary>
+        /// which controller left / right / both is being used
+        /// </summary>
         [SerializeField]
         private IMLSides controllerSide;
+        /// <summary>
+        /// method to find controllers
+        /// </summary>
         [SerializeField]
         private List<UnityEngine.XR.InputDevice> _controllers;
+        /// <summary>
+        /// controller which is currently being used 
+        /// </summary>
         [SerializeField]
         private UnityEngine.XR.InputDevice currentController;
 
+        /// <summary>
+        /// event to fire when action happens 
+        /// </summary>
         public override event IMLEventDispatcher.IMLEvent ButtonFire;
 
         public VRButtonHandler(int butNo, IMLSides side, IMLTriggerTypes type, string name)
