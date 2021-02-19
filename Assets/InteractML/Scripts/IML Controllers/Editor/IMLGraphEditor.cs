@@ -90,10 +90,11 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type);
             }
-            if (type.PrettyName() == "InteractML.GameObjectNode")
-            {
-                return base.GetNodeMenuName(type).Replace("InteractML", "");
-            }
+            //commented outas gameobject should be controlled in the inspector
+            //if (type.PrettyName() == "InteractML.GameObjectNode")
+            //{
+            //    return base.GetNodeMenuName(type).Replace("InteractML", "");
+            //}
 
             if (type.PrettyName() == "InteractML.SeriesTrainingExamplesNode")
             {
