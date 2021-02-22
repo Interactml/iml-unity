@@ -15,7 +15,7 @@ namespace InteractML
         /// <summary>
         /// The IML Component in the scene that this graph is attached to
         /// </summary>
-        public IMLComponent SceneComponent;
+        [SerializeField]public IMLComponent SceneComponent;
 
         /// <summary>
         /// Flag that tells us if the graph is supposed to currently run

@@ -119,7 +119,7 @@ namespace InteractML
         /// <summary>
         /// protected member, returns total number of training examples from vector (if reference not null)
         /// </summary>
-        protected int m_TotalNumberOfTrainingExamples { get { return (TrainingExamplesVector != null ? TrainingExamplesVector.Count : 0); } }
+        protected int m_TotalNumberOfTrainingExamples { get { return TrainingExamplesVector.Count; } }
         /// <summary>
         /// Total number of training examples
         /// </summary>
@@ -400,7 +400,11 @@ namespace InteractML
                 m_DesiredInputFeatures = new List<IMLBaseDataType>();
 
             if (Lists.IsNullOrEmpty(ref TrainingExamplesVector))
+            {
                 TrainingExamplesVector = new List<IMLTrainingExample>();
+                Debug.Log("here");
+            }
+                
 
             if (Lists.IsNullOrEmpty(ref TrainingSeriesCollection))
                 TrainingSeriesCollection = new List<IMLTrainingSeries>();
@@ -506,8 +510,11 @@ namespace InteractML
             if (GetInputValue<bool>("ToggleRecordingInputBoolPort"))
                 IMLEventDispatcher.ToggleRecordCallback(this.id);
             if (GetInputValue<bool>("DeleteAllExamplesBoolPort"))
-                IMLEventDispatcher.DeleteAllCallback(this.id);            
-
+                IMLEventDispatcher.DeleteAllCallback(this.id);
+            if (TrainingExamplesVector.Count == 0 && TrainingSeriesCollection.Count == 0)
+            {
+                LoadDataFromDisk();
+            }
             // Run examples logic in case we need to start/stop collecting examples
             CollectExamplesLogic();
 
@@ -518,7 +525,7 @@ namespace InteractML
         /// </summary>
         public virtual void ClearTrainingExamples()
         {
-
+            Debug.Log("here");
             // Account for mode
             switch (ModeOfCollection)
             {
@@ -894,6 +901,7 @@ namespace InteractML
                     //Debug.Log("Training Examples Vector loaded!");
                 }
             }
+            Debug.Log(TrainingExamplesVector.Count);
 
             if (TrainingExamplesVector.Count > 0 || TrainingSeriesCollection.Count > 0)
             {

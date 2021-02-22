@@ -152,7 +152,7 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 0
-  showWarning: 1
+  showWarning: 0
   canCollect: 1
   listNo: 0
 --- !u!114 &-822635662666423153
