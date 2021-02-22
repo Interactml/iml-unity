@@ -99,21 +99,21 @@ namespace InteractML.ControllerCustomisers
             GUILayout.Space(10);
             GUILayout.BeginHorizontal();
             GUILayout.Label("Delete All", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
-            ShowButtonChoice(m_InputSetUp.DeleteAll.buttonName, m_InputSetUp.deleteAllButtonNo, out m_InputSetUp.deleteAllButtonNo, m_InputSetUp.deleteAllButtonTT, out m_InputSetUp.deleteAllButtonTT);
+            ShowButtonChoice(m_InputSetUp.deleteAllName, m_InputSetUp.deleteAllButtonNo, out m_InputSetUp.deleteAllButtonNo, m_InputSetUp.deleteAllButtonTT, out m_InputSetUp.deleteAllButtonTT);
             GUILayout.EndHorizontal();
 
             // record one
             GUILayout.Space(10);
             GUILayout.BeginHorizontal();
             GUILayout.Label("Record One", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
-            ShowButtonChoice(m_InputSetUp.RecordOne.buttonName, m_InputSetUp.recordOneButtonNo, out m_InputSetUp.recordOneButtonNo, m_InputSetUp.recordOneButtonTT, out m_InputSetUp.recordOneButtonTT);
+            ShowButtonChoice(m_InputSetUp.recordOneName, m_InputSetUp.recordOneButtonNo, out m_InputSetUp.recordOneButtonNo, m_InputSetUp.recordOneButtonTT, out m_InputSetUp.recordOneButtonTT);
             GUILayout.EndHorizontal();
 
             // choose toggle record button 
             GUILayout.Space(10);
             GUILayout.BeginHorizontal();
             GUILayout.Label("Toggle Record", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
-            ShowButtonChoice(m_InputSetUp.ToggleRecord.buttonName, m_InputSetUp.toggleRecordButtonNo, out m_InputSetUp.toggleRecordButtonNo, m_InputSetUp.toggleRecordButtonTT, out m_InputSetUp.toggleRecordButtonTT);
+            ShowButtonChoice(m_InputSetUp.toggleRecordName, m_InputSetUp.toggleRecordButtonNo, out m_InputSetUp.toggleRecordButtonNo, m_InputSetUp.toggleRecordButtonTT, out m_InputSetUp.toggleRecordButtonTT);
             GUILayout.EndHorizontal();
 
             GUILayout.Space(30);
@@ -138,8 +138,8 @@ namespace InteractML.ControllerCustomisers
             // sets the button for training
             GUILayout.Space(10);
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Toggle Train", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
-            ShowButtonChoice(m_InputSetUp.Train.buttonName, m_InputSetUp.trainButtonNo, out m_InputSetUp.trainButtonNo, m_InputSetUp.trainButtonTT, out m_InputSetUp.trainButtonTT);
+            GUILayout.Label("Train", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
+            ShowButtonChoice(m_InputSetUp.trainName, m_InputSetUp.trainButtonNo, out m_InputSetUp.trainButtonNo, m_InputSetUp.trainButtonTT, out m_InputSetUp.trainButtonTT);
             GUILayout.EndHorizontal();
 
 
@@ -147,7 +147,7 @@ namespace InteractML.ControllerCustomisers
             GUILayout.Space(10);
             GUILayout.BeginHorizontal();
             GUILayout.Label("Toggle Run", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
-            ShowButtonChoice(m_InputSetUp.ToggleRun.buttonName, m_InputSetUp.toggleRunButtonNo, out m_InputSetUp.toggleRunButtonNo, m_InputSetUp.toggleRunButtonTT, out m_InputSetUp.toggleRunButtonTT);
+            ShowButtonChoice(m_InputSetUp.toggleRunName, m_InputSetUp.toggleRunButtonNo, out m_InputSetUp.toggleRunButtonNo, m_InputSetUp.toggleRunButtonTT, out m_InputSetUp.toggleRunButtonTT);
             GUILayout.EndHorizontal();
 
 

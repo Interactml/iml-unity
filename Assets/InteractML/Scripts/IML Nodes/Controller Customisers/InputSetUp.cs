@@ -54,12 +54,18 @@ namespace InteractML.CustomControllers
         public int toggleRunButtonNo;
         public IMLTriggerTypes toggleRunButtonTT;
 
-        private string deleteAllName = "deleteAll";
-        private string deleteLastName = "deleteLast";
-        private string toggleRecordName = "toggleRecord";
-        private string recordOneName = "recordOne";
-        private string trainName = "train";
-        private string toggleRunName = "toggleRun";
+        private string m_deleteAllName = "deleteAll";
+        private string m_deleteLastName = "deleteLast";
+        private string m_toggleRecordName = "toggleRecord";
+        private string m_recordOneName = "recordOne";
+        private string m_trainName = "train";
+        private string m_toggleRunName = "toggleRun";
+        public string deleteAllName { get => m_deleteAllName; }
+        public string deleteLastName { get => m_deleteLastName; }
+        public string toggleRecordName { get => m_toggleRecordName; }
+        public string recordOneName { get => m_recordOneName; }
+        public string trainName { get => m_trainName; }
+        public string toggleRunName { get => m_toggleRunName; }
 
         public string currentMLS;
         public string currentTraining;
@@ -188,22 +194,22 @@ namespace InteractML.CustomControllers
         /// </summary>
         private void InstantiateVRButtonHandlers()
         {
-            DeleteAll = new VRButtonHandler(deleteAllButtonNo, trainingHand, deleteAllButtonTT, deleteAllName);
+            DeleteAll = new VRButtonHandler(deleteAllButtonNo, trainingHand, deleteAllButtonTT, m_deleteAllName);
             //DeleteLast = new VRButtonHandler(deleteLastButtonNo, trainingHand, deleteLastButtonTT, deleteLastName);
-            RecordOne = new VRButtonHandler(recordOneButtonNo, trainingHand, recordOneButtonTT, recordOneName);
-            ToggleRecord = new VRButtonHandler(toggleRecordButtonNo, trainingHand, toggleRecordButtonTT, toggleRecordName);
-            Train = new VRButtonHandler(trainButtonNo, mlsHand, trainButtonTT, trainName);
-            ToggleRun = new VRButtonHandler(toggleRunButtonNo, mlsHand, toggleRunButtonTT, toggleRunName);
+            RecordOne = new VRButtonHandler(recordOneButtonNo, trainingHand, recordOneButtonTT, m_recordOneName);
+            ToggleRecord = new VRButtonHandler(toggleRecordButtonNo, trainingHand, toggleRecordButtonTT, m_toggleRecordName);
+            Train = new VRButtonHandler(trainButtonNo, mlsHand, trainButtonTT, m_trainName);
+            ToggleRun = new VRButtonHandler(toggleRunButtonNo, mlsHand, toggleRunButtonTT, m_toggleRunName);
         }
         private void InstantiateKeyboardButtonHandlers()
         {
             Debug.Log(deleteAllButtonNo);
-            DeleteAll = new KeyboardHandler(deleteAllButtonNo, deleteAllButtonTT, deleteAllName);
+            DeleteAll = new KeyboardHandler(deleteAllButtonNo, deleteAllButtonTT, m_deleteAllName);
             //DeleteLast = new KeyboardHandler(deleteLastButtonNo, deleteLastButtonTT, "deleteLast");
-            RecordOne = new KeyboardHandler(recordOneButtonNo, recordOneButtonTT, recordOneName);
-            ToggleRecord = new KeyboardHandler(toggleRecordButtonNo, toggleRecordButtonTT, toggleRecordName);
-            Train = new KeyboardHandler(trainButtonNo, trainButtonTT, trainName);
-            ToggleRun = new KeyboardHandler(toggleRunButtonNo, toggleRunButtonTT, toggleRunName);
+            RecordOne = new KeyboardHandler(recordOneButtonNo, recordOneButtonTT, m_recordOneName);
+            ToggleRecord = new KeyboardHandler(toggleRecordButtonNo, toggleRecordButtonTT, m_toggleRecordName);
+            Train = new KeyboardHandler(trainButtonNo, trainButtonTT, m_trainName);
+            ToggleRun = new KeyboardHandler(toggleRunButtonNo, toggleRunButtonTT, m_toggleRunName);
         }
         private void EnableTraining()
         {

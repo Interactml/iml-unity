@@ -7,8 +7,6 @@ public class colorChanger : MonoBehaviour
 {
     Renderer m_Renderer;
     Color[] colors;
-   // float transitionTime = 5f;
-    //float transitionRate = 0;
 
     // IML values classification
     [PullFromIMLGraph]
@@ -33,21 +31,6 @@ public class colorChanger : MonoBehaviour
         switch (SetAbsoluteColour)
         {
             case 1:
-                /*while (transitionRate < 1) {
-
-                    //this next line is how we change our material color property. We Lerp between the current color and newColor
-
-                    renderer.material.SetColor("_Color", Color.Lerp(renderer.material.color, newColor, Time.deltaTime * transitionRate));
-
-                    transitionRate += Time.deltaTime / transitionTime; // Increment transitionRate over the length of transitionTime
-
-                    yield return null; // wait for a frame then loop again
-
-                }
-
-                yield return null; // wait for a frame then loop again
-
-        } */
                 m_Renderer.material.SetColor("_Color", colors[1]);
                 break;
             case 2:

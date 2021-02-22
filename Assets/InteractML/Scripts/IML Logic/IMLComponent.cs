@@ -64,7 +64,7 @@ namespace InteractML
         public List<IFeatureIML> FeatureNodesList;
         [SerializeField, HideInInspector]
         private List<ScriptNode> m_ScriptNodesList;
-        [SerializeField]
+        //[SerializeField, HideInInspector]
         private InteractML.CustomControllers.InputSetUp m_inputSetUp;
         [SerializeField, HideInInspector]
         private List<CustomController> m_CustomControllerList;
@@ -72,6 +72,7 @@ namespace InteractML
         #endregion
 
         #region Public Lists of Nodes (Properties)
+        [HideInInspector]
         public InteractML.CustomControllers.InputSetUp inputSetUp { get => m_inputSetUp; }
         /// <summary>
         /// List of Training Example Nodes in the IML Controller
@@ -343,7 +344,8 @@ namespace InteractML
                 m_inputSetUp.NodeInitalize();
             } else
             {
-                m_inputSetUp = graph.AddNode<InteractML.CustomControllers.InputSetUp>();
+                if(graph != null)
+                    m_inputSetUp = graph.AddNode<InteractML.CustomControllers.InputSetUp>();
             }
             
         }
@@ -504,7 +506,7 @@ namespace InteractML
                     if (graph.SceneComponent != this)
                     {
                         // Warn in the editor that the controller is being used by several IMLComponents
-                        Debug.LogError("The referenced IML Controller is being used by more than one IML Component!");
+                        //Debug.LogError("The referenced IML Controller is being used by more than one IML Component!");
                         graph.SceneComponent = this;
                     }
                 }
@@ -1187,9 +1189,11 @@ namespace InteractML
 
             // Keep lists of nodes found updated
             //GetAllNodes();
-
-            if (graph != null || graph.IsGraphRunning == false)
+            
+            if (graph != null)
             {
+                if(graph.IsGraphRunning == false)
+                    IMLControllerOwnershipLogic();
                 // Fetch data from the Monobehaviours we have subscribed into and out of the IML Controller
                 FetchDataFromMonobehavioursSubscribed();
 

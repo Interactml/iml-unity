@@ -259,10 +259,26 @@ namespace InteractML
         IEnumerator SlowSubscribe()
         {
             yield return new WaitForSeconds(1);
-            OnactivateEvents();
+            OnactivateFirstEvents();
         }
 
-        private void OnactivateEvents()
+        private void OnactivateFirstEvents()
+        {
+            // direty code need to figure out why this is happening
+
+            if(graph == null)
+            {
+                exitMenu();
+            } else
+            {
+                exit.onPress += exitMenu;
+                trainingMenu.onPress += secondMenu;
+                mlsInteraction.onPress += MLSNodeSelected;
+            }
+            
+        }
+        
+        private void OnactivateSecondEvents()
         {
             // direty code need to figure out why this is happening
 
@@ -278,20 +294,20 @@ namespace InteractML
                     trainingSelections[i].onPress += TrainingNodeSelected;
                 }
 
-                exit.onPress += exitMenu;
-                trainingMenu.onPress += secondMenu;
                 back.onPress += backMenu;
-                mlsInteraction.onPress += MLSNodeSelected;
             }
             
         }
 
-        private void OndeactivateUnsubscribe()
+        private void OndeactivateFirst()
         {
             exit.onPress -= exitMenu;
             trainingMenu.onPress -= secondMenu;
-            back.onPress -= backMenu;
             mlsInteraction.onPress -= MLSNodeSelected;
+        }
+        private void OnDeactivateSecond()
+        {
+            back.onPress -= backMenu;
             foreach (RadialSectionNode section in trainingSelections)
             {
                 section.onPress -= TrainingNodeSelected;
@@ -304,11 +320,12 @@ namespace InteractML
 
         private void exitMenu()
         {
+            Debug.Log("here");
             on = false;
             IMLEventDispatcher.deselectGraph?.Invoke(graph);
             //graph = null;
             RemoveMenuSetUp();
-            OndeactivateUnsubscribe();
+            OndeactivateFirst();
             transform.Find("radial").gameObject.SetActive(false); 
         }
 
@@ -346,15 +363,19 @@ namespace InteractML
 
         IEnumerator EnableInner()
         {
+            OnDeactivateSecond();
             // suspend execution for 5 seconds
             yield return new WaitForSeconds(1);
             secondOn = false;
+            OnactivateFirstEvents();
         }
 
         IEnumerator EnableOuter()
         {
+            OndeactivateFirst();
             yield return new WaitForSeconds(1.5f);
             secondOn = true;
+            OnactivateSecondEvents();
         }
 
         private void MenuOpen(IMLComponent graphToControl)
