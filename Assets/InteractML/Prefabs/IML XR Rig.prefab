@@ -597,13 +597,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2122530346636165223}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.35020736, y: 0, z: 0, w: 0.9366722}
   m_LocalPosition: {x: 0, y: 0, z: 0.05}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 2122530346562721072}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 41, y: 0, z: 0}
 --- !u!33 &2122530346636165227
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -690,13 +690,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2122530346806975043}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.35020736, y: 0, z: 0, w: 0.9366722}
   m_LocalPosition: {x: 0, y: 0, z: 0.05}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 2122530346578314922}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 41, y: 0, z: 0}
 --- !u!33 &2122530346806975047
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1009,7 +1009,7 @@ PrefabInstance:
     - target: {fileID: 5637202447916438428, guid: 25a695415466a7a44bd3c3b718c92b99,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.21132481
+      value: 0.35478067
       objectReference: {fileID: 0}
     - target: {fileID: 5637202447916438428, guid: 25a695415466a7a44bd3c3b718c92b99,
         type: 3}
@@ -1024,7 +1024,7 @@ PrefabInstance:
     - target: {fileID: 5637202447916438428, guid: 25a695415466a7a44bd3c3b718c92b99,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9774159
+      value: 0.9349496
       objectReference: {fileID: 0}
     - target: {fileID: 5637202447916438428, guid: 25a695415466a7a44bd3c3b718c92b99,
         type: 3}
@@ -1034,7 +1034,7 @@ PrefabInstance:
     - target: {fileID: 5637202447916438428, guid: 25a695415466a7a44bd3c3b718c92b99,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 24.4
+      value: 41.56
       objectReference: {fileID: 0}
     - target: {fileID: 5637202447916438428, guid: 25a695415466a7a44bd3c3b718c92b99,
         type: 3}

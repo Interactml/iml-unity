@@ -67,7 +67,7 @@ namespace InteractML.ControllerCustomisers
             GUI.changed = false;
 
             GUILayout.Space(20);
-            GUILayout.Label("Training Controls", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"));
+            GUILayout.Label("Teach The Machine Controls", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"));
             GUILayout.Space(10);
 
             

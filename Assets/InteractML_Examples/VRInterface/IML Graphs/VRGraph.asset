@@ -215,7 +215,7 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 0
-  showWarning: 1
+  showWarning: 0
   canCollect: 1
   listNo: 0
 --- !u!114 &11400000
@@ -445,7 +445,7 @@ MonoBehaviour:
   enableUniversalInterface: 1
   activeUniversalInterface: 0
   device: 2
-  trainingHand: 0
+  trainingHand: 1
   mlsHand: 1
   buttonOptions:
   - Trigger
@@ -456,15 +456,15 @@ MonoBehaviour:
   trainingID: 
   deleteLastButtonNo: 2
   deleteLastButtonTT: 0
-  deleteAllButtonNo: 3
+  deleteAllButtonNo: 2
   deleteAllButtonTT: 1
-  toggleRecordButtonNo: 1
+  toggleRecordButtonNo: 0
   recordOneButtonTT: 0
-  recordOneButtonNo: 0
+  recordOneButtonNo: 1
   toggleRecordButtonTT: 2
-  trainButtonNo: 0
+  trainButtonNo: 1
   trainButtonTT: 0
-  toggleRunButtonNo: 1
+  toggleRunButtonNo: 0
   toggleRunButtonTT: 2
   currentMLS: 
   currentTraining: 
@@ -560,7 +560,7 @@ MonoBehaviour:
   GameObjectDataOut: {fileID: 0}
   GameObjMissing: 0
   state: 0
-  GOHashCode: 23576
+  GOHashCode: 23820
   CreatedDuringPlaymode: 0
 --- !u!114 &8373069013392079893
 MonoBehaviour:
@@ -617,7 +617,19 @@ MonoBehaviour:
   id: 85b122b5-7814-4367-9adf-1db24e409906
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 23604
+  ScriptHashCode: 23848
   m_PortsPerFieldInfo:
-    m_keys: []
+    m_keys:
+    - _fieldName: SetAbsoluteColour
+      _node: {fileID: 8948996071717161829}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: 5534068286345460579}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   CreatedDuringPlaymode: 0

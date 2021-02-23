@@ -177,8 +177,8 @@ MonoBehaviour:
   m_CustomReticle: {fileID: 0}
   graph: {fileID: 0}
   selectedHighlight: {r: 0.72156864, g: 0.73333335, b: 0.98039216, a: 0}
-  trainedColor: {fileID: 2800000, guid: d3009154998b11144992a6c5be9cc1f7, type: 3}
+  trainedColor: {fileID: 2800000, guid: c417d3fdbb88654449462abbdc48680c, type: 3}
   baseColour: {fileID: 2800000, guid: c4c3665142c39b4459c779bd443b9776, type: 3}
-  recordingColour: {fileID: 2800000, guid: ac209d0e15a2d9845be67e3cfbf3b5a1, type: 3}
-  runningColour: {fileID: 2800000, guid: 996eac35cd99e76488e01a9c06a55b0a, type: 3}
+  recordingColour: {fileID: 2800000, guid: 243854e302a54c04082cefa189303fc6, type: 3}
+  runningColour: {fileID: 2800000, guid: 7886c868007defe40ba0a0cc1ebfc46b, type: 3}
   current: {fileID: 0}

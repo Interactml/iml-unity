@@ -20,9 +20,9 @@ public class colorChanger : MonoBehaviour
         colors = new Color[3]; // We will randomize through this array
 
         //initialize our array indexes with colors
-        colors[0] = Color.green;
-        colors[1] = Color.black;
-        colors[2] = Color.blue;
+        colors[0] = Color.black;
+        colors[1] = Color.blue;
+        colors[2] = Color.green;
     }
 
     void Update()
@@ -31,13 +31,13 @@ public class colorChanger : MonoBehaviour
         switch (SetAbsoluteColour)
         {
             case 1:
-                m_Renderer.material.SetColor("_Color", colors[1]);
+                m_Renderer.material.SetColor("_Color", colors[0]);
                 break;
             case 2:
-                m_Renderer.material.SetColor("_Color", colors[2]);
+                m_Renderer.material.SetColor("_Color", colors[1]);
                 break;
             case 3:
-                m_Renderer.material.SetColor("_Color", colors[0]);
+                m_Renderer.material.SetColor("_Color", colors[2]);
                 break;
             default:
                 break;
