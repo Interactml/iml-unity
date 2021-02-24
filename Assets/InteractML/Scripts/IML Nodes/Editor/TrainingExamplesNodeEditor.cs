@@ -478,7 +478,6 @@ namespace InteractML
                 if (Event.current.type == EventType.Layout)
                 {
                     GUI.DrawTexture(m_Dropdown, NodeColor);
-                    Resources.UnloadAsset(NodeColor);
                 }
                     
 
