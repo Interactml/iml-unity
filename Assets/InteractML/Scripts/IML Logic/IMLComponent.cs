@@ -1189,14 +1189,18 @@ namespace InteractML
 
             // Keep lists of nodes found updated
             //GetAllNodes();
-            
+            // is reference to the graph is not null
             if (graph != null)
             {
+                // if it is a new graph
                 if(m_LastKnownGraph != graph)
                 {
+                    // set up reference
                     IMLControllerOwnershipLogic();
+                    // Initialize all nodes
                     Initialize();
                 }
+                // if graph has lost reference to the IML Compoenent 
                 if(graph.IsGraphRunning == false)
                     IMLControllerOwnershipLogic();
                 // Fetch data from the Monobehaviours we have subscribed into and out of the IML Controller
@@ -1217,8 +1221,10 @@ namespace InteractML
 
             } else
             {
+                // get reference to graph & give graph reference to IML Component
                 IMLControllerOwnershipLogic();
             }
+            // input logic 
             InputLogic();
 
         }
