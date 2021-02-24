@@ -29,6 +29,11 @@ namespace InteractML.DataTypeNodes
                 //reset counter
                 node.Counter = 0;
 
+                // check for null
+                if (node == null || node.PreviousFeatureValues == null || node.FeatureValues == null 
+                    || node.PreviousFeatureValues.Values == null || node.FeatureValues.Values == null)
+                    return false;
+
                 // check if storage types for new feature values and previous values hold the same number of values to compare
                 if (node.PreviousFeatureValues.Values.Length == node.FeatureValues.Values.Length)
                 {

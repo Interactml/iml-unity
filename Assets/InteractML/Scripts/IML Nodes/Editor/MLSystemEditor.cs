@@ -179,7 +179,9 @@ namespace InteractML
                 buttonTipHelper = true;
                 if (GUI.enabled)
                 {
-                    TooltipText = m_MLSystem.tooltips.BodyTooltip.Tips[1];
+                    // Check for null
+                    if (m_MLSystem.tooltips != null && m_MLSystem.tooltips.BodyTooltip != null && m_MLSystem.tooltips.BodyTooltip.Tips != null)
+                        TooltipText = m_MLSystem.tooltips.BodyTooltip.Tips[1];
                 }
                 else
                 {
@@ -243,11 +245,15 @@ namespace InteractML
                 buttonTipHelper = true;
                 if (GUI.enabled)
                 {
-                    TooltipText = m_MLSystem.tooltips.BodyTooltip.Tips[2];
+                    // Check for null
+                    if (m_MLSystem.tooltips != null && m_MLSystem.tooltips.BodyTooltip != null && m_MLSystem.tooltips.BodyTooltip.Tips != null)
+                        TooltipText = m_MLSystem.tooltips.BodyTooltip.Tips[2];
                 }
                 else
                 {
-                    TooltipText = m_MLSystem.tooltips.BodyTooltip.Error[1];
+                    // Check for null
+                    if (m_MLSystem.tooltips != null && m_MLSystem.tooltips.BodyTooltip != null && m_MLSystem.tooltips.BodyTooltip.Tips != null)
+                        TooltipText = m_MLSystem.tooltips.BodyTooltip.Error[1];
                 }
             }
             else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))

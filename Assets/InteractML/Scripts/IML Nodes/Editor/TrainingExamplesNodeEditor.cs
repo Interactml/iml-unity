@@ -125,7 +125,7 @@ namespace InteractML
             //show warning if there are training examples 
             if (m_TrainingExamplesNode.showWarning)
             {
-                if (m_TrainingExamplesNode.tooltips != null && m_TrainingExamplesNode.tooltips.BottomError.Length > 0)
+                if (m_TrainingExamplesNode.tooltips != null && m_TrainingExamplesNode.tooltips.BottomError != null && m_TrainingExamplesNode.tooltips.BottomError.Length > 0)
                     ShowWarning(m_TrainingExamplesNode.tooltips.BottomError[0]);
                 m_RecalculateRects = true;
             }
@@ -386,7 +386,11 @@ namespace InteractML
                 GUILayout.EndHorizontal();
                 
                 //button tooltip code 
-                if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition) && m_TrainingExamplesNode.tooltips.BodyTooltip.Tips.Length > 2)
+                if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition)
+                    && m_TrainingExamplesNode.tooltips != null
+                    && m_TrainingExamplesNode.tooltips.BodyTooltip != null
+                    && m_TrainingExamplesNode.tooltips.BodyTooltip.Tips != null
+                    && m_TrainingExamplesNode.tooltips.BodyTooltip.Tips.Length > 2)
                 {
                     buttonTipHelper = true;
                     TooltipText = m_TrainingExamplesNode.tooltips.BodyTooltip.Tips[2];
