@@ -1192,6 +1192,11 @@ namespace InteractML
             
             if (graph != null)
             {
+                if(m_LastKnownGraph != graph)
+                {
+                    IMLControllerOwnershipLogic();
+                    Initialize();
+                }
                 if(graph.IsGraphRunning == false)
                     IMLControllerOwnershipLogic();
                 // Fetch data from the Monobehaviours we have subscribed into and out of the IML Controller
