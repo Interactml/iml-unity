@@ -61,7 +61,9 @@ namespace InteractML
         /// </summary>
         private void ShowGameObjectPreview()
         {
-            Rect previewBox = new Rect(m_BodyRect.x + 15, m_BodyRect.y, m_BodyRect.width - 30, m_BodyRect.height);
+            // Set size of preview box
+            Rect previewBox = new Rect(m_BodyRect.x + 20, m_BodyRect.y, m_BodyRect.width - 40, m_BodyRect.height);
+
             GUILayout.BeginArea(previewBox);
 
             EditorGUILayout.Space();
@@ -70,11 +72,12 @@ namespace InteractML
             // Show label of which object is being fed to the node
             GameObject gObj = m_GameObjectNode.GameObjectDataOut;
 
-            // Only draw the label if the object is not null
+            // Only draw the preview if the object is not null
             if (gObj != null)
             {
 
-                EditorGUILayout.LabelField(gObj.name, new GUIStyle(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label")) { alignment = TextAnchor.MiddleLeft });
+                EditorGUILayout.LabelField(gObj.name, m_NodeSkin.GetStyle("Node Body Label"));
+
                 EditorGUILayout.Space();
                 EditorGUILayout.Space();
 
@@ -150,10 +153,11 @@ namespace InteractML
                     EditorGUI.DrawPreviewTexture(new Rect(0f, 35f, m_NoMeshTexture.width, m_NoMeshTexture.height), m_NoMeshTexture);
                 }
             }
-            // If it is null, we warn it
+            // If it is null, we warn the user
             else
             {
-                EditorGUILayout.HelpBox("Connect a GameObject", MessageType.Error);
+                EditorGUILayout.LabelField("Connect a GameObject", m_NodeSkin.GetStyle("Node Body Label"));
+                //EditorGUILayout.HelpBox("Connect a GameObject", MessageType.Error);
             }
 
             GUILayout.EndArea();
