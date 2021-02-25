@@ -37,10 +37,10 @@ namespace InteractML
         private Scene m_OurScene;
 
         /// <summary>
-        /// Collection of GameObjects that will be sent to the IML Controller
+        /// Collection of GameObjects that will be sent to the IML Graph
         /// </summary>
         [Header("GameObjects to Track")]
-        [Tooltip("Add number of GameObjects to use in the IML Controller and what they are here")]
+        [Tooltip("Add number of GameObjects to use in the IML Graph and what they are here")]
         [Rename("GameObject")]
         public List<GameObject> GameObjectsToUse;
         /// <summary>
@@ -120,7 +120,7 @@ namespace InteractML
         /// search for values marked with the "SendToIMLController" attribute
         /// </summary>
         [Header("Scripts to Track")]
-        [Tooltip("Add number of Scripts to use in the IML Controller and what they are here")]
+        [Tooltip("Add number of Scripts to use in the IML Graph and what they are here")]
         public List<IMLMonoBehaviourContainer> ComponentsWithIMLData;
         /// <summary>
         /// Dictionary to hold references of components with IML Data and which scriptNode manages them
@@ -167,7 +167,6 @@ namespace InteractML
         // Called when something changes in the scene
         private void OnValidate()
         {
-            
             IMLControllerOwnershipLogic();
         }
 
@@ -297,11 +296,11 @@ namespace InteractML
             }
 
             InitializeIMLIndicator();
-            // comented to fix opening window problem - delete when sure this has not caused issues 
-            // Inject GameObjects to GameObject nodes
-            //SendGameObjectsToIMLController();
 
-            //updateGameObjectImage();
+            // commented to fix opening window problem - delete when sure this has not caused issues 
+            // Inject GameObjects to GameObject nodes
+            // SendGameObjectsToIMLController();
+            // UpdateGameObjectImage();
 
 #if !UNITY_EDITOR
             // If we are not on the editor...
@@ -782,8 +781,8 @@ namespace InteractML
             }
 
             // Make sure dictionaries and lists are init
-            if (m_MonoBehavioursPerScriptNode == null)
-                m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
+            if (m_GOsPerGONodes == null)
+                m_GOsPerGONodes = new GOPerGONodeDictionary();
             if (m_GameObjectNodeList == null)
                 m_GameObjectNodeList = new List<GameObjectNode>();
 
@@ -873,7 +872,7 @@ namespace InteractML
                     // If we didn't find a suitable existing node...
                     if (goNode == null)
                     {
-                        // Create a new script node into the graph
+                        // Create a new gameObject node into the graph
                         goNode = graph.AddNode<GameObjectNode>();
                     }
 
@@ -1274,7 +1273,7 @@ namespace InteractML
                     graph.RemoveNode(goNode);
                     // Decrease counter to not delete the wrong element later
                     i--;
-                    // Force scriptNode reference to null
+                    // Force gameobject reference to null
                     goNode = null;
                 }
 #endif
@@ -1293,16 +1292,16 @@ namespace InteractML
                     }
                 }
 
-                // Now if the node wasn't removed, make sure that there is a script that the node is controlling in the scene list that the user controls
+                // Now if the node wasn't removed, make sure that there is a gameobject that the node is controlling in the scene list that the user controls
                 if (goNode != null)
                 {
                     // If we are switching playmodes, it is very likely that we lost the reference to the GO?
                     if (changingPlayMode)
                     {
-                        // Check if the script reference is null
+                        // Check if the gameobject reference is null
                         if (goNode.GameObjectDataOut == null)
                         {
-                            // See if we know the hash of the referenced script
+                            // See if we know the hash of the referenced gameobject
                             if (goNode.GOHashCode != default(int))
                             {
                                 // Check if the script is contained in the scene list
