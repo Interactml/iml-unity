@@ -140,9 +140,20 @@ namespace InteractML
                             // Create new empty texture
                             m_NoMeshTexture = new Texture2D(1, 1);
                             // Read texture from memory
-                            m_NoMeshTexture.LoadImage(System.IO.File.ReadAllBytes(Application.dataPath + "/InteractML/Resources/Icons/gameobject_transform_img.png"));
-                            // Resize it
-                            m_NoMeshTexture = TextureTools.ResampleAndCrop(m_NoMeshTexture, (int)NodeWidth, (int)(NodeWidth * m_TexHeightMultiplier));
+                            try
+                            {
+                                m_NoMeshTexture.LoadImage(System.IO.File.ReadAllBytes(Application.dataPath + "/InteractML/Resources/Icons/gameobject_transform_img.png"));
+                            }
+                            catch (System.Exception e)
+                            {
+
+                                Debug.LogError(e.Message);
+                            }
+                            // Only resize it if the loading was successful
+                            if (m_NoMeshTexture.width != 1)
+                                // Resize it
+                                m_NoMeshTexture = TextureTools.ResampleAndCrop(m_NoMeshTexture, (int)NodeWidth, (int)(NodeWidth * m_TexHeightMultiplier));
+
                         }
                     }
 
