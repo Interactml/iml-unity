@@ -145,7 +145,19 @@ namespace InteractML
                             // Read texture from memory
                             try
                             {
-                                m_NoMeshTexture.LoadImage(System.IO.File.ReadAllBytes(Application.dataPath + "/InteractML/Resources/Icons/gameobject_transform_img.png"));
+                                // If InteractML is imported or used as normal...
+                                if (System.IO.Directory.Exists(Application.dataPath + "/InteractML/Resources/Icons/"))
+                                {                                    
+                                    m_NoMeshTexture.LoadImage(System.IO.File.ReadAllBytes(Application.dataPath + "/InteractML/Resources/Icons/gameobject_transform_img.png"));
+                                }
+                                // If InteractML is imported as a Git submodule...
+                                else
+                                {
+                                    if (System.IO.Directory.Exists(Application.dataPath + "/iml-unity/Assets/InteractML/Resources/Icons/"))
+                                    {
+                                        m_NoMeshTexture.LoadImage(System.IO.File.ReadAllBytes(Application.dataPath + "/iml-unity/Assets/InteractML/Resources/Icons/gameobject_transform_img.png"));
+                                    }
+                                }
                             }
                             catch (System.Exception e)
                             {
