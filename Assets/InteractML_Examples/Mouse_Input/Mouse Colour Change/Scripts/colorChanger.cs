@@ -28,7 +28,7 @@ public class colorChanger : MonoBehaviour
     void Start()
     {
         count = 100;
-        array1 = new float[3];
+        array1 = new float[34];
         array1[0] = 100;
         array1[1] = 100;
         array1[2] = 100;

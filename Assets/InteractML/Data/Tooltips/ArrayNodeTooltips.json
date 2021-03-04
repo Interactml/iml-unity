@@ -9,7 +9,7 @@
       "error"
     ]
   },
-  "BottomError": [ "bottom error" ]
+  "BottomError": [ "Size of array exceeds maximum number of elements allowed" ]
 }
 
 

@@ -39,7 +39,7 @@ namespace InteractML.DataTypeNodes
         /// <summary>
         /// Set maximum length of array accepted
         /// </summary>
-        private int m_MaximumArraySize;
+        public int m_MaximumArraySize;
 
         /// <summary>
         /// Initialise node
@@ -96,8 +96,12 @@ namespace InteractML.DataTypeNodes
                     ReceivedValue = new float[FeatureValues.Values.Length];
                 }
 
-                if ((to.node.GetInputNodeConnected("m_In") as IFeatureIML).FeatureValues.Values.Length > m_MaximumArraySize)
-                    from.Disconnect(to);
+                // if connected a float array to input port
+                if (to.GetInputValue().GetType() == typeof(float[]))
+                {
+                    if (to.node.GetInputValue<float[]>("m_In").Length > m_MaximumArraySize)
+                        from.Disconnect(to);
+                }
             }
 
         }
