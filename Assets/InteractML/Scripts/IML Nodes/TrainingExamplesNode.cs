@@ -188,6 +188,40 @@ namespace InteractML
 
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
+            // If there is a connection to any of the button ports...
+            if (to.fieldName == "RecordOneInputBoolPort")
+            {
+                // check incoming node type and port data type is accepted by input port
+                System.Type[] portTypesAccept = new System.Type[] { typeof(bool) };
+                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IMLNode) };
+                this.DisconnectPortAndNodeIfANYTypes(from, to, portTypesAccept, nodeTypesAccept);
+                // Exit any further checks to avoid unwanted disconnections
+                return;
+
+            }
+            if (to.fieldName == "ToggleRecordingInputBoolPort")
+            {
+                // check incoming node type and port data type is accepted by input port
+                System.Type[] portTypesAccept = new System.Type[] { typeof(bool) };
+                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IMLNode) };
+                this.DisconnectPortAndNodeIfANYTypes(from, to, portTypesAccept, nodeTypesAccept);
+                // Exit any further checks to avoid unwanted disconnections
+                return;
+
+            }
+            if (to.fieldName == "DeleteAllExamplesBoolPort")
+            {
+                // check incoming node type and port data type is accepted by input port
+                System.Type[] portTypesAccept = new System.Type[] { typeof(bool) };
+                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IMLNode) };
+                this.DisconnectPortAndNodeIfANYTypes(from, to, portTypesAccept, nodeTypesAccept);
+                // Exit any further checks to avoid unwanted disconnections
+                return;
+            }
+
+
+            // If there is a connection in one of the features ports...
+
             // bool for tracking whether there are training examples recorded
             bool trainingExamplesExist = false;
             // if you are not connecting a ifeatureiml node then disconnect
@@ -301,6 +335,7 @@ namespace InteractML
                 IMLEventDispatcher.LabelsConfigChangeCallback?.Invoke();
                 
             }
+
             CheckSetUp();
 
         }
@@ -431,11 +466,11 @@ namespace InteractML
 
             // Add all required dynamic ports
             // RecordOneInputBoolPort           
-            this.GetOrCreateDynamicPort("RecordOneInputBoolPort", typeof(bool), NodePort.IO.Input);
+            this.GetOrCreateDynamicPort("RecordOneInputBoolPort", typeof(bool), NodePort.IO.Input, ConnectionType.Override, TypeConstraint.Inherited);
             // ToggleRecordingInputBool
-            this.GetOrCreateDynamicPort("ToggleRecordingInputBoolPort", typeof(bool), NodePort.IO.Input);
+            this.GetOrCreateDynamicPort("ToggleRecordingInputBoolPort", typeof(bool), NodePort.IO.Input, ConnectionType.Override, TypeConstraint.Inherited);
             // DeleteAllExamplesBoolPort
-            this.GetOrCreateDynamicPort("DeleteAllExamplesBoolPort", typeof(bool), NodePort.IO.Input);
+            this.GetOrCreateDynamicPort("DeleteAllExamplesBoolPort", typeof(bool), NodePort.IO.Input, ConnectionType.Override, TypeConstraint.Inherited);
 
         }
 

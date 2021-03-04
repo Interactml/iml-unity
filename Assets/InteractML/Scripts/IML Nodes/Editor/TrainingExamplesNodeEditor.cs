@@ -45,6 +45,23 @@ namespace InteractML
         /// </summary>
         protected bool lastShowWarning = false;
 
+        /// <summary>
+        /// The label to show on the button port labels
+        /// </summary>
+        protected GUIContent m_ButtonPortLabel;
+        /// <summary>
+        /// NodePort for button. Loaded in OnHeaderHUI()
+        /// </summary>
+        protected NodePort m_ButtonPortRecordOneInput;
+        /// <summary>
+        /// NodePort for button. Loaded in OnHeaderHUI()
+        /// </summary>
+        protected NodePort m_ButtonPortToggleRecord;
+        /// <summary>
+        /// NodePort for button. Loaded in OnHeaderHUI()
+        /// </summary>
+        protected NodePort m_ButtonPortDeleteExamples;
+
         #endregion
         #region XNode messages
         public override void OnHeaderGUI()
@@ -61,6 +78,21 @@ namespace InteractML
             {
                 NodeSubtitle = "DTW training examples";
             }
+
+            // Create inputport button label
+            if (m_ButtonPortLabel == null)
+                m_ButtonPortLabel = new GUIContent("");
+
+            // Get button ports
+            if (m_ButtonPortRecordOneInput == null)
+                m_ButtonPortRecordOneInput = m_TrainingExamplesNode.GetPort("RecordOneInputBoolPort");
+            if (m_ButtonPortToggleRecord == null)
+                m_ButtonPortToggleRecord = m_TrainingExamplesNode.GetPort("ToggleRecordingInputBoolPort");
+            if (m_ButtonPortDeleteExamples == null)
+                m_ButtonPortDeleteExamples = m_TrainingExamplesNode.GetPort("DeleteAllExamplesBoolPort");
+
+
+
             base.OnHeaderGUI();
         }
 
@@ -113,15 +145,16 @@ namespace InteractML
         /// </summary>
         protected override void ShowBodyFields()
         {
+            // ShowButtons needs to be called outside of the BeginArea in order for the button nodeports to work
+            ShowButtons();
+
             GUILayout.BeginArea(m_BodyRect);
+
             GUILayout.Space(bodySpace);
             DrawValues(m_TrainingExamplesNode.DesiredInputFeatures, "Input Values");
             GUILayout.Space(bodySpace);
             DrawValues(m_TrainingExamplesNode.DesiredOutputFeatures, "Target Values");
-
-
-
-            ShowButtons();
+            
             //show warning if there are training examples 
             if (m_TrainingExamplesNode.showWarning)
             {
@@ -370,9 +403,7 @@ namespace InteractML
                 GUILayout.BeginHorizontal();
                 // Draw port
                 GUILayout.Space(15);
-                ///// DIRTY CODE! IF YOU DEBUG THIS PORT VARAIBLE YOU CAN SEE THAT IT FINDS THE PORT!!! WHY IS IT NOT WORKING??
-               /* NodePort port = m_TrainingExamplesNode.GetPort("RecordOneInputBoolPort");
-                IMLNodeEditor.PortField(new GUIContent(""), port, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));*/
+                IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortRecordOneInput, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
                 GUILayout.Space(offset);
                 if (GUILayout.Button(new GUIContent(""), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record One Button")))
                 {
@@ -414,7 +445,7 @@ namespace InteractML
             GUILayout.BeginHorizontal();
             // Draw port
             GUILayout.Space(15);
-            //IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("ToggleRecordingInputBoolPort"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+            IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortToggleRecord, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
             GUILayout.Space(offset);
 
             // draw record button
@@ -436,7 +467,7 @@ namespace InteractML
             //GUILayout.Space(spacing);
             // Draw port
             GUILayout.Space(15);
-           // IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("DeleteAllExamplesBoolPort"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+            IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortDeleteExamples, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
             GUILayout.Space(offset);
             // draw delete all button
 

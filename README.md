@@ -1,4 +1,3 @@
-# SteamVRWorkingWithUnityXTToolkit
-SteamVRWorkingWithUnityXTToolkit basic empty project for Unity 2020.1
+#InteractMLVRInterface2021 
 
-Check the Oculus Box if you want Quest/Rift support.  Right now this does not support Oculus until you check the XR Integration box for Oculus.
+This branch is set up for working with 2019.4.11f1. If you are using 2020 + versions follow the set up instruction in the wiki.
