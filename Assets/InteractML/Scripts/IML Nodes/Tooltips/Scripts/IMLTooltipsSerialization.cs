@@ -50,13 +50,28 @@ namespace InteractML
         /// <returns>Returns file path for tooltip json</returns>
         private static string SetUpFileNamesAndPaths(string fileName)
         {
+            // Account for cross-platform
             if (String.IsNullOrEmpty(m_AppDataPath))
             {
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_STANDALONE
                 m_AppDataPath = Application.dataPath;
+#elif UNITY_EDITOR
+                // Check if InteractML has been imported as a git submodule
+                string projectPath = Path.GetDirectoryName(Application.dataPath);
+                if (File.Exists(projectPath + @"\.gitmodules"))
+                {
+                    // Read file to see if iml-unity is included
+                    string gitModulesText = File.ReadAllText(projectPath + @"\.gitmodules");
+                    if (gitModulesText.Contains("iml-unity"))
+                    {
+                        // InteractML files then are under Assets/iml-unity/Assets
+                        m_AppDataPath = Path.Combine(Application.dataPath, "iml-unity/Assets/");
+                    }
+                }
 #elif UNITY_ANDROID
                 m_AppDataPath = Application.persistentDataPath;
 #endif
+
             }
 
             // Set up data path (Application.dataPath + FolderName + FileName + FileExtension)
