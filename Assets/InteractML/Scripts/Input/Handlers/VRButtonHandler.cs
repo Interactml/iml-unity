@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
-using UnityEditor;
+
 
 namespace InteractML
 {
@@ -119,7 +119,8 @@ namespace InteractML
                 }
             } else
             {
-                if (EditorApplication.isPlaying)
+                // Changed from EditorApplication.isPlaying to Application.isPlaying in order to build without errors
+                if (Application.isPlaying)
                 {
                     SetController(controllerSide);
                 }
