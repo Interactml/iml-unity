@@ -13,10 +13,8 @@ public class IMLBuildManager
     [InitializeOnLoadMethod]
     private static void Initialize()
     {
-#if UNITY_STANDALONE || UNITY_ANDROID 
         // Subscribe to event that fires when a build is produced
         BuildPlayerWindow.RegisterBuildPlayerHandler(BuildPlayerHandler);
-#endif
     }
 
     /// <summary>
@@ -55,7 +53,8 @@ public class IMLBuildManager
         // Calculate target paths
         string targetPathModels = buildDataPath + "/InteractML/Data/Models";
         string targetPathTrainingExamples = buildDataPath + "/InteractML/Data/Training_Examples";
-        
+        string targetPathInputSettings = buildDataPath + "InteractML/Data/InputSetUp";
+
         // If the Models folder exists in current project...
         if (Directory.Exists("Assets/InteractML/Data/Models"))
         {
@@ -94,7 +93,23 @@ public class IMLBuildManager
                 }
 
             }
-        }        
+        }
+
+        // If the IML Input Settings folder exists in current project...
+        if (Directory.Exists("Assets/InteractML/Data/InputSetUp"))
+        {
+            // Get all inputSettings files
+            string[] inputSettingsFiles = Directory.GetFiles("Assets/InteractML/Data/InputSetUp");
+            // Copy the models and overwrite destination files if they already exist.
+            foreach (string inputSettingsFile in inputSettingsFiles)
+            {
+                // Use static Path methods to extract only the file name from the path.
+                string fileName = Path.GetFileName(inputSettingsFile);
+                string destFile = Path.Combine(targetPathInputSettings, fileName);
+                File.Copy(inputSettingsFile, destFile, true);
+            }
+
+        }
 
         //UnityEngine.Debug.Log("=========END OF CUSTOM BUILD CODE==========");
 
