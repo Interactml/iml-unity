@@ -362,6 +362,9 @@ namespace InteractML
             CheckSetUp();
         }
 
+        /// <summary>
+        /// Checks if the training examples node has the right set up of features to collect training examples
+        /// </summary>
         private void CheckSetUp()
         {
             canCollect = true;
@@ -374,7 +377,18 @@ namespace InteractML
             {
                 if (DesiredInputsConfig.Count != InputFeatures.Count || DesiredOutputsConfig.Count != TargetValues.Count)
                 {
-                    canCollect = false;
+                    // DIRTY CODE
+                    // Update desired input features in case is an unwanted mismatch (init event not triggering due to an unhandled exception)
+                    UpdateInputConfigList();
+                    UpdateTargetValuesConfig();
+                    UpdateDesiredInputFeatures();
+                    UpdateDesiredOutputFeatures();
+                    // If the mismatch is still present...
+                    if (DesiredInputsConfig.Count != InputFeatures.Count || DesiredOutputsConfig.Count != TargetValues.Count)
+                        canCollect = false;
+                    // If not, allow collection of data
+                    else
+                        canCollect = true;
                 }
             }
         }
@@ -490,8 +504,10 @@ namespace InteractML
         /// <returns>boolean on whether we have started</returns>
         public bool StartCollecting()
         {
+            // Refresh the canCollect flag inside CheckSetUp to ensure that we can collect if needed
+            CheckSetUp();
             // if the node is set up with input features and it is not currently collecting data start collecting data
-            if(InputFeatures.Count > 0 && TargetValues.Count > 0 && !m_CollectingData && canCollect)
+            if (InputFeatures.Count > 0 && TargetValues.Count > 0 && !m_CollectingData && canCollect)
             {
                 StartCollectingData();
                 return true;
@@ -820,7 +836,8 @@ namespace InteractML
             SaveDataToDisk();
             //update connected MLSystem node with no of training examples
             UpdateConnectMLSystems();
-
+            
+            Debug.Log("TrainingExamples Saved!");
         }
 
         protected void AddInputsToSeries(List<Node> inputs, string label, ref IMLTrainingSeries series)
