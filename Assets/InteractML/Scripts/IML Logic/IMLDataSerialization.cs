@@ -489,7 +489,7 @@ namespace InteractML
             m_AppDataPath = Application.dataPath;
 #elif UNITY_ANDROID
             // on Android it is better to use persistent datapath           
-            m_DataPath = Application.persistentDataPath;
+            m_AppDataPath = Application.persistentDataPath;
 #endif
             // Set up data path (m_AppDataPath + FolderName + FileName + FileExtension)
             m_DataPathModel = Path.Combine(m_AppDataPath, m_FolderDataPathName + m_FileModelName + m_FileExtension);
