@@ -239,6 +239,7 @@ public class ResizeTexture2D : Utilities
 
     private void ResizeTexture()
     {
+#if UNITY_STANDALONE || UNITY_EDITOR
         Debug.Log("resize");
         for (int index = 0; index < listTexture2D.Count; index++)
         {
@@ -248,10 +249,13 @@ public class ResizeTexture2D : Utilities
             File.WriteAllBytes(listString[index].Replace(Application.dataPath, "Assets"), bytes);
         }
         AssetDatabase.Refresh();
+#endif
+
     }
 
     void CropTexture(RectOptions rectOptions)
     {
+#if UNITY_STANDALONE || UNITY_EDITOR
         Debug.Log("crop");
         for (int i = 0; i < listTexture2D.Count; i++)
         {
@@ -264,6 +268,7 @@ public class ResizeTexture2D : Utilities
             File.WriteAllBytes(listString[i].Replace(Application.dataPath, "Assets"), bytes);
         }
         AssetDatabase.Refresh();
+#endif
     }
 
     private static Texture2D CropWithRect(RectOptions rectOptions, Texture2D texture, Rect r, int xMod, int yMod)

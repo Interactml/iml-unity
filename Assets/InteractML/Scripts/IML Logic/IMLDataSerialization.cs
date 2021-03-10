@@ -15,6 +15,7 @@ namespace InteractML
     {
         #region Variables
 
+        private static string m_AppDataPath;
         private static string m_DefaultFolderDataPathName = "InteractML/Data";
         private static string m_FolderDataPathName = "InteractML/Data";
         private static string m_SubFolderTrainingSetPathName;
@@ -356,13 +357,13 @@ namespace InteractML
             SetUpFileNamesAndPaths(objName);
 
             // Check if there is NOT a folder with the folder name
-            if (!Directory.Exists(Path.Combine(Application.dataPath, m_FolderDataPathName)))
+            if (!Directory.Exists(Path.Combine(m_AppDataPath, m_FolderDataPathName)))
             {
                 // If there is not, we create it
-                Directory.CreateDirectory(Path.Combine(Application.dataPath, m_FolderDataPathName));
+                Directory.CreateDirectory(Path.Combine(m_AppDataPath, m_FolderDataPathName));
             }
 
-            string subFolderPath = Path.Combine(Application.dataPath, m_FolderDataPathName + objName);
+            string subFolderPath = Path.Combine(m_AppDataPath, m_FolderDataPathName + objName);
             //Debug.Log("SUBFOLDER PATH IS: " + subFolderPath);
 
             // Check if there is NOT a subfolder with the component name
@@ -404,13 +405,13 @@ namespace InteractML
             SetUpFileNamesAndPaths(objName);
 
             // Check if there is NOT a folder with the folder name
-            if (!Directory.Exists(Path.Combine(Application.dataPath, m_FolderDataPathName)))
+            if (!Directory.Exists(Path.Combine(m_AppDataPath, m_FolderDataPathName)))
             {
                 // If there is not, we create it
-                Directory.CreateDirectory(Path.Combine(Application.dataPath, m_FolderDataPathName));
+                Directory.CreateDirectory(Path.Combine(m_AppDataPath, m_FolderDataPathName));
             }
 
-            string subFolderPath = Path.Combine(Application.dataPath, m_FolderDataPathName + objName);
+            string subFolderPath = Path.Combine(m_AppDataPath, m_FolderDataPathName + objName);
             //Debug.Log("SUBFOLDER PATH IS: " + subFolderPath);
 
             // Check if there is NOT a subfolder with the component name
@@ -482,10 +483,18 @@ namespace InteractML
             m_SubFolderTrainingSetPathName = m_FolderDataPathName + "/Training_Examples";
             m_SubFolderModelPathName = m_FolderDataPathName + "/Models";
 
-            // Set up data path (Application.dataPath + FolderName + FileName + FileExtension)
-            m_DataPathModel = Path.Combine(Application.dataPath, m_FolderDataPathName + m_FileModelName + m_FileExtension);
+            m_AppDataPath = "";
+#if UNITY_STANDALONE || UNITY_EDITOR
+            // in a standalone build or editor, we go to local assets folder
+            m_AppDataPath = Application.dataPath;
+#elif UNITY_ANDROID
+            // on Android it is better to use persistent datapath           
+            m_DataPath = Application.persistentDataPath;
+#endif
+            // Set up data path (m_AppDataPath + FolderName + FileName + FileExtension)
+            m_DataPathModel = Path.Combine(m_AppDataPath, m_FolderDataPathName + m_FileModelName + m_FileExtension);
             // Training set is not having the extension added yet
-            m_DataPathTrainingSet = Path.Combine(Application.dataPath, m_FolderDataPathName + m_FileTrainingSetName);
+            m_DataPathTrainingSet = Path.Combine(m_AppDataPath, m_FolderDataPathName + m_FileTrainingSetName);
             //Debug.Log("datapath TRAINING SET IS: " + m_DataPathTrainingSet);
 
             // Mark the class to use json serialization
@@ -500,13 +509,13 @@ namespace InteractML
         private static string CheckOrCreateFoldersAndSubfoldersModel()
         {
             // Check if there is NOT a folder with the folder name
-            if (!Directory.Exists(Path.Combine(Application.dataPath, m_FolderDataPathName)))
+            if (!Directory.Exists(Path.Combine(m_AppDataPath, m_FolderDataPathName)))
             {
                 // If there is not, we create it
-                Directory.CreateDirectory(Path.Combine(Application.dataPath, m_FolderDataPathName));
+                Directory.CreateDirectory(Path.Combine(m_AppDataPath, m_FolderDataPathName));
             }
 
-            string subFolderPath = Path.Combine(Application.dataPath, m_SubFolderModelPathName);
+            string subFolderPath = Path.Combine(m_AppDataPath, m_SubFolderModelPathName);
             //Debug.Log("SUBFOLDER PATH IS: " + subFolderPath);
 
             // Check if there is NOT a subfolder with the component name
@@ -526,13 +535,13 @@ namespace InteractML
         private static string CheckOrCreateFoldersAndSubfoldersTrainingSet()
         {
             // Check if there is NOT a folder with the folder name
-            if (!Directory.Exists(Path.Combine(Application.dataPath, m_FolderDataPathName)))
+            if (!Directory.Exists(Path.Combine(m_AppDataPath, m_FolderDataPathName)))
             {
                 // If there is not, we create it
-                Directory.CreateDirectory(Path.Combine(Application.dataPath, m_FolderDataPathName));
+                Directory.CreateDirectory(Path.Combine(m_AppDataPath, m_FolderDataPathName));
             }
 
-            string subFolderPath = Path.Combine(Application.dataPath, m_SubFolderTrainingSetPathName);
+            string subFolderPath = Path.Combine(m_AppDataPath, m_SubFolderTrainingSetPathName);
             //Debug.Log("SUBFOLDER PATH IS: " + subFolderPath);
 
             // Check if there is NOT a subfolder with the component name

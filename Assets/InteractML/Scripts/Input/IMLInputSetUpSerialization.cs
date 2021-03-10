@@ -9,14 +9,24 @@ using System;
 namespace InteractML {
     public static class IMLInputSetUpSerialization
     {
+        private static string m_AppDataPath; // defines if we are using application.datapath or application.persistentdatapath (for cross-platform code)
         private static string m_FolderDataPathName = "InteractML/Data/InputSetUp";
         private static string m_FileName = "InputSettings.json";
 
-
+        /// <summary>
+        /// Saves the controller set up for interaction
+        /// </summary>
         public static void SaveInputSettingToDisk(InputSetUpVRSettings settings)
         {
+            if (String.IsNullOrEmpty(m_AppDataPath) ) {
+#if UNITY_EDITOR || UNITY_STANDALONE
+                m_AppDataPath = Application.dataPath;
+#elif UNITY_ANDROID
+                m_AppDataPath = Application.persistentDataPath;
+#endif
+            }
             string json = JsonUtility.ToJson(settings);
-            string m_DataPath = Path.Combine(Application.dataPath, m_FolderDataPathName);
+            string m_DataPath = Path.Combine(m_AppDataPath, m_FolderDataPathName);
             // Check if there is NOT a folder with the folder name
             if (!Directory.Exists(m_DataPath))
             {
@@ -39,7 +49,16 @@ namespace InteractML {
 
         public static InputSetUpVRSettings LoadInputSettings()
         {
-            string auxFilePath = Path.Combine(Application.dataPath, m_FolderDataPathName, m_FileName);
+            if (String.IsNullOrEmpty(m_AppDataPath))
+            {
+#if UNITY_EDITOR || UNITY_STANDALONE
+                m_AppDataPath = Application.dataPath;
+#elif UNITY_ANDROID
+                m_AppDataPath = Application.persistentDataPath;
+#endif
+            }
+
+            string auxFilePath = Path.Combine(m_AppDataPath, m_FolderDataPathName, m_FileName);
             InputSetUpVRSettings settings = new InputSetUpVRSettings();
             if (File.Exists(auxFilePath))
             {
