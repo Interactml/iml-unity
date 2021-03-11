@@ -48,6 +48,7 @@ public class IMLBuildManager
             Directory.CreateDirectory(buildDataPath + "/InteractML/Data");
             Directory.CreateDirectory(buildDataPath + "/InteractML/Data/Models");
             Directory.CreateDirectory(buildDataPath + "/InteractML/Data/Training_Examples");
+            Directory.CreateDirectory(buildDataPath + "/InteractML/Data/InputSetUp");
 
         }
         // Calculate target paths
