@@ -282,6 +282,29 @@ namespace InteractML
         {
             Debug.Log(from.GetType().ToString());
             base.OnCreateConnection(from, to);
+
+            // If there is a connection to any of the button ports...
+            if (to.fieldName == "ToggleTrainInputBoolPort")
+            {
+                // check incoming node type and port data type is accepted by input port
+                System.Type[] portTypesAccept = new System.Type[] { typeof(bool) };
+                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IMLNode) };
+                this.DisconnectPortAndNodeIfANYTypes(from, to, portTypesAccept, nodeTypesAccept);
+                // Exit any further checks to avoid unwanted disconnections
+                return;
+
+            }
+            if (to.fieldName == "ToggleRunInputBoolPort")
+            {
+                // check incoming node type and port data type is accepted by input port
+                System.Type[] portTypesAccept = new System.Type[] { typeof(bool) };
+                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IMLNode) };
+                this.DisconnectPortAndNodeIfANYTypes(from, to, portTypesAccept, nodeTypesAccept);
+                // Exit any further checks to avoid unwanted disconnections
+                return;
+
+            }
+
             m_WrongNumberOfTargetValues = false;
             m_TrainingExamplesConflict = false;
 
