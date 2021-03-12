@@ -57,7 +57,7 @@ public class IMLBuildManager
         string targetPathInputSettings = buildDataPath + "InteractML/Data/InputSetUp";
 
         // If the Models folder exists in current project...
-        if (Directory.Exists("Assets/InteractML/Data/Models"))
+        if (Directory.Exists("Assets/InteractML/Data/Models") && Directory.Exists(targetPathModels))
         {
             // Get all modelPaths
             string[] modelNames = Directory.GetFiles("Assets/InteractML/Data/Models");
@@ -72,7 +72,7 @@ public class IMLBuildManager
         }
 
         // If the Training Examples folder exists in current project...
-        if (Directory.Exists("Assets/InteractML/Data/Training_Examples"))
+        if (Directory.Exists("Assets/InteractML/Data/Training_Examples") && Directory.Exists(targetPathTrainingExamples))
         {
             // Get all trainingExamplesPaths
             string[] trainingExamplesNames = Directory.GetFiles("Assets/InteractML/Data/Training_Examples");
@@ -97,7 +97,7 @@ public class IMLBuildManager
         }
 
         // If the IML Input Settings folder exists in current project...
-        if (Directory.Exists("Assets/InteractML/Data/InputSetUp"))
+        if (Directory.Exists("Assets/InteractML/Data/InputSetUp") && Directory.Exists(targetPathInputSettings))
         {
             // Get all inputSettings files
             string[] inputSettingsFiles = Directory.GetFiles("Assets/InteractML/Data/InputSetUp");
