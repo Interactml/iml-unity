@@ -19,7 +19,6 @@ namespace InteractML
     /// <summary>
     /// Handles the logic of the different IML systems per graph
     /// </summary>
-    [ExecuteInEditMode]
     public class IMLComponent : MonoBehaviour
     {
 
@@ -146,8 +145,37 @@ namespace InteractML
 
         #region Unity Messages
 
+        private void Reset()
+        {
+            Debug.Log("reset");
+            
+        }
+
         private void OnEnable()
         {
+            Debug.Log("On enabled");
+            /*universalInputActive = false;
+            // if this componenet is in the open scene 
+            if (this.gameObject.scene.IsValid())
+            {
+                //Initialize this object 
+                Initialize();
+                // initialize all nodes 
+                InitializeAllNodes();
+                InitializeEvent();
+                // train models
+                LoadDataForModels();
+            }*/
+        }
+
+
+
+        // Called when something changes in the scene
+        private void OnValidate()
+        {
+            Debug.Log("Validate");
+            IMLControllerOwnershipLogic();
+
             universalInputActive = false;
             // if this componenet is in the open scene 
             if (this.gameObject.scene.IsValid())
@@ -160,14 +188,6 @@ namespace InteractML
                 // train models
                 LoadDataForModels();
             }
-        }
-
-
-
-        // Called when something changes in the scene
-        private void OnValidate()
-        {
-            IMLControllerOwnershipLogic();
         }
 
         // Awake is called before start
@@ -1420,10 +1440,13 @@ namespace InteractML
         /// </summary>
         private void LoadDataForModels()
         {
-            // There will be waits for things to init. Take into account
-            IEnumerator coroutine = LoadDataForModelsCoroutine();
-            StartCoroutine(coroutine);
-
+            if(this != null)
+            {
+                // There will be waits for things to init. Take into account
+                IEnumerator coroutine = LoadDataForModelsCoroutine();
+                StartCoroutine(coroutine);
+            }
+            
         }
 
         /// <summary>
@@ -1482,9 +1505,13 @@ namespace InteractML
         /// </summary>
         public void RunModelsOnPlay()
         {
-            // There will be waits for things to init. Take into account
-            IEnumerator coroutine = RunModelsOnPlayCoroutine();
-            StartCoroutine(coroutine);
+            if (this != null)
+            {
+                // There will be waits for things to init. Take into account
+                IEnumerator coroutine = RunModelsOnPlayCoroutine();
+                StartCoroutine(coroutine);
+            }
+            
 
         }
         /// <summary>

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7444281257571340909}
   - component: {fileID: 7444281257571340908}
   - component: {fileID: 7444281257571340907}
-  - component: {fileID: 7444281257571340906}
+  - component: {fileID: 7750816985660075746}
   m_Layer: 0
   m_Name: IMLIcon
   m_TagString: Untagged
@@ -111,7 +111,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7444281257571340906
+--- !u!114 &7750816985660075746
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,65 +120,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7444281257571340905}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9158b678fd7f994caf28762f33405ed, type: 3}
+  m_Script: {fileID: 11500000, guid: ef3256e4d6e973c44a702fb766708827, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_InteractionManager: {fileID: 0}
-  m_Colliders: []
-  m_InteractionLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_OnFirstHoverEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnHoverEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnHoverExit:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnLastHoverExit:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnSelectEnter:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7444281257571340906}
-        m_MethodName: Selected
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7444281257571340906}
-        m_MethodName: ActivateVRInterface
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  m_OnSelectExit:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnActivate:
-    m_PersistentCalls:
-      m_Calls: []
-  m_OnDeactivate:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CustomReticle: {fileID: 0}
   graph: {fileID: 0}
-  selectedHighlight: {r: 0.72156864, g: 0.73333335, b: 0.98039216, a: 0}
+  selectedHighlight: {r: 0.5334925, g: 0.077162705, b: 0.9622642, a: 0}
   trainedColor: {fileID: 2800000, guid: c417d3fdbb88654449462abbdc48680c, type: 3}
-  baseColour: {fileID: 2800000, guid: c4c3665142c39b4459c779bd443b9776, type: 3}
+  baseColour: {fileID: 2800000, guid: 4ffcad1f45510b1469266718df5333f9, type: 3}
   recordingColour: {fileID: 2800000, guid: 243854e302a54c04082cefa189303fc6, type: 3}
   runningColour: {fileID: 2800000, guid: 7886c868007defe40ba0a0cc1ebfc46b, type: 3}
   current: {fileID: 0}
