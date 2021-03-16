@@ -4,6 +4,7 @@ using UnityEngine;
 using ReusableMethods;
 using System;
 using System.Linq;
+using XNode;
 #if UNITY_EDITOR
 using UnityEditor;
 using XNodeEditor;
@@ -19,6 +20,20 @@ namespace InteractML
         /// </summary>
         protected MLSystem m_MLSystem;
 
+        /// <summary>
+        /// The label to show on the button port labels
+        /// </summary>
+        protected GUIContent m_ButtonPortLabel;
+        /// <summary>
+        /// NodePort for button. Loaded in OnHeaderHUI()
+        /// </summary>
+        protected NodePort m_ButtonPortToggleTrainInput;
+        /// <summary>
+        /// NodePort for button. Loaded in OnHeaderHUI()
+        /// </summary>
+        protected NodePort m_ButtonPortToggleRunInput;
+
+
         public override void OnHeaderGUI()
         {
             // Get reference to the current node
@@ -28,6 +43,18 @@ namespace InteractML
             if (m_MLSystem.numberInComponentList != -1)
                 arrayNo = m_MLSystem.numberInComponentList.ToString();
             NodeName = "MACHINE LEARNING SYSTEM " + arrayNo;
+
+            // Create inputport button label
+            if (m_ButtonPortLabel == null)
+                m_ButtonPortLabel = new GUIContent("");
+
+            // Get button ports
+            if (m_ButtonPortToggleTrainInput == null)
+                m_ButtonPortToggleTrainInput = m_MLSystem.GetPort("ToggleTrainInputBoolPort");
+            if (m_ButtonPortToggleRunInput == null)
+                m_ButtonPortToggleRunInput = m_MLSystem.GetPort("ToggleRunInputBoolPort");
+
+
             base.OnHeaderGUI();
         }
 
@@ -105,26 +132,27 @@ namespace InteractML
             m_ButtonsRect.height = 150;
 
 
-            GUILayout.BeginArea(m_ButtonsRect);
-
+            // DRAW BUTTONS AND PORTS OUTSIDE OF BEGIN AREA TO MAKE THEM WORK
             GUILayout.BeginHorizontal();
             // Draw port
             GUILayout.Space(15);
-            //IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("ToggleTrainInputBoolPort"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+            IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortToggleTrainInput, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
 
             // if button contains mouse position
             TrainModelButton();
             GUILayout.EndHorizontal();
 
-        
+
             GUILayout.Space(15);
             GUILayout.BeginHorizontal();
             // Draw port
             GUILayout.Space(15);
-            //IMLNodeEditor.PortField(new GUIContent(""), m_IMLNode.GetInputPort("ToggleRunInputBoolPort"), m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+            IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortToggleRunInput, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
 
             RunModelButton();
             GUILayout.EndHorizontal();
+
+            GUILayout.BeginArea(m_ButtonsRect);
 
             GUILayout.Space(20);
             GUILayout.BeginHorizontal();

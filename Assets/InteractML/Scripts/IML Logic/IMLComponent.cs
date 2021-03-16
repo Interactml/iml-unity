@@ -444,6 +444,10 @@ namespace InteractML
         /// Subscribe to all delegates called in initialize
         /// </summary>
         private void SubscribeToDelegates() {
+            // DIRTY CODE
+            // I am unsubscribing from all delegates first since there are issue with ToggleRecordCallback having the same method twice
+            UnsubscribeToDelegates();
+            
             // dispatchers for MLSystem node events
             IMLEventDispatcher.TrainMLSCallback += Train;
             IMLEventDispatcher.ToggleRunCallback += ToggleRunning;
