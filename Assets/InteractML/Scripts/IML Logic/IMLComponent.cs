@@ -153,19 +153,10 @@ namespace InteractML
 
         private void OnEnable()
         {
-            Debug.Log("On enabled");
-            /*universalInputActive = false;
-            // if this componenet is in the open scene 
-            if (this.gameObject.scene.IsValid())
-            {
-                //Initialize this object 
-                Initialize();
-                // initialize all nodes 
-                InitializeAllNodes();
-                InitializeEvent();
-                // train models
-                LoadDataForModels();
-            }*/
+#if !UNITY_EDITOR
+            Initialize();
+
+#endif
         }
 
 
@@ -173,21 +164,14 @@ namespace InteractML
         // Called when something changes in the scene
         private void OnValidate()
         {
-            Debug.Log("Validate");
-            IMLControllerOwnershipLogic();
+#if UNITY_EDITOR
 
-            universalInputActive = false;
-            // if this componenet is in the open scene 
-            if (this.gameObject.scene.IsValid())
-            {
-                //Initialize this object 
-                Initialize();
-                // initialize all nodes 
-                InitializeAllNodes();
-                InitializeEvent();
-                // train models
-                LoadDataForModels();
-            }
+            // Subscribe to the editor manager so that our update loop gets called
+            IMLEditorManager.SubscribeIMLComponent(this);
+
+            IMLControllerOwnershipLogic();
+            Initialize();
+#endif
         }
 
         // Awake is called before start
@@ -243,12 +227,15 @@ namespace InteractML
             //Unsubscribe this from the event dispatcher 
             UnsubscribeToDelegates();
         }
-        #endregion
+#endregion
 
-        #region Private Methods
+#region Private Methods
+
 
         private void Initialize()
         {
+            // ensure universal input in inactive on open
+            universalInputActive = false;
             SubscribeToDelegates();
             // Initialise list of nodes for the IML Controller
             if (Lists.IsNullOrEmpty(ref GameObjectsToUse))
@@ -336,7 +323,11 @@ namespace InteractML
             if (graph)
                 graph.nodes.RemoveAll(node => node == null);
 
-
+            // initialize all nodes 
+            InitializeAllNodes();
+            InitializeEvent();
+            // train models
+            LoadDataForModels();
         }
 
         /// <summary>
@@ -678,7 +669,7 @@ namespace InteractML
 
                 if(m_MLSystemNodeList.Count > 0)
                 {
-                    Debug.LogWarning("Only one machine learning system node allowed per graph when using VR interface you will not be able to control this in the headset");
+                    Debug.LogWarning("Only one machine learning system node allowed per graph when using radial you will not be able to control this in the headset");
                 }
                 if (mlSystemNode != null)
                 {
@@ -1135,9 +1126,9 @@ namespace InteractML
 
         }
 
-        #endregion
+#endregion
 
-        #region Public Methods
+#region Public Methods
 
         [ContextMenu("Clear Lists (Use in Case of null ref errors)")]
         public void ClearLists()
@@ -1169,6 +1160,7 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
+            Debug.Log(graph.IsGraphRunning);
             if (icon.graph == null)
             {
                 icon.graph = this;
@@ -1776,7 +1768,7 @@ namespace InteractML
             return success;
         }
 
-        #region SubscriptionOfMonobehaviours
+#region SubscriptionOfMonobehaviours
 
         /// <summary>
         /// Pass a Monobehaviour and mark any field with "SendToIMLController" or "PullFromIMLController" attribute to use it with the IML Component
@@ -1908,9 +1900,9 @@ namespace InteractML
 
         }
 
-        #endregion
+#endregion
 
-        #region Add Nodes
+#region Add Nodes
 
         /// <summary>
         /// Adds a scriptNode internally to the list
@@ -1973,9 +1965,9 @@ namespace InteractML
             return nodeAdded;
         }
 
-        #endregion
+#endregion
 
-        #region Deletion of Nodes
+#region Deletion of Nodes
         // code needs refactoring 
         /// <summary>
         /// Removes GameObjectNode From GameObjectNodeList 
@@ -2079,7 +2071,7 @@ namespace InteractML
                 m_ScriptNodesList.Remove(node);
         }
 
-        #endregion
+#endregion
 
         //Very dirty code need to sort it out in a better way - updates the node pointer when exiting or entering play mode 
         public void updateGameObjectImage()
@@ -2091,9 +2083,9 @@ namespace InteractML
             }
         }
 
-        #endregion
+#endregion
 
-        #region SceneLoading
+#region SceneLoading
 
 #if UNITY_EDITOR
         private void SceneOpenedLogic(UnityEngine.SceneManagement.Scene scene, UnityEditor.SceneManagement.OpenSceneMode mode)
@@ -2103,8 +2095,8 @@ namespace InteractML
 
 #endif
 
-        #endregion
-        #region Delegates
+#endregion
+#region Delegates
         /// <summary>
         /// Delegate to train model from 
         /// </summary>
@@ -2315,7 +2307,7 @@ namespace InteractML
             }
         }
 
-        #endregion
+#endregion
     }
 
 }
