@@ -356,10 +356,10 @@ namespace InteractML
             if(port.fieldName == "InputFeatures")
             {
                 InputFeatures = this.GetInputNodesConnected("InputFeatures");
-                CheckLiveDataInputMatchesTrainingExamples();
-                CheckLengthInputsVector();
-                UIErrors();
             }
+            CheckLiveDataInputMatchesTrainingExamples();
+            CheckLengthInputsVector();
+            UIErrors();
 
         }
 
@@ -1541,25 +1541,24 @@ namespace InteractML
         {
             // Get training examples from the connected examples nodes
             IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
+            // get the number of input features for the first training examples
             int numberOfTrainingDataInputs = 0;
-
-            if (!Lists.IsNullOrEmpty(ref IMLTrainingExamplesNodes))
+            // if the list has objects
+            if(!Lists.IsNullOrEmpty(ref IMLTrainingExamplesNodes))
             {
-                for (int i = 0; i < IMLTrainingExamplesNodes.Count; i++)
-                {
-                    if (IMLTrainingExamplesNodes[i] != null)
-                    {
-                        numberOfTrainingDataInputs = numberOfTrainingDataInputs + IMLTrainingExamplesNodes[i].GetInputPort("InputFeatures").GetConnections().Count();
-                    }
-                }
+                // set the numnber of training data inputs as the first connected training example (which should be the same as the rest connected)
+                numberOfTrainingDataInputs = IMLTrainingExamplesNodes[0].GetInputPort("InputFeatures").GetConnections().Count();
             }
 
+            // if the number of input features connected is the same to that of the connected training examples set matching to true
             if (numberOfTrainingDataInputs == GetInputPort("InputFeatures").GetConnections().Count())
+            {
                 matchLiveDataInputs = true;
-            else
+            } else
+            {
                 matchLiveDataInputs = false;
-
-
+            }
+                
 
         }
 

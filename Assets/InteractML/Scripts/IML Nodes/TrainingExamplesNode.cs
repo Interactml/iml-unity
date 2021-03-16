@@ -235,6 +235,17 @@ namespace InteractML
             {
                 trainingExamplesExist = true;
             }
+            // if you are changing the input features or target values check if the connected MLSystemNodes have more then one training example and don't allow if they do
+            if(to.fieldName == "InputFeatures" || to.fieldName == "TargetValues")
+            {
+                foreach (MLSystem MLS in MLSystemNodesConnected)
+                {
+                    if (MLS.IMLTrainingExamplesNodes.Count > 1)
+                    {
+                        from.Disconnect(to);
+                    }
+                }
+            }
 
             // if you are connecting to input port 
             if (to.fieldName == "InputFeatures")
@@ -437,7 +448,6 @@ namespace InteractML
             if (Lists.IsNullOrEmpty(ref TrainingExamplesVector))
             {
                 TrainingExamplesVector = new List<IMLTrainingExample>();
-                Debug.Log("here");
             }
                 
 
@@ -624,7 +634,6 @@ namespace InteractML
         /// </summary>
         protected void UpdateInputConfigList()
         {
-            Debug.Log("inputconfiglist");
             // Get values from the input list
             InputFeatures = this.GetInputNodesConnected("InputFeatures");
 
