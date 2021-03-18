@@ -785,6 +785,10 @@ namespace InteractML
         /// </summary>
         private void SendGameObjectsToIMLController()
         {
+
+            //Debug.Log(GameObjectsToUse.Count);
+            //Debug.Log(m_GOsPerGONodes.Count);
+            //Debug.Log(m_GameObjectNodeList.Count);
             // Don't do anything if there are no gameObjects from the scene to use
             if (GameObjectsToUse == null || GameObjectsToUse.Count == 0)
             {
@@ -863,6 +867,18 @@ namespace InteractML
                 if (go == null)
                 {
                     continue;
+                }
+
+                if(m_GOsPerGONodes.Count > m_GameObjectNodeList.Count)
+                {
+                    
+                    foreach (KeyValuePair<GameObject, GameObjectNode> dicItem in m_GOsPerGONodes)
+                    {
+                        if (!m_GameObjectNodeList.Contains(dicItem.Value)){
+                            Debug.Log("doesn't contain");
+                            m_GOsPerGONodes.Remove(dicItem);
+                        }
+                    }
                 }
 
                 // Check if the dictionary DOESN'T contain this GameObject value, and then create nodes and dictionary values (it is a new GameObject)
