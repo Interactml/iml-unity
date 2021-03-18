@@ -667,7 +667,7 @@ namespace InteractML
                 // Then check that the node is a MLSystem
                 var mlSystemNode = nodeToAdd as MLSystem;
 
-                if(m_MLSystemNodeList.Count > 0)
+                if(m_MLSystemNodeList.Count > 1)
                 {
                     Debug.LogWarning("Only one machine learning system node allowed per graph when using radial you will not be able to control this in the headset");
                 }
