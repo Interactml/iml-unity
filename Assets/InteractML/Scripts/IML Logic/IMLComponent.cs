@@ -815,7 +815,6 @@ namespace InteractML
                     // If there is a scriptHashCode from a previous GO...
                     if (!goNode.GOHashCode.Equals(default))
                     {
-
                         // Check if the GOsPerGONodes dictionary contains the node and its GO
                         var gameObject = m_GOsPerGONodes.GetKey(goNode);
                         // Set GO if we found it
@@ -841,6 +840,9 @@ namespace InteractML
                                     if (!m_GOsPerGONodes.Contains(goToAdd))
                                         m_GOsPerGONodes.Add(goToAdd, goNode);
                                 }
+                            } else
+                            {
+                                m_GameObjectNodeList.Remove(goNode);
                             }
 
                         }
@@ -1160,7 +1162,6 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
-            Debug.Log(graph.IsGraphRunning);
             if (icon.graph == null)
             {
                 icon.graph = this;
