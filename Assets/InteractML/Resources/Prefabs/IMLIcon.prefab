@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7444281257571340909}
   - component: {fileID: 7444281257571340908}
   - component: {fileID: 7444281257571340907}
-  - component: {fileID: 7750816985660075746}
+  - component: {fileID: 8283213952507851438}
   m_Layer: 0
   m_Name: IMLIcon
   m_TagString: Untagged
@@ -111,7 +111,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7750816985660075746
+--- !u!114 &8283213952507851438
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,11 +120,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7444281257571340905}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef3256e4d6e973c44a702fb766708827, type: 3}
+  m_Script: {fileID: 11500000, guid: acc64436e1d5bac4caf99eae49340f28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 0}
-  selectedHighlight: {r: 0.5334925, g: 0.077162705, b: 0.9622642, a: 0}
+  selectedHighlight: {r: 0, g: 0, b: 0, a: 0}
   trainedColor: {fileID: 2800000, guid: c417d3fdbb88654449462abbdc48680c, type: 3}
   baseColour: {fileID: 2800000, guid: 4ffcad1f45510b1469266718df5333f9, type: 3}
   recordingColour: {fileID: 2800000, guid: 243854e302a54c04082cefa189303fc6, type: 3}

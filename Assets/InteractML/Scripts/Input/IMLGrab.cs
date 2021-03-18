@@ -1,45 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
-
 namespace InteractML
 {
-    public class IMLGrab : XRBaseInteractable
+    public class IMLGrab : MonoBehaviour
     {
+        // reference to IML graph this object represents
         public IMLComponent graph;
+        // colour for outline when selected
         public Color selectedHighlight;
+        // texture for circle when the model is trained
         public Texture2D trainedColor;
-        
+        // base texture when the object is not selected
         public Texture2D baseColour;
+        // texture for when graph recording
         public Texture2D recordingColour;
+        // texture for when the graph is running
         public Texture2D runningColour;
         [HideInInspector]
+        // hold current texture - used bu imlcomponent
         public Texture2D current;
 
         public void Start()
         {
-            IMLEventDispatcher.deselectGraph += DeactivateVRInterface;
+
+            IMLEventDispatcher.deselectGraph += DeactivateInterface;
             Deselected();
             SetBody(baseColour);
         }
 
-        public void Update()
-        {
-            if (interactionManager == null)
-            {
-                interactionManager = FindObjectOfType<XRInteractionManager>();
-            }
-        }
+        /// <summary>
+        /// method for when the object is selected change texture and send event for activation
+        /// </summary>
         public void Selected()
         {
             this.GetComponent<Renderer>().material.SetFloat("_OutlineWidth", 0.01f);
-            //cubeRenderer.material.SetColor("_OutlineColor", selectedHighlight);
             IMLEventDispatcher.selectGraph?.Invoke(graph);
 
         }
 
-
+        /// <summary>
+        /// method for when the colour is highlighted 
+        /// </summary>
+        /// <param name="colour"></param>
         public void SetColourHighlight(Color colour)
         {
             this.GetComponent<Renderer>().sharedMaterial.SetColor("_OutlineColor", colour);
@@ -47,7 +50,8 @@ namespace InteractML
         
         public void SetBody(Texture2D texture)
         {
-            this.GetComponent<Renderer>().material.SetTexture("_MainTex", texture);
+            if(this != null)
+                this.GetComponent<Renderer>().material.SetTexture("_MainTex", texture);
             current = texture;
         }
         
@@ -58,17 +62,13 @@ namespace InteractML
         }
        
 
-        public void Recording()
-        {
 
-        }
-
-        public void ActivateVRInterface()
+        public void ActivateInterface()
         {
             graph.universalInputActive = true;
         }
         
-        public void DeactivateVRInterface(IMLComponent deselectedGraph)
+        public void DeactivateInterface(IMLComponent deselectedGraph)
         {
             if (graph = deselectedGraph)
             {
@@ -76,14 +76,7 @@ namespace InteractML
                 graph.universalInputActive = false;
             }
         }
-        void Detach()
-        {
-            /*if (m_ThrowOnDetach)
-            {
-                m_RigidBody.velocity = m_DetachVelocity;
-                m_RigidBody.angularVelocity = m_DetachAngularVelocity;
-            }*/
-        }
+       
     }
 }
 
