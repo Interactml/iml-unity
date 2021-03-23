@@ -667,7 +667,7 @@ namespace InteractML
                 // Then check that the node is a MLSystem
                 var mlSystemNode = nodeToAdd as MLSystem;
 
-                if(m_MLSystemNodeList.Count > 0)
+                if(m_MLSystemNodeList.Count > 1)
                 {
                     Debug.LogWarning("Only one machine learning system node allowed per graph when using radial you will not be able to control this in the headset");
                 }
@@ -785,6 +785,10 @@ namespace InteractML
         /// </summary>
         private void SendGameObjectsToIMLController()
         {
+
+            //Debug.Log(GameObjectsToUse.Count);
+            //Debug.Log(m_GOsPerGONodes.Count);
+            //Debug.Log(m_GameObjectNodeList.Count);
             // Don't do anything if there are no gameObjects from the scene to use
             if (GameObjectsToUse == null || GameObjectsToUse.Count == 0)
             {
@@ -815,7 +819,6 @@ namespace InteractML
                     // If there is a scriptHashCode from a previous GO...
                     if (!goNode.GOHashCode.Equals(default))
                     {
-
                         // Check if the GOsPerGONodes dictionary contains the node and its GO
                         var gameObject = m_GOsPerGONodes.GetKey(goNode);
                         // Set GO if we found it
@@ -841,6 +844,9 @@ namespace InteractML
                                     if (!m_GOsPerGONodes.Contains(goToAdd))
                                         m_GOsPerGONodes.Add(goToAdd, goNode);
                                 }
+                            } else
+                            {
+                                m_GameObjectNodeList.Remove(goNode);
                             }
 
                         }
@@ -861,6 +867,18 @@ namespace InteractML
                 if (go == null)
                 {
                     continue;
+                }
+
+                if(m_GOsPerGONodes.Count > m_GameObjectNodeList.Count)
+                {
+                    
+                    foreach (KeyValuePair<GameObject, GameObjectNode> dicItem in m_GOsPerGONodes)
+                    {
+                        if (!m_GameObjectNodeList.Contains(dicItem.Value)){
+                            Debug.Log("doesn't contain");
+                            m_GOsPerGONodes.Remove(dicItem);
+                        }
+                    }
                 }
 
                 // Check if the dictionary DOESN'T contain this GameObject value, and then create nodes and dictionary values (it is a new GameObject)
@@ -1160,7 +1178,6 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
-            Debug.Log(graph.IsGraphRunning);
             if (icon.graph == null)
             {
                 icon.graph = this;
