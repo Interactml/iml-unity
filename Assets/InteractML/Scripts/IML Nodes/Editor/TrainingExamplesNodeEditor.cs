@@ -109,10 +109,10 @@ namespace InteractML
                 InputPortsNamesOverride.Add("TargetValues", "Labels");
 
                 base.nodeTips = m_TrainingExamplesNode.tooltips;
-                if (m_TrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_TrainingExamplesNode.DesiredOutputFeatures.Count || lastShowWarning != m_TrainingExamplesNode.showWarning)
+               // if (m_TrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_TrainingExamplesNode.DesiredOutputFeatures.Count || lastShowWarning != m_TrainingExamplesNode.showWarning)
                     m_RecalculateRects = true;
-                m_ConnectedInputs = m_TrainingExamplesNode.DesiredInputFeatures.Count;
-                m_ConnectedTargets = m_TrainingExamplesNode.DesiredOutputFeatures.Count;
+                //m_ConnectedInputs = m_TrainingExamplesNode.DesiredInputFeatures.Count;
+                //m_ConnectedTargets = m_TrainingExamplesNode.DesiredOutputFeatures.Count;
                 lastShowWarning = m_TrainingExamplesNode.showWarning;
                 base.OnBodyGUI();
             }
@@ -240,7 +240,7 @@ namespace InteractML
 
             bool disableButton = false;
 
-            if (!Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.TrainingExamplesVector))
+            if (m_TrainingExamplesNode.TrainingExamplesVector.Count > 0)
             {
                 disableButton = false;
             }
@@ -517,7 +517,7 @@ namespace InteractML
                 EditorGUI.indentLevel++;
 
 
-                if (ReusableMethods.Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.TrainingExamplesVector)&& ReusableMethods.Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.TrainingSeriesCollection))
+                if (m_TrainingExamplesNode.TrainingExamplesVector.Count > 0 && m_TrainingExamplesNode.TrainingSeriesCollection.Count > 0)
                 {
                     EditorGUILayout.LabelField("Training Examples List is empty", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("foldoutempty"));
                 }

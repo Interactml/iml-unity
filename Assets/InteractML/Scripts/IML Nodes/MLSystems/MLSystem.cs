@@ -1606,7 +1606,7 @@ namespace InteractML
                 for (int i = 0; i < trainingNodesIML.Count; i++)
                 {
                     // If there are training examples in this node...
-                    if (!Lists.IsNullOrEmpty(ref trainingNodesIML[i].TrainingExamplesVector))
+                    if (trainingNodesIML[i].TrainingExamplesVector.Count > 0)
                     {
                         // Go through all the training examples
                         for (int j = 0; j < trainingNodesIML[i].TrainingExamplesVector.Count; j++)
@@ -1655,7 +1655,7 @@ namespace InteractML
                 for (int i = 0; i < trainingNodesIML.Count; i++)
                 {
                     // If there are training series in this node...
-                    if (!Lists.IsNullOrEmpty(ref trainingNodesIML[i].TrainingSeriesCollection))
+                    if (trainingNodesIML[i].TrainingSeriesCollection.Count > 0)
                     {
                         foreach (var IMLSeries in trainingNodesIML[i].TrainingSeriesCollection)
                         {

@@ -21,6 +21,10 @@ namespace InteractML
         // hold current texture - used bu imlcomponent
         public Texture2D current;
 
+        public void OnValidate()
+        {
+            Debug.Log("validate grab");
+        }
         public void Start()
         {
 
@@ -50,7 +54,7 @@ namespace InteractML
         
         public void SetBody(Texture2D texture)
         {
-            if(this != null)
+            if(this != null && Application.isPlaying)
                 this.GetComponent<Renderer>().material.SetTexture("_MainTex", texture);
             current = texture;
         }
