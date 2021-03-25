@@ -871,14 +871,22 @@ namespace InteractML
 
                 if(m_GOsPerGONodes.Count > m_GameObjectNodeList.Count)
                 {
-                    
+                    // Create copy of dictionary to evaluate
+                    var goPerGONodesCopy = new GOPerGONodeDictionary();
                     foreach (KeyValuePair<GameObject, GameObjectNode> dicItem in m_GOsPerGONodes)
+                    {
+                        goPerGONodesCopy.Add(dicItem);
+                    }
+
+                    // Iterate through copy, but modify original
+                    foreach (KeyValuePair<GameObject, GameObjectNode> dicItem in goPerGONodesCopy)
                     {
                         if (!m_GameObjectNodeList.Contains(dicItem.Value)){
                             Debug.Log("doesn't contain");
+                            // Modify original list
                             m_GOsPerGONodes.Remove(dicItem);
                         }
-                    }
+                    }                    
                 }
 
                 // Check if the dictionary DOESN'T contain this GameObject value, and then create nodes and dictionary values (it is a new GameObject)
@@ -1182,9 +1190,13 @@ namespace InteractML
             if (icon == null)
                 InitializeIMLIndicator();
 
-            if (icon.graph == null)
+            if (icon != null)
             {
-                icon.graph = this;
+                if (icon.graph == null)
+                {
+                    icon.graph = this;
+                }
+
             }
             //Debug.Log("Running IMLComponent update...");
 
