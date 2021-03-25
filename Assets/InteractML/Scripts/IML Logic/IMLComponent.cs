@@ -1178,6 +1178,10 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
+            // Make sure that the icon is init
+            if (icon == null)
+                InitializeIMLIndicator();
+
             if (icon.graph == null)
             {
                 icon.graph = this;
