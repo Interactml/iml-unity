@@ -2282,15 +2282,24 @@ namespace InteractML
                         Debug.Log("stop");
                         success = TENode.StopCollecting();
                         if (success)
-                            icon.SetBody(icon.baseColour);
+                        {
+                            if (icon != null)
+                                icon.SetBody(icon.baseColour);
+                        }
                     } else
                     {
                         Debug.Log("start");
                         success = TENode.StartCollecting();
                         if (success)
-                            icon.SetBody(icon.recordingColour);
+                        {
+                            if (icon !=null )
+                                icon.SetBody(icon.recordingColour);
+                        }
                         else
-                            icon.SetBody(icon.current);
+                        {
+                            if (icon != null)
+                                icon.SetBody(icon.current);
+                        }
                     }
                         
                 }
