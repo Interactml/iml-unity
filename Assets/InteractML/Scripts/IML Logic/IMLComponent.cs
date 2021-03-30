@@ -140,12 +140,13 @@ namespace InteractML
 
 
         private IMLGrab icon;
+        private bool isSubscribed = false;
 
         #endregion
 
         #region Unity Messages
 
-        private void Reset()
+        void Reset()
         {
             Debug.Log("reset");
             
@@ -153,7 +154,9 @@ namespace InteractML
 
         private void OnEnable()
         {
+            Debug.Log("enable");
 #if !UNITY_EDITOR
+            SubscribeToDelegates();
             Initialize();
 
 #endif
@@ -165,18 +168,26 @@ namespace InteractML
         private void OnValidate()
         {
 #if UNITY_EDITOR
-
+           // Debug.Log("validating");
             // Subscribe to the editor manager so that our update loop gets called
             IMLEditorManager.SubscribeIMLComponent(this);
 
             IMLControllerOwnershipLogic();
+            //SubscribeToDelegates();
+            if (IMLEventDispatcher.TrainMLSCallback == null)
+            {
+                SubscribeToDelegates();
+                
+            }
             Initialize();
+            
 #endif
         }
 
         // Awake is called before start
         private void Awake()
         {
+            Debug.Log("awake");
             // We use the scene managers to make sure we flush the ownership of the controller when the scene loads/unloads
 #if UNITY_EDITOR
             m_OurScene = EditorSceneManager.GetActiveScene();
@@ -236,7 +247,7 @@ namespace InteractML
         {
             // ensure universal input in inactive on open
             universalInputActive = false;
-            SubscribeToDelegates();
+            
             // Initialise list of nodes for the IML Controller
             if (Lists.IsNullOrEmpty(ref GameObjectsToUse))
                 GameObjectsToUse = new List<GameObject>();
@@ -328,6 +339,8 @@ namespace InteractML
             InitializeEvent();
             // train models
             LoadDataForModels();
+
+
         }
 
         /// <summary>
@@ -435,9 +448,10 @@ namespace InteractML
         /// Subscribe to all delegates called in initialize
         /// </summary>
         private void SubscribeToDelegates() {
+            //Debug.Log("subscribe");
             // DIRTY CODE
             // I am unsubscribing from all delegates first since there are issue with ToggleRecordCallback having the same method twice
-            UnsubscribeToDelegates();
+           // UnsubscribeToDelegates();
             
             // dispatchers for MLSystem node events
             IMLEventDispatcher.TrainMLSCallback += Train;
@@ -458,6 +472,7 @@ namespace InteractML
         /// </summary>
         private void UnsubscribeToDelegates()
         {
+            Debug.Log("unsubscribe from delegates");
             // dispatchers for MLSystem node event
             IMLEventDispatcher.TrainMLSCallback -= Train;
             IMLEventDispatcher.ToggleRunCallback -= ToggleRunning;
@@ -1256,11 +1271,14 @@ namespace InteractML
             InputLogic();
 
         }
-
-
+        /// <summary>
+        /// Update logic for input modules
+        /// </summary>
         public void InputLogic(){
+            // if user has enables universal input system
             if(universalInputEnabled && universalInputActive)
             {
+                //if there is a reference to the node
                 if (m_inputSetUp != null)
                 {
                     m_inputSetUp.UpdateLogic();
@@ -1499,6 +1517,7 @@ namespace InteractML
             {
                 while (!(bool)IMLEventDispatcher.LoadModelsCallback?.Invoke())
                 {
+                    Debug.Log("load models");
                     // wait for a frame until models are retrained
                     yield return null;
                 }
@@ -2232,6 +2251,7 @@ namespace InteractML
         /// <returns>bool whether training has started</returns>
         private bool ToggleRecording(string nodeID)
         {
+            Debug.Log("toggle");
             bool success = false;
             foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
             {
@@ -2239,11 +2259,13 @@ namespace InteractML
                 {
                     if (TENode.CollectingData)
                     {
+                        Debug.Log("stop");
                         success = TENode.StopCollecting();
                         if (success)
                             icon.SetBody(icon.baseColour);
                     } else
                     {
+                        Debug.Log("start");
                         success = TENode.StartCollecting();
                         if (success)
                             icon.SetBody(icon.recordingColour);
