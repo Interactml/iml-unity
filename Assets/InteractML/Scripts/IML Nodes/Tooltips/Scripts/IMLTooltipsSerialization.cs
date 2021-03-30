@@ -53,9 +53,7 @@ namespace InteractML
             // Account for cross-platform
             if (String.IsNullOrEmpty(m_AppDataPath))
             {
-#if UNITY_STANDALONE
-                m_AppDataPath = Application.dataPath;
-#elif UNITY_EDITOR
+#if UNITY_EDITOR
                 // Check if InteractML has been imported as a git submodule
                 string projectPath = Path.GetDirectoryName(Application.dataPath);
                 if (File.Exists(projectPath + @"\.gitmodules"))
@@ -67,7 +65,14 @@ namespace InteractML
                         // InteractML files then are under Assets/iml-unity/Assets
                         m_AppDataPath = Path.Combine(Application.dataPath, "iml-unity/Assets/");
                     }
+                    else
+                    {
+                        // If not, InteractML files are in default location
+                        m_AppDataPath = Application.dataPath;
+                    }
                 }
+#elif UNITY_STANDALONE
+                m_AppDataPath = Application.dataPath;
 #elif UNITY_ANDROID
                 m_AppDataPath = Application.persistentDataPath;
 #endif
