@@ -61,6 +61,10 @@ namespace InteractML
         /// NodePort for button. Loaded in OnHeaderHUI()
         /// </summary>
         protected NodePort m_ButtonPortDeleteExamples;
+        /// <summary>
+        /// Used to specify subfolder where to save/load data. Loaded in OnHeaderHUI()
+        /// </summary>
+        protected NodePort m_PortSubFolderDataPath;
 
         #endregion
         #region XNode messages
@@ -90,7 +94,9 @@ namespace InteractML
                 m_ButtonPortToggleRecord = m_TrainingExamplesNode.GetPort("ToggleRecordingInputBoolPort");
             if (m_ButtonPortDeleteExamples == null)
                 m_ButtonPortDeleteExamples = m_TrainingExamplesNode.GetPort("DeleteAllExamplesBoolPort");
-
+            // Get subfolderdatapath port
+            if (m_PortSubFolderDataPath == null)
+                m_PortSubFolderDataPath = m_TrainingExamplesNode.GetPort("SubFolderDataPathStringPort");
 
 
             base.OnHeaderGUI();
@@ -163,6 +169,8 @@ namespace InteractML
                 m_RecalculateRects = true;
             }
             GUILayout.EndArea();
+            // Added an option to specify a subfolder to save/load the data
+            ShowSubFolderDataField();
             ShowTrainingExamplesDropdown();
         }
 
@@ -401,8 +409,7 @@ namespace InteractML
             {
 
                 GUILayout.BeginHorizontal();
-                // Draw port
-                GUILayout.Space(15);
+                // Draw port                
                 IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortRecordOneInput, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
                 GUILayout.Space(offset);
                 if (GUILayout.Button(new GUIContent(""), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record One Button")))
@@ -444,7 +451,6 @@ namespace InteractML
             GUILayout.Space(15);
             GUILayout.BeginHorizontal();
             // Draw port
-            GUILayout.Space(15);
             IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortToggleRecord, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
             GUILayout.Space(offset);
 
@@ -466,7 +472,6 @@ namespace InteractML
             GUILayout.BeginHorizontal();
             //GUILayout.Space(spacing);
             // Draw port
-            GUILayout.Space(15);
             IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortDeleteExamples, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
             GUILayout.Space(offset);
             // draw delete all button
@@ -715,6 +720,20 @@ namespace InteractML
                 GUILayout.EndArea();
             }
 
+        }
+
+        /// <summary>
+        /// Shows the subfolder data field to specify and optional name where to save/load data
+        /// </summary>
+        private void ShowSubFolderDataField()
+        {
+            GUILayout.BeginHorizontal();
+            // Draw port
+            IMLNodeEditor.PortField(m_ButtonPortLabel, m_PortSubFolderDataPath, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+            GUILayout.Space(40);
+            EditorGUILayout.LabelField("SubFolder Data Path");
+            m_TrainingExamplesNode.SubFolderDataPath = EditorGUILayout.TextField(m_TrainingExamplesNode.SubFolderDataPath);
+            GUILayout.EndHorizontal();
         }
     }
 

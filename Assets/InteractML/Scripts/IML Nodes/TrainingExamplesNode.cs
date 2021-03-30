@@ -175,18 +175,23 @@ namespace InteractML
         /// </summary>
         public bool showWarning;
 
-        private int lastNoOfRecordings = 0;
-        private bool deleteLast = false;
+        private int lastNoOfRecordings = 0; // this needs a comment (what, why)
+        private bool deleteLast = false; // this needs a comment (what, why)
 
-        public bool canCollect;
+        public bool canCollect; // this needs a comment (what, why)
 
-        public int listNo;
+        public int listNo; // this needs a comment (what, why)
+
+        /// <summary>
+        /// Specifies a subfolder to save the training examples
+        /// </summary>
+        public string SubFolderDataPath;
 
         #endregion
 
         #region XNode Messages
 
-        
+
 
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
@@ -220,6 +225,16 @@ namespace InteractML
                 // Exit any further checks to avoid unwanted disconnections
                 return;
             }
+            if (to.fieldName == "SubFolderDataPathStringPort")
+            {
+                // check incoming node type and port data type is accepted by input port
+                System.Type[] portTypesAccept = new System.Type[] { typeof(string) };
+                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IMLNode) };
+                this.DisconnectPortAndNodeIfANYTypes(from, to, portTypesAccept, nodeTypesAccept);
+                // Exit any further checks to avoid unwanted disconnections
+                return;
+            }
+
 
 
             // If there is a connection in one of the features ports...
@@ -497,6 +512,8 @@ namespace InteractML
             this.GetOrCreateDynamicPort("ToggleRecordingInputBoolPort", typeof(bool), NodePort.IO.Input, ConnectionType.Override, TypeConstraint.Inherited);
             // DeleteAllExamplesBoolPort
             this.GetOrCreateDynamicPort("DeleteAllExamplesBoolPort", typeof(bool), NodePort.IO.Input, ConnectionType.Override, TypeConstraint.Inherited);
+            // SubFolderDataPathStringPort
+            this.GetOrCreateDynamicPort("SubFolderDataPathStringPort", typeof(string), NodePort.IO.Input, ConnectionType.Override, TypeConstraint.Inherited);
 
         }
 
@@ -576,6 +593,9 @@ namespace InteractML
                 IMLEventDispatcher.ToggleRecordCallback(this.id);
             if (GetInputValue<bool>("DeleteAllExamplesBoolPort"))
                 IMLEventDispatcher.DeleteAllCallback(this.id);
+            // Pull input from string subfolderDataPath nodeport
+            SubFolderDataPath = GetInputValue<string>("SubFolderDataPathStringPort");
+            // Attempt to load data
             if (m_TrainingExamplesVector.Count == 0 && m_TrainingSeriesCollection.Count == 0)
             {
                 LoadDataFromDisk();
