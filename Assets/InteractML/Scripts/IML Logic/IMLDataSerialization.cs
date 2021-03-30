@@ -472,6 +472,16 @@ namespace InteractML
         /// <param name="fileName"></param>
         private static void SetUpFileNamesAndPaths(string fileName)
         {
+            string folderInFileName = "";
+            // If the file name contains any folders...
+            if (fileName.Contains("/"))
+            {
+                // Get folder(s) names
+                folderInFileName = Path.GetDirectoryName(fileName);
+                // Remove folder(s) from fileName
+                fileName = Path.GetFileName(fileName);
+            }
+
             // Set up file extension type
             m_FileExtension = ".json";
 
@@ -482,6 +492,14 @@ namespace InteractML
             // Set up training Examples subfolder 
             m_SubFolderTrainingSetPathName = m_FolderDataPathName + "/Training_Examples";
             m_SubFolderModelPathName = m_FolderDataPathName + "/Models";
+            // If the fileName included desired subfolders...
+            if (!String.IsNullOrEmpty(folderInFileName)) 
+            {
+                // ONLY AFFECTING LOCATION OF TRAINING SET FOR THE MOMENT
+                // Add the folders to the m_SubFolderTrainingSetPathName
+                m_SubFolderTrainingSetPathName = string.Concat(m_SubFolderTrainingSetPathName, "/", folderInFileName);
+            }
+
 
             m_AppDataPath = "";
 #if UNITY_STANDALONE || UNITY_EDITOR
@@ -525,6 +543,9 @@ namespace InteractML
                 Directory.CreateDirectory(subFolderPath);
             }
 
+            // Make sure the default folderDataPath name is reset to default (in case there has been any changes)
+            m_FolderDataPathName = m_DefaultFolderDataPathName;
+
             return subFolderPath;
         }
 
@@ -550,6 +571,9 @@ namespace InteractML
                 // If there is not, we create it
                 Directory.CreateDirectory(subFolderPath);
             }
+
+            // Make sure the default folderDataPath name is reset to default (in case there has been any changes)
+            m_FolderDataPathName = m_DefaultFolderDataPathName;
 
             return subFolderPath;
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 using XNode;
 using System.Linq;
 using ReusableMethods;
+using System;
 
 namespace InteractML
 {
@@ -1013,6 +1014,11 @@ namespace InteractML
             if(this.graph != null)
             {
                 string fileName = "TrainingExamplesNode" + this.id;
+                
+                // If we have a subfolder specified for the data...
+                if (!String.IsNullOrEmpty(SubFolderDataPath))
+                    fileName = String.Concat(SubFolderDataPath, "/", fileName);
+                
                 return fileName;
             }
             return null;
