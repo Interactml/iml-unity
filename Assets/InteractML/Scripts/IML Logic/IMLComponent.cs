@@ -436,7 +436,11 @@ namespace InteractML
             if(transform.childCount == 0 && icon == null)
             {
                 icon = GameObject.Instantiate(Resources.Load("Prefabs/IMLIcon") as GameObject, this.transform).GetComponent<IMLGrab>();
-                icon.graph = this;
+                // avoiding null reference error in case the icon didn't load from resources
+                if (icon != null && icon.graph != null)
+                    icon.graph = this;
+                else
+                    Debug.LogWarning("Failed to load Prefabs/IMLIcon in IMLComponent.InitializeIMLIndicator()");
             }
             if (icon == null)
             {
