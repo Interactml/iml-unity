@@ -1620,6 +1620,26 @@ namespace InteractML
             return success;
         }
 
+        /// <summary>
+        /// Stops collecting examples on all the training examples nodes (to be called when leaving or entering a scene)
+        /// </summary>
+        public void StopAllCollectingExamples()
+        {
+            // Avoid null or empty errors
+            if (m_TrainingExamplesNodesList == null || m_TrainingExamplesNodesList.Count == 0)
+                return;
+
+            // Iterate all training examples nodes
+            foreach (var trainingExamplesNode in m_TrainingExamplesNodesList)
+            {
+                // Only stop it if it is collecting data
+                if (trainingExamplesNode.CollectingData)
+                {
+                    trainingExamplesNode.StopCollecting();
+                }
+            }
+        }
+
         [ContextMenu("Delete All Models")]
         public void DeleteAllModels()
         {

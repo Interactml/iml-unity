@@ -205,6 +205,7 @@ public class IMLEditorManager
     /// </summary>
     private static void ClearIMLComponents()
     {
+        // Clear private list
         m_IMLComponents.Clear();
     }
 
