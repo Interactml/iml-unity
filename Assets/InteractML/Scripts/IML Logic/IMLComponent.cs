@@ -233,7 +233,10 @@ namespace InteractML
         // On Destroy gets called before the component is removed
         private void OnDestroy()
         {
-            // We unsubscribe the component form the editor manager to avoid messing up with the list
+            // Stop running all models and stop collecting examples (if any)
+            StopAllModels();
+            StopAllCollectingExamples();
+            // We unsubscribe the component from the editor manager to avoid messing up with the list
             IMLEditorManager.UnsubscribeIMLComponent(this);
             //Unsubscribe this from the event dispatcher 
             UnsubscribeToDelegates();
