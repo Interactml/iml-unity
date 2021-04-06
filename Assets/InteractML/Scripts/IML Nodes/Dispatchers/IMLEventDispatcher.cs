@@ -106,11 +106,18 @@ namespace InteractML
 
         // delete traiing examples events
         /// <summary>
-        /// Event for deleting the last examples
+        /// Event for deleting the training examples from one node
         /// </summary>
         /// <param name="nodeID"></param>
         /// <returns></returns>
-        public static IMLEvent DeleteAllCallback;
+        public static IMLEvent DeleteAllExamplesInNodeCallback;
+        
+        
+        public delegate bool DeleteAllTrainingExamplesEvent();
+        /// <summary>
+        /// Deletes all the training exemples in the graph
+        /// </summary>
+        public static DeleteAllTrainingExamplesEvent DeleteAllTrainingExamplesInGraphCallback;
 
         /// <summary>
         /// 

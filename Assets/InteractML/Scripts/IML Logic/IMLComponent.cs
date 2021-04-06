@@ -470,7 +470,8 @@ namespace InteractML
             IMLEventDispatcher.ToggleRecordCallback += ToggleRecording;
             IMLEventDispatcher.StartRecordCallback += StartRecording;
             IMLEventDispatcher.StopRecordCallback += StopRecording;
-            IMLEventDispatcher.DeleteAllCallback += DeleteAllTrainingExamples;
+            IMLEventDispatcher.DeleteAllExamplesInNodeCallback += DeleteAllTrainingExamplesInNode;
+            IMLEventDispatcher.DeleteAllTrainingExamplesInGraphCallback += DeleteAllTrainingExamplesInGraph;
             // IMLEventDispatcher.DeleteLastCallback +=
         }
         /// <summary>
@@ -490,7 +491,8 @@ namespace InteractML
             IMLEventDispatcher.ToggleRecordCallback -= ToggleRecording;
             IMLEventDispatcher.StartRecordCallback -= StartRecording;
             IMLEventDispatcher.StopRecordCallback -= StopRecording;
-            IMLEventDispatcher.DeleteAllCallback -= DeleteAllTrainingExamples;
+            IMLEventDispatcher.DeleteAllExamplesInNodeCallback -= DeleteAllTrainingExamplesInNode;
+            IMLEventDispatcher.DeleteAllTrainingExamplesInGraphCallback -= DeleteAllTrainingExamplesInGraph;
         }
         /// <summary>
         /// Checks if an IMLController is owned and properly updates it when needed
@@ -2372,7 +2374,7 @@ namespace InteractML
         /// Delete all training exmples for delefate
         /// </summary>
         /// <param name="nodeID">nodeID of the training examples to delete</param>
-        private bool DeleteAllTrainingExamples(string nodeID)
+        private bool DeleteAllTrainingExamplesInNode(string nodeID)
         {
             Debug.Log(nodeID);
             foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
@@ -2384,6 +2386,17 @@ namespace InteractML
                 }
             }
             return true;
+        }
+
+        private bool DeleteAllTrainingExamplesInGraph()
+        {
+            foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
+            {                
+                // clear training examples from this node 
+                TENode.ClearTrainingExamples();
+            }
+            return true;
+
         }
 
         private void EnableUniversalInterface(bool value)
