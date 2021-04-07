@@ -1067,10 +1067,46 @@ namespace InteractML
                                     // If we found a matching script...
                                     if (scriptToAdd != null)
                                     {
-                                        // We add that script to our scriptNode (if it is not null)                                
-                                        m_ScriptNodesList[i].SetScript(scriptToAdd);
-                                        // Add it to the dictionary as well    
-                                        m_MonoBehavioursPerScriptNode.Add(scriptToAdd, m_ScriptNodesList[i]);
+                                        bool rogueNodeFound = false;
+                                        // Check if the script is already present in the dictionary with a matching scriptnode, if it is, maybe our found scriptNode is a duplicate rogue
+                                        while (m_MonoBehavioursPerScriptNode.Contains(scriptToAdd))
+                                        {
+                                            // Check if that entry has a corresponding not null scriptnode
+                                            ScriptNode auxScriptNode = null;
+                                            m_MonoBehavioursPerScriptNode.TryGetValue(scriptToAdd, out auxScriptNode);
+                                            // If the matching node in dict is null, it might be a corrupted entry
+                                            if (auxScriptNode == null)
+                                            {
+                                                // Remove corrupted entry
+                                                m_MonoBehavioursPerScriptNode.Remove(scriptToAdd);
+                                            }
+                                            // If the matching node is not null, then our scriptToAdd is in a healthy node and we have a rogue node. Exit while loop
+                                            else
+                                            {
+                                                // we are dealing with a rogue scriptNode reference right now, mark it
+                                                rogueNodeFound = true;
+                                                break; // exit while loop
+                                            }
+                                        }
+
+                                        // If we are dealing with a rogue Node (a node that shouldn't have been created)...
+                                        if (rogueNodeFound)
+                                        {
+                                            // We need to remove this node from the list
+                                            m_ScriptNodesList.RemoveAt(i);
+                                            // Adjust index
+                                            i--;
+                                            continue; // skip to next entry
+                                        }
+                                        // If it is a healthy but lonely node...
+                                        else
+                                        {
+                                            // We add that script to our scriptNode (if it is not null)                                
+                                            m_ScriptNodesList[i].SetScript(scriptToAdd);
+                                            // Add it to the dictionary as well, unless it is already present    
+                                            m_MonoBehavioursPerScriptNode.Add(scriptToAdd, m_ScriptNodesList[i]);
+
+                                        }
                                     }
                                 }
                             }
@@ -1149,6 +1185,24 @@ namespace InteractML
                 else
                 {
                     m_MonoBehavioursPerScriptNode.TryGetValue(IMLGameComponentContainer.GameComponent, out scriptNode);
+                    // If the returned node is null...
+                    if (scriptNode == null)
+                    {
+                        // The corresponding scriptnode was deleted for some reason. Attempt a repair
+                        scriptNode = graph.AddNode<ScriptNode>();
+                        scriptNode.SetScript(gameComponent);
+                        // Reset the entry in dictionary
+                        while (m_MonoBehavioursPerScriptNode.Contains(gameComponent))
+                        {
+                            ScriptNode scriptNodeToDelete = null;
+                            m_MonoBehavioursPerScriptNode.TryGetValue(gameComponent, out scriptNodeToDelete);
+                            if (scriptNodeToDelete != null)
+                                graph.RemoveNode(scriptNodeToDelete);
+                            m_MonoBehavioursPerScriptNode.Remove(gameComponent);
+
+                        }
+                        m_MonoBehavioursPerScriptNode.Add(gameComponent, scriptNode);
+                    }
                 }
 
                 // Update ports if required
@@ -1207,7 +1261,11 @@ namespace InteractML
             for (int i = 0; i < m_GameObjectNodeList.Count; i++)
             {
                 var goNode = m_GameObjectNodeList[i];
-                // We are going to check node name to see if it matches one of the gameObjects to use in the scene
+                // Skip to next entry if current is null!
+                if (goNode == null)
+                    continue;
+
+                // Check node name to see if it matches one of the gameObjects to use in the scene
                 foreach (var go in GameObjectsToUse)
                 {
                     string goName = go.name + " (GameObject)";
@@ -1232,8 +1290,18 @@ namespace InteractML
                                 
                                 if (auxGONode == null)
                                 {
-                                    // Add GO, GONode pair to dictionary since there is not one present
-                                    m_GOsPerGONodes.Add(go, goNode);
+                                    // Maybe there is an entry corrupted in the dictionary, attempt a repair
+                                    while (m_GOsPerGONodes.Contains(go))
+                                    {
+                                        m_GOsPerGONodes.TryGetValue(go, out auxGONode);
+                                        if (auxGONode == null)
+                                            m_GOsPerGONodes.Remove(go);
+                                        else
+                                            break;
+                                    }
+                                    if (auxGONode == null)
+                                        // Add GO, GONode pair to dictionary since there is not one present
+                                        m_GOsPerGONodes.Add(go, goNode);
                                 }
                                 // If the found goNode in dictionary doesn't match our recycled node...
                                 if (auxGONode != null && !auxGONode.Equals(goNode))
@@ -1280,6 +1348,10 @@ namespace InteractML
             for (int i = 0; i < m_ScriptNodesList.Count; i++)
             {
                 var scriptNode = m_ScriptNodesList[i];
+                // Continue to next entry if current is null!
+                if (scriptNode == null)
+                    continue;
+
                 // We are going to check  he existing script name in the scriptNode to see if it matches one of the scripts to use in the scene
                 foreach (IMLMonoBehaviourContainer scriptContainer in ComponentsWithIMLData)
                 {
