@@ -72,6 +72,7 @@ namespace InteractML
                     }
                 } else
                 {
+                    // If not, InteractML files are in default location
                     m_AppDataPath = Application.dataPath;
                 }
                 
