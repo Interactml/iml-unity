@@ -70,7 +70,12 @@ namespace InteractML
                         // If not, InteractML files are in default location
                         m_AppDataPath = Application.dataPath;
                     }
+                } else
+                {
+                    // If not, InteractML files are in default location
+                    m_AppDataPath = Application.dataPath;
                 }
+                
 #elif UNITY_STANDALONE
                 m_AppDataPath = Application.dataPath;
 #elif UNITY_ANDROID
