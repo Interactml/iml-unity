@@ -199,7 +199,7 @@ namespace InteractML
             }
             if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Train")))
             {
-                IMLEventDispatcher.TrainMLSCallback(m_MLSystem.id);
+                IMLEventDispatcher.TrainMLSCallback?.Invoke(m_MLSystem.id);
             }
 
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
@@ -213,7 +213,7 @@ namespace InteractML
                 }
                 else
                 {
-                    TooltipText = m_MLSystem.tooltips.BodyTooltip.Error[0];
+                    //TooltipText = m_MLSystem.tooltips.BodyTooltip.Error[0];
                 }
             }
             else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))

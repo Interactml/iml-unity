@@ -215,7 +215,7 @@ namespace InteractML
         /// </summary>
         public bool error = false;
 
-        public bool trainOnLoad = false;
+        public bool trainOnLoad = true;
 
         protected bool  isKNN;
 
@@ -1966,32 +1966,6 @@ namespace InteractML
             //Debug.Log(Trained);
             //Debug.Log(m_trainingType);
             //Debug.Log(m_Model.TypeOfModel);
-
-            //set errors for ui
-            //UIErrors();
-            //Set Learning Type 
-            //SetLearningType();
-
-            //if (Trained && !matchVectorLength)
-            //CheckLengthInputsVector();
-
-
-            //Check if live data input matches training examples 
-            //CheckLiveDataInputMatchesTrainingExamples();
-
-            // Update Input Config List
-            //UpdateInputConfigList();
-
-            // Update Output Config List from Training Examples Node
-            //UpdateOutputConfigList();
-
-            // Update Number of Training Examples Connected
-            //UpdateTotalNumberTrainingExamples();
-
-            // Make sure that current output format matches the expected output format
-            //UpdateOutputFormat();
-
-            // Make sure dynamic output ports match the expected output format
             
             //UpdateDynamicOutputPorts(IMLTrainingExamplesNodes, m_ExpectedOutputList, ref m_DynamicOutputPorts);
             // Pull inputs from bool event nodeports
@@ -2003,27 +1977,23 @@ namespace InteractML
             // Perform running logic (it will account for DTW and Classification/Regression) only if there is a predicted output            
             RunningLogic();
 
-            /*Debug.Log(IMLTrainingExamplesNodes.Count);
-            Debug.Log(m_ExpectedOutputList.Count);
-            Debug.Log(m_DynamicOutputPorts.Count);*/
-            
-            // Update feature selection matrix
-            // TO DO
-           /* Debug.Log("expected output" + m_ExpectedOutputList.Count);
-            Debug.Log("predicted rap lib output" + PredictedRapidlibOutput.Length);
-            Debug.Log("predicted output" + PredictedOutput.Count);*/
-            // TO DO add some logic
-            //UpdateRapidLibOutputVector();
-
         }
 
         private bool LoadOrTrain()
         {
             ResetModel();
-
-            if (Model.TypeOfModel == RapidlibModel.ModelType.DTW && trainOnLoad)
+            Debug.Log(trainOnLoad);
+            Debug.Log(Model.TypeOfModel);
+            if (Model.TypeOfModel == RapidlibModel.ModelType.DTW)
             {
-                return TrainModel();
+                if (NumExamplesTrainedOn > 0)
+                {
+                    return TrainModel();
+                } else
+                {
+                    return true;
+                }
+                
 
             } else if(Model.TypeOfModel == RapidlibModel.ModelType.NeuralNetwork || Model.TypeOfModel == RapidlibModel.ModelType.kNN)  
             {
