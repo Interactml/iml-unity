@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.InputSystem;
 
 namespace InteractML

@@ -69,6 +69,7 @@ namespace InteractML.ControllerCustomisers
 
         public void OnDestroy()
         {
+            Debug.Log("here");
             var MLController = graph as IMLGraph;
             if (MLController.SceneComponent != null)
             {
