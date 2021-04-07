@@ -136,14 +136,15 @@ namespace InteractML
                 m_BodyRect.x = 5;
                 m_BodyRect.y = HeaderRect.height + m_PortRect.height;
                 m_BodyRect.width = NodeWidth - 10;
-                // height is the base node height plus the number of inputs/targets 
-                m_BodyRect.height = baseNodeBodyHeight + ((m_ConnectedInputs + m_ConnectedTargets) * 80);
+                // height is the base node height plus the number of inputs/targets + extra offset after moving buttons with nodeports out of begin area
+                m_BodyRect.height = baseNodeBodyHeight + ((m_ConnectedInputs + m_ConnectedTargets) * 80) + 225;
                 // if showing warning increase height 
                 if (m_TrainingExamplesNode.showWarning)
                 {
                     m_BodyRect.height += 60;
                 }
-                nodeSpace = m_BodyRect.height + 50;
+                // NodeSpace makes the node longer/shorter if there is extra space needed or lacking at the end of the node
+                nodeSpace = m_BodyRect.height * 0.4f;
             }
         }
         /// <summary>
@@ -151,15 +152,19 @@ namespace InteractML
         /// </summary>
         protected override void ShowBodyFields()
         {
+            GUILayout.Space(bodySpace);
+
             // ShowButtons needs to be called outside of the BeginArea in order for the button nodeports to work
             ShowButtons();
 
-            GUILayout.BeginArea(m_BodyRect);
-
+            // Moved the draw values out of begin area to draw them after showbuttons and not on top
             GUILayout.Space(bodySpace);
             DrawValues(m_TrainingExamplesNode.DesiredInputFeatures, "Input Values");
             GUILayout.Space(bodySpace);
             DrawValues(m_TrainingExamplesNode.DesiredOutputFeatures, "Target Values");
+
+            GUILayout.BeginArea(m_BodyRect);
+
             
             //show warning if there are training examples 
             if (m_TrainingExamplesNode.showWarning)
@@ -169,8 +174,10 @@ namespace InteractML
                 m_RecalculateRects = true;
             }
             GUILayout.EndArea();
+            
             // Added an option to specify a subfolder to save/load the data
             ShowSubFolderDataField();
+
             ShowTrainingExamplesDropdown();
         }
 
@@ -399,7 +406,7 @@ namespace InteractML
 
         private void ShowButtons()
         {
-            int offset = 40;
+            int offset = 20;
             GUILayout.Space(20);
 
             // show record ONE example button
@@ -730,7 +737,7 @@ namespace InteractML
             GUILayout.BeginHorizontal();
             // Draw port
             IMLNodeEditor.PortField(m_ButtonPortLabel, m_PortSubFolderDataPath, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
-            GUILayout.Space(40);
+            GUILayout.Space(15);
             EditorGUILayout.LabelField("SubFolder Data Path");
             m_TrainingExamplesNode.SubFolderDataPath = EditorGUILayout.TextField(m_TrainingExamplesNode.SubFolderDataPath);
             GUILayout.EndHorizontal();
