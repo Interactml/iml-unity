@@ -80,7 +80,21 @@ namespace InteractML.DataTypeNodes
         /// <summary>
         // Field to store input value from editable field when nothing is connected to input port
         /// </summary>
-        public IMLBaseDataType UserInput { get; set; }
+        public IMLBaseDataType UserInput {
+            get
+            {
+                if (m_UserInput == null)
+                {
+                    Debug.LogError($"User Input from {this.name} is null! Returning default values...");
+                    return IMLBaseDataType.GetDataTypeInstance(typeof(T));
+                }
+                else
+                {
+                    return m_UserInput;
+                }
+            }
+            set { m_UserInput = value; } }
+        private IMLBaseDataType m_UserInput;
 
         /// <summary>
         // IMLFeature variables
