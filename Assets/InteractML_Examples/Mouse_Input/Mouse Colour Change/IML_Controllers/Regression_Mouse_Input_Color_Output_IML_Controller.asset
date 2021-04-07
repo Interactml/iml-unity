@@ -51,8 +51,9 @@ MonoBehaviour:
   m_Value: 0
   m_Out: 0
   ReceivingData: 0
+  FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 0
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -96,9 +97,8 @@ MonoBehaviour:
   id: 422cc719-c83d-4548-811e-3e9557a924e8
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  GameObjMissing: 0
   state: 1
-  GOHashCode: 15744
+  GOHashCode: 16474
   CreatedDuringPlaymode: 0
 --- !u!114 &-6267761647402259264
 MonoBehaviour:
@@ -147,8 +147,8 @@ MonoBehaviour:
   id: eabcb99f-25ae-408c-979b-bc78f618fc52
   numberInComponentList: -1
   ReceivingData: 0
-  FeatureValueReceivingData: 010101
-  Counter: 0
+  FeatureValueReceivingData: 000000
+  Counter: 5
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -158,8 +158,8 @@ MonoBehaviour:
   GameObjInputMissing: 1
   m_PositionExtracted:
     m_Values:
-    - 35.6
-    - -11.2
+    - -16.6
+    - 2.07
     - 0
 --- !u!114 &-4567322012494782378
 MonoBehaviour:
@@ -209,8 +209,9 @@ MonoBehaviour:
   m_Value: 0
   m_Out: 0
   ReceivingData: 0
+  FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 0
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -290,8 +291,9 @@ MonoBehaviour:
   m_Value: 0
   m_Out: 0
   ReceivingData: 0
+  FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 0
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -323,7 +325,6 @@ MonoBehaviour:
   - {fileID: 4113153438833120164}
   - {fileID: 5196100462732241058}
   - {fileID: -8747729476039928021}
-  - {fileID: 0}
   SceneComponent: {fileID: 0}
 --- !u!114 &1841612058189453493
 MonoBehaviour:
@@ -373,8 +374,9 @@ MonoBehaviour:
   m_Value: 0
   m_Out: 0
   ReceivingData: 0
+  FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 0
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -473,9 +475,18 @@ MonoBehaviour:
   id: 53949355-7c79-485c-9447-e419d17d0dd8
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 15794
+  ScriptHashCode: 16522
   m_PortsPerFieldInfo:
-    m_keys: []
+    m_keys:
+    - _fieldName: RGBColour
+      _node: {fileID: 4113153438833120164}
+      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   CreatedDuringPlaymode: 0
 --- !u!114 &5092278411087661957
 MonoBehaviour:
@@ -523,8 +534,8 @@ MonoBehaviour:
   id: ef03f6b0-90b5-4a64-8537-b44159b176c1
   numberInComponentList: -1
   ReceivingData: 0
-  FeatureValueReceivingData: 010101
-  Counter: 0
+  FeatureValueReceivingData: 000000
+  Counter: 5
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -534,8 +545,8 @@ MonoBehaviour:
   GameObjInputMissing: 1
   m_PositionExtracted:
     m_Values:
-    - 35.6
-    - -11.2
+    - -16.6
+    - 2.07
     - 0
 --- !u!114 &5196100462732241058
 MonoBehaviour:
@@ -585,8 +596,9 @@ MonoBehaviour:
   m_Value: 0
   m_Out: 0
   ReceivingData: 0
+  FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 0
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -642,8 +654,9 @@ MonoBehaviour:
   m_Value: 0
   m_Out: 0
   ReceivingData: 0
+  FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 0
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -789,7 +802,7 @@ MonoBehaviour:
   - 0
   - -0.11232991752434973
   - 0.16687193177643145
-  m_NumExamplesTrainedOn: 5
+  m_NumExamplesTrainedOn: 0
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 000000000000000000000000
   m_trainingType: 0
@@ -801,7 +814,7 @@ MonoBehaviour:
   RunOnAwake: 1
   matchLiveDataInputs: 1
   matchVectorLength: 1
-  warning: Live data in does not match the trained examples
+  warning: You are in edit mode live data in from objects will only workin play mode
   error: 1
   trainOnLoad: 0
 --- !u!114 &7294438029271661948
@@ -953,8 +966,6 @@ MonoBehaviour:
   DeleteAllInputBool: 0
   TrainingExamplesNodeToOutput: {fileID: 7294438029271661948}
   ModeOfCollection: 0
-  TrainingExamplesVector: []
-  TrainingSeriesCollection: []
   m_DesiredInputsConfig: 03000000
   m_DesiredOutputsConfig: 000000000000000000000000
   MLSystemNodesConnected:
@@ -964,6 +975,6 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 0
-  showWarning: 1
+  showWarning: 0
   canCollect: 1
   listNo: 0
