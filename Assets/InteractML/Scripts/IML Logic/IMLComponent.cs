@@ -2635,12 +2635,12 @@ namespace InteractML
             return true;
         }
 
-        private bool DeleteAllTrainingExamplesInGraph()
+        private bool DeleteAllTrainingExamplesInGraph(bool deleteFromDisk = true)
         {
             foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
             {                
                 // clear training examples from this node 
-                TENode.ClearTrainingExamples();
+                TENode.ClearTrainingExamples(deleteFromDisk: deleteFromDisk);
             }
             return true;
 

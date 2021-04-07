@@ -609,7 +609,7 @@ namespace InteractML
         /// <summary>
         /// Clears all the training examples stored in the node
         /// </summary>
-        public virtual void ClearTrainingExamples()
+        public virtual void ClearTrainingExamples(bool deleteFromDisk = true)
         {
             Debug.Log("here");
             // Account for mode
@@ -626,8 +626,10 @@ namespace InteractML
                 default:
                     break;
             }
-            // clear data on disk
-            SaveDataToDisk();
+            
+            if (deleteFromDisk)
+                // clear data on disk
+                SaveDataToDisk();
             //set false to show warning about training 
             CheckWarning();
             //Update MLsystems connected with new number of training data 
