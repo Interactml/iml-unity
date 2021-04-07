@@ -305,7 +305,7 @@ namespace InteractML.CustomControllers
         public void SubscribeToEvents()
         {
            // DeleteLast.ButtonFire += IMLEventDispatcher.DeleteLastCallback;
-            DeleteAll.ButtonFire += IMLEventDispatcher.DeleteAllCallback;
+            DeleteAll.ButtonFire += IMLEventDispatcher.DeleteAllExamplesInNodeCallback;
             RecordOne.ButtonFire += IMLEventDispatcher.RecordOneCallback;
             ToggleRecord.ButtonFire += IMLEventDispatcher.ToggleRecordCallback;
             Train.ButtonFire += IMLEventDispatcher.TrainMLSCallback;
@@ -333,7 +333,7 @@ namespace InteractML.CustomControllers
         public void UnsubscribeFromEvents()
         {
             //DeleteLast.ButtonFire -= IMLEventDispatcher.DeleteLastCallback;
-            DeleteAll.ButtonFire -= IMLEventDispatcher.DeleteAllCallback;
+            DeleteAll.ButtonFire -= IMLEventDispatcher.DeleteAllExamplesInNodeCallback;
             ToggleRecord.ButtonFire -= IMLEventDispatcher.ToggleRecordCallback;
             RecordOne.ButtonFire -= IMLEventDispatcher.RecordOneCallback;
             Train.ButtonFire -= IMLEventDispatcher.TrainMLSCallback;

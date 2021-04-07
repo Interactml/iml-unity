@@ -316,7 +316,12 @@ namespace InteractML
                 }
             }
 
-            InitializeIMLIndicator();
+            InitializeIMLIndicator(); 
+
+            // In case the user is reusing the same IML graph (with the same number of GO or Script nodes) in more than one scene
+            // We need to make sure that we are reusing the correct GameObjectNodes and ScriptNodes
+            TryRecycleGameObjectNodes();
+            TryRecycleScriptNodes();
 
             // commented to fix opening window problem - delete when sure this has not caused issues 
             // Inject GameObjects to GameObject nodes
@@ -470,7 +475,8 @@ namespace InteractML
             IMLEventDispatcher.ToggleRecordCallback += ToggleRecording;
             IMLEventDispatcher.StartRecordCallback += StartRecording;
             IMLEventDispatcher.StopRecordCallback += StopRecording;
-            IMLEventDispatcher.DeleteAllCallback += DeleteAllTrainingExamples;
+            IMLEventDispatcher.DeleteAllExamplesInNodeCallback += DeleteAllTrainingExamplesInNode;
+            IMLEventDispatcher.DeleteAllTrainingExamplesInGraphCallback += DeleteAllTrainingExamplesInGraph;
             // IMLEventDispatcher.DeleteLastCallback +=
         }
         /// <summary>
@@ -490,7 +496,8 @@ namespace InteractML
             IMLEventDispatcher.ToggleRecordCallback -= ToggleRecording;
             IMLEventDispatcher.StartRecordCallback -= StartRecording;
             IMLEventDispatcher.StopRecordCallback -= StopRecording;
-            IMLEventDispatcher.DeleteAllCallback -= DeleteAllTrainingExamples;
+            IMLEventDispatcher.DeleteAllExamplesInNodeCallback -= DeleteAllTrainingExamplesInNode;
+            IMLEventDispatcher.DeleteAllTrainingExamplesInGraphCallback -= DeleteAllTrainingExamplesInGraph;
         }
         /// <summary>
         /// Checks if an IMLController is owned and properly updates it when needed
@@ -891,7 +898,8 @@ namespace InteractML
                     continue;
                 }
 
-                if(m_GOsPerGONodes.Count > m_GameObjectNodeList.Count)
+                // Check if any go NODE entry of the dictionary is NOT contain in one of our goNodes, and then remove those wrong entries (cleanup of wrong entries in dictionary)
+                if (m_GOsPerGONodes.Count > m_GameObjectNodeList.Count)
                 {
                     // Create copy of dictionary to evaluate
                     var goPerGONodesCopy = new GOPerGONodeDictionary();
@@ -1174,9 +1182,157 @@ namespace InteractML
 
         }
 
-#endregion
+        /// <summary>
+        /// Tries to reuse GameObject Nodes (in case the same graph is used in more than one scene)
+        /// </summary>
+        private void TryRecycleGameObjectNodes()
+        {
+            // Don't do anything if there are no gameObjects from the scene to use
+            if (GameObjectsToUse == null || GameObjectsToUse.Count == 0)
+            {
+                return;
+            }
 
-#region Public Methods
+            // Make sure dictionary is init
+            if (m_GOsPerGONodes == null)
+                m_GOsPerGONodes = new GOPerGONodeDictionary();
+            // If we don't have any GO nodes found, we can't recycle anything
+            if (m_GameObjectNodeList == null)
+            {
+                m_GameObjectNodeList = new List<GameObjectNode>();
+                return; // stop here because we can't recycle nodes if there are none!
+            }
+
+            // Go through every gameObject node, seeing if we can recycle it
+            for (int i = 0; i < m_GameObjectNodeList.Count; i++)
+            {
+                var goNode = m_GameObjectNodeList[i];
+                // We are going to check node name to see if it matches one of the gameObjects to use in the scene
+                foreach (var go in GameObjectsToUse)
+                {
+                    string goName = go.name + " (GameObject)";
+                    if (goName.Equals(goNode.name))
+                    {
+                        // We found a match (by name), check if the go instances are not the same (we are double recycling)
+                        if (goNode.GetHashCode().Equals(go.GetHashCode()))
+                        {
+                            // We have already recycled this gameObject! Skip to next gameObject
+                            continue;
+                        }
+                        else
+                        {
+                            // We can recycle this goNode
+                            goNode.SetGameObject(go);
+                            // Make sure that the pair GO, GONode is present in dictionary
+                            if (m_GOsPerGONodes.ContainsKey(go))
+                            {
+                                GameObjectNode auxGONode;
+                                // If there is already a gameobject key in dictionary, update its goNode key
+                                m_GOsPerGONodes.TryGetValue(go, out auxGONode);
+                                
+                                if (auxGONode == null)
+                                {
+                                    // Add GO, GONode pair to dictionary since there is not one present
+                                    m_GOsPerGONodes.Add(go, goNode);
+                                }
+                                // If the found goNode in dictionary doesn't match our recycled node...
+                                if (auxGONode != null && !auxGONode.Equals(goNode))
+                                {
+                                    // Override it
+                                    m_GOsPerGONodes.Remove(go);
+                                    m_GOsPerGONodes.Add(go, goNode);
+                                }
+                            }
+                            // Stop iterating
+                            break;
+
+                        }
+                    }
+                }
+                
+                // The foreach loop should have taken care of the recycling logic :)
+            }
+
+        }
+
+        /// <summary>
+        /// Tries to reuse Script Nodes (in case the same graph is used in more than one scene)
+        /// </summary>
+        private void TryRecycleScriptNodes()
+        {
+            // Don't do anything if there are no scripts from the scene to use
+            if (ComponentsWithIMLData == null || ComponentsWithIMLData.Count == 0)
+            {
+                return;
+            }
+            // Init dictionary if not init
+            if (m_MonoBehavioursPerScriptNode == null)
+                m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
+
+            // If we don't have any scripts nodes found, we can't recycle anything
+            if (m_ScriptNodesList == null)
+            {
+                m_ScriptNodesList = new List<ScriptNode>();
+                return; // stop here because we can't recycle nodes if there are none!
+            }
+
+            // Go through every script node, seeing if we can recycle it
+            for (int i = 0; i < m_ScriptNodesList.Count; i++)
+            {
+                var scriptNode = m_ScriptNodesList[i];
+                // We are going to check  he existing script name in the scriptNode to see if it matches one of the scripts to use in the scene
+                foreach (IMLMonoBehaviourContainer scriptContainer in ComponentsWithIMLData)
+                {
+                    string scriptName = scriptContainer.GameComponent.GetType().ToString() + " (Script)";
+                    if (scriptName.Equals(scriptNode.name))
+                    {
+                        // We found a match (by name), check if the script instances are not the same (we are double recycling)
+                        if (scriptNode.ScriptHashCode.Equals(scriptContainer.GetHashCode()))
+                        {
+                            // We have already recycled this gameObject! Skip to next gameObject
+                            continue;
+                        }
+                        else
+                        {
+                            // We can recycle this goNode
+                            scriptNode.SetScript(scriptContainer.GameComponent);
+                            // Make sure that the pair Script, ScriptNode is present in dictionary
+                            if (m_MonoBehavioursPerScriptNode.ContainsKey(scriptContainer.GameComponent))
+                            {
+                                ScriptNode auxScriptNode;
+                                // If there is already a script key in dictionary, update its scriptNode key
+                                m_MonoBehavioursPerScriptNode.TryGetValue(scriptContainer.GameComponent, out auxScriptNode);
+
+                                if (auxScriptNode == null)
+                                {
+                                    // Add script, scriptNode pair to dictionary since there is not one present
+                                    m_MonoBehavioursPerScriptNode.Add(scriptContainer.GameComponent, scriptNode);
+                                }
+                                // If the found scriptNode in dictionary doesn't match our recycled node...
+                                if (auxScriptNode != null && !auxScriptNode.Equals(scriptNode))
+                                {
+                                    // Override it
+                                    m_MonoBehavioursPerScriptNode.Remove(scriptContainer.GameComponent);
+                                    m_MonoBehavioursPerScriptNode.Add(scriptContainer.GameComponent, scriptNode);
+                                }
+                            }
+                            // Stop iterating
+                            break;
+
+                        }
+                    }
+                }
+
+                // The foreach loop should have taken care of the recycling logic :)
+            }
+
+
+
+        }
+
+        #endregion
+
+        #region Public Methods
 
         [ContextMenu("Clear Lists (Use in Case of null ref errors)")]
         public void ClearLists()
@@ -2372,7 +2528,7 @@ namespace InteractML
         /// Delete all training exmples for delefate
         /// </summary>
         /// <param name="nodeID">nodeID of the training examples to delete</param>
-        private bool DeleteAllTrainingExamples(string nodeID)
+        private bool DeleteAllTrainingExamplesInNode(string nodeID)
         {
             Debug.Log(nodeID);
             foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
@@ -2384,6 +2540,17 @@ namespace InteractML
                 }
             }
             return true;
+        }
+
+        private bool DeleteAllTrainingExamplesInGraph()
+        {
+            foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
+            {                
+                // clear training examples from this node 
+                TENode.ClearTrainingExamples();
+            }
+            return true;
+
         }
 
         private void EnableUniversalInterface(bool value)

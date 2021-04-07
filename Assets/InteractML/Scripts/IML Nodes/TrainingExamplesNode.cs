@@ -593,7 +593,7 @@ namespace InteractML
             if (GetInputValue<bool>("ToggleRecordingInputBoolPort"))
                 IMLEventDispatcher.ToggleRecordCallback(this.id);
             if (GetInputValue<bool>("DeleteAllExamplesBoolPort"))
-                IMLEventDispatcher.DeleteAllCallback(this.id);
+                IMLEventDispatcher.DeleteAllExamplesInNodeCallback(this.id);
             // Pull input from string subfolderDataPath nodeport
             SubFolderDataPath = GetInputValue<string>("SubFolderDataPathStringPort");
             // Attempt to load data
