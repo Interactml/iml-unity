@@ -34,7 +34,7 @@ public class IMLMonobehaviourDrawer : PropertyDrawer
         string goClassName = null;
         if (serializedScript != null)
         {
-            scriptClassName = serializedScript.GetType().ToString();
+            scriptClassName = serializedScript.GetType().Name;
             goClassName = serializedScript.name;
         }
         else

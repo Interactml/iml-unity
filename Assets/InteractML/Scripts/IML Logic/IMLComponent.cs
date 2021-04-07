@@ -1109,6 +1109,15 @@ namespace InteractML
                                         }
                                     }
                                 }
+                                // We are dealing with a rogue node if reaching here
+                                else
+                                {
+                                    // Remove null reference
+                                    m_ScriptNodesList.RemoveAt(i);
+                                    // Adjust index
+                                    i--;
+                                    continue;
+                                }
                             }
                         }
                     }
@@ -1355,7 +1364,7 @@ namespace InteractML
                 // We are going to check  he existing script name in the scriptNode to see if it matches one of the scripts to use in the scene
                 foreach (IMLMonoBehaviourContainer scriptContainer in ComponentsWithIMLData)
                 {
-                    string scriptName = scriptContainer.GameComponent.GetType().ToString() + " (Script)";
+                    string scriptName = scriptContainer.GameComponent.GetType().Name + " (Script)";
                     if (scriptName.Equals(scriptNode.name))
                     {
                         // We found a match (by name), check if the script instances are not the same (we are double recycling)
@@ -1377,8 +1386,20 @@ namespace InteractML
 
                                 if (auxScriptNode == null)
                                 {
-                                    // Add script, scriptNode pair to dictionary since there is not one present
-                                    m_MonoBehavioursPerScriptNode.Add(scriptContainer.GameComponent, scriptNode);
+                                    // There might be Corrupted data in dictionary, attempt a repair
+                                    while (m_MonoBehavioursPerScriptNode.Contains(scriptContainer.GameComponent))
+                                    {
+                                        m_MonoBehavioursPerScriptNode.TryGetValue(scriptContainer.GameComponent, out auxScriptNode);
+                                        if (auxScriptNode == null)
+                                            m_MonoBehavioursPerScriptNode.Remove(scriptContainer.GameComponent);
+                                        else
+                                            break;
+                                    }
+
+                                    // If after the repair, the dictionary didn't contain any healthy reference...
+                                    if (auxScriptNode == null) 
+                                        // Add script, scriptNode pair to dictionary since there is not one present
+                                        m_MonoBehavioursPerScriptNode.Add(scriptContainer.GameComponent, scriptNode);
                                 }
                                 // If the found scriptNode in dictionary doesn't match our recycled node...
                                 if (auxScriptNode != null && !auxScriptNode.Equals(scriptNode))
