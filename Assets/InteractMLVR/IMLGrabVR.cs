@@ -12,7 +12,7 @@ namespace InteractML
 
         public void Start()
         {
-            imlgrab.GetComponent<IMLGrab>();
+            imlgrab = GetComponent<IMLGrab>();
             onSelectEnter.AddListener(Selected);
         }
 

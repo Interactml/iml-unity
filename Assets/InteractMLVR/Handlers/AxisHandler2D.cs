@@ -11,9 +11,9 @@ namespace InteractML {
             Primary2DAxis,
             Secondary2DAxis
         }
-        
-        public XRController controller;
-        
+
+        private XRController controller;
+
         public delegate void ValueChange(XRController controller, Vector2 value);
         public event ValueChange OnValueChange;
 
@@ -21,8 +21,15 @@ namespace InteractML {
 
         private InputFeatureUsage<Vector2> inputFeature;
         private Vector2 previousValue = Vector2.zero;
+        [HideInInspector]
+        public RadialMenu innerMenu;
 
-        public RadialMenu innerMenu = null;
+        void Start()
+        {
+            controller = this.GetComponentInParent<XRController>();
+            innerMenu = this.GetComponent<RadialMenu>();
+        }
+        
         public void Update()
         {
             HandleState();
