@@ -876,7 +876,9 @@ namespace InteractML
             
             // Add the training example to the vector
             m_TrainingExamplesVector.Add(newExample);
-            SaveDataToDisk();
+            
+            // Commented this as it is slowing down released builds
+            //SaveDataToDisk();
             //update connected MLSystem node with no of training examples
             UpdateConnectMLSystems();
             
