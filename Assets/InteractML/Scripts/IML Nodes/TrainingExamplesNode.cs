@@ -817,16 +817,16 @@ namespace InteractML
         {
             if (m_CollectingData)
             {
-                Debug.Log("here1");
+                //Debug.Log("here1");
                 if (Application.isPlaying && m_TimeToStopCapture > 0 && Time.time >= m_TimeToStopCapture)
                 {
-                    Debug.Log("here2");
-                    Debug.Log("collecting false");
+                    //Debug.Log("here2");
+                    //Debug.Log("collecting false");
                     m_CollectingData = false;
                 }
                 else if (!Application.isPlaying || Time.time >= m_TimeToNextCapture)
                 {
-                    Debug.Log("here3");
+                    //Debug.Log("here3");
                     //check 
                     // We check which modality of collection is selected
                     switch (ModeOfCollection)
@@ -882,7 +882,7 @@ namespace InteractML
             //update connected MLSystem node with no of training examples
             UpdateConnectMLSystems();
             
-            Debug.Log("TrainingExamples Saved!");
+            //Debug.Log("TrainingExamples Saved!");
         }
 
         protected void AddInputsToSeries(List<Node> inputs, string label, ref IMLTrainingSeries series)
