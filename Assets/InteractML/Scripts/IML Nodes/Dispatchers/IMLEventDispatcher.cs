@@ -113,7 +113,7 @@ namespace InteractML
         public static IMLEvent DeleteAllExamplesInNodeCallback;
         
         
-        public delegate bool DeleteAllTrainingExamplesEvent();
+        public delegate bool DeleteAllTrainingExamplesEvent(bool deleteFromDisk);
         /// <summary>
         /// Deletes all the training exemples in the graph
         /// </summary>
