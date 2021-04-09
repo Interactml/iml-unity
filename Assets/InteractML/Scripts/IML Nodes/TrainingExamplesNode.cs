@@ -534,13 +534,13 @@ namespace InteractML
         /// <returns>boolean on whether we have started</returns>
         public bool StartCollecting()
         {
-            //Debug.Log("start-1");
+            Debug.Log("start-1");
             // Refresh the canCollect flag inside CheckSetUp to ensure that we can collect if needed
             CheckSetUp();
             // if the node is set up with input features and it is not currently collecting data start collecting data
             if (InputFeatures.Count > 0 && TargetValues.Count > 0 && !m_CollectingData && canCollect)
             {
-                //Debug.Log("start0");
+                Debug.Log("start0");
                 StartCollectingData();
                 return true;
             } else
@@ -817,12 +817,16 @@ namespace InteractML
         {
             if (m_CollectingData)
             {
+                //Debug.Log("here1");
                 if (Application.isPlaying && m_TimeToStopCapture > 0 && Time.time >= m_TimeToStopCapture)
                 {
+                    //Debug.Log("here2");
+                    //Debug.Log("collecting false");
                     m_CollectingData = false;
                 }
                 else if (!Application.isPlaying || Time.time >= m_TimeToNextCapture)
                 {
+                    //Debug.Log("here3");
                     //check 
                     // We check which modality of collection is selected
                     switch (ModeOfCollection)
@@ -872,11 +876,13 @@ namespace InteractML
             
             // Add the training example to the vector
             m_TrainingExamplesVector.Add(newExample);
-            SaveDataToDisk();
+            
+            // Commented this as it is slowing down released builds
+            //SaveDataToDisk();
             //update connected MLSystem node with no of training examples
             UpdateConnectMLSystems();
             
-            Debug.Log("TrainingExamples Saved!");
+            //Debug.Log("TrainingExamples Saved!");
         }
 
         protected void AddInputsToSeries(List<Node> inputs, string label, ref IMLTrainingSeries series)
@@ -928,9 +934,9 @@ namespace InteractML
         /// </summary>
         protected void StartCollectingData()
         {
-           // Debug.Log(m_CollectingData);
+            Debug.Log(m_CollectingData);
             m_CollectingData = true;
-            //Debug.Log(m_CollectingData);
+            Debug.Log(m_CollectingData);
             m_TimeToNextCapture = Time.time + StartDelay;
             if (RecordTime > 0)
             {
