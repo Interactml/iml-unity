@@ -1982,8 +1982,8 @@ namespace InteractML
         private bool LoadOrTrain()
         {
             ResetModel();
-            Debug.Log(trainOnLoad);
-            Debug.Log(Model.TypeOfModel);
+            //Debug.Log(trainOnLoad);
+            //Debug.Log(Model.TypeOfModel);
             if (Model.TypeOfModel == RapidlibModel.ModelType.DTW)
             {
                 if (NumExamplesTrainedOn > 0)

@@ -134,7 +134,7 @@ namespace InteractML
         private Dictionary<FieldInfo, IMLFieldInfoContainer> m_DataContainersPerFieldInfo;
         private Dictionary<FieldInfo, MonoBehaviour> m_DataMonobehavioursPerFieldInfo;
 
-        private bool universalInputEnabled = true;
+        private bool universalInputEnabled;
         [HideInInspector]
         public bool universalInputActive = false;
 
@@ -148,21 +148,19 @@ namespace InteractML
 
         void Reset()
         {
-            Debug.Log("reset");
             
         }
 
         private void OnEnable()
         {
-            Debug.Log("enable");
+
 #if !UNITY_EDITOR
             SubscribeToDelegates();
             Initialize();
 
 #endif
+            //InitializeIMLIndicator();
         }
-
-
 
         // Called when something changes in the scene
         private void OnValidate()
@@ -187,7 +185,7 @@ namespace InteractML
         // Awake is called before start
         private void Awake()
         {
-            Debug.Log("awake");
+            //Debug.Log("awake");
             // We use the scene managers to make sure we flush the ownership of the controller when the scene loads/unloads
 #if UNITY_EDITOR
             m_OurScene = EditorSceneManager.GetActiveScene();
@@ -206,6 +204,7 @@ namespace InteractML
                 // Run Models on Play if we are on a build
                 RunModelsOnPlay();
 #endif
+            
         }
 
         // Update is called once per frame
@@ -316,7 +315,7 @@ namespace InteractML
                 }
             }
 
-            InitializeIMLIndicator(); 
+            
 
             // In case the user is reusing the same IML graph (with the same number of GO or Script nodes) in more than one scene
             // We need to make sure that we are reusing the correct GameObjectNodes and ScriptNodes
@@ -440,8 +439,9 @@ namespace InteractML
 
         private void InitializeIMLIndicator()
         {
+            Debug.Log("icon initialize it");
             //comeback
-            if(transform.childCount == 0 && icon == null)
+            if (transform.childCount == 0 && icon == null)
             {
                 icon = GameObject.Instantiate(Resources.Load("Prefabs/IMLIcon") as GameObject, this.transform).GetComponent<IMLGrab>();
                 // avoiding null reference error in case the icon didn't load from resources
@@ -449,7 +449,7 @@ namespace InteractML
                     icon.graph = this;
                 else
                     Debug.LogWarning("Failed to load Prefabs/IMLIcon in IMLComponent.InitializeIMLIndicator()");
-            }
+            } 
             if (icon == null)
             {
                 icon = this.transform.Find("IMLIcon(Clone)").GetComponent<IMLGrab>();
@@ -478,6 +478,8 @@ namespace InteractML
             IMLEventDispatcher.DeleteAllExamplesInNodeCallback += DeleteAllTrainingExamplesInNode;
             IMLEventDispatcher.DeleteAllTrainingExamplesInGraphCallback += DeleteAllTrainingExamplesInGraph;
             // IMLEventDispatcher.DeleteLastCallback +=
+
+            IMLEventDispatcher.UniversalControlChange += UniversalInterface;
         }
         /// <summary>
         /// 
@@ -485,7 +487,7 @@ namespace InteractML
         /// </summary>
         private void UnsubscribeToDelegates()
         {
-            Debug.Log("unsubscribe from delegates");
+            //Debug.Log("unsubscribe from delegates");
             // dispatchers for MLSystem node event
             IMLEventDispatcher.TrainMLSCallback -= Train;
             IMLEventDispatcher.ToggleRunCallback -= ToggleRunning;
@@ -498,6 +500,8 @@ namespace InteractML
             IMLEventDispatcher.StopRecordCallback -= StopRecording;
             IMLEventDispatcher.DeleteAllExamplesInNodeCallback -= DeleteAllTrainingExamplesInNode;
             IMLEventDispatcher.DeleteAllTrainingExamplesInGraphCallback -= DeleteAllTrainingExamplesInGraph;
+
+            IMLEventDispatcher.UniversalControlChange -= UniversalInterface;
         }
         /// <summary>
         /// Checks if an IMLController is owned and properly updates it when needed
@@ -1457,8 +1461,9 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
+            //Debug.Log(universalInputEnabled);
             // Make sure that the icon is init
-            if (icon == null)
+            if (icon == null && m_inputSetUp != null)
                 InitializeIMLIndicator();
 
             if (icon != null)
@@ -2447,6 +2452,7 @@ namespace InteractML
                         MLSNode.SaveModelToDisk();
                 }
             }
+            //Debug.Log(icon == null);
             if (success && icon != null)
                 icon.SetBody(icon.trainedColor);
             // returns true if nodeID exists and whether training successful
@@ -2543,7 +2549,7 @@ namespace InteractML
         /// <returns>bool whether training has started</returns>
         private bool ToggleRecording(string nodeID)
         {
-            Debug.Log("toggle");
+            //Debug.Log("toggle");
             bool success = false;
             foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
             {
@@ -2551,7 +2557,7 @@ namespace InteractML
                 {
                     if (TENode.CollectingData)
                     {
-                        Debug.Log("stop");
+                       // Debug.Log("stop");
                         success = TENode.StopCollecting();
                         if (success)
                         {
@@ -2560,7 +2566,7 @@ namespace InteractML
                         }
                     } else
                     {
-                        Debug.Log("start");
+                        //Debug.Log("start");
                         success = TENode.StartCollecting();
                         if (success)
                         {
@@ -2623,7 +2629,7 @@ namespace InteractML
         /// <param name="nodeID">nodeID of the training examples to delete</param>
         private bool DeleteAllTrainingExamplesInNode(string nodeID)
         {
-            Debug.Log(nodeID);
+           // Debug.Log(nodeID);
             foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
             {
                 if (nodeID == TENode.id)
@@ -2646,7 +2652,7 @@ namespace InteractML
 
         }
 
-        private void EnableUniversalInterface(bool value)
+        private void UniversalInterface(bool value)
         {
             universalInputEnabled = value;
         }

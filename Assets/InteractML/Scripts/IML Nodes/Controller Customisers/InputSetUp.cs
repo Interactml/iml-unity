@@ -73,9 +73,6 @@ namespace InteractML.CustomControllers
         public string selectedMLS;
         public string selectedTraining;
 
-        public delegate bool UniversalSetUp(bool value);
-        public event UniversalSetUp setUpChange;
-
 
         public override void Initialize()
         {
@@ -93,6 +90,7 @@ namespace InteractML.CustomControllers
             allHandlers.AddRange(mlsHandlers);
             allHandlers.AddRange(trainingHandlers);
             SubscribeToEvents();
+            IMLEventDispatcher.UniversalControlChange?.Invoke(enableUniversalInterface);
         }
 
 
@@ -117,7 +115,7 @@ namespace InteractML.CustomControllers
         //let rest of code know that the 
         public void SetUniversalSetUp()
         {
-            setUpChange?.Invoke(enableUniversalInterface);
+            IMLEventDispatcher.UniversalControlChange?.Invoke(enableUniversalInterface);
             SaveToFile();
         }
         public void OnInputDeviceChange()
@@ -217,7 +215,6 @@ namespace InteractML.CustomControllers
         }
         private void DisableTraining()
         {
-            Debug.Log("disable");
             trainingEnabled = false;
         }
         public bool SetTrainingID(string id)
@@ -386,6 +383,7 @@ namespace InteractML.CustomControllers
        
         private void OnDestroy()
         {
+            IMLEventDispatcher.DestroyIMLGrab?.Invoke();
             UnsubscribeFromEvents();
         }
     }

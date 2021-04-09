@@ -168,5 +168,12 @@ namespace InteractML
         public delegate void TrainingNodeChange();
         public static TrainingNodeChange tNodeChange;
 
+        public delegate void IMLBoolChange(bool boolean);
+        public static IMLBoolChange UniversalControlChange;
+        
+        public static IMLEvent ActivateUniversalControl;
+        public static IMLEvent DisactivateUniversalControl;
+        public static RunOnPlay DestroyIMLGrab;
+
     }
 }

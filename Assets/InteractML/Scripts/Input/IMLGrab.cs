@@ -23,7 +23,10 @@ namespace InteractML
 
         public void OnValidate()
         {
-            Debug.Log("validate grab");
+            //Debug.Log("validate grab");
+
+            IMLEventDispatcher.UniversalControlChange += DestroyMe;
+            IMLEventDispatcher.DestroyIMLGrab += DestroyIt;
         }
         public void Start()
         {
@@ -33,6 +36,22 @@ namespace InteractML
             SetBody(baseColour);
         }
 
+        private void DestroyMe(bool destroy)
+        {
+            if (!destroy)
+            {
+                Debug.Log("destroy");
+                //DestroyImmediate(this);
+            }
+            
+        }
+
+        private void DestroyIt()
+        {
+            Debug.Log("destroy");
+            DestroyImmediate(this.gameObject);
+
+        }
         /// <summary>
         /// method for when the object is selected change texture and send event for activation
         /// </summary>
@@ -54,8 +73,11 @@ namespace InteractML
         
         public void SetBody(Texture2D texture)
         {
-            if(this != null && Application.isPlaying)
+            if (this != null && Application.isPlaying)
+            {
+               // Debug.Log("change colour");
                 this.GetComponent<Renderer>().material.SetTexture("_MainTex", texture);
+            }
             current = texture;
         }
         
@@ -80,7 +102,15 @@ namespace InteractML
                 graph.universalInputActive = false;
             }
         }
-       
+
+        private void OnDestroy()
+        {
+            Debug.Log("here");
+            IMLEventDispatcher.deselectGraph -= DeactivateInterface;
+            IMLEventDispatcher.UniversalControlChange -= DestroyMe;
+            IMLEventDispatcher.DestroyIMLGrab -= DestroyIt;
+        }
+
     }
 }
 
