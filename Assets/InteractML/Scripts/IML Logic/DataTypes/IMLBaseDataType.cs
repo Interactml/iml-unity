@@ -24,7 +24,7 @@ namespace InteractML
         /// </summary>
         /// <param name="type"></param>
         public static IMLBaseDataType GetDataTypeInstance (System.Type type)
-        {           
+        {
             if (type == typeof(float))
                 return new IMLFloat();
             else if (type == typeof(int))
@@ -35,6 +35,8 @@ namespace InteractML
                 return new IMLVector3();
             else if (type == typeof(Vector4))
                 return new IMLVector4();
+            else if (type == typeof(bool))
+                return new IMLBoolean();
             else
                 return null; // not implement datatype is null
 

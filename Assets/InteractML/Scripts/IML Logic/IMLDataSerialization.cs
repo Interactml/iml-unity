@@ -102,6 +102,9 @@ namespace InteractML
                 case IMLSpecifications.DataTypes.Array:
                     dataToInstantiate = new IMLArray(dataToReadFrom);
                     break;
+                case IMLSpecifications.DataTypes.Boolean:
+                    dataToInstantiate = new IMLBoolean(dataToReadFrom);
+                    break;
                 default:
                     break;
             }
