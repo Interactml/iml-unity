@@ -330,8 +330,8 @@ namespace InteractML
         /// <returns> Color of node </returns>
         public override Color GetTint()
         {
-            ColorUtility.TryParseHtmlString("#3A3B5B", out customNodeColor);
-            return customNodeColor;
+            ColorUtility.TryParseHtmlString("#3A3B5B", out Color color);
+            return color;
         }
 
         public void InitHeaderRects()
@@ -381,7 +381,7 @@ namespace InteractML
             // Iterate through serialized properties and draw them like the Inspector (But with ports)
             SerializedProperty iterator = serializedObject.GetIterator();
             bool enterChildren = true;
-            EditorGUIUtility.labelWidth = LabelWidth;
+            EditorGUIUtility.labelWidth = 84;
             GUILayout.Space(m_PortRect.height * 0.5f);
             while (iterator.NextVisible(enterChildren))
             {
