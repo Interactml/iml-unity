@@ -7,7 +7,7 @@ using UnityEditor;
 using XNodeEditor;
 #endif
 
-namespace InteractML.MovementFeatures
+namespace InteractML.GameObjectMovementFeatures
 {
     public static class MovementFeatureEditorMethods
     {

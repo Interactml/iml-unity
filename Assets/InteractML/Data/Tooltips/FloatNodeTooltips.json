@@ -1,5 +1,5 @@
 {
-  "HelpTooltip": "Extracts and Outputs a Float value. The displayed data is either the live value when a Float is connected to the input port, or when nothing is connected the display shows an editable field to output a Float",
+  "HelpTooltip": "\n ABOUT \n Extracts and Outputs a Float value. The displayed data is either the live value when a Float is connected to the input port, or when nothing is connected the display shows an editable field to output a Float \n",
   "PortTooltip": [ "Connect a Float", "Outputs a Float" ],
   "BodyTooltip": {
     "tips": [

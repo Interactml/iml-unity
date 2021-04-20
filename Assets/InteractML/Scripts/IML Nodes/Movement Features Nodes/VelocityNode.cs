@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 using XNode;
 
-namespace InteractML.MovementFeatures
+namespace InteractML.GameObjectMovementFeatures
 {
     /// <summary>
     /// Extract the velocity from any other Feature

@@ -227,6 +227,13 @@ namespace InteractML
                     m_IMLNodeSerialized = new SerializedObject(m_IMLNode);
 
                     NodeWidth = this.GetWidth();
+
+                    // Draws header with live subtitle if input connected - only data type nodes
+                    string name = m_IMLNode.GetType().ToString();
+                    //find out if the node is a data type node 
+                    if (name.Contains("DataType"))
+                        NodeSubtitle = m_IMLNode.GetInputNodesConnected("m_In")!=null ? "LIVE" : null;
+
                     // Initialise header background Rects
                     InitHeaderRects();
 
@@ -234,6 +241,9 @@ namespace InteractML
 
                     if (Event.current.type == EventType.Repaint)
                     {
+                        // Draw over xnode header tint
+                        GUI.DrawTexture(new Rect(6, 6, GetWidth() - 12, 24), NodeColor);
+
                         // Draw line below header
                         GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
                     }
@@ -271,6 +281,7 @@ namespace InteractML
                 // If we want to reskin the node
                 if (UIReskinAuto)
                 {
+
                     // Unity specifically requires this to save/update any serial object.
                     // serializedObject.Update(); must go at the start of an inspector gui, and
                     // serializedObject.ApplyModifiedProperties(); goes at the end.

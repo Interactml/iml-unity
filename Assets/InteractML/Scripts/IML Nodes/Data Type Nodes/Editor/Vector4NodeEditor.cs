@@ -28,7 +28,7 @@ namespace InteractML.DataTypeNodes
             m_Vector4Node = (target as Vector4Node);
 
             // Initialise node name
-            NodeName = "LIVE VECTOR4 DATA";
+            NodeName = "VECTOR4";
 
             // Initialise node body height
             m_BodyRect.height = 170;

@@ -1,5 +1,5 @@
 {
-  "HelpTooltip": "Extracts and Outputs a Vector3. The displayed data is either the live value when a Vector3 is connected to the input port, or when nothing is connected the display shows an editable field to output a Vector3",
+  "HelpTooltip": "\n ABOUT \n Extracts and Outputs a Vector3. The displayed data is either the live value when a Vector3 is connected to the input port, or when nothing is connected the display shows an editable field to output a Vector3 \n",
   "PortTooltip": [ "Connect a Vector3", "Outputs a Vector3" ],
   "BodyTooltip": {
     "tips": [

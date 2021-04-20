@@ -28,7 +28,7 @@ namespace InteractML.DataTypeNodes
             m_BooleanNode = (target as BooleanNode);
 
             // Initialise node name
-            NodeName = "LIVE BOOL DATA";
+            NodeName = "BOOLEAN";
 
             // Initialise node height
             m_BodyRect.height = 80;

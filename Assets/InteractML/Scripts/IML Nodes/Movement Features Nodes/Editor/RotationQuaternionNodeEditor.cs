@@ -6,7 +6,7 @@ using UnityEditor;
 using XNodeEditor;
 #endif
 
-namespace InteractML.MovementFeatures
+namespace InteractML.GameObjectMovementFeatures
 {
     [CustomNodeEditor(typeof(RotationQuaternionNode))]
     public class ExtractRotationQuaternionNodeEditor : IMLNodeEditor
@@ -25,7 +25,7 @@ namespace InteractML.MovementFeatures
             m_ExtractRotationQuaternion = (target as RotationQuaternionNode);
 
             // Initialise node name
-            NodeName = "LIVE ROTATION DATA";
+            NodeName = "ROTATION";
             NodeSubtitle = "Quaternion";
 
             // Initialise node height

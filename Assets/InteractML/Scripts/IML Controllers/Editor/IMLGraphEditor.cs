@@ -19,7 +19,7 @@ namespace InteractML
             window.titleContent.text = "InteractML";
 
             // Set the background color and highlight color
-            NodeEditorPreferences.GetSettings().highlightColor = hexToColor("21203B");
+            NodeEditorPreferences.GetSettings().highlightColor = hexToColor("#888EF7");
             NodeEditorPreferences.GetSettings().gridLineColor = hexToColor("21203B");
             NodeEditorPreferences.GetSettings().gridBgColor = hexToColor("21203B");
 
@@ -108,23 +108,23 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.MovementFeatures.DistanceToFirstInputNode")
+            if (type.PrettyName() == "InteractML.GameObjectMovementFeatures.DistanceToFirstInputNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.MovementFeatures.PositionNode")
+            if (type.PrettyName() == "InteractML.GameObjectMovementFeatures.PositionNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.MovementFeatures.RotationQuaternionNode")
+            if (type.PrettyName() == "InteractML.GameObjectMovementFeatures.RotationQuaternionNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.MovementFeatures.RotationEulerNode")
+            if (type.PrettyName() == "InteractML.GameObjectMovementFeatures.RotationEulerNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.MovementFeatures.VelocityNode")
+            if (type.PrettyName() == "InteractML.GameObjectMovementFeatures.VelocityNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
@@ -185,7 +185,7 @@ namespace InteractML
         {
             string name = node.GetType().ToString();
             //find out if the node is a feature extractor or data type node connected to training examples with trained data
-            if (name.Contains("FeatureExtractor") || name.Contains("DataType"))
+            if (name.Contains("MovementFeatures") || name.Contains("DataType"))
             {
                 foreach (XNode.NodePort output in node.Outputs)
                 {

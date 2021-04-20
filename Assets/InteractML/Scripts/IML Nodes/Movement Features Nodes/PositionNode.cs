@@ -2,7 +2,7 @@
 using UnityEngine;
 using XNode;
 
-namespace InteractML.MovementFeatures
+namespace InteractML.GameObjectMovementFeatures
 {
     /// <summary>
     /// Feature extractor for positions

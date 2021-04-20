@@ -26,7 +26,7 @@ namespace InteractML.DataTypeNodes
             m_Vector3Node = (target as Vector3Node);
 
             // Initialise node name
-            NodeName = "LIVE VECTOR3 DATA";
+            NodeName = "VECTOR3";
 
             // Initialise node body height
             m_BodyRect.height = 130;

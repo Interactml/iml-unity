@@ -28,7 +28,7 @@ namespace InteractML.DataTypeNodes
             m_IntegerNode = (target as IntegerNode);
 
             // Initialise node name
-            NodeName = "LIVE INTEGER DATA";
+            NodeName = "INTEGER";
 
             // Initialise node body height
             m_BodyRect.height = 80;

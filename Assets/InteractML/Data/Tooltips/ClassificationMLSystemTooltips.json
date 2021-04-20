@@ -1,5 +1,5 @@
 {
-  "HelpTooltip": "KEYBOARD SHORTCUTS: \n Train Model = T \n Run Model = P \n \n This node trains the machine learning model and runs the model to recognise inputs. This is the Classification MLS it takes in single inputs and classifies them as a distinct output.",
+  "HelpTooltip": "\n ABOUT \n This node trains the machine learning model and runs the model to recognise inputs. This is the Classification MLS- it takes in single inputs and classifies them as a distinct output. \n",
   "PortTooltip": [ "Connect Recorded Data", "Connect Data Type Node or Feature Extractor", "Outputs the Output value/s of the machine learning system" ],
   "BodyTooltip": {
     "tips": [

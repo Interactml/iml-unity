@@ -6,7 +6,7 @@ using UnityEditor;
 using XNodeEditor;
 #endif
 
-namespace InteractML.MovementFeatures
+namespace InteractML.GameObjectMovementFeatures
 {
     [CustomNodeEditor(typeof(VelocityNode))]
     public class ExtractVelocityNodeEditor : IMLNodeEditor
@@ -25,7 +25,7 @@ namespace InteractML.MovementFeatures
             m_ExtractVelocity = (target as VelocityNode);
 
             // Initialise node name
-            NodeName = "LIVE VELOCITY DATA";
+            NodeName = "VELOCITY";
 
             // Initialise node height
             m_BodyRect.height = 140;
