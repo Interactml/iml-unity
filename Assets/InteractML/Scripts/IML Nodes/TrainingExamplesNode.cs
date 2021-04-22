@@ -577,6 +577,7 @@ namespace InteractML
             {
                 AddTrainingExampleprotected();
                 CheckWarning();
+                SaveDataToDisk();
                 return true;
             }
             return false;
@@ -611,7 +612,6 @@ namespace InteractML
         /// </summary>
         public virtual void ClearTrainingExamples(bool deleteFromDisk = true)
         {
-            Debug.Log("here");
             // Account for mode
             switch (ModeOfCollection)
             {
@@ -744,11 +744,9 @@ namespace InteractML
                 }
                 else
                 {
-                   // Debug.Log("training");
                     var inputFeatures = m_TrainingExamplesVector[0].Inputs;
                     for (int i = 0; i < m_TrainingExamplesVector[0].Inputs.Count; i++)
                     {
-                        //Debug.Log((IMLSpecifications.InputsEnum)inputFeatures[i].InputData.DataType);
                         m_DesiredInputsConfig.Add((IMLSpecifications.InputsEnum)inputFeatures[i].InputData.DataType);
 
                     }
