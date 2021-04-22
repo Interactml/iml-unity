@@ -1804,7 +1804,14 @@ namespace InteractML
             // Wait for another frame
             yield return null;
 
-            nodesLoaded = true; 
+            nodesLoaded = true;
+
+            yield return null;
+
+            if (Application.isPlaying)
+            {
+                RunModelsOnPlay();
+            }
 
             yield break;
 
