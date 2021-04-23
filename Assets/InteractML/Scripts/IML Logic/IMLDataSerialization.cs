@@ -691,6 +691,15 @@ namespace InteractML
         }
 
         /// <summary>
+        /// Returns path for the Assets folder (SetUpFileNamesAndPaths() should have been called beforehand)
+        /// </summary>
+        /// <returns></returns>
+        public static string GetAssetsPath()
+        {
+            return m_AppDataPath;
+        }
+
+        /// <summary>
         /// Returns path for InteractML/Data (SetUpFileNamesAndPaths() should have been called beforehand)
         /// </summary>
         /// <returns></returns>
