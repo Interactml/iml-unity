@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using System.Diagnostics;
+﻿using UnityEditor;
 using System.IO;
 
 /// <summary>
@@ -10,6 +6,16 @@ using System.IO;
 /// </summary>
 public class IMLBuildManager
 {
+    /// <summary>
+    /// Delegate type storing different methods to call when the app builds
+    /// </summary>
+    public delegate void OnBuildEvent(BuildPlayerOptions options);
+    /// <summary>
+    /// Gets called when a build is produced
+    /// </summary>
+    public static OnBuildEvent OnBuildCallback;
+
+
     [InitializeOnLoadMethod]
     private static void Initialize()
     {
@@ -26,21 +32,29 @@ public class IMLBuildManager
         // Build the player as set by the unity buildplayer window
         BuildPlayerWindow.DefaultBuildMethods.BuildPlayer(options);
 
+        // Copy iml files to build
+        CopyIMLFilesToBuild(options);
+
+        // Call any additional methods specified by the user
+        OnBuildCallback(options);
+
+        //UnityEngine.Debug.Log("=========END OF CUSTOM BUILD CODE==========");
+
+        // Run the game (Process class from System.Diagnostics).
+        //Process proc = new Process();
+        //proc.StartInfo.FileName = options.locationPathName;
+        //proc.Start();
+    }
+ 
+    /// <summary>
+    /// Copies all training examples and models present in the editor to the final build
+    /// </summary>
+    /// <param name="options"></param>
+    private static void CopyIMLFilesToBuild(BuildPlayerOptions options)
+    {
         // Calculate the datapath for the build
-        string buildDataPath = "";
-#if UNITY_STANDALONE
-        // Get filename.
-        string buildPath = options.locationPathName;        
-        // Cut name of executable from path
-        string executableName = Path.GetFileNameWithoutExtension(buildPath);
-        buildPath = Path.GetDirectoryName(buildPath);
-        buildDataPath = Path.Combine(buildPath, executableName + "_Data");
-        //UnityEngine.Debug.Log("=========CUSTOM BUILD CODE==========");
-        //UnityEngine.Debug.Log("The app will be built at: " + buildPath);
-#elif UNITY_ANDROID
-        // The datapath for the build will be the persistent one
-        buildDataPath = Application.persistentDataPath;
-# endif
+        string buildDataPath = GetBuildDataPath(options);
+
         // Copy models and training data from the project folder to the build folder, alongside the built game.
         // Create IML directory
         if (!Directory.Exists(buildDataPath + "/InteractML/Data"))
@@ -112,14 +126,31 @@ public class IMLBuildManager
 
         }
 
-        //UnityEngine.Debug.Log("=========END OF CUSTOM BUILD CODE==========");
-
-        // Run the game (Process class from System.Diagnostics).
-        Process proc = new Process();
-        proc.StartInfo.FileName = options.locationPathName;
-        proc.Start();
     }
 
+    /// <summary>
+    /// Returns the data path inside a build
+    /// </summary>
+    /// <returns></returns>
+    public static string GetBuildDataPath(BuildPlayerOptions options)
+    {
+        // Calculate the datapath for the build
+        string buildDataPath = "";
+#if UNITY_STANDALONE
+        // Get filename.
+        string buildPath = options.locationPathName;
+        // Cut name of executable from path
+        string executableName = Path.GetFileNameWithoutExtension(buildPath);
+        buildPath = Path.GetDirectoryName(buildPath);
+        buildDataPath = Path.Combine(buildPath, executableName + "_Data");
+        //UnityEngine.Debug.Log("=========CUSTOM BUILD CODE==========");
+        //UnityEngine.Debug.Log("The app will be built at: " + buildPath);
+#elif UNITY_ANDROID
+        // The datapath for the build will be the persistent one
+        buildDataPath = Application.persistentDataPath;
+# endif
 
- 
+        return buildDataPath;
+
+    }
 }
