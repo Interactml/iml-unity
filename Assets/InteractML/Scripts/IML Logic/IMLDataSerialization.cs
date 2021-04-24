@@ -152,7 +152,7 @@ namespace InteractML
         /// <param name="filePath">File path without file extension</param>
         public static void SaveTrainingSetToDisk(List<IMLBaseDataType> listToSave, string fileName)
         {
-            SaveTrainingSetToDiskAsync<IMLBaseDataType>(listToSave, fileName);
+            SaveTrainingSetToDisk<IMLBaseDataType>(listToSave, fileName);
         }
 
         /// <summary>
@@ -162,12 +162,12 @@ namespace InteractML
         /// <param name="filePath">File path without file extension</param>
         public static void SaveTrainingSetToDisk(List<IMLTrainingExample> listToSave, string fileName)
         {
-            SaveTrainingSetToDiskAsync<IMLTrainingExample>(listToSave, fileName);
+            SaveTrainingSetToDisk<IMLTrainingExample>(listToSave, fileName);
         }
 
         public static void SaveTrainingSeriesCollectionToDisk(List<IMLTrainingSeries> listToSave, string fileName)
         {
-            SaveTrainingSetToDiskAsync<IMLTrainingSeries>(listToSave, fileName);
+            SaveTrainingSetToDisk<IMLTrainingSeries>(listToSave, fileName);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace InteractML
         /// <param name="fileName"></param>
         public static void SaveTrainingSetToDiskRapidlib(List<RapidlibTrainingExample> listToSave, string fileName)
         {
-            SaveTrainingSetToDiskAsync<RapidlibTrainingExample>(listToSave, fileName);
+            SaveTrainingSetToDisk<RapidlibTrainingExample>(listToSave, fileName);
         }
 
         /// <summary>
@@ -187,7 +187,7 @@ namespace InteractML
         /// <param name="fileName"></param>
         public static void SaveTrainingSeriesSetsToDiskRapidlib(List<RapidlibTrainingSerie> listToSave, string fileName)
         {
-            SaveTrainingSetToDiskAsync<RapidlibTrainingSerie>(listToSave, fileName);
+            SaveTrainingSetToDisk<RapidlibTrainingSerie>(listToSave, fileName);
         }
 
         /// <summary>
@@ -642,15 +642,64 @@ namespace InteractML
         /// </summary>
         /// <param name="listToSave">The list of training examples</param>
         /// <param name="filePath">File path without file extension</param>
-        private static void SaveTrainingSetToDiskAsync<T>(List<T> listToSave, string gameObjectName)
+        private static void SaveTrainingSetToDisk<T>(List<T> listToSave, string gameObjectName)
+        {
+            // We make sure paths and filenames are set properly
+            SetUpFileNamesAndPaths(gameObjectName);
+
+            string subFolderPath = CheckOrCreateFoldersAndSubfoldersTrainingSet();
+
+            // If the option to serialize witht JSON dot net is active...
+            if (m_SerializeWithJSONDotNet)
+            {
+                // We save the entire input/output list as a JSON
+                string auxFilePath = subFolderPath + "/" + m_FileTrainingSetName + "_Inputs_Outputs" + m_FileExtension;
+                // Check if there is already a JSON file created for this training example
+                if (File.Exists(auxFilePath))
+                {
+                    bool fileDeleted = false;
+                    while (!fileDeleted)
+                    {
+                        try
+                        {
+                            // We delete it to make sure we override it
+                            File.Delete(auxFilePath);
+                            // If there was no exception, update flag
+                            fileDeleted = true;
+                        }
+                        catch (Exception)
+                        {
+                            // The file might be in use, in that case, let's wait until next iteration to try again 
+                            fileDeleted = false;
+                        }
+
+                    }
+                }
+                // Generate JSON string from the entire list
+                //COMEBACK
+                var jsonTrainingeExamplesList = JsonConvert.SerializeObject(listToSave, Formatting.Indented);
+                //Debug.Log(jsonTrainingeExamplesList);
+                // Write on the path
+                File.WriteAllText(auxFilePath, jsonTrainingeExamplesList);
+            }
+
+
+        }
+
+        /// <summary>
+        /// Private method that saves Training Data Set to disk using a thread
+        /// </summary>
+        /// <param name="listToSave">The list of training examples</param>
+        /// <param name="filePath">File path without file extension</param>
+        private static async void SaveTrainingSetToDiskAsync<T>(List<T> listToSave, string gameObjectName)
         {
             // Launch the task in a thread
-            Task savingTask = Task.Run(() => 
+            Task savingTask = Task.Run(async () => 
             {
-                // We make sure paths and filenames are set properly
-                SetUpFileNamesAndPaths(gameObjectName);
+            // We make sure paths and filenames are set properly
+            SetUpFileNamesAndPaths(gameObjectName);
 
-                string subFolderPath = CheckOrCreateFoldersAndSubfoldersTrainingSet();
+            string subFolderPath = CheckOrCreateFoldersAndSubfoldersTrainingSet();
 
                 // If the option to serialize witht JSON dot net is active...
                 if (m_SerializeWithJSONDotNet)
@@ -683,9 +732,11 @@ namespace InteractML
                     var jsonTrainingeExamplesList = JsonConvert.SerializeObject(listToSave, Formatting.Indented);
                     //Debug.Log(jsonTrainingeExamplesList);
                     // Write on the path
-                    File.WriteAllText(auxFilePath, jsonTrainingeExamplesList);
+                    using (var sw = new StreamWriter(auxFilePath))
+                    {
+                        await sw.WriteAsync(jsonTrainingeExamplesList);
+                    }
                 }
-
             });
 
         }
