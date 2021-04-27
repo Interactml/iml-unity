@@ -36,6 +36,15 @@ namespace InteractML
         /// </summary>
         public override void HandleState()
         {
+            Debug.Log(Input.GetKey(_button));
+            Debug.Log(_button);
+            Debug.Log(buttonNo);
+
+            if (Input.GetKey(_button))
+            {
+                Debug.Log("press");
+
+            }
             // if the button is held and the trigger type is hold
             if (Input.GetKey(_button) && triggerType == IMLTriggerTypes.Hold)
             {

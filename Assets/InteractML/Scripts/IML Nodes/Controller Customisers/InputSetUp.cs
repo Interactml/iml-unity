@@ -129,9 +129,6 @@ namespace InteractML.CustomControllers
                 /*case IMLInputDevices.Mouse:
                     
                     break;*/
-                case IMLInputDevices.VRControllers:
-                    InstantiateVRButtonHandlers();
-                    break;
                 default:
                     Debug.Log("device not set");
                     break;
@@ -140,25 +137,7 @@ namespace InteractML.CustomControllers
 
 
         }
-        /// <summary>
-        /// Changes hand type in handler 
-        /// </summary>
-        /// <param name="side">which side it is being changed to</param>
-        public void OnHandChange(IMLSides side, string group)
-        {
-            List<InputHandler> handlers = new List<InputHandler>();
-            if (group == "mlsHand")
-                handlers = mlsHandlers;
-            else
-                handlers = trainingHandlers;
-
-            foreach (InputHandler handler in handlers)
-            {
-                VRButtonHandler vrHandler = handler as VRButtonHandler;
-                vrHandler.SetController(side);
-            }
-            SaveToFile();
-        }
+      
         /// <summary>
         /// Set the button type in the handler 
         /// </summary>
@@ -187,18 +166,7 @@ namespace InteractML.CustomControllers
             }
             SaveToFile();
         }
-        /// <summary>
-        /// Create instances of VR button handlers
-        /// </summary>
-        private void InstantiateVRButtonHandlers()
-        {
-            DeleteAll = new VRButtonHandler(deleteAllButtonNo, trainingHand, deleteAllButtonTT, m_deleteAllName);
-            //DeleteLast = new VRButtonHandler(deleteLastButtonNo, trainingHand, deleteLastButtonTT, deleteLastName);
-            RecordOne = new VRButtonHandler(recordOneButtonNo, trainingHand, recordOneButtonTT, m_recordOneName);
-            ToggleRecord = new VRButtonHandler(toggleRecordButtonNo, trainingHand, toggleRecordButtonTT, m_toggleRecordName);
-            Train = new VRButtonHandler(trainButtonNo, mlsHand, trainButtonTT, m_trainName);
-            ToggleRun = new VRButtonHandler(toggleRunButtonNo, mlsHand, toggleRunButtonTT, m_toggleRunName);
-        }
+    
         private void InstantiateKeyboardButtonHandlers()
         {
             Debug.Log(deleteAllButtonNo);

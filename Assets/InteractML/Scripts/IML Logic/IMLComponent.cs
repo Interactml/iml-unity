@@ -439,7 +439,7 @@ namespace InteractML
 
         private void InitializeIMLIndicator()
         {
-            Debug.Log("icon initialize it");
+            //Debug.Log("icon initialize it");
             //comeback
             if (transform.childCount == 0 && icon == null)
             {
@@ -1554,7 +1554,7 @@ namespace InteractML
         public void InputLogic(){
 
             // if user has enables universal input system
-            if(universalInputActive)
+            if (universalInputActive)
             {
                 //if there is a reference to the node
                 if (m_inputSetUp != null)

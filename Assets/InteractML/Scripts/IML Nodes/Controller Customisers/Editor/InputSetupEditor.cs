@@ -82,7 +82,6 @@ namespace InteractML.ControllerCustomisers
             }
             if (GUI.changed)
             {
-                m_InputSetUp.OnHandChange(m_InputSetUp.trainingHand, "trainingSide");
                 EditorUtility.SetDirty(m_InputSetUp);
             }
             // choose delete last button
@@ -132,7 +131,6 @@ namespace InteractML.ControllerCustomisers
             }
             if (GUI.changed)
             {
-                m_InputSetUp.OnHandChange(m_InputSetUp.mlsHand, "mlsSide");
                 EditorUtility.SetDirty(m_InputSetUp);
             }
             // sets the button for training

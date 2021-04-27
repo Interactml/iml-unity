@@ -17,7 +17,6 @@ MonoBehaviour:
   ports:
     keys: []
     values: []
-  DevMode: 0
   id: 
   numberInComponentList: -1
   note: 
@@ -61,7 +60,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: f13a07c9-b561-4148-b8af-f6bc12cbf52a
   numberInComponentList: -1
   ValueName: 
@@ -71,7 +69,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 5
+  Counter: 1
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -116,7 +114,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: 69f41e8c-8f64-429f-af50-9e205b47297f
   numberInComponentList: -1
   ValueName: 
@@ -126,7 +123,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 000000
   InputConnected: 0
-  Counter: 5
+  Counter: 1
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue:
@@ -163,12 +160,11 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: 4903aa20-d431-4831-a681-2b5986d14be8
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
   state: 1
-  GOHashCode: 27572
+  GOHashCode: 18018
   CreatedDuringPlaymode: 0
 --- !u!114 &-1424750386442165512
 MonoBehaviour:
@@ -187,13 +183,12 @@ MonoBehaviour:
   ports:
     keys: []
     values: []
-  DevMode: 0
   id: d52ce103-3c7a-454c-80e8-85e9c7bce95f
   numberInComponentList: -1
   enableUniversalInterface: 1
   activeUniversalInterface: 0
   device: 1
-  trainingHand: 2
+  trainingHand: 1
   mlsHand: 1
   buttonOptions:
   - None
@@ -526,10 +521,10 @@ MonoBehaviour:
   trainingID: 
   deleteLastButtonNo: 0
   deleteLastButtonTT: 0
-  deleteAllButtonNo: 17
+  deleteAllButtonNo: 7
   deleteAllButtonTT: 1
   toggleRecordButtonNo: 0
-  recordOneButtonTT: 0
+  recordOneButtonTT: 1
   recordOneButtonNo: 1
   toggleRecordButtonTT: 2
   trainButtonNo: 1
@@ -557,6 +552,8 @@ MonoBehaviour:
   ports:
     keys:
     - SetAbsoluteColour
+    - array1
+    - array2
     values:
     - _fieldName: SetAbsoluteColour
       _node: {fileID: -949560571666818954}
@@ -570,13 +567,60 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-  DevMode: 0
+    - _fieldName: array1
+      _node: {fileID: -949560571666818954}
+      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: array2
+      _node: {fileID: -949560571666818954}
+      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   id: 72e29da8-845d-42a3-99ab-719f3263a7f3
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 27630
+  ScriptHashCode: 18076
   m_PortsPerFieldInfo:
-    m_keys: []
+    m_keys:
+    - _fieldName: SetAbsoluteColour
+      _node: {fileID: -949560571666818954}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: -4054044754050795943}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: array1
+      _node: {fileID: -949560571666818954}
+      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: array2
+      _node: {fileID: -949560571666818954}
+      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   CreatedDuringPlaymode: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -696,7 +740,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-  DevMode: 0
   id: fb330902-d994-4b55-9ad9-f548e18886ab
   numberInComponentList: -1
   IMLTrainingExamplesNodes:
@@ -707,7 +750,7 @@ MonoBehaviour:
   ToggleRunInputBool: 0
   PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
-  m_NumExamplesTrainedOn: 1
+  m_NumExamplesTrainedOn: 0
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 03000000
   m_trainingType: 1
@@ -715,7 +758,6 @@ MonoBehaviour:
   EnableKeyboardControl: 1
   TrainingKey: 116
   RunningKey: 0
-  m_RapidlibTrainingExamples: []
   TrainOnPlaymodeChange: 1
   RunOnAwake: 0
   matchLiveDataInputs: 1
@@ -749,6 +791,7 @@ MonoBehaviour:
     - RecordOneInputBoolPort
     - ToggleRecordingInputBoolPort
     - DeleteAllExamplesBoolPort
+    - SubFolderDataPathStringPort
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 1251363775571419173}
@@ -851,7 +894,15 @@ MonoBehaviour:
       _connectionType: 1
       _typeConstraint: 1
       _dynamic: 1
-  DevMode: 0
+    - _fieldName: SubFolderDataPathStringPort
+      _node: {fileID: 1251363775571419173}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 1
+      _dynamic: 1
   id: 57c26508-8fb1-44e3-8f3c-e0ab58071d75
   numberInComponentList: -1
   InputFeatures:
@@ -874,9 +925,10 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 0
-  showWarning: 1
+  showWarning: 0
   canCollect: 1
   listNo: 0
+  SubFolderDataPath: 
 --- !u!114 &3935821938320227337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -922,12 +974,11 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: 64f91b27-ce13-4ea0-9695-f865100a7b02
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 5
+  Counter: 1
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
