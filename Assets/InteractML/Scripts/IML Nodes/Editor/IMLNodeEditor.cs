@@ -388,7 +388,6 @@ namespace InteractML
         protected virtual void ShowBodyFields()
         {
             string[] excludes = { "m_Script", "graph", "position", "ports" };
-
             // Iterate through serialized properties and draw them like the Inspector (But with ports)
             SerializedProperty iterator = serializedObject.GetIterator();
             bool enterChildren = true;

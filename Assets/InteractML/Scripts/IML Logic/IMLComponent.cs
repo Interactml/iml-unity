@@ -64,7 +64,7 @@ namespace InteractML
         [SerializeField, HideInInspector]
         private List<ScriptNode> m_ScriptNodesList;
         //[SerializeField, HideInInspector]
-        private InteractML.CustomControllers.InputSetUp m_inputSetUp;
+        private InteractML.ControllerCustomisers.InputSetUp m_inputSetUp;
         [SerializeField, HideInInspector]
         private List<CustomController> m_CustomControllerList;
 
@@ -72,7 +72,7 @@ namespace InteractML
 
         #region Public Lists of Nodes (Properties)
         [HideInInspector]
-        public InteractML.CustomControllers.InputSetUp inputSetUp { get => m_inputSetUp; }
+        public InteractML.ControllerCustomisers.InputSetUp inputSetUp { get => m_inputSetUp; }
         /// <summary>
         /// List of Training Example Nodes in the IML Controller
         /// </summary>
@@ -629,11 +629,11 @@ namespace InteractML
             }
         }
 
-        private void CheckNodeIsInput(XNode.Node nodetoAdd, ref InteractML.CustomControllers.InputSetUp setUpNode)
+        private void CheckNodeIsInput(XNode.Node nodetoAdd, ref InteractML.ControllerCustomisers.InputSetUp setUpNode)
         {
             //check node not null
             if (nodetoAdd != null) {
-                var inputNode = nodetoAdd as InteractML.CustomControllers.InputSetUp;
+                var inputNode = nodetoAdd as InteractML.ControllerCustomisers.InputSetUp;
                 // if input node is not null and inputsetup node is null
                 if (inputNode != null && m_inputSetUp == null)
                 {
@@ -1563,9 +1563,10 @@ namespace InteractML
                 }
             } else
             {
+                Debug.Log(m_CustomControllerList.Count);
                 foreach(CustomController controller in m_CustomControllerList)
                 {
-                    //controller.UpdateLogic();
+                    controller.UpdateLogic();
                 }
             }
 

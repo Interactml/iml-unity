@@ -15,11 +15,11 @@ C:/Users/Phoenix/Documents/Unity/InteractMLGithub/iml-unity-github
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-61849
+63982
 Successfully changed project path to: C:/Users/Phoenix/Documents/Unity/InteractMLGithub/iml-unity-github
 C:/Users/Phoenix/Documents/Unity/InteractMLGithub/iml-unity-github
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 72.62 ms, found 6 plugins.
+Refreshing native plugins compatible for Editor in 69.67 ms, found 6 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2020.3.5f1 (8095aa901b9b)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.5f1/Editor/Data/Resources/UnitySubsystems
@@ -35,230 +35,230 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.5f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.5f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.5f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56216
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56652
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.002435 seconds.
+Registered in 0.002423 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 57.17 ms, found 6 plugins.
+Refreshing native plugins compatible for Editor in 48.83 ms, found 6 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  2.039 seconds
+- Completed reload, in  3.236 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.005447 seconds.
+Registered in 0.011126 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 51.89 ms, found 6 plugins.
+Refreshing native plugins compatible for Editor in 47.63 ms, found 6 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.464 seconds
+- Completed reload, in  1.518 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
-Refreshing native plugins compatible for Editor in 0.78 ms, found 6 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
+Refreshing native plugins compatible for Editor in 0.69 ms, found 6 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1931 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 94.0 MB.
-System memory in use after: 93.9 MB.
+Unloading 1921 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 93.7 MB.
+System memory in use after: 93.6 MB.
 
-Unloading 128 unused Assets to reduce memory usage. Loaded Objects now: 2366.
-Total: 2.602000 ms (FindLiveObjects: 0.238500 ms CreateObjectMapping: 0.095900 ms MarkObjects: 2.128700 ms  DeleteObjects: 0.137800 ms)
-
-========================================================================
-Received Import Request.
-  path: Packages/com.unity.xr.openxr
-  artifactKey: Guid(cc9ee5c4ed88fab5898e2fb8b1c53e14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr using Guid(cc9ee5c4ed88fab5898e2fb8b1c53e14) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a2fdedc4844144d41a57e30aac95652d') in 0.012943 seconds
-  Import took 0.017620 seconds .
+Unloading 128 unused Assets to reduce memory usage. Loaded Objects now: 2356.
+Total: 2.695900 ms (FindLiveObjects: 0.267200 ms CreateObjectMapping: 0.133500 ms MarkObjects: 2.155600 ms  DeleteObjects: 0.137800 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000314 seconds.
-  path: Packages/com.unity.xr.openxr/Third Party Notices.md
-  artifactKey: Guid(76b917b9ca0b644b8be6c9c9c155e2e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Third Party Notices.md using Guid(76b917b9ca0b644b8be6c9c9c155e2e9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9bf8818e89f6b30892ae1ba42aa811b2') in 0.069487 seconds
-  Import took 0.075011 seconds .
+  path: Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change
+  artifactKey: Guid(fc5cc10e30507b44f9f7a789edca5291) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change using Guid(fc5cc10e30507b44f9f7a789edca5291) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4e81fbb516609b31e9e1dec72bba5b05') in 0.011716 seconds
+  Import took 0.016286 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 300.418318 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/android/arm64/libUnityOpenXR.so
-  artifactKey: Guid(679995d58a7149ac93e7fd279331d39a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/android/arm64/libUnityOpenXR.so using Guid(679995d58a7149ac93e7fd279331d39a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7562fecaeaa440b48c7c5d3346f7d8c1') in 0.013373 seconds
-  Import took 0.019040 seconds .
+  Time since last request: 0.000296 seconds.
+  path: Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/Mouse_Input_Color_Output_Classification.unity
+  artifactKey: Guid(e8a5e442fecc38d42a57654a03f04e82) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/Mouse_Input_Color_Output_Classification.unity using Guid(e8a5e442fecc38d42a57654a03f04e82) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6159f9a5352cd25563b4922730f9f2d0') in 0.017375 seconds
+  Import took 0.022762 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.017352 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/android/arm64/libUnityOpenXR.so
-  artifactKey: Guid(679995d58a7149ac93e7fd279331d39a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/android/arm64/libUnityOpenXR.so using Guid(679995d58a7149ac93e7fd279331d39a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7562fecaeaa440b48c7c5d3346f7d8c1') in 0.002495 seconds
-  Import took 0.006485 seconds .
+  Time since last request: 0.000359 seconds.
+  path: Assets/InteractML_Examples/Mouse_Input
+  artifactKey: Guid(c4bbb84a32c9c6f4eb676464cd5aeb9d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Mouse_Input using Guid(c4bbb84a32c9c6f4eb676464cd5aeb9d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8bbec398bbc8b1ae8e7edb7aebabe057') in 0.013244 seconds
+  Import took 0.020584 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.645961 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/universalwindows/arm64/UnityOpenXR.dll
-  artifactKey: Guid(02c276c21481474da9e9265f0f16b49c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/universalwindows/arm64/UnityOpenXR.dll using Guid(02c276c21481474da9e9265f0f16b49c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '24bcde0f66737cb03f93525e9ed300d0') in 0.013497 seconds
-  Import took 0.017953 seconds .
+  Time since last request: 0.503397 seconds.
+  path: Assets/InteractML_Examples/VRInterface
+  artifactKey: Guid(9523c60c95e6c2046890d41a1cfa354d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface using Guid(9523c60c95e6c2046890d41a1cfa354d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '83ed69405569bc8e018a31edc44226e1') in 0.008886 seconds
+  Import took 0.016798 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.001060 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/universalwindows/arm64/UnityOpenXR.dll
-  artifactKey: Guid(02c276c21481474da9e9265f0f16b49c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/universalwindows/arm64/UnityOpenXR.dll using Guid(02c276c21481474da9e9265f0f16b49c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '24bcde0f66737cb03f93525e9ed300d0') in 0.003306 seconds
-  Import took 0.008609 seconds .
+  Time since last request: 85.788238 seconds.
+  path: Assets/InteractML/Scripts/IML Nodes/Controller Customisers/Editor/VRTriggerEditor.cs
+  artifactKey: Guid(eb7595f737b7b3a4fbe2109ba11c9fe4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Nodes/Controller Customisers/Editor/VRTriggerEditor.cs using Guid(eb7595f737b7b3a4fbe2109ba11c9fe4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0faeae888524d9f5404fbf3389e2f4c7') in 0.028224 seconds
+  Import took 0.033463 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 485.854336 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/universalwindows/x64/UnityOpenXR.dll
-  artifactKey: Guid(09d69331baa64feab1314638a4ea66c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/universalwindows/x64/UnityOpenXR.dll using Guid(09d69331baa64feab1314638a4ea66c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a1dabfe22d49b222a7c8210e81b1e79c') in 0.002742 seconds
-  Import took 0.008884 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.007091 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/universalwindows/x64/UnityOpenXR.dll
-  artifactKey: Guid(09d69331baa64feab1314638a4ea66c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/universalwindows/x64/UnityOpenXR.dll using Guid(09d69331baa64feab1314638a4ea66c0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a1dabfe22d49b222a7c8210e81b1e79c') in 0.002505 seconds
-  Import took 0.007100 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.733950 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/windows/x64/UnityOpenXR.dll
-  artifactKey: Guid(7b51b375a24f43c2bdc1239cb2ade182) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/windows/x64/UnityOpenXR.dll using Guid(7b51b375a24f43c2bdc1239cb2ade182) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b517b309851ac08b904028af93feb56f') in 0.002377 seconds
-  Import took 0.007405 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.001672 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/windows/x64/UnityOpenXR.dll
-  artifactKey: Guid(7b51b375a24f43c2bdc1239cb2ade182) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/windows/x64/UnityOpenXR.dll using Guid(7b51b375a24f43c2bdc1239cb2ade182) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b517b309851ac08b904028af93feb56f') in 0.001828 seconds
-  Import took 0.004672 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1920.962257 seconds.
-  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
-  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '10a3741518494fd8c242e8fd21968d7d') in 0.155164 seconds
-  Import took 0.167435 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.643555 seconds.
-  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
-  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2cd820b0a75081e19f1019a7dc262415') in 0.009285 seconds
-  Import took 0.014267 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 121.333484 seconds.
-  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
-  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '451759f5b4128a670bc4796ea0fc3f42') in 0.008289 seconds
-  Import took 0.013377 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 858.480907 seconds.
-  path: Assets/InteractML/Scripts/IML Logic/IMLComponent.cs
-  artifactKey: Guid(3c477b3f40f547843930edfdcbde5951) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Scripts/IML Logic/IMLComponent.cs using Guid(3c477b3f40f547843930edfdcbde5951) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f9f2e57eae6c2451182296d54df10da1') in 0.015017 seconds
-  Import took 0.022836 seconds .
+  Time since last request: 0.010716 seconds.
+  path: Assets/InteractML/Scripts/IML Nodes/Controller Customisers/Editor/VRTriggerEditor.cs
+  artifactKey: Guid(eb7595f737b7b3a4fbe2109ba11c9fe4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Nodes/Controller Customisers/Editor/VRTriggerEditor.cs using Guid(eb7595f737b7b3a4fbe2109ba11c9fe4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0faeae888524d9f5404fbf3389e2f4c7') in 0.002464 seconds
+  Import took 0.006046 seconds .
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.017039 seconds.
+Registered in 0.005938 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.10 ms, found 6 plugins.
+Refreshing native plugins compatible for Editor in 0.69 ms, found 6 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.710 seconds
+- Completed reload, in  1.365 seconds
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.70 ms, found 6 plugins.
+Refreshing native plugins compatible for Editor in 1.63 ms, found 6 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1905 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.0 MB.
-System memory in use after: 92.2 MB.
+Unloading 1890 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 91.6 MB.
+System memory in use after: 91.7 MB.
 
-Unloading 122 unused Assets to reduce memory usage. Loaded Objects now: 2370.
-Total: 4.680900 ms (FindLiveObjects: 0.405100 ms CreateObjectMapping: 0.169100 ms MarkObjects: 3.982400 ms  DeleteObjects: 0.121800 ms)
+Unloading 88 unused Assets to reduce memory usage. Loaded Objects now: 2360.
+Total: 3.566200 ms (FindLiveObjects: 0.206600 ms CreateObjectMapping: 0.079500 ms MarkObjects: 3.199300 ms  DeleteObjects: 0.078800 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.008105 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.68 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.342 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.71 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1890 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 91.6 MB.
+System memory in use after: 91.7 MB.
+
+Unloading 88 unused Assets to reduce memory usage. Loaded Objects now: 2364.
+Total: 3.411700 ms (FindLiveObjects: 0.213800 ms CreateObjectMapping: 0.066300 ms MarkObjects: 3.054500 ms  DeleteObjects: 0.075700 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005475 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.59 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.228 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.57 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1890 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 91.6 MB.
+System memory in use after: 91.7 MB.
+
+Unloading 88 unused Assets to reduce memory usage. Loaded Objects now: 2368.
+Total: 2.824200 ms (FindLiveObjects: 0.215900 ms CreateObjectMapping: 0.079700 ms MarkObjects: 2.447400 ms  DeleteObjects: 0.079700 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 192.754975 seconds.
-  path: Assets/InteractML/Scripts/IML Logic/IMLComponent.cs
-  artifactKey: Guid(3c477b3f40f547843930edfdcbde5951) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Scripts/IML Logic/IMLComponent.cs using Guid(3c477b3f40f547843930edfdcbde5951) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c0a3a3d2725a1a1a1a7e6a10ebf8ae4a') in 0.009070 seconds
-  Import took 0.013822 seconds .
+  Time since last request: 189.067408 seconds.
+  path: Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/Mouse_Input_Color_Output_DTW.unity
+  artifactKey: Guid(5f26ace6b839bf349b2a70f5dd19b88c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/Mouse_Input_Color_Output_DTW.unity using Guid(5f26ace6b839bf349b2a70f5dd19b88c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9d63ab5892a14631150f8a6e7a0b3034') in 0.023065 seconds
+  Import took 0.029206 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005873 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.60 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.334 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 2.28 ms, found 6 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1890 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 91.7 MB.
+System memory in use after: 91.8 MB.
+
+Unloading 88 unused Assets to reduce memory usage. Loaded Objects now: 2372.
+Total: 2.839600 ms (FindLiveObjects: 0.255600 ms CreateObjectMapping: 0.099400 ms MarkObjects: 2.405100 ms  DeleteObjects: 0.077900 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 54.641075 seconds.
+  Time since last request: 125.199474 seconds.
   path: Assets/InteractML/Scripts/Input/Handlers/KeyboardHandler.cs
   artifactKey: Guid(99c5288b3cc8a6c4da1cf06541efdd8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Scripts/Input/Handlers/KeyboardHandler.cs using Guid(99c5288b3cc8a6c4da1cf06541efdd8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7ca4855900933ed033bac097285856ec') in 0.014163 seconds
-  Import took 0.019071 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.006547 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.70 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.551 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.66 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1905 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.1 MB.
-System memory in use after: 92.2 MB.
-
-Unloading 122 unused Assets to reduce memory usage. Loaded Objects now: 2374.
-Total: 4.040700 ms (FindLiveObjects: 0.384700 ms CreateObjectMapping: 0.139400 ms MarkObjects: 3.325700 ms  DeleteObjects: 0.188300 ms)
+Start importing Assets/InteractML/Scripts/Input/Handlers/KeyboardHandler.cs using Guid(99c5288b3cc8a6c4da1cf06541efdd8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aa4f3817965aaa993ea2c4ff5c7b128c') in 0.009552 seconds
+  Import took 0.014463 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 45.343009 seconds.
+  Time since last request: 0.001976 seconds.
   path: Assets/InteractML/Scripts/Input/Handlers/KeyboardHandler.cs
   artifactKey: Guid(99c5288b3cc8a6c4da1cf06541efdd8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Scripts/Input/Handlers/KeyboardHandler.cs using Guid(99c5288b3cc8a6c4da1cf06541efdd8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3b73959383a37c3e2f5df785b175a9c0') in 0.010037 seconds
-  Import took 0.014764 seconds .
+Start importing Assets/InteractML/Scripts/Input/Handlers/KeyboardHandler.cs using Guid(99c5288b3cc8a6c4da1cf06541efdd8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aa4f3817965aaa993ea2c4ff5c7b128c') in 0.002461 seconds
+  Import took 0.006462 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.299834 seconds.
+  path: Assets/InteractML/Scripts/IML Nodes/Controller Customisers/KeyboardPress.cs
+  artifactKey: Guid(6cd80d6ec5a1f7540bcf4649926cc13f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Nodes/Controller Customisers/KeyboardPress.cs using Guid(6cd80d6ec5a1f7540bcf4649926cc13f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '05c24b4dec2df61347b792eff5a6bd99') in 0.015041 seconds
+  Import took 0.021179 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.027720 seconds.
+  path: Assets/InteractML/Scripts/IML Nodes/Controller Customisers/Editor/KeyboardPressEditor.cs
+  artifactKey: Guid(766df6c727bee8748bb251f3e9b637f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Nodes/Controller Customisers/Editor/KeyboardPressEditor.cs using Guid(766df6c727bee8748bb251f3e9b637f5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fdc3459dfb146dc449c677ac88f6bffa') in 0.013825 seconds
+  Import took 0.018205 seconds .
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.006142 seconds.
+Registered in 0.009628 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 3.10 ms, found 6 plugins.
+Refreshing native plugins compatible for Editor in 0.59 ms, found 6 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.994 seconds
+- Completed reload, in  1.280 seconds
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.77 ms, found 6 plugins.
+Refreshing native plugins compatible for Editor in 0.58 ms, found 6 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1905 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.1 MB.
-System memory in use after: 92.2 MB.
+Unloading 1890 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 91.7 MB.
+System memory in use after: 91.8 MB.
 
-Unloading 122 unused Assets to reduce memory usage. Loaded Objects now: 2378.
-Total: 3.706400 ms (FindLiveObjects: 0.284300 ms CreateObjectMapping: 0.111400 ms MarkObjects: 3.159300 ms  DeleteObjects: 0.149600 ms)
+Unloading 89 unused Assets to reduce memory usage. Loaded Objects now: 2376.
+Total: 2.519700 ms (FindLiveObjects: 0.227500 ms CreateObjectMapping: 0.082400 ms MarkObjects: 2.141200 ms  DeleteObjects: 0.067600 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 123.896083 seconds.
+  path: Assets/InteractML/Scripts/Input/Handlers/KeyboardHandler.cs
+  artifactKey: Guid(99c5288b3cc8a6c4da1cf06541efdd8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/Input/Handlers/KeyboardHandler.cs using Guid(99c5288b3cc8a6c4da1cf06541efdd8c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd61af4eaa3ca451a309f11665a7f33dc') in 0.007915 seconds
+  Import took 0.012225 seconds .
 

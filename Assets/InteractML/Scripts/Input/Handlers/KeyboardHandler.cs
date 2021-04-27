@@ -24,6 +24,7 @@ namespace InteractML
 
         public KeyboardHandler(int butNo, IMLTriggerTypes type, string name)
         {
+            Debug.Log(Input.GetKey(_button));
             this.buttonNo = butNo;
             this.triggerType = type;
             this.buttonName = name;
@@ -36,9 +37,6 @@ namespace InteractML
         /// </summary>
         public override void HandleState()
         {
-            Debug.Log(Input.GetKey(_button));
-            Debug.Log(_button);
-            Debug.Log(buttonNo);
 
             if (Input.GetKey(_button))
             {

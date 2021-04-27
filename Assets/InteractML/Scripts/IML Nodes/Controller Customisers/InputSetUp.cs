@@ -6,7 +6,7 @@ using XNode;
 using InteractML.ControllerCustomisers;
 
 
-namespace InteractML.CustomControllers
+namespace InteractML.ControllerCustomisers
 {
     [NodeWidth(420)]
     public class InputSetUp : IMLNode
@@ -97,6 +97,8 @@ namespace InteractML.CustomControllers
 
         public void UpdateLogic()
         {
+
+            Debug.Log("record one" + recordOneButtonNo);
             if (trainingEnabled)
             {
                 foreach (InputHandler handler in trainingHandlers)
@@ -120,6 +122,7 @@ namespace InteractML.CustomControllers
         }
         public void OnInputDeviceChange()
         {
+
             switch (device)
             {
                 case IMLInputDevices.Keyboard:
