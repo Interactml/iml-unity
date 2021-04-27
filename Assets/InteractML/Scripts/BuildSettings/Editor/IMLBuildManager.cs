@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using System.IO;
+using UnityEngine;
 
 /// <summary>
 /// Methods to integrate IML files into the final build
