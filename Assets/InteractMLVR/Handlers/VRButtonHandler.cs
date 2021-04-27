@@ -69,7 +69,8 @@ namespace InteractML
 
                 foreach (UnityEngine.XR.InputDevice controller in _controllers)
                 {
-                    ///Debug.Log("found controllers " + _controllers.Count);
+                  
+                    //Debug.Log("found controllers " + _controllers.Count);
                     bool triggerValue;
                     if (controller.TryGetFeatureValue(_button, out triggerValue) && triggerValue)
                     {

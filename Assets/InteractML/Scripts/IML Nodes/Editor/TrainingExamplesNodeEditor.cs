@@ -138,11 +138,18 @@ namespace InteractML
                 m_BodyRect.width = NodeWidth - 10;
                 // height is the base node height plus the number of inputs/targets + extra offset after moving buttons with nodeports out of begin area
                 //m_BodyRect.height = baseNodeBodyHeight + ((m_ConnectedInputs + m_ConnectedTargets) * 20) + 225;
-                m_BodyRect.height = baseNodeBodyHeight - 30;
+                
+                if (m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
+                    m_BodyRect.height = baseNodeBodyHeight - 30;
+                else
+                    m_BodyRect.height = baseNodeBodyHeight - 60;
                 // if showing warning increase height 
                 if (m_TrainingExamplesNode.showWarning)
                 {
-                    m_BodyRect.height += 90;
+                    if(m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
+                        m_BodyRect.height += 90;
+                    else
+                        m_BodyRect.height += 60;
                 }
                 // NodeSpace makes the node longer/shorter if there is extra space needed or lacking at the end of the node
                 nodeSpace = 65;

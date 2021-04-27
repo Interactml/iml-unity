@@ -13,7 +13,7 @@ namespace InteractML
         public void Start()
         {
             imlgrab = GetComponent<IMLGrab>();
-            onSelectEnter.AddListener(Selected);
+            onSelectEntered.AddListener(Selected);
         }
 
         private void Selected(XRBaseInteractor interactable)

@@ -38,7 +38,6 @@ namespace InteractML
         }
         public void Update()
         {
-            Debug.Log(this);
             if (currentOld != current)
             {
                 this.GetComponent<Renderer>().material.SetTexture("_MainTex", current);
