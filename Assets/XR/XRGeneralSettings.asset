@@ -14,9 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_LoaderManagerInstance: {fileID: 1613731627154717816}
   m_InitManagerOnStart: 1
-  m_XRManager: {fileID: 0}
-  m_ProviderIntialized: 0
-  m_ProviderStarted: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,8 +41,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4c3631f5e58749a59194e0cf6baf6d5, type: 3}
   m_Name: Standalone Providers
   m_EditorClassIdentifier: 
-  m_InitializationComplete: 0
   m_RequiresSettingsUpdate: 1
   m_AutomaticLoading: 0
   m_AutomaticRunning: 0
-  m_Loaders: []
+  m_Loaders:
+  - {fileID: 11400000, guid: a576a8c1f36ca2848bea84a7ce474630, type: 2}
+  - {fileID: 11400000, guid: 98738a52bae580f41bbbcd2707059655, type: 2}

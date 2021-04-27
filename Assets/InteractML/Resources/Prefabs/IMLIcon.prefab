@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7444281257571340909}
   - component: {fileID: 7444281257571340908}
   - component: {fileID: 7444281257571340907}
-  - component: {fileID: 8103421695815092225}
+  - component: {fileID: 94089251799371001}
   m_Layer: 0
   m_Name: IMLIcon
   m_TagString: Untagged
@@ -58,6 +58,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -82,6 +83,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!135 &7444281257571340908
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -111,7 +113,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8103421695815092225
+--- !u!114 &94089251799371001
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,11 +122,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7444281257571340905}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d060dad9de89ea44b2297c2a249758b, type: 3}
+  m_Script: {fileID: 11500000, guid: 5db8dd2375f76944dbba1ea1e593d099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 0}
-  selectedHighlight: {r: 0, g: 0, b: 0, a: 0}
+  selectedHighlight: {r: 0.53333336, g: 0.5568628, b: 0.96862745, a: 0}
   trainedColor: {fileID: 2800000, guid: c417d3fdbb88654449462abbdc48680c, type: 3}
   baseColour: {fileID: 2800000, guid: c4c3665142c39b4459c779bd443b9776, type: 3}
   recordingColour: {fileID: 2800000, guid: 243854e302a54c04082cefa189303fc6, type: 3}

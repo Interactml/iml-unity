@@ -1464,7 +1464,7 @@ namespace InteractML
             //Debug.Log(universalInputEnabled);
             // Make sure that the icon is init
             if (icon == null && m_inputSetUp != null)
-                //InitializeIMLIndicator();
+                InitializeIMLIndicator();
 
             if (icon != null)
             {
@@ -1552,8 +1552,9 @@ namespace InteractML
         /// Update logic for input modules
         /// </summary>
         public void InputLogic(){
+
             // if user has enables universal input system
-            if(universalInputEnabled && universalInputActive)
+            if(universalInputActive)
             {
                 //if there is a reference to the node
                 if (m_inputSetUp != null)
