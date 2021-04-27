@@ -43,7 +43,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: dcacac4f-d21c-44ed-9f52-e4cdf2322b44
   numberInComponentList: -1
   ValueName: 
@@ -93,12 +92,11 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: 422cc719-c83d-4548-811e-3e9557a924e8
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  state: 1
-  GOHashCode: 16474
+  state: 0
+  GOHashCode: 19598
   CreatedDuringPlaymode: 0
 --- !u!114 &-6267761647402259264
 MonoBehaviour:
@@ -143,7 +141,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: eabcb99f-25ae-408c-979b-bc78f618fc52
   numberInComponentList: -1
   ReceivingData: 0
@@ -201,7 +198,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: 9a87be5d-8700-4496-9158-255106b85369
   numberInComponentList: -1
   ValueName: 
@@ -233,7 +229,6 @@ MonoBehaviour:
   ports:
     keys: []
     values: []
-  DevMode: 0
   id: 
   numberInComponentList: -1
   note: 'INPUT TRAINING DATA
@@ -283,7 +278,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: a37ef95a-16a9-4735-b2d8-1027f8ecfd8e
   numberInComponentList: -1
   ValueName: 
@@ -366,7 +360,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: 76576ba5-ff80-4db7-b9a5-d468ba8f4195
   numberInComponentList: -1
   ValueName: 
@@ -398,7 +391,6 @@ MonoBehaviour:
   ports:
     keys: []
     values: []
-  DevMode: 0
   id: 
   numberInComponentList: -1
   note: 'OUTPUT TRAINING DATA (RGB VALUES)
@@ -471,11 +463,10 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-  DevMode: 0
   id: 53949355-7c79-485c-9447-e419d17d0dd8
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 16522
+  ScriptHashCode: 19646
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: RGBColour
@@ -530,7 +521,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: ef03f6b0-90b5-4a64-8537-b44159b176c1
   numberInComponentList: -1
   ReceivingData: 0
@@ -588,7 +578,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: f2ade717-3053-48da-ad79-2833a55bfed2
   numberInComponentList: -1
   ValueName: 
@@ -646,7 +635,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: b88c1ddb-adbc-4db5-ab61-0af3f5c7ddbc
   numberInComponentList: -1
   ValueName: 
@@ -785,7 +773,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-  DevMode: 0
   id: 26244b0d-6e86-4880-aa38-9b90267c70d0
   numberInComponentList: 0
   IMLTrainingExamplesNodes:
@@ -843,6 +830,7 @@ MonoBehaviour:
     - RecordOneInputBoolPort
     - ToggleRecordingInputBoolPort
     - DeleteAllExamplesBoolPort
+    - SubFolderDataPathStringPort
     values:
     - _fieldName: InputFeatures
       _node: {fileID: 7294438029271661948}
@@ -951,7 +939,15 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-  DevMode: 0
+    - _fieldName: SubFolderDataPathStringPort
+      _node: {fileID: 7294438029271661948}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 1
+      _dynamic: 1
   id: 73f3f341-4afe-45e0-afd5-898769700fa7
   numberInComponentList: 0
   InputFeatures:
@@ -978,3 +974,4 @@ MonoBehaviour:
   showWarning: 0
   canCollect: 1
   listNo: 0
+  SubFolderDataPath: 
