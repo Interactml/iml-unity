@@ -242,7 +242,7 @@ namespace InteractML
                     if (Event.current.type == EventType.Repaint)
                     {
                         // Draw over xnode header tint
-                        GUI.DrawTexture(new Rect(6, 6, GetWidth() - 12, 24), NodeColor);
+                        //GUI.DrawTexture(new Rect(6, 6, GetWidth() - 12, 24), NodeColor);
 
                         // Draw line below header
                         GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));

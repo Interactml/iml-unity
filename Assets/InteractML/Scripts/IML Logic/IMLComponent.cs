@@ -1464,7 +1464,7 @@ namespace InteractML
             //Debug.Log(universalInputEnabled);
             // Make sure that the icon is init
             if (icon == null && m_inputSetUp != null)
-                InitializeIMLIndicator();
+                //InitializeIMLIndicator();
 
             if (icon != null)
             {
@@ -1564,7 +1564,7 @@ namespace InteractML
             {
                 foreach(CustomController controller in m_CustomControllerList)
                 {
-                    controller.UpdateLogic();
+                    //controller.UpdateLogic();
                 }
             }
 
@@ -2490,8 +2490,8 @@ namespace InteractML
                         success = MLSNode.StartRunning();
                         if (success && icon != null)
                             icon.SetBody(icon.runningColour);
-                        else
-                            icon.SetBody(icon.current);
+                        //else
+                            //icon.SetBody(icon.current);
                     }
                         
 

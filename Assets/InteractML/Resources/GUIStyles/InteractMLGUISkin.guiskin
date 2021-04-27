@@ -3414,10 +3414,10 @@ MonoBehaviour:
     m_TextClipping: 0
     m_ImagePosition: 3
     m_ContentOffset: {x: 0, y: 0}
-    m_FixedWidth: 20
+    m_FixedWidth: 15
     m_FixedHeight: 20
-    m_StretchWidth: 1
-    m_StretchHeight: 0
+    m_StretchWidth: 0
+    m_StretchHeight: 1
   - m_Name: Warning Header
     m_Normal:
       m_Background: {fileID: 0}
@@ -3461,7 +3461,7 @@ MonoBehaviour:
     m_Margin:
       m_Left: 0
       m_Right: 0
-      m_Top: 12
+      m_Top: 0
       m_Bottom: 0
     m_Padding:
       m_Left: 0

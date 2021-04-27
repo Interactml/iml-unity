@@ -70,7 +70,7 @@ namespace InteractML
         #region XNode messages
         public override void OnHeaderGUI()
         {
-            baseNodeBodyHeight = 320;
+            baseNodeBodyHeight = 250;
             // Get reference to the current node
             m_TrainingExamplesNode = (target as TrainingExamplesNode);
             NodeName = "TEACH THE MACHINE " + m_TrainingExamplesNode.listNo;
@@ -115,10 +115,10 @@ namespace InteractML
                 InputPortsNamesOverride.Add("TargetValues", "Labels");
 
                 base.nodeTips = m_TrainingExamplesNode.tooltips;
-               // if (m_TrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_TrainingExamplesNode.DesiredOutputFeatures.Count || lastShowWarning != m_TrainingExamplesNode.showWarning)
+                if (m_TrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_TrainingExamplesNode.DesiredOutputFeatures.Count || lastShowWarning != m_TrainingExamplesNode.showWarning)
                     m_RecalculateRects = true;
-                //m_ConnectedInputs = m_TrainingExamplesNode.DesiredInputFeatures.Count;
-                //m_ConnectedTargets = m_TrainingExamplesNode.DesiredOutputFeatures.Count;
+                m_ConnectedInputs = m_TrainingExamplesNode.DesiredInputFeatures.Count;
+                m_ConnectedTargets = m_TrainingExamplesNode.DesiredOutputFeatures.Count;
                 lastShowWarning = m_TrainingExamplesNode.showWarning;
                 base.OnBodyGUI();
             }
@@ -137,14 +137,15 @@ namespace InteractML
                 m_BodyRect.y = HeaderRect.height + m_PortRect.height;
                 m_BodyRect.width = NodeWidth - 10;
                 // height is the base node height plus the number of inputs/targets + extra offset after moving buttons with nodeports out of begin area
-                m_BodyRect.height = baseNodeBodyHeight + ((m_ConnectedInputs + m_ConnectedTargets) * 80) + 225;
+                //m_BodyRect.height = baseNodeBodyHeight + ((m_ConnectedInputs + m_ConnectedTargets) * 20) + 225;
+                m_BodyRect.height = baseNodeBodyHeight - 30;
                 // if showing warning increase height 
                 if (m_TrainingExamplesNode.showWarning)
                 {
-                    m_BodyRect.height += 60;
+                    m_BodyRect.height += 90;
                 }
                 // NodeSpace makes the node longer/shorter if there is extra space needed or lacking at the end of the node
-                nodeSpace = m_BodyRect.height * 0.4f;
+                nodeSpace = 65;
             }
         }
         /// <summary>
@@ -157,26 +158,32 @@ namespace InteractML
             // ShowButtons needs to be called outside of the BeginArea in order for the button nodeports to work
             ShowButtons();
 
+            // commented out for ual students
             // Moved the draw values out of begin area to draw them after showbuttons and not on top
-            GUILayout.Space(bodySpace);
+            /*GUILayout.Space(bodySpace);
             DrawValues(m_TrainingExamplesNode.DesiredInputFeatures, "Input Values");
             GUILayout.Space(bodySpace);
-            DrawValues(m_TrainingExamplesNode.DesiredOutputFeatures, "Target Values");
+            DrawValues(m_TrainingExamplesNode.DesiredOutputFeatures, "Target Values");*/
 
-            GUILayout.BeginArea(m_BodyRect);
 
             
             //show warning if there are training examples 
             if (m_TrainingExamplesNode.showWarning)
             {
+                GUILayout.Space(25);
                 if (m_TrainingExamplesNode.tooltips != null && m_TrainingExamplesNode.tooltips.BottomError != null && m_TrainingExamplesNode.tooltips.BottomError.Length > 0)
+                {
+                    //Changed for UAL students 
+                    nodeSpace = 55;
                     ShowWarning(m_TrainingExamplesNode.tooltips.BottomError[0]);
+                }
+                    
                 m_RecalculateRects = true;
             }
-            GUILayout.EndArea();
             
             // Added an option to specify a subfolder to save/load the data
-            ShowSubFolderDataField();
+            // commented out for UAL students 
+            //ShowSubFolderDataField();
 
             ShowTrainingExamplesDropdown();
         }
@@ -189,11 +196,11 @@ namespace InteractML
 
             if (m_TrainingExamplesNode.CollectingData)
             {
-                nameButton = "stop \n recording";
+                nameButton = "stop recording";
             }
             else
             {
-                nameButton = "start \n recording";
+                nameButton = "start recording";
             }
 
             if (!m_TrainingExamplesNode.canCollect)
@@ -406,7 +413,7 @@ namespace InteractML
 
         private void ShowButtons()
         {
-            int offset = 20;
+            int offset = 1;
             GUILayout.Space(20);
 
             // show record ONE example button
@@ -426,7 +433,7 @@ namespace InteractML
                 GUILayout.Space(5);
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(10);
-                GUILayout.Label("record one \nexample", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
+                GUILayout.Label("record one example", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
                 GUILayout.Label("");
                 GUILayout.EndHorizontal();
                 
@@ -485,17 +492,17 @@ namespace InteractML
 
             ShowClearAllExamplesButton();
             
-            GUILayout.Space(10);
+            GUILayout.Space(5);
             GUILayout.BeginHorizontal();
             GUILayout.Space(10);
-            GUILayout.Label("delete all \n recordings", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button Pink"));
+            GUILayout.Label("delete all recordings", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button Pink"));
             GUILayout.Label("");
             GUILayout.EndHorizontal();
             GUILayout.EndHorizontal();
 
             GUILayout.Space(20);
             GUILayout.BeginHorizontal();
-            GUILayout.Space(30);
+            GUILayout.Space(15);
             if (m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
             {
                 GUILayout.Label("Number of training pairs: " + m_TrainingExamplesNode.TrainingExamplesVector.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"));

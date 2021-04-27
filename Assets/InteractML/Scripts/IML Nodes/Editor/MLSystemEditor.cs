@@ -38,7 +38,7 @@ namespace InteractML
         {
             // Get reference to the current node
             m_MLSystem = (target as MLSystem);
-            nodeSpace = 10;
+            nodeSpace = 20;
             string arrayNo = "";
             if (m_MLSystem.numberInComponentList != -1)
                 arrayNo = m_MLSystem.numberInComponentList.ToString();
@@ -64,7 +64,7 @@ namespace InteractML
             InputPortsNamesOverride.Add("IMLTrainingExamplesNodes", "Recorded Data In");
             InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
             base.nodeTips = m_MLSystem.tooltips;
-            m_BodyRect.height = 330;
+            m_BodyRect.height = 350;
             base.OnBodyGUI();
         }
 
@@ -72,14 +72,14 @@ namespace InteractML
         {
             ShowTrainingIcon(m_MLSystem.LearningType.ToString());
             ShowButtons(m_MLSystem);
-            GUILayout.Space(m_BodyRect.height + HeaderRect.height - 50);
+            GUILayout.Space(20);
             ShowRunOnAwakeToggle(m_MLSystem as MLSystem);
             GUILayout.Space(20);
             // if there is an error show the correct warning
             if (m_MLSystem.error)
             {
-                nodeSpace = 40;
-                m_BodyRect.height = m_BodyRect.height + HeaderRect.height + 60;
+                nodeSpace = 60;
+                m_BodyRect.height = m_BodyRect.height + HeaderRect.height + 40;
                 ShowWarning(m_MLSystem.warning);
             }
         }
@@ -130,12 +130,11 @@ namespace InteractML
             m_ButtonsRect.y = m_IconCenter.y + m_IconCenter.height;
             m_ButtonsRect.width = m_BodyRect.width -10;
             m_ButtonsRect.height = 150;
-
+            GUILayout.Space(230);
 
             // DRAW BUTTONS AND PORTS OUTSIDE OF BEGIN AREA TO MAKE THEM WORK
             GUILayout.BeginHorizontal();
             // Draw port
-            GUILayout.Space(15);
             IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortToggleTrainInput, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
 
             // if button contains mouse position
@@ -146,7 +145,6 @@ namespace InteractML
             GUILayout.Space(15);
             GUILayout.BeginHorizontal();
             // Draw port
-            GUILayout.Space(15);
             IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortToggleRunInput, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
 
             RunModelButton();
@@ -154,7 +152,7 @@ namespace InteractML
 
             GUILayout.BeginArea(m_ButtonsRect);
 
-            GUILayout.Space(20);
+            //GUILayout.Space(20);
             GUILayout.BeginHorizontal();
             GUILayout.Space(NodeWidth / 2 - 20);
             if (GUILayout.Button("", m_NodeSkin.GetStyle("Reset")))
@@ -168,7 +166,6 @@ namespace InteractML
             GUILayout.Space(20);
             GUILayout.Label("reset model", m_NodeSkin.GetStyle("Reset Pink Label"));
             GUILayout.EndHorizontal();
-            GUILayout.Space(15);
             //ShowRunOnAwakeToggle(node);
             GUILayout.EndArea();
         }

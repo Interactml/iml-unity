@@ -20,6 +20,7 @@ namespace InteractML
         [HideInInspector]
         // hold current texture - used bu imlcomponent
         public Texture2D current;
+        private Texture2D currentOld;
 
         public void OnValidate()
         {
@@ -34,6 +35,17 @@ namespace InteractML
             IMLEventDispatcher.deselectGraph += DeactivateInterface;
             Deselected();
             SetBody(baseColour);
+        }
+        public void Update()
+        {
+            Debug.Log(this);
+            if (currentOld != current)
+            {
+                this.GetComponent<Renderer>().material.SetTexture("_MainTex", current);
+                Debug.Log("here");
+                currentOld = current;
+            }
+                
         }
 
         private void DestroyMe(bool destroy)
@@ -73,6 +85,7 @@ namespace InteractML
         
         public void SetBody(Texture2D texture)
         {
+            Debug.Log("set body" + this);
             if (this != null && Application.isPlaying)
             {
                // Debug.Log("change colour");
