@@ -1552,9 +1552,8 @@ namespace InteractML
         /// Update logic for input modules
         /// </summary>
         public void InputLogic(){
-
             // if user has enables universal input system
-            if(universalInputActive)
+            if(universalInputEnabled && universalInputActive)
             {
                 //if there is a reference to the node
                 if (m_inputSetUp != null)

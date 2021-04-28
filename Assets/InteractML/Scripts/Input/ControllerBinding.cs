@@ -10,7 +10,6 @@ namespace InteractML
         Keyboard,
         /*Mouse, */
         VRControllers,
-        ViveControllers
         /*VRHands*/
     }
 
