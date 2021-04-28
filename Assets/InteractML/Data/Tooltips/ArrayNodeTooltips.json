@@ -1,5 +1,5 @@
 {
-  "HelpTooltip": "Extracts and Outputs an array of floats.  Attach ",
+  "HelpTooltip": "\n ABOUT \n Extracts and Outputs an array of floats.\n",
   "PortTooltip": [ "Connect an array of floats, either from a script node or from a distance from first input node", "Outputs an array of floats, connect to a teach the machine node or to a script node" ],
   "BodyTooltip": {
     "tips": [

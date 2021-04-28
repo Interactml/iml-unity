@@ -6,7 +6,7 @@ using UnityEditor;
 using XNodeEditor;
 #endif
 
-namespace InteractML.MovementFeatures
+namespace InteractML.GameObjectMovementFeatures
 {
     [CustomNodeEditor(typeof(RotationEulerNode))]
     public class ExtractRotationEulerNodeEditor : IMLNodeEditor
@@ -25,7 +25,7 @@ namespace InteractML.MovementFeatures
             m_ExtractRotationEuler = (target as RotationEulerNode);
 
             // Initialise node name
-            NodeName = "LIVE ROTATION DATA";
+            NodeName = "ROTATION";
             NodeSubtitle = "Euler";
 
             // Initialise node height

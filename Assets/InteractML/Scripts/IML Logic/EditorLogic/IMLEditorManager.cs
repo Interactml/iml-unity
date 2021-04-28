@@ -21,7 +21,6 @@ public class IMLEditorManager
 #if UNITY_EDITOR
         // Subscribe this manager to the editor update loop
         EditorApplication.update += UpdateLogic;
-
         // Make sure the list is init
         if (m_IMLComponents == null)
             m_IMLComponents = new List<IMLComponent>();
@@ -57,7 +56,10 @@ public class IMLEditorManager
                 foreach (var MLcomponent in m_IMLComponents)
                 {
                     //Debug.Log("**EDITOR**");
-                    MLcomponent.UpdateLogic();
+                    if (MLcomponent != null)
+                        MLcomponent.UpdateLogic();
+                    else
+                        Debug.LogWarning("There is a null reference to a MLComponent in IMLEditorManager.UpdateLogic()");
                 }
             }
 
@@ -81,12 +83,19 @@ public class IMLEditorManager
         // Reload all models (if we can) when we enter playmode or when we come back to the editor
         foreach (var MLComponent in m_IMLComponents)
         {
-            // Get all nodes
-            MLComponent.GetAllNodes();
-            //// Reload models
-            //MLComponent.LoadAllModelsFromDisk(reCreateModels: true);
-            //// Run them (if marked with RunOnAwake)
-            //MLComponent.RunAllModels();
+            if (MLComponent != null)
+            {
+                // Get all nodes
+                MLComponent.GetAllNodes();
+                //// Reload models
+                //MLComponent.LoadAllModelsFromDisk(reCreateModels: true);
+                //// Run them (if marked with RunOnAwake)
+                //MLComponent.RunAllModels();
+            }
+            else
+            {
+                Debug.LogWarning("There is a null reference to a MLComponent in IMLEditorManager.SceneOpenedLogic()");
+            }
         }
 
     }
@@ -100,7 +109,10 @@ public class IMLEditorManager
     {
         foreach (IMLComponent MLComp in m_IMLComponents) {
             foreach (MLSystem MLS in MLComp.MLSystemNodeList) {
-                MLS.UIErrors();
+                if (MLS != null)
+                    MLS.UIErrors();
+                else
+                    Debug.LogWarning("Null reference to a MLComponent in IMLEditorManager.PlayModeStateChangedLogic()");
             }
         }
         #region Enter Events
@@ -111,13 +123,20 @@ public class IMLEditorManager
             // Reload all models (if we can) when we enter playmode or when we come back to the editor
             foreach (var MLComponent in m_IMLComponents)
             {
-                Debug.Log("Play mode state changed");
-                //MLComponent.LoadDataAndRunOnAwakeModels();
-                MLComponent.RunModelsOnPlay();
-                //// Reload models
-                //MLComponent.LoadAllModelsFromDisk(reCreateModels: true);
-                //// Run them (if marked with RunOnAwake)
-                //MLComponent.RunAllModels();
+                if (MLComponent != null)
+                {
+                    //Debug.Log("Play mode state changed");
+                    //MLComponent.LoadDataAndRunOnAwakeModels();
+                    MLComponent.RunModelsOnPlay();
+                    //// Reload models
+                    //MLComponent.LoadAllModelsFromDisk(reCreateModels: true);
+                    //// Run them (if marked with RunOnAwake)
+                    //MLComponent.RunAllModels();
+                }
+                else
+                {
+                    Debug.LogWarning("Null reference to a MLComponent in IMLEditorManager.PlayModeStateChangedLogic() when EnteredPlayMode");
+                }
             }
             //Debug.Log("**Models reconfigured in editor status: " + playModeStatus + "**");
         }
@@ -126,10 +145,18 @@ public class IMLEditorManager
         {
             foreach (var MLComponent in m_IMLComponents)
             {
-                MLComponent.updateGameObjectImage();
-                MLComponent.GetAllNodes();
-                MLComponent.UpdateGameObjectNodes(changingPlayMode: true);
-                MLComponent.UpdateScriptNodes(changingPlayMode: true);
+                if (MLComponent != null)
+                {
+                    MLComponent.updateGameObjectImage();
+                    MLComponent.GetAllNodes();
+                    MLComponent.UpdateGameObjectNodes(changingPlayMode: true);
+                    MLComponent.UpdateScriptNodes(changingPlayMode: true);
+                }
+                else
+                {
+                    Debug.LogWarning("Null reference to a MLComponent in IMLEditorManager.PlayModeStateChangedLogic() when EnteredEditMode");
+                }
+
             }
         }
 
@@ -142,8 +169,16 @@ public class IMLEditorManager
         {
             foreach (var MLComponent in m_IMLComponents)
             {
-                MLComponent.UpdateGameObjectNodes(changingPlayMode: true);
-                MLComponent.UpdateScriptNodes(changingPlayMode: true);
+                if (MLComponent != null)
+                {
+                    MLComponent.UpdateGameObjectNodes(changingPlayMode: true);
+                    MLComponent.UpdateScriptNodes(changingPlayMode: true);
+                }
+                else
+                {
+                    Debug.LogWarning("Null reference to a MLComponent in IMLEditorManager.PlayModeStateChangedLogic() when ExitingPlayMode");
+                }
+
             }
         }
 
@@ -152,7 +187,10 @@ public class IMLEditorManager
         {
             foreach (var MLComponent in m_IMLComponents)
             {
-                MLComponent.StopAllModels();
+                if (MLComponent != null)
+                    MLComponent.StopAllModels();
+                else
+                    Debug.LogWarning("Null reference to a MLComponent in IMLEditorManager.PlayModeStateChangedLogic() when leaving a playmode or editormode");
             }
         }
 
@@ -167,6 +205,7 @@ public class IMLEditorManager
     /// </summary>
     private static void ClearIMLComponents()
     {
+        // Clear private list
         m_IMLComponents.Clear();
     }
 

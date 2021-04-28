@@ -22,7 +22,6 @@ namespace InteractML
         }
         protected override void SetTrainingType()
         {
-            Debug.Log("here regress");
             m_trainingType = IMLSpecifications.TrainingSetType.SingleTrainingExamples;
         }
 

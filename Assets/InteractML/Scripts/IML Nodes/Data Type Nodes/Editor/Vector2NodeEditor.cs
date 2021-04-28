@@ -28,7 +28,7 @@ namespace InteractML.DataTypeNodes
             m_Vector2Node = (target as Vector2Node);
 
             // Initialise node name
-            NodeName = "LIVE VECTOR2 DATA";
+            NodeName = "VECTOR2";
 
             // Initialise node body height
             m_BodyRect.height = 110;

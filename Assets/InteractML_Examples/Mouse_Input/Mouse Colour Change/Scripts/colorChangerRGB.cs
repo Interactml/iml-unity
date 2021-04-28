@@ -13,12 +13,9 @@ public class colorChangerRGB : MonoBehaviour
     private Color regressionColor;
 
     // IML values regression
-    [PullFromIMLGraph]
-    public float SetR;
-    [PullFromIMLGraph]
-    public float SetG;
-    [PullFromIMLGraph]
-    public float SetB;
+    [PullFromIMLGraph, Range(0, 1)]
+    public Vector3 RGBColour;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,9 +30,9 @@ public class colorChangerRGB : MonoBehaviour
     void Update()
     {
         // Get the values from the iml controller
-        regressionColor.r = SetR;
-        regressionColor.g = SetG;
-        regressionColor.b = SetB;
+        regressionColor.r = RGBColour.x;
+        regressionColor.g = RGBColour.y;
+        regressionColor.b = RGBColour.z;
 
         m_Renderer.material.SetColor("_Color", regressionColor);
         

@@ -6,7 +6,7 @@ using UnityEditor;
 using XNodeEditor;
 #endif
 
-namespace InteractML.MovementFeatures
+namespace InteractML.GameObjectMovementFeatures
 {
     [CustomNodeEditor(typeof(DistanceToFirstInputNode))]
     public class ExtractDistanceToFirstInputNodeEditor : IMLNodeEditor
@@ -25,7 +25,7 @@ namespace InteractML.MovementFeatures
             m_ExtractDistanceToFirstInput = (target as DistanceToFirstInputNode);
 
             // Initialise node name
-            NodeName = "DISTANCE BETWEEN INPUTS";
+            NodeName = "DISTANCE TO FIRST INPUT";
 
             // Initialise node height
             m_BodyRect.height = 80;

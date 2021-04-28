@@ -13,44 +13,10 @@ MonoBehaviour:
   m_Name: Mouse_Input_Console_Output_IML_Controller
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: 114507523331420728}
-  - {fileID: 114357140570682068}
-  - {fileID: 114913048169967506}
   - {fileID: 114315671501912336}
-  - {fileID: 114277858093761784}
+  - {fileID: 7636454524532698999}
+  - {fileID: 1350118086287415889}
   SceneComponent: {fileID: 0}
---- !u!114 &114277858093761784
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: GAME OBJECT INPUT
-  m_EditorClassIdentifier: 
-  id: 42bf189a-fb56-4950-b205-5f13a4a707ec
-  graph: {fileID: 11400000}
-  position: {x: -632, y: -136}
-  ports:
-    keys:
-    - GameObjectDataOut
-    values:
-    - _fieldName: GameObjectDataOut
-      _node: {fileID: 114277858093761784}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  GameObjectDataOut: {fileID: 0}
-  GameObjMissing: 0
-  state: 0
 --- !u!114 &114315671501912336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,9 +29,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
   m_Name: LIVE POSITION DATA
   m_EditorClassIdentifier: 
-  id: fd93943d-403e-4532-abdd-feac88045df4
   graph: {fileID: 11400000}
-  position: {x: -280, y: -184}
+  position: {x: -40, y: -200}
   ports:
     keys:
     - LiveDataOut
@@ -74,7 +39,10 @@ MonoBehaviour:
     - _fieldName: LiveDataOut
       _node: {fileID: 114315671501912336}
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: InputFeatures
+        node: {fileID: 1350118086287415889}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -89,149 +57,23 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
   DevMode: 0
+  id: fd93943d-403e-4532-abdd-feac88045df4
+  numberInComponentList: -1
+  ReceivingData: 0
+  FeatureValueReceivingData: 000000
+  Counter: 1
+  Count: 5
+  ToggleSwitches: 010101
+  ReceivedValue: []
   GameObjectDataIn: {fileID: 0}
   LiveDataOut: {fileID: 0}
   LocalSpace: 0
-  x_switch: 0
-  y_switch: 0
-  z_switch: 0
+  GameObjInputMissing: 1
   m_PositionExtracted:
     m_Values:
     - 1.47
     - -4.98
     - -2.85
-  ReceivingData: 0
---- !u!114 &114357140570682068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21cbf9d5f90a6a749bf70593dd60aa10, type: 3}
-  m_Name: MACHINE LEARNING SYSTEM
-  m_EditorClassIdentifier: 
-  id: 04161202-039c-48d1-b3e5-ef8459a4cfea
-  graph: {fileID: 11400000}
-  position: {x: 984, y: -232}
-  ports:
-    keys:
-    - IMLTrainingExamplesNodes
-    - InputFeatures
-    - ModelOutput
-    values:
-    - _fieldName: IMLTrainingExamplesNodes
-      _node: {fileID: 114357140570682068}
-      _typeQualifiedName: System.Collections.Generic.List`1[[InteractML.TrainingExamplesNode,
-        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
-        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: TrainingExamplesNodeToOutput
-        node: {fileID: 114507523331420728}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: InputFeatures
-      _node: {fileID: 114357140570682068}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: ModelOutput
-      _node: {fileID: 114357140570682068}
-      _typeQualifiedName: InteractML.IMLConfiguration, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: IMLModelOutputs
-        node: {fileID: 114913048169967506}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  IMLTrainingExamplesNodes:
-  - {fileID: 114507523331420728}
-  InputFeatures:
-  - {fileID: 114315671501912336}
-  ModelOutput: {fileID: 0}
-  PredictedRapidlibOutput:
-  - 0
-  DelayedPredictedOutput:
-  - 11
-  m_ExpectedInputList: 03000000
-  m_ExpectedOutputList: 00000000
-  m_LearningType: 0
-  EnableKeyboardControl: 0
-  TrainingKey: 116
-  RunningKey: 114
-  TrainOnPlaymodeChange: 0
-  RunOnAwake: 0
---- !u!114 &114507523331420728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 951c4d4b1f5774e4889ccfa10aab7dc0, type: 3}
-  m_Name: TEACH THE MACHINE
-  m_EditorClassIdentifier: 
-  id: 2affc6e8-258c-418e-bca8-2919cb4deb85
-  graph: {fileID: 11400000}
-  position: {x: 280, y: -264}
-  ports:
-    keys:
-    - InputFeatures
-    - TrainingExamplesNodeToOutput
-    values:
-    - _fieldName: InputFeatures
-      _node: {fileID: 114507523331420728}
-      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: TrainingExamplesNodeToOutput
-      _node: {fileID: 114507523331420728}
-      _typeQualifiedName: InteractML.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: IMLTrainingExamplesNodes
-        node: {fileID: 114357140570682068}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  DevMode: 0
-  InputFeatures:
-  - {fileID: 114315671501912336}
-  TrainingExamplesNodeToOutput: {fileID: 114507523331420728}
-  ModeOfCollection: 0
-  TrainingExamplesVector: []
-  TrainingSeriesCollection: []
-  m_DesiredInputsConfig: 03000000
-  m_DesiredOutputsConfig: 00000000
-  IMLConfigurationNodesConnected: []
-  StartDelay: 0
-  CaptureRate: 10
-  RecordTime: -1
-  EnableKeyboardControl: 0
-  RecordDataKey: 0
 --- !u!114 &114913048169967506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,7 +98,7 @@ MonoBehaviour:
       _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: ModelOutput
-        node: {fileID: 114357140570682068}
+        node: {fileID: 0}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -266,3 +108,259 @@ MonoBehaviour:
   IMLModelOutputs: {fileID: 0}
   m_IMLOutputVector:
   - 0
+--- !u!114 &1350118086287415889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a91209fffbd444385488c8c3e7a6e2, type: 3}
+  m_Name: Single Training Examples
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 280, y: -248}
+  ports:
+    keys:
+    - InputFeatures
+    - TargetValues
+    - RecordOneInputBool
+    - ToggleRecordingInputBool
+    - DeleteLastInputBool
+    - DeleteAllInputBool
+    - TrainingExamplesNodeToOutput
+    - RecordOneInputBoolPort
+    - ToggleRecordingInputBoolPort
+    - DeleteAllExamplesBoolPort
+    values:
+    - _fieldName: InputFeatures
+      _node: {fileID: 1350118086287415889}
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: LiveDataOut
+        node: {fileID: 114315671501912336}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: TargetValues
+      _node: {fileID: 1350118086287415889}
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: RecordOneInputBool
+      _node: {fileID: 1350118086287415889}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: ToggleRecordingInputBool
+      _node: {fileID: 1350118086287415889}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: DeleteLastInputBool
+      _node: {fileID: 1350118086287415889}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: DeleteAllInputBool
+      _node: {fileID: 1350118086287415889}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: TrainingExamplesNodeToOutput
+      _node: {fileID: 1350118086287415889}
+      _typeQualifiedName: InteractML.TrainingExamplesNode, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: IMLTrainingExamplesNodes
+        node: {fileID: 7636454524532698999}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: RecordOneInputBoolPort
+      _node: {fileID: 1350118086287415889}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 1
+      _dynamic: 1
+    - _fieldName: ToggleRecordingInputBoolPort
+      _node: {fileID: 1350118086287415889}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 1
+      _dynamic: 1
+    - _fieldName: DeleteAllExamplesBoolPort
+      _node: {fileID: 1350118086287415889}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 1
+      _dynamic: 1
+  DevMode: 0
+  id: 64c8356f-8a7a-4e8d-90b2-8afddbce061e
+  numberInComponentList: -1
+  InputFeatures:
+  - {fileID: 114315671501912336}
+  TargetValues: []
+  RecordOneInputBool: 0
+  ToggleRecordingInputBool: 0
+  DeleteLastInputBool: 0
+  DeleteAllInputBool: 0
+  TrainingExamplesNodeToOutput: {fileID: 1350118086287415889}
+  ModeOfCollection: 0
+  m_DesiredInputsConfig: 03000000
+  m_DesiredOutputsConfig: 
+  MLSystemNodesConnected:
+  - {fileID: 7636454524532698999}
+  StartDelay: 0
+  CaptureRate: 10
+  RecordTime: -1
+  EnableKeyboardControl: 0
+  RecordDataKey: 0
+  showWarning: 0
+  canCollect: 0
+  listNo: 0
+--- !u!114 &7636454524532698999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a51c50017649824896fd13d40aded38, type: 3}
+  m_Name: Classification ML System
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 680, y: -248}
+  ports:
+    keys:
+    - IMLTrainingExamplesNodes
+    - InputFeatures
+    - ToggleTrainInputBool
+    - ToggleRunInputBool
+    - ToggleTrainInputBoolPort
+    - ToggleRunInputBoolPort
+    values:
+    - _fieldName: IMLTrainingExamplesNodes
+      _node: {fileID: 7636454524532698999}
+      _typeQualifiedName: System.Collections.Generic.List`1[[InteractML.TrainingExamplesNode,
+        Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
+        mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: TrainingExamplesNodeToOutput
+        node: {fileID: 1350118086287415889}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: InputFeatures
+      _node: {fileID: 7636454524532698999}
+      _typeQualifiedName: System.Collections.Generic.List`1[[XNode.Node, XNode, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: ToggleTrainInputBool
+      _node: {fileID: 7636454524532698999}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: ToggleRunInputBool
+      _node: {fileID: 7636454524532698999}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: ToggleTrainInputBoolPort
+      _node: {fileID: 7636454524532698999}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: ToggleRunInputBoolPort
+      _node: {fileID: 7636454524532698999}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  DevMode: 0
+  id: 2a7c4d1f-6bf3-4e61-ad73-c3b27a931fbb
+  numberInComponentList: -1
+  IMLTrainingExamplesNodes:
+  - {fileID: 1350118086287415889}
+  InputFeatures: []
+  ToggleTrainInputBool: 0
+  ToggleRunInputBool: 0
+  PredictedRapidlibOutput: []
+  DelayedPredictedOutput: []
+  m_NumExamplesTrainedOn: 0
+  m_ExpectedInputList: 
+  m_ExpectedOutputList: 
+  m_trainingType: 0
+  m_LearningType: 0
+  EnableKeyboardControl: 1
+  TrainingKey: 116
+  RunningKey: 0
+  TrainOnPlaymodeChange: 0
+  RunOnAwake: 0
+  matchLiveDataInputs: 0
+  matchVectorLength: 0
+  warning: Live data in does not match the trained examples
+  error: 1
+  trainOnLoad: 0

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XNode;
@@ -31,6 +32,21 @@ namespace InteractML
         /// </summary>
         [SerializeField]
         public List<IMLBaseDataType> PredictedOutput;
+
+        //[Input]
+        //public List<Node> TriggerTrain;
+
+        /// <summary>
+        /// Toggle Train Button Input Customiser Boolean
+        /// </summary>
+        [Input]
+        public bool ToggleTrainInputBool;
+
+        /// <summary>
+        /// Toggle Run Button Input Customiser Boolean
+        /// </summary>
+        [Input]
+        public bool ToggleRunInputBool;
 
         /// <summary>
         /// Predicted Rapidlib Output 
@@ -199,7 +215,7 @@ namespace InteractML
         /// </summary>
         public bool error = false;
 
-        public bool trainOnLoad = false;
+        public bool trainOnLoad = true;
 
         protected bool  isKNN;
 
@@ -264,7 +280,31 @@ namespace InteractML
         /// <param name="to"></param>
         public override void OnCreateConnection(XNode.NodePort from, XNode.NodePort to)
         {
+            Debug.Log(from.GetType().ToString());
             base.OnCreateConnection(from, to);
+
+            // If there is a connection to any of the button ports...
+            if (to.fieldName == "ToggleTrainInputBoolPort")
+            {
+                // check incoming node type and port data type is accepted by input port
+                System.Type[] portTypesAccept = new System.Type[] { typeof(bool) };
+                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IMLNode) };
+                this.DisconnectPortAndNodeIfANYTypes(from, to, portTypesAccept, nodeTypesAccept);
+                // Exit any further checks to avoid unwanted disconnections
+                return;
+
+            }
+            if (to.fieldName == "ToggleRunInputBoolPort")
+            {
+                // check incoming node type and port data type is accepted by input port
+                System.Type[] portTypesAccept = new System.Type[] { typeof(bool) };
+                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IMLNode) };
+                this.DisconnectPortAndNodeIfANYTypes(from, to, portTypesAccept, nodeTypesAccept);
+                // Exit any further checks to avoid unwanted disconnections
+                return;
+
+            }
+
             m_WrongNumberOfTargetValues = false;
             m_TrainingExamplesConflict = false;
 
@@ -339,10 +379,10 @@ namespace InteractML
             if(port.fieldName == "InputFeatures")
             {
                 InputFeatures = this.GetInputNodesConnected("InputFeatures");
-                CheckLiveDataInputMatchesTrainingExamples();
-                CheckLengthInputsVector();
-                UIErrors();
             }
+            CheckLiveDataInputMatchesTrainingExamples();
+            CheckLengthInputsVector();
+            UIErrors();
 
         }
 
@@ -389,7 +429,9 @@ namespace InteractML
             IMLEventDispatcher.ModelSetUpChangeCallback += UIErrors;
 
 
-            IMLEventDispatcher.LoadModelsCallback += LoadOrTrain; 
+            IMLEventDispatcher.LoadModelsCallback += LoadOrTrain;
+
+            IMLEventDispatcher.listenText += ListenText;
         }
         /// <summary>
         /// Method that subscribes relevant methods to events in the event dispatcher
@@ -411,6 +453,8 @@ namespace InteractML
             IMLEventDispatcher.ModelSetUpChangeCallback -= UIErrors;
 
             IMLEventDispatcher.LoadModelsCallback -= LoadOrTrain;
+
+            IMLEventDispatcher.listenText -= ListenText;
         }
 
         /// <summary>
@@ -502,7 +546,11 @@ namespace InteractML
             m_TrainingExamplesNodeportName = "IMLTrainingExamplesNodes";
             m_LiveFeaturesNodeportName = "InputFeatures";
 
-            
+            // Add all required dynamic ports
+            // ToggleTrainInputBoolPort           
+            this.GetOrCreateDynamicPort("ToggleTrainInputBoolPort", typeof(bool), NodePort.IO.Input);
+            // ToggleRunInputBoolPort
+            this.GetOrCreateDynamicPort("ToggleRunInputBoolPort", typeof(bool), NodePort.IO.Input);
 
 
         }
@@ -670,25 +718,28 @@ namespace InteractML
         /// Sets running boolean to true 
         /// </summary>
         /// <returns>boolean on whether the model has started running</returns>
-        private bool StartRunning()
+        public bool StartRunning()
         {
-            Debug.Log("here");
-            UpdateOutputFormat();
-            // If the system is not running and it is trained, it is not traing and the vectors match 
-            if (!m_Running && Trained && !Training && matchLiveDataInputs && matchVectorLength)
+            if (!m_Running)
             {
-                // Set flag to true if running inputs/outputs are not null and the model is trained or it is a series 
-                if (((m_RapidlibInputVector != null && m_RapidlibOutputVector != null) || m_trainingType == IMLSpecifications.TrainingSetType.SeriesTrainingExamples))
+                UpdateOutputFormat();
+                // If the system is not running and it is trained, it is not traing and the vectors match 
+                if (!m_Running && Trained && !Training && matchLiveDataInputs && matchVectorLength)
                 {
-                    m_Running = true;
-                    return true;
-                }
-                else
-                {
-                    Debug.LogError("Rapidlib vectors for realtime predictions are null!");
-                    return false;
+                    // Set flag to true if running inputs/outputs are not null and the model is trained or it is a series 
+                    if (((m_RapidlibInputVector != null && m_RapidlibOutputVector != null) || m_trainingType == IMLSpecifications.TrainingSetType.SeriesTrainingExamples))
+                    {
+                        m_Running = true;
+                        return true;
+                    }
+                    else
+                    {
+                        Debug.LogError("Rapidlib vectors for realtime predictions are null!");
+                        return false;
+                    }
                 }
             }
+            
             return false; 
         }
         /// <summary>
@@ -728,9 +779,7 @@ namespace InteractML
         /// <returns></returns>
         public string GetJSONFileName()
         {
-            string graphName = this.graph.name;
-            string nodeIndex = this.graph.nodes.FindIndex(a => a == this).ToString();
-            string fileName = graphName + "_node_" + nodeIndex + "_" + "IMLConfiguration";
+            string fileName = "MLSystem" + this.id;
             return fileName;
         }
 
@@ -1515,25 +1564,24 @@ namespace InteractML
         {
             // Get training examples from the connected examples nodes
             IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
+            // get the number of input features for the first training examples
             int numberOfTrainingDataInputs = 0;
-
-            if (!Lists.IsNullOrEmpty(ref IMLTrainingExamplesNodes))
+            // if the list has objects
+            if(!Lists.IsNullOrEmpty(ref IMLTrainingExamplesNodes))
             {
-                for (int i = 0; i < IMLTrainingExamplesNodes.Count; i++)
-                {
-                    if (IMLTrainingExamplesNodes[i] != null)
-                    {
-                        numberOfTrainingDataInputs = numberOfTrainingDataInputs + IMLTrainingExamplesNodes[i].GetInputPort("InputFeatures").GetConnections().Count();
-                    }
-                }
+                // set the numnber of training data inputs as the first connected training example (which should be the same as the rest connected)
+                numberOfTrainingDataInputs = IMLTrainingExamplesNodes[0].GetInputPort("InputFeatures").GetConnections().Count();
             }
 
+            // if the number of input features connected is the same to that of the connected training examples set matching to true
             if (numberOfTrainingDataInputs == GetInputPort("InputFeatures").GetConnections().Count())
+            {
                 matchLiveDataInputs = true;
-            else
+            } else
+            {
                 matchLiveDataInputs = false;
-
-
+            }
+                
 
         }
 
@@ -1558,7 +1606,7 @@ namespace InteractML
                 for (int i = 0; i < trainingNodesIML.Count; i++)
                 {
                     // If there are training examples in this node...
-                    if (!Lists.IsNullOrEmpty(ref trainingNodesIML[i].TrainingExamplesVector))
+                    if (trainingNodesIML[i].TrainingExamplesVector.Count > 0)
                     {
                         // Go through all the training examples
                         for (int j = 0; j < trainingNodesIML[i].TrainingExamplesVector.Count; j++)
@@ -1607,7 +1655,7 @@ namespace InteractML
                 for (int i = 0; i < trainingNodesIML.Count; i++)
                 {
                     // If there are training series in this node...
-                    if (!Lists.IsNullOrEmpty(ref trainingNodesIML[i].TrainingSeriesCollection))
+                    if (trainingNodesIML[i].TrainingSeriesCollection.Count > 0)
                     {
                         foreach (var IMLSeries in trainingNodesIML[i].TrainingSeriesCollection)
                         {
@@ -1876,7 +1924,8 @@ namespace InteractML
                 // if the applicsation is not playing show error about running in edit mode 
             } else if (!Application.isPlaying)
             {
-                warning = tooltips.BottomError[4];
+                if (tooltips.BottomError != null)
+                    warning = tooltips.BottomError[4];
                 error = true;
             }
             else
@@ -1913,63 +1962,38 @@ namespace InteractML
         {
             //test
             //Debug.Log(Model.ModelAddress);
-            //Debug.Log(id);
             //Debug.Log(Model.ModelStatus);
             //Debug.Log(Trained);
             //Debug.Log(m_trainingType);
             //Debug.Log(m_Model.TypeOfModel);
-
-            //set errors for ui
-            //UIErrors();
-            //Set Learning Type 
-            //SetLearningType();
-
-            //if (Trained && !matchVectorLength)
-              //CheckLengthInputsVector();
-
-
-            //Check if live data input matches training examples 
-            //CheckLiveDataInputMatchesTrainingExamples();
-
-            // Update Input Config List
-            //UpdateInputConfigList();
-
-            // Update Output Config List from Training Examples Node
-            //UpdateOutputConfigList();
-
-            // Update Number of Training Examples Connected
-            //UpdateTotalNumberTrainingExamples();
-
-            // Make sure that current output format matches the expected output format
-            //UpdateOutputFormat();
-
-            // Make sure dynamic output ports match the expected output format
+            
             //UpdateDynamicOutputPorts(IMLTrainingExamplesNodes, m_ExpectedOutputList, ref m_DynamicOutputPorts);
+            // Pull inputs from bool event nodeports
+            if (GetInputValue<bool>("ToggleTrainInputBoolPort"))
+                IMLEventDispatcher.TrainMLSCallback(this.id);
+            if (GetInputValue<bool>("ToggleRunInputBoolPort"))
+                IMLEventDispatcher.ToggleRunCallback(this.id);
 
             // Perform running logic (it will account for DTW and Classification/Regression) only if there is a predicted output            
             RunningLogic();
-
-            /*Debug.Log(IMLTrainingExamplesNodes.Count);
-            Debug.Log(m_ExpectedOutputList.Count);
-            Debug.Log(m_DynamicOutputPorts.Count);*/
-            
-            // Update feature selection matrix
-            // TO DO
-           /* Debug.Log("expected output" + m_ExpectedOutputList.Count);
-            Debug.Log("predicted rap lib output" + PredictedRapidlibOutput.Length);
-            Debug.Log("predicted output" + PredictedOutput.Count);*/
-            // TO DO add some logic
-            //UpdateRapidLibOutputVector();
 
         }
 
         private bool LoadOrTrain()
         {
             ResetModel();
-
-            if (Model.TypeOfModel == RapidlibModel.ModelType.DTW && trainOnLoad)
+            //Debug.Log(trainOnLoad);
+            //Debug.Log(Model.TypeOfModel);
+            if (Model.TypeOfModel == RapidlibModel.ModelType.DTW)
             {
-                return TrainModel();
+                if (NumExamplesTrainedOn > 0)
+                {
+                    return TrainModel();
+                } else
+                {
+                    return true;
+                }
+                
 
             } else if(Model.TypeOfModel == RapidlibModel.ModelType.NeuralNetwork || Model.TypeOfModel == RapidlibModel.ModelType.kNN)  
             {
@@ -1981,6 +2005,62 @@ namespace InteractML
                 return true;
             }
             
+        }
+
+        private bool ListenText(string nodeid)
+        {
+            bool listening;
+            if (this.id == nodeid)
+                IMLEventDispatcher.getText += GetStatus;
+            else
+                IMLEventDispatcher.getText -= GetStatus;
+            return true;
+        }
+        private string GetStatus(string nodeid)
+        {
+            if (nodeid == this.id)
+            {
+                
+                string status = "";
+                if (Trained)
+                {
+                    status = "Trained " + m_NumExamplesTrainedOn.ToString() + "\n";
+                }
+                
+                if (Running)
+                {
+                    status += "Running \n";
+                    if(LearningType != IMLSpecifications.LearningType.DTW)
+                    {
+                        int i = 0;
+                        foreach (IMLBaseDataType dataType in PredictedOutput)
+                        {
+                            status += "Output: " + i;
+                            i++;
+                            foreach (float f in dataType.Values)
+                                status += f.ToString() + "\n";
+                        }
+
+                    }
+                    
+                } else
+                {
+                    if(LearningType == IMLSpecifications.LearningType.DTW)
+                    {
+                        int i = 0;
+                        foreach (IMLBaseDataType dataType in PredictedOutput)
+                        {
+                            status += "Output: " + i;
+                            i++;
+                            foreach (float f in dataType.Values)
+                                status += f.ToString() + "\n";
+                        }
+                    }
+                }
+
+                return status;
+            }
+            return null;
         }
 
         #endregion

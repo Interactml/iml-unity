@@ -26,7 +26,7 @@ namespace InteractML
         /// Texture2D for node color
         /// </summary>
         /// <returns></returns>
-        protected Texture2D NodeColor { get; set; }
+        protected Texture2D NodeColor { get; set; }  
 
         /// <summary>
         /// Float value for line weight
@@ -139,6 +139,8 @@ namespace InteractML
         // Dictionaries to allow the override of portFields
         protected Dictionary<string, string> InputPortsNamesOverride;
         protected Dictionary<string, string> OutputPortsNamesOverride;
+        
+        protected Dictionary<string, string> CustomInputPortsNamesOverride;
         protected bool OverridePortNames = false;
         /// <summary>
         /// List of nodetips 
@@ -148,6 +150,8 @@ namespace InteractML
         /// Used to calculate the extra space the node needs to be the right height
         /// </summary>
         protected float nodeSpace;
+
+        
 
 
         #endregion
@@ -171,6 +175,8 @@ namespace InteractML
 
         public string[] feature_labels;
 
+        private string lastWindow;
+
         #endregion
         #region Variable TrainingExamples 
         /// <summary>
@@ -186,97 +192,144 @@ namespace InteractML
 
         public override void OnHeaderGUI()
         {
+            if(EditorWindow.focusedWindow != null)
+            {
+                if (!EditorWindow.focusedWindow.ToString().Contains("XNodeEditor.NodeEditorWindow") && lastWindow != EditorWindow.focusedWindow.ToString())
+                {
+                    Resources.UnloadUnusedAssets();
+                    lastWindow = EditorWindow.focusedWindow.ToString();
+                }
+                    
+            }
+
+
             // Load node skin
             if (m_NodeSkin == null)
                 m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
 
-            // If we want to reskin the node
-            if (UIReskinAuto)
+            IMLGraph m_IMLGraph = target.graph as IMLGraph;
+            if (!m_IMLGraph.IsGraphRunning && Event.current.type == EventType.Repaint)
             {
-                // Get references
-                m_IMLNode = target as IMLNode;
-                m_IMLNodeSerialized = new SerializedObject(m_IMLNode);
-
-                NodeWidth = this.GetWidth();
-                // Initialise header background Rects
-                InitHeaderRects();
-
-                NodeColor = GetColorTextureFromHexString("#3A3B5B");
-
-                // Draw line below header
-                GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
-
-                //Display Node name
-                if (String.IsNullOrEmpty(NodeName))
-                    NodeName = target.GetType().Name;
-
+                HeaderRect.height = 500;
+                HeaderRect.width = 800;
                 GUILayout.BeginArea(HeaderRect);
-                GUILayout.Label(NodeName, m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
-                //if(!String.IsNullOrEmpty(NodeSubtitle)) this causes the GUI to stutter 
-                GUILayout.Label(/*NodeSubtitle*/ m_IMLNode.id, m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
+                GUILayout.Label("Graph not in this scene", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(200));
+                GUILayout.Label("Please open scene with this graph in or add to this scene", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
                 GUILayout.EndArea();
-
-                GUILayout.Label("", GUILayout.MinHeight(60));
-
-            }
-            // If we want to keep xNode's default skin
-            else
+            } else
             {
-                base.OnHeaderGUI();
+
+                // If we want to reskin the node
+                if (UIReskinAuto)
+                {
+                    // Get references
+                    m_IMLNode = target as IMLNode;
+                    m_IMLNodeSerialized = new SerializedObject(m_IMLNode);
+
+                    NodeWidth = this.GetWidth();
+
+                    // Draws header with live subtitle if input connected - only data type nodes
+                    string name = m_IMLNode.GetType().ToString();
+                    //find out if the node is a data type node 
+                    if (name.Contains("DataType"))
+                        NodeSubtitle = m_IMLNode.GetInputNodesConnected("m_In")!=null ? "LIVE" : null;
+
+                    // Initialise header background Rects
+                    InitHeaderRects();
+
+                    NodeColor = GetColorTextureFromHexString("#3A3B5B");
+
+                    if (Event.current.type == EventType.Repaint)
+                    {
+                        // Draw over xnode header tint
+                        //GUI.DrawTexture(new Rect(6, 6, GetWidth() - 12, 24), NodeColor);
+
+                        // Draw line below header
+                        GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
+                    }
+                    //Display Node name
+                    if (String.IsNullOrEmpty(NodeName))
+                        NodeName = target.GetType().Name;
+
+                    GUILayout.BeginArea(HeaderRect);
+                    GUILayout.Label(NodeName, m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(NodeWidth - 10));
+                    //if(!String.IsNullOrEmpty(NodeSubtitle)) this causes the GUI to stutter 
+                    //commented out nodeid in subtitle for debugging
+                    GUILayout.Label(NodeSubtitle, m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(NodeWidth - 10));
+                    GUILayout.EndArea();
+
+                    GUILayout.Label("", GUILayout.MinHeight(60));
+
+                }
+                // If we want to keep xNode's default skin
+                else
+                {
+                    base.OnHeaderGUI();
+                }
             }
+
+
+
+            
         }
         
         public override void OnBodyGUI()
         {
-            // If we want to reskin the node
-            if (UIReskinAuto)
+            IMLGraph graph = this.target.graph as IMLGraph;
+            if (graph.IsGraphRunning)
             {
-                // Unity specifically requires this to save/update any serial object.
-                // serializedObject.Update(); must go at the start of an inspector gui, and
-                // serializedObject.ApplyModifiedProperties(); goes at the end.
-                serializedObject.Update();
-
-                // Draw Port Section
-                DrawPortLayout();
-                ShowNodePorts(InputPortsNamesOverride, OutputPortsNamesOverride, showOutput);
-                // checks if node port is hovered and draws tooltip
-                PortTooltip();
-
-                // Draw Body Section
-                InitBodyLayout();
-                // Shows body content
-                ShowBodyFields();
-                // if nodespace is not set in the node editor sets it to 100 
-                if (nodeSpace == 0)
-                    nodeSpace = 100;
-                GUILayout.Space(nodeSpace);
-
-                // Draw help button
-                float bottomY = HeaderRect.height + m_PortRect.height + m_BodyRect.height;
-                DrawHelpButtonLayout(bottomY);
-                ShowHelpButton(m_HelpRect);
-
-                serializedObject.ApplyModifiedProperties();
-
-                // if hovering port show port tooltip
-                if (showPort)
+                // If we want to reskin the node
+                if (UIReskinAuto)
                 {
-                    ShowTooltip(m_PortRect, TooltipText);
-                }
-                //if hovering over help show tooltip 
-                if (showHelp && nodeTips != null)
-                {
-                    ShowTooltip(m_HelpRect, nodeTips.HelpTooltip);
-                }
 
-                // Make sure we are not recalculating rects every frame
-                m_RecalculateRects = false;
-            }
-            // If we want to keep xNode's default skin
-            else
-            {
-                base.OnBodyGUI();
-            }
+                    // Unity specifically requires this to save/update any serial object.
+                    // serializedObject.Update(); must go at the start of an inspector gui, and
+                    // serializedObject.ApplyModifiedProperties(); goes at the end.
+                    serializedObject.Update();
+
+                    // Draw Port Section
+                    DrawPortLayout();
+                    ShowNodePorts(InputPortsNamesOverride, OutputPortsNamesOverride, showOutput);
+                    // checks if node port is hovered and draws tooltip
+                    PortTooltip();
+
+                    // Draw Body Section
+                    InitBodyLayout();
+                    // Shows body content
+                    ShowBodyFields();
+                    // if nodespace is not set in the node editor sets it to 100 
+                    if (nodeSpace == 0)
+                        nodeSpace = 100;
+                    GUILayout.Space(nodeSpace);
+
+                    // Draw help button
+                    float bottomY = HeaderRect.height + m_PortRect.height + m_BodyRect.height;
+                    DrawHelpButtonLayout(bottomY);
+                    ShowHelpButton(m_HelpRect);
+
+                    serializedObject.ApplyModifiedProperties();
+
+                    // if hovering port show port tooltip
+                    if (showPort)
+                    {
+                        ShowTooltip(m_PortRect, TooltipText);
+                    }
+                    //if hovering over help show tooltip 
+                    if (showHelp && nodeTips != null)
+                    {
+                        ShowTooltip(m_HelpRect, nodeTips.HelpTooltip);
+                    }
+
+                    // Make sure we are not recalculating rects every frame
+                    m_RecalculateRects = false;
+                }
+                // If we want to keep xNode's default skin
+                else
+                {
+                    base.OnBodyGUI();
+                }
+            } 
+
         }
 
         #endregion
@@ -288,8 +341,8 @@ namespace InteractML
         /// <returns> Color of node </returns>
         public override Color GetTint()
         {
-            ColorUtility.TryParseHtmlString("#3A3B5B", out customNodeColor);
-            return customNodeColor;
+            ColorUtility.TryParseHtmlString("#3A3B5B", out Color color);
+            return color;
         }
 
         public void InitHeaderRects()
@@ -339,7 +392,7 @@ namespace InteractML
             // Iterate through serialized properties and draw them like the Inspector (But with ports)
             SerializedProperty iterator = serializedObject.GetIterator();
             bool enterChildren = true;
-            EditorGUIUtility.labelWidth = LabelWidth;
+            EditorGUIUtility.labelWidth = 84;
             GUILayout.Space(m_PortRect.height * 0.5f);
             while (iterator.NextVisible(enterChildren))
             {
@@ -464,13 +517,17 @@ namespace InteractML
 
             //GUI.DrawTexture(m_PortRect, NodeColor);
 
-            // Calculate rect for line below ports
-            Rect lineRect = new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine);
-            Texture2D lineTex = GetColorTextureFromHexString("#888EF7");
+            
 
-            // Draw line below ports
-            GUI.DrawTexture(lineRect, lineTex);
+            if (Event.current.type == EventType.Repaint)
+            {
+                // Calculate rect for line below ports
+                Rect lineRect = new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine);
+                Texture2D lineTex = GetColorTextureFromHexString("#888EF7");
 
+                // Draw line below ports
+                GUI.DrawTexture(lineRect, lineTex);
+            }
         }
 
         /// <summary>
@@ -506,20 +563,46 @@ namespace InteractML
                 // Set flag to false in mls node to not redraw every frame
                 mlsNode.OutputPortsChanged = false;
             }
+
+
+
             // Generic check if the number ports changes to reduce the times we reserve memory
             if (m_NumInputs != target.Inputs.Count() || m_NumOutputs != target.Outputs.Count()) updatePortPairs = true;
 
             // Get number of ports to avoid reserving memory twice
             if (updatePortPairs)
             {
-                // Update known number of ports
-                m_NumInputs = target.Inputs.Count();
-                m_NumOutputs = target.Outputs.Count();
-                // Get inputs and outputs ports
-                IEnumerator<NodePort> inputs = target.Inputs.GetEnumerator();
-                IEnumerator<NodePort> outputs = target.Outputs.GetEnumerator();
-                // Add them to the list
-                AddPairsToList(inputs, outputs, ref m_PortPairs);
+                if (!(target is TrainingExamplesNode)&&!(target is MLSystem))
+                {
+                    // Update known number of ports
+                    m_NumInputs = target.Inputs.Count();
+                    m_NumOutputs = target.Outputs.Count();
+                    // Get inputs and outputs ports
+                    IEnumerator<NodePort> inputs = target.Inputs.GetEnumerator();
+                    IEnumerator<NodePort> outputs = target.Outputs.GetEnumerator();
+                    // Add them to the list
+                    AddPairsToList(inputs, outputs, ref m_PortPairs);
+                }
+                else
+                {
+                    // Update known number of ports
+                    m_NumInputs = 2;
+                    m_NumOutputs = target.Outputs.Count();
+
+                    // Get inputs and outputs ports
+                    IEnumerator<NodePort> inputs = target.Outputs.GetEnumerator();
+
+                    // Get first 2 input ports and add to new IEnumerator
+                    List<NodePort> ttminputslist = new List<NodePort> { target.Inputs.ElementAt(0), target.Inputs.ElementAt(1) };
+                    IEnumerable<NodePort> TTMInputs = ttminputslist;
+                    IEnumerator<NodePort> ttminputs = ttminputslist.GetEnumerator();
+
+                    IEnumerator<NodePort> outputs = target.Outputs.GetEnumerator();
+                    // Add them to the list
+                    AddPairsToList(ttminputs, outputs, ref m_PortPairs);
+
+                }
+                
             }
 
 
@@ -683,12 +766,17 @@ namespace InteractML
         /// </summary>
         protected virtual void DrawHelpButtonLayout(float y)
         {
-            m_HelpRect.x = 5;
-            m_HelpRect.y = y;
-            m_HelpRect.width = NodeWidth - 10;
-            m_HelpRect.height = 40;
-            //Draw separator line
-            GUI.DrawTexture(new Rect(m_HelpRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_HelpRect.width, WeightOfSeparatorLine * 2), GetColorTextureFromHexString("#888EF7"));
+           
+            if (Event.current.type == EventType.Repaint)
+            {
+                m_HelpRect.x = 5;
+                m_HelpRect.y = y;
+                m_HelpRect.width = NodeWidth - 10;
+                m_HelpRect.height = 40;
+                Texture2D texture = GetColorTextureFromHexString("#888EF7");
+                //Draw separator line
+                GUI.DrawTexture(new Rect(m_HelpRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_HelpRect.width, WeightOfSeparatorLine * 2), texture);
+            }
         }
 
         // <summary>

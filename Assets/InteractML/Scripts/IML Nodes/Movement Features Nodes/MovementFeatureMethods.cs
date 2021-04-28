@@ -7,7 +7,7 @@ using UnityEditor;
 using XNodeEditor;
 #endif
 
-namespace InteractML.MovementFeatures
+namespace InteractML.GameObjectMovementFeatures
 {
     /// </summary>
     /// Contains extension methods for data type node classes

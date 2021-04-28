@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Simple script that will move an object with the mouse
@@ -32,7 +33,11 @@ public class MouseMover : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         // Mouse x,y moves obj in 2D
-        Vector3 newMousePosWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10f);
+        Vector2 mousePos2 = Mouse.current.position.ReadValue();
+        Vector3 mousePos = new Vector3(mousePos2.x, mousePos2.y, 10);
+        Vector3 newMousePosWorldPoint = Camera.main.ScreenToWorldPoint(mousePos);
+        newMousePosWorldPoint.z = 1;
+        
         m_CurrentMouseWorldPos.x = newMousePosWorldPoint.x;
         m_CurrentMouseWorldPos.y = newMousePosWorldPoint.y;
 

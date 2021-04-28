@@ -40,7 +40,7 @@ namespace InteractML.DataTypeNodes
             m_ArrayNode = (target as ArrayNode);
 
             // Initialise node name
-            NodeName = "LIVE ARRAY DATA";
+            NodeName = "ARRAY";
 
             // Initialise input port labels
             InputPortsNamesOverride = new Dictionary<string, string>();

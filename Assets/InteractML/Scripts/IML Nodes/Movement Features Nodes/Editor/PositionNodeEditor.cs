@@ -6,7 +6,7 @@ using UnityEditor;
 using XNodeEditor;
 #endif
 
-namespace InteractML.MovementFeatures
+namespace InteractML.GameObjectMovementFeatures
 {
     [CustomNodeEditor(typeof(PositionNode))]
     public class ExtractPositionNodeEditor : IMLNodeEditor
@@ -25,7 +25,7 @@ namespace InteractML.MovementFeatures
             m_ExtractPosition = (target as PositionNode);
 
             // Initialise node name
-            NodeName = "LIVE POSITION DATA";
+            NodeName = "POSITION";
 
             // Initialise node height
             m_BodyRect.height = 150;

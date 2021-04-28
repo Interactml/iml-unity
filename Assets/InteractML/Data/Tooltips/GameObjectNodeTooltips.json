@@ -1,6 +1,6 @@
 {
-  "HelpTooltip": "Gives access to the GameObject in the scene to extract datafrom. GameObject Data Out connects to Feature Extractor or Datatype Node.",
-  "PortTooltip": [ "Connect to Feature Extractor or Data Type node. Outputs all information about GameObject" ],
+  "HelpTooltip": "\n ABOUT \n This node gives access to a GameObject in the scene to extract movement data from. The GameObject Data Out port connects to one of the following Game Object Movement Features nodes- Position, Rotation Euler and Rotation Quaternion. \n",
+  "PortTooltip": [ "Connect to GameObject Movement Feature node. Outputs information about GameObject" ],
   "BodyTooltip": {
     "tips": [
       "Name of GameObject Connected",

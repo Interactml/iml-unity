@@ -4,6 +4,7 @@ using UnityEngine;
 using ReusableMethods;
 using System;
 using System.Linq;
+using XNode;
 #if UNITY_EDITOR
 using UnityEditor;
 using XNodeEditor;
@@ -19,15 +20,42 @@ namespace InteractML
         /// </summary>
         protected MLSystem m_MLSystem;
 
+        /// <summary>
+        /// The label to show on the button port labels
+        /// </summary>
+        protected GUIContent m_ButtonPortLabel;
+        /// <summary>
+        /// NodePort for button. Loaded in OnHeaderHUI()
+        /// </summary>
+        protected NodePort m_ButtonPortToggleTrainInput;
+        /// <summary>
+        /// NodePort for button. Loaded in OnHeaderHUI()
+        /// </summary>
+        protected NodePort m_ButtonPortToggleRunInput;
+
+
         public override void OnHeaderGUI()
         {
             // Get reference to the current node
             m_MLSystem = (target as MLSystem);
-            nodeSpace = 10;
+            //previous nodespace 10
+            nodeSpace = 20;
             string arrayNo = "";
             if (m_MLSystem.numberInComponentList != -1)
                 arrayNo = m_MLSystem.numberInComponentList.ToString();
             NodeName = "MACHINE LEARNING SYSTEM " + arrayNo;
+
+            // Create inputport button label
+            if (m_ButtonPortLabel == null)
+                m_ButtonPortLabel = new GUIContent("");
+
+            // Get button ports
+            if (m_ButtonPortToggleTrainInput == null)
+                m_ButtonPortToggleTrainInput = m_MLSystem.GetPort("ToggleTrainInputBoolPort");
+            if (m_ButtonPortToggleRunInput == null)
+                m_ButtonPortToggleRunInput = m_MLSystem.GetPort("ToggleRunInputBoolPort");
+
+
             base.OnHeaderGUI();
         }
 
@@ -37,7 +65,8 @@ namespace InteractML
             InputPortsNamesOverride.Add("IMLTrainingExamplesNodes", "Recorded Data In");
             InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
             base.nodeTips = m_MLSystem.tooltips;
-            m_BodyRect.height = 330;
+            //previous nodespace 330
+            m_BodyRect.height = 350;
             base.OnBodyGUI();
         }
 
@@ -45,14 +74,15 @@ namespace InteractML
         {
             ShowTrainingIcon(m_MLSystem.LearningType.ToString());
             ShowButtons(m_MLSystem);
-            GUILayout.Space(m_BodyRect.height + HeaderRect.height - 50);
+            GUILayout.Space(20);
             ShowRunOnAwakeToggle(m_MLSystem as MLSystem);
             GUILayout.Space(20);
             // if there is an error show the correct warning
             if (m_MLSystem.error)
             {
-                nodeSpace = 40;
-                m_BodyRect.height = m_BodyRect.height + HeaderRect.height + 60;
+
+                nodeSpace = 60;
+                m_BodyRect.height = m_BodyRect.height + HeaderRect.height + 40;
                 ShowWarning(m_MLSystem.warning);
             }
         }
@@ -99,31 +129,46 @@ namespace InteractML
         /// </summary>
         protected void ShowButtons(MLSystem node)
         {
-            m_ButtonsRect.x = m_IconCenter.x + 20;
+            m_ButtonsRect.x = m_BodyRect.x -5 ;
             m_ButtonsRect.y = m_IconCenter.y + m_IconCenter.height;
-            m_ButtonsRect.width = m_BodyRect.width - 40;
+            m_ButtonsRect.width = m_BodyRect.width -10;
             m_ButtonsRect.height = 150;
+            GUILayout.Space(230);
 
-
-            GUILayout.BeginArea(m_ButtonsRect);
+            // DRAW BUTTONS AND PORTS OUTSIDE OF BEGIN AREA TO MAKE THEM WORK
+            GUILayout.BeginHorizontal();
+            // Draw port
+            IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortToggleTrainInput, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
 
             // if button contains mouse position
             TrainModelButton();
-            GUILayout.Space(15);
-            RunModelButton();
+            GUILayout.EndHorizontal();
+
+
             GUILayout.Space(15);
             GUILayout.BeginHorizontal();
-            GUILayout.Space(NodeWidth / 2 - 40);
+            // Draw port
+            IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortToggleRunInput, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+
+            RunModelButton();
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginArea(m_ButtonsRect);
+
+            //GUILayout.Space(20);
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(NodeWidth / 2 - 20);
             if (GUILayout.Button("", m_NodeSkin.GetStyle("Reset")))
             {
                 node.ResetModel();
                 numberOfExamplesTrained = 0;
             }
             GUILayout.EndHorizontal();
+            GUILayout.Space(5);
             GUILayout.BeginHorizontal();
+            GUILayout.Space(20);
             GUILayout.Label("reset model", m_NodeSkin.GetStyle("Reset Pink Label"));
             GUILayout.EndHorizontal();
-            GUILayout.Space(15);
             //ShowRunOnAwakeToggle(node);
             GUILayout.EndArea();
         }
@@ -154,7 +199,7 @@ namespace InteractML
             }
             if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Train")))
             {
-                IMLEventDispatcher.TrainMLSCallback(m_MLSystem.id);
+                IMLEventDispatcher.TrainMLSCallback?.Invoke(m_MLSystem.id);
             }
 
             if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
@@ -162,11 +207,13 @@ namespace InteractML
                 buttonTipHelper = true;
                 if (GUI.enabled)
                 {
-                    TooltipText = m_MLSystem.tooltips.BodyTooltip.Tips[1];
+                    // Check for null
+                    if (m_MLSystem.tooltips != null && m_MLSystem.tooltips.BodyTooltip != null && m_MLSystem.tooltips.BodyTooltip.Tips != null)
+                        TooltipText = m_MLSystem.tooltips.BodyTooltip.Tips[1];
                 }
                 else
                 {
-                    TooltipText = m_MLSystem.tooltips.BodyTooltip.Error[0];
+                    //TooltipText = m_MLSystem.tooltips.BodyTooltip.Error[0];
                 }
             }
             else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
@@ -226,11 +273,15 @@ namespace InteractML
                 buttonTipHelper = true;
                 if (GUI.enabled)
                 {
-                    TooltipText = m_MLSystem.tooltips.BodyTooltip.Tips[2];
+                    // Check for null
+                    if (m_MLSystem.tooltips != null && m_MLSystem.tooltips.BodyTooltip != null && m_MLSystem.tooltips.BodyTooltip.Tips != null)
+                        TooltipText = m_MLSystem.tooltips.BodyTooltip.Tips[2];
                 }
                 else
                 {
-                    TooltipText = m_MLSystem.tooltips.BodyTooltip.Error[1];
+                    // Check for null
+                    if (m_MLSystem.tooltips != null && m_MLSystem.tooltips.BodyTooltip != null && m_MLSystem.tooltips.BodyTooltip.Tips != null)
+                        TooltipText = m_MLSystem.tooltips.BodyTooltip.Error[1];
                 }
             }
             else if (Event.current.type == EventType.MouseMove && !GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))

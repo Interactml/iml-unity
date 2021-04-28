@@ -28,7 +28,7 @@ namespace InteractML.DataTypeNodes
             m_FloatNode = (target as FloatNode);
 
             // Initialise node name
-            NodeName = "LIVE FLOAT DATA";
+            NodeName = "FLOAT";
 
             // Initialise node height
             m_BodyRect.height = 80;

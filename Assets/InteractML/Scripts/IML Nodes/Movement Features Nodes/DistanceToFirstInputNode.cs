@@ -5,7 +5,7 @@ using XNode;
 using InteractML;
 using System.Linq;
 
-namespace InteractML.MovementFeatures
+namespace InteractML.GameObjectMovementFeatures
 {
     /// <summary>
     /// Extracts the distance from one or several features to another one (i.e. fingers to the palm of the hand)

@@ -15,7 +15,7 @@ namespace InteractML
         /// <summary>
         /// The IML Component in the scene that this graph is attached to
         /// </summary>
-        public IMLComponent SceneComponent;
+        [SerializeField]public IMLComponent SceneComponent;
 
         /// <summary>
         /// Flag that tells us if the graph is supposed to currently run
@@ -58,7 +58,7 @@ namespace InteractML
                     IMLNode imlNode = node as IMLNode;
                     imlNode.NodeInitalize();
                 }
-                
+                SceneComponent.GetAllNodes();
 
                 if (isCustomType)
                 {
@@ -81,6 +81,7 @@ namespace InteractML
             else
             {
                 Debug.LogError("You can't add nodes to an IMLGraph that is not attached to an IMLComponent!");
+                
             }
             return node;
         }

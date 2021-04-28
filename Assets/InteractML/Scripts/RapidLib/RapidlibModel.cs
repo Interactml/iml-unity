@@ -52,6 +52,7 @@ namespace InteractML
         /// </summary>
         public RapidlibModel()
         {
+            //Debug.Log("construct");
             // Set default values
             m_ModelAddress = (IntPtr)0;
             m_ModelJSONString = "";
@@ -94,6 +95,8 @@ namespace InteractML
 
         ~RapidlibModel()
         {
+           // Debug.Log("destroy rapilib library");
+            //Debug.Log(ModelAddress);
             // Make sure to destroy the model when the class is collected by the GC
             DestroyModel();
         }

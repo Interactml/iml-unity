@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ReusableMethods;
+using XNode;
 #if UNITY_EDITOR
 using UnityEditor;
 using XNodeEditor;
@@ -44,14 +45,35 @@ namespace InteractML
         /// </summary>
         protected bool lastShowWarning = false;
 
+        /// <summary>
+        /// The label to show on the button port labels
+        /// </summary>
+        protected GUIContent m_ButtonPortLabel;
+        /// <summary>
+        /// NodePort for button. Loaded in OnHeaderHUI()
+        /// </summary>
+        protected NodePort m_ButtonPortRecordOneInput;
+        /// <summary>
+        /// NodePort for button. Loaded in OnHeaderHUI()
+        /// </summary>
+        protected NodePort m_ButtonPortToggleRecord;
+        /// <summary>
+        /// NodePort for button. Loaded in OnHeaderHUI()
+        /// </summary>
+        protected NodePort m_ButtonPortDeleteExamples;
+        /// <summary>
+        /// Used to specify subfolder where to save/load data. Loaded in OnHeaderHUI()
+        /// </summary>
+        protected NodePort m_PortSubFolderDataPath;
+
         #endregion
         #region XNode messages
         public override void OnHeaderGUI()
         {
-            baseNodeBodyHeight = 360;
+            baseNodeBodyHeight = 250;
             // Get reference to the current node
             m_TrainingExamplesNode = (target as TrainingExamplesNode);
-            NodeName = "TEACH THE MACHINE ";
+            NodeName = "TEACH THE MACHINE " + m_TrainingExamplesNode.listNo;
             if (m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
             {
                 NodeSubtitle = "Classification and Regression trainging examples";
@@ -60,25 +82,47 @@ namespace InteractML
             {
                 NodeSubtitle = "DTW training examples";
             }
+
+            // Create inputport button label
+            if (m_ButtonPortLabel == null)
+                m_ButtonPortLabel = new GUIContent("");
+
+            // Get button ports
+            if (m_ButtonPortRecordOneInput == null)
+                m_ButtonPortRecordOneInput = m_TrainingExamplesNode.GetPort("RecordOneInputBoolPort");
+            if (m_ButtonPortToggleRecord == null)
+                m_ButtonPortToggleRecord = m_TrainingExamplesNode.GetPort("ToggleRecordingInputBoolPort");
+            if (m_ButtonPortDeleteExamples == null)
+                m_ButtonPortDeleteExamples = m_TrainingExamplesNode.GetPort("DeleteAllExamplesBoolPort");
+            // Get subfolderdatapath port
+            if (m_PortSubFolderDataPath == null)
+                m_PortSubFolderDataPath = m_TrainingExamplesNode.GetPort("SubFolderDataPathStringPort");
+
+
             base.OnHeaderGUI();
         }
 
         public override void OnBodyGUI()
         {
-            OutputPortsNamesOverride = new Dictionary<string, string>();
-            OutputPortsNamesOverride.Add("TrainingExamplesNodeToOutput", "Recorded\nExamples");
+            IMLGraph graph = this.target.graph as IMLGraph;
+            if (graph.IsGraphRunning)
+            {
+                OutputPortsNamesOverride = new Dictionary<string, string>();
+                OutputPortsNamesOverride.Add("TrainingExamplesNodeToOutput", "Recorded\nExamples");
 
-            InputPortsNamesOverride = new Dictionary<string, string>();
-            InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
-            InputPortsNamesOverride.Add("TargetValues", "Target Values");
+                InputPortsNamesOverride = new Dictionary<string, string>();
+                InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
+                InputPortsNamesOverride.Add("TargetValues", "Labels");
 
-            base.nodeTips = m_TrainingExamplesNode.tooltips;
-            if (m_TrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_TrainingExamplesNode.DesiredOutputFeatures.Count || lastShowWarning != m_TrainingExamplesNode.showWarning)
-                m_RecalculateRects = true;
-            m_ConnectedInputs = m_TrainingExamplesNode.DesiredInputFeatures.Count;
-            m_ConnectedTargets = m_TrainingExamplesNode.DesiredOutputFeatures.Count;
-            lastShowWarning = m_TrainingExamplesNode.showWarning;
-            base.OnBodyGUI();
+                base.nodeTips = m_TrainingExamplesNode.tooltips;
+                if (m_TrainingExamplesNode.DesiredInputFeatures.Count != m_ConnectedInputs || m_ConnectedTargets != m_TrainingExamplesNode.DesiredOutputFeatures.Count || lastShowWarning != m_TrainingExamplesNode.showWarning)
+                    m_RecalculateRects = true;
+                m_ConnectedInputs = m_TrainingExamplesNode.DesiredInputFeatures.Count;
+                m_ConnectedTargets = m_TrainingExamplesNode.DesiredOutputFeatures.Count;
+                lastShowWarning = m_TrainingExamplesNode.showWarning;
+                base.OnBodyGUI();
+            }
+            
         }
 
         #endregion
@@ -92,14 +136,24 @@ namespace InteractML
                 m_BodyRect.x = 5;
                 m_BodyRect.y = HeaderRect.height + m_PortRect.height;
                 m_BodyRect.width = NodeWidth - 10;
-                // height is the base node height plus the number of inputs/targets 
-                m_BodyRect.height = baseNodeBodyHeight + ((m_ConnectedInputs + m_ConnectedTargets) * 80);
+                // height is the base node height plus the number of inputs/targets + extra offset after moving buttons with nodeports out of begin area
+                //m_BodyRect.height = baseNodeBodyHeight + ((m_ConnectedInputs + m_ConnectedTargets) * 20) + 225;
+                
+                if (m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
+                    m_BodyRect.height = baseNodeBodyHeight - 30;
+                else
+                    m_BodyRect.height = baseNodeBodyHeight - 60;
                 // if showing warning increase height 
                 if (m_TrainingExamplesNode.showWarning)
                 {
-                    m_BodyRect.height += 60;
+                    if(m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
+                        m_BodyRect.height += 90;
+                    else
+                        m_BodyRect.height += 60;
                 }
-                nodeSpace = m_BodyRect.height + 50;
+                // NodeSpace makes the node longer/shorter if there is extra space needed or lacking at the end of the node
+                //nodespace = m_BodyRect.height * 0.4f;
+                nodeSpace = 65;
             }
         }
         /// <summary>
@@ -107,20 +161,39 @@ namespace InteractML
         /// </summary>
         protected override void ShowBodyFields()
         {
-            GUILayout.BeginArea(m_BodyRect);
             GUILayout.Space(bodySpace);
+
+            // ShowButtons needs to be called outside of the BeginArea in order for the button nodeports to work
+            ShowButtons();
+
+            // commented out for ual students
+            // Moved the draw values out of begin area to draw them after showbuttons and not on top
+            /*GUILayout.Space(bodySpace);
             DrawValues(m_TrainingExamplesNode.DesiredInputFeatures, "Input Values");
             GUILayout.Space(bodySpace);
-            DrawValues(m_TrainingExamplesNode.DesiredOutputFeatures, "Target Values");
-            ShowButtons();
+            DrawValues(m_TrainingExamplesNode.DesiredOutputFeatures, "Target Values");*/
+
+
+            
             //show warning if there are training examples 
             if (m_TrainingExamplesNode.showWarning)
             {
-                if (m_TrainingExamplesNode.tooltips != null && m_TrainingExamplesNode.tooltips.BottomError.Length > 0)
+                //UAL 
+                GUILayout.Space(25);
+                if (m_TrainingExamplesNode.tooltips != null && m_TrainingExamplesNode.tooltips.BottomError != null && m_TrainingExamplesNode.tooltips.BottomError.Length > 0)
+                {
+                    //Changed for UAL students 
+                    nodeSpace = 55;
                     ShowWarning(m_TrainingExamplesNode.tooltips.BottomError[0]);
+                }
+                    
                 m_RecalculateRects = true;
             }
-            GUILayout.EndArea();
+            
+            // Added an option to specify a subfolder to save/load the data
+            // commented out for UAL students 
+            //ShowSubFolderDataField();
+
             ShowTrainingExamplesDropdown();
         }
 
@@ -132,18 +205,18 @@ namespace InteractML
 
             if (m_TrainingExamplesNode.CollectingData)
             {
-                nameButton = "stop \n recording";
+                nameButton = "stop recording";
             }
             else
             {
-                nameButton = "start \n recording";
+                nameButton = "start recording";
             }
 
             if (!m_TrainingExamplesNode.canCollect)
             {
                 GUI.enabled = false;
             }
-                
+
             if (GUILayout.Button("Record Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button")))
             {
                 IMLEventDispatcher.ToggleRecordCallback(m_TrainingExamplesNode.id);
@@ -198,7 +271,7 @@ namespace InteractML
 
             bool disableButton = false;
 
-            if (!Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.TrainingExamplesVector))
+            if (m_TrainingExamplesNode.TrainingExamplesVector.Count > 0)
             {
                 disableButton = false;
             }
@@ -212,7 +285,7 @@ namespace InteractML
                     GUI.enabled = false;
                 if (GUILayout.Button("Delete Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button")))
                 {
-                    IMLEventDispatcher.DeleteAllCallback(m_TrainingExamplesNode.id);               
+                    IMLEventDispatcher.DeleteAllExamplesInNodeCallback(m_TrainingExamplesNode.id);               
                 }
                 if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
                 {
@@ -349,21 +422,36 @@ namespace InteractML
 
         private void ShowButtons()
         {
-            int spacing = 75;
-            GUILayout.Space(40);
+            int offset = 1;
+            GUILayout.Space(20);
 
             // show record ONE example button
-            GUILayout.BeginHorizontal();
-            GUILayout.Space(spacing);
+
             //if it is a single training examples node 
             if (m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
             {
-                if (GUILayout.Button(new GUIContent("Record One \n example"), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record One Button")))
+
+                GUILayout.BeginHorizontal();
+                // Draw port                
+                IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortRecordOneInput, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+                GUILayout.Space(offset);
+                if (GUILayout.Button(new GUIContent(""), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record One Button")))
                 {
                     IMLEventDispatcher.RecordOneCallback?.Invoke(m_TrainingExamplesNode.id);
                 }
+                GUILayout.Space(5);
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(10);
+                GUILayout.Label("record one example", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
+                GUILayout.Label("");
+                GUILayout.EndHorizontal();
+                
                 //button tooltip code 
-                if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition) && m_TrainingExamplesNode.tooltips.BodyTooltip.Tips.Length > 2)
+                if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition)
+                    && m_TrainingExamplesNode.tooltips != null
+                    && m_TrainingExamplesNode.tooltips.BodyTooltip != null
+                    && m_TrainingExamplesNode.tooltips.BodyTooltip.Tips != null
+                    && m_TrainingExamplesNode.tooltips.BodyTooltip.Tips.Length > 2)
                 {
                     buttonTipHelper = true;
                     TooltipText = m_TrainingExamplesNode.tooltips.BodyTooltip.Tips[2];
@@ -373,59 +461,63 @@ namespace InteractML
                     buttonTip = false;
 
                 }
-
                 if (Event.current.type == EventType.Layout && buttonTipHelper)
                 {
                     buttonTip = true;
                     buttonTipHelper = false;
                 }
-                // show record examples button
-                GUILayout.Space(spacing);
+
+                GUILayout.EndHorizontal();
             }
-            
+
+            // show record examples button
+            GUILayout.Space(15);
+            GUILayout.BeginHorizontal();
+            // Draw port
+            IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortToggleRecord, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+            GUILayout.Space(offset);
+
+            // draw record button
             string recordNameButton = ShowRecordExamplesButton();
-
-            GUILayout.EndHorizontal();
-
-            GUILayout.Space(10);
-
+            GUILayout.Space(5);
+            // draw record label
             GUILayout.BeginHorizontal();
-            GUILayout.Space(spacing - 10);
-
-            if(m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
-            {
-                GUILayout.Label("record one \nexample", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
-                GUILayout.Label("");
-            }
-            
-
+            GUILayout.Space(10);
             GUILayout.Label(recordNameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
-            GUILayout.Space(spacing - 10);
-            GUILayout.EndHorizontal();
-
-            GUILayout.Space(20);
-
-            GUILayout.BeginHorizontal();
-            GUILayout.Space(spacing);
-            ShowClearAllExamplesButton();
-            GUILayout.EndHorizontal();
-
-            GUILayout.Space(10);
-            GUILayout.BeginHorizontal();
-            GUILayout.Space(spacing - 10);
-            GUILayout.Label("delete all \n recordings", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button Pink"));
             GUILayout.Label("");
             GUILayout.EndHorizontal();
 
-            GUILayout.Space(10);
+
+            GUILayout.EndHorizontal();
+
+            // show delete all button
+            GUILayout.Space(15);
             GUILayout.BeginHorizontal();
-            GUILayout.Space(spacing - 10);
+            //GUILayout.Space(spacing);
+            // Draw port
+            IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortDeleteExamples, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+            GUILayout.Space(offset);
+            // draw delete all button
+
+            ShowClearAllExamplesButton();
+            
+            GUILayout.Space(5);
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(10);
+            GUILayout.Label("delete all recordings", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button Pink"));
+            GUILayout.Label("");
+            GUILayout.EndHorizontal();
+            GUILayout.EndHorizontal();
+
+            GUILayout.Space(20);
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(15);
             if (m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
             {
-                GUILayout.Label("No of training pairs: " + m_TrainingExamplesNode.TrainingExamplesVector.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"));
+                GUILayout.Label("Number of training pairs: " + m_TrainingExamplesNode.TrainingExamplesVector.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"));
             }
             else{
-                GUILayout.Label("No of training examples: " + m_TrainingExamplesNode.TrainingSeriesCollection.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"));
+                GUILayout.Label("Number of training examples: " + m_TrainingExamplesNode.TrainingSeriesCollection.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"));
             }
             
             GUILayout.EndHorizontal();
@@ -442,14 +534,18 @@ namespace InteractML
                 m_Dropdown.y = m_HelpRect.y + m_HelpRect.height;
                 m_Dropdown.width = m_HelpRect.width;
                 m_Dropdown.height = 200;
-                GUI.DrawTexture(m_Dropdown, NodeColor);
+                if (Event.current.type == EventType.Layout)
+                {
+                    GUI.DrawTexture(m_Dropdown, NodeColor);
+                }
+                    
 
                 GUILayout.BeginArea(m_Dropdown);
 
                 EditorGUI.indentLevel++;
 
 
-                if (ReusableMethods.Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.TrainingExamplesVector)&& ReusableMethods.Lists.IsNullOrEmpty(ref m_TrainingExamplesNode.TrainingSeriesCollection))
+                if (m_TrainingExamplesNode.TrainingExamplesVector.Count > 0 && m_TrainingExamplesNode.TrainingSeriesCollection.Count > 0)
                 {
                     EditorGUILayout.LabelField("Training Examples List is empty", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("foldoutempty"));
                 }
@@ -647,6 +743,20 @@ namespace InteractML
                 GUILayout.EndArea();
             }
 
+        }
+
+        /// <summary>
+        /// Shows the subfolder data field to specify and optional name where to save/load data
+        /// </summary>
+        private void ShowSubFolderDataField()
+        {
+            GUILayout.BeginHorizontal();
+            // Draw port
+            IMLNodeEditor.PortField(m_ButtonPortLabel, m_PortSubFolderDataPath, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
+            GUILayout.Space(15);
+            EditorGUILayout.LabelField("SubFolder Data Path");
+            m_TrainingExamplesNode.SubFolderDataPath = EditorGUILayout.TextField(m_TrainingExamplesNode.SubFolderDataPath);
+            GUILayout.EndHorizontal();
         }
     }
 
