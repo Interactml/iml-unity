@@ -145,6 +145,7 @@ namespace InteractML
                     m_BodyRect.height += 90;
                 }
                 // NodeSpace makes the node longer/shorter if there is extra space needed or lacking at the end of the node
+                //nodespace = m_BodyRect.height * 0.4f;
                 nodeSpace = 65;
             }
         }
@@ -170,6 +171,7 @@ namespace InteractML
             //show warning if there are training examples 
             if (m_TrainingExamplesNode.showWarning)
             {
+                //UAL 
                 GUILayout.Space(25);
                 if (m_TrainingExamplesNode.tooltips != null && m_TrainingExamplesNode.tooltips.BottomError != null && m_TrainingExamplesNode.tooltips.BottomError.Length > 0)
                 {

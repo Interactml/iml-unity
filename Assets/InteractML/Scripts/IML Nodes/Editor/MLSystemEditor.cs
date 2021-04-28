@@ -38,6 +38,7 @@ namespace InteractML
         {
             // Get reference to the current node
             m_MLSystem = (target as MLSystem);
+            //previous nodespace 10
             nodeSpace = 20;
             string arrayNo = "";
             if (m_MLSystem.numberInComponentList != -1)
@@ -64,6 +65,7 @@ namespace InteractML
             InputPortsNamesOverride.Add("IMLTrainingExamplesNodes", "Recorded Data In");
             InputPortsNamesOverride.Add("InputFeatures", "Live Data In");
             base.nodeTips = m_MLSystem.tooltips;
+            //previous nodespace 330
             m_BodyRect.height = 350;
             base.OnBodyGUI();
         }
@@ -78,6 +80,7 @@ namespace InteractML
             // if there is an error show the correct warning
             if (m_MLSystem.error)
             {
+
                 nodeSpace = 60;
                 m_BodyRect.height = m_BodyRect.height + HeaderRect.height + 40;
                 ShowWarning(m_MLSystem.warning);
