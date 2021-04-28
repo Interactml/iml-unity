@@ -1,6 +1,8 @@
 ﻿using UnityEditor;
 using System.IO;
+#if UNITY_EDITOR
 using UnityEngine;
+#endif
 
 /// <summary>
 /// Methods to integrate IML files into the final build
@@ -20,8 +22,10 @@ public class IMLBuildManager
     [InitializeOnLoadMethod]
     private static void Initialize()
     {
+#if UNITY_EDITOR && UNITY_STANDALONE
         // Subscribe to event that fires when a build is produced
         BuildPlayerWindow.RegisterBuildPlayerHandler(BuildPlayerHandler);
+#endif
     }
 
     /// <summary>
@@ -30,6 +34,7 @@ public class IMLBuildManager
     /// <param name="options"></param>
     private static void BuildPlayerHandler(BuildPlayerOptions options)
     {
+#if UNITY_EDITOR
         // Build the player as set by the unity buildplayer window
         BuildPlayerWindow.DefaultBuildMethods.BuildPlayer(options);
 
@@ -45,6 +50,7 @@ public class IMLBuildManager
         //Process proc = new Process();
         //proc.StartInfo.FileName = options.locationPathName;
         //proc.Start();
+#endif
     }
  
     /// <summary>
@@ -53,6 +59,7 @@ public class IMLBuildManager
     /// <param name="options"></param>
     private static void CopyIMLFilesToBuild(BuildPlayerOptions options)
     {
+#if UNITY_STANDALONE
         // Calculate the datapath for the build
         string buildDataPath = GetBuildDataPath(options);
 
@@ -126,6 +133,8 @@ public class IMLBuildManager
             }
 
         }
+#endif
+
 
     }
 
