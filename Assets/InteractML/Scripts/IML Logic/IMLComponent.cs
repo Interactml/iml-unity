@@ -1464,7 +1464,7 @@ namespace InteractML
             //Debug.Log(universalInputEnabled);
             // Make sure that the icon is init
             if (icon == null && m_inputSetUp != null)
-                //InitializeIMLIndicator();
+                InitializeIMLIndicator();
 
             if (icon != null)
             {
