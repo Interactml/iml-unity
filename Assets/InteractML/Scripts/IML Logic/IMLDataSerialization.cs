@@ -475,6 +475,9 @@ namespace InteractML
         /// <param name="fileName"></param>
         private static void SetUpFileNamesAndPaths(string fileName)
         {
+            // First, set up data path and immediate subfolders
+            SetUpIMLDataPath();
+
             string folderInFileName = "";
             // If the file name contains any folders...
             if (fileName.Contains("/"))
@@ -492,9 +495,6 @@ namespace InteractML
             m_FileModelName = fileName + "_Model";
             m_FileTrainingSetName = fileName + "_TrainingSet";
 
-            // Set up training Examples subfolder 
-            m_SubFolderTrainingSetPathName = m_FolderDataPathName + "/Training_Examples";
-            m_SubFolderModelPathName = m_FolderDataPathName + "/Models";
             // If the fileName included desired subfolders...
             if (!String.IsNullOrEmpty(folderInFileName)) 
             {
@@ -503,6 +503,25 @@ namespace InteractML
                 m_SubFolderTrainingSetPathName = string.Concat(m_SubFolderTrainingSetPathName, "/", folderInFileName);
             }
 
+            // Set up data path (m_AppDataPath + FolderName + FileName + FileExtension)
+            m_DataPathModel = Path.Combine(m_AppDataPath, m_FolderDataPathName + m_FileModelName + m_FileExtension);
+            // Training set is not having the extension added yet
+            m_DataPathTrainingSet = Path.Combine(m_AppDataPath, m_FolderDataPathName + m_FileTrainingSetName);
+            //Debug.Log("datapath TRAINING SET IS: " + m_DataPathTrainingSet);
+
+            // Mark the class to use json serialization
+            m_SerializeWithJSONDotNet = true;
+
+        }
+
+        /// <summary>
+        /// Only sets up the IML data path, but not specific training example files
+        /// </summary>
+        private static void SetUpIMLDataPath() 
+        {
+            // Set up training Examples subfolder 
+            m_SubFolderTrainingSetPathName = m_FolderDataPathName + "/Training_Examples";
+            m_SubFolderModelPathName = m_FolderDataPathName + "/Models";
 
             m_AppDataPath = "";
 #if UNITY_STANDALONE || UNITY_EDITOR
@@ -512,14 +531,6 @@ namespace InteractML
             // on Android it is better to use persistent datapath           
             m_AppDataPath = Application.persistentDataPath;
 #endif
-            // Set up data path (m_AppDataPath + FolderName + FileName + FileExtension)
-            m_DataPathModel = Path.Combine(m_AppDataPath, m_FolderDataPathName + m_FileModelName + m_FileExtension);
-            // Training set is not having the extension added yet
-            m_DataPathTrainingSet = Path.Combine(m_AppDataPath, m_FolderDataPathName + m_FileTrainingSetName);
-            //Debug.Log("datapath TRAINING SET IS: " + m_DataPathTrainingSet);
-
-            // Mark the class to use json serialization
-            m_SerializeWithJSONDotNet = true;
 
         }
 
@@ -694,7 +705,7 @@ namespace InteractML
         private static async void SaveTrainingSetToDiskAsync<T>(List<T> listToSave, string gameObjectName)
         {
             // Launch the task in a thread
-            Task savingTask = Task.Run(async () => 
+            await Task.Run(async () => 
             {
             // We make sure paths and filenames are set properly
             SetUpFileNamesAndPaths(gameObjectName);
@@ -742,39 +753,42 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Returns path for the Assets folder (SetUpFileNamesAndPaths() should have been called beforehand)
+        /// Returns path for the Assets folder 
         /// </summary>
         /// <returns></returns>
         public static string GetAssetsPath()
         {
+            SetUpIMLDataPath();
             return m_AppDataPath;
         }
 
         /// <summary>
-        /// Returns path for InteractML/Data (SetUpFileNamesAndPaths() should have been called beforehand)
+        /// Returns path for InteractML/Data
         /// </summary>
         /// <returns></returns>
         public static string GetDataPath()
         {
-            // This assumes that SetUpFileNamesAndPaths() has been called previously in this scene
+            SetUpIMLDataPath();
             return Path.Combine(m_AppDataPath, m_FolderDataPathName);
         }
 
         /// <summary>
-        /// Returns path for InteractML/Data/Training_Examples (SetUpFileNamesAndPaths() should have been called beforehand)
+        /// Returns path for InteractML/Data/Training_Examples 
         /// </summary>
         /// <returns></returns>
         public static string GetTrainingExamplesDataPath()
         {
+            SetUpIMLDataPath();
             return Path.Combine(m_AppDataPath, m_FolderDataPathName, "Training_Examples");
         }
 
         /// <summary>
-        /// Returns path for InteractML/Data/Models (SetUpFileNamesAndPaths() should have been called beforehand)
+        /// Returns path for InteractML/Data/Models 
         /// </summary>
         /// <returns></returns>
         public static string GetModelsDataPath()
         {
+            SetUpIMLDataPath();
             return Path.Combine(GetDataPath(), "Models");
         }
 
