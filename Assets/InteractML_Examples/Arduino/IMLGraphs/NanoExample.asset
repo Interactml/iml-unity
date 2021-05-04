@@ -55,7 +55,7 @@ MonoBehaviour:
   ReceivingData: 1
   FeatureValueReceivingData: 
   InputConnected: 0
-  Counter: 1
+  Counter: 5
   Count: 5
   ToggleSwitches: 
   ReceivedValue: []
@@ -93,7 +93,7 @@ MonoBehaviour:
   id: 238f0c45-1b49-441f-9d8d-c5cf308a6312
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 18384
+  ScriptHashCode: 16306
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: outArray
@@ -321,7 +321,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 1
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -378,7 +378,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 1
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -562,7 +562,7 @@ MonoBehaviour:
   id: 88074358-b5e8-4b21-aa2b-fb67c0cad545
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 18410
+  ScriptHashCode: 16332
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: SetAbsoluteColour
