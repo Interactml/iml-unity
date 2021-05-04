@@ -127,7 +127,6 @@ namespace InteractML.ControllerCustomisers
             {
                 case IMLInputDevices.Keyboard:
                     InstantiateKeyboardButtonHandlers();
-                    Debug.Log("here");
                     break;
                 /*case IMLInputDevices.Mouse:
                     
@@ -172,7 +171,6 @@ namespace InteractML.ControllerCustomisers
     
         private void InstantiateKeyboardButtonHandlers()
         {
-            Debug.Log(deleteAllButtonNo);
             DeleteAll = new KeyboardHandler(deleteAllButtonNo, deleteAllButtonTT, m_deleteAllName);
             //DeleteLast = new KeyboardHandler(deleteLastButtonNo, deleteLastButtonTT, "deleteLast");
             RecordOne = new KeyboardHandler(recordOneButtonNo, recordOneButtonTT, m_recordOneName);
