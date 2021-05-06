@@ -12,6 +12,24 @@ PluginImporter:
   validateReferences: 1
   platformData:
   - first:
+      : Any
+    second:
+      enabled: 0
+      settings:
+        Exclude Android: 0
+        Exclude Editor: 1
+        Exclude Linux64: 1
+        Exclude OSXUniversal: 1
+        Exclude Win: 1
+        Exclude Win64: 1
+        Exclude iOS: 0
+  - first:
+      Android: Android
+    second:
+      enabled: 1
+      settings:
+        CPU: ARMv7
+  - first:
       Any: 
     second:
       enabled: 1
@@ -23,6 +41,7 @@ PluginImporter:
       settings:
         CPU: x86_64
         DefaultValueInitialized: true
+        OS: AnyOS
   - first:
       Facebook: Win
     second:
@@ -38,7 +57,7 @@ PluginImporter:
   - first:
       Standalone: Linux64
     second:
-      enabled: 1
+      enabled: 0
       settings:
         CPU: AnyCPU
   - first:
@@ -56,9 +75,18 @@ PluginImporter:
   - first:
       Standalone: Win64
     second:
+      enabled: 0
+      settings:
+        CPU: None
+  - first:
+      iPhone: iOS
+    second:
       enabled: 1
       settings:
+        AddToEmbeddedBinaries: false
         CPU: AnyCPU
+        CompileFlags: 
+        FrameworkDependencies: 
   userData: 
   assetBundleName: 
   assetBundleVariant: 

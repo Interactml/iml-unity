@@ -17,7 +17,6 @@ namespace InteractML.ControllerCustomisers
 
         string attachedNodeID;
 
-
         public override void Initialize()
         {
             name = "Keyboard Input";
@@ -30,11 +29,9 @@ namespace InteractML.ControllerCustomisers
 
         public override void UpdateLogic()
         {
-            handler.HandleState();
-            Debug.Log(inputValue);
             if (inputChange)
-                inputValue = !inputValue;
-            inputChange = false;
+                inputChange = false;
+            handler.HandleState();
         }
 
         public override void OnButtonChange()
@@ -44,7 +41,7 @@ namespace InteractML.ControllerCustomisers
 
         public override void OnTriggerChange()
         {
-
+            handler.SetTriggerType(trigger);
         }
 
         public void OnDestroy()
@@ -71,6 +68,7 @@ namespace InteractML.ControllerCustomisers
 
         private bool StateChange(string nodeID)
         {
+            Debug.Log("here");
             inputChange = true;
             return inputChange;
         }

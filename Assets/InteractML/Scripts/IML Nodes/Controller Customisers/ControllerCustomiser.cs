@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using InteractML;
+using XNode;
+
 namespace InteractML.ControllerCustomisers
 {
     [NodeWidth(420)]
@@ -18,6 +21,13 @@ namespace InteractML.ControllerCustomisers
         public abstract void UpdateLogic();
         public abstract void OnButtonChange();
         public abstract void OnTriggerChange();
+
+        public override object GetValue(NodePort port)
+        {
+            inputValue = inputChange;
+
+            return inputValue;
+        }
 
     }
 }

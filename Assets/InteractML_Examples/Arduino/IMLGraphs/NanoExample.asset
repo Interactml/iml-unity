@@ -52,10 +52,10 @@ MonoBehaviour:
   m_In: []
   m_Value: []
   m_Out: []
-  ReceivingData: 1
+  ReceivingData: 0
   FeatureValueReceivingData: 
   InputConnected: 0
-  Counter: 5
+  Counter: 2
   Count: 5
   ToggleSwitches: 
   ReceivedValue: []
@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Name: NanoConnect (Script)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1096, y: -40}
+  position: {x: -1112, y: -8}
   ports:
     keys:
     - outArray
@@ -93,7 +93,7 @@ MonoBehaviour:
   id: 238f0c45-1b49-441f-9d8d-c5cf308a6312
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 16306
+  ScriptHashCode: 17394
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: outArray
@@ -321,7 +321,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 5
+  Counter: 2
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -378,7 +378,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 5
+  Counter: 2
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -542,7 +542,7 @@ MonoBehaviour:
   m_Name: colorChanger (Script)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 712, y: -24}
+  position: {x: 728, y: 8}
   ports:
     keys:
     - SetAbsoluteColour
@@ -562,7 +562,7 @@ MonoBehaviour:
   id: 88074358-b5e8-4b21-aa2b-fb67c0cad545
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 16332
+  ScriptHashCode: 17434
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: SetAbsoluteColour

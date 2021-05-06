@@ -37,7 +37,7 @@ namespace InteractML
         /// </summary>
         public override void HandleState()
         {
-
+            Debug.Log("here");
             if (Input.GetKey(_button))
             {
                 Debug.Log("press");

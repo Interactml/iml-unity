@@ -8,6 +8,7 @@ public class NanoConnect : MonoBehaviour
     public string port;
     public SerialPort serial;
     public bool isScanningDevices = true;
+
     [SendToIMLGraph]
     public float[] outArray;
     // Start is called before the first frame update
@@ -24,7 +25,7 @@ public class NanoConnect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(serial.ReadLine());
+        //Debug.Log(serial.ReadLine());
         if (serial != null && serial.IsOpen)
         {
             string data = serial.ReadLine();
