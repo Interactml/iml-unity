@@ -31,6 +31,8 @@ namespace InteractML.ControllerCustomisers
         {
             if (inputChange)
                 inputChange = false;
+            if(handler == null)
+                handler = new KeyboardHandler(inputNo, trigger, name);
             handler.HandleState();
         }
 

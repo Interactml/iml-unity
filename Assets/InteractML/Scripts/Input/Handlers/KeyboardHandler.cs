@@ -7,6 +7,7 @@ using InteractML.ControllerCustomisers;
 
 namespace InteractML
 {
+    [InitializeOnLoad]
     public class KeyboardHandler : InputHandler
     {
         //public InputHelpers.Button button = InputHelpers.Button.Trigger;
@@ -24,7 +25,6 @@ namespace InteractML
 
         public KeyboardHandler(int butNo, IMLTriggerTypes type, string name)
         {
-            Debug.Log(Input.GetKey(_button));
             this.buttonNo = butNo;
             this.triggerType = type;
             this.buttonName = name;
@@ -37,7 +37,8 @@ namespace InteractML
         /// </summary>
         public override void HandleState()
         {
-            Debug.Log("here");
+            Debug.Log(Input.anyKey);
+            Debug.Log(Input.GetKey(_button));
             if (Input.GetKey(_button))
             {
                 Debug.Log("press");
