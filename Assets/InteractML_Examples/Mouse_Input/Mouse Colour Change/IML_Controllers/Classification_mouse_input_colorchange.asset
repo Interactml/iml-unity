@@ -1,5 +1,38 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6639583725913372061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
+  m_Name: Capsule (GameObject)
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -1272, y: 40}
+  ports:
+    keys:
+    - GameObjectDataOut
+    values:
+    - _fieldName: GameObjectDataOut
+      _node: {fileID: -6639583725913372061}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  id: 9fc406e6-7eea-4c04-8bc8-a353ef1e41a4
+  numberInComponentList: -1
+  GameObjectDataOut: {fileID: 0}
+  state: 1
+  GOHashCode: 16730
+  CreatedDuringPlaymode: 0
 --- !u!114 &-6267016618958553248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,7 +102,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -87,7 +120,7 @@ MonoBehaviour:
   m_Name: Capsule (GameObject)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -664, y: -136}
+  position: {x: -872, y: 312}
   ports:
     keys:
     - GameObjectDataOut
@@ -96,10 +129,7 @@ MonoBehaviour:
       _node: {fileID: -5429471714670445252}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataIn
-        node: {fileID: 3494963089093532734}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -107,8 +137,8 @@ MonoBehaviour:
   id: 7bb14f4a-7df4-4d16-a409-e0c0d860c253
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  state: 0
-  GOHashCode: 16786
+  state: 1
+  GOHashCode: 16730
   CreatedDuringPlaymode: 0
 --- !u!114 &-3769350579374232867
 MonoBehaviour:
@@ -162,7 +192,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -182,7 +212,6 @@ MonoBehaviour:
   nodes:
   - {fileID: -6267016618958553248}
   - {fileID: 101476052607039849}
-  - {fileID: -5429471714670445252}
   - {fileID: -5714426016310200244}
   - {fileID: 3494963089093532734}
   - {fileID: 7326543755388267902}
@@ -242,7 +271,7 @@ MonoBehaviour:
   id: de7d766c-5ccd-4ec0-8966-1f0c9eb94532
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 16842
+  ScriptHashCode: 16786
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: SetAbsoluteColour
@@ -421,6 +450,39 @@ MonoBehaviour:
   canCollect: 1
   listNo: 0
   SubFolderDataPath: 
+--- !u!114 &3183303761041523922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
+  m_Name: Capsule (GameObject)
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -824, y: -56}
+  ports:
+    keys:
+    - GameObjectDataOut
+    values:
+    - _fieldName: GameObjectDataOut
+      _node: {fileID: 3183303761041523922}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  id: 8c457ead-4f16-4694-b9e5-ed4dd3a3ca31
+  numberInComponentList: -1
+  GameObjectDataOut: {fileID: 0}
+  state: 1
+  GOHashCode: 16730
+  CreatedDuringPlaymode: 0
 --- !u!114 &3494963089093532734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,7 +496,7 @@ MonoBehaviour:
   m_Name: Position
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -319.531, y: -114.50196}
+  position: {x: -424, y: -200}
   ports:
     keys:
     - GameObjectDataIn
@@ -444,10 +506,7 @@ MonoBehaviour:
       _node: {fileID: 3494963089093532734}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataOut
-        node: {fileID: -5429471714670445252}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -480,9 +539,9 @@ MonoBehaviour:
   GameObjInputMissing: 1
   m_PositionExtracted:
     m_Values:
-    - -77.77
-    - 149.67
-    - 18.13
+    - -4.6091027
+    - 10.098411
+    - -1
 --- !u!114 &7326543755388267902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -641,3 +700,36 @@ MonoBehaviour:
   hand: 0
   inputs: 0
   triggerType: 0
+--- !u!114 &9098918708771377583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
+  m_Name: Capsule (GameObject)
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -840, y: -56}
+  ports:
+    keys:
+    - GameObjectDataOut
+    values:
+    - _fieldName: GameObjectDataOut
+      _node: {fileID: 9098918708771377583}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  id: ee7ac488-d8a2-4b08-8851-49537052747e
+  numberInComponentList: -1
+  GameObjectDataOut: {fileID: 0}
+  state: 1
+  GOHashCode: 16730
+  CreatedDuringPlaymode: 0
