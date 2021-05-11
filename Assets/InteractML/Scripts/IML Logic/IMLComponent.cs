@@ -67,6 +67,7 @@ namespace InteractML
         private InteractML.CustomControllers.InputSetUp m_inputSetUp;
         [SerializeField, HideInInspector]
         private List<CustomController> m_CustomControllerList;
+        public List<Type> inputTypes; 
 
         #endregion
 
@@ -638,9 +639,24 @@ namespace InteractML
                 if (inputNode != null && m_inputSetUp == null)
                 {
                     m_inputSetUp = inputNode;
+                    if (inputTypes == null)
+                        inputTypes = new List<Type>();
+                    inputTypes.Add(typeof(InteractML.CustomControllers.KeyboardInput));
+                   
                 }
             }
 
+        }
+
+        public void InputTypeAdd()
+        {
+            m_inputSetUp.devices = new InteractML.CustomControllers.IInputType[inputTypes.Count];
+            for(int i =0; i < inputTypes.Count; i++)
+            {
+                var type = inputTypes[i];
+
+            }
+           // m_inputSetUp.devices = inputTypes;
         }
         
         private void CheckNodeIsCustomController(XNode.Node nodeToAdd, ref List<CustomController> listToAddTo)
@@ -823,6 +839,9 @@ namespace InteractML
             //Debug.Log(m_GOsPerGONodes.Count);
             //Debug.Log(m_GameObjectNodeList.Count);
             // Don't do anything if there are no gameObjects from the scene to use
+
+
+
             if (GameObjectsToUse == null || GameObjectsToUse.Count == 0)
             {
                 return;

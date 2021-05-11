@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEditor;
 using System;
 using System.Collections.Generic;
 using XNode;
@@ -20,10 +21,11 @@ namespace InteractML.CustomControllers
 
         // private List<InputDevice> inputDevices = new List<InputDevice>();
         //public string[] inputDevicesArray;
-        public IMLInputDevices device;
-
-        public IMLSides trainingHand;
-        public IMLSides mlsHand;
+        // public IMLInputDevices device;//s device list 
+        public string[] deviceNames;
+        public int deviceNo;
+        public IInputType[] devices;
+        private IInputType device; 
 
         public string[] buttonOptions;
 
@@ -76,7 +78,14 @@ namespace InteractML.CustomControllers
 
         public override void Initialize()
         {
-            LoadFromFile();
+            devices = new IInputType[0];
+            KeyboardInput keyboard = new KeyboardInput();
+            //Debug.Log(keyboard.inputName);
+            //Debug.Log(devices.Length);
+            AddDeviceType(keyboard);
+            Debug.Log(devices.Length);
+            //Debug.Log(device.inputName);
+            //device.LoadDeviceInfo();
             OnInputDeviceChange();
             trainingHandlers = new List<InputHandler>();
             //trainingHandlers.Add(DeleteLast);
@@ -89,7 +98,7 @@ namespace InteractML.CustomControllers
             allHandlers = new List<InputHandler>();
             allHandlers.AddRange(mlsHandlers);
             allHandlers.AddRange(trainingHandlers);
-            SubscribeToEvents();
+            //SubscribeToEvents();
             IMLEventDispatcher.UniversalControlChange?.Invoke(enableUniversalInterface);
         }
 
@@ -116,49 +125,19 @@ namespace InteractML.CustomControllers
         public void SetUniversalSetUp()
         {
             IMLEventDispatcher.UniversalControlChange?.Invoke(enableUniversalInterface);
-            SaveToFile();
+            device.SaveDeviceInfo();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void OnInputDeviceChange()
         {
-            switch (device)
-            {
-                case IMLInputDevices.Keyboard:
-                    InstantiateKeyboardButtonHandlers();
-                    Debug.Log("here");
-                    break;
-                /*case IMLInputDevices.Mouse:
-                    
-                    break;*/
-                case IMLInputDevices.VRControllers:
-                    InstantiateVRButtonHandlers();
-                    break;
-                default:
-                    Debug.Log("device not set");
-                    break;
-            }
-            buttonOptions = InputHelperMethods.deviceEnumSetUp(device);
-
-
+            if (device == null)
+                device = devices[0];
+            DeleteAll = device.InitializeButtonHandler(deleteAllButtonNo, deleteAllButtonTT, deleteAllName);
         }
-        /// <summary>
-        /// Changes hand type in handler 
-        /// </summary>
-        /// <param name="side">which side it is being changed to</param>
-        public void OnHandChange(IMLSides side, string group)
-        {
-            List<InputHandler> handlers = new List<InputHandler>();
-            if (group == "mlsHand")
-                handlers = mlsHandlers;
-            else
-                handlers = trainingHandlers;
 
-            foreach (InputHandler handler in handlers)
-            {
-                VRButtonHandler vrHandler = handler as VRButtonHandler;
-                vrHandler.SetController(side);
-            }
-            SaveToFile();
-        }
         /// <summary>
         /// Set the button type in the handler 
         /// </summary>
@@ -166,49 +145,26 @@ namespace InteractML.CustomControllers
         /// <param name="button">number from enum in editor</param>
         public void OnButtonChange(string handlerName, int button)
         {
-            foreach (InputHandler handler in trainingHandlers)
-            {
-                if (handlerName == handler.buttonName)
-                {
-                    handler.SetButtonNo(button);
-                    Debug.Log(button);
-                }
-            }
-            SaveToFile();
-        }
-        public void OnTriggerChange(string handlerName, IMLTriggerTypes triggerT)
-        {
-            foreach (InputHandler handler in trainingHandlers)
-            {
-                if (handlerName == handler.buttonName)
-                {
-                    handler.SetTriggerType(triggerT);
-                }
-            }
-            SaveToFile();
+            if (trainingEnabled)
+                device.OnButtonChange(handlerName, button, trainingHandlers);
+            else
+                device.OnButtonChange(handlerName, button, mlsHandlers);
         }
         /// <summary>
-        /// Create instances of VR button handlers
+        /// Trigger the button change in the device input setup 
         /// </summary>
-        private void InstantiateVRButtonHandlers()
+        /// <param name="handlerName">name of the button</param>
+        /// <param name="triggerT">trigger type to change to</param>
+        public void OnTriggerChange(string handlerName, IMLTriggerTypes triggerT)
         {
-            DeleteAll = new VRButtonHandler(deleteAllButtonNo, trainingHand, deleteAllButtonTT, m_deleteAllName);
-            //DeleteLast = new VRButtonHandler(deleteLastButtonNo, trainingHand, deleteLastButtonTT, deleteLastName);
-            RecordOne = new VRButtonHandler(recordOneButtonNo, trainingHand, recordOneButtonTT, m_recordOneName);
-            ToggleRecord = new VRButtonHandler(toggleRecordButtonNo, trainingHand, toggleRecordButtonTT, m_toggleRecordName);
-            Train = new VRButtonHandler(trainButtonNo, mlsHand, trainButtonTT, m_trainName);
-            ToggleRun = new VRButtonHandler(toggleRunButtonNo, mlsHand, toggleRunButtonTT, m_toggleRunName);
+            /*if (trainingEnabled)
+                device.OnTriggerChange(handlerName, triggerT, trainingHandlers);
+            else
+                device.OnTriggerChange(handlerName, triggerT, mlsHandlers);
+            */
         }
-        private void InstantiateKeyboardButtonHandlers()
-        {
-            Debug.Log(deleteAllButtonNo);
-            DeleteAll = new KeyboardHandler(deleteAllButtonNo, deleteAllButtonTT, m_deleteAllName);
-            //DeleteLast = new KeyboardHandler(deleteLastButtonNo, deleteLastButtonTT, "deleteLast");
-            RecordOne = new KeyboardHandler(recordOneButtonNo, recordOneButtonTT, m_recordOneName);
-            ToggleRecord = new KeyboardHandler(toggleRecordButtonNo, toggleRecordButtonTT, m_toggleRecordName);
-            Train = new KeyboardHandler(trainButtonNo, trainButtonTT, m_trainName);
-            ToggleRun = new KeyboardHandler(toggleRunButtonNo, toggleRunButtonTT, m_toggleRunName);
-        }
+        
+      
         private void EnableTraining()
         {
             trainingEnabled = true;
@@ -234,87 +190,15 @@ namespace InteractML.CustomControllers
             return true;
         }
 
-        private void SaveToFile()
+        public void AddDeviceType(IInputType inputType)
         {
-            InputSetUpVRSettings setUP = new InputSetUpVRSettings();
-            setUP.isEnabled = enableUniversalInterface;
-            setUP.device = device;
-            /*setUP.deleteLastButtonNo = deleteLastButtonNo;
-            setUP.deleteLastButtonTT = deleteLastButtonTT;*/
-            setUP.deleteAllButtonNo = deleteAllButtonNo;
-            setUP.deleteAllButtonTT = deleteAllButtonTT;
-            setUP.toggleRecordButtonNo = toggleRecordButtonNo;
-            setUP.toggleRecordButtonTT = toggleRecordButtonTT;
-            setUP.recordOneButtonNo = recordOneButtonNo;
-            setUP.recordOneButtonTT = recordOneButtonTT;
-            setUP.trainButtonNo = trainButtonNo;
-            setUP.trainButtonTT = trainButtonTT;
-            setUP.toggleRunButtonNo = toggleRunButtonNo;
-            setUP.toggleRunButtonTT = toggleRunButtonTT;
-            setUP.trainingSide = trainingHand;
-            setUP.mlsSide = mlsHand;
-            IMLInputSetUpSerialization.SaveInputSettingToDisk(setUP);
+            if (devices == null)
+                devices = new IInputType[0];
+            UnityEditor.ArrayUtility.Add<IInputType>(ref devices, inputType);
+            Debug.Log(inputType.inputName);
+            UnityEditor.ArrayUtility.Add<string>(ref deviceNames, inputType.inputName);
         }
-
-        private void LoadFromFile()
-        {
-            InputSetUpVRSettings setUP = IMLInputSetUpSerialization.LoadInputSettings();
-            enableUniversalInterface = setUP.isEnabled;
-            device = setUP.device;
-            /*deleteLastButtonNo = setUP.deleteLastButtonNo;
-            deleteLastButtonTT = setUP.deleteLastButtonTT;*/
-            deleteAllButtonNo = setUP.deleteAllButtonNo;
-            deleteAllButtonTT = setUP.deleteAllButtonTT;
-            recordOneButtonNo = setUP.recordOneButtonNo;
-            recordOneButtonTT = setUP.recordOneButtonTT;
-            toggleRecordButtonNo = setUP.toggleRecordButtonNo;
-            toggleRecordButtonTT = setUP.toggleRecordButtonTT;
-            trainButtonNo = setUP.trainButtonNo;
-            trainButtonTT = setUP.trainButtonTT;
-            toggleRunButtonNo = setUP.toggleRunButtonNo;
-            toggleRunButtonTT = setUP.toggleRunButtonTT;
-            trainingHand = setUP.trainingSide;
-            mlsHand = setUP.mlsSide;
-
-            if (device == IMLInputDevices.None)
-            {
-                device = IMLInputDevices.Keyboard;
-                deleteLastButtonNo = 1;
-                deleteLastButtonTT = IMLTriggerTypes.Hold;
-                deleteAllButtonNo = 2;
-                deleteAllButtonTT = IMLTriggerTypes.Hold;
-                toggleRecordButtonNo = 3;
-                toggleRecordButtonTT = IMLTriggerTypes.Hold;
-                trainButtonNo = 4;
-                trainButtonTT = IMLTriggerTypes.Hold;
-                toggleRunButtonNo = 5;
-                toggleRunButtonTT = IMLTriggerTypes.Hold;
-                mlsHand = setUP.mlsSide;
-                trainingHand = IMLSides.Left;
-                mlsHand = IMLSides.Right;
-            }
-           
-            
-        }
-
-
-
-        public void SubscribeToEvents()
-        {
-           // DeleteLast.ButtonFire += IMLEventDispatcher.DeleteLastCallback;
-            DeleteAll.ButtonFire += IMLEventDispatcher.DeleteAllExamplesInNodeCallback;
-            RecordOne.ButtonFire += IMLEventDispatcher.RecordOneCallback;
-            ToggleRecord.ButtonFire += IMLEventDispatcher.ToggleRecordCallback;
-            Train.ButtonFire += IMLEventDispatcher.TrainMLSCallback;
-            ToggleRun.ButtonFire += IMLEventDispatcher.ToggleRunCallback;
-
-            IMLEventDispatcher.selectGraph += ActivateInput;
-            IMLEventDispatcher.deselectGraph += DeactivateInput;
-            IMLEventDispatcher.SetUniversalTrainingID += SetTrainingID;
-            IMLEventDispatcher.EnableTraining += EnableTraining;
-            IMLEventDispatcher.DisableTraining += DisableTraining;
-            IMLEventDispatcher.SetUniversalMLSID += SetMLSID;
-        }
+       
 
         private void ActivateInput(IMLComponent graph)
         {
@@ -325,7 +209,24 @@ namespace InteractML.CustomControllers
         {
             activeUniversalInterface = false;
         }
-        
+
+        public void SubscribeToEvents()
+        {
+            //DeleteLast.ButtonFire += IMLEventDispatcher.DeleteLastCallback;
+            DeleteAll.ButtonFire += IMLEventDispatcher.DeleteAllExamplesInNodeCallback;
+            ToggleRecord.ButtonFire += IMLEventDispatcher.ToggleRecordCallback;
+            RecordOne.ButtonFire += IMLEventDispatcher.RecordOneCallback;
+            Train.ButtonFire += IMLEventDispatcher.TrainMLSCallback;
+            ToggleRun.ButtonFire += IMLEventDispatcher.ToggleRunCallback;
+
+            IMLEventDispatcher.selectGraph += ActivateInput;
+            IMLEventDispatcher.deselectGraph += DeactivateInput;
+            IMLEventDispatcher.SetUniversalTrainingID += SetTrainingID;
+            IMLEventDispatcher.SetUniversalMLSID += SetMLSID;
+
+            IMLEventDispatcher.EnableTraining += EnableTraining;
+            IMLEventDispatcher.DisableTraining += DisableTraining;
+        }
 
         public void UnsubscribeFromEvents()
         {
@@ -345,46 +246,11 @@ namespace InteractML.CustomControllers
             IMLEventDispatcher.DisableTraining -= DisableTraining;
         }
 
-
-        //method for getting inputs from system come back for future
-        /*
-         private void InputSystemOnDeviceChange(InputDevice device, InputDeviceChange deviceChange)
-        {
-            UpdateInputDevices();
-        }
-        private void UpdateInputList()
-         {
-             Debug.Log("input set up");
-            // if there are already devices in list clear list 
-             if (inputDevices.Count > 0)
-             {
-                 inputDevices.Clear();
-             }
-             //add devices to the input device 
-             for (int i = 0; i < InputSystem.devices.Count; i++)
-             {
-                 inputDevices.Add(InputSystem.devices[i]);
-
-             }
-
-
-             inputDevicesArray = new string[inputDevices.Count + 2];
-             for (int i = 0; i < inputDevices.Count -1; i++)
-             {
-                 inputDevicesArray[i] = inputDevices[i].displayName;
-             }
-
-            // inputDevicesArray[inputDevices.Count - 2] = "XRControllers";
-             //inputDevicesArray[inputDevices.Count - 2] = "XRHands";
-             Debug.Log(inputDevices.Count);
-
-         }*/
-
        
         private void OnDestroy()
         {
             IMLEventDispatcher.DestroyIMLGrab?.Invoke();
-            UnsubscribeFromEvents();
+            //UnsubscribeFromEvents();
         }
     }
 }

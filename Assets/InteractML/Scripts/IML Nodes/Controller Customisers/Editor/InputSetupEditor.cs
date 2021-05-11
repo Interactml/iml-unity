@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.InputSystem;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -29,9 +28,19 @@ namespace InteractML.ControllerCustomisers
         /// </summary>
         protected Vector2 m_ScrollPos;
 
-        IMLSides trainingSide;
-        IMLSides mlsSide;
-       
+        public int deleteLastButtonNo;
+        public IMLTriggerTypes deleteLastButtonTT;
+        public int deleteAllButtonNo;
+        public IMLTriggerTypes deleteAllButtonTT;
+        public int toggleRecordButtonNo;
+        public IMLTriggerTypes recordOneButtonTT;
+        public int recordOneButtonNo;
+        public IMLTriggerTypes toggleRecordButtonTT;
+        public int trainButtonNo;
+        public IMLTriggerTypes trainButtonTT;
+        public int toggleRunButtonNo;
+        public IMLTriggerTypes toggleRunButtonTT;
+
         /// <summary>
         /// Initialise node specific interface labels and parameters
         /// </summary>
@@ -72,7 +81,7 @@ namespace InteractML.ControllerCustomisers
 
             
             // if the input is from vr controllers or hands show choice for training examples related buttons to be on the left hand or right hand or both
-            if (m_InputSetUp.device == IMLInputDevices.VRControllers)
+           /* if (m_InputSetUp.device == IMLInputDevices.VRControllers)
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Label("Hand", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
@@ -84,7 +93,7 @@ namespace InteractML.ControllerCustomisers
             {
                 m_InputSetUp.OnHandChange(m_InputSetUp.trainingHand, "trainingSide");
                 EditorUtility.SetDirty(m_InputSetUp);
-            }
+            }8/
             // choose delete last button
             GUI.changed = false;
             // set button choice for delete last
@@ -99,11 +108,11 @@ namespace InteractML.ControllerCustomisers
             GUILayout.Space(10);
             GUILayout.BeginHorizontal();
             GUILayout.Label("Delete All", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
-            ShowButtonChoice(m_InputSetUp.deleteAllName, m_InputSetUp.deleteAllButtonNo, out m_InputSetUp.deleteAllButtonNo, m_InputSetUp.deleteAllButtonTT, out m_InputSetUp.deleteAllButtonTT);
+            ShowButtonChoice(m_InputSetUp.deleteAllName, deleteAllButtonNo, out deleteAllButtonNo, deleteAllButtonTT, out deleteAllButtonTT);
             GUILayout.EndHorizontal();
 
             // record one
-            GUILayout.Space(10);
+          /*  GUILayout.Space(10);
             GUILayout.BeginHorizontal();
             GUILayout.Label("Record One", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
             ShowButtonChoice(m_InputSetUp.recordOneName, m_InputSetUp.recordOneButtonNo, out m_InputSetUp.recordOneButtonNo, m_InputSetUp.recordOneButtonTT, out m_InputSetUp.recordOneButtonTT);
@@ -123,7 +132,7 @@ namespace InteractML.ControllerCustomisers
             // sets the controller side for the training
             GUI.changed = false;
             // if the input is from vr controllers or hands show choice for training examples related buttons to be on the left hand or right hand or both
-            if (m_InputSetUp.device == IMLInputDevices.VRControllers)
+           /* if (m_InputSetUp.device == IMLInputDevices.VRControllers)
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.Label("Hand", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
@@ -134,9 +143,9 @@ namespace InteractML.ControllerCustomisers
             {
                 m_InputSetUp.OnHandChange(m_InputSetUp.mlsHand, "mlsSide");
                 EditorUtility.SetDirty(m_InputSetUp);
-            }
+            }*/
             // sets the button for training
-            GUILayout.Space(10);
+           /* GUILayout.Space(10);
             GUILayout.BeginHorizontal();
             GUILayout.Label("Train", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
             ShowButtonChoice(m_InputSetUp.trainName, m_InputSetUp.trainButtonNo, out m_InputSetUp.trainButtonNo, m_InputSetUp.trainButtonTT, out m_InputSetUp.trainButtonTT);
@@ -148,7 +157,7 @@ namespace InteractML.ControllerCustomisers
             GUILayout.BeginHorizontal();
             GUILayout.Label("Toggle Run", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(200));
             ShowButtonChoice(m_InputSetUp.toggleRunName, m_InputSetUp.toggleRunButtonNo, out m_InputSetUp.toggleRunButtonNo, m_InputSetUp.toggleRunButtonTT, out m_InputSetUp.toggleRunButtonTT);
-            GUILayout.EndHorizontal();
+            GUILayout.EndHorizontal();*/
 
 
         }
@@ -158,7 +167,7 @@ namespace InteractML.ControllerCustomisers
             // set gui changed to false so thar we know if they have selected a new input 
             GUI.changed = false;
             // set the device to user chosen input
-            m_InputSetUp.device = (IMLInputDevices)EditorGUILayout.EnumPopup(m_InputSetUp.device);
+            m_InputSetUp.deviceNo = EditorGUILayout.Popup(m_InputSetUp.deviceNo, m_InputSetUp.deviceNames);
 
 
             // if the user changes then alert the node 

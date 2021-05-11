@@ -594,10 +594,10 @@ namespace InteractML
             // Pull input from string subfolderDataPath nodeport
             SubFolderDataPath = GetInputValue<string>("SubFolderDataPathStringPort");
             // Attempt to load data
-            if (m_TrainingExamplesVector.Count == 0 && m_TrainingSeriesCollection.Count == 0)
+            /*if (m_TrainingExamplesVector.Count == 0 && m_TrainingSeriesCollection.Count == 0)
             {
                 LoadDataFromDisk();
-            }
+            }*/
             // Run examples logic in case we need to start/stop collecting examples
             CollectExamplesLogic();
 
@@ -1007,7 +1007,7 @@ namespace InteractML
                 // If we have a subfolder specified for the data...
                 if (!String.IsNullOrEmpty(SubFolderDataPath))
                     fileName = String.Concat(SubFolderDataPath, "/", fileName);
-                
+                Debug.Log(fileName);
                 return fileName;
             }
             return null;
