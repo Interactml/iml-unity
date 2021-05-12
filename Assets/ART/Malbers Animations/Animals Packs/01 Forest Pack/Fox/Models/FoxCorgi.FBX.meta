@@ -1,0 +1,184 @@
+fileFormatVersion: 2
+guid: 52c1ce7eb9f494f4b9f9680af10815e5
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: CG
+    100002: Eye L
+    100004: Eye R
+    100006: Fox
+    100008: //RootNode
+    100010: Head
+    100012: Jaw
+    100014: L Calf
+    100016: L Cheek
+    100018: L Clavicle
+    100020: L Ear
+    100022: L Foot
+    100024: L Forearm
+    100026: L Hand
+    100028: L HorseLink
+    100030: L Thigh
+    100032: L UpperArm
+    100034: Magic
+    100036: Neck
+    100038: Pelvis
+    100040: R Calf
+    100042: R Cheek
+    100044: R Clavicle
+    100046: R Ear
+    100048: R Foot
+    100050: R Forearm
+    100052: R Hand
+    100054: R HorseLink
+    100056: R Thigh
+    100058: R UpperArm
+    100060: Spine
+    100062: Spine1
+    100064: Spine2
+    100066: Tail
+    100068: Tail1
+    100070: Tail2
+    100072: Tail3
+    100074: Tongue
+    400000: CG
+    400002: Eye L
+    400004: Eye R
+    400006: Fox
+    400008: //RootNode
+    400010: Head
+    400012: Jaw
+    400014: L Calf
+    400016: L Cheek
+    400018: L Clavicle
+    400020: L Ear
+    400022: L Foot
+    400024: L Forearm
+    400026: L Hand
+    400028: L HorseLink
+    400030: L Thigh
+    400032: L UpperArm
+    400034: Magic
+    400036: Neck
+    400038: Pelvis
+    400040: R Calf
+    400042: R Cheek
+    400044: R Clavicle
+    400046: R Ear
+    400048: R Foot
+    400050: R Forearm
+    400052: R Hand
+    400054: R HorseLink
+    400056: R Thigh
+    400058: R UpperArm
+    400060: Spine
+    400062: Spine1
+    400064: Spine2
+    400066: Tail
+    400068: Tail1
+    400070: Tail2
+    400072: Tail3
+    400074: Tongue
+    4300000: Magic
+    4300002: Fox
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: Fox
+    13700002: Magic
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Magic
+    second: {fileID: 2100000, guid: e43ee141c36996942a2d503cd21e5d79, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #25'
+    second: {fileID: 2100000, guid: a763c8a219e865e4092be54ce776ed9b, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: CG
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

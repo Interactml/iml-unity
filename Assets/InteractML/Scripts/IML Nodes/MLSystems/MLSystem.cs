@@ -582,6 +582,7 @@ namespace InteractML
         /// <returns></returns>
         public bool TrainModel()
         {
+            Debug.Log(trainOnLoad);
             bool isTrained = false;
             //if the MLS is not running, training and the model is not null and the total number of training data is bigger than 0
             if (!Running && !Training && Model != null && TotalNumTrainingDataConnected > 0)
@@ -1960,13 +1961,14 @@ namespace InteractML
 
         public void UpdateLogic()
         {
+            UpdateTotalNumberTrainingExamples();
             //test
             //Debug.Log(Model.ModelAddress);
             //Debug.Log(Model.ModelStatus);
             //Debug.Log(Trained);
             //Debug.Log(m_trainingType);
             //Debug.Log(m_Model.TypeOfModel);
-            
+
             //UpdateDynamicOutputPorts(IMLTrainingExamplesNodes, m_ExpectedOutputList, ref m_DynamicOutputPorts);
             // Pull inputs from bool event nodeports
             if (GetInputValue<bool>("ToggleTrainInputBoolPort"))
@@ -1982,18 +1984,9 @@ namespace InteractML
         private bool LoadOrTrain()
         {
             ResetModel();
-            //Debug.Log(trainOnLoad);
-            //Debug.Log(Model.TypeOfModel);
             if (Model.TypeOfModel == RapidlibModel.ModelType.DTW)
             {
-                if (NumExamplesTrainedOn > 0)
-                {
-                    return TrainModel();
-                } else
-                {
-                    return true;
-                }
-                
+                return TrainModel();
 
             } else if(Model.TypeOfModel == RapidlibModel.ModelType.NeuralNetwork || Model.TypeOfModel == RapidlibModel.ModelType.kNN)  
             {

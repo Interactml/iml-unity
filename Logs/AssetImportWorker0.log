@@ -1,10 +1,10 @@
 Using pre-set license
-Built from '2020.2/staging' branch; Version is '2020.2.5f1 (e2c53f129de5) revision 14861631'; Using compiler version '192528614'; Build Type 'Release'
+Built from '2020.3/release' branch; Version is '2020.3.7f1 (dd97f2c94397) revision 14522354'; Using compiler version '192528614'; Build Type 'Release'
 OS: 'Windows 10 Education; OS build 19042.928; Version 2009; 64bit' Language: 'en' Physical Memory: 16173 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
 
  COMMAND LINE ARGUMENTS:
-C:\Program Files\Unity\Hub\Editor\2020.2.5f1\Editor\Unity.exe
+C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Unity.exe
 -adb2
 -batchMode
 -noUpm
@@ -15,14 +15,14 @@ C:/Users/Clarice/Documents/4i Project/bugfixes
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-4395
+13660
 Successfully changed project path to: C:/Users/Clarice/Documents/4i Project/bugfixes
 C:/Users/Clarice/Documents/4i Project/bugfixes
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 36.76 ms, found 2 plugins.
+Refreshing native plugins compatible for Editor in 36.01 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Initialize engine version: 2020.2.5f1 (e2c53f129de5)
-[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.2.5f1/Editor/Data/Resources/UnitySubsystems
+Initialize engine version: 2020.3.7f1 (dd97f2c94397)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/Resources/UnitySubsystems
 [Subsystems] Discovering subsystems at path C:/Users/Clarice/Documents/4i Project/bugfixes/Assets
 GfxDevice: creating device client; threaded=0
 Direct3D:
@@ -32,106 +32,1526 @@ Direct3D:
     VRAM:     8010 MB
     Driver:   27.21.14.5687
 Initialize mono
-Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.2.5f1/Editor/Data/Managed'
-Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.2.5f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
-Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.2.5f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56012
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56908
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
-Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.2.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.002439 seconds.
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.002632 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 26.66 ms, found 2 plugins.
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 29.52 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.949 seconds
+- Completed reload, in  1.809 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.004197 seconds.
+Registered in 0.002770 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
 Refreshing native plugins compatible for Editor in 0.32 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.TrainingExamplesNode.OnRemoveConnection (XNode.NodePort port) [0x00007] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\TrainingExamplesNode.cs:375 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00080] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:302 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/TrainingExamplesNode.cs Line: 375)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.MLSystem.CheckLengthTrainingVector (InteractML.TrainingExamplesNode tNode) [0x0001d] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:652 
+  at InteractML.MLSystem.CheckLengthInputsVector () [0x00038] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:670 
+  at InteractML.MLSystem.OnRemoveConnection (XNode.NodePort port) [0x000aa] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:384 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00071] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:301 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs Line: 652)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.TrainingExamplesNode.OnRemoveConnection (XNode.NodePort port) [0x00007] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\TrainingExamplesNode.cs:375 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00080] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:302 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/TrainingExamplesNode.cs Line: 375)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.TrainingExamplesNode.OnRemoveConnection (XNode.NodePort port) [0x00007] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\TrainingExamplesNode.cs:375 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00080] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:302 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/TrainingExamplesNode.cs Line: 375)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.TrainingExamplesNode.OnRemoveConnection (XNode.NodePort port) [0x00007] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\TrainingExamplesNode.cs:375 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00080] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:302 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/TrainingExamplesNode.cs Line: 375)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.TrainingExamplesNode.OnRemoveConnection (XNode.NodePort port) [0x00007] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\TrainingExamplesNode.cs:375 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00080] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:302 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/TrainingExamplesNode.cs Line: 375)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.TrainingExamplesNode.OnRemoveConnection (XNode.NodePort port) [0x00007] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\TrainingExamplesNode.cs:375 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00080] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:302 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/TrainingExamplesNode.cs Line: 375)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.MLSystem.CheckLengthTrainingVector (InteractML.TrainingExamplesNode tNode) [0x0001d] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:652 
+  at InteractML.MLSystem.CheckLengthInputsVector () [0x00038] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:670 
+  at InteractML.MLSystem.OnRemoveConnection (XNode.NodePort port) [0x000aa] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:384 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00071] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:301 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs Line: 652)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.MLSystem.CheckLengthTrainingVector (InteractML.TrainingExamplesNode tNode) [0x0001d] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:652 
+  at InteractML.MLSystem.CheckLengthInputsVector () [0x00038] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:670 
+  at InteractML.MLSystem.OnRemoveConnection (XNode.NodePort port) [0x000aa] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:384 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00071] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:301 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs Line: 652)
+
 Mono: successfully reloaded assembly
-- Completed reload, in  0.891 seconds
+- Completed reload, in  0.936 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
-Refreshing native plugins compatible for Editor in 0.93 ms, found 2 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
+Refreshing native plugins compatible for Editor in 0.58 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1236 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 64.2 MB.
-System memory in use after: 64.2 MB.
+Unloading 1383 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 74.1 MB.
+System memory in use after: 73.2 MB.
 
-Unloading 99 unused Assets to reduce memory usage. Loaded Objects now: 1662.
-Total: 1.680900 ms (FindLiveObjects: 0.202100 ms CreateObjectMapping: 0.058900 ms MarkObjects: 1.316900 ms  DeleteObjects: 0.101700 ms)
-
-========================================================================
-Received Import Request.
-  path: Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/DTW_Mouse_Input_ColorChange.asset
-  artifactKey: Guid(4f7c21b001de13743a16ae174908e557) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/DTW_Mouse_Input_ColorChange.asset using Guid(4f7c21b001de13743a16ae174908e557) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8de9879581ddf59d413f383d1b8c2bbc') in 0.056607 seconds
-  Import took 0.059858 seconds .
+Unloading 207 unused Assets to reduce memory usage. Loaded Objects now: 1792.
+Total: 2.237400 ms (FindLiveObjects: 0.201100 ms CreateObjectMapping: 0.093200 ms MarkObjects: 1.445000 ms  DeleteObjects: 0.496900 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000592 seconds.
-  path: Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/Classification_mouse_input_colorchange.asset
-  artifactKey: Guid(3318a7925d1c0284089e33d519a87d84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/Classification_mouse_input_colorchange.asset using Guid(3318a7925d1c0284089e33d519a87d84) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '486a43abcc3ccc13c299918fe2d186a8') in 0.010595 seconds
-  Import took 0.014068 seconds .
+  path: Assets/ART/Malbers Animations/Animals Packs/01 Forest Pack/Fox/Materials/Fox Skin Orange 1.mat
+  artifactKey: Guid(af3a7daa4e44b814d8193ab256a1f9d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ART/Malbers Animations/Animals Packs/01 Forest Pack/Fox/Materials/Fox Skin Orange 1.mat using Guid(af3a7daa4e44b814d8193ab256a1f9d7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ce31a56be2c774fbf923b645fb56ab4f') in 0.133223 seconds
+  Import took 0.135560 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 2.887879 seconds.
-  path: Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/DTW_Mouse_Input_ColorChange.asset
-  artifactKey: Guid(4f7c21b001de13743a16ae174908e557) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/DTW_Mouse_Input_ColorChange.asset using Guid(4f7c21b001de13743a16ae174908e557) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4a151d6567eeedf6f976a266b8830a6f') in 0.006799 seconds
-  Import took 0.009951 seconds .
+  Time since last request: 0.000306 seconds.
+  path: Assets/ART/Malbers Animations/Animals Packs/01 Forest Pack/Fox/Materials/Fox Skin Fennec.mat
+  artifactKey: Guid(1e28f2ea86686bf46bd1a28256f0888b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ART/Malbers Animations/Animals Packs/01 Forest Pack/Fox/Materials/Fox Skin Fennec.mat using Guid(1e28f2ea86686bf46bd1a28256f0888b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b671e221b31e043271f507768ff06d80') in 0.256658 seconds
+  Import took 0.258974 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000274 seconds.
+  path: Assets/ART/Malbers Animations/Animals Packs/01 Forest Pack/Fox/Materials/Fox Skin Snow.mat
+  artifactKey: Guid(8d90183e2b86ad442a615272550d044a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ART/Malbers Animations/Animals Packs/01 Forest Pack/Fox/Materials/Fox Skin Snow.mat using Guid(8d90183e2b86ad442a615272550d044a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c7ecd535209b13d9022a447a8bb18cc7') in 0.012778 seconds
+  Import took 0.015574 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000429 seconds.
+  path: Assets/ART/Malbers Animations/Animals Packs/01 Forest Pack/Fox/Materials/Fox Skin Black.mat
+  artifactKey: Guid(f7d139f5e6a3c9c44a5835eca8271951) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ART/Malbers Animations/Animals Packs/01 Forest Pack/Fox/Materials/Fox Skin Black.mat using Guid(f7d139f5e6a3c9c44a5835eca8271951) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '948df436feab5d1e9bf48136b08a5dd4') in 0.019595 seconds
+  Import took 0.023792 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000299 seconds.
+  path: Assets/ART/Malbers Animations/Animals Packs/01 Forest Pack/Fox/Materials/Fox Skin Mane Wolf.mat
+  artifactKey: Guid(fcc8068c8b002c442a7b5f8ffe02d0a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/ART/Malbers Animations/Animals Packs/01 Forest Pack/Fox/Materials/Fox Skin Mane Wolf.mat using Guid(fcc8068c8b002c442a7b5f8ffe02d0a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4124476db1745fbcb7eec1b7d87bf591') in 0.014366 seconds
+  Import took 0.017685 seconds .
 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.003731 seconds.
+Registered in 0.004229 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.51 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.TrainingExamplesNode.OnRemoveConnection (XNode.NodePort port) [0x00007] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\TrainingExamplesNode.cs:375 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00080] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:302 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/TrainingExamplesNode.cs Line: 375)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.MLSystem.CheckLengthTrainingVector (InteractML.TrainingExamplesNode tNode) [0x0001d] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:652 
+  at InteractML.MLSystem.CheckLengthInputsVector () [0x00038] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:670 
+  at InteractML.MLSystem.OnRemoveConnection (XNode.NodePort port) [0x000aa] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:384 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00071] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:301 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs Line: 652)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.TrainingExamplesNode.OnRemoveConnection (XNode.NodePort port) [0x00007] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\TrainingExamplesNode.cs:375 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00080] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:302 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/TrainingExamplesNode.cs Line: 375)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.TrainingExamplesNode.OnRemoveConnection (XNode.NodePort port) [0x00007] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\TrainingExamplesNode.cs:375 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00080] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:302 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/TrainingExamplesNode.cs Line: 375)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.TrainingExamplesNode.OnRemoveConnection (XNode.NodePort port) [0x00007] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\TrainingExamplesNode.cs:375 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00080] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:302 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/TrainingExamplesNode.cs Line: 375)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.TrainingExamplesNode.OnRemoveConnection (XNode.NodePort port) [0x00007] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\TrainingExamplesNode.cs:375 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00080] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:302 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/TrainingExamplesNode.cs Line: 375)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.TrainingExamplesNode.OnRemoveConnection (XNode.NodePort port) [0x00007] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\TrainingExamplesNode.cs:375 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00080] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:302 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/TrainingExamplesNode.cs Line: 375)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.MLSystem.CheckLengthTrainingVector (InteractML.TrainingExamplesNode tNode) [0x0001d] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:652 
+  at InteractML.MLSystem.CheckLengthInputsVector () [0x00038] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:670 
+  at InteractML.MLSystem.OnRemoveConnection (XNode.NodePort port) [0x000aa] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:384 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00071] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:301 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs Line: 652)
+
+NullReferenceException: Object reference not set to an instance of an object
+  at InteractML.MLSystem.CheckLengthTrainingVector (InteractML.TrainingExamplesNode tNode) [0x0001d] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:652 
+  at InteractML.MLSystem.CheckLengthInputsVector () [0x00038] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:670 
+  at InteractML.MLSystem.OnRemoveConnection (XNode.NodePort port) [0x000aa] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\InteractML\Scripts\IML Nodes\MLSystems\MLSystem.cs:384 
+  at XNode.NodePort.Disconnect (XNode.NodePort port) [0x00071] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:301 
+  at XNode.NodePort.ClearConnections () [0x00002] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodePort.cs:326 
+  at XNode.NodeDataCache.UpdatePorts (XNode.Node node, System.Collections.Generic.Dictionary`2[TKey,TValue] ports) [0x0013a] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\NodeDataCache.cs:46 
+  at XNode.Node.UpdatePorts () [0x00000] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:128 
+  at XNode.Node.OnEnable () [0x0001e] in C:\Users\Clarice\Documents\4i Project\bugfixes\Assets\Dependencies\xNode\Scripts\Node.cs:122 
+UnityEditor.AssetDatabase:LoadAssetAtPath(String, Type)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor() (at Assets\Dependencies\xNode\Scripts\Editor\NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs Line: 652)
+
+Mono: successfully reloaded assembly
+- Completed reload, in  1.216 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.35 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1374 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.3 MB.
+System memory in use after: 76.5 MB.
+
+Unloading 202 unused Assets to reduce memory usage. Loaded Objects now: 1835.
+Total: 2.955700 ms (FindLiveObjects: 0.445200 ms CreateObjectMapping: 0.243000 ms MarkObjects: 1.640100 ms  DeleteObjects: 0.623200 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003354 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.34 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.876 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.34 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1371 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 76.9 MB.
+System memory in use after: 76.2 MB.
+
+Unloading 125 unused Assets to reduce memory usage. Loaded Objects now: 1838.
+Total: 2.381300 ms (FindLiveObjects: 0.242900 ms CreateObjectMapping: 0.114500 ms MarkObjects: 1.587500 ms  DeleteObjects: 0.435000 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005770 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.71 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.538 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.68 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1371 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.0 MB.
+System memory in use after: 76.2 MB.
+
+Unloading 125 unused Assets to reduce memory usage. Loaded Objects now: 1841.
+Total: 2.595100 ms (FindLiveObjects: 0.195400 ms CreateObjectMapping: 0.059900 ms MarkObjects: 1.737800 ms  DeleteObjects: 0.600000 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 421.405502 seconds.
+  path: Assets/InteractML_Examples/Fox
+  artifactKey: Guid(a944922ba73b3b545b4e0f63890add2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox using Guid(a944922ba73b3b545b4e0f63890add2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a896624792ae691585ee39cd9d745bae') in 0.006147 seconds
+  Import took 0.009676 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 24.301721 seconds.
+  path: Assets/InteractML_Examples/Fox/New IML Graph.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/New IML Graph.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1c11967ba4af02c823604e318e03c8e3') in 0.020989 seconds
+  Import took 0.025986 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 76.262716 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox)_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox)_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e70f487cd6f9c86172c1fc4b5ca507a0') in 0.003374 seconds
+  Import took 0.007438 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 6.569944 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd33b287b0b50299e5140efbdd50cf1dc') in 0.004373 seconds
+  Import took 0.007716 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 11.791157 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4f3f6210f6627d2e4a853b9a05ebae1d') in 0.003308 seconds
+  Import took 0.006893 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.028958 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f5f4568be9c67b6a8a1d48dd9d016e4e') in 0.002819 seconds
+  Import took 0.005100 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 8.850562 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '00d81a3a726f3f2a02067ce91b9a8175') in 0.003291 seconds
+  Import took 0.006961 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.202281 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '35eaef673a93169075c240a4d76832a9') in 0.002888 seconds
+  Import took 0.005379 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.713885 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '32ec697ab45e559b765e3e16ed40851c') in 0.002496 seconds
+  Import took 0.005117 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.627033 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5cba2a98a6ecea3e05fd502032dd7193') in 0.003350 seconds
+  Import took 0.005699 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.251017 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd2c44af8db3c11254df7cdc42cbc70d1') in 0.003024 seconds
+  Import took 0.005562 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.776230 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '62fb78f06c5450da2b656aeb077612aa') in 0.003523 seconds
+  Import took 0.006503 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 6.592595 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '89d0e71e5589428c28fc8e4f5d4bf465') in 0.004066 seconds
+  Import took 0.007487 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.595752 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '847f2e8a5d20463fb9b5fbccffac010c') in 0.003452 seconds
+  Import took 0.006245 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.820695 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '27f7e7e0017a353569d1cd339837c826') in 0.003180 seconds
+  Import took 0.006184 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 10.225160 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3e4509ae4a8c4cb531db7e393b626908') in 0.003261 seconds
+  Import took 0.005520 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.648229 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'af2755b2082bb7c62d37cb0e22d154e4') in 0.003412 seconds
+  Import took 0.005623 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.909431 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '261ab1511278793f924b5b91c81668ba') in 0.005441 seconds
+  Import took 0.008410 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.472428 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e1d6c50c56bcf25e6290cc47253b057a') in 0.004070 seconds
+  Import took 0.006882 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.524136 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '12bf547b44a4b90035ef3f38839e19ca') in 0.003369 seconds
+  Import took 0.006502 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 12.419019 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '17db74dd746e943ab992b903a1c1e520') in 0.004713 seconds
+  Import took 0.008137 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 50.607635 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4dcd1892676bbefef0b91a7885fb40df') in 0.005086 seconds
+  Import took 0.008369 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.306826 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eef0acda361a9982c0bd3441c4c32688') in 0.006468 seconds
+  Import took 0.009822 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.227114 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'faf68a92e29fee577be4c4103190377f') in 0.004267 seconds
+  Import took 0.006908 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.600839 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8c89ce9a8df3adc7b2ca7a707b9d8eaa') in 0.004473 seconds
+  Import took 0.008304 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 12.035415 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9296ed4ea937c4420d9bec3132f65696') in 0.003446 seconds
+  Import took 0.005906 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.501849 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '625012022cff574fad641d60630c1b82') in 0.004130 seconds
+  Import took 0.006531 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.749773 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cd9062c239d72122d530c0e50e864a20') in 0.003734 seconds
+  Import took 0.006264 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003783 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.31 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.876 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.39 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.0 MB.
+System memory in use after: 76.2 MB.
+
+Unloading 132 unused Assets to reduce memory usage. Loaded Objects now: 1844.
+Total: 2.127700 ms (FindLiveObjects: 0.270800 ms CreateObjectMapping: 0.098300 ms MarkObjects: 1.319200 ms  DeleteObjects: 0.438200 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 171.490490 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b9d45c24a049f73a200e27df883a8c39') in 0.012768 seconds
+  Import took 0.015317 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001455 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b9d45c24a049f73a200e27df883a8c39') in 0.004634 seconds
+  Import took 0.007560 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.584006 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '13b5a6821be7498b324935c543600885') in 0.004084 seconds
+  Import took 0.006579 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 6.046130 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '71a2fdb5f57502d70e056dbd033ce8cb') in 0.006677 seconds
+  Import took 0.009863 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.901384 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7c13103aab8c280971448ad2fe95c40b') in 0.004824 seconds
+  Import took 0.007680 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002703 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.40 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.983 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.35 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.0 MB.
+System memory in use after: 76.2 MB.
+
+Unloading 133 unused Assets to reduce memory usage. Loaded Objects now: 1847.
+Total: 2.244500 ms (FindLiveObjects: 0.143900 ms CreateObjectMapping: 0.052300 ms MarkObjects: 1.532300 ms  DeleteObjects: 0.514900 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 35.470783 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '07605631c810ba19ff2ac7f1bf30d09b') in 0.013558 seconds
+  Import took 0.016585 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.306276 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6ed41c21ae9e62164b43afccbc02cf00') in 0.004558 seconds
+  Import took 0.007706 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.281335 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f40823b4a276388507cc4b4023a4ae54') in 0.006262 seconds
+  Import took 0.009734 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.065313 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '12ca9e8b777374bb6e52507e800a602e') in 0.006116 seconds
+  Import took 0.009021 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.022307 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e1302ff801c265a39e2dd802b0e14856') in 0.008129 seconds
+  Import took 0.012178 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 17.203563 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '50fcf7239f3a02c247c8b44ceee2ee6a') in 0.004560 seconds
+  Import took 0.007430 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.430998 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fbb960cfdc3a87c2fe844e4fdca6de3b') in 0.004834 seconds
+  Import took 0.008292 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.936220 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8cb71cab17501faedaea6915f5fb51a2') in 0.006510 seconds
+  Import took 0.009911 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 12.929816 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a63928dd1f86ba3386828c764c5ff5f3') in 0.004533 seconds
+  Import took 0.007305 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.859316 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a0c4ed8f8149ffafc242664d37a7bdf5') in 0.004409 seconds
+  Import took 0.006606 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.593917 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '433e4ef6c42f23a8dc9f224a6aa4a6c9') in 0.004904 seconds
+  Import took 0.008865 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002804 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.58 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.047 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.32 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.0 MB.
+System memory in use after: 76.3 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1850.
+Total: 2.255100 ms (FindLiveObjects: 0.207800 ms CreateObjectMapping: 0.055900 ms MarkObjects: 1.456500 ms  DeleteObjects: 0.533700 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 18.929572 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1cbd147224a90dfe1d419ca82521322e') in 0.013556 seconds
+  Import took 0.017211 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 205.103583 seconds.
+  path: Assets/InteractML/Scripts/IML Controllers/IMLGraph.cs
+  artifactKey: Guid(4a8e1e2d4383d9e4081fe3bdfd1bfed4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Controllers/IMLGraph.cs using Guid(4a8e1e2d4383d9e4081fe3bdfd1bfed4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5d3ed6869fefb321bf8d27b253a9a350') in 0.008965 seconds
+  Import took 0.012157 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002142 seconds.
+  path: Assets/InteractML/Scripts/IML Controllers/IMLGraph.cs
+  artifactKey: Guid(4a8e1e2d4383d9e4081fe3bdfd1bfed4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Controllers/IMLGraph.cs using Guid(4a8e1e2d4383d9e4081fe3bdfd1bfed4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5d3ed6869fefb321bf8d27b253a9a350') in 0.003040 seconds
+  Import took 0.006022 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003219 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.32 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.855 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.44 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.0 MB.
+System memory in use after: 76.3 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1853.
+Total: 2.218400 ms (FindLiveObjects: 0.179100 ms CreateObjectMapping: 0.041200 ms MarkObjects: 1.409500 ms  DeleteObjects: 0.587700 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 25.828999 seconds.
+  path: Assets/InteractML/Scripts/IML Controllers/IMLGraph.cs
+  artifactKey: Guid(4a8e1e2d4383d9e4081fe3bdfd1bfed4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Controllers/IMLGraph.cs using Guid(4a8e1e2d4383d9e4081fe3bdfd1bfed4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd6f708a2651fe56ebbd86dd558446ff3') in 0.003698 seconds
+  Import took 0.006186 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000387 seconds.
+  path: Assets/InteractML/Scripts/IML Controllers/Editor/IMLGraphEditor.cs
+  artifactKey: Guid(a7b42894f0074cc4ab84e33bbcfd0cb9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Controllers/Editor/IMLGraphEditor.cs using Guid(a7b42894f0074cc4ab84e33bbcfd0cb9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f324a80e5a526b7e6d09a2fc2babdb51') in 0.001981 seconds
+  Import took 0.004577 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002649 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.34 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.046 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.32 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.1 MB.
+System memory in use after: 76.3 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1856.
+Total: 2.145300 ms (FindLiveObjects: 0.183100 ms CreateObjectMapping: 0.051100 ms MarkObjects: 1.419800 ms  DeleteObjects: 0.487900 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002881 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.64 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.893 seconds
+Platform modules already initialized, skipping
 Refreshing native plugins compatible for Editor in 0.33 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Invoked RoslynAnalysisRunner static constructor.
-RoslynAnalysisRunner will not be running.
-RoslynAnalysisRunner has terminated.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.1 MB.
+System memory in use after: 76.3 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1859.
+Total: 2.209800 ms (FindLiveObjects: 0.270300 ms CreateObjectMapping: 0.088500 ms MarkObjects: 1.401900 ms  DeleteObjects: 0.448100 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003089 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.35 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.884 seconds
+- Completed reload, in  1.025 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.33 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.1 MB.
+System memory in use after: 76.3 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1862.
+Total: 2.647000 ms (FindLiveObjects: 0.263200 ms CreateObjectMapping: 0.066900 ms MarkObjects: 1.802700 ms  DeleteObjects: 0.512600 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002835 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.33 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.994 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.56 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.1 MB.
+System memory in use after: 76.3 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1865.
+Total: 2.253400 ms (FindLiveObjects: 0.153600 ms CreateObjectMapping: 0.045000 ms MarkObjects: 1.599700 ms  DeleteObjects: 0.454000 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002844 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.36 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.999 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.35 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.1 MB.
+System memory in use after: 76.3 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1868.
+Total: 2.415700 ms (FindLiveObjects: 0.163200 ms CreateObjectMapping: 0.085800 ms MarkObjects: 1.707600 ms  DeleteObjects: 0.457500 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003173 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.40 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.989 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.40 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.1 MB.
+System memory in use after: 76.3 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1871.
+Total: 2.164900 ms (FindLiveObjects: 0.180200 ms CreateObjectMapping: 0.053300 ms MarkObjects: 1.345000 ms  DeleteObjects: 0.585000 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003382 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.55 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.210 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.45 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.1 MB.
+System memory in use after: 76.3 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1874.
+Total: 2.359000 ms (FindLiveObjects: 0.288900 ms CreateObjectMapping: 0.083800 ms MarkObjects: 1.484900 ms  DeleteObjects: 0.500200 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005322 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.47 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.382 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.68 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.1 MB.
+System memory in use after: 76.3 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1877.
+Total: 2.950800 ms (FindLiveObjects: 0.439900 ms CreateObjectMapping: 0.154700 ms MarkObjects: 1.758700 ms  DeleteObjects: 0.595300 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002928 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.40 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.026 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.40 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.1 MB.
+System memory in use after: 76.3 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1880.
+Total: 2.480600 ms (FindLiveObjects: 0.258500 ms CreateObjectMapping: 0.098900 ms MarkObjects: 1.535800 ms  DeleteObjects: 0.586200 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002736 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.36 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.119 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.42 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.1 MB.
+System memory in use after: 76.4 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1883.
+Total: 2.592600 ms (FindLiveObjects: 0.205100 ms CreateObjectMapping: 0.051400 ms MarkObjects: 1.787300 ms  DeleteObjects: 0.547300 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003552 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.56 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.128 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.38 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.1 MB.
+System memory in use after: 76.4 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1886.
+Total: 2.351400 ms (FindLiveObjects: 0.186400 ms CreateObjectMapping: 0.041100 ms MarkObjects: 1.386600 ms  DeleteObjects: 0.735900 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002896 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.46 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.003 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.46 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.1 MB.
+System memory in use after: 76.4 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1889.
+Total: 3.170300 ms (FindLiveObjects: 0.205100 ms CreateObjectMapping: 0.060800 ms MarkObjects: 2.326000 ms  DeleteObjects: 0.576800 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003036 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.34 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.025 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.36 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.2 MB.
+System memory in use after: 76.4 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1892.
+Total: 2.261600 ms (FindLiveObjects: 0.172400 ms CreateObjectMapping: 0.047500 ms MarkObjects: 1.572500 ms  DeleteObjects: 0.468200 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 1565.752404 seconds.
+  path: Assets/InteractML_Examples/Fox/Fox_Mouse.asset
+  artifactKey: Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Fox/Fox_Mouse.asset using Guid(f6e196b1b08474c43963a752f637bfe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f221f77137cf2b5d618f7e1e7d99b99f') in 0.012763 seconds
+  Import took 0.015898 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 84.629880 seconds.
+  path: Assets/InteractML/Scripts/IML Logic/IMLComponent.cs
+  artifactKey: Guid(3c477b3f40f547843930edfdcbde5951) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Logic/IMLComponent.cs using Guid(3c477b3f40f547843930edfdcbde5951) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e4cd6dd25802fe99a9f86887a889509b') in 0.002357 seconds
+  Import took 0.005085 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001373 seconds.
+  path: Assets/InteractML/Scripts/IML Logic/IMLComponent.cs
+  artifactKey: Guid(3c477b3f40f547843930edfdcbde5951) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Logic/IMLComponent.cs using Guid(3c477b3f40f547843930edfdcbde5951) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e4cd6dd25802fe99a9f86887a889509b') in 0.002946 seconds
+  Import took 0.005216 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.004269 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.39 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.928 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.76 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.2 MB.
+System memory in use after: 76.4 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1895.
+Total: 2.063000 ms (FindLiveObjects: 0.168700 ms CreateObjectMapping: 0.052800 ms MarkObjects: 1.381000 ms  DeleteObjects: 0.459400 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 37.013126 seconds.
+  path: Assets/InteractML/Scripts/IML Logic/IMLComponent.cs
+  artifactKey: Guid(3c477b3f40f547843930edfdcbde5951) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Logic/IMLComponent.cs using Guid(3c477b3f40f547843930edfdcbde5951) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '498381d7570a9df860627404d4ef4000') in 0.004319 seconds
+  Import took 0.007576 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.458511 seconds.
+  path: Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs
+  artifactKey: Guid(21cbf9d5f90a6a749bf70593dd60aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs using Guid(21cbf9d5f90a6a749bf70593dd60aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a064cbe52b6a1e9ff79ec98b203845f2') in 0.002427 seconds
+  Import took 0.004668 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001544 seconds.
+  path: Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs
+  artifactKey: Guid(21cbf9d5f90a6a749bf70593dd60aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs using Guid(21cbf9d5f90a6a749bf70593dd60aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a064cbe52b6a1e9ff79ec98b203845f2') in 0.003163 seconds
+  Import took 0.006287 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003242 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.31 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.853 seconds
 Platform modules already initialized, skipping
 Refreshing native plugins compatible for Editor in 0.31 ms, found 2 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1216 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 63.2 MB.
-System memory in use after: 63.3 MB.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.2 MB.
+System memory in use after: 76.4 MB.
 
-Unloading 94 unused Assets to reduce memory usage. Loaded Objects now: 1665.
-Total: 1.811700 ms (FindLiveObjects: 0.438600 ms CreateObjectMapping: 0.130200 ms MarkObjects: 1.189100 ms  DeleteObjects: 0.052100 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 9.141145 seconds.
-  path: Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/DTW_Mouse_Input_ColorChange.asset
-  artifactKey: Guid(4f7c21b001de13743a16ae174908e557) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/DTW_Mouse_Input_ColorChange.asset using Guid(4f7c21b001de13743a16ae174908e557) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f8edf9e9fea154c14e8e66019dd405b4') in 0.011089 seconds
-  Import took 0.013247 seconds .
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1898.
+Total: 2.176700 ms (FindLiveObjects: 0.191100 ms CreateObjectMapping: 0.052700 ms MarkObjects: 1.486500 ms  DeleteObjects: 0.445500 ms)
 
 ========================================================================
 Received Import Request.
-  Time since last request: 11.014111 seconds.
-  path: Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/DTW_Mouse_Input_ColorChange.asset
-  artifactKey: Guid(4f7c21b001de13743a16ae174908e557) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/DTW_Mouse_Input_ColorChange.asset using Guid(4f7c21b001de13743a16ae174908e557) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f645dce2bc037cbe287e812fbc771ae9') in 0.004605 seconds
-  Import took 0.006726 seconds .
+  Time since last request: 18.991373 seconds.
+  path: Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs
+  artifactKey: Guid(21cbf9d5f90a6a749bf70593dd60aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs using Guid(21cbf9d5f90a6a749bf70593dd60aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '45a933bb68584bec9c672157f3a1930a') in 0.004147 seconds
+  Import took 0.006992 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002972 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.35 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.840 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.56 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.2 MB.
+System memory in use after: 76.4 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1901.
+Total: 2.252800 ms (FindLiveObjects: 0.255100 ms CreateObjectMapping: 0.064900 ms MarkObjects: 1.484500 ms  DeleteObjects: 0.447100 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 43.540638 seconds.
+  path: Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs
+  artifactKey: Guid(21cbf9d5f90a6a749bf70593dd60aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs using Guid(21cbf9d5f90a6a749bf70593dd60aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c44ae959394093455ccaf56e8d7e04b4') in 0.003602 seconds
+  Import took 0.005987 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.002614 seconds.
+  path: Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs
+  artifactKey: Guid(21cbf9d5f90a6a749bf70593dd60aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs using Guid(21cbf9d5f90a6a749bf70593dd60aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c44ae959394093455ccaf56e8d7e04b4') in 0.002185 seconds
+  Import took 0.004694 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.005680 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.37 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.990 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.52 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.2 MB.
+System memory in use after: 76.4 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1904.
+Total: 2.184600 ms (FindLiveObjects: 0.193100 ms CreateObjectMapping: 0.052300 ms MarkObjects: 1.372200 ms  DeleteObjects: 0.565700 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 25.571306 seconds.
+  path: Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs
+  artifactKey: Guid(21cbf9d5f90a6a749bf70593dd60aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs using Guid(21cbf9d5f90a6a749bf70593dd60aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '514210817768aea3bc7f4336733dccf5') in 0.005511 seconds
+  Import took 0.009356 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002821 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.34 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.063 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.37 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.2 MB.
+System memory in use after: 76.4 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1907.
+Total: 2.569200 ms (FindLiveObjects: 0.217600 ms CreateObjectMapping: 0.063400 ms MarkObjects: 1.582100 ms  DeleteObjects: 0.704500 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 190.737258 seconds.
+  path: Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs
+  artifactKey: Guid(21cbf9d5f90a6a749bf70593dd60aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs using Guid(21cbf9d5f90a6a749bf70593dd60aa10) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1ad0bec8efdee32985c13d8c2817ebf0') in 0.004593 seconds
+  Import took 0.007802 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002854 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.75 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.002 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.33 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.3 MB.
+System memory in use after: 76.5 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1910.
+Total: 2.433300 ms (FindLiveObjects: 0.267900 ms CreateObjectMapping: 0.086000 ms MarkObjects: 1.521800 ms  DeleteObjects: 0.555800 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003115 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.40 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.039 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.37 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.3 MB.
+System memory in use after: 76.5 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1913.
+Total: 2.606900 ms (FindLiveObjects: 0.406000 ms CreateObjectMapping: 0.106600 ms MarkObjects: 1.587300 ms  DeleteObjects: 0.506000 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002720 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.36 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.845 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.36 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.3 MB.
+System memory in use after: 76.5 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1916.
+Total: 3.659900 ms (FindLiveObjects: 0.411200 ms CreateObjectMapping: 0.103100 ms MarkObjects: 2.528100 ms  DeleteObjects: 0.614300 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002765 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.31 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.860 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.33 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.3 MB.
+System memory in use after: 76.5 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1919.
+Total: 2.578400 ms (FindLiveObjects: 0.267200 ms CreateObjectMapping: 0.060800 ms MarkObjects: 1.756600 ms  DeleteObjects: 0.492400 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002838 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.37 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.904 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.31 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.3 MB.
+System memory in use after: 76.5 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1922.
+Total: 3.191000 ms (FindLiveObjects: 0.299600 ms CreateObjectMapping: 0.096000 ms MarkObjects: 2.078100 ms  DeleteObjects: 0.715800 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003247 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.33 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.864 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.57 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.3 MB.
+System memory in use after: 76.5 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1925.
+Total: 2.527200 ms (FindLiveObjects: 0.253900 ms CreateObjectMapping: 0.060200 ms MarkObjects: 1.695000 ms  DeleteObjects: 0.515900 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003214 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.33 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.031 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.32 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.3 MB.
+System memory in use after: 76.5 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1928.
+Total: 2.176900 ms (FindLiveObjects: 0.252200 ms CreateObjectMapping: 0.066000 ms MarkObjects: 1.398000 ms  DeleteObjects: 0.458600 ms)
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.002757 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.46 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.107 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.38 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.3 MB.
+System memory in use after: 76.6 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1931.
+Total: 3.068000 ms (FindLiveObjects: 0.195300 ms CreateObjectMapping: 0.060400 ms MarkObjects: 2.096200 ms  DeleteObjects: 0.714300 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 436.790571 seconds.
+  path: Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/Mouse_Input_Color_Output_Classification.unity
+  artifactKey: Guid(e8a5e442fecc38d42a57654a03f04e82) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/Mouse_Input_Color_Output_Classification.unity using Guid(e8a5e442fecc38d42a57654a03f04e82) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '91ede6e62eed9a9fb51092981c3fa623') in 0.010633 seconds
+  Import took 0.013443 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.003080 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 0.35 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.966 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.36 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1372 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 77.3 MB.
+System memory in use after: 76.6 MB.
+
+Unloading 135 unused Assets to reduce memory usage. Loaded Objects now: 1934.
+Total: 3.066500 ms (FindLiveObjects: 0.315800 ms CreateObjectMapping: 0.102000 ms MarkObjects: 2.095700 ms  DeleteObjects: 0.551200 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 22.496599 seconds.
+  path: Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/test graph.asset
+  artifactKey: Guid(cf6fbba693d836242a9232cd7deb0a05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/test graph.asset using Guid(cf6fbba693d836242a9232cd7deb0a05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a356da5cedd57df9d2bea59d81f5c522') in 0.014435 seconds
+  Import took 0.017293 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.074868 seconds.
+  path: Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/test graph.asset
+  artifactKey: Guid(cf6fbba693d836242a9232cd7deb0a05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/test graph.asset using Guid(cf6fbba693d836242a9232cd7deb0a05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a462b0dac2b6ff04ffc9413ac96024e4') in 0.006886 seconds
+  Import took 0.010182 seconds .
 

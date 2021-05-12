@@ -1818,6 +1818,7 @@ namespace InteractML
             // if there are mlsystem nodes in the graph
             if (MLSystemNodeList.Count > 0)
             {
+                Debug.Log("load models");
                 while (!(bool)IMLEventDispatcher.LoadModelsCallback?.Invoke())
                 {
                     // wait for a frame until models are retrained

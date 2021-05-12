@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 472, y: -8}
+  position: {x: 824, y: 392}
   ports:
     keys:
     - m_In
@@ -47,16 +47,16 @@ MonoBehaviour:
   numberInComponentList: -1
   ValueName: 
   m_In: 0
-  m_Value: 1
-  m_Out: 1
+  m_Value: 0
+  m_Out: 0
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 1
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
-  - 1
+  - 0
 --- !u!114 &-6454712093436097475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1016, y: 408}
+  position: {x: -808, y: 248}
   ports:
     keys:
     - m_In
@@ -106,7 +106,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 1
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Name: Classification ML System
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 136, y: 8}
+  position: {x: 456, y: 360}
   ports:
     keys:
     - IMLTrainingExamplesNodes
@@ -224,10 +224,10 @@ MonoBehaviour:
   ToggleTrainInputBool: 0
   ToggleRunInputBool: 0
   PredictedRapidlibOutput:
-  - 1
+  - 0
   DelayedPredictedOutput:
   - 1
-  m_NumExamplesTrainedOn: 2
+  m_NumExamplesTrainedOn: 0
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_trainingType: 0
@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Name: Keyboard Press
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -616, y: 648}
+  position: {x: -696, y: 824}
   ports:
     keys:
     - inputValue
@@ -618,7 +618,7 @@ MonoBehaviour:
   m_Name: Position
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -632, y: -40}
+  position: {x: -760, y: -152}
   ports:
     keys:
     - GameObjectDataIn
@@ -654,7 +654,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 1
+  Counter: 5
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -680,7 +680,7 @@ MonoBehaviour:
   m_Name: colorChanger (Script)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 744, y: -8}
+  position: {x: 1176, y: 424}
   ports:
     keys:
     - SetAbsoluteColour
@@ -700,7 +700,7 @@ MonoBehaviour:
   id: 92f617d8-3db8-4586-95a2-8055c8aead12
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 15388
+  ScriptHashCode: 15856
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: SetAbsoluteColour
@@ -729,7 +729,7 @@ MonoBehaviour:
   m_Name: Keyboard Press
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -296, y: 904}
+  position: {x: 8, y: 712}
   ports:
     keys:
     - inputValue
@@ -1092,7 +1092,7 @@ MonoBehaviour:
   m_Name: Single Training Examples
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -216, y: 24}
+  position: {x: -344, y: 456}
   ports:
     keys:
     - InputFeatures
@@ -1244,7 +1244,7 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 0
-  showWarning: 1
+  showWarning: 0
   canCollect: 1
   listNo: 0
   SubFolderDataPath: 
@@ -1286,7 +1286,7 @@ MonoBehaviour:
   m_Name: Keyboard Press
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -600, y: 360}
+  position: {x: -696, y: 536}
   ports:
     keys:
     - inputValue
@@ -1649,7 +1649,7 @@ MonoBehaviour:
   m_Name: Capsule (GameObject)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -968, y: 56}
+  position: {x: -1064, y: -184}
   ports:
     keys:
     - GameObjectDataOut
@@ -1669,8 +1669,8 @@ MonoBehaviour:
   id: 4e3416e5-8a9d-4be5-ad45-791b75b3711e
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  state: 0
-  GOHashCode: 15332
+  state: 1
+  GOHashCode: 15814
   CreatedDuringPlaymode: 0
 --- !u!114 &3740228562435652138
 MonoBehaviour:
@@ -1685,7 +1685,7 @@ MonoBehaviour:
   m_Name: Keyboard Press
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -280, y: 552}
+  position: {x: 8, y: 440}
   ports:
     keys:
     - inputValue

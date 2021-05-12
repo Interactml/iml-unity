@@ -15,15 +15,15 @@ public class SineWaveIMLBridge : MonoBehaviour
     /// The IML component from where we are getting the outputs
     /// </summary>
     [SerializeField]
-    public IMLComponent m_MLComponent;
+    private IMLComponent m_MLComponent;
 
     [SerializeField, Range (0, 1000f)]
-    public float m_IntensitySound;
+    private float m_IntensitySound;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_SineWaveGenerator = new SineWaveExample();
+
     }
 
     // Update is called once per frame
