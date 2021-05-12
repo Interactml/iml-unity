@@ -5,7 +5,8 @@ using UnityEngine;
 /// <summary>
 /// Simple script that will move an object with the mouse
 /// </summary>
-public class MouseMover : MonoBehaviour {
+public class MouseMover : MonoBehaviour
+{
 
     private GameObject m_ObjToMove;
     private Vector3 m_CurrentMouseWorldPos;
@@ -13,8 +14,9 @@ public class MouseMover : MonoBehaviour {
     public bool MoveAxisZ;
     public bool UseCurrentZOnStart;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         m_ObjToMove = this.gameObject;
 
         if (!UseCurrentZOnStart)
@@ -28,9 +30,10 @@ public class MouseMover : MonoBehaviour {
         }
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         // Mouse x,y moves obj in 2D
         Vector3 newMousePosWorldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition + Vector3.forward * 10f);
         m_CurrentMouseWorldPos.x = newMousePosWorldPoint.x;

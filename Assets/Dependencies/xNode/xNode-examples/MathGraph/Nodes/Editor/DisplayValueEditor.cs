@@ -20,7 +20,7 @@ namespace XNodeEditor.Examples {
             // Attempt to draw a texture as the base color
             if (tex == null)
                 tex = new Texture2D(1, 1, TextureFormat.RGBA32, false);
-            tex.SetPixel(0, 0, customNodeColor);
+            tex.SetPixel(0, 0, GetTint());
             tex.Apply();
 
             if (drawCustomTexture)
@@ -47,9 +47,5 @@ namespace XNodeEditor.Examples {
 
         }
 
-        //public override Color GetTint()
-        //{
-        //    return customNodeColor;
-        //}
     }
 }

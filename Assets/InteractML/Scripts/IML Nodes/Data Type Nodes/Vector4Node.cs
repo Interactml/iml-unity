@@ -20,39 +20,44 @@ namespace InteractML.DataTypeNodes
                 return m_FeatureValues;
             }
         }
+
         /// <summary>
         /// Local specific IML data type
         /// </summary>
         private IMLVector4 m_FeatureValues;
 
-        public bool ReceivingData;
-        public bool x_switch = true;
-        public bool y_switch = true;
-        public bool z_switch = true;
-        public bool w_switch = true;
-        float x, y, z, w;
-        int counter, count;
-
-        public bool InputConnected;
-        public Vector4 m_UserInput;
-        Vector4 receivedVector4;
+        /// <summary>
+        /// Local specific Vector4 Value
+        /// </summary>
+        private Vector4 m_UpdatedValue;
 
         // Use this for initialization
-        protected override void Init()
+        public override void Initialize()
         {
-            counter = 0;
-            count = 5;
-            tooltips = IMLTooltipsSerialization.LoadTooltip("Vector4");
-            base.Init();
+            // initialise variables
+            PreviousFeatureValues = new IMLVector4();
+            UserInput = new IMLVector4();
+            m_UpdatedValue = new Vector4();
+
+            base.Initialize();
         }
 
         // Check that a feature connected is of the right type
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
-            base.OnCreateConnection(from, to);
+            // control what connections the input port accepts 
+            if (to.node == this)
+            {
+                // only allow 1 connection (but don't override the original - user must disconnect original input to connect a different one)
+                if (this.GetInputNodesConnected("m_In").Count > 1) { from.Disconnect(to); }
 
-            // Make sure that the IFeatureIML connected is matching our type
-            this.DisconnectFeatureNotSameIMLDataType(from, to, IMLSpecifications.DataTypes.Vector4);
+                // check incoming node type and port data type is accepted by input port
+                base.OnCreateConnection(from, to);
+
+                // if array check number of elements with number of features
+                DataTypeNodeMethods.CheckArraySizeAgainstFeatureValues(this, from, to);
+
+            }
 
         }
 
@@ -62,53 +67,52 @@ namespace InteractML.DataTypeNodes
         /// <returns></returns>
         protected override object Update()
         {
-            base.Update();
-            //check if receiving data
-            if (counter == count)
+            // update if node is receiving data
+            ReceivingData = DataTypeNodeMethods.IsReceivingData(this);
+
+            // update if node has input connected
+            InputConnected = DataTypeNodeMethods.IsInputConnected(this);
+
+            // if there is no input connected take input from the user
+            if (!InputConnected)
             {
-                counter = 0;
-                if ((x == FeatureValues.Values[0] || !x_switch) && y == FeatureValues.Values[1] && z == FeatureValues.Values[2] && w == FeatureValues.Values[2])
-                {
-                    ReceivingData = false;
-                }
-                else
-                {
-                    ReceivingData = true;
+                // check if each toggle is off and set feature value to 0, return float array of updated feature values
+                ReceivedValue = DataTypeNodeMethods.CheckTogglesAndUpdateFeatures(this, UserInput.Values);
 
-                }
-                x = FeatureValues.Values[0];
-                y = FeatureValues.Values[1];
-                z = FeatureValues.Values[2];
-                w = FeatureValues.Values[2];
-            }
+                // convert float array to vector
+                m_UpdatedValue.x = ReceivedValue[0];
+                m_UpdatedValue.y = ReceivedValue[1];
+                m_UpdatedValue.z = ReceivedValue[2];
+                m_UpdatedValue.w = ReceivedValue[3];
 
-            counter++;
-
-            //check if input connected
-            if (this.GetInputNodesConnected("m_In") == null)
-            {
-                InputConnected = false;
-                if (!x_switch) m_UserInput.x = 0;
-                if (!y_switch) m_UserInput.y = 0;
-                if (!z_switch) m_UserInput.z = 0;
-                if (!w_switch) m_UserInput.w = 0;
-
-                Value = m_UserInput;
+                // update values in node
+                Value = m_UpdatedValue;
             }
             else
             {
-                InputConnected = true;
+                // update node value based on input
                 base.Update();
-                receivedVector4 = Value;
-                if (!x_switch) receivedVector4.x = 0;
-                if (!y_switch) receivedVector4.y = 0;
-                if (!z_switch) receivedVector4.z = 0;
-                if (!z_switch) receivedVector4.w = 0;
-                Value = receivedVector4;
+
+                // convert input vector to float array
+                ReceivedValue[0] = Value.x;
+                ReceivedValue[1] = Value.y;
+                ReceivedValue[2] = Value.z;
+                ReceivedValue[3] = Value.w;
+
+                // check if each toggle is off and set feature value to 0, return float array of updated feature values
+                ReceivedValue = DataTypeNodeMethods.CheckTogglesAndUpdateFeatures(this, ReceivedValue);
+
+                // convert float array to vector 
+                m_UpdatedValue.x = ReceivedValue[0];
+                m_UpdatedValue.y = ReceivedValue[1];
+                m_UpdatedValue.z = ReceivedValue[2];
+                m_UpdatedValue.w = ReceivedValue[3];
+
+                // update values in node
+                Value = m_UpdatedValue;
             }
 
             return this;
-
         }
 
     }

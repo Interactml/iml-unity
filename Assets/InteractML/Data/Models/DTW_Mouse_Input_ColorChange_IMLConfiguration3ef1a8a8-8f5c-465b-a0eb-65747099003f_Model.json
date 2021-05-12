@@ -1,0 +1,40 @@
+{
+   "metadata" : {
+      "creator" : "Rapid API C++",
+      "inputNames" : [ "inputs-1" ],
+      "numInputs" : 1,
+      "numOutputs" : 1,
+      "version" : "v0.1.1"
+   },
+   "modelSet" : [
+      {
+         "examples" : [
+            {
+               "class" : 3,
+               "features" : [ 3 ]
+            },
+            {
+               "class" : 3,
+               "features" : [ 3 ]
+            },
+            {
+               "class" : 3,
+               "features" : [ 3 ]
+            },
+            {
+               "class" : 3,
+               "features" : [ 3 ]
+            },
+            {
+               "class" : 3,
+               "features" : [ 3 ]
+            }
+         ],
+         "inputNames" : [ "inputs-1" ],
+         "k" : 1,
+         "modelType" : "kNN Classificiation",
+         "numInputs" : 1,
+         "whichInputs" : [ 0 ]
+      }
+   ]
+}

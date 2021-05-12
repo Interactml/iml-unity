@@ -1,0 +1,16 @@
+{
+  "HelpTooltip": "\n ABOUT \n Extracts and Outputs a Vector2. The displayed data is either the live value when a Vector2 is connected to the input port, or when nothing is connected the display shows an editable field to output a Vector2 \n",
+  "PortTooltip": [ "Connect a Vector2", "Outputs a Vector2" ],
+  "BodyTooltip": {
+    "tips": [
+      "x and y values: turn on/off using the toggle, flashes when detecting input",
+    ],
+    "error": [
+      "error"
+    ]
+  },
+  "BottomError": [ "bottom error" ]
+}
+
+
+

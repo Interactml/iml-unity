@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor.SceneManagement;
 using UnityEditor;
+using InteractML.ControllerCustomisers;
 #endif
 
 namespace InteractML
@@ -18,7 +19,6 @@ namespace InteractML
     /// <summary>
     /// Handles the logic of the different IML systems per graph
     /// </summary>
-    [ExecuteInEditMode]
     public class IMLComponent : MonoBehaviour
     {
 
@@ -27,8 +27,8 @@ namespace InteractML
         /// <summary>
         /// Reference to the IML Controller with nodes
         /// </summary>
-        public IMLController MLController;
-        private IMLController m_LastKnownIMLController;
+        public IMLGraph graph;
+        private IMLGraph m_LastKnownGraph;
 
         /// <summary>
         /// Scene where this IML Component belongs to
@@ -36,10 +36,10 @@ namespace InteractML
         private Scene m_OurScene;
 
         /// <summary>
-        /// Collection of GameObjects that will be sent to the IML Controller
+        /// Collection of GameObjects that will be sent to the IML Graph
         /// </summary>
         [Header("GameObjects to Track")]
-        [Tooltip("Add number of GameObjects to use in the IML Controller and what they are here")]
+        [Tooltip("Add number of GameObjects to use in the IML Graph and what they are here")]
         [Rename("GameObject")]
         public List<GameObject> GameObjectsToUse;
         /// <summary>
@@ -48,21 +48,32 @@ namespace InteractML
         [SerializeField, HideInInspector]
         private GOPerGONodeDictionary m_GOsPerGONodes;
 
+        /// <summary>
+        /// bool to check whether MLS nodes are loaded before running
+        /// </summary>
+        private bool nodesLoaded;
 
         #region Private Lists of Nodes (Fields)
         /* Private Lists of nodes that we can have in the graph */
         private List<TextNote> m_TextNoteNodesList;
         private List<TrainingExamplesNode> m_TrainingExamplesNodesList;
-        private List<IMLConfiguration> m_IMLConfigurationNodesList;
+        private List<MLSystem> m_MLSystemNodeList;
         [SerializeField, HideInInspector]
         private List<GameObjectNode> m_GameObjectNodeList;
-        private List<RealtimeIMLOutputNode> m_RealtimeIMLOutputNodesList;
         public List<IFeatureIML> FeatureNodesList;
         [SerializeField, HideInInspector]
         private List<ScriptNode> m_ScriptNodesList;
+        //[SerializeField, HideInInspector]
+        private InteractML.ControllerCustomisers.InputSetUp m_inputSetUp;
+        [SerializeField, HideInInspector]
+        private List<CustomController> m_CustomControllerList;
+        public List<Type> inputTypes;
+
         #endregion
 
         #region Public Lists of Nodes (Properties)
+        [HideInInspector]
+        public InteractML.ControllerCustomisers.InputSetUp inputSetUp { get => m_inputSetUp; }
         /// <summary>
         /// List of Training Example Nodes in the IML Controller
         /// </summary>
@@ -79,14 +90,14 @@ namespace InteractML
         /// <summary>
         /// Lists of Model Nodes in the IML Controller
         /// </summary>
-        public List<IMLConfiguration> IMLConfigurationNodesList
+        public List<MLSystem> MLSystemNodeList
         {
             get
             {
-                if (m_IMLConfigurationNodesList != null)
-                    return m_IMLConfigurationNodesList;
+                if (m_MLSystemNodeList != null)
+                    return m_MLSystemNodeList;
                 else
-                    return new List<IMLConfiguration>();
+                    return new List<MLSystem>();
             }
         }
         #endregion
@@ -95,7 +106,7 @@ namespace InteractML
         /// <summary>
         /// Have all the features been updated? (useful for features that need to update only once)
         /// </summary>
-       [HideInInspector]
+        [HideInInspector]
         public bool FeaturesUpdated;
 
         /// <summary>
@@ -109,7 +120,7 @@ namespace InteractML
         /// search for values marked with the "SendToIMLController" attribute
         /// </summary>
         [Header("Scripts to Track")]
-        [Tooltip("Add number of Scripts to use in the IML Controller and what they are here")]
+        [Tooltip("Add number of Scripts to use in the IML Graph and what they are here")]
         public List<IMLMonoBehaviourContainer> ComponentsWithIMLData;
         /// <summary>
         /// Dictionary to hold references of components with IML Data and which scriptNode manages them
@@ -124,21 +135,58 @@ namespace InteractML
         private Dictionary<FieldInfo, IMLFieldInfoContainer> m_DataContainersPerFieldInfo;
         private Dictionary<FieldInfo, MonoBehaviour> m_DataMonobehavioursPerFieldInfo;
 
+        private bool universalInputEnabled;
+        [HideInInspector]
+        public bool universalInputActive = false;
 
+
+        private IMLGrab icon;
+        private bool isSubscribed = false;
 
         #endregion
 
         #region Unity Messages
 
+        void Reset()
+        {
+            
+        }
+
+        private void OnEnable()
+        {
+
+#if !UNITY_EDITOR
+            SubscribeToDelegates();
+            Initialize();
+
+#endif
+            //InitializeIMLIndicator();
+        }
+
         // Called when something changes in the scene
         private void OnValidate()
         {
+#if UNITY_EDITOR
+           // Debug.Log("validating");
+            // Subscribe to the editor manager so that our update loop gets called
+            IMLEditorManager.SubscribeIMLComponent(this);
+
             IMLControllerOwnershipLogic();
+            //SubscribeToDelegates();
+            if (IMLEventDispatcher.TrainMLSCallback == null)
+            {
+                SubscribeToDelegates();
+                
+            }
+            Initialize();
+            
+#endif
         }
 
         // Awake is called before start
         private void Awake()
         {
+            //Debug.Log("awake");
             // We use the scene managers to make sure we flush the ownership of the controller when the scene loads/unloads
 #if UNITY_EDITOR
             m_OurScene = EditorSceneManager.GetActiveScene();
@@ -153,7 +201,11 @@ namespace InteractML
         // Start is called before the first frame update
         void Start()
         {
-            Initialize();
+#if !UNITY_EDITOR
+                // Run Models on Play if we are on a build
+                RunModelsOnPlay();
+#endif
+            
         }
 
         // Update is called once per frame
@@ -166,6 +218,7 @@ namespace InteractML
             {
                 //Debug.Log("**RUNTIME**");
                 UpdateLogic();
+
             }
 
             // If the app is running not in the editor...
@@ -176,18 +229,28 @@ namespace InteractML
 #endif
         }
 
+
         // On Destroy gets called before the component is removed
         private void OnDestroy()
         {
-            // We unsubscribe the component form the editor manager to avoid messing up with the list
+            // Stop running all models and stop collecting examples (if any)
+            StopAllModels();
+            StopAllCollectingExamples();
+            // We unsubscribe the component from the editor manager to avoid messing up with the list
             IMLEditorManager.UnsubscribeIMLComponent(this);
+            //Unsubscribe this from the event dispatcher 
+            UnsubscribeToDelegates();
         }
 #endregion
 
 #region Private Methods
 
+
         private void Initialize()
         {
+            // ensure universal input in inactive on open
+            universalInputActive = false;
+            
             // Initialise list of nodes for the IML Controller
             if (Lists.IsNullOrEmpty(ref GameObjectsToUse))
                 GameObjectsToUse = new List<GameObject>();
@@ -198,8 +261,8 @@ namespace InteractML
             if (Lists.IsNullOrEmpty<TrainingExamplesNode>(ref m_TrainingExamplesNodesList))
                 m_TrainingExamplesNodesList = new List<TrainingExamplesNode>();
 
-            if (Lists.IsNullOrEmpty<IMLConfiguration>(ref m_IMLConfigurationNodesList))
-                m_IMLConfigurationNodesList = new List<IMLConfiguration>();
+            if (Lists.IsNullOrEmpty<MLSystem>(ref m_MLSystemNodeList))
+                m_MLSystemNodeList = new List<MLSystem>();
 
             if (Lists.IsNullOrEmpty(ref m_GameObjectNodeList))
                 m_GameObjectNodeList = new List<GameObjectNode>();
@@ -209,74 +272,238 @@ namespace InteractML
 
             if (Lists.IsNullOrEmpty(ref FeatureNodesList))
                 FeatureNodesList = new List<IFeatureIML>();
+            
+            if (Lists.IsNullOrEmpty(ref m_CustomControllerList))
+                m_CustomControllerList = new List<CustomController>();
 
 
             // Get all th nodes which are in the graph
             GetAllNodes();
 
-            // Init logic for training examples
-            if (!Lists.IsNullOrEmpty(ref m_TrainingExamplesNodesList))
+            /*  // Init logic for training examples
+              if (!Lists.IsNullOrEmpty(ref m_TrainingExamplesNodesList))
+              {
+                  for (int i = 0; i < m_TrainingExamplesNodesList.Count; i++)
+                  {
+                      var TrainingNode = m_TrainingExamplesNodesList[i];
+                      if (TrainingNode == null)
+                      {
+                          Debug.LogError("Null reference in Training Examples list in IML System. The list is not calculated properly and has some null spaces!");
+                      }
+                      else
+                      {
+                          // Initialize Training Examples Node if not already initialized
+                          m_TrainingExamplesNodesList[i].Initialize();
+                      }
+
+
+                  }
+
+              }*/
+
+            // Init logic for MLSystem nodes
+            if (!Lists.IsNullOrEmpty(ref m_MLSystemNodeList))
             {
-                for (int i = 0; i < m_TrainingExamplesNodesList.Count; i++)
+
+                for (int i = 0; i < m_MLSystemNodeList.Count; i++)
                 {
-                    var TrainingNode = m_TrainingExamplesNodesList[i];
-                    if (TrainingNode == null)
+                    var MLSystemNode = m_MLSystemNodeList[i];
+
+                    if (MLSystemNode == null)
                     {
-                        Debug.LogError("Null reference in Training Examples list in IML System. The list is not calculated properly and has some null spaces!");
-                    }
-                    else
-                    {
-                        // Initialize Training Examples Node if not already initialized
-                        m_TrainingExamplesNodesList[i].Initialize();
-                    }
-
-
-                }
-
-            }
-
-            // Init logic for IML Config node
-            if (!Lists.IsNullOrEmpty(ref m_IMLConfigurationNodesList))
-            {
-
-                for (int i = 0; i < m_IMLConfigurationNodesList.Count; i++)
-                {
-                    var IMLConfigNode = m_IMLConfigurationNodesList[i];
-
-                    if (IMLConfigNode == null)
-                    {
-                        Debug.LogError("Null reference in IML Config Node list in IML System. The list is not calculated properly and has some null spaces!");
-                    }
-                    else
-                    {
-                        // Initialize Training Examples Node if not already initialized
-                        IMLConfigNode.Initialize();
+                        Debug.LogError("Null reference in MLSystem Node list in IML System. The list is not calculated properly and has some null spaces!");
                     }
                 }
             }
 
+            
+
+            // In case the user is reusing the same IML graph (with the same number of GO or Script nodes) in more than one scene
+            // We need to make sure that we are reusing the correct GameObjectNodes and ScriptNodes
+            TryRecycleGameObjectNodes();
+            TryRecycleScriptNodes();
+
+            // commented to fix opening window problem - delete when sure this has not caused issues 
             // Inject GameObjects to GameObject nodes
-            SendGameObjectsToIMLController();
-
-            updateGameObjectImage();
+            // SendGameObjectsToIMLController();
+            // UpdateGameObjectImage();
 
 #if !UNITY_EDITOR
             // If we are not on the editor...
             if (Application.isPlaying)
             {
-                LoadDataAndRunOnAwakeModels();
+                LoadDataForModels();
             }
 
 #endif
 
 
             // We make sure that all null nodes in list are removed from the list
-            if (MLController)
-                MLController.nodes.RemoveAll(node => node == null);
+            if (graph)
+                graph.nodes.RemoveAll(node => node == null);
+
+            // initialize all nodes 
+            InitializeAllNodes();
+            InitializeEvent();
+            // train models
+            LoadDataForModels();
 
 
         }
 
+        /// <summary>
+        /// Initialize all nodes in the graph called OnEnable
+        /// </summary>
+        private void InitializeAllNodes()
+        {
+            //Initialise GameObjectNodes
+            InitializeNodeType(m_GameObjectNodeList);
+            //Initialise Features
+            InitializeFeatureNode(FeatureNodesList);
+            //Initialise Training Examples
+            InitializeTrainingNodes(TrainingExamplesNodesList);
+            //Initialise MLSystemList
+            InitializeNodeType(MLSystemNodeList);
+            //Initialise Script nodes
+            InitializeNodeType(m_ScriptNodesList);
+            //Initialise Script nodes
+            InitializeNodeType(m_CustomControllerList);
+            //Initialize input set up
+            if (m_inputSetUp != null)
+            {
+                //initialize node
+                m_inputSetUp.NodeInitalize();
+            } 
+            
+        }
+        /// <summary>
+        /// Event to set up models when loading
+        /// </summary>
+        private void InitializeEvent()
+        {
+            IMLEventDispatcher.ModelSetUpChangeCallback?.Invoke();
+        }
+
+        /// <summary>
+        /// Goes through all IMLnodes in list and initialises. Called in InitializeAllNodes
+        /// </summary>
+        /// <param name="ListToInitalize">IMLNode List to initiliaze</param>
+        private void InitializeNodeType(IEnumerable<IMLNode> ListToInitalize)
+        {
+            if (ListToInitalize != null)
+            {
+                // loop through all nodes in list
+                foreach (IMLNode node in ListToInitalize)
+                {
+                    if (node != null)
+                    {
+                        //Initialize node 
+                        node.NodeInitalize();
+                    } 
+
+                }
+            }
+
+        }
+        /// <summary>
+        /// Goes through all IMLnodes in list and initialises. Called in InitializeAllNodes
+        /// </summary>
+        /// <param name="ListToInitalize">IMLNode List to initiliaze</param>
+        private void InitializeTrainingNodes(List<TrainingExamplesNode> ListToInitalize)
+        {
+            if (ListToInitalize != null)
+            {
+                // loop through all nodes in list
+                for(int i = 0; i < ListToInitalize.Count; i++)
+                {
+                    if (ListToInitalize[i] != null)
+                    {
+                        //Initialize node 
+                        ListToInitalize[i].NodeInitalize();
+                        ListToInitalize[i].listNo = i;
+                    } 
+
+                }
+            }
+
+        }
+
+        private void InitializeFeatureNode(List<IFeatureIML> ListToInitalize)
+        {
+            // loop through all nodes in list
+            foreach (IMLNode node in ListToInitalize)
+            {
+                //Initialize node 
+                node.NodeInitalize();
+            }
+        }
+
+        private void InitializeIMLIndicator()
+        {
+            //Debug.Log("icon initialize it");
+            //comeback
+            if (transform.childCount == 0 && icon == null)
+            {
+                icon = GameObject.Instantiate(Resources.Load("Prefabs/IMLIcon") as GameObject, this.transform).GetComponent<IMLGrab>();
+                // avoiding null reference error in case the icon didn't load from resources
+                if (icon != null && icon.graph != null)
+                    icon.graph = this;
+                else
+                    Debug.LogWarning("Failed to load Prefabs/IMLIcon in IMLComponent.InitializeIMLIndicator()");
+            } 
+            if (icon == null)
+            {
+                icon = this.transform.Find("IMLIcon(Clone)").GetComponent<IMLGrab>();
+            }
+            
+        }
+        /// <summary>
+        /// Subscribe to all delegates called in initialize
+        /// </summary>
+        private void SubscribeToDelegates() {
+            //Debug.Log("subscribe");
+            // DIRTY CODE
+            // I am unsubscribing from all delegates first since there are issue with ToggleRecordCallback having the same method twice
+           // UnsubscribeToDelegates();
+            
+            // dispatchers for MLSystem node events
+            IMLEventDispatcher.TrainMLSCallback += Train;
+            IMLEventDispatcher.ToggleRunCallback += ToggleRunning;
+            IMLEventDispatcher.ResetModelCallback += ResetModel;
+
+            // dispatchers for training examples node events
+            IMLEventDispatcher.RecordOneCallback += RecordOne;
+            IMLEventDispatcher.ToggleRecordCallback += ToggleRecording;
+            IMLEventDispatcher.StartRecordCallback += StartRecording;
+            IMLEventDispatcher.StopRecordCallback += StopRecording;
+            IMLEventDispatcher.DeleteAllExamplesInNodeCallback += DeleteAllTrainingExamplesInNode;
+            IMLEventDispatcher.DeleteAllTrainingExamplesInGraphCallback += DeleteAllTrainingExamplesInGraph;
+            // IMLEventDispatcher.DeleteLastCallback +=
+
+            IMLEventDispatcher.UniversalControlChange += UniversalInterface;
+        }
+        /// <summary>
+        /// 
+        /// Unsubscribe to all delegates called on destroy
+        /// </summary>
+        private void UnsubscribeToDelegates()
+        {
+            //Debug.Log("unsubscribe from delegates");
+            // dispatchers for MLSystem node event
+            IMLEventDispatcher.TrainMLSCallback -= Train;
+            IMLEventDispatcher.ToggleRunCallback -= ToggleRunning;
+            IMLEventDispatcher.ResetModelCallback -= ResetModel;
+
+            // dispatchers for training examples node events
+            IMLEventDispatcher.RecordOneCallback -= RecordOne;
+            IMLEventDispatcher.ToggleRecordCallback -= ToggleRecording;
+            IMLEventDispatcher.StartRecordCallback -= StartRecording;
+            IMLEventDispatcher.StopRecordCallback -= StopRecording;
+            IMLEventDispatcher.DeleteAllExamplesInNodeCallback -= DeleteAllTrainingExamplesInNode;
+            IMLEventDispatcher.DeleteAllTrainingExamplesInGraphCallback -= DeleteAllTrainingExamplesInGraph;
+
+            IMLEventDispatcher.UniversalControlChange -= UniversalInterface;
+        }
         /// <summary>
         /// Checks if an IMLController is owned and properly updates it when needed
         /// </summary>
@@ -296,35 +523,35 @@ namespace InteractML
             {
                 //Debug.Log("Our Scene is open!");
             }
-            
+
             // If there is an IML Controller assigned
-            if (MLController != null)
+            if (graph != null)
             {
                 // If we don't have a memory a previous controller, we remember this one
-                if (m_LastKnownIMLController == null)
+                if (m_LastKnownGraph == null)
                 {
-                    m_LastKnownIMLController = MLController;
+                    m_LastKnownGraph = graph;
                     // We also make sure to assign this IML Component as the one referenced in the IML controller
                     // So that nodes in the graph can know who updates them in the scene
-                    MLController.SceneComponent = this;
+                    graph.SceneComponent = this;
                 }
                 // If the controller has changed, we make sure to flush wrong information
-                else if (m_LastKnownIMLController != MLController)
+                else if (m_LastKnownGraph != graph)
                 {
                     // We make sure we free the scene component reference in the previous controller to avoid information sent to the wrong place
-                    m_LastKnownIMLController.SceneComponent = null;
+                    m_LastKnownGraph.SceneComponent = null;
                     // We remember the current controller
-                    m_LastKnownIMLController = MLController;
+                    m_LastKnownGraph = graph;
                 }
                 // If the controller matches what we remember...
-                else if (m_LastKnownIMLController == MLController)
+                else if (m_LastKnownGraph == graph)
                 {
                     // We make sure the current controller is the right one
-                    if (MLController.SceneComponent != this)
+                    if (graph.SceneComponent != this)
                     {
                         // Warn in the editor that the controller is being used by several IMLComponents
-                        Debug.LogError("The referenced IML Controller is being used by more than one IML Component!");
-                        MLController.SceneComponent = this;
+                        //Debug.LogError("The referenced IML Controller is being used by more than one IML Component!");
+                        graph.SceneComponent = this;
                     }
                 }
             }
@@ -340,31 +567,33 @@ namespace InteractML
         /// <summary>
         /// Finds all nodes in the IML Controller and puts them in lists of their types
         /// </summary>
-        public void GetAllNodes ()
+        public void GetAllNodes()
         {
             // Keep lists of nodes found updated
-            if (MLController != null)
+            if (graph != null)
             {
-                foreach (var node in MLController.nodes)
+                foreach (var node in graph.nodes)
                 {
                     // Feature nodes
                     CheckNodeIsFeature(node, ref FeatureNodesList);
-                    
+
                     // GameObject nodes
                     CheckTypeAddNodeToList(node, ref m_GameObjectNodeList);
 
                     // Training Examples nodes
                     CheckNodeIsTraining(node, ref m_TrainingExamplesNodesList);
 
-                    // IML Config Node
-                    CheckNodeIsConfiguration(node, ref m_IMLConfigurationNodesList);
-
-                    // Export output node
-                    CheckTypeAddNodeToList(node, ref m_RealtimeIMLOutputNodesList);
+                    // MLSystem Node
+                    CheckNodeIsMLSystem(node, ref m_MLSystemNodeList);
 
                     // ScriptNodes
                     CheckTypeAddNodeToList(node, ref m_ScriptNodesList);
 
+                    // input set up nodes 
+                    CheckNodeIsInput(node, ref m_inputSetUp);
+
+                    // check node is custom controller 
+                    CheckNodeIsCustomController(node, ref m_CustomControllerList);
                 }
 
             }
@@ -400,6 +629,63 @@ namespace InteractML
                 }
             }
         }
+        /// <summary>
+        /// Check whether node is inout and assign it to the reference in the script 
+        /// </summary>
+        /// <param name="nodetoAdd"></param>
+        /// <param name="setUpNode"></param>
+        private void CheckNodeIsInput(XNode.Node nodetoAdd, ref InteractML.ControllerCustomisers.InputSetUp setUpNode)
+        {
+            //check node not null
+            if (nodetoAdd != null) {
+                var inputNode = nodetoAdd as InteractML.ControllerCustomisers.InputSetUp;
+                // if input node is not null and inputsetup node is null
+                if (inputNode != null && m_inputSetUp == null)
+                {
+                    m_inputSetUp = inputNode;
+                    if (inputTypes == null)
+                        inputTypes = new List<Type>();
+                    inputTypes.Add(typeof(InteractML.ControllerCustomisers.KeyboardInput));
+                   
+                }
+            }
+
+        }
+
+        public void InputTypeAdd()
+        {
+            m_inputSetUp.devices = new InteractML.ControllerCustomisers.IInputType[inputTypes.Count];
+            for(int i =0; i < inputTypes.Count; i++)
+            {
+                var type = inputTypes[i];
+
+            }
+           // m_inputSetUp.devices = inputTypes;
+        }
+        
+        private void CheckNodeIsCustomController(XNode.Node nodeToAdd, ref List<CustomController> listToAddTo)
+        {
+
+            // We first check that the node ref is not null
+            if (nodeToAdd != null)
+            {
+                // Then check that the node is a training examples node
+                var customNode = nodeToAdd as CustomController;
+                if (customNode != null)
+                {
+                    // Make sure the list is init
+                    if (listToAddTo == null)
+                        listToAddTo = new List<CustomController>();
+
+                    // If we got a feature, we add it to the list (if it is not there already)
+                    if (!listToAddTo.Contains(customNode))
+                    {
+                        listToAddTo.Add(customNode);
+                    }
+
+                }
+            }
+        }
 
         private void CheckNodeIsTraining(XNode.Node nodeToAdd, ref List<TrainingExamplesNode> listToAddTo)
         {
@@ -419,32 +705,39 @@ namespace InteractML
                     {
                         listToAddTo.Add(trainingNode);
                     }
+                    trainingNode.listNo = listToAddTo.Count - 1;
 
                 }
             }
 
         }
 
-        private void CheckNodeIsConfiguration(XNode.Node nodeToAdd, ref List<IMLConfiguration> listToAddTo)
+        private void CheckNodeIsMLSystem(XNode.Node nodeToAdd, ref List<MLSystem> listToAddTo)
         {
             // We first check that the node ref is not null
             if (nodeToAdd != null)
             {
-                // Then check that the node is a configuratiton
-                var configNode = nodeToAdd as IMLConfiguration;
-                if (configNode != null)
+                // Then check that the node is a MLSystem
+                var mlSystemNode = nodeToAdd as MLSystem;
+
+                if(m_MLSystemNodeList.Count > 1)
+                {
+                    Debug.LogWarning("Only one machine learning system node allowed per graph when using radial you will not be able to control this in the headset");
+                }
+                if (mlSystemNode != null)
                 {
                     // Make sure the list is init
                     if (listToAddTo == null)
-                        listToAddTo = new List<IMLConfiguration>();
+                        listToAddTo = new List<MLSystem>();
 
                     // If we got a feature, we add it to the list (if it is not there already)
-                    if (!listToAddTo.Contains(configNode))
+                    if (!listToAddTo.Contains(mlSystemNode))
                     {
-                        listToAddTo.Add(configNode);
+                        listToAddTo.Add(mlSystemNode);
                     }
 
                 }
+
             }
 
         }
@@ -472,11 +765,11 @@ namespace InteractML
                     {
                         listToAddTo.Add(featureNode);
                     }
-                    
+
                 }
             }
 
-        
+
         }
 
         private void RunFeaturesLogic()
@@ -507,7 +800,7 @@ namespace InteractML
             // Only run if we have the list of training examples
             if (m_TrainingExamplesNodesList == null)
                 return;
-
+            
             for (int i = 0; i < m_TrainingExamplesNodesList.Count; i++)
             {
                 // Call the update logic per node
@@ -515,12 +808,16 @@ namespace InteractML
             }
         }
 
-        private void RunIMLConfigurationsLogic()
+        private void RunMLSystemLogic()
         {
-            for (int i = 0; i < m_IMLConfigurationNodesList.Count; i++)
+            if (m_MLSystemNodeList == null)
+            {
+                GetAllNodes();
+            }
+            for (int i = 0; i < m_MLSystemNodeList.Count; i++)
             {
                 // If the node is null...
-                if (m_IMLConfigurationNodesList[i] == null)
+                if (m_MLSystemNodeList[i] == null)
                 {
                     // We call again GetAllNodes to make sure our list is updated
                     GetAllNodes();
@@ -530,7 +827,7 @@ namespace InteractML
                 else
                 {
                     // Call the update logic per node
-                    m_IMLConfigurationNodesList[i].UpdateLogic();
+                    m_MLSystemNodeList[i].UpdateLogic();
                 }
             }
 
@@ -541,15 +838,22 @@ namespace InteractML
         /// </summary>
         private void SendGameObjectsToIMLController()
         {
+
+            //Debug.Log(GameObjectsToUse.Count);
+            //Debug.Log(m_GOsPerGONodes.Count);
+            //Debug.Log(m_GameObjectNodeList.Count);
             // Don't do anything if there are no gameObjects from the scene to use
+
+
+
             if (GameObjectsToUse == null || GameObjectsToUse.Count == 0)
             {
                 return;
             }
 
             // Make sure dictionaries and lists are init
-            if (m_MonoBehavioursPerScriptNode == null)
-                m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
+            if (m_GOsPerGONodes == null)
+                m_GOsPerGONodes = new GOPerGONodeDictionary();
             if (m_GameObjectNodeList == null)
                 m_GameObjectNodeList = new List<GameObjectNode>();
 
@@ -571,7 +875,6 @@ namespace InteractML
                     // If there is a scriptHashCode from a previous GO...
                     if (!goNode.GOHashCode.Equals(default))
                     {
-
                         // Check if the GOsPerGONodes dictionary contains the node and its GO
                         var gameObject = m_GOsPerGONodes.GetKey(goNode);
                         // Set GO if we found it
@@ -597,10 +900,13 @@ namespace InteractML
                                     if (!m_GOsPerGONodes.Contains(goToAdd))
                                         m_GOsPerGONodes.Add(goToAdd, goNode);
                                 }
+                            } else
+                            {
+                                m_GameObjectNodeList.Remove(goNode);
                             }
 
                         }
-                        
+
                     }
                 }
             }
@@ -619,12 +925,33 @@ namespace InteractML
                     continue;
                 }
 
+                // Check if any go NODE entry of the dictionary is NOT contain in one of our goNodes, and then remove those wrong entries (cleanup of wrong entries in dictionary)
+                if (m_GOsPerGONodes.Count > m_GameObjectNodeList.Count)
+                {
+                    // Create copy of dictionary to evaluate
+                    var goPerGONodesCopy = new GOPerGONodeDictionary();
+                    foreach (KeyValuePair<GameObject, GameObjectNode> dicItem in m_GOsPerGONodes)
+                    {
+                        goPerGONodesCopy.Add(dicItem);
+                    }
+
+                    // Iterate through copy, but modify original
+                    foreach (KeyValuePair<GameObject, GameObjectNode> dicItem in goPerGONodesCopy)
+                    {
+                        if (!m_GameObjectNodeList.Contains(dicItem.Value)){
+                            Debug.Log("doesn't contain");
+                            // Modify original list
+                            m_GOsPerGONodes.Remove(dicItem);
+                        }
+                    }                    
+                }
+
                 // Check if the dictionary DOESN'T contain this GameObject value, and then create nodes and dictionary values (it is a new GameObject)
                 if (!m_GOsPerGONodes.ContainsKey(go))
                 {
                     // First, we try and see if the graph already contains an empty node we can use
                     foreach (var potentialGONode in m_GameObjectNodeList)
-                    {                        
+                    {
                         // We check if the node is available to use                        
                         // If the node is not taken...
                         if (!potentialGONode.IsTaken)
@@ -633,14 +960,14 @@ namespace InteractML
                             goNode = potentialGONode;
                             // Stop searching for nodes
                             break;
-                        }                        
+                        }
                     }
 
                     // If we didn't find a suitable existing node...
                     if (goNode == null)
                     {
-                        // Create a new script node into the graph
-                        goNode = MLController.AddNode<GameObjectNode>();
+                        // Create a new gameObject node into the graph
+                        goNode = graph.AddNode<GameObjectNode>();
                     }
 
                     // Configure our node appropiately
@@ -711,57 +1038,6 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Gets all the outputs coming from the list of ExportOutputNodes
-        /// </summary>
-        private void ExtractOutputsIMLController()
-        {
-            // If the list is not created, we create one
-            if (IMLControllerOutputs == null)
-            {
-                IMLControllerOutputs = new List<double[]>();
-            }
-
-            // If the list is not null or empty...
-            if (!Lists.IsNullOrEmpty(ref m_RealtimeIMLOutputNodesList))
-            {
-                // If the size of the IML Controller outputs and the nodes found doesn't match, we make it match
-                if (IMLControllerOutputs.Count != m_RealtimeIMLOutputNodesList.Count)
-                {
-                    // We clear all contents of the list
-                    IMLControllerOutputs.Clear();
-                    // We go through all the nodes exporting outputs
-                    foreach (var outputNode in m_RealtimeIMLOutputNodesList)
-                    {
-                        var output = outputNode.GetIMLControllerOutputs();
-                        // If the node has an output...
-                        if (output != null)
-                        {
-                            // We add that output to the list
-                            IMLControllerOutputs.Add(output);
-                        }
-                    }
-                }
-                // If it matches, we make sure to call the output node get method to update values
-                else
-                {
-                    // We go through all the nodes exporting outputs
-                    for (int i = 0; i < m_RealtimeIMLOutputNodesList.Count; i++)
-                    {
-                        var outputNode = m_RealtimeIMLOutputNodesList[i];
-                        IMLControllerOutputs[i] = outputNode.GetIMLControllerOutputs();
-
-                    }
-                }
-            }
-            // If the output nodes list is null...
-            else if (m_RealtimeIMLOutputNodesList == null)
-            {
-                // We create a new one
-                m_RealtimeIMLOutputNodesList = new List<RealtimeIMLOutputNode>();
-            }
-        }
-
-        /// <summary>
         /// Gets and sets the data marked with the "SendToIMLController" and "PullFromIMLController" attributes in Monobehaviours subscribed
         /// </summary>
         private void FetchDataFromMonobehavioursSubscribed()
@@ -818,12 +1094,57 @@ namespace InteractML
                                     // If we found a matching script...
                                     if (scriptToAdd != null)
                                     {
-                                        // We add that script to our scriptNode (if it is not null)                                
-                                        m_ScriptNodesList[i].SetScript(scriptToAdd);
-                                        // Add it to the dictionary as well    
-                                        m_MonoBehavioursPerScriptNode.Add(scriptToAdd, m_ScriptNodesList[i]);
+                                        bool rogueNodeFound = false;
+                                        // Check if the script is already present in the dictionary with a matching scriptnode, if it is, maybe our found scriptNode is a duplicate rogue
+                                        while (m_MonoBehavioursPerScriptNode.Contains(scriptToAdd))
+                                        {
+                                            // Check if that entry has a corresponding not null scriptnode
+                                            ScriptNode auxScriptNode = null;
+                                            m_MonoBehavioursPerScriptNode.TryGetValue(scriptToAdd, out auxScriptNode);
+                                            // If the matching node in dict is null, it might be a corrupted entry
+                                            if (auxScriptNode == null)
+                                            {
+                                                // Remove corrupted entry
+                                                m_MonoBehavioursPerScriptNode.Remove(scriptToAdd);
+                                            }
+                                            // If the matching node is not null, then our scriptToAdd is in a healthy node and we have a rogue node. Exit while loop
+                                            else
+                                            {
+                                                // we are dealing with a rogue scriptNode reference right now, mark it
+                                                rogueNodeFound = true;
+                                                break; // exit while loop
+                                            }
+                                        }
+
+                                        // If we are dealing with a rogue Node (a node that shouldn't have been created)...
+                                        if (rogueNodeFound)
+                                        {
+                                            // We need to remove this node from the list
+                                            m_ScriptNodesList.RemoveAt(i);
+                                            // Adjust index
+                                            i--;
+                                            continue; // skip to next entry
+                                        }
+                                        // If it is a healthy but lonely node...
+                                        else
+                                        {
+                                            // We add that script to our scriptNode (if it is not null)                                
+                                            m_ScriptNodesList[i].SetScript(scriptToAdd);
+                                            // Add it to the dictionary as well, unless it is already present    
+                                            m_MonoBehavioursPerScriptNode.Add(scriptToAdd, m_ScriptNodesList[i]);
+
+                                        }
                                     }
-                                }   
+                                }
+                                // We are dealing with a rogue node if reaching here
+                                else
+                                {
+                                    // Remove null reference
+                                    m_ScriptNodesList.RemoveAt(i);
+                                    // Adjust index
+                                    i--;
+                                    continue;
+                                }
                             }
                         }
                     }
@@ -849,7 +1170,7 @@ namespace InteractML
                 if (!m_MonoBehavioursPerScriptNode.ContainsKey(IMLGameComponentContainer.GameComponent))
                 {
                     // First, we try and see if the graph already contains an empty node we can use
-                    foreach (var node in MLController.nodes)
+                    foreach (var node in graph.nodes)
                     {
                         // We see if this node is of the right type
                         if (node.GetType() == typeof(ScriptNode))
@@ -866,7 +1187,7 @@ namespace InteractML
                                 if (isSameType && IMLGameComponentContainer.ControlClones)
                                 {
                                     // We check if the script is attached to a clone
-                                    if (foundScriptNode.GetScript().gameObject.name.Contains("(Clone)") )
+                                    if (foundScriptNode.GetScript().gameObject.name.Contains("(Clone)"))
                                         // If it is a clone we consider it not taken
                                         isTaken = false;
                                 }
@@ -886,7 +1207,7 @@ namespace InteractML
                     if (scriptNode == null)
                     {
                         // Create a new script node into the graph
-                        scriptNode = MLController.AddNode<ScriptNode>();
+                        scriptNode = graph.AddNode<ScriptNode>();
                     }
 
                     // Configure our node appropiately
@@ -900,6 +1221,24 @@ namespace InteractML
                 else
                 {
                     m_MonoBehavioursPerScriptNode.TryGetValue(IMLGameComponentContainer.GameComponent, out scriptNode);
+                    // If the returned node is null...
+                    if (scriptNode == null)
+                    {
+                        // The corresponding scriptnode was deleted for some reason. Attempt a repair
+                        scriptNode = graph.AddNode<ScriptNode>();
+                        scriptNode.SetScript(gameComponent);
+                        // Reset the entry in dictionary
+                        while (m_MonoBehavioursPerScriptNode.Contains(gameComponent))
+                        {
+                            ScriptNode scriptNodeToDelete = null;
+                            m_MonoBehavioursPerScriptNode.TryGetValue(gameComponent, out scriptNodeToDelete);
+                            if (scriptNodeToDelete != null)
+                                graph.RemoveNode(scriptNodeToDelete);
+                            m_MonoBehavioursPerScriptNode.Remove(gameComponent);
+
+                        }
+                        m_MonoBehavioursPerScriptNode.Add(gameComponent, scriptNode);
+                    }
                 }
 
                 // Update ports if required
@@ -922,7 +1261,7 @@ namespace InteractML
                     continue;
                 }
                 // Get corresponding scriptNode
-                if (m_MonoBehavioursPerScriptNode.Contains(clone) )
+                if (m_MonoBehavioursPerScriptNode.Contains(clone))
                 {
                     ScriptNode scriptNode;
                     m_MonoBehavioursPerScriptNode.TryGetValue(clone, out scriptNode);
@@ -930,6 +1269,184 @@ namespace InteractML
                         scriptNode.UpdatePortFields(clone);
                 }
             }
+
+        }
+
+        /// <summary>
+        /// Tries to reuse GameObject Nodes (in case the same graph is used in more than one scene)
+        /// </summary>
+        private void TryRecycleGameObjectNodes()
+        {
+            // Don't do anything if there are no gameObjects from the scene to use
+            if (GameObjectsToUse == null || GameObjectsToUse.Count == 0)
+            {
+                return;
+            }
+
+            // Make sure dictionary is init
+            if (m_GOsPerGONodes == null)
+                m_GOsPerGONodes = new GOPerGONodeDictionary();
+            // If we don't have any GO nodes found, we can't recycle anything
+            if (m_GameObjectNodeList == null)
+            {
+                m_GameObjectNodeList = new List<GameObjectNode>();
+                return; // stop here because we can't recycle nodes if there are none!
+            }
+
+            // Go through every gameObject node, seeing if we can recycle it
+            for (int i = 0; i < m_GameObjectNodeList.Count; i++)
+            {
+                var goNode = m_GameObjectNodeList[i];
+                // Skip to next entry if current is null!
+                if (goNode == null)
+                    continue;
+
+                // Check node name to see if it matches one of the gameObjects to use in the scene
+                foreach (var go in GameObjectsToUse)
+                {
+                    string goName = go.name + " (GameObject)";
+                    if (goName.Equals(goNode.name))
+                    {
+                        // We found a match (by name), check if the go instances are not the same (we are double recycling)
+                        if (goNode.GetHashCode().Equals(go.GetHashCode()))
+                        {
+                            // We have already recycled this gameObject! Skip to next gameObject
+                            continue;
+                        }
+                        else
+                        {
+                            // We can recycle this goNode
+                            goNode.SetGameObject(go);
+                            // Make sure that the pair GO, GONode is present in dictionary
+                            if (m_GOsPerGONodes.ContainsKey(go))
+                            {
+                                GameObjectNode auxGONode;
+                                // If there is already a gameobject key in dictionary, update its goNode key
+                                m_GOsPerGONodes.TryGetValue(go, out auxGONode);
+                                
+                                if (auxGONode == null)
+                                {
+                                    // Maybe there is an entry corrupted in the dictionary, attempt a repair
+                                    while (m_GOsPerGONodes.Contains(go))
+                                    {
+                                        m_GOsPerGONodes.TryGetValue(go, out auxGONode);
+                                        if (auxGONode == null)
+                                            m_GOsPerGONodes.Remove(go);
+                                        else
+                                            break;
+                                    }
+                                    if (auxGONode == null)
+                                        // Add GO, GONode pair to dictionary since there is not one present
+                                        m_GOsPerGONodes.Add(go, goNode);
+                                }
+                                // If the found goNode in dictionary doesn't match our recycled node...
+                                if (auxGONode != null && !auxGONode.Equals(goNode))
+                                {
+                                    // Override it
+                                    m_GOsPerGONodes.Remove(go);
+                                    m_GOsPerGONodes.Add(go, goNode);
+                                }
+                            }
+                            // Stop iterating
+                            break;
+
+                        }
+                    }
+                }
+                
+                // The foreach loop should have taken care of the recycling logic :)
+            }
+
+        }
+
+        /// <summary>
+        /// Tries to reuse Script Nodes (in case the same graph is used in more than one scene)
+        /// </summary>
+        private void TryRecycleScriptNodes()
+        {
+            // Don't do anything if there are no scripts from the scene to use
+            if (ComponentsWithIMLData == null || ComponentsWithIMLData.Count == 0)
+            {
+                return;
+            }
+            // Init dictionary if not init
+            if (m_MonoBehavioursPerScriptNode == null)
+                m_MonoBehavioursPerScriptNode = new MonobehaviourScriptNodeDictionary();
+
+            // If we don't have any scripts nodes found, we can't recycle anything
+            if (m_ScriptNodesList == null)
+            {
+                m_ScriptNodesList = new List<ScriptNode>();
+                return; // stop here because we can't recycle nodes if there are none!
+            }
+
+            // Go through every script node, seeing if we can recycle it
+            for (int i = 0; i < m_ScriptNodesList.Count; i++)
+            {
+                var scriptNode = m_ScriptNodesList[i];
+                // Continue to next entry if current is null!
+                if (scriptNode == null)
+                    continue;
+
+                // We are going to check  he existing script name in the scriptNode to see if it matches one of the scripts to use in the scene
+                foreach (IMLMonoBehaviourContainer scriptContainer in ComponentsWithIMLData)
+                {
+                    string scriptName = scriptContainer.GameComponent.GetType().Name + " (Script)";
+                    if (scriptName.Equals(scriptNode.name))
+                    {
+                        // We found a match (by name), check if the script instances are not the same (we are double recycling)
+                        if (scriptNode.ScriptHashCode.Equals(scriptContainer.GetHashCode()))
+                        {
+                            // We have already recycled this gameObject! Skip to next gameObject
+                            continue;
+                        }
+                        else
+                        {
+                            // We can recycle this goNode
+                            scriptNode.SetScript(scriptContainer.GameComponent);
+                            // Make sure that the pair Script, ScriptNode is present in dictionary
+                            if (m_MonoBehavioursPerScriptNode.ContainsKey(scriptContainer.GameComponent))
+                            {
+                                ScriptNode auxScriptNode;
+                                // If there is already a script key in dictionary, update its scriptNode key
+                                m_MonoBehavioursPerScriptNode.TryGetValue(scriptContainer.GameComponent, out auxScriptNode);
+
+                                if (auxScriptNode == null)
+                                {
+                                    // There might be Corrupted data in dictionary, attempt a repair
+                                    while (m_MonoBehavioursPerScriptNode.Contains(scriptContainer.GameComponent))
+                                    {
+                                        m_MonoBehavioursPerScriptNode.TryGetValue(scriptContainer.GameComponent, out auxScriptNode);
+                                        if (auxScriptNode == null)
+                                            m_MonoBehavioursPerScriptNode.Remove(scriptContainer.GameComponent);
+                                        else
+                                            break;
+                                    }
+
+                                    // If after the repair, the dictionary didn't contain any healthy reference...
+                                    if (auxScriptNode == null) 
+                                        // Add script, scriptNode pair to dictionary since there is not one present
+                                        m_MonoBehavioursPerScriptNode.Add(scriptContainer.GameComponent, scriptNode);
+                                }
+                                // If the found scriptNode in dictionary doesn't match our recycled node...
+                                if (auxScriptNode != null && !auxScriptNode.Equals(scriptNode))
+                                {
+                                    // Override it
+                                    m_MonoBehavioursPerScriptNode.Remove(scriptContainer.GameComponent);
+                                    m_MonoBehavioursPerScriptNode.Add(scriptContainer.GameComponent, scriptNode);
+                                }
+                            }
+                            // Stop iterating
+                            break;
+
+                        }
+                    }
+                }
+
+                // The foreach loop should have taken care of the recycling logic :)
+            }
+
+
 
         }
 
@@ -946,17 +1463,11 @@ namespace InteractML
             else
                 m_TrainingExamplesNodesList = new List<TrainingExamplesNode>();
 
-            // IML Config node List
-            if (m_IMLConfigurationNodesList != null)
-                m_IMLConfigurationNodesList.Clear();
+            // MLSystem node List
+            if (m_MLSystemNodeList != null)
+                m_MLSystemNodeList.Clear();
             else
-                m_IMLConfigurationNodesList = new List<IMLConfiguration>();
-
-            // RealtimeIMLOutPutNodes List
-            if (m_RealtimeIMLOutputNodesList != null)
-                m_RealtimeIMLOutputNodesList.Clear();
-            else
-                m_RealtimeIMLOutputNodesList = new List<RealtimeIMLOutputNode>();
+                m_MLSystemNodeList = new List<MLSystem>();
 
         }
 
@@ -973,6 +1484,19 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
+            //Debug.Log(universalInputEnabled);
+            // Make sure that the icon is init
+            if (icon == null && m_inputSetUp != null)
+                InitializeIMLIndicator();
+
+            if (icon != null)
+            {
+                if (icon.graph == null)
+                {
+                    icon.graph = this;
+                }
+
+            }
             //Debug.Log("Running IMLComponent update...");
 
 
@@ -1007,10 +1531,21 @@ namespace InteractML
 
 
             // Keep lists of nodes found updated
-            GetAllNodes();
-
-            if (MLController != null)
+            //GetAllNodes();
+            // is reference to the graph is not null
+            if (graph != null)
             {
+                // if it is a new graph
+                if(m_LastKnownGraph != graph)
+                {
+                    // set up reference
+                    IMLControllerOwnershipLogic();
+                    // Initialize all nodes
+                    Initialize();
+                }
+                // if graph has lost reference to the IML Compoenent 
+                if(graph.IsGraphRunning == false)
+                    IMLControllerOwnershipLogic();
                 // Fetch data from the Monobehaviours we have subscribed into and out of the IML Controller
                 FetchDataFromMonobehavioursSubscribed();
 
@@ -1023,12 +1558,39 @@ namespace InteractML
                 // Run logic for all training example nodes
                 RunTraininExamplesLogic();
 
-                // Run logic for all IML Config nodes
-                RunIMLConfigurationsLogic();
+                // Run logic for all MLSystem nodes
+                RunMLSystemLogic();
 
-                // Get all IML Controller outputs
-                ExtractOutputsIMLController();
 
+            } else
+            {
+                // get reference to graph & give graph reference to IML Component
+                IMLControllerOwnershipLogic();
+            }
+            // input logic 
+            InputLogic();
+
+        }
+        /// <summary>
+        /// Update logic for input modules
+        /// </summary>
+        public void InputLogic(){
+            // if user has enables universal input system
+            if(universalInputEnabled && universalInputActive)
+            {
+                //if there is a reference to the node
+                if (m_inputSetUp != null)
+                {
+                    m_inputSetUp.UpdateLogic();
+                }
+            } else
+            {
+                foreach(CustomController controller in m_CustomControllerList)
+                {
+                    if (controller == null)
+                        m_CustomControllerList.Remove(controller);
+                    controller.UpdateLogic();
+                }
             }
 
         }
@@ -1057,10 +1619,10 @@ namespace InteractML
                 else if (changingPlayMode && goNode.CreatedDuringPlaymode)
                 {
                     // Destroy node
-                    MLController.RemoveNode(goNode);
+                    graph.RemoveNode(goNode);
                     // Decrease counter to not delete the wrong element later
                     i--;
-                    // Force scriptNode reference to null
+                    // Force gameobject reference to null
                     goNode = null;
                 }
 #endif
@@ -1071,7 +1633,7 @@ namespace InteractML
                     if (!m_GOsPerGONodes.ContainsValue(goNode))
                     {
                         // Destroy node
-                        MLController.RemoveNode(goNode);
+                        graph.RemoveNode(goNode);
                         // Decrease counter to not delete the wrong element later
                         i--;
                         // Force scriptNode reference to null
@@ -1079,16 +1641,16 @@ namespace InteractML
                     }
                 }
 
-                // Now if the node wasn't removed, make sure that there is a script that the node is controlling in the scene list that the user controls
+                // Now if the node wasn't removed, make sure that there is a gameobject that the node is controlling in the scene list that the user controls
                 if (goNode != null)
                 {
                     // If we are switching playmodes, it is very likely that we lost the reference to the GO?
                     if (changingPlayMode)
                     {
-                        // Check if the script reference is null
+                        // Check if the gameobject reference is null
                         if (goNode.GameObjectDataOut == null)
                         {
-                            // See if we know the hash of the referenced script
+                            // See if we know the hash of the referenced gameobject
                             if (goNode.GOHashCode != default(int))
                             {
                                 // Check if the script is contained in the scene list
@@ -1143,7 +1705,7 @@ namespace InteractML
                 else if (changingPlayMode && scriptNode.CreatedDuringPlaymode)
                 {
                     // Destroy node
-                    MLController.RemoveNode(scriptNode);
+                    graph.RemoveNode(scriptNode);
                     // Decrease counter to not delete the wrong element later
                     i--;
                     // Force scriptNode reference to null
@@ -1157,7 +1719,7 @@ namespace InteractML
                     if (!m_MonoBehavioursPerScriptNode.ContainsValue(scriptNode))
                     {
                         // Destroy node
-                        MLController.RemoveNode(scriptNode);
+                        graph.RemoveNode(scriptNode);
                         // Decrease counter to not delete the wrong element later
                         i--;
                         // Force scriptNode reference to null
@@ -1209,59 +1771,109 @@ namespace InteractML
         /// <summary>
         /// Loads and runs (or retrains if needed) models from disk on awake
         /// </summary>
-        public void LoadDataAndRunOnAwakeModels()
+        private void LoadDataForModels()
         {
-            // There will be waits for things to init. Take into account
-            IEnumerator coroutine = LoadDataAndRunOnAwakeModelsCoroutine();
-            StartCoroutine(coroutine);
-
+            if(this != null)
+            {
+                // There will be waits for things to init. Take into account
+                IEnumerator coroutine = LoadDataForModelsCoroutine();
+                StartCoroutine(coroutine);
+            }
+            
         }
 
         /// <summary>
         /// Coroutine to load and run (or retrain if needed) models from disk on awake
         /// </summary>
         /// <returns></returns>
-        private IEnumerator LoadDataAndRunOnAwakeModelsCoroutine()
+        private IEnumerator LoadDataForModelsCoroutine()
         {
-            yield return new WaitForSeconds(0.05f);
+            nodesLoaded = false;
+            //Debug.Log("RESET AND RETRAIN CALLED FROM IML COMPONENT");
 
-            Debug.Log("RESET AND RETRAIN CALLED FROM IML COMPONENT");
+            //yield return new WaitForSeconds(0.05f);
+
+            //Debug.Log("RESET AND RETRAIN CALLED FROM IML COMPONENT");
 
             // Reset all models
             //ResetAllModels();
-
-            // Reload Training Data Set
-            while (!LoadAllTrainingExamples())
+            // if there are training examples nodes
+            if (TrainingExamplesNodesList.Count > 0)
             {
-                // wait for a frame until the data is loaded
-                yield return null;
+                // Reload Training Data Set
+                while (!LoadAllTrainingExamples())
+                {
+                    // wait for a frame until the data is loaded
+                    yield return null;
+                }
             }
-
+            
             // Wait for another frame
             yield return null;
 
             // Retrain them
             //ReTrainAllModelsCoroutine();
 
-            while(!RetrainAllModelsPrivate())
+            // if there are mlsystem nodes in the graph
+            if (MLSystemNodeList.Count > 0)
             {
-                // wait for a frame until models are retrained
-                yield return null;
+                while (!(bool)IMLEventDispatcher.LoadModelsCallback?.Invoke())
+                {
+                    // wait for a frame until models are retrained
+                    yield return null;
+                }
             }
+            
 
             // Wait for another frame
             yield return null;
 
-            // Run the models
-            while(!RunAllModels() )
+            nodesLoaded = true;
+
+            yield return null;
+
+            if (Application.isPlaying)
             {
-                yield return null;
+                RunModelsOnPlay();
             }
 
             yield break;
 
         }
+        /// <summary>
+        /// Starts run models on play coroutine
+        /// </summary>
+        public void RunModelsOnPlay()
+        {
+            if (this != null)
+            {
+                // There will be waits for things to init. Take into account
+                IEnumerator coroutine = RunModelsOnPlayCoroutine();
+                StartCoroutine(coroutine);
+            }
+            
 
+        }
+        /// <summary>
+        /// Coroutine for running models checks to see if loaded and then runs models
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator RunModelsOnPlayCoroutine()
+        {
+            yield return null;
+
+            // wait for nodes to load
+            while (!nodesLoaded)
+            {
+                yield return null;
+            }
+
+            // run models marked run on awake
+            RunAllModels();
+
+            yield break;
+              
+        }
         /// <summary>
         /// Loads training data from disk and forces an init on the training examples node if not init
         /// </summary>
@@ -1287,7 +1899,7 @@ namespace InteractML
                 }
 
                 // Load Data
-                trainingExamplesNode.LoadDataFromDisk();
+                //trainingExamplesNode.LoadDataFromDisk();
 
                 success = true;
             }
@@ -1295,12 +1907,32 @@ namespace InteractML
             return success;
         }
 
+        /// <summary>
+        /// Stops collecting examples on all the training examples nodes (to be called when leaving or entering a scene)
+        /// </summary>
+        public void StopAllCollectingExamples()
+        {
+            // Avoid null or empty errors
+            if (m_TrainingExamplesNodesList == null || m_TrainingExamplesNodesList.Count == 0)
+                return;
+
+            // Iterate all training examples nodes
+            foreach (var trainingExamplesNode in m_TrainingExamplesNodesList)
+            {
+                // Only stop it if it is collecting data
+                if (trainingExamplesNode.CollectingData)
+                {
+                    trainingExamplesNode.StopCollecting();
+                }
+            }
+        }
+
         [ContextMenu("Delete All Models")]
         public void DeleteAllModels()
         {
             //Debug.Log("Delete All Models Called");
 
-            // I tried deleting the IML Config nodes, but that gave errors when controlling Rapidlib! Avoiding to do that at all.
+            // I tried deleting the MLSystem nodes, but that gave errors when controlling Rapidlib! Avoiding to do that at all.
 
 //            // Destroy all rapidlib components attached to this gameobject (since we don't need them any more)
 //            var rapidlibsInGameObject = this.GetComponents<RapidLib>();
@@ -1321,10 +1953,10 @@ namespace InteractML
         /// </summary>
         public void LoadAllModelsFromDisk(bool reCreateModels = false)
         {
-            foreach (var IMLConfigNode in m_IMLConfigurationNodesList)
+            foreach (var MLSystemNode in m_MLSystemNodeList)
             {
-                // Loads the model in the IMLConfigNode
-                IMLConfigNode.LoadModelFromDisk(reCreateModels);
+                // Loads the model in the MLSystemNode
+                MLSystemNode.LoadModelFromDisk(reCreateModels);
             }
             
         }
@@ -1334,10 +1966,10 @@ namespace InteractML
         /// </summary>
         public void SaveAllModels()
         {
-            foreach (var IMLConfigNode in m_IMLConfigurationNodesList)
+            foreach (var MLSystemNode in m_MLSystemNodeList)
             {
                 // Save model to disk
-                IMLConfigNode.SaveModelToDisk();
+                MLSystemNode.SaveModelToDisk();
             }
 
         }
@@ -1347,16 +1979,16 @@ namespace InteractML
         /// </summary>
         public void StopAllModels()
         {
-            foreach (var IMLConfigNode in m_IMLConfigurationNodesList)
+            foreach (var MLSystemNode in m_MLSystemNodeList)
             {
                 // Stop model if they are running
-                if (IMLConfigNode.Running)
-                    IMLConfigNode.ToggleRunning();
+                if (MLSystemNode.Running)
+                    MLSystemNode.StopRunning();
             }
         }
 
         /// <summary>
-        /// Resets all models for the IML Config nodes (by destroying and re-creating them)
+        /// Resets all models for the MLSystem nodes (by destroying and re-creating them)
         /// </summary>
         public void ResetAllModels()
         {
@@ -1364,12 +1996,12 @@ namespace InteractML
 
             DeleteAllModels();
 
-            //// Go through the list of iml config nodes and instantiate new rapidlibs
-            //foreach (var imlConfigNode in IMLConfigurationNodesList)
+            //// Go through the list of MLSystem nodes and instantiate new rapidlibs
+            //foreach (var MLSystemNode in MLSystemNodesList)
             //{
-            //    if (imlConfigNode)
+            //    if (MLSystemNode)
             //    {
-            //        imlConfigNode.InstantiateRapidlibModel();                    
+            //        MLSystemNode.InstantiateRapidlibModel();                    
             //    }
             //}
         }
@@ -1391,45 +2023,49 @@ namespace InteractML
         /// </summary>
         public bool RunAllModels()
         {
+            Debug.Log("run all models");
             bool success = false;
-            foreach (var imlConfigNode in m_IMLConfigurationNodesList)
+            foreach (var MLSystemNode in m_MLSystemNodeList)
             {
-                if (imlConfigNode)
+                if (MLSystemNode)
                 {
                     // Only run if the flag is marked to do so
                     bool trainingExamples = false;
-                    if (imlConfigNode.RunOnAwake)
+                    if (MLSystemNode.RunOnAwake)
                     {
                         // Attempt to load/train if the model is untrained
-                        if (imlConfigNode.Untrained)
+                        if (MLSystemNode.Untrained)
                         {
                             // First try to load the model (unless is DTW)
-                            if (imlConfigNode.LearningType != IMLSpecifications.LearningType.DTW)
+                            if (MLSystemNode.Model.TypeOfModel != RapidlibModel.ModelType.DTW)
                             {
-                                imlConfigNode.LoadModelFromDisk();
+                                MLSystemNode.LoadModelFromDisk();
                             }
                             // Only attempt to train if model is still untrained
-                            if (imlConfigNode.Untrained)
+                            if (MLSystemNode.Untrained)
                             {
                                 // Train if there are training examples available
-                                for (int i = 0; i < imlConfigNode.IMLTrainingExamplesNodes.Count; i++)
+                                for (int i = 0; i < MLSystemNode.IMLTrainingExamplesNodes.Count; i++)
                                 {
-                                    if (imlConfigNode.IMLTrainingExamplesNodes[i].TrainingExamplesVector.Count > 0)
+                                    if (MLSystemNode.IMLTrainingExamplesNodes[i].TrainingExamplesVector.Count > 0)
                                     {
                                         trainingExamples = true;
                                     }
                                 }
                                 if (trainingExamples)
                                 {
-                                    success = imlConfigNode.TrainModel();
+                                    success = MLSystemNode.TrainModel();
                                 }
                             }
                         }
                         // Toggle Run only if the model is trained (and it is not DTW, the user should do that)
-                        if (imlConfigNode.Trained && imlConfigNode.LearningType != IMLSpecifications.LearningType.DTW)
+                        if (MLSystemNode.Trained && MLSystemNode.TrainingType != IMLSpecifications.TrainingSetType.SeriesTrainingExamples)
                         {
-                            imlConfigNode.ToggleRunning();
-                            success = true;
+                            success = MLSystemNode.StartRunning();
+                            if (success && icon != null)
+                            {
+                                icon.SetBody(icon.runningColour);
+                            }
                         }
                     }
 
@@ -1445,13 +2081,13 @@ namespace InteractML
         IEnumerator ReTrainAllModelsCoroutine()
         {
             yield return new WaitForSeconds(0.05f);
-            foreach (var imlConfigNode in m_IMLConfigurationNodesList)
+            foreach (var MLSystemNode in m_MLSystemNodeList)
             {
-                if (imlConfigNode)
+                if (MLSystemNode)
                 {
                     // Only retrains if the flag is marked to do so
-                    if (imlConfigNode.TrainOnPlaymodeChange)
-                        imlConfigNode.TrainModel();
+                    if (MLSystemNode.TrainOnPlaymodeChange)
+                        MLSystemNode.TrainModel();
 
                     yield return null;
                 }
@@ -1465,31 +2101,37 @@ namespace InteractML
         /// <returns></returns>
         private bool RetrainAllModelsPrivate()
         {
+            Debug.Log("retraining");
             bool success = false;
-            foreach (var imlConfigNode in m_IMLConfigurationNodesList)
+            foreach (var MLSystemNode in m_MLSystemNodeList)
             {
-                if (imlConfigNode)
+                if (MLSystemNode)
                 {
                     // Reset Model
-                    imlConfigNode.ResetModel();
+                    MLSystemNode.ResetModel();
                     // Attempt to load if not DTW
-                    if (imlConfigNode.LearningType != IMLSpecifications.LearningType.DTW)
+                    if (MLSystemNode.Model.TypeOfModel != RapidlibModel.ModelType.DTW)
                     {
-                        success = imlConfigNode.LoadModelFromDisk();
+                        success = MLSystemNode.LoadModelFromDisk();
                     }
                     // If the model didn't succeed in loading
                     if (!success)
                     {
                         // Only retrains if the flag is marked to do so
-                        if (imlConfigNode.TrainOnPlaymodeChange)
-                            success = imlConfigNode.TrainModel();
+                        if (MLSystemNode.TrainOnPlaymodeChange)
+                            success = MLSystemNode.TrainModel();
                     }
+                    if (!success && MLSystemNode.TotalNumTrainingDataConnected == 0)
+                    {
+                        success = true;
+                    }
+                    
                 }
             }
             return success;
         }
 
-        #region SubscriptionOfMonobehaviours
+#region SubscriptionOfMonobehaviours
 
         /// <summary>
         /// Pass a Monobehaviour and mark any field with "SendToIMLController" or "PullFromIMLController" attribute to use it with the IML Component
@@ -1602,7 +2244,7 @@ namespace InteractML
                                         if (entry2.Key == fieldInfoToDelete)
                                         {
                                             // Remove Node from IML Controller before deleting the entry
-                                            MLController.RemoveNode(entry2.Value.nodeForField);
+                                            graph.RemoveNode(entry2.Value.nodeForField);
                                             // Remove fieldInfo/DataContainer entry from dictionary
                                             m_DataContainersPerFieldInfo.Remove(entry2.Key);
                                         }
@@ -1621,9 +2263,9 @@ namespace InteractML
 
         }
 
-        #endregion
+#endregion
 
-        #region Add Nodes
+#region Add Nodes
 
         /// <summary>
         /// Adds a scriptNode internally to the list
@@ -1646,9 +2288,9 @@ namespace InteractML
                     if (EditorApplication.isPlaying) node.CreatedDuringPlaymode = true;
 
                     // Save newnode to graph on disk                              
-                    AssetDatabase.AddObjectToAsset(node, MLController);
+                    AssetDatabase.AddObjectToAsset(node, graph);
                     // Reload graph into memory since we have modified it on disk
-                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(graph));
 #endif
 
                 }
@@ -1676,9 +2318,9 @@ namespace InteractML
                     if (EditorApplication.isPlaying) node.CreatedDuringPlaymode = true;
 
                     // Save newnode to graph on disk                              
-                    AssetDatabase.AddObjectToAsset(node, MLController);
+                    AssetDatabase.AddObjectToAsset(node, graph);
                     // Reload graph into memory since we have modified it on disk
-                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(MLController));
+                    AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(graph));
 #endif
                 }
 
@@ -1686,10 +2328,10 @@ namespace InteractML
             return nodeAdded;
         }
 
-        #endregion
+#endregion
 
-        #region Deletion of Nodes
-
+#region Deletion of Nodes
+        // code needs refactoring 
         /// <summary>
         /// Removes GameObjectNode From GameObjectNodeList 
         /// </summary>
@@ -1721,23 +2363,21 @@ namespace InteractML
 
         }
         /// <summary>
-        /// Removes IMLConfigurationNode From IMLConfigurationNodeList 
+        /// Removes MLSystemNode From MLSystemNodeList 
         /// </summary>
         /// <param name="nodeToDelete"></param>
-        public void DeleteIMLConfigurationNode(IMLConfiguration nodeToDelete)
+        public void DeleteMLSystemNode(MLSystem nodeToDelete)
         {
-            if (m_IMLConfigurationNodesList.Contains(nodeToDelete))
-                m_IMLConfigurationNodesList.Remove(nodeToDelete);
+            if (m_MLSystemNodeList.Contains(nodeToDelete))
+                m_MLSystemNodeList.Remove(nodeToDelete);
         }
-        /// <summary>
-        /// Removes RealtimeOutputNode From RealtimeOutputNodeList 
-        /// </summary>
-        /// <param name="nodeToDelete"></param>
-        public void DeleteRealtimeIMLOutputNode(RealtimeIMLOutputNode nodeToDelete)
+        
+        public void DeleteCustomControllerNode(CustomController nodeToDelete)
         {
-            if (m_RealtimeIMLOutputNodesList.Contains(nodeToDelete))
-                m_RealtimeIMLOutputNodesList.Remove(nodeToDelete);
+            if (m_CustomControllerList.Contains(nodeToDelete))
+                m_CustomControllerList.Remove(nodeToDelete);
         }
+        
         /// <summary>
         /// Removes TrainingExamplesNode From TrainingExamplesNodeList 
         /// </summary>
@@ -1746,6 +2386,7 @@ namespace InteractML
         {
             if (m_TrainingExamplesNodesList.Contains(nodeToDelete))
                 m_TrainingExamplesNodesList.Remove(nodeToDelete);
+            UpdateTrainingExamplesListNo();
         }
         /// <summary>
         /// Removes TextNoteNode From TextNoteNodeList 
@@ -1793,7 +2434,7 @@ namespace InteractML
                 m_ScriptNodesList.Remove(node);
         }
 
-        #endregion
+#endregion
 
         //Very dirty code need to sort it out in a better way - updates the node pointer when exiting or entering play mode 
         public void updateGameObjectImage()
@@ -1805,20 +2446,255 @@ namespace InteractML
             }
         }
 
-        #endregion
+#endregion
 
-        #region SceneLoading
+#region SceneLoading
 
 #if UNITY_EDITOR
         private void SceneOpenedLogic(UnityEngine.SceneManagement.Scene scene, UnityEditor.SceneManagement.OpenSceneMode mode)
         {
             Debug.Log("SceneOpened detected by IMLComponent");
-        }      
+        }
 
 #endif
 
 #endregion
+#region Delegates
+        /// <summary>
+        /// Delegate to train model from 
+        /// </summary>
+        /// <param name="nodeID">ID of the node to be trained</param>
+        /// <returns>returns boolean whether sucessfully trained</returns>
+        private bool Train(string nodeID)
+        {
+            bool success = false;
+            //iterate through all mls nodes
+            foreach (MLSystem MLSNode in MLSystemNodeList)
+            {
+                //if nodeID matches
+                if (nodeID == MLSNode.id)
+                {
+                    
+                    // train model
+                    success = MLSNode.TrainModel();
+                    // if this is successful save model to the disk
+                    if (success)
+                        MLSNode.SaveModelToDisk();
+                }
+            }
+            //Debug.Log(icon == null);
+            if (success && icon != null)
+                icon.SetBody(icon.trainedColor);
+            // returns true if nodeID exists and whether training successful
+            return success;
+        }
+        /// <summary>
+        ///  Start running delegate
+        /// </summary>
+        /// <param name="nodeID">nodeID for ls to start running</param>
+        /// <returns></returns>
+        private bool ToggleRunning(string nodeID)
+        {
+            bool success = false;
+            //iterate through all mls nodes
+            foreach (MLSystem MLSNode in MLSystemNodeList)
+            {
+                // if nodeID matches
+                if (nodeID == MLSNode.id)
+                {
+                    if (MLSNode.Running)
+                    {
+                        success = MLSNode.StopRunning();
+                        if(success && icon != null)
+                            icon.SetBody(icon.baseColour);
+                    }
+                    else
+                    {
+                        success = MLSNode.StartRunning();
+                        if (success && icon != null)
+                            icon.SetBody(icon.runningColour);
+                        //else
+                            //icon.SetBody(icon.current);
+                    }
+                        
 
+                }
+            }
+            // return true if nodeID exists and running started
+            return success; 
+        }
+        
+       
+        
+
+        /// <summary>
+        /// Reset model for delegate
+        /// </summary>
+        /// <param name="nodeID">node id of the MLS nide to reset</param>
+        private bool ResetModel(string nodeID)
+        {
+            //iterate through all mls nodes
+            foreach (MLSystem MLSNode in MLSystemNodeList)
+            {
+                // if nodeID matches
+                if (nodeID == MLSNode.id)
+                {
+                    // Reset model
+                    MLSNode.ResetModel();
+                }
+            }
+            icon.SetColourHighlight(icon.selectedHighlight);
+            return true;
+        }
+
+        /// <summary>
+        /// Record one example for delegate
+        /// </summary>
+        /// <param name="nodeID"></param>
+        /// <returns></returns>
+        private bool RecordOne(string nodeID)
+        {
+            //iterate through all training nodes
+            foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
+            {
+                // if node ID matches AND the node is a single training examples node
+                if (nodeID == TENode.id && TENode.GetType().ToString().Contains("InteractML.SingleTrainingExamplesNode"))
+                {
+                    // add single example
+                    
+                    if (TENode.AddSingleTrainingExample())
+                    {
+                        return true;
+                    }
+                    
+                }
+            }
+            return false; ;
+        }
+
+        /// <summary>
+        /// Start recording training examples for delegate
+        /// </summary>
+        /// <param name="nodeID">nodeID of the training examples node</param>
+        /// <returns>bool whether training has started</returns>
+        private bool ToggleRecording(string nodeID)
+        {
+            //Debug.Log("toggle");
+            bool success = false;
+            foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
+            {
+                if (nodeID == TENode.id)
+                {
+                    if (TENode.CollectingData)
+                    {
+                       // Debug.Log("stop");
+                        success = TENode.StopCollecting();
+                        if (success)
+                        {
+                            if (icon != null)
+                                icon.SetBody(icon.baseColour);
+                        }
+                    } else
+                    {
+                        //Debug.Log("start");
+                        success = TENode.StartCollecting();
+                        if (success)
+                        {
+                            if (icon !=null )
+                                icon.SetBody(icon.recordingColour);
+                        }
+                        else
+                        {
+                            if (icon != null)
+                                icon.SetBody(icon.current);
+                        }
+                    }
+                        
+                }
+            }
+            return success;
+        }
+
+
+        /// <summary>
+        /// Start recording training examples for delegate
+        /// </summary>
+        /// <param name="nodeID">nodeID of the training examples node</param>
+        /// <returns>bool whether training has started</returns>
+        private bool StartRecording(string nodeID)
+        {
+            bool success = false;
+            foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
+            {
+                if (nodeID == TENode.id)
+                {
+                    success = TENode.StartCollecting();
+                }
+            }
+            return success;
+        }
+        /// <summary>
+        /// Stop recording training examples for delegate
+        /// </summary>
+        /// <param name="nodeID">nodeID of the training examples node</param>
+        /// <returns>bool whether training has stopped</returns>
+        private bool StopRecording(string nodeID)
+        {
+            foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
+            {
+                if (nodeID == TENode.id)
+                {
+                    if (TENode.StopCollecting())
+                    {
+                        return true;
+                    }
+
+                }
+            }
+            return false; ;
+        }
+        /// <summary>
+        /// Delete all training exmples for delefate
+        /// </summary>
+        /// <param name="nodeID">nodeID of the training examples to delete</param>
+        private bool DeleteAllTrainingExamplesInNode(string nodeID)
+        {
+           // Debug.Log(nodeID);
+            foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
+            {
+                if (nodeID == TENode.id)
+                {
+                    // clear training examples from this node 
+                   TENode.ClearTrainingExamples();
+                }
+            }
+            return true;
+        }
+
+        private bool DeleteAllTrainingExamplesInGraph(bool deleteFromDisk = true)
+        {
+            foreach (TrainingExamplesNode TENode in TrainingExamplesNodesList)
+            {                
+                // clear training examples from this node 
+                TENode.ClearTrainingExamples(deleteFromDisk: deleteFromDisk);
+            }
+            return true;
+
+        }
+
+        private void UniversalInterface(bool value)
+        {
+            universalInputEnabled = value;
+        }
+
+        private void UpdateTrainingExamplesListNo()
+        {
+            for(int i = 0; i < TrainingExamplesNodesList.Count; i++){
+                TrainingExamplesNodesList[i].listNo = i;
+            }
+        }
+
+#endregion
     }
 
 }

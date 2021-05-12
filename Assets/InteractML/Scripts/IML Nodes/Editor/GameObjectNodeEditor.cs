@@ -8,6 +8,9 @@ using XNodeEditor;
 
 namespace InteractML
 {
+    /// <summary>
+    /// Editor class drawing a Game Object Feature - receiving the transform from a game object in the scene.
+    /// </summary>
     [CustomNodeEditor(typeof(GameObjectNode))]
     public class GameObjectNodeEditor : IMLNodeEditor
     {
@@ -24,27 +27,28 @@ namespace InteractML
         Texture2D m_NoMeshTexture;
         float m_TexHeightMultiplier = 0.45f;
 
-
-
-        public override void OnHeaderGUI()
+        /// <summary>
+        /// Initialise node specific interface labels and parameters
+        /// </summary>
+        public override void OnCreate()
         {
             // Get reference to the current node
             m_GameObjectNode = (target as GameObjectNode);
-            nodeSpace = 230;
+
+            // Initialise node name
             NodeName = "GAME OBJECT";
-            base.OnHeaderGUI();
 
-        }
-
-        public override void OnBodyGUI()
-        {
-            InputPortsNamesOverride = new Dictionary<string, string>();
-            OutputPortsNamesOverride = new Dictionary<string, string>();
-            base.InputPortsNamesOverride.Add("GameObjectDataIn", "Game Object\nData In");
-            base.OutputPortsNamesOverride.Add("LiveDataOut", "Rotation\nData Out");
-            base.nodeTips = m_GameObjectNode.tooltips;
+            // Initialise node height
             m_BodyRect.height = 170;
-            base.OnBodyGUI();
+            nodeSpace = 230;
+
+            // Initialise output port labels
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            base.OutputPortsNamesOverride.Add("GameObjectDataOut", "Game Object\nData Out");
+            
+            // Initialise node tooltips
+            base.nodeTips = m_GameObjectNode.tooltips;
+
         }
 
         protected override void ShowBodyFields()
@@ -57,7 +61,9 @@ namespace InteractML
         /// </summary>
         private void ShowGameObjectPreview()
         {
-            Rect previewBox = new Rect(m_BodyRect.x + 15, m_BodyRect.y, m_BodyRect.width - 30, m_BodyRect.height);
+            // Set size of preview box
+            Rect previewBox = new Rect(m_BodyRect.x + 20, m_BodyRect.y, m_BodyRect.width - 40, m_BodyRect.height);
+
             GUILayout.BeginArea(previewBox);
 
             EditorGUILayout.Space();
@@ -66,11 +72,12 @@ namespace InteractML
             // Show label of which object is being fed to the node
             GameObject gObj = m_GameObjectNode.GameObjectDataOut;
 
-            // Only draw the label if the object is not null
+            // Only draw the preview if the object is not null
             if (gObj != null)
             {
 
-                EditorGUILayout.LabelField(gObj.name, new GUIStyle(Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Node Body Label")) { alignment = TextAnchor.MiddleLeft });
+                EditorGUILayout.LabelField(gObj.name, m_NodeSkin.GetStyle("Node Body Label"));
+
                 EditorGUILayout.Space();
                 EditorGUILayout.Space();
 
@@ -136,9 +143,32 @@ namespace InteractML
                             // Create new empty texture
                             m_NoMeshTexture = new Texture2D(1, 1);
                             // Read texture from memory
-                            m_NoMeshTexture.LoadImage(System.IO.File.ReadAllBytes(Application.dataPath + "/InteractML/Resources/Icons/gameobject_transform_img.png"));
-                            // Resize it
-                            m_NoMeshTexture = TextureTools.ResampleAndCrop(m_NoMeshTexture, (int)NodeWidth, (int)(NodeWidth * m_TexHeightMultiplier));
+                            try
+                            {
+                                // If InteractML is imported or used as normal...
+                                if (System.IO.Directory.Exists(Application.dataPath + "/InteractML/Resources/Icons/"))
+                                {                                    
+                                    m_NoMeshTexture.LoadImage(System.IO.File.ReadAllBytes(Application.dataPath + "/InteractML/Resources/Icons/gameobject_transform_img.png"));
+                                }
+                                // If InteractML is imported as a Git submodule...
+                                else
+                                {
+                                    if (System.IO.Directory.Exists(Application.dataPath + "/iml-unity/Assets/InteractML/Resources/Icons/"))
+                                    {
+                                        m_NoMeshTexture.LoadImage(System.IO.File.ReadAllBytes(Application.dataPath + "/iml-unity/Assets/InteractML/Resources/Icons/gameobject_transform_img.png"));
+                                    }
+                                }
+                            }
+                            catch (System.Exception e)
+                            {
+
+                                Debug.LogError(e.Message);
+                            }
+                            // Only resize it if the loading was successful
+                            if (m_NoMeshTexture.width != 1)
+                                // Resize it
+                                m_NoMeshTexture = TextureTools.ResampleAndCrop(m_NoMeshTexture, (int)NodeWidth, (int)(NodeWidth * m_TexHeightMultiplier));
+
                         }
                     }
 
@@ -146,10 +176,11 @@ namespace InteractML
                     EditorGUI.DrawPreviewTexture(new Rect(0f, 35f, m_NoMeshTexture.width, m_NoMeshTexture.height), m_NoMeshTexture);
                 }
             }
-            // If it is null, we warn it
+            // If it is null, we warn the user
             else
             {
-                EditorGUILayout.HelpBox("Connect a GameObject", MessageType.Error);
+                EditorGUILayout.LabelField("Connect a GameObject", m_NodeSkin.GetStyle("Node Body Label"));
+                //EditorGUILayout.HelpBox("Connect a GameObject", MessageType.Error);
             }
 
             GUILayout.EndArea();

@@ -15,10 +15,10 @@ namespace InteractML
         /// The GameObject from the scene to use
         /// </summary>
         [Output] public GameObject GameObjectDataOut;
-        
 
-        [HideInInspector]
-        public bool GameObjMissing;
+        /// <summary>
+        /// Has the node been updated?
+        /// </summary>
         [HideInInspector]
         public bool state;
 
@@ -46,48 +46,26 @@ namespace InteractML
 
         #region XNode Messages
 
-        // Use this for initialization
-        protected override void Init()
-        {
-            base.Init();
-
-            var MLController = graph as IMLController;
-            if (MLController.SceneComponent != null)
-            {
-                MLController.SceneComponent.GetAllNodes();
-               
-            }
-
-            tooltips = IMLTooltipsSerialization.LoadTooltip("GameObject");
-        }
-
+        /// <summary>
+        /// Remove reference of this node in the IMLComponent controlling this node (if any)
+        /// </summary> 
         public void OnDestroy()
-        {
-            // Remove reference of this node in the IMLComponent controlling this node (if any)
-            var MLController = graph as IMLController;
-            if (MLController.SceneComponent != null)
-            {
+        { 
+            var MLController = graph as IMLGraph;
+            if (MLController != null)
                 MLController.SceneComponent.DeleteGameObjectNode(this);
-            }
         }
 
-        // Return the correct value of an output port when requested
+        /// <summary>
+        /// Return the correct value of an output port when requested
+        /// </summary>
+        /// <param name="port"></param>
         public override object GetValue(NodePort port)
         {
             if (GameObjectDataOut != null)
-            {
-                GameObjMissing = false;
                 return GameObjectDataOut;
-            }
             else
-            {
-                if ((graph as IMLController).IsGraphRunning)
-                {
-                    Debug.LogWarning("GameObject missing from GameObjectNode!!");
-                }
-                GameObjMissing = true;
                 return null;
-            }
         }
 
         #endregion
@@ -95,12 +73,12 @@ namespace InteractML
         #region Public Methods
 
         /// <summary>
-        /// Sets GO and update internal references
+        /// Sets GameObject and update internal references
         /// </summary>
         /// <param name="gameObject"></param>
         public void SetGameObject(GameObject gameObject)
         {
-            // If the GO is null but we have some memory of the previous GO...
+            // If the GameObject is null but we have some memory of the previous GameObject.
             if (GameObjectDataOut == null && GOHashCode != default(int))
             {
                 // It is the same GO! Assign it but don't clear ports
