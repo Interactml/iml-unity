@@ -4,9 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
-  m_configObjects:
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: f0b9905f7fef8944ea38d2797c482f34,
-      type: 2}
-    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: fb006816ae86ebb4d83c838cd1ae83f5,
-      type: 2}
+  m_Scenes:
+  - enabled: 1
+    path: Assets/InteractML_Examples/VR_Interface/Venice_VR.unity
+    guid: 630f61ddc47f2c44885f64b9493c042e
+  m_configObjects: {}

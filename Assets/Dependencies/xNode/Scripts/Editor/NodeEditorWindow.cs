@@ -77,16 +77,7 @@ namespace XNodeEditor {
         void OnFocus() {
             current = this;
             ValidateGraphEditor();
-            if (graphEditor != null) {
-                graphEditor.OnWindowFocus();
-                if (NodeEditorPreferences.GetSettings().autoSave) AssetDatabase.SaveAssets();
-            }
-            
-            dragThreshold = Math.Max(1f, Screen.width / 1000f);
-        }
-        
-        void OnLostFocus() {
-            if (graphEditor != null) graphEditor.OnWindowFocusLost();
+            if (graphEditor != null && NodeEditorPreferences.GetSettings().autoSave) AssetDatabase.SaveAssets();
         }
 
         [InitializeOnLoadMethod]
@@ -106,7 +97,7 @@ namespace XNodeEditor {
         /// <summary> Make sure the graph editor is assigned and to the right object </summary>
         private void ValidateGraphEditor() {
             NodeGraphEditor graphEditor = NodeGraphEditor.GetEditor(graph, this);
-            if (this.graphEditor != graphEditor && graphEditor != null) {
+            if (this.graphEditor != graphEditor) {
                 this.graphEditor = graphEditor;
                 graphEditor.OnOpen();
             }
@@ -196,13 +187,12 @@ namespace XNodeEditor {
         }
 
         /// <summary>Open the provided graph in the NodeEditor</summary>
-        public static NodeEditorWindow Open(XNode.NodeGraph graph) {
-            if (!graph) return null;
+        public static void Open(XNode.NodeGraph graph) {
+            if (!graph) return;
 
             NodeEditorWindow w = GetWindow(typeof(NodeEditorWindow), false, "xNode", true) as NodeEditorWindow;
             w.wantsMouseMove = true;
             w.graph = graph;
-            return w;
         }
 
         /// <summary> Repaint all open NodeEditorWindows. </summary>
@@ -211,6 +201,15 @@ namespace XNodeEditor {
             for (int i = 0; i < windows.Length; i++) {
                 windows[i].Repaint();
             }
+        }
+
+        /// <summary>
+        /// Unity event that is called 10 times per second. 
+        /// </summary>
+        public void OnInspectorUpdate()
+        {
+            // We call this xNode framework to repaint all nodes
+            RepaintAll();
         }
     }
 }

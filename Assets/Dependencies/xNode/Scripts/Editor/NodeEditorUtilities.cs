@@ -18,9 +18,6 @@ namespace XNodeEditor {
         /// Saves Attribute from Type+Field for faster lookup. Resets on recompiles.
         private static Dictionary<Type, Dictionary<string, Dictionary<Type, Attribute>>> typeAttributes = new Dictionary<Type, Dictionary<string, Dictionary<Type, Attribute>>>();
 
-        /// Saves ordered PropertyAttribute from Type+Field for faster lookup. Resets on recompiles.
-        private static Dictionary<Type, Dictionary<string, List<PropertyAttribute>>> typeOrderedPropertyAttributes = new Dictionary<Type, Dictionary<string, List<PropertyAttribute>>>();
-
         public static bool GetAttrib<T>(Type classType, out T attribOut) where T : Attribute {
             object[] attribs = classType.GetCustomAttributes(typeof(T), false);
             return GetAttrib(attribs, out attribOut);
@@ -74,10 +71,8 @@ namespace XNodeEditor {
 
             Attribute attr;
             if (!typeTypes.TryGetValue(typeof(T), out attr)) {
-                if (GetAttrib<T>(classType, fieldName, out attribOut)) {
-                    typeTypes.Add(typeof(T), attribOut);
-                    return true;
-                } else typeTypes.Add(typeof(T), null);
+                if (GetAttrib<T>(classType, fieldName, out attribOut)) typeTypes.Add(typeof(T), attribOut);
+                else typeTypes.Add(typeof(T), null);
             }
 
             if (attr == null) {
@@ -87,24 +82,6 @@ namespace XNodeEditor {
 
             attribOut = attr as T;
             return true;
-        }
-
-        public static List<PropertyAttribute> GetCachedPropertyAttribs(Type classType, string fieldName) {
-            Dictionary<string, List<PropertyAttribute>> typeFields;
-            if (!typeOrderedPropertyAttributes.TryGetValue(classType, out typeFields)) {
-                typeFields = new Dictionary<string, List<PropertyAttribute>>();
-                typeOrderedPropertyAttributes.Add(classType, typeFields);
-            }
-
-            List<PropertyAttribute> typeAttributes;
-            if (!typeFields.TryGetValue(fieldName, out typeAttributes)) {
-                FieldInfo field = classType.GetFieldInfo(fieldName);
-                object[] attribs = field.GetCustomAttributes(typeof(PropertyAttribute), true);
-                typeAttributes = attribs.Cast<PropertyAttribute>().Reverse().ToList(); //Unity draws them in reverse
-                typeFields.Add(fieldName, typeAttributes);
-            }
-
-            return typeAttributes;
         }
 
         public static bool IsMac() {

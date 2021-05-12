@@ -8,9 +8,6 @@ using XNodeEditor;
 
 namespace InteractML.DataTypeNodes
 {
-    /// <summary>
-    /// Editor class drawing a IMLVector2 Feature - receiving a Vector2 or drawing editable Vector2 field 
-    /// </summary>
     [CustomNodeEditor(typeof(Vector2Node))]
     public class Vector2NodeEditor : IMLNodeEditor
     {
@@ -19,47 +16,88 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private Vector2Node m_Vector2Node;
 
-        /// <summary>
-        /// Initialise node specific interface values
-        /// </summary>
-        public override void OnCreate()
+        public override void OnHeaderGUI()
         {
-            // Get reference to the current node
             m_Vector2Node = (target as Vector2Node);
-
-            // Initialise node name
-            NodeName = "VECTOR2";
-
-            // Initialise node body height
-            m_BodyRect.height = 110;
-            nodeSpace = 110;
-
-            // Initialise input port labels
-            InputPortsNamesOverride = new Dictionary<string, string>();
-            base.InputPortsNamesOverride.Add("m_In", "Vector2\nData In");
-
-            // Initialise output port labels
-            OutputPortsNamesOverride = new Dictionary<string, string>();
-            base.OutputPortsNamesOverride.Add("m_Out", "Vector2\nData Out");
-
-            // Initialise node tooltips
-            base.nodeTips = m_Vector2Node.tooltips;
-
-            // Initialise axis labels
-            feature_labels = new string[2] { "x: ", "y: " };
-
+            NodeName = "LIVE VECTOR 2 DATA";
+            nodeSpace = 100;
+            base.OnHeaderGUI();
         }
 
-        /// <summary>
-        /// Draws node specific body fields
-        /// </summary>
+        public override void OnBodyGUI()
+        {
+            InputPortsNamesOverride = new Dictionary<string, string>();
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            base.InputPortsNamesOverride.Add("m_In", "Float\nData In");
+            base.OutputPortsNamesOverride.Add("m_Out", "Float\nData Out");
+            base.nodeTips = m_Vector2Node.tooltips;
+            m_BodyRect.height = 100;
+            base.OnBodyGUI();
+        }
+
         protected override void ShowBodyFields()
         {
-            // draws each feature in the node
-            DataTypeNodeEditorMethods.DrawFeatureOrEditableFields(this, m_Vector2Node, m_BodyRect);
+            DataInToggle(m_Vector2Node.ReceivingData, m_InnerBodyRect, m_BodyRect);
+        }
+
+        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(bodySpace);
+            // If something is connected to the input port show incoming data
+            if (m_Vector2Node.InputConnected)
+            {
+                m_Vector2Node.x_switch = EditorGUILayout.Toggle(m_Vector2Node.x_switch, style);
+                EditorGUILayout.LabelField("x: " + System.Math.Round(m_Vector2Node.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
+                GUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
+                m_Vector2Node.y_switch = EditorGUILayout.Toggle(m_Vector2Node.y_switch, style);
+                EditorGUILayout.LabelField("y: " + System.Math.Round(m_Vector2Node.FeatureValues.Values[1], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
+                GUILayout.EndHorizontal();
+
+            }
+            // If there is nothing connected to the input port show editable fields
+            else { 
+                m_Vector2Node.x_switch = EditorGUILayout.Toggle(m_Vector2Node.x_switch, style, GUILayout.MaxWidth(30));
+                EditorGUILayout.LabelField("x: ", m_NodeSkin.GetStyle("Node Body Label Axis"), GUILayout.MaxWidth(20));
+                m_Vector2Node.m_UserInput.x = EditorGUILayout.FloatField(m_Vector2Node.m_UserInput.x, GUILayout.MaxWidth(inputWidth));
+                GUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
+                m_Vector2Node.y_switch = EditorGUILayout.Toggle(m_Vector2Node.y_switch, style, GUILayout.MaxWidth(30));
+                EditorGUILayout.LabelField("y: ", m_NodeSkin.GetStyle("Node Body Label Axis"), GUILayout.MaxWidth(20));
+                m_Vector2Node.m_UserInput.y = EditorGUILayout.FloatField(m_Vector2Node.m_UserInput.y, GUILayout.MaxWidth(inputWidth));
+                GUILayout.EndHorizontal();
+
+            }
+
+
         }
 
 
+        /// <summary>
+        /// Display help button
+        /// </summary>
+        private void ShowHelpButton()
+        {
+            m_HelpRect.x = m_HelpRect.x + 20;
+            m_HelpRect.y = m_HelpRect.y + 10;
+            m_HelpRect.width = m_HelpRect.width - 30;
+
+            GUILayout.BeginArea(m_HelpRect);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("");
+            GUILayout.Button("Help", m_NodeSkin.GetStyle("Help Button"));
+            GUILayout.EndHorizontal();
+            GUILayout.EndArea();
+        }
     }
 }
 

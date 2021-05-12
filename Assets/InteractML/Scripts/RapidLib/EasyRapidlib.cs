@@ -431,7 +431,7 @@ namespace InteractML
                     break;
                 default:
                     throw new Exception("Error: Unkown learning type in RapidlibClass");
-                    //break;
+                    break;
             }
 
             return tempModel;

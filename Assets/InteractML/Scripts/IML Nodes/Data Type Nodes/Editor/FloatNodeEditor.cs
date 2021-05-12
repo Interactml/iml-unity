@@ -8,9 +8,6 @@ using XNodeEditor;
 
 namespace InteractML.DataTypeNodes
 {
-    /// <summary>
-    /// Editor class drawing a IMLFloat Feature - receiving a float or drawing editable float field 
-    /// </summary>
     [CustomNodeEditor(typeof(FloatNode))]
     public class FloatNodeEditor : IMLNodeEditor
     {
@@ -19,47 +16,53 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private FloatNode m_FloatNode;
 
-        /// <summary>
-        /// Initialise node specific interface labels and parameters
-        /// </summary>
-        public override void OnCreate()
+
+        public override void OnHeaderGUI()
         {
-            // Get reference to the current node
             m_FloatNode = (target as FloatNode);
-
-            // Initialise node name
-            NodeName = "FLOAT";
-
-            // Initialise node height
-            m_BodyRect.height = 80;
-            nodeSpace = 80;
-
-            // Initialise input port labels
-            InputPortsNamesOverride = new Dictionary<string, string>();
-            base.InputPortsNamesOverride.Add("m_In", "Float\nData In");
-
-            // Initialise output port labels
-            OutputPortsNamesOverride = new Dictionary<string, string>();
-            base.OutputPortsNamesOverride.Add("m_Out", "Float\nData Out");
-
-            // Initialise node tooltips
-            base.nodeTips = m_FloatNode.tooltips;
-
-            // Initialise axis labels
-            feature_labels = new string[1] { " " };
-
+            NodeName = "LIVE FLOAT DATA";
+            base.OnHeaderGUI();
         }
 
-        /// <summary>
-        /// Draws node specific body fields
-        /// </summary>
+        public override void OnBodyGUI()
+        {
+            InputPortsNamesOverride = new Dictionary<string, string>();
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            base.InputPortsNamesOverride.Add("m_In", "Float\nData In");
+            base.OutputPortsNamesOverride.Add("m_Out", "Float\nData Out");
+            base.nodeTips = m_FloatNode.tooltips;
+            m_BodyRect.height = 80;
+            base.OnBodyGUI();
+        }
+        
+
         protected override void ShowBodyFields()
         {
-            // draws each feature in the node
-            DataTypeNodeEditorMethods.DrawFeatureOrEditableFields(this, m_FloatNode, m_BodyRect);
+            DataInToggle(m_FloatNode.ReceivingData, m_InnerBodyRect, m_BodyRect);
         }
 
         
+        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(bodySpace);
+            // If something is connected to the input port show incoming data
+            if (m_FloatNode.InputConnected)
+            {
+                m_FloatNode.float_switch = EditorGUILayout.Toggle(m_FloatNode.float_switch, style, GUILayout.MaxWidth(dataWidth));
+                EditorGUILayout.LabelField("Float: " + System.Math.Round(m_FloatNode.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+            }
+            // If there is nothing connected to the input port show editable fields
+            else
+            {
+                m_FloatNode.float_switch = EditorGUILayout.Toggle(m_FloatNode.float_switch, style, GUILayout.MaxWidth(dataWidth));
+                EditorGUILayout.LabelField("Float: ", m_NodeSkin.GetStyle("Node Body Label"), GUILayout.MaxWidth(dataWidth));
+                GUILayout.Space(10);
+                m_FloatNode.m_UserInput = EditorGUILayout.FloatField(m_FloatNode.m_UserInput, GUILayout.MaxWidth(inputWidth));
+                
+            }
+            GUILayout.EndHorizontal();
+        }
 
     }
 }

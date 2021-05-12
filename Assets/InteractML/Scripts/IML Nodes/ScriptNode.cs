@@ -136,9 +136,9 @@ namespace InteractML
                 var fieldToUse = serializedFields[i];
 
                 // Check if the field is marked with the "SendToIMLController" attribute
-                SendToIMLGraph dataForIMLController = Attribute.GetCustomAttribute(fieldToUse, typeof(SendToIMLGraph)) as SendToIMLGraph;
+                SendToIMLController dataForIMLController = Attribute.GetCustomAttribute(fieldToUse, typeof(SendToIMLController)) as SendToIMLController;
                 // We check now if the field is marked with the "PullFromIMLController" attribute
-                PullFromIMLGraph dataFromIMLController = Attribute.GetCustomAttribute(fieldToUse, typeof(PullFromIMLGraph)) as PullFromIMLGraph;
+                PullFromIMLController dataFromIMLController = Attribute.GetCustomAttribute(fieldToUse, typeof(PullFromIMLController)) as PullFromIMLController;
                 // Define flags to identify attribute behaviour
                 bool isInputData = false, isOutputData = false;
                 // Update flags

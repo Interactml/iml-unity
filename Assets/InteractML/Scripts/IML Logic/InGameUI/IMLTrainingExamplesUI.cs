@@ -398,8 +398,9 @@ namespace InteractML
                         case IMLSpecifications.DataTypes.Vector4:
                             prefabClone = Instantiate(dataUIPrefabs[4], parent);
                             break;
-                        case IMLSpecifications.DataTypes.Array:
+                        case IMLSpecifications.DataTypes.SerialVector:
                             throw new System.Exception("Serial Vector not yet supported in in-game UI!");
+                            break;
                         default:
                             break;
                     }
@@ -417,6 +418,7 @@ namespace InteractML
                     else
                     {
                         throw new System.Exception("Error when reconfiguring data type on UI, a prefab was null!");
+                        return;
                     }
 
                     // Assign a listener to each input field if we are not protecting the data

@@ -26,33 +26,30 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private IMLInteger m_FeatureValues;
 
-        // Use this for initialization
-        public override void Initialize()
-        {
-            // initialise variables
-            PreviousFeatureValues = new IMLInteger();
-            UserInput = new IMLInteger();
+        public bool ReceivingData;
+        public bool InputConnected;
+        public int m_UserInput;
+        int receivedInt;
+        public bool int_switch = true;
+        float f;
+        int counter, count;
 
-            base.Initialize();
+        // Use this for initialization
+        protected override void Init()
+        {
+            counter = 0;
+            count = 5;
+            tooltips = IMLTooltipsSerialization.LoadTooltip("Int");
+            base.Init();
         }
 
         // Check that a feature connected is of the right type
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
-            // control what connections the input port accepts 
-            if (to.node == this)
-            {
-                // only allow 1 connection (but don't override the original - user must disconnect original input to connect a different one)
-                if (this.GetInputNodesConnected("m_In").Count > 1) { from.Disconnect(to); }
+            base.OnCreateConnection(from, to);
 
-                // if array check number of elements with number of features
-                DataTypeNodeMethods.CheckArraySizeAgainstFeatureValues(this, from, to);
-
-                // check incoming node type and port data type is accepted by input port
-                System.Type[] portTypesAccept = new System.Type[] { typeof(float), typeof(int), typeof(float[]) };
-                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML), typeof(MLSystem), typeof(ScriptNode) };
-                this.DisconnectPortAndNodeIfNONETypes(from, to, portTypesAccept, nodeTypesAccept);
-            }
+            // Make sure that the IFeatureIML connected is matching our type
+            this.DisconnectFeatureNotSameIMLDataType(from, to, IMLSpecifications.DataTypes.Integer);
 
         }
 
@@ -62,36 +59,40 @@ namespace InteractML.DataTypeNodes
         /// <returns></returns>
         protected override object Update()
         {
-            // update if node is receiving data
-            ReceivingData = DataTypeNodeMethods.IsReceivingData(this);
-
-            // update if node has input connected
-            InputConnected = DataTypeNodeMethods.IsInputConnected(this);
-
-            // if there is no input connected take input from the user
-            if (!InputConnected)
+            base.Update();
+            //check if receiving data
+            if (counter == count)
             {
-                // check if each toggle is off and set feature value to 0, return float array of updated feature values
-                ReceivedValue = DataTypeNodeMethods.CheckTogglesAndUpdateFeatures(this, UserInput.Values);
+                counter = 0;
+                if ((f == FeatureValues.Values[0]))
+                {
+                    ReceivingData = false;
+                }
+                else
+                {
+                    ReceivingData = true;
 
-                // update values in node
-                Value = (int)ReceivedValue[0];
+                }
+                f = FeatureValues.Values[0];
+            }
+
+            counter++;
+
+            //check if input connected
+            if (this.GetInputNodesConnected("m_In") == null)
+            {
+                InputConnected = false;
+                if (!int_switch) m_UserInput = 0;
+                Value = m_UserInput;
             }
             else
             {
-                // update node value based on input
+                InputConnected = true;
                 base.Update();
-
-                // convert input float to float array
-                ReceivedValue[0] = Value;
-
-                // check if each toggle is off and set feature value to 0, return float array of updated feature values
-                ReceivedValue = DataTypeNodeMethods.CheckTogglesAndUpdateFeatures(this, ReceivedValue);
-
-                // update values in node
-                Value = (int)ReceivedValue[0];
+                receivedInt = Value;
+                if (!int_switch) receivedInt = 0;
+                Value = receivedInt;
             }
-
             return this;
 
         }

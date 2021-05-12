@@ -19,18 +19,9 @@ namespace XNode {
             }
         }
 
-        public IO direction { 
-            get { return _direction; }
-            internal set { _direction = value; }
-        }
-        public Node.ConnectionType connectionType {
-            get { return _connectionType; }
-            internal set { _connectionType = value; }
-        }
-        public Node.TypeConstraint typeConstraint {
-            get { return _typeConstraint; }
-            internal set { _typeConstraint = value; }
-        }
+        public IO direction { get { return _direction; } }
+        public Node.ConnectionType connectionType { get { return _connectionType; } }
+        public Node.TypeConstraint typeConstraint { get { return _typeConstraint; } }
 
         /// <summary> Is this port connected to anytihng? </summary>
         public bool IsConnected { get { return connections.Count != 0; } }
@@ -208,10 +199,6 @@ namespace XNode {
             if (port == this) { Debug.LogWarning("Cannot connect port to self."); return; }
             if (IsConnectedTo(port)) { Debug.LogWarning("Port already connected. "); return; }
             if (direction == port.direction) { Debug.LogWarning("Cannot connect two " + (direction == IO.Input ? "input" : "output") + " connections"); return; }
-#if UNITY_EDITOR
-            UnityEditor.Undo.RecordObject(node, "Connect Port");
-            UnityEditor.Undo.RecordObject(port.node, "Connect Port");
-#endif
             if (port.connectionType == Node.ConnectionType.Override && port.ConnectionCount != 0) { port.ClearConnections(); }
             if (connectionType == Node.ConnectionType.Override && ConnectionCount != 0) { ClearConnections(); }
             connections.Add(new PortConnection(port));
@@ -272,11 +259,9 @@ namespace XNode {
             // Check input type constraints
             if (input.typeConstraint == XNode.Node.TypeConstraint.Inherited && !input.ValueType.IsAssignableFrom(output.ValueType)) return false;
             if (input.typeConstraint == XNode.Node.TypeConstraint.Strict && input.ValueType != output.ValueType) return false;
-            if (input.typeConstraint == XNode.Node.TypeConstraint.InheritedInverse && !output.ValueType.IsAssignableFrom(input.ValueType)) return false;
             // Check output type constraints
-            if (output.typeConstraint == XNode.Node.TypeConstraint.Inherited && !input.ValueType.IsAssignableFrom(output.ValueType)) return false;
-            if (output.typeConstraint == XNode.Node.TypeConstraint.Strict && input.ValueType != output.ValueType) return false;
-            if (output.typeConstraint == XNode.Node.TypeConstraint.InheritedInverse && !output.ValueType.IsAssignableFrom(input.ValueType)) return false;
+            if (output.typeConstraint == XNode.Node.TypeConstraint.Inherited && !output.ValueType.IsAssignableFrom(input.ValueType)) return false;
+            if (output.typeConstraint == XNode.Node.TypeConstraint.Strict && output.ValueType != input.ValueType) return false;
             // Success
             return true;
         }

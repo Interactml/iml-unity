@@ -8,9 +8,6 @@ using XNodeEditor;
 
 namespace InteractML.DataTypeNodes
 {
-    /// <summary>
-    /// Editor class drawing a IMLVector4 Feature - receiving a Vector4 or drawing editable Vector4 field 
-    /// </summary>
     [CustomNodeEditor(typeof(Vector4Node))]
     public class Vector4NodeEditor : IMLNodeEditor
     {
@@ -19,46 +16,151 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private Vector4Node m_Vector4Node;
 
-        /// <summary>
-        /// Initialise node specific interface values
-        /// </summary>
-        public override void OnCreate()
+        public override void OnHeaderGUI()
         {
-            // Get reference to the current node
             m_Vector4Node = (target as Vector4Node);
-
-            // Initialise node name
-            NodeName = "VECTOR4";
-
-            // Initialise node body height
-            m_BodyRect.height = 170;
-            nodeSpace = 170;
-
-            // Initialise input port labels
-            InputPortsNamesOverride = new Dictionary<string, string>();
-            base.InputPortsNamesOverride.Add("m_In", "Vector4\nData In");
-
-            // Initialise output port labels
-            OutputPortsNamesOverride = new Dictionary<string, string>();
-            base.OutputPortsNamesOverride.Add("m_Out", "Vector4\nData Out");
-
-            // Initialise node tooltips
-            base.nodeTips = m_Vector4Node.tooltips;
-
-            // Initialise axis labels
-            feature_labels = new string[4] { "x: ", "y: ", "z: ", "w: "};
+            NodeName = "LIVE VECTOR 4 DATA";
+            nodeSpace = 160;
+            base.OnHeaderGUI();
         }
 
-        /// <summary>
-        /// Draws node specific body fields
-        /// </summary>
+        public override void OnBodyGUI()
+        {
+            InputPortsNamesOverride = new Dictionary<string, string>();
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            base.InputPortsNamesOverride.Add("m_In", "Vector3\nData In");
+            base.OutputPortsNamesOverride.Add("m_Out", "Vector3\nData Out");
+            base.nodeTips = m_Vector4Node.tooltips;
+            m_BodyRect.height = 160;
+            base.OnBodyGUI();
+        }
+
         protected override void ShowBodyFields()
         {
-            // draws each feature in the node
-            DataTypeNodeEditorMethods.DrawFeatureOrEditableFields(this, m_Vector4Node, m_BodyRect);
+            DataInToggle(m_Vector4Node.ReceivingData, m_InnerBodyRect, m_BodyRect);
         }
 
+        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        {
+            // If something is connected to the input port show incoming data
+            if (m_Vector4Node.InputConnected)
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
+                m_Vector4Node.x_switch = EditorGUILayout.Toggle(m_Vector4Node.x_switch, style);
+                EditorGUILayout.LabelField("x: " + System.Math.Round(m_Vector4Node.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
+                GUILayout.EndHorizontal();
 
+                EditorGUILayout.Space();
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
+                m_Vector4Node.y_switch = EditorGUILayout.Toggle(m_Vector4Node.y_switch, style);
+                EditorGUILayout.LabelField("y: " + System.Math.Round(m_Vector4Node.FeatureValues.Values[1], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
+                GUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
+                m_Vector4Node.z_switch = EditorGUILayout.Toggle(m_Vector4Node.z_switch, style);
+                EditorGUILayout.LabelField("z: " + System.Math.Round(m_Vector4Node.FeatureValues.Values[2], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
+                GUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
+                m_Vector4Node.w_switch = EditorGUILayout.Toggle(m_Vector4Node.w_switch, style);
+                EditorGUILayout.LabelField("w: " + System.Math.Round(m_Vector4Node.FeatureValues.Values[3], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label Axis"));
+                GUILayout.EndHorizontal();
+
+            }
+            // If there is nothing connected to the input port show editable fields
+            else
+            {
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
+                m_Vector4Node.x_switch = EditorGUILayout.Toggle(m_Vector4Node.x_switch, style, GUILayout.MaxWidth(40));
+                EditorGUILayout.LabelField("x: ", m_NodeSkin.GetStyle("Node Body Label Axis"), GUILayout.MaxWidth(20));
+                m_Vector4Node.m_UserInput.x = EditorGUILayout.FloatField(m_Vector4Node.m_UserInput.x, GUILayout.MaxWidth(60));
+                GUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
+                m_Vector4Node.y_switch = EditorGUILayout.Toggle(m_Vector4Node.y_switch, style, GUILayout.MaxWidth(40));
+                EditorGUILayout.LabelField("y: ", m_NodeSkin.GetStyle("Node Body Label Axis"), GUILayout.MaxWidth(20));
+                m_Vector4Node.m_UserInput.y = EditorGUILayout.FloatField(m_Vector4Node.m_UserInput.y, GUILayout.MaxWidth(60));
+                GUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
+                m_Vector4Node.z_switch = EditorGUILayout.Toggle(m_Vector4Node.z_switch, style, GUILayout.MaxWidth(40));
+                EditorGUILayout.LabelField("z: ", m_NodeSkin.GetStyle("Node Body Label Axis"), GUILayout.MaxWidth(20));
+                m_Vector4Node.m_UserInput.z = EditorGUILayout.FloatField(m_Vector4Node.m_UserInput.z, GUILayout.MaxWidth(60));
+                GUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(bodySpace);
+                m_Vector4Node.w_switch = EditorGUILayout.Toggle(m_Vector4Node.w_switch, style, GUILayout.MaxWidth(40));
+                EditorGUILayout.LabelField("w: ", m_NodeSkin.GetStyle("Node Body Label Axis"), GUILayout.MaxWidth(20));
+                m_Vector4Node.m_UserInput.w = EditorGUILayout.FloatField(m_Vector4Node.m_UserInput.w, GUILayout.MaxWidth(60));
+                GUILayout.EndHorizontal();
+
+            }
+
+            
+
+        }
+
+        /// <summary>
+        /// Show the serial value fields with attribute name
+        /// </summary>
+        //private void ShowVector4Values()
+        //{
+        //    m_InnerBodyRect.x = m_BodyRect.x + 20;
+        //    m_InnerBodyRect.y = m_BodyRect.y + 20;
+        //    m_InnerBodyRect.width = m_BodyRect.width - 20;
+        //    m_InnerBodyRect.height = m_BodyRect.height - 20;
+
+        //    GUILayout.BeginArea(m_InnerBodyRect);
+        //    EditorGUILayout.Space();
+        //    EditorGUILayout.LabelField("Name: " + m_Vector4Node.ValueName, m_NodeSkin.GetStyle("Node Body Label"));
+        //    EditorGUILayout.Space();
+        //    EditorGUILayout.LabelField("x: " + System.Math.Round(m_Vector4Node.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+        //    EditorGUILayout.Space();
+        //    EditorGUILayout.LabelField("y: " + System.Math.Round(m_Vector4Node.FeatureValues.Values[1], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+        //    EditorGUILayout.Space();
+        //    EditorGUILayout.LabelField("z: " + System.Math.Round(m_Vector4Node.FeatureValues.Values[2], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+        //    EditorGUILayout.Space();
+        //    EditorGUILayout.LabelField("w: " + System.Math.Round(m_Vector4Node.FeatureValues.Values[3], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+
+        //    GUILayout.EndArea();
+
+        //}
+
+        /// <summary>
+        /// Display help button
+        /// </summary>
+        private void ShowHelpButton()
+        {
+            m_HelpRect.x = m_HelpRect.x + 20;
+            m_HelpRect.y = m_HelpRect.y + 10;
+            m_HelpRect.width = m_HelpRect.width - 30;
+
+            GUILayout.BeginArea(m_HelpRect);
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("");
+            GUILayout.Button("Help", m_NodeSkin.GetStyle("Help Button"));
+            GUILayout.EndHorizontal();
+            GUILayout.EndArea();
+        }
     }
 }
 

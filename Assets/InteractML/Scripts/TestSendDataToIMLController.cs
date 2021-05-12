@@ -7,7 +7,7 @@ public class TestSendDataToIMLController : MonoBehaviour
 {
     public IMLComponent IMLcomponentToSendData;
 
-    [SendToIMLGraph]
+    [SendToIMLController]
     public float floatValueToSend;
 
     public double[][] valuesPulled;

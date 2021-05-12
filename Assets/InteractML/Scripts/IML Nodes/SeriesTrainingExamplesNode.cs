@@ -26,12 +26,33 @@ namespace InteractML
         #region Unity Messages
         #endregion
 
-        #region Protected Methods
+        #region Public Methods
 
+
+        protected override void Init()
+        {
+            base.Init();
+
+            Initialize();
+
+            tooltips = IMLTooltipsSerialization.LoadTooltip("SeriesTrainingExamples");
+        }
+
+        /// <summary>
+        /// Clears all the training examples stored in the node
+        /// </summary>
+        public override void ClearTrainingExamples()
+        {
+            // Clear series in node
+            TrainingSeriesCollection.Clear();
+            SaveDataToDisk();
+            //UpdateOutputsList();
+            //UpdateTargeValues();
+        }
 
         #endregion
 
-        
+        #region Protected Methods
 
         /// <summary>
         /// Sets Data Collection Type 
@@ -41,15 +62,36 @@ namespace InteractML
             ModeOfCollection = CollectionMode.Series;
         }
 
-        #region Public Methods
         /// <summary>
-        /// Save IML Training Data to Disk 
+        /// Sets the collect data flag to false to stop collecting data
         /// </summary>
+        protected override void StopCollectingData()
+        {
+            m_CollectData = false;
+
+            // We add our series to the series collection
+            TrainingSeriesCollection.Add(new IMLTrainingSeries(m_SingleSeries));
+            m_SingleSeries.ClearSerie();
+
+            // Save data to disk
+            SaveDataToDisk();
+        }
+
+
         public override void SaveDataToDisk()
         {
-            IMLDataSerialization.SaveTrainingSeriesCollectionToDisk(m_TrainingSeriesCollection, GetJSONFileName());
+            IMLDataSerialization.SaveTrainingSeriesCollectionToDisk(TrainingSeriesCollection, GetJSONFileName());
         }
-        
+
+        public override void LoadDataFromDisk()
+        {
+            // Load IML Series Collection from disk
+            var auxTrainingSeriesCollection = IMLDataSerialization.LoadTrainingSeriesCollectionFromDisk(GetJSONFileName());
+            if (!Lists.IsNullOrEmpty(ref auxTrainingSeriesCollection))
+            {
+                TrainingSeriesCollection = auxTrainingSeriesCollection;
+            }
+        }
 
         #endregion
 

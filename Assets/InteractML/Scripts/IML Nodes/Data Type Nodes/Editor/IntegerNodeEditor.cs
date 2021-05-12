@@ -8,9 +8,6 @@ using XNodeEditor;
 
 namespace InteractML.DataTypeNodes
 {
-    /// <summary>
-    /// Editor class drawing a IMLInteger Feature - receiving an integer or drawing editable integer field 
-    /// </summary>
     [CustomNodeEditor(typeof(IntegerNode))]
     public class IntegerNodeEditor : IMLNodeEditor
     {
@@ -19,43 +16,50 @@ namespace InteractML.DataTypeNodes
         /// </summary>
         private IntegerNode m_IntegerNode;
 
-        /// <summary>
-        /// Initialise node specific interface values
-        /// </summary>
-        public override void OnCreate()
+        public override void OnHeaderGUI()
         {
             // Get reference to the current node
             m_IntegerNode = (target as IntegerNode);
-
-            // Initialise node name
-            NodeName = "INTEGER";
-
-            // Initialise node body height
-            m_BodyRect.height = 80;
-            nodeSpace = 80;
-
-            // Initialise input port labels
-            InputPortsNamesOverride = new Dictionary<string, string>();
-            base.InputPortsNamesOverride.Add("m_In", "Integer\nData In");
-
-            // Initialise output port labels
-            OutputPortsNamesOverride = new Dictionary<string, string>();
-            base.OutputPortsNamesOverride.Add("m_Out", "Integer\nData Out");
-
-            // Initialise node tooltips
-            base.nodeTips = m_IntegerNode.tooltips;
-            
-            // Initialise axis labels
-            feature_labels = new string[1] { " " };
+            NodeName = "LIVE INT DATA";
+            base.OnHeaderGUI();
         }
 
-        /// <summary>
-        /// Draws node specific body fields
-        /// </summary>
+        public override void OnBodyGUI()
+        {
+            InputPortsNamesOverride = new Dictionary<string, string>();
+            OutputPortsNamesOverride = new Dictionary<string, string>();
+            base.InputPortsNamesOverride.Add("m_In", "Int\nData In");
+            base.OutputPortsNamesOverride.Add("m_Out", "Int\nData Out");
+            base.nodeTips = m_IntegerNode.tooltips;
+            m_BodyRect.height = 80;
+            base.OnBodyGUI();
+
+        }
+
         protected override void ShowBodyFields()
         {
-            // draws each feature in the node
-            DataTypeNodeEditorMethods.DrawFeatureOrEditableFields(this, m_IntegerNode, m_BodyRect);
+            DataInToggle(m_IntegerNode.ReceivingData, m_InnerBodyRect, m_BodyRect);
+        }
+        protected override void DrawPositionValueTogglesAndLabels(GUIStyle style)
+        {
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(bodySpace);
+            // If something is connected to the input port show incoming data
+            if (m_IntegerNode.InputConnected)
+            {
+                m_IntegerNode.int_switch = EditorGUILayout.Toggle(m_IntegerNode.int_switch, style);
+                EditorGUILayout.LabelField("Int: " + System.Math.Round(m_IntegerNode.FeatureValues.Values[0], 3).ToString(), m_NodeSkin.GetStyle("Node Body Label"));
+                
+            }
+            // If there is nothing connected to the input port show editable fields
+            else
+            {
+                m_IntegerNode.int_switch = EditorGUILayout.Toggle(m_IntegerNode.int_switch, style, GUILayout.MaxWidth(dataWidth));
+                EditorGUILayout.LabelField("Int: ", m_NodeSkin.GetStyle("Node Body Label"), GUILayout.MaxWidth(dataWidth));
+                m_IntegerNode.m_UserInput = EditorGUILayout.IntField(m_IntegerNode.m_UserInput, GUILayout.MaxWidth(inputWidth));
+                
+            }
+            GUILayout.EndHorizontal();
         }
 
     }

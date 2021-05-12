@@ -26,7 +26,7 @@ namespace InteractML
             
             // Attempt to get name of script to change node name
             if (m_SriptNode.GetScript() != null && string.IsNullOrEmpty(NodeName))
-                NodeName = $"{m_SriptNode.GetScript().GetType().Name} (Script)";
+                NodeName = $"{m_SriptNode.GetScript().GetType().ToString()} (Script)";
 
             base.OnHeaderGUI();
         }

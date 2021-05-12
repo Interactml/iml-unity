@@ -1,0 +1,23 @@
+{
+  "HelpTooltip": "Calculates the difference between the first input and
+the second input and outputs this value.
+
+First Input port and Second Input port connect to a
+Feature Extractor or a Datatype node. Both inputs
+must be of the same type. Live Data Out port
+connects to a DataType, Velocity, Record Examples
+and Machine Learning System nodes.",
+  "PortTooltip": [ "Connect a Feature Extract or Data Type node", "Coonect to Data In port. Outputs a float value." ],
+  "BodyTooltip": {
+    "tips": [
+      "Float value of distance between inputs",
+    ],
+    "error": [
+      "error"
+    ]
+  },
+  "BottomError": [ "bottom error" ]
+}
+
+
+

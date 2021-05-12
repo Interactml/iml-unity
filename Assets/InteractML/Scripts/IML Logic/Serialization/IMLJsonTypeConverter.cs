@@ -93,8 +93,8 @@ public class IMLJsonTypeConverter : JsonConverter
                 return JsonConvert.DeserializeObject<IMLVector3>(jo.ToString(), SpecifiedSubclassConversion);
             case (int)IMLSpecifications.DataTypes.Vector4:
                 return JsonConvert.DeserializeObject<IMLVector4>(jo.ToString(), SpecifiedSubclassConversion);
-            case (int)IMLSpecifications.DataTypes.Array:
-                return JsonConvert.DeserializeObject<IMLArray>(jo.ToString(), SpecifiedSubclassConversion);
+            case (int)IMLSpecifications.DataTypes.SerialVector:
+                return JsonConvert.DeserializeObject<IMLSerialVector>(jo.ToString(), SpecifiedSubclassConversion);
             default:
                 throw new Exception();
         }

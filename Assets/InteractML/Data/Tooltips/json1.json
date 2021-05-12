@@ -1,0 +1,23 @@
+{
+  "GameObject": [
+    {
+      "HelpTooltip": "help tooltip",
+      "PortTooltip": [
+        "port tooltip 0"
+      ],
+      "BodyTooltip": {
+        "tips": [
+          "tip 1",
+          "tip 2"
+        ],
+        "error": [
+          "error 0",
+          "error 1"
+        ]
+      },
+      "BottomError": [
+        "bottom error"
+      ]
+    }
+  ]
+}

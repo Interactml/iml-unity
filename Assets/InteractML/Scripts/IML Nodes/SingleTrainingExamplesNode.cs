@@ -15,6 +15,47 @@ namespace InteractML
     public class SingleTrainingExamplesNode : TrainingExamplesNode
     {
 
+        #region Variables
+
+        #endregion
+
+        #region XNode Messages
+
+
+
+        #endregion
+
+        #region Unity Messages
+
+
+
+        #endregion
+
+        #region Public Methods
+        protected override void Init()
+        {
+            base.Init();
+
+            Initialize();
+
+            TrainingTips = IMLTooltipsSerialization.LoadTooltip("SingleTrainingExamples");
+            tooltips = IMLTooltipsSerialization.LoadTooltip("SingleTrainingExamples");
+        }
+
+        /// <summary>
+        /// Clears all the training examples stored in the node
+        /// </summary>
+        public void ClearTrainingExamples()
+        {
+            // Clear examples in node
+            TrainingExamplesVector.Clear();
+            SaveDataToDisk();
+            // Make sure the outputs are populated properly after clearing them out
+            //UpdateOutputsList();
+            //UpdateTargeValues();
+        }
+
+        #endregion
 
         #region Protected Methods
 
@@ -25,16 +66,31 @@ namespace InteractML
         {
             ModeOfCollection = CollectionMode.SingleExample;
         }
-        #endregion
-        #region Public Methods
         /// <summary>
-        /// Save IML Training Data to Disk 
+        /// Sets the collect data flag to false to stop collecting data
         /// </summary>
+        protected override void StopCollectingData()
+        {
+            m_CollectData = false;
+            SaveDataToDisk();
+        }
+
+
         public override void SaveDataToDisk()
         {
-           IMLDataSerialization.SaveTrainingSetToDisk(m_TrainingExamplesVector, GetJSONFileName());
+           IMLDataSerialization.SaveTrainingSetToDisk(TrainingExamplesVector, GetJSONFileName());
         }
-        
+
+        public override void LoadDataFromDisk()
+        {
+            //Load training data from disk
+            var auxTrainingExamplesVector = IMLDataSerialization.LoadTrainingSetFromDisk(GetJSONFileName());
+            if (!Lists.IsNullOrEmpty(ref auxTrainingExamplesVector))
+            {
+                TrainingExamplesVector = auxTrainingExamplesVector;
+                //Debug.Log("Training Examples Vector loaded!");
+            }
+        }
 
         #endregion
 

@@ -19,7 +19,7 @@ namespace InteractML
         /// <summary>
         /// Rects for node layout
         /// </summary>
-       // Rect m_BodyRect;
+        Rect m_BodyRect;
 
 
         Vector2 scrollWindow;
@@ -42,13 +42,11 @@ namespace InteractML
             // Set node width
             NodeWidth = 200;
 
-            if (Event.current.type == EventType.Layout)
-            {
-                // Draw header background Rect
-                GUI.DrawTexture(HeaderRect, NodeColor);
-                // Draw line below header
-                GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#F6C46F"));
-            }
+            // Draw header background Rect
+            GUI.DrawTexture(HeaderRect, NodeColor);
+
+            // Draw line below header
+            GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#F6C46F"));
 
             //Display Node name
             GUILayout.BeginArea(HeaderRect);
@@ -68,10 +66,8 @@ namespace InteractML
             m_BodyRect.y = HeaderRect.height;
             m_BodyRect.width = NodeWidth - 10;
             m_BodyRect.height = 30 + (dynamicSize * 1.3f);
-            if (Event.current.type == EventType.Layout)
-            {
-                GUI.DrawTexture(m_BodyRect, NodeColor);
-            }
+            GUI.DrawTexture(m_BodyRect, NodeColor);
+
             ShowTextNote();
         }
 

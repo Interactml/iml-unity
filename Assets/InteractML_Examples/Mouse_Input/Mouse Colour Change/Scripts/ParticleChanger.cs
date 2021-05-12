@@ -9,7 +9,7 @@ public class ParticleChanger : MonoBehaviour
     /// The IML component from where we are getting the outputs
     /// </summary>
     [SerializeField]
-    public IMLComponent m_MLComponent;
+    private IMLComponent m_MLComponent;
 
     ParticleSystem ps;
 

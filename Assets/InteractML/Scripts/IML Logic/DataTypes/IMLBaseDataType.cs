@@ -19,29 +19,6 @@ namespace InteractML
 
         public abstract IMLSpecifications.DataTypes DataType { get; }
 
-        /// <summary>
-        /// Returns an instance of an IMLDataType based on the type passed in
-        /// </summary>
-        /// <param name="type"></param>
-        public static IMLBaseDataType GetDataTypeInstance (System.Type type)
-        {
-            if (type == typeof(float))
-                return new IMLFloat();
-            else if (type == typeof(int))
-                return new IMLInteger();
-            else if (type == typeof(Vector2))
-                return new IMLVector2();
-            else if (type == typeof(Vector3))
-                return new IMLVector3();
-            else if (type == typeof(Vector4))
-                return new IMLVector4();
-            else if (type == typeof(bool))
-                return new IMLBoolean();
-            else
-                return null; // not implement datatype is null
-
-        }
-
     }
 
 }
