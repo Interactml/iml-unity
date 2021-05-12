@@ -1589,7 +1589,8 @@ namespace InteractML
                 {
                     if (controller == null)
                         m_CustomControllerList.Remove(controller);
-                    controller.UpdateLogic();
+                    else
+                     controller.UpdateLogic();
                 }
             }
 
