@@ -306,8 +306,8 @@ namespace InteractML
                 // If it is not an interface...
                 else
                 {
-                    // Compare FROM node type equality to current type
-                    equals = from.node.GetType().Equals(typesAccepted[i]);
+                    // Compare FROM node type equality to current type (including inheritance)
+                    equals = (from.node.GetType().Equals(typesAccepted[i]) || from.node.GetType().IsSubclassOf(typesAccepted[i]) );                                            
                 }
 
                 if (equals)
@@ -370,7 +370,7 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Disconnects if NONE of the FROM port or node don't meet type requirements
+        /// Disconnects if NONE (relaxed) of the FROM port or node don't meet type requirements. All type checks fail, then disconnect
         /// </summary>
         /// <param name="node"></param>
         /// <param name="from"></param>
@@ -411,7 +411,7 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Disconnects if ANY of the FROM port or node don't meet type requirements
+        /// Disconnects if ANY (strict) of the FROM port or node don't meet type requirements. One type check fails, then disconnect
         /// </summary>
         /// <param name="node"></param>
         /// <param name="from"></param>
@@ -438,17 +438,47 @@ namespace InteractML
             else
                 equalNodeType = CheckNodeEqualTypes(node, from, to, typesNode);
             
-            // If any of them is true, DO disconnect
-            if (equalPorts || equalNodeType)
+            // If all of them are true, DON'T disconnect
+            if (equalPorts && equalNodeType)
             {
-                from.Disconnect(to);
                 return true;
             }
-            // If all of them are false, DON'T disconnect
+            // If any of them is false, DO disconnect
             else
             {
+                from.Disconnect(to);
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Check if a nodeport exists and if not creates it
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="portFieldName"></param>
+        /// <param name="fieldType"></param>
+        /// <param name="portIOType"></param>
+        /// <param name="portConnectionType"></param>
+        /// <param name="portTypeConstraint"></param>
+        /// <returns></returns>
+        public static NodePort GetOrCreateDynamicPort(this Node node, string portFieldName, Type fieldType, NodePort.IO portIOType, Node.ConnectionType portConnectionType = Node.ConnectionType.Multiple, Node.TypeConstraint portTypeConstraint = Node.TypeConstraint.None)
+        {
+            // Check if nodeport exists
+            NodePort auxPort = node.GetPort(portFieldName);
+            // If not, create input or ouput depending on option
+            if (auxPort == null)
+            {
+                if (portIOType == NodePort.IO.Input)
+                {
+                    auxPort = node.AddDynamicInput(fieldType, portConnectionType, portTypeConstraint, portFieldName);
+                }
+                else if (portIOType == NodePort.IO.Output)
+                {
+                    auxPort = node.AddDynamicOutput(fieldType, portConnectionType, portTypeConstraint, portFieldName);
+                }
+            }
+            // Return nodeport
+            return auxPort;
         }
     }
 }

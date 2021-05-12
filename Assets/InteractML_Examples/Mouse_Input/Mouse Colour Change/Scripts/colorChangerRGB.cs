@@ -8,22 +8,19 @@ using InteractML;
 /// </summary>
 public class colorChangerRGB : MonoBehaviour
 {
-    Renderer renderer;
+    Renderer m_Renderer;
 
     private Color regressionColor;
 
     // IML values regression
-    [PullFromIMLController]
-    public float SetR;
-    [PullFromIMLController]
-    public float SetG;
-    [PullFromIMLController]
-    public float SetB;
+    [PullFromIMLGraph, Range(0, 1)]
+    public Vector3 RGBColour;
+
 
     // Start is called before the first frame update
     void Start()
     {
-        renderer = GetComponent<Renderer>(); // grab the renderer component
+        m_Renderer = GetComponent<Renderer>(); // grab the renderer component
 
         if (regressionColor == null)
             new Color();
@@ -33,11 +30,11 @@ public class colorChangerRGB : MonoBehaviour
     void Update()
     {
         // Get the values from the iml controller
-        regressionColor.r = SetR;
-        regressionColor.g = SetG;
-        regressionColor.b = SetB;
+        regressionColor.r = RGBColour.x;
+        regressionColor.g = RGBColour.y;
+        regressionColor.b = RGBColour.z;
 
-        renderer.material.SetColor("_Color", regressionColor);
+        m_Renderer.material.SetColor("_Color", regressionColor);
         
     }
 }

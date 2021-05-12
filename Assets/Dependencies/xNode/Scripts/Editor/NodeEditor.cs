@@ -21,16 +21,8 @@ namespace XNodeEditor {
         public readonly static Dictionary<XNode.NodePort, Vector2> portPositions = new Dictionary<XNode.NodePort, Vector2>();
 
 #if ODIN_INSPECTOR
-        internal static bool inNodeEditor = false;
+        protected internal static bool inNodeEditor = false;
 #endif
-
-        // Label width for this node
-        public float LabelWidth = 84;
-
-	/// <summary>
-        /// COLOR FOR DEV PURPOSES ONLY
-        /// </summary>
-        public Color customNodeColor;
 
         public virtual void OnHeaderGUI() {
             GUILayout.Label(target.name, NodeEditorResources.styles.nodeHeader, GUILayout.Height(30));
@@ -50,7 +42,7 @@ namespace XNodeEditor {
 
 #if ODIN_INSPECTOR
             InspectorUtilities.BeginDrawPropertyTree(objectTree, true);
-            GUIHelper.PushLabelWidth(LabelWidth);
+            GUIHelper.PushLabelWidth(84);
             objectTree.Draw(true);
             InspectorUtilities.EndDrawPropertyTree(objectTree);
             GUIHelper.PopLabelWidth();
@@ -59,7 +51,6 @@ namespace XNodeEditor {
             // Iterate through serialized properties and draw them like the Inspector (But with ports)
             SerializedProperty iterator = serializedObject.GetIterator();
             bool enterChildren = true;
-            EditorGUIUtility.labelWidth = LabelWidth;
             while (iterator.NextVisible(enterChildren)) {
                 enterChildren = false;
                 if (excludes.Contains(iterator.name)) continue;
@@ -76,7 +67,7 @@ namespace XNodeEditor {
             serializedObject.ApplyModifiedProperties();
 
 #if ODIN_INSPECTOR
-            // Call repaint so that the graph window elements respond properly to layout changes coming from Odin    
+            // Call repaint so that the graph window elements respond properly to layout changes coming from Odin
             if (GUIHelper.RepaintRequested) {
                 GUIHelper.ClearRepaintRequest();
                 window.Repaint();
@@ -86,14 +77,6 @@ namespace XNodeEditor {
 #if ODIN_INSPECTOR
             inNodeEditor = false;
 #endif
-
-            // CODE TO CHANGE NODE COLOR [ONLY DEV MODE]
-            if (target.DevMode)
-            {
-                customNodeColor = target.CustomColor;
-                customNodeColor = EditorGUILayout.ColorField(customNodeColor);
-                target.CustomColor = customNodeColor;
-            }
         }
 
         public virtual int GetWidth() {
@@ -117,19 +100,28 @@ namespace XNodeEditor {
             return NodeEditorResources.styles.nodeBody;
         }
 
+        public virtual GUIStyle GetBodyHighlightStyle() {
+            return NodeEditorResources.styles.nodeHighlight;
+        }
+
         /// <summary> Add items for the context menu when right-clicking this node. Override to add custom menu items. </summary>
         public virtual void AddContextMenuItems(GenericMenu menu) {
+            bool canRemove = true;
             // Actions if only one node is selected
             if (Selection.objects.Length == 1 && Selection.activeObject is XNode.Node) {
                 XNode.Node node = Selection.activeObject as XNode.Node;
                 menu.AddItem(new GUIContent("Move To Top"), false, () => NodeEditorWindow.current.MoveNodeToTop(node));
                 menu.AddItem(new GUIContent("Rename"), false, NodeEditorWindow.current.RenameSelectedNode);
+
+                canRemove = NodeGraphEditor.GetEditor(node.graph, NodeEditorWindow.current).CanRemove(node);
             }
 
             // Add actions to any number of selected nodes
             menu.AddItem(new GUIContent("Copy"), false, NodeEditorWindow.current.CopySelectedNodes);
             menu.AddItem(new GUIContent("Duplicate"), false, NodeEditorWindow.current.DuplicateSelectedNodes);
-            menu.AddItem(new GUIContent("Remove"), false, NodeEditorWindow.current.RemoveSelectedNodes);
+
+            if (canRemove) menu.AddItem(new GUIContent("Remove"), false, NodeEditorWindow.current.RemoveSelectedNodes);
+            else menu.AddItem(new GUIContent("Remove"), false, null);
 
             // Custom sctions if only one node is selected
             if (Selection.objects.Length == 1 && Selection.activeObject is XNode.Node) {
@@ -142,8 +134,12 @@ namespace XNodeEditor {
         public void Rename(string newName) {
             if (newName == null || newName.Trim() == "") newName = NodeEditorUtilities.NodeDefaultName(target.GetType());
             target.name = newName;
+            OnRename();
             AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(target));
         }
+
+        /// <summary> Called after this node's name has changed. </summary>
+        public virtual void OnRename() { }
 
         [AttributeUsage(AttributeTargets.Class)]
         public class CustomNodeEditorAttribute : Attribute,

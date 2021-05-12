@@ -8,16 +8,16 @@ using InteractML;
 /// </summary>
 public class colorChangerHSV : MonoBehaviour
 {
-    Renderer renderer;
+    Renderer m_Renderer;
     private Color regressionColor;
     // IML values regression
-    [PullFromIMLController]
+    [PullFromIMLGraph]
     public float H, S, V;
 
     // Start is called before the first frame update
     void Start()
     {
-        renderer = GetComponent<Renderer>(); // grab the renderer component
+        m_Renderer = GetComponent<Renderer>(); // grab the renderer component
         if (regressionColor == null)
             new Color();
         S = 0.5f;
@@ -37,6 +37,6 @@ public class colorChangerHSV : MonoBehaviour
         }
         // Get the values from the iml controller
         regressionColor = Color.HSVToRGB(H, S, V);
-        renderer.material.SetColor("_Color", regressionColor);
+        m_Renderer.material.SetColor("_Color", regressionColor);
     }
 }

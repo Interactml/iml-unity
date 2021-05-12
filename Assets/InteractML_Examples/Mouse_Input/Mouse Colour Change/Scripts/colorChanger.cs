@@ -5,14 +5,16 @@ using InteractML;
 
 public class colorChanger : MonoBehaviour
 {
+    /// <summary>
+    /// The IML component from where we are getting the outputs
+    /// </summary>
+    [SerializeField]
+    private IMLComponent m_MLComponent;
+
     Renderer renderer;
     Color[] colors;
     float transitionTime = 5f;
     float transitionRate = 0;
-
-    // IML values classification
-    [PullFromIMLController]
-    public int SetAbsoluteColour;
 
     // Start is called before the first frame update
     void Start()
@@ -29,36 +31,40 @@ public class colorChanger : MonoBehaviour
 
     void Update()
     {
-        // Depending on the value from IML Controller, we have a different predefined colour
-        switch (SetAbsoluteColour)
+        if (m_MLComponent)
         {
-            case 1:
-                /*while (transitionRate < 1) {
+            if (m_MLComponent.IMLControllerOutputs.Count > 0)
+            {
+                switch (m_MLComponent.IMLControllerOutputs[0][0])
+                {
+                    case 1:
+    /*                    while (transitionRate < 1) {
 
-                    //this next line is how we change our material color property. We Lerp between the current color and newColor
+                            //this next line is how we change our material color property. We Lerp between the current color and newColor
 
-                    renderer.material.SetColor("_Color", Color.Lerp(renderer.material.color, newColor, Time.deltaTime * transitionRate));
+                            renderer.material.SetColor("_Color", Color.Lerp(renderer.material.color, newColor, Time.deltaTime * transitionRate));
 
-                    transitionRate += Time.deltaTime / transitionTime; // Increment transitionRate over the length of transitionTime
+                            transitionRate += Time.deltaTime / transitionTime; // Increment transitionRate over the length of transitionTime
 
-                    yield return null; // wait for a frame then loop again
+                            yield return null; // wait for a frame then loop again
 
-                }
+                        }
 
-                yield return null; // wait for a frame then loop again
+                        yield return null; // wait for a frame then loop again
 
-        } */
+                } */
                 renderer.material.SetColor("_Color", colors[1]);
-                break;
-            case 2:
-                renderer.material.SetColor("_Color", colors[2]);
-                break;
-            case 3:
-                renderer.material.SetColor("_Color", colors[0]);
-                break;
-            default:
-                break;
+                        break;
+                    case 2:
+                        renderer.material.SetColor("_Color", colors[2]);
+                        break;
+                    case 3:
+                        renderer.material.SetColor("_Color", colors[0]);
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
-       
     }
 }

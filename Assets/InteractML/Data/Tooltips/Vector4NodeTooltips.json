@@ -1,0 +1,16 @@
+{
+  "HelpTooltip": "\n ABOUT \n Extracts and Outputs a Vectors. The displayed data is either the live value when a Vector4 is connected to the input port, or when nothing is connected the display shows an editable field to output a Vector4 \n",
+  "PortTooltip": [ "Connect a Vector4", "Outputs a Vector4" ],
+  "BodyTooltip": {
+    "tips": [
+      "x, y, z and w values: turn on/off using the toggle, flashes when detecting input",
+    ],
+    "error": [
+      "error"
+    ]
+  },
+  "BottomError": [ "bottom error" ]
+}
+
+
+

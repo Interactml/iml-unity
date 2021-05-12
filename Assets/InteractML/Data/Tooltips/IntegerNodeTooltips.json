@@ -1,0 +1,20 @@
+{
+  "HelpTooltip": "\n ABOUT \n Extracts and Outputs a Integer value. The displayed data is either the live value when a Integer is connected to the input port, or when nothing is connected the display shows an editable field to output a Integer \n",
+  "PortTooltip": [ "Connect a Integer", "Outputs a Integer" ],
+  "BodyTooltip": {
+    "tips": [
+      "Integer value: turn on/off using the toggle, flashes when detecting input"
+    ],
+    "error": [
+      "error"
+    ]
+  },
+  "BottomError": [ "bottom error" ]
+}
+
+
+
+
+
+
+

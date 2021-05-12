@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78b2425a2284af743826c689403a4924, type: 3}
+  m_Name: ColorShartSlot
+  m_EditorClassIdentifier: 
+  m_functionInfo: "// Made with Amplify Shader Editor\n// Available at the Unity Asset
+    Store - http://u3d.as/y3X \n/*ASEBEGIN\nVersion=15301\n179;678;1666;523;2207.656;674.4197;2.07272;True;False\nNode;AmplifyShaderEditor.SimpleDivideOpNode;20;-565.8304,-530.5086;Float;False;2;0;FLOAT;1;False;1;FLOAT;4;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleSubtractOpNode;19;-802.3792,-519.5356;Float;False;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0\nNode;AmplifyShaderEditor.StepOpNode;21;-241.4012,-705.4393;Float;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.StepOpNode;5;-248.5329,-461.722;Float;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;13;-15.79412,-465.8131;Float;True;2;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;24;324.6066,-590.1711;Float;True;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;7;-998.332,-331.4687;Float;False;RowTotal;1;3;False;1;0;FLOAT;4;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;9;-1012.371,78.72998;Float;False;Column;1;2;False;1;0;FLOAT;2;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;8;-1026.98,200.8006;Float;False;ColumnTotal;1;4;False;1;0;FLOAT;2;False;1;FLOAT;0\nNode;AmplifyShaderEditor.OneMinusNode;22;-8.22621,-704.9683;Float;True;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;37;780.1146,-213.7737;Float;True;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;3;-987.0153,-432.528;Float;False;Row;1;1;False;1;0;FLOAT;1;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleDivideOpNode;6;-568.4902,-433.4317;Float;False;2;0;FLOAT;1;False;1;FLOAT;4;False;1;FLOAT;0\nNode;AmplifyShaderEditor.StepOpNode;29;-228.2625,-186.1603;Float;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.OneMinusNode;28;4.912429,-185.6893;Float;True;1;0;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionInput;38;702.4907,-614.7635;Float;True;Color;5;0;False;1;0;COLOR;0.7843138,0.3137255,0,0;False;1;COLOR;0\nNode;AmplifyShaderEditor.TextureCoordinatesNode;2;-1134.076,-765.7475;Float;True;0;-1;2;3;2;SAMPLER2D;;False;0;FLOAT2;1,1;False;1;FLOAT2;0,0;False;5;FLOAT2;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;39;976.109,-530.9385;Float;False;2;2;0;COLOR;0,0,0,0;False;1;FLOAT;0;False;1;COLOR;0\nNode;AmplifyShaderEditor.SimpleSubtractOpNode;34;-789.2405,-0.25667;Float;False;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleDivideOpNode;36;-555.3515,85.84718;Float;False;2;0;FLOAT;1;False;1;FLOAT;4;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;33;-2.655481,53.46581;Float;True;2;2;0;FLOAT;0;False;1;FLOAT;1;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleDivideOpNode;35;-553.6917,-12.22969;Float;False;2;0;FLOAT;1;False;1;FLOAT;4;False;1;FLOAT;0\nNode;AmplifyShaderEditor.StepOpNode;32;-235.3942,57.55692;Float;True;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.SimpleMultiplyOpNode;30;337.7453,-70.89212;Float;True;2;2;0;FLOAT;0;False;1;FLOAT;0;False;1;FLOAT;0\nNode;AmplifyShaderEditor.FunctionOutput;0;1119.289,-300.4296;Float;True;True;Output;0;True;1;0;COLOR;0,0,0,0;False;1;COLOR;0\nWireConnection;20;0;19;0\nWireConnection;20;1;7;0\nWireConnection;19;0;3;0\nWireConnection;21;0;2;1\nWireConnection;21;1;20;0\nWireConnection;5;0;2;1\nWireConnection;5;1;6;0\nWireConnection;13;0;5;0\nWireConnection;24;0;22;0\nWireConnection;24;1;13;0\nWireConnection;22;0;21;0\nWireConnection;37;0;24;0\nWireConnection;37;1;30;0\nWireConnection;6;0;3;0\nWireConnection;6;1;7;0\nWireConnection;29;0;2;2\nWireConnection;29;1;35;0\nWireConnection;28;0;29;0\nWireConnection;39;0;38;0\nWireConnection;39;1;37;0\nWireConnection;34;0;9;0\nWireConnection;36;0;9;0\nWireConnection;36;1;8;0\nWireConnection;33;0;32;0\nWireConnection;35;0;34;0\nWireConnection;35;1;8;0\nWireConnection;32;0;2;2\nWireConnection;32;1;36;0\nWireConnection;30;0;28;0\nWireConnection;30;1;33;0\nWireConnection;0;0;39;0\nASEEND*/\n//CHKSM=4A82D50CBD74977F25030742A78234F9A1FF3AC7"
+  m_functionName: 
+  m_description: 'Slots for the Color Shart
+
+'
+  m_additionalIncludes:
+    m_additionalIncludes: []
+    m_outsideIncludes: []
+  m_additionalPragmas:
+    m_additionalPragmas: []
+    m_outsidePragmas: []
+  m_nodeCategory: 3
+  m_customNodeCategory: 
+  m_previewPosition: 0
