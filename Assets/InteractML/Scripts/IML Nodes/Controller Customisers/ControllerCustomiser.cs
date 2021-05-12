@@ -1,15 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace InteractML
+using InteractML;
+using XNode;
+
+namespace InteractML.ControllerCustomisers
 {
+    [NodeWidth(420)]
     public abstract class CustomController : IMLNode
     {
-
-        public bool inputEvent { get { return m_inputEvent; } }
+        
         [Output, SerializeField]
-        public bool m_inputEvent;
+        public bool inputValue;
+        public int inputNo;
+        public IMLTriggerTypes trigger;
+        public string[] buttonOptions;
+        public string name;
+        protected bool inputChange;
+
         public abstract void UpdateLogic();
+        public abstract void OnButtonChange();
+        public abstract void OnTriggerChange();
+
+        public override object GetValue(NodePort port)
+        {
+            inputValue = inputChange;
+
+            return inputValue;
+        }
 
     }
 }

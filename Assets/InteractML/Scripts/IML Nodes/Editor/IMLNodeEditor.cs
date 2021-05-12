@@ -194,11 +194,11 @@ namespace InteractML
         {
             if(EditorWindow.focusedWindow != null)
             {
-                if (!EditorWindow.focusedWindow.ToString().Contains("XNodeEditor.NodeEditorWindow") && lastWindow != EditorWindow.focusedWindow.ToString())
+                /*if (!EditorWindow.focusedWindow.ToString().Contains("XNodeEditor.NodeEditorWindow") && lastWindow != EditorWindow.focusedWindow.ToString())
                 {
                     Resources.UnloadUnusedAssets();
                     lastWindow = EditorWindow.focusedWindow.ToString();
-                }
+                }*/
                     
             }
 
@@ -209,7 +209,7 @@ namespace InteractML
 
             IMLGraph m_IMLGraph = target.graph as IMLGraph;
 
-            if (!m_IMLGraph.IsGraphRunning && Event.current.type == EventType.Repaint)
+            if (!m_IMLGraph.IsGraphRunning/* && Event.current.type == EventType.Repaint*/)
             {
                 HeaderRect.height = 500;
                 HeaderRect.width = 800;
@@ -768,8 +768,8 @@ namespace InteractML
         protected virtual void DrawHelpButtonLayout(float y)
         {
            
-            if (Event.current.type == EventType.Repaint)
-            {
+            //if (Event.current.type == EventType.Repaint)
+            //{
                 m_HelpRect.x = 5;
                 m_HelpRect.y = y;
                 m_HelpRect.width = NodeWidth - 10;
@@ -777,7 +777,7 @@ namespace InteractML
                 Texture2D texture = GetColorTextureFromHexString("#888EF7");
                 //Draw separator line
                 GUI.DrawTexture(new Rect(m_HelpRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_HelpRect.width, WeightOfSeparatorLine * 2), texture);
-            }
+            //}
         }
 
         // <summary>

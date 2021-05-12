@@ -64,16 +64,16 @@ namespace InteractML
         [SerializeField, HideInInspector]
         private List<ScriptNode> m_ScriptNodesList;
         //[SerializeField, HideInInspector]
-        private InteractML.CustomControllers.InputSetUp m_inputSetUp;
+        private InteractML.ControllerCustomisers.InputSetUp m_inputSetUp;
         [SerializeField, HideInInspector]
         private List<CustomController> m_CustomControllerList;
-        public List<Type> inputTypes; 
+        public List<Type> inputTypes;
 
         #endregion
 
         #region Public Lists of Nodes (Properties)
         [HideInInspector]
-        public InteractML.CustomControllers.InputSetUp inputSetUp { get => m_inputSetUp; }
+        public InteractML.ControllerCustomisers.InputSetUp inputSetUp { get => m_inputSetUp; }
         /// <summary>
         /// List of Training Example Nodes in the IML Controller
         /// </summary>
@@ -440,7 +440,7 @@ namespace InteractML
 
         private void InitializeIMLIndicator()
         {
-            Debug.Log("icon initialize it");
+            //Debug.Log("icon initialize it");
             //comeback
             if (transform.childCount == 0 && icon == null)
             {
@@ -629,19 +629,23 @@ namespace InteractML
                 }
             }
         }
-
-        private void CheckNodeIsInput(XNode.Node nodetoAdd, ref InteractML.CustomControllers.InputSetUp setUpNode)
+        /// <summary>
+        /// Check whether node is inout and assign it to the reference in the script 
+        /// </summary>
+        /// <param name="nodetoAdd"></param>
+        /// <param name="setUpNode"></param>
+        private void CheckNodeIsInput(XNode.Node nodetoAdd, ref InteractML.ControllerCustomisers.InputSetUp setUpNode)
         {
             //check node not null
             if (nodetoAdd != null) {
-                var inputNode = nodetoAdd as InteractML.CustomControllers.InputSetUp;
+                var inputNode = nodetoAdd as InteractML.ControllerCustomisers.InputSetUp;
                 // if input node is not null and inputsetup node is null
                 if (inputNode != null && m_inputSetUp == null)
                 {
                     m_inputSetUp = inputNode;
                     if (inputTypes == null)
                         inputTypes = new List<Type>();
-                    inputTypes.Add(typeof(InteractML.CustomControllers.KeyboardInput));
+                    inputTypes.Add(typeof(InteractML.ControllerCustomisers.KeyboardInput));
                    
                 }
             }
@@ -650,7 +654,7 @@ namespace InteractML
 
         public void InputTypeAdd()
         {
-            m_inputSetUp.devices = new InteractML.CustomControllers.IInputType[inputTypes.Count];
+            m_inputSetUp.devices = new InteractML.ControllerCustomisers.IInputType[inputTypes.Count];
             for(int i =0; i < inputTypes.Count; i++)
             {
                 var type = inputTypes[i];
@@ -1583,7 +1587,9 @@ namespace InteractML
             {
                 foreach(CustomController controller in m_CustomControllerList)
                 {
-                    //controller.UpdateLogic();
+                    if (controller == null)
+                        m_CustomControllerList.Remove(controller);
+                    controller.UpdateLogic();
                 }
             }
 
@@ -1787,7 +1793,7 @@ namespace InteractML
 
             //yield return new WaitForSeconds(0.05f);
 
-            Debug.Log("RESET AND RETRAIN CALLED FROM IML COMPONENT");
+            //Debug.Log("RESET AND RETRAIN CALLED FROM IML COMPONENT");
 
             // Reset all models
             //ResetAllModels();
@@ -1813,7 +1819,6 @@ namespace InteractML
             {
                 while (!(bool)IMLEventDispatcher.LoadModelsCallback?.Invoke())
                 {
-                    Debug.Log("load models");
                     // wait for a frame until models are retrained
                     yield return null;
                 }
@@ -1874,7 +1879,6 @@ namespace InteractML
         /// </summary>
         public bool LoadAllTrainingExamples()
         {
-            Debug.Log("loading data");
             bool success = false;
             // Only run if we got trainnig examples
             if (m_TrainingExamplesNodesList == null && m_TrainingExamplesNodesList.Count == 0)

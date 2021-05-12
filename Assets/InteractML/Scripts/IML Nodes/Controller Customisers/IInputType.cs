@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using InteractML;
 
-namespace InteractML.CustomControllers
+namespace InteractML.ControllerCustomisers
 {
     public interface IInputType
     {

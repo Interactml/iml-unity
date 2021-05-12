@@ -52,7 +52,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -79,7 +79,15 @@ MonoBehaviour:
       _node: {fileID: -8747729476039928021}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: GameObjectDataIn
+        node: {fileID: 5092278411087661957}
+        reroutePoints: []
+      - fieldName: GameObjectDataIn
+        node: {fileID: -6267761647402259264}
+        reroutePoints:
+        - {x: -165.19609, y: 613.868}
+        - {x: 156.25777, y: 1421.1838}
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -87,8 +95,8 @@ MonoBehaviour:
   id: 422cc719-c83d-4548-811e-3e9557a924e8
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  state: 1
-  GOHashCode: 25674
+  state: 0
+  GOHashCode: 19598
   CreatedDuringPlaymode: 0
 --- !u!114 &-6267761647402259264
 MonoBehaviour:
@@ -113,7 +121,10 @@ MonoBehaviour:
       _node: {fileID: -6267761647402259264}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: GameObjectDataOut
+        node: {fileID: -8747729476039928021}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -134,7 +145,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -144,9 +155,9 @@ MonoBehaviour:
   GameObjInputMissing: 1
   m_PositionExtracted:
     m_Values:
-    - -77.77
-    - 151.2
-    - 18.13
+    - -16.6
+    - 2.07
+    - 0
 --- !u!114 &-4567322012494782378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +207,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -276,7 +287,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -358,7 +369,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -455,9 +466,18 @@ MonoBehaviour:
   id: 53949355-7c79-485c-9447-e419d17d0dd8
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 25656
+  ScriptHashCode: 19646
   m_PortsPerFieldInfo:
-    m_keys: []
+    m_keys:
+    - _fieldName: RGBColour
+      _node: {fileID: 4113153438833120164}
+      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   CreatedDuringPlaymode: 0
 --- !u!114 &5092278411087661957
 MonoBehaviour:
@@ -482,7 +502,10 @@ MonoBehaviour:
       _node: {fileID: 5092278411087661957}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections: []
+      connections:
+      - fieldName: GameObjectDataOut
+        node: {fileID: -8747729476039928021}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -502,7 +525,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -512,9 +535,9 @@ MonoBehaviour:
   GameObjInputMissing: 1
   m_PositionExtracted:
     m_Values:
-    - -77.77
-    - 151.2
-    - 18.13
+    - -16.6
+    - 2.07
+    - 0
 --- !u!114 &5196100462732241058
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,7 +587,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -621,7 +644,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -950,5 +973,5 @@ MonoBehaviour:
   RecordDataKey: 0
   showWarning: 0
   canCollect: 1
-  listNo: 1
+  listNo: 0
   SubFolderDataPath: 

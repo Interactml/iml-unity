@@ -293,7 +293,6 @@ namespace InteractML
 
         public static void SaveRapidlibModelToDisk(string modelToSave, string fileName)
         {
-            Debug.Log(fileName);
             SetUpFileNamesAndPaths(fileName);
 
             string subFolderPath = CheckOrCreateFoldersAndSubfoldersModel();
@@ -590,7 +589,6 @@ namespace InteractML
         /// <returns></returns>
         private static List<T> LoadTrainingSetFromDisk<T>(string fileName)
         {
-            Debug.Log(fileName);
             SetUpFileNamesAndPaths(fileName);
 
             //Debug.Log("Load training set from disk called! FolderDataPath: " + m_FolderDataPathName);

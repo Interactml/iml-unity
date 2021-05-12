@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 #if UNITY_EDITOR
 using UnityEditor;
 using XNodeEditor;
@@ -15,13 +14,13 @@ namespace InteractML.ControllerCustomisers
     /// <summary>
     /// 
     /// </summary>
-    [CustomNodeEditor(typeof(InteractML.CustomControllers.InputSetUp))]
+    [CustomNodeEditor(typeof(InteractML.ControllerCustomisers.InputSetUp))]
     public class InputSetUpEditor : IMLNodeEditor
     {
         /// <summary>
         /// Reference to the node itself
         /// </summary>
-        private InteractML.CustomControllers.InputSetUp m_InputSetUp;
+        private InteractML.ControllerCustomisers.InputSetUp m_InputSetUp;
 
         /// <summary>
         /// Position of scroll for dropdown
@@ -47,7 +46,7 @@ namespace InteractML.ControllerCustomisers
         public override void OnCreate()
         {
             // Get reference to the current node
-            m_InputSetUp = (target as InteractML.CustomControllers.InputSetUp);
+            m_InputSetUp = (target as InteractML.ControllerCustomisers.InputSetUp);
 
             // Initialise node height
             m_BodyRect.height = 400;

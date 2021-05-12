@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
+
 using UnityEditor;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using XNode;
 using InteractML.ControllerCustomisers;
 
 
-namespace InteractML.CustomControllers
+namespace InteractML.ControllerCustomisers
 {
     [NodeWidth(420)]
     public class InputSetUp : IMLNode
