@@ -1243,6 +1243,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 356084404}
   m_CullTransparentMesh: 0
+--- !u!1 &428810980
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 428810981}
+  m_Layer: 20
+  m_Name: look at
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &428810981
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 428810980}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0, y: 0, z: 4.66}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 615437634}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!1 &440782214
 GameObject:
   m_ObjectHideFlags: 0
@@ -4051,7 +4081,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1289955436
 AudioListener:
   m_ObjectHideFlags: 0
@@ -4980,7 +5010,6 @@ GameObject:
   - component: {fileID: 1479469387}
   - component: {fileID: 1479469391}
   - component: {fileID: 1479469388}
-  - component: {fileID: 1479469389}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4996,13 +5025,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1479469386}
-  m_LocalRotation: {x: 0.042848412, y: 0.29836056, z: -0.009248469, w: 0.95344615}
-  m_LocalPosition: {x: 0.26908386, y: 0.7364049, z: -1.9833047}
+  m_LocalRotation: {x: 0.028056886, y: -0.70654994, z: 0.03367912, w: 0.70630425}
+  m_LocalPosition: {x: 0.27, y: 0.75, z: -0.79}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1981887549}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 5.004, y: -90, z: 0.456}
 --- !u!81 &1479469388
 AudioListener:
   m_ObjectHideFlags: 0
@@ -5012,18 +5041,6 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1479469386}
   m_Enabled: 1
---- !u!114 &1479469389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1479469386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!20 &1479469391
 Camera:
   m_ObjectHideFlags: 0
@@ -6647,7 +6664,7 @@ GameObject:
   m_Icon: {fileID: -215833656, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1859723782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6662,7 +6679,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerID: Player0
-  m_Target: {fileID: 615437634}
+  m_Target: {fileID: 428810981}
   updateType: 0
   m_MoveSpeed: 13
   m_TurnSpeed: 0.5
@@ -6670,7 +6687,7 @@ MonoBehaviour:
   m_TiltMax: 60
   m_TiltMin: 35
   Vertical:
-    active: 1
+    active: 0
     name: Vertical
     raw: 0
     input: Mouse Y
@@ -6678,7 +6695,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   Horizontal:
-    active: 1
+    active: 0
     name: Horizontal
     raw: 0
     input: Mouse X
@@ -6714,7 +6731,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1859723781}
   m_LocalRotation: {x: -0.0047781384, y: 0.71753776, z: 0.0045702844, w: 0.69648826}
-  m_LocalPosition: {x: 17.97, y: 0.03, z: 15.02}
+  m_LocalPosition: {x: 16.18, y: 0.01, z: 15.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1981887549}
@@ -6734,7 +6751,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targets:
-  - {fileID: 615437634}
+  - {fileID: 428810981}
   - {fileID: 0}
   key: 116
   NoInputs: 0

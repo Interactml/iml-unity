@@ -1247,7 +1247,7 @@ MonoBehaviour:
   id: b770b61b-4249-4971-9cfd-f9d194e3d371
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 33364
+  ScriptHashCode: 17094
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: motionController
@@ -1297,5 +1297,5 @@ MonoBehaviour:
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
   state: 1
-  GOHashCode: -17822
+  GOHashCode: 16932
   CreatedDuringPlaymode: 0
