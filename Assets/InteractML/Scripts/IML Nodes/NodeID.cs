@@ -7,7 +7,7 @@ using System;
 
 namespace InteractML
 {  /// <summary>
-   /// Offers a collection of functions to serialize/deserialize IML data from disk
+   /// Gets or sets the id from a node
    /// </summary>
     public static class NodeID
     {
