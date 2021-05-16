@@ -433,12 +433,23 @@ namespace InteractML
 
         #region Unity Messages
 
-        //public void OnValidate()
-        //{
-        //    // Check that the output list is being updated properly
-        //    //UpdateOutputsList();
+        public void OnValidate()
+        {
+            // Check that the output list is being updated properly
+            //UpdateOutputsList();
 
-        //}
+            if (m_TrainingExamplesVector != null && m_TrainingSeriesCollection!= null)
+            {
+                // Attempt to load data if needed
+                if (m_TrainingExamplesVector.Count == 0 && m_TrainingSeriesCollection.Count == 0)
+                {
+                    LoadDataFromDisk();
+                }
+
+            }
+
+
+        }
         //check 
         protected void OnDestroy()
         {
@@ -513,6 +524,22 @@ namespace InteractML
             this.GetOrCreateDynamicPort("DeleteAllExamplesBoolPort", typeof(bool), NodePort.IO.Input, ConnectionType.Override, TypeConstraint.Inherited);
             // SubFolderDataPathStringPort
             this.GetOrCreateDynamicPort("SubFolderDataPathStringPort", typeof(string), NodePort.IO.Input, ConnectionType.Override, TypeConstraint.Inherited);
+
+            // Pull inputs from bool event nodeports
+            if (GetInputValue<bool>("RecordOneInputBoolPort"))
+                IMLEventDispatcher.RecordOneCallback(this.id);
+            if (GetInputValue<bool>("ToggleRecordingInputBoolPort"))
+                IMLEventDispatcher.ToggleRecordCallback(this.id);
+            if (GetInputValue<bool>("DeleteAllExamplesBoolPort"))
+                IMLEventDispatcher.DeleteAllExamplesInNodeCallback(this.id);
+            // Pull input from string subfolderDataPath nodeport
+            SubFolderDataPath = GetInputValue<string>("SubFolderDataPathStringPort");
+
+            // Attempt to load data
+            if (m_TrainingExamplesVector.Count == 0 && m_TrainingSeriesCollection.Count == 0)
+            {
+                LoadDataFromDisk();
+            }
 
         }
 
@@ -593,11 +620,15 @@ namespace InteractML
                 IMLEventDispatcher.DeleteAllExamplesInNodeCallback(this.id);
             // Pull input from string subfolderDataPath nodeport
             SubFolderDataPath = GetInputValue<string>("SubFolderDataPathStringPort");
-            // Attempt to load data
-            if (m_TrainingExamplesVector.Count == 0 && m_TrainingSeriesCollection.Count == 0)
-            {
-                LoadDataFromDisk();
-            }
+
+
+            // loading if empty moved to init and onvalidate
+            //// Attempt to load data
+            //if (m_TrainingExamplesVector.Count == 0 && m_TrainingSeriesCollection.Count == 0)
+            //{
+            //    LoadDataFromDisk();
+            //}
+
             // Run examples logic in case we need to start/stop collecting examples
             CollectExamplesLogic();
 
