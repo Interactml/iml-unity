@@ -25,7 +25,7 @@ namespace InteractML
         private static string m_FileTrainingSetName;
         private static string m_FileExtension;
         private static string m_FileModelName;
-        private static bool m_SerializeWithJSONDotNet;
+        private static bool m_SerializeWithJSONDotNet = true;
 
         #endregion
 
@@ -215,9 +215,9 @@ namespace InteractML
         /// </summary>
         /// <param name="filePath"></param>
         /// <returns>Returns a list with training set</returns>
-        public static List<IMLTrainingExample> LoadTrainingSetFromDisk(string fileName)
+        public static List<IMLTrainingExample> LoadTrainingSetFromDisk(string fileName, bool ignoreDefaultLocation = false)
         {
-            List<IMLTrainingExample> auxList = LoadTrainingSetFromDisk<IMLTrainingExample>(fileName);
+            List<IMLTrainingExample> auxList = LoadTrainingSetFromDisk<IMLTrainingExample>(fileName, ignoreDefaultLocation);
 
             if (auxList != null)
             {
@@ -229,6 +229,28 @@ namespace InteractML
                 return null;
             }
         }
+
+        /// <summary>
+        /// Loads Training Data Set from Disk Asynchronously
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns>Returns a list with training set</returns>
+
+        public static async Task<List<IMLTrainingExample>> LoadTrainingSetFromDiskAsync(string fileName, bool ignoreDefaultLocation = false)
+        {
+            List<IMLTrainingExample> auxList = await LoadTrainingSetFromDiskAsync<IMLTrainingExample>(fileName, ignoreDefaultLocation);
+
+            if (auxList != null)
+            {
+                return auxList;
+            }
+            else
+            {
+                Debug.LogError("Training set to load from disk is null!");
+                return null;
+            }
+        }
+
 
         /// <summary>
         /// Loads a training series collection from disk (for InteractML)
@@ -598,25 +620,43 @@ namespace InteractML
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        private static List<T> LoadTrainingSetFromDisk<T>(string fileName)
+        private static List<T> LoadTrainingSetFromDisk<T>(string fileName, bool ignoreDefaultLocation = false)
         {
-            SetUpFileNamesAndPaths(fileName);
-
-            //Debug.Log("Load training set from disk called! FolderDataPath: " + m_FolderDataPathName);
-
-            string subFolderPath = CheckOrCreateFoldersAndSubfoldersTrainingSet();
+            bool canLoad = false;
+            string auxFilePath = "";
 
             List<T> auxList = new List<T>();
 
             // If the option to serialize witht JSON dot net is active...
             if (m_SerializeWithJSONDotNet)
             {
-                // We calculate the entire input/output list file name
-                string auxFilePath = subFolderPath + "/" + m_FileTrainingSetName + "_Inputs_Outputs" + m_FileExtension;
-                //Debug.Log("File to load is: >>> " + auxFilePath);
-                //Debug.Log("File name to read is: " + auxFilePath);
-                // We check if the file is there before reading from it
-                if (File.Exists(auxFilePath))
+                if (ignoreDefaultLocation)
+                {
+                    auxFilePath = fileName;
+                    if (File.Exists(auxFilePath)) 
+                        canLoad = true;
+                }
+                else 
+                {
+                    SetUpFileNamesAndPaths(fileName);
+
+                    //Debug.Log("Load training set from disk called! FolderDataPath: " + m_FolderDataPathName);
+
+                    string subFolderPath = CheckOrCreateFoldersAndSubfoldersTrainingSet();
+
+                    // We calculate the entire input/output list file name
+                    auxFilePath = subFolderPath + "/" + m_FileTrainingSetName + "_Inputs_Outputs" + m_FileExtension;
+                    //Debug.Log("File to load is: >>> " + auxFilePath);
+                    //Debug.Log("File name to read is: " + auxFilePath);
+                    // We check if the file is there before reading from it
+                    if (File.Exists(auxFilePath))
+                        canLoad = true;
+                    //else
+                    //    Debug.LogError($"Error when loading file: {fileName}. It doesn't exist!");
+                }
+
+                // Load file if possible
+                if (canLoad)
                 {
                     try
                     {
@@ -637,9 +677,10 @@ namespace InteractML
                         Debug.LogError(e.Message);
                     }
                     //Debug.Log("The file exists and we read from it!");
-                    
+
 
                     //Debug.Log("What we read is: " + jsonTrainingExamplesList);
+
                 }
             }
 
@@ -647,6 +688,81 @@ namespace InteractML
 
 
         }
+
+        private static async Task<List<T>> LoadTrainingSetFromDiskAsync<T>(string fileName, bool ignoreDefaultLocation = false)
+        {
+            bool canLoad = false;
+            string auxFilePath = "";
+
+            List<T> auxList = new List<T>();
+
+            // If the option to serialize witht JSON dot net is active...
+            if (m_SerializeWithJSONDotNet)
+            {
+                if (ignoreDefaultLocation)
+                {
+                    auxFilePath = fileName;
+                    if (File.Exists(auxFilePath))
+                        canLoad = true;
+                }
+                else
+                {
+                    SetUpFileNamesAndPaths(fileName);
+
+                    //Debug.Log("Load training set from disk called! FolderDataPath: " + m_FolderDataPathName);
+
+                    string subFolderPath = CheckOrCreateFoldersAndSubfoldersTrainingSet();
+
+                    // We calculate the entire input/output list file name
+                    auxFilePath = subFolderPath + "/" + m_FileTrainingSetName + "_Inputs_Outputs" + m_FileExtension;
+                    //Debug.Log("File to load is: >>> " + auxFilePath);
+                    //Debug.Log("File name to read is: " + auxFilePath);
+                    // We check if the file is there before reading from it
+                    if (File.Exists(auxFilePath))
+                        canLoad = true;
+                    else
+                        Debug.LogError($"Error when loading file: {fileName}. It doesn't exist!");
+                }
+
+                // Load file if possible
+                if (canLoad)
+                {
+                    try
+                    {
+                        using (var reader = File.OpenText(auxFilePath))
+                        {
+                            string jsonTrainingExamplesList = await reader.ReadToEndAsync();
+                            if (jsonTrainingExamplesList != null)
+                            {
+                                //Debug.Log("Examples are not null, loading the text");
+                                //Debug.Log(jsonTrainingExamplesList);
+                                auxList = JsonConvert.DeserializeObject<List<T>>(jsonTrainingExamplesList);
+                            }
+
+                        }
+                    }
+                    catch (FileNotFoundException e)
+                    {
+                        Debug.Log(e.Message);
+                    }
+                    catch (IOException e)
+                    {
+                        Debug.LogError(e.Message);
+                    }
+                    //Debug.Log("The file exists and we read from it!");
+
+
+                    //Debug.Log("What we read is: " + jsonTrainingExamplesList);
+
+                }
+            }
+
+            return auxList;
+
+
+
+        }
+
 
         /// <summary>
         /// Private method that saves Training Data Set to disk
