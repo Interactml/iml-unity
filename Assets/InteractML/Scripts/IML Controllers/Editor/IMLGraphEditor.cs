@@ -104,6 +104,13 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
+
+            // Node to hold several single training Examples
+            if (type.PrettyName() == "InteractML.TraningDataSetsNode")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+
             if (type.PrettyName() == "InteractML.TextNote")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
