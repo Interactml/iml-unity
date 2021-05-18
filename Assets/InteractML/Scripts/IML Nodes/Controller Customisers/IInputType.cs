@@ -7,17 +7,17 @@ namespace InteractML.ControllerCustomisers
 {
     public interface IInputType
     {
-        public string inputName
+        string inputName
         {
             get;
             set;
         }
 
-        public InputHandler InitializeButtonHandler(int buttonNo, IMLTriggerTypes triggerType, string buttonName);
-        public void LoadDeviceInfo();
-        public void SaveDeviceInfo();
-        public void OnTriggerChange(string handlerName, IMLTriggerTypes triggerT, List<InputHandler> handlers);
-        public void OnButtonChange(string handlerName, int button, List<InputHandler> handlers);
+        InputHandler InitializeButtonHandler(int buttonNo, IMLTriggerTypes triggerType, string buttonName);
+        void LoadDeviceInfo();
+        void SaveDeviceInfo();
+        void OnTriggerChange(string handlerName, IMLTriggerTypes triggerT, List<InputHandler> handlers);
+        void OnButtonChange(string handlerName, int button, List<InputHandler> handlers);
     }
 }
 
