@@ -438,7 +438,7 @@ namespace InteractML
             // Check that the output list is being updated properly
             //UpdateOutputsList();
 
-            if (m_TrainingExamplesVector != null && m_TrainingSeriesCollection!= null)
+            if (((IMLGraph)graph).IsGraphRunning && m_TrainingExamplesVector != null && m_TrainingSeriesCollection!= null)
             {
                 // Attempt to load data if needed
                 if (m_TrainingExamplesVector.Count == 0 && m_TrainingSeriesCollection.Count == 0)
