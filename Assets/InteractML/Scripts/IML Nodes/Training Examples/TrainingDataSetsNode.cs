@@ -36,15 +36,29 @@ namespace InteractML
         /// <summary>
         /// Number of training examples lists loaded
         /// </summary>
+        public int DataSetSize { get { return m_DataSetSize; } }
         [SerializeField]
         private int m_DataSetSize;
 
+        // Flags for loading
+        public bool LoadingStarted { get { return m_LoadingStarted; } }
+        [System.NonSerialized]
         private bool m_LoadingStarted;
+        public bool LoadingFinished { get { return m_LoadingFinished; } }
+        [System.NonSerialized]
         private bool m_LoadingFinished;
 
         #endregion
 
         #region xNode Messages
+        // Use this for initialization
+        protected override void Init()
+        {
+            base.Init();
+
+            if (TrainingDataSets == null || TrainingDataSets.Count == 0)
+                m_DataSetSize = 0;
+        }
 
         // Return the correct value of an output port when requested
         public override object GetValue(NodePort port)
@@ -64,7 +78,13 @@ namespace InteractML
         /// <param name="specificID">When loading, are we looking only for a specific nodeID in file(s)?</param>        
         public void LoadDataSets(string path, string specificID = "")
         {
-            if (Directory.Exists(path) && ! m_LoadingStarted)
+            if (m_LoadingStarted)
+            {
+                NodeDebug.LogWarning("Can't start loading when there is a loading in progress...", this);
+                return;
+            }
+
+            if (Directory.Exists(path))
             {
                 m_LoadingStarted = true;
                 m_LoadingFinished = false;
