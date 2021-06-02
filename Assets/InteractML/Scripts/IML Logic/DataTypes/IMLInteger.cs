@@ -36,6 +36,17 @@
 
         }
 
+        public IMLInteger(int newData)
+        {
+            if (m_Values == null)
+                m_Values = new float[1];
+
+            m_DataType = IMLSpecifications.DataTypes.Integer;
+
+            SetValue(newData);
+
+        }
+
 
         public void SetValue(int newValue)
         {

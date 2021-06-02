@@ -39,6 +39,17 @@ namespace InteractML
 
         }
 
+        public IMLFloat(float newData)
+        {
+            if (m_Values == null)
+                m_Values = new float[1];
+
+            m_DataType = IMLSpecifications.DataTypes.Float;
+
+            SetValue(newData);
+
+        }
+
         public void SetValue(float newValue)
         {
             m_Values[0] = newValue;
