@@ -154,7 +154,7 @@ namespace InteractML
                     m_ScrollPos = EditorGUILayout.BeginScrollView(m_ScrollPos, GUILayout.Width(GetWidth() - 25), GUILayout.Height(GetWidth() - 100));
 
                     // Training Examples List iteration (only draw 1% of data)
-                    for (int i = 0; i < m_NodeDataSet.TrainingDataSets.Count * 0.01; i++)
+                    for (int i = 0; i < m_NodeDataSet.TrainingDataSets.Count; i++)
                     {
                         var trainingExamplesList = m_NodeDataSet.TrainingDataSets[i];
                         IMLBaseDataType labelSeries = null;
