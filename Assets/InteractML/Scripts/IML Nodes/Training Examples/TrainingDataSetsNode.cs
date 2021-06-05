@@ -108,7 +108,7 @@ namespace InteractML
                         if (Path.GetExtension(file) == ".json")
                         {
                             // Are we looking for a specific ID?
-                            if (string.IsNullOrEmpty(specificID))
+                            if (!string.IsNullOrEmpty(specificID))
                             {
                                 // skip if the file doesn't contain the ID we want
                                 if (!file.Contains(specificID))
