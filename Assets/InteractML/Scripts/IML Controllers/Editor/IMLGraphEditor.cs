@@ -190,7 +190,10 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-
+            if (type.PrettyName() == "MECM.MECMTrainingDataSet")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
 #endif
 
             else return null;
