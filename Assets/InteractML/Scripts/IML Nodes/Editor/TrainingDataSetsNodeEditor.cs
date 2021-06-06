@@ -134,10 +134,7 @@ namespace InteractML
 
                 EditorGUI.indentLevel++;
 
-                if (m_NodeDataSet.TrainingDataSets == null)
-                    return;
-
-                if (m_NodeDataSet.TrainingDataSets.Count < 0)
+                if (m_NodeDataSet.TrainingDataSets == null || m_NodeDataSet.TrainingDataSets.Count == 0)
                 {
                     EditorGUILayout.LabelField("Training Data Sets List is empty", m_FoldoutEmptyStyle);
                 }
