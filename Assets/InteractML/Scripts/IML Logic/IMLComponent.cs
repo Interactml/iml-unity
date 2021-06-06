@@ -2302,14 +2302,18 @@ namespace InteractML
                 // Add node to graph and list if it is not contained in list
                 if (!m_GameObjectNodeList.Contains(node))
                 {
-                    // Add to dictionary
-                    if (!m_GOsPerGONodes.ContainsKey(node.GameObjectDataOut))
-                        m_GOsPerGONodes.Add(node.GameObjectDataOut, node);
-                    else
+                    // Add to dictionary (if possible)
+                    if (node.GameObjectDataOut != null) 
                     {
-                        Debug.LogError($"GameObject {node.GameObjectDataOut.name} is already in internal dictionary! Aborting");
-                        return false;
+                        if (!m_GOsPerGONodes.ContainsKey(node.GameObjectDataOut))
+                            m_GOsPerGONodes.Add(node.GameObjectDataOut, node);
+                        else
+                        {
+                            Debug.LogError($"GameObject {node.GameObjectDataOut.name} is already in internal dictionary! Aborting");
+                            return false;
+                        }
                     }
+                    
 
                     m_GameObjectNodeList.Add(node);
                     nodeAdded = true;
@@ -2344,21 +2348,49 @@ namespace InteractML
                 }
 
                 // Setup node to add
-                GameObjectNode goNode = ScriptableObject.CreateInstance<GameObjectNode>();
-                goNode.SetGameObject(GO);
-                if (graph != null)
-                    goNode.graph = this.graph;
+                //GameObjectNode goNode = ScriptableObject.CreateInstance<GameObjectNode>();
+                // This will add the node to the internal list, but not the dictionary
+                GameObjectNode goNode = (GameObjectNode) (graph as IMLGraph).AddNode(typeof(GameObjectNode));
 
-                // Add goNode to graph                
-                if (AddGameObjectNode(goNode))
+                if (goNode != null)
                 {
-                    return goNode;
+                    goNode.SetGameObject(GO);
+                    // set graph of node if needed
+                    if (graph != null && goNode.graph == null)
+                        goNode.graph = this.graph;
+
+                    // Add node to graph and list if it is not contained in list
+                    if (!m_GameObjectNodeList.Contains(goNode))
+                        m_GameObjectNodeList.Add(goNode);
+                    // Add to dictionary
+                    if (!m_GOsPerGONodes.ContainsKey(goNode.GameObjectDataOut))
+                        m_GOsPerGONodes.Add(goNode.GameObjectDataOut, goNode);
+                    else
+                    {
+                        Debug.LogError($"GameObject {goNode.GameObjectDataOut.name} is already in internal dictionary! Aborting");
+                        return null;
+                    }
+
                 }
                 else
                 {
                     Debug.LogError($"Failed to add GameObject {GO.name}!");
-                    return null;
+                    return goNode;
+
                 }
+
+                return goNode;
+
+                //// Add goNode to graph                
+                //if (AddGameObjectNode(goNode))
+                //{
+                //    return goNode;
+                //}
+                //else
+                //{
+                //    Debug.LogError($"Failed to add GameObject {GO.name}!");
+                //    return null;
+                //}
 
             }
             else
