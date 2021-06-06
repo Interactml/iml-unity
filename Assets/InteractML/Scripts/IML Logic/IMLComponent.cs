@@ -2320,10 +2320,28 @@ namespace InteractML
                     return null;
                 }
 
+                // Setup node to add
                 GameObjectNode goNode = new GameObjectNode();
                 goNode.SetGameObject(GO);
-                // Add GO to internal list
-                GameObjectsToUse.Add(GO);
+
+                // GOs per GONodes dictionary
+                if (m_GOsPerGONodes == null)
+                    m_GOsPerGONodes = new GOPerGONodeDictionary();
+                if (!m_GOsPerGONodes.ContainsKey(goNode.GameObjectDataOut))
+                    m_GOsPerGONodes.Add(goNode.GameObjectDataOut, goNode);
+                else
+                {
+                    Debug.LogError($"GameObject {GO.name} is already in internal dictionary! Aborting");
+                    return null;
+                }
+
+
+                // GONodes list
+                if (m_GameObjectNodeList == null)
+                    m_GameObjectNodeList = new List<GameObjectNode>();
+                if (!m_GameObjectNodeList.Contains(goNode))
+                    m_GameObjectNodeList.Add(goNode);
+
                 // Add goNode to graph                
                 if (AddGameObjectNode(goNode))
                 {
