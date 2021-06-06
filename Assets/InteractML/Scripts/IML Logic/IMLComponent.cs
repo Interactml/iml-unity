@@ -2284,10 +2284,24 @@ namespace InteractML
             bool nodeAdded = false;
             if (node != null)
             {
+                // init lists
+                // GONodes list
                 if (m_GameObjectNodeList == null) m_GameObjectNodeList = new List<GameObjectNode>();
-                // Add node if it is not contained in list
+                // GOs per GONodes dictionary
+                if (m_GOsPerGONodes == null) m_GOsPerGONodes = new GOPerGONodeDictionary();
+
+                // Add node to graph and list if it is not contained in list
                 if (!m_GameObjectNodeList.Contains(node))
                 {
+                    // Add to dictionary
+                    if (!m_GOsPerGONodes.ContainsKey(node.GameObjectDataOut))
+                        m_GOsPerGONodes.Add(node.GameObjectDataOut, node);
+                    else
+                    {
+                        Debug.LogError($"GameObject {node.GameObjectDataOut.name} is already in internal dictionary! Aborting");
+                        return false;
+                    }
+
                     m_GameObjectNodeList.Add(node);
                     nodeAdded = true;
 #if UNITY_EDITOR
@@ -2323,24 +2337,6 @@ namespace InteractML
                 // Setup node to add
                 GameObjectNode goNode = new GameObjectNode();
                 goNode.SetGameObject(GO);
-
-                // GOs per GONodes dictionary
-                if (m_GOsPerGONodes == null)
-                    m_GOsPerGONodes = new GOPerGONodeDictionary();
-                if (!m_GOsPerGONodes.ContainsKey(goNode.GameObjectDataOut))
-                    m_GOsPerGONodes.Add(goNode.GameObjectDataOut, goNode);
-                else
-                {
-                    Debug.LogError($"GameObject {GO.name} is already in internal dictionary! Aborting");
-                    return null;
-                }
-
-
-                // GONodes list
-                if (m_GameObjectNodeList == null)
-                    m_GameObjectNodeList = new List<GameObjectNode>();
-                if (!m_GameObjectNodeList.Contains(goNode))
-                    m_GameObjectNodeList.Add(goNode);
 
                 // Add goNode to graph                
                 if (AddGameObjectNode(goNode))
