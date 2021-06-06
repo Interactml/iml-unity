@@ -153,6 +153,15 @@ namespace InteractML
 
         private void OnEnable()
         {
+            // Make sure to have the current scene updated
+#if UNITY_EDITOR
+            m_OurScene = EditorSceneManager.GetActiveScene();
+
+            // Subscribe to the editor manager so that our update loop gets called
+            IMLEditorManager.SubscribeIMLComponent(this);
+#else
+            m_OurScene = SceneManager.GetActiveScene();
+#endif
 
 #if !UNITY_EDITOR
             SubscribeToDelegates();
@@ -206,7 +215,7 @@ namespace InteractML
 #endif
             
         }
-
+        
         // Update is called once per frame
         void Update()
         {
