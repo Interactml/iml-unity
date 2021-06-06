@@ -2305,6 +2305,45 @@ namespace InteractML
             return nodeAdded;
         }
 
+        /// <summary>
+        /// Adds a GameObjectNode internally to the graph 
+        /// </summary>
+        /// <param name="GO"></param>
+        /// <returns></returns>
+        public GameObjectNode AddGameObjectNode(GameObject GO)
+        {
+            if (GO != null)
+            {
+                if (GameObjectsToUse.Contains(GO))
+                {
+                    Debug.LogError($"GameObject {GO.name} is already in graph! We don't need a new node for it");
+                    return null;
+                }
+
+                GameObjectNode goNode = new GameObjectNode();
+                goNode.SetGameObject(GO);
+                // Add GO to internal list
+                GameObjectsToUse.Add(GO);
+                // Add goNode to graph                
+                if (AddGameObjectNode(goNode))
+                {
+                    return goNode;
+                }
+                else
+                {
+                    Debug.LogError($"Failed to add GameObject {GO.name}!");
+                    return null;
+                }
+
+            }
+            else
+            {
+                Debug.LogError($"Can't add a null GameObject to IMLGraph");
+
+                return null;
+            }
+        }
+
 #endregion
 
 #region Deletion of Nodes
