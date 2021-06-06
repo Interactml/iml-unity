@@ -289,7 +289,7 @@ namespace InteractML
         public override void OnBodyGUI()
         {
             IMLGraph graph = this.target.graph as IMLGraph;
-            if (graph.IsGraphRunning)
+            if (graph != null && graph.IsGraphRunning)
             {
                 // If we want to reskin the node
                 if (UIReskinAuto)
