@@ -2346,6 +2346,8 @@ namespace InteractML
                 // Setup node to add
                 GameObjectNode goNode = ScriptableObject.CreateInstance<GameObjectNode>();
                 goNode.SetGameObject(GO);
+                if (graph != null)
+                    goNode.graph = this.graph;
 
                 // Add goNode to graph                
                 if (AddGameObjectNode(goNode))
