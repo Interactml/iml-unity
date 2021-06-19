@@ -545,13 +545,13 @@ namespace InteractML
             m_SubFolderTrainingSetPathName = m_FolderDataPathName + "/Training_Examples";
             m_SubFolderModelPathName = m_FolderDataPathName + "/Models";
 
-            m_AppDataPath = "";
+            //m_AppDataPath = "";
 #if UNITY_STANDALONE || UNITY_EDITOR
             // in a standalone build or editor, we go to local assets folder
-            m_AppDataPath = Application.dataPath;
+            if (string.IsNullOrEmpty(m_AppDataPath)) m_AppDataPath = Application.dataPath;
 #elif UNITY_ANDROID
             // on Android it is better to use persistent datapath           
-            m_AppDataPath = Application.persistentDataPath;
+            if (string.IsNullOrEmpty(m_AppDataPath)) m_AppDataPath = Application.persistentDataPath;
 #endif
 
         }
