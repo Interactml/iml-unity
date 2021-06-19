@@ -707,6 +707,9 @@ namespace InteractML
             if (tNode == null)
                 return trainingVector;
 
+            // Attempt to trigger an update of desired input features on connected training examples node in case it hasn't been updated yet
+            if (tNode.DesiredInputFeatures == null) tNode.UpdateDesiredInputOutputConfigFromDataVector(updateDesiredFeatures: true);
+
             // First attempt to calculate training vector from recorded examples and desired input features (in case the tNode doesn't have any connected live features and it is just a data container)
             if (tNode.TrainingExamplesVector != null && tNode.TrainingExamplesVector.Count > 0 && tNode.DesiredInputFeatures != null && tNode.DesiredInputFeatures.Count > 0)
             {

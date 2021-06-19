@@ -741,7 +741,7 @@ namespace InteractML
         /// Updates the configuration list of desired inputs and outputs from the internal training examples list
         /// </summary>
         /// <param name="updateDesiredFeatures">Update list of desired features as well? </param>
-        protected void UpdateDesiredInputOutputConfigFromDataVector(bool updateDesiredFeatures = false)
+        public void UpdateDesiredInputOutputConfigFromDataVector(bool updateDesiredFeatures = false)
         {
             // Make sure that the list is initialised
             // Expected configuration
