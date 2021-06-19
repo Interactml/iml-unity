@@ -53,7 +53,7 @@ namespace InteractML.DataTypeNodes
 
             PreviousFeatureValues = new IMLArray();
 
-            m_MaximumArraySize = 35;
+            m_MaximumArraySize = 150;
 
             base.Initialize();
         }

@@ -47,6 +47,11 @@
 
         }
 
+        public override void SetValues(float[] newValues)
+        {
+            if (m_Values == null) m_Values = new float[1];
+            if (newValues != null) m_Values[0] = newValues[0];
+        }
 
         public void SetValue(int newValue)
         {

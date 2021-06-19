@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace InteractML
 {
@@ -116,6 +117,20 @@ namespace InteractML
             return trainRegression(model, trainingSet);
         }
 
+        /// <summary>
+        /// Trains a rapidlib regression model
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="trainingSet"></param>
+        /// <returns>True if succesfully trained</returns>
+        public static async Task<bool> TrainRegressionAsync(IntPtr model, IntPtr trainingSet)
+        {
+            if (model == IntPtr.Zero)
+                throw new Exception("The address to the model is zero, aborting trainRegression.");
+
+            return trainRegression(model, trainingSet);
+        }
+
         /* === CLASSIFICATION === */
         /// <summary>
         /// Creates a rapidlib classification model (kNN)
@@ -147,6 +162,20 @@ namespace InteractML
             return trainClassification(model, trainingSeriesCollection);
         }
 
+        /// <summary>
+        /// Trains a rapidlib classification model
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="trainingSeriesCollection"></param>
+        /// <returns>True if succesfully trained</returns>
+        public static async Task<bool> TrainClassificationAsync(IntPtr model, IntPtr trainingSeriesCollection)
+        {
+            if (model == IntPtr.Zero)
+                throw new Exception("The address to the model is zero, aborting trainClassification.");
+            
+            return trainClassification(model, trainingSeriesCollection);
+        }
+
         /* === DTW === */
         /// <summary>
         /// Creates a rapidlib time series classification model (DTW)
@@ -170,6 +199,19 @@ namespace InteractML
         /// <param name="model"></param>
         /// <param name="trainingSeriesCollection"></param>
         public static bool TrainSeriesClassification(IntPtr model, IntPtr trainingSeriesCollection)
+        {
+            if (model == IntPtr.Zero || trainingSeriesCollection == IntPtr.Zero)
+                throw new Exception("The address to the model is zero, aborting trainingSeriesClassification.");
+
+            return trainSeriesClassification(model, trainingSeriesCollection);
+        }
+
+        /// <summary>
+        /// Trains a rapidlib trime series classification model (DTW) with a series collection in unmanaged memory
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="trainingSeriesCollection"></param>
+        public static async Task<bool> TrainSeriesClassificationAsync(IntPtr model, IntPtr trainingSeriesCollection)
         {
             if (model == IntPtr.Zero || trainingSeriesCollection == IntPtr.Zero)
                 throw new Exception("The address to the model is zero, aborting trainingSeriesClassification.");

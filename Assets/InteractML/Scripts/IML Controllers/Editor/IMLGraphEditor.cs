@@ -186,11 +186,7 @@ namespace InteractML
 
 #if MECM
             // This nodes are exclusive to the MECM that Carlos is working on part-time. It won't compile on any other InteractML version
-            if (type.PrettyName() == "MECM.BrainHQDataSetNode")
-            {
-                return base.GetNodeMenuName(type).Replace("InteractML", "");
-            }
-            if (type.PrettyName() == "MECM.MECMTrainingDataSet")
+            if (type.PrettyName().Contains("MECM."))
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }

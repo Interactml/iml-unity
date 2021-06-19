@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using XNode;
+using UnityEngine;
 
 namespace InteractML
 {
@@ -32,7 +33,7 @@ namespace InteractML
         /// </summary>
         /// <param name="text"></param>
         /// <param name="node"></param>
-        public static void LogWarning(string text, Node node) 
+        public static void LogWarning(string text, Node node, bool debugToConsole = false) 
         {
             if (m_Logs == null)
                 m_Logs = new Dictionary<Node, string>();
@@ -41,6 +42,9 @@ namespace InteractML
                 m_Logs.Add(node, text);
             else
                 AddToQueue(text, node);
+
+            if (debugToConsole)
+                Debug.LogWarning($"{text} \n In {node}");
         }
 
         /// <summary>

@@ -1801,11 +1801,14 @@ namespace InteractML
             // if there are mlsystem nodes in the graph
             if (MLSystemNodeList.Count > 0)
             {
-                while (!(bool)IMLEventDispatcher.LoadModelsCallback?.Invoke())
+
+                if (!(bool)IMLEventDispatcher.LoadModelsCallback?.Invoke())
                 {
                     Debug.Log("load models");
-                    // wait for a frame until models are retrained
-                    yield return null;
+                    // wait for a bit if there is something that needs to "heat up"
+                    yield return new WaitForSeconds(0.5f);
+                    // Attempt to load models again, one last time
+                    IMLEventDispatcher.LoadModelsCallback?.Invoke();
                 }
             }
             
@@ -2007,57 +2010,75 @@ namespace InteractML
         /// <summary>
         /// Runs all models that are marked with RunOnAwake
         /// </summary>
-        public bool RunAllModels()
+        public void RunAllModels()
         {
             Debug.Log("run all models");
-            bool success = false;
             foreach (var MLSystemNode in m_MLSystemNodeList)
             {
                 if (MLSystemNode)
                 {
-                    // Only run if the flag is marked to do so
-                    bool trainingExamples = false;
-                    if (MLSystemNode.RunOnAwake)
-                    {
-                        // Attempt to load/train if the model is untrained
-                        if (MLSystemNode.Untrained)
-                        {
-                            // First try to load the model (unless is DTW)
-                            if (MLSystemNode.Model.TypeOfModel != RapidlibModel.ModelType.DTW)
-                            {
-                                MLSystemNode.LoadModelFromDisk();
-                            }
-                            // Only attempt to train if model is still untrained
-                            if (MLSystemNode.Untrained)
-                            {
-                                // Train if there are training examples available
-                                for (int i = 0; i < MLSystemNode.IMLTrainingExamplesNodes.Count; i++)
-                                {
-                                    if (MLSystemNode.IMLTrainingExamplesNodes[i].TrainingExamplesVector.Count > 0)
-                                    {
-                                        trainingExamples = true;
-                                    }
-                                }
-                                if (trainingExamples)
-                                {
-                                    success = MLSystemNode.TrainModel();
-                                }
-                            }
-                        }
-                        // Toggle Run only if the model is trained (and it is not DTW, the user should do that)
-                        if (MLSystemNode.Trained && MLSystemNode.TrainingType != IMLSpecifications.TrainingSetType.SeriesTrainingExamples)
-                        {
-                            success = MLSystemNode.StartRunning();
-                            if (success && icon != null)
-                            {
-                                icon.SetBody(icon.runningColour);
-                            }
-                        }
-                    }
-
+                    var coroutine = RunOnAwakeCoroutine(MLSystemNode);
+                    StartCoroutine(coroutine);
                 }
             }
-            return success;
+        }
+
+        /// <summary>
+        /// Runs a MLS node on awake. It will train to train if there is no possibility of loading the model
+        /// </summary>
+        /// <param name="MLSystemNode"></param>
+        /// <returns></returns>
+        IEnumerator RunOnAwakeCoroutine(MLSystem MLSystemNode)
+        {
+            bool success = false;
+            // Only run if the flag is marked to do so
+            bool trainingExamples = false;
+            if (MLSystemNode.RunOnAwake)
+            {
+                // Attempt to load/train if the model is untrained
+                if (MLSystemNode.Untrained)
+                {
+                    // First try to load the model (unless is DTW)
+                    if (MLSystemNode.Model.TypeOfModel != RapidlibModel.ModelType.DTW)
+                    {
+                        MLSystemNode.LoadModelFromDisk();
+                        // wait a frame
+                        yield return null;
+                    }
+                    // Only attempt to train if model is still untrained
+                    if (MLSystemNode.Untrained)
+                    {
+                        // Train if there are training examples available
+                        for (int i = 0; i < MLSystemNode.IMLTrainingExamplesNodes.Count; i++)
+                        {
+                            if (MLSystemNode.IMLTrainingExamplesNodes[i].TrainingExamplesVector.Count > 0)
+                            {
+                                trainingExamples = true;
+                            }
+                        }
+                        if (trainingExamples)
+                        {
+                            MLSystemNode.TrainModel();
+                            // Wait until model is trained
+                            while (MLSystemNode.Training)
+                                // wait a frame
+                                yield return null;
+
+                            success = MLSystemNode.Trained;
+                        }
+                    }
+                }
+                // Toggle Run only if the model is trained (and it is not DTW, the user should do that)
+                if (MLSystemNode.Trained && MLSystemNode.TrainingType != IMLSpecifications.TrainingSetType.SeriesTrainingExamples)
+                {
+                    success = MLSystemNode.StartRunning();
+                    if (success && icon != null)
+                    {
+                        icon.SetBody(icon.runningColour);
+                    }
+                }
+            }
+
         }
 
         /// <summary>
@@ -2547,12 +2568,21 @@ namespace InteractML
                 //if nodeID matches
                 if (nodeID == MLSNode.id)
                 {
-                    
-                    // train model
-                    success = MLSNode.TrainModel();
-                    // if this is successful save model to the disk
-                    if (success)
-                        MLSNode.SaveModelToDisk();
+                    // If the model trains asynchronously, we will need to wait to know the result. Launch coroutine
+                    if (MLSNode.UseAsync)
+                    {
+                        var coroutine = TrainCoroutine(MLSNode);
+                        StartCoroutine(coroutine);
+                    }
+                    // If it is a synchronous model...
+                    else
+                    {
+                        // train model
+                        success = MLSNode.TrainModel();
+                        // if this is successful save model to the disk
+                        if (success)
+                            MLSNode.SaveModelToDisk();
+                    }
                 }
             }
             //Debug.Log(icon == null);
@@ -2561,6 +2591,25 @@ namespace InteractML
             // returns true if nodeID exists and whether training successful
             return success;
         }
+
+        IEnumerator TrainCoroutine(MLSystem MLSNode)
+        {
+            // train model
+            MLSNode.TrainModel();
+
+            // Wait until the model is trained
+            while (MLSNode.Training)
+            {
+                // Wait a bit
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            // if this is successful save model to the disk
+            if (MLSNode.Trained)
+                MLSNode.SaveModelToDisk();
+
+        }
+
         /// <summary>
         ///  Start running delegate
         /// </summary>

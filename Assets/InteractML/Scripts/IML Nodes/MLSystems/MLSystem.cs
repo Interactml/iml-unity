@@ -6,6 +6,7 @@ using System.Linq;
 using ReusableMethods;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace InteractML
 {
@@ -217,6 +218,15 @@ namespace InteractML
         public bool trainOnLoad = true;
 
         protected bool  isKNN;
+
+        /// <summary>
+        /// Is the model training/running asynchronously?
+        /// </summary>
+        public bool UseAsync { get { return m_UseAsync; } }
+        /// <summary>
+        /// Change this flag to use or not async methods (training, running models)
+        /// </summary>
+        private bool m_UseAsync = true;        
 
         #endregion
 
@@ -538,7 +548,7 @@ namespace InteractML
             //Add this node to list of MLsystem nodes in all training nodes attached 
             foreach (TrainingExamplesNode node in IMLTrainingExamplesNodes)
             {
-                if (!node.MLSystemNodesConnected.Contains(this))
+                if (node != null && node.MLSystemNodesConnected != null && !node.MLSystemNodesConnected.Contains(this))
                     node.MLSystemNodesConnected.Add(this);
             }
             // Specify the names for the nodeports
@@ -576,10 +586,10 @@ namespace InteractML
         #endregion
 
         /// <summary>
-        /// 
+        /// Trains the ML model
         /// </summary>
         /// <returns></returns>
-        public bool TrainModel()
+        public bool TrainModel(bool useAsync = false)
         {
             bool isTrained = false;
             //if the MLS is not running, training and the model is not null and the total number of training data is bigger than 0
@@ -595,14 +605,25 @@ namespace InteractML
                 }
                 else
                 {
-                    isTrained = SetUpTrainingExamples();
+                    if (m_UseAsync || useAsync)
+                    {
+                        TrainModelPrivateAsync();
+                    }
+                    else
+                    {
+                        isTrained = TrainModelPrivate();
+                    }
                 }
                 
             }
             return isTrained;
         }
 
-        private bool SetUpTrainingExamples() {
+        /// <summary>
+        /// Trains the ML model
+        /// </summary>
+        /// <returns></returns>
+        private bool TrainModelPrivate() {
 
             bool trained = false;
             switch (m_trainingType)
@@ -617,6 +638,26 @@ namespace InteractML
                     break;
             }
             return trained;
+        }
+
+        /// <summary>
+        /// Trains the ML model
+        /// </summary>
+        /// <returns></returns>
+        private void TrainModelPrivateAsync() 
+        {
+
+            switch (m_trainingType)
+            {
+                case IMLSpecifications.TrainingSetType.SingleTrainingExamples:
+                    SingleExamplesTrainAsync();
+                    break;
+                case IMLSpecifications.TrainingSetType.SeriesTrainingExamples:
+                    SeriesExampleTrainAsync();
+                    break;
+                default:
+                    break;
+            }
         }
 
         private bool SingleExamplesTrain()
@@ -642,13 +683,47 @@ namespace InteractML
             return isTrained;
         }
 
+        private void SingleExamplesTrainAsync()
+        {
+            // Transform the IML Training Examples into a format suitable for Rapidlib
+            m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
+
+             // Trains rapidlib with the examples added
+             m_Model.TrainAsync(m_RapidlibTrainingExamples);
+        }
+
+        private void SeriesExampleTrainAsync()
+        {
+            if (m_RapidlibTrainingSeriesCollection == null)
+                m_RapidlibTrainingSeriesCollection = new List<RapidlibTrainingSerie>();
+            m_RapidlibTrainingSeriesCollection = TransformIMLSeriesToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
+            m_Model.TrainAsync(m_RapidlibTrainingSeriesCollection);
+        }
+
         protected int CheckLengthTrainingVector(TrainingExamplesNode tNode)
         {
             int trainingVector = 0;
-            foreach (Node node in tNode.InputFeatures)
+            // check null
+            if (tNode == null)
+                return trainingVector;
+
+            // First attempt to calculate training vector from recorded examples and desired input features (in case the tNode doesn't have any connected live features and it is just a data container)
+            if (tNode.TrainingExamplesVector != null && tNode.TrainingExamplesVector.Count > 0 && tNode.DesiredInputFeatures != null && tNode.DesiredInputFeatures.Count > 0)
             {
-                IFeatureIML feature = node as IFeatureIML;
-                trainingVector += feature.FeatureValues.Values.Length;
+                foreach (var feature in tNode.DesiredInputFeatures)
+                {
+                    trainingVector += feature.Values.Length; 
+                }
+            }
+            // If there are no recorded examples, calculate from connected inputs
+            else if (tNode.InputFeatures != null)
+            {
+                foreach (Node node in tNode.InputFeatures)
+                {
+                    IFeatureIML feature = node as IFeatureIML;
+                    trainingVector += feature.FeatureValues.Values.Length;
+                }
+
             }
             return trainingVector;
         }
@@ -1176,7 +1251,8 @@ namespace InteractML
                 List<TrainingExamplesNode> deletedTrainingExamplesNodes = oldTrainingExamplesNodes.Except(IMLTrainingExamplesNodes).ToList();
                 foreach (TrainingExamplesNode node in deletedTrainingExamplesNodes)
                 {
-                    node.MLSystemNodesConnected.Remove(this);
+                    if (node != null)
+                        node.MLSystemNodesConnected.Remove(this);
                 }
             }
 
@@ -1280,22 +1356,22 @@ namespace InteractML
             switch (type)
             {
                 case IMLSpecifications.OutputsEnum.Float:
-                    dynamicOutputPort = AddDynamicOutput(typeof(float), fieldName: "Output " + outputPorts.Count);
+                    dynamicOutputPort = AddDynamicOutput(typeof(float), fieldName: $"Out {outputPorts.Count} (Float)");
                     break;
                 case IMLSpecifications.OutputsEnum.Integer:
-                    dynamicOutputPort = AddDynamicOutput(typeof(int), fieldName: "Output " + outputPorts.Count);
+                    dynamicOutputPort = AddDynamicOutput(typeof(int), fieldName: $"Out {outputPorts.Count} (Int)");
                     break;
                 case IMLSpecifications.OutputsEnum.Vector2:
-                    dynamicOutputPort = AddDynamicOutput(typeof(Vector2), fieldName: "Output " + outputPorts.Count);
+                    dynamicOutputPort = AddDynamicOutput(typeof(Vector2), fieldName: $"Out {outputPorts.Count} (V2)");
                     break;
                 case IMLSpecifications.OutputsEnum.Vector3:
-                    dynamicOutputPort = AddDynamicOutput(typeof(Vector3), fieldName: "Output " + outputPorts.Count);
+                    dynamicOutputPort = AddDynamicOutput(typeof(Vector3), fieldName: $"Out {outputPorts.Count} (V3)");
                     break;
                 case IMLSpecifications.OutputsEnum.Vector4:
-                    dynamicOutputPort = AddDynamicOutput(typeof(Vector4), fieldName: "Output " + outputPorts.Count);
+                    dynamicOutputPort = AddDynamicOutput(typeof(Vector4), fieldName: $"Out {outputPorts.Count} (V4)");
                     break;
                 case IMLSpecifications.OutputsEnum.Array:
-                    dynamicOutputPort = AddDynamicOutput(typeof(float[]), fieldName: "Output " + outputPorts.Count);
+                    dynamicOutputPort = AddDynamicOutput(typeof(float[]), fieldName: $"Out {outputPorts.Count} (Array)");
                     break;
                 default:
                     dynamicOutputPort = null;
@@ -1565,22 +1641,60 @@ namespace InteractML
             IMLTrainingExamplesNodes = GetInputValues<TrainingExamplesNode>("IMLTrainingExamplesNodes").ToList();
             // get the number of input features for the first training examples
             int numberOfTrainingDataInputs = 0;
+            int numOfDesiredTrainingDataInputs = 0;
+            int numOfLiveDataInputs = 0;
+            bool alreadyChecked = false;
             // if the list has objects
             if(!Lists.IsNullOrEmpty(ref IMLTrainingExamplesNodes))
             {
-                // set the numnber of training data inputs as the first connected training example (which should be the same as the rest connected)
-                numberOfTrainingDataInputs = IMLTrainingExamplesNodes[0].GetInputPort("InputFeatures").GetConnections().Count();
+                if (IMLTrainingExamplesNodes[0] != null )
+                {
+                    var liveFeaturesFromTrainingExamples = IMLTrainingExamplesNodes[0].GetInputPort("InputFeatures");
+                    if (liveFeaturesFromTrainingExamples != null)
+                    {
+                        // set the numnber of training data inputs as the first connected training example (which should be the same as the rest connected)
+                        numberOfTrainingDataInputs = liveFeaturesFromTrainingExamples.GetConnections().Count();
+                        // If inputs are 0, we need a different way of calculating if the live inputs match the training examples
+                        if (numberOfTrainingDataInputs == 0)
+                        {
+                            if (IMLTrainingExamplesNodes[0].DesiredInputFeatures != null && InputFeatures != null)
+                            {
+                                foreach (var desiredInputFeature in IMLTrainingExamplesNodes[0].DesiredInputFeatures)
+                                {
+                                    if (desiredInputFeature != null && desiredInputFeature.Values != null)
+                                        numOfDesiredTrainingDataInputs += desiredInputFeature.Values.Length;
+                                }
+
+                                foreach (var liveInputFeature in InputFeatures)
+                                {
+                                    if (liveInputFeature != null)
+                                    {
+                                        var liveFeatureValues = (liveInputFeature as IFeatureIML).FeatureValues;
+                                        if (liveFeatureValues != null && liveFeatureValues.Values != null)
+                                            numOfLiveDataInputs += liveFeatureValues.Values.Length;
+                                    }
+                                }
+                                // Check that the sequence of inputs is equal in the training examples node and the MLSystem
+                                if (numOfDesiredTrainingDataInputs == numOfLiveDataInputs)
+                                {
+                                    matchLiveDataInputs = true;
+                                    alreadyChecked = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    Debug.LogError("There is a null reference in training examples node connected!");
+                }
             }
 
-            // if the number of input features connected is the same to that of the connected training examples set matching to true
-            if (numberOfTrainingDataInputs == GetInputPort("InputFeatures").GetConnections().Count())
+            if (!alreadyChecked)
             {
-                matchLiveDataInputs = true;
-            } else
-            {
-                matchLiveDataInputs = false;
-            }
-                
+                // if the number of input features connected is the same to that of the connected training examples set matching to true
+                matchLiveDataInputs = (numberOfTrainingDataInputs == GetInputPort("InputFeatures").GetConnections().Count()) ?  true : false;
+            }                
 
         }
 
@@ -1815,8 +1929,10 @@ namespace InteractML
                 bool isNotTrainingExamplesNode = false;
                 if (m_trainingType == IMLSpecifications.TrainingSetType.SingleTrainingExamples)
                 {
-                    // Check if the node connected was a training examples node
-                    isNotTrainingExamplesNode = this.DisconnectIfNotType<MLSystem, SingleTrainingExamplesNode>(from, to);
+                    // Check if the node connected was a single training examples node OR a node implementing IDataSetIML
+                    Type[] typesAccepted = { typeof(SingleTrainingExamplesNode), typeof(IDataSetIML) };
+                    isNotTrainingExamplesNode = this.DisconnectFROMPortIsNotTypes(from, to, typesAccepted);
+                    //isNotTrainingExamplesNode = this.DisconnectIfNotType<MLSystem, SingleTrainingExamplesNode>(from, to);
                     Debug.Log(isNotTrainingExamplesNode);
                 }
                 else
@@ -1848,7 +1964,8 @@ namespace InteractML
                         }
                     }
 
-                    if (examplesNode.TargetValues.Count > 1 && isKNN)
+                    // Disconnect if there is a wrong number of target values
+                    if (examplesNode.TargetValues != null && examplesNode.TargetValues.Count > 1 && isKNN)
                     {
                         from.Disconnect(to);
                         m_WrongNumberOfTargetValues = true;

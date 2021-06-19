@@ -42,7 +42,7 @@ namespace InteractML
             m_Values[1] = newValues.y;
         }
 
-        public void SetValues(float[] newValues)
+        public override void SetValues(float[] newValues)
         {
             if (newValues.Length == m_Values.Length)
             {

@@ -11,7 +11,7 @@ namespace InteractML
         [SerializeField]
         private float[] m_Values = new float[1];
 
-        public override float[] Values { get { return m_Values; } set { if(value != null) SetValue(value[0]);  } }
+        public override float[] Values { get { return m_Values; } set { if(value != null) SetValues(value[0]);  } }
 
         private IMLSpecifications.DataTypes m_DataType = IMLSpecifications.DataTypes.Float;
 
@@ -35,7 +35,7 @@ namespace InteractML
             m_DataType = IMLSpecifications.DataTypes.Float;
 
             if (newData.Values != null && newData.Values.Length > 0)
-                SetValue(newData.Values[0]);
+                SetValues(newData.Values[0]);
 
         }
 
@@ -46,11 +46,17 @@ namespace InteractML
 
             m_DataType = IMLSpecifications.DataTypes.Float;
 
-            SetValue(newData);
+            SetValues(newData);
 
         }
 
-        public void SetValue(float newValue)
+        public override void SetValues(float[] newValues)
+        {
+            if (m_Values == null) m_Values = new float[1];
+            if (newValues != null) m_Values[0] = newValues[0];
+        }
+
+        public void SetValues(float newValue)
         {
             m_Values[0] = newValue;
         }
