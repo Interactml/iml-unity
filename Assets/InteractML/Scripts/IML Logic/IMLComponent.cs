@@ -61,6 +61,7 @@ namespace InteractML
         [SerializeField, HideInInspector]
         private List<GameObjectNode> m_GameObjectNodeList;
         public List<IFeatureIML> FeatureNodesList;
+        public List<ScriptNode> ScriptNodesList { get { return m_ScriptNodesList; } set { m_ScriptNodesList = value; } }
         [SerializeField, HideInInspector]
         private List<ScriptNode> m_ScriptNodesList;
         //[SerializeField, HideInInspector]
@@ -124,6 +125,7 @@ namespace InteractML
         /// <summary>
         /// Dictionary to hold references of components with IML Data and which scriptNode manages them
         /// </summary>
+        public MonobehaviourScriptNodeDictionary MonoBehavioursPerScriptNode { get { return m_MonoBehavioursPerScriptNode; } set { m_MonoBehavioursPerScriptNode = value; } }
         [SerializeField, HideInInspector]
         private MonobehaviourScriptNodeDictionary m_MonoBehavioursPerScriptNode;
         /// <summary>
@@ -1026,7 +1028,7 @@ namespace InteractML
         /// <summary>
         /// Gets and sets the data marked with the "SendToIMLController" and "PullFromIMLController" attributes in Monobehaviours subscribed
         /// </summary>
-        private void FetchDataFromMonobehavioursSubscribed()
+        public void FetchDataFromMonobehavioursSubscribed()
         {
             if (ComponentsWithIMLData == null || ComponentsWithIMLData.Count == 0)
             {
