@@ -11,6 +11,9 @@ using UnityEngine.SceneManagement;
 #if UNITY_EDITOR
 using UnityEditor.SceneManagement;
 using UnityEditor;
+#if MECM
+using Unity.EditorCoroutines.Editor;
+#endif
 using InteractML.ControllerCustomisers;
 #endif
 
@@ -1763,7 +1766,18 @@ namespace InteractML
             {
                 // There will be waits for things to init. Take into account
                 IEnumerator coroutine = LoadDataForModelsCoroutine();
-                StartCoroutine(coroutine);
+                try
+                {
+                    // Attempt to start coroutine 
+                    StartCoroutine(coroutine);
+                }
+                catch (UnityException e)
+                {
+#if UNITY_EDITOR && MECM
+                    // Start coroutine with editor coroutines in case we get the error "Coroutine couldn't be started because the game object is inactive!"
+                    EditorCoroutineUtility.StartCoroutine(coroutine, this);
+#endif
+                }
             }
             
         }
@@ -1839,7 +1853,19 @@ namespace InteractML
             {
                 // There will be waits for things to init. Take into account
                 IEnumerator coroutine = RunModelsOnPlayCoroutine();
-                StartCoroutine(coroutine);
+                try
+                {
+                    StartCoroutine(coroutine);
+
+                }
+                catch (UnityException e)
+                {
+#if UNITY_EDITOR && MECM
+                    // Start coroutine with editor coroutines in case we get the error "Coroutine couldn't be started because the game object is inactive!"
+                    EditorCoroutineUtility.StartCoroutine(coroutine, this);
+#endif
+
+                }
             }
             
 
