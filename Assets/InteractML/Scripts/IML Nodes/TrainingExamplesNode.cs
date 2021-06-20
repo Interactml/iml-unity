@@ -196,6 +196,9 @@ namespace InteractML
 
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
+            if (m_TrainingExamplesVector == null) m_TrainingExamplesVector = new List<IMLTrainingExample>();
+            if (m_TrainingSeriesCollection == null) m_TrainingSeriesCollection = new List<IMLTrainingSeries>();
+
             // If there is a connection to any of the button ports...
             if (to.fieldName == "RecordOneInputBoolPort")
             {
@@ -243,11 +246,19 @@ namespace InteractML
             // bool for tracking whether there are training examples recorded
             bool trainingExamplesExist = false;
             // if you are not connecting a ifeatureiml node then disconnect
-            if (this.DisconnectIfNotType<TrainingExamplesNode, IFeatureIML>(from, to) && from.fieldName != "TrainingExamplesNodeToOutput")
+            if (to.fieldName == "MovementData")
             {
-                from.Disconnect(to);
-                return;
+                // check incoming node type and port data type is accepted by input port
+                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML) }; // discriminate based on type of node connected
+                this.DisconnectFROMPortIsNotTypes(from, to, nodeTypesAccept);                
+
             }
+            //if (this.DisconnectIfNotType<TrainingExamplesNode, IFeatureIML>(from, to) && from.fieldName != "TrainingExamplesNodeToOutput")
+            //{
+            //    from.Disconnect(to);
+            //    return;
+            //}
+            
             // if there are training examples set the bool to true 
             if (m_TrainingExamplesVector.Count > 0 || m_TrainingSeriesCollection.Count > 0)
             {
@@ -370,7 +381,9 @@ namespace InteractML
         public override void OnRemoveConnection(NodePort port)
         {
             base.OnRemoveConnection(port);
-            
+
+            if (m_TrainingExamplesVector == null) m_TrainingExamplesVector = new List<IMLTrainingExample>();
+            if (m_TrainingSeriesCollection == null) m_TrainingSeriesCollection = new List<IMLTrainingSeries>();
 
             if (m_TrainingExamplesVector.Count == 0 && m_TrainingSeriesCollection.Count == 0)
             {
@@ -816,7 +829,7 @@ namespace InteractML
                     }
                 }
                 // Single training examples
-                else
+                else if (m_TrainingExamplesVector.Count > 0)
                 {
                     // Check for null
                     if (m_TrainingExamplesVector[0] == null || m_TrainingExamplesVector[0].Inputs == null || m_TrainingExamplesVector[0].Outputs == null)

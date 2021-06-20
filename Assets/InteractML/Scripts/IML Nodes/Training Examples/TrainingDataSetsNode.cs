@@ -12,9 +12,10 @@ namespace InteractML
     /// <summary>
     /// Holds multiple training data sets
     /// </summary>
+    [CreateNodeMenuAttribute("Interact ML/DataSets/TrainingDataSets")]
     [NodeWidth(350)]
 
-    public class TrainingDataSetsNode : IMLNode
+    public class TrainingDataSetsNode : IMLNode, IFeatureIML
     {
         #region Variables
         /// <summary>
@@ -45,6 +46,13 @@ namespace InteractML
         [System.NonSerialized]
         private bool m_LoadingStarted;
         public bool LoadingFinished { get { return m_LoadingFinished; } }
+
+        public IMLBaseDataType FeatureValues => default(IMLBaseDataType);
+
+        public bool isExternallyUpdatable => false;
+
+        public bool isUpdated { get => true; set => throw new System.NotImplementedException(); }
+
         [System.NonSerialized]
         private bool m_LoadingFinished;
 
@@ -148,6 +156,11 @@ namespace InteractML
             {
                 NodeDebug.LogWarning("The folder doesn't exist!", this);
             }
+        }
+
+        public object UpdateFeature()
+        {
+            throw new System.NotImplementedException();
         }
 
         #endregion
