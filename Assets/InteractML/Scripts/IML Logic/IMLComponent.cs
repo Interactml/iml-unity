@@ -1762,7 +1762,7 @@ namespace InteractML
         /// </summary>
         private void LoadDataForModels()
         {
-            if(this != null)
+            if(this != null && this.gameObject.activeInHierarchy)
             {
                 // There will be waits for things to init. Take into account
                 IEnumerator coroutine = LoadDataForModelsCoroutine();
@@ -1771,7 +1771,7 @@ namespace InteractML
                     // Attempt to start coroutine 
                     StartCoroutine(coroutine);
                 }
-                catch (UnityException e)
+                catch (Exception)
                 {
 #if UNITY_EDITOR && MECM
                     // Start coroutine with editor coroutines in case we get the error "Coroutine couldn't be started because the game object is inactive!"
@@ -1849,7 +1849,7 @@ namespace InteractML
         /// </summary>
         public void RunModelsOnPlay()
         {
-            if (this != null)
+            if (this != null && this.gameObject.activeInHierarchy)
             {
                 // There will be waits for things to init. Take into account
                 IEnumerator coroutine = RunModelsOnPlayCoroutine();
@@ -1858,7 +1858,7 @@ namespace InteractML
                     StartCoroutine(coroutine);
 
                 }
-                catch (UnityException e)
+                catch (UnityException)
                 {
 #if UNITY_EDITOR && MECM
                     // Start coroutine with editor coroutines in case we get the error "Coroutine couldn't be started because the game object is inactive!"
