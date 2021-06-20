@@ -504,6 +504,14 @@ namespace InteractML
             // Set training type of the machine learning model
             SetLearningType();
 
+            // Make sure that the scene component is aware of this node
+            var imlGraph = graph as IMLGraph;
+            if (imlGraph != null && imlGraph.SceneComponent != null && imlGraph.SceneComponent.MLSystemNodeList != null)
+            {
+                if (!imlGraph.SceneComponent.MLSystemNodeList.Contains(this))
+                    imlGraph.SceneComponent.MLSystemNodeList.Add(this);
+            }
+
             // need to clarify what this is doing 
             if (m_trainingType == IMLSpecifications.TrainingSetType.SeriesTrainingExamples)
                 TrainOnPlaymodeChange = true;
@@ -561,7 +569,8 @@ namespace InteractML
             // ToggleRunInputBoolPort
             this.GetOrCreateDynamicPort("ToggleRunInputBoolPort", typeof(bool), NodePort.IO.Input);
 
-
+            // Evaluate data in
+            OnDataInChanged();
         }
         #region Subclass Instatiation Methods
         /// <summary>
@@ -708,7 +717,7 @@ namespace InteractML
                 return trainingVector;
 
             // Attempt to trigger an update of desired input features on connected training examples node in case it hasn't been updated yet
-            if (tNode.DesiredInputFeatures == null) tNode.UpdateDesiredInputOutputConfigFromDataVector(updateDesiredFeatures: true);
+            if (tNode.DesiredInputFeatures == null || tNode.DesiredInputFeatures.Count == 0) tNode.UpdateDesiredInputOutputConfigFromDataVector(updateDesiredFeatures: true);
 
             // First attempt to calculate training vector from recorded examples and desired input features (in case the tNode doesn't have any connected live features and it is just a data container)
             if (tNode.TrainingExamplesVector != null && tNode.TrainingExamplesVector.Count > 0 && tNode.DesiredInputFeatures != null && tNode.DesiredInputFeatures.Count > 0)
