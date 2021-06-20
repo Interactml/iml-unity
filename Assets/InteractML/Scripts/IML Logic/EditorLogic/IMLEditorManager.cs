@@ -250,7 +250,7 @@ public class IMLEditorManager
     /// <returns></returns>
     private static bool NullIMLComponents()
     {
-        return m_IMLComponents.Contains(null) ? true : false;
+        return m_IMLComponents.Any(x => x == null) ? true : false;
     }
 
     /// <summary>
