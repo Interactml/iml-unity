@@ -2564,7 +2564,7 @@ namespace InteractML
             
             foreach (GameObjectNode GONode in m_GameObjectNodeList)
             {
-                GONode.state = true;
+                if (GONode != null) GONode.state = true;
             }
         }
 
