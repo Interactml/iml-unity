@@ -622,7 +622,7 @@ namespace InteractML
         /// <summary>
         /// Update logic per node
         /// </summary>
-        public void UpdateLogic()
+        public virtual void UpdateLogic()
         {
             // Pull inputs from bool event nodeports
             if (GetInputValue<bool>("RecordOneInputBoolPort"))
