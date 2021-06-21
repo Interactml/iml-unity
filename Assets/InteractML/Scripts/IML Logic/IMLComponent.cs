@@ -64,6 +64,8 @@ namespace InteractML
         [SerializeField, HideInInspector]
         private List<GameObjectNode> m_GameObjectNodeList;
         public List<IFeatureIML> FeatureNodesList;
+        private List<IUpdatableIML> m_UpdatableNodesList;
+
         public List<ScriptNode> ScriptNodesList { get { return m_ScriptNodesList; } set { m_ScriptNodesList = value; } }
         [SerializeField, HideInInspector]
         private List<ScriptNode> m_ScriptNodesList;
@@ -288,6 +290,10 @@ namespace InteractML
             
             if (Lists.IsNullOrEmpty(ref m_CustomControllerList))
                 m_CustomControllerList = new List<CustomController>();
+
+            if (Lists.IsNullOrEmpty(ref m_UpdatableNodesList))
+                m_UpdatableNodesList = new List<IUpdatableIML>();
+
 
 
             // Get all th nodes which are in the graph
@@ -590,6 +596,9 @@ namespace InteractML
                     // Feature nodes
                     CheckNodeIsFeature(node, ref FeatureNodesList);
 
+                    // IUpdatable nodes
+                    CheckNodeIsUpdatable(node, ref m_UpdatableNodesList);
+
                     // GameObject nodes
                     CheckTypeAddNodeToList(node, ref m_GameObjectNodeList);
 
@@ -766,6 +775,37 @@ namespace InteractML
 
         }
 
+        /// <summary>
+        /// Adds an updatable node to the list of updatables
+        /// </summary>
+        /// <param name="nodeToAdd"></param>
+        /// <param name="listToAddTo"></param>
+        private void CheckNodeIsUpdatable(XNode.Node nodeToAdd, ref List<IUpdatableIML> listToAddTo)
+        {
+            // We first check that the node ref is not null
+            if (nodeToAdd != null)
+            {
+                // Then check that the node is updatable
+                var updatableNode = nodeToAdd as IUpdatableIML;
+                if (updatableNode != null)
+                {
+                    // Make sure the list is init
+                    if (listToAddTo == null)
+                        listToAddTo = new List<IUpdatableIML>();
+
+                    // If we got an updatable node, we add it to the list (if it is not there already)
+                    if (!listToAddTo.Contains(updatableNode))
+                    {
+                        listToAddTo.Add(updatableNode);
+                    }
+
+                }
+            }
+
+
+        }
+
+
         private void RunFeaturesLogic()
         {
             if (FeatureNodesList == null)
@@ -784,6 +824,26 @@ namespace InteractML
                     FeatureNodesList[i].isUpdated = true;
                 }
             }
+        }
+
+        private void RunUpdatablesLogic()
+        {
+            if (m_UpdatableNodesList == null) m_UpdatableNodesList = new List<IUpdatableIML>();
+
+            for (int i = 0; i < m_UpdatableNodesList.Count; i++)
+            {
+                // Call the update logic per node ONLY IF THEY ARE UPDATABLE (for performance reasons)
+                if (m_UpdatableNodesList[i].isExternallyUpdatable)
+                {
+                    // Unlock the isUpdated flag so that all fields will be properly updated
+                    m_UpdatableNodesList[i].isUpdated = false;
+                    // Update the feature
+                    m_UpdatableNodesList[i].Update();
+                    // Lock isUpdated so that later on calls don't recalculate certain values (as the velocity for instance)
+                    m_UpdatableNodesList[i].isUpdated = true;
+                }
+            }
+
         }
 
         /// <summary>
@@ -1545,6 +1605,9 @@ namespace InteractML
 
                 // Run logic for all feature nodes
                 RunFeaturesLogic();
+
+                // Run logic for all updatable nodes
+                RunUpdatablesLogic();
 
                 // Run logic for all training example nodes
                 RunTraininExamplesLogic();
