@@ -49,9 +49,10 @@ namespace InteractML
 
         public IMLBaseDataType FeatureValues => default(IMLBaseDataType);
 
-        public bool isExternallyUpdatable => false;
+        public bool isExternallyUpdatable => true;
 
-        public bool isUpdated { get => true; set => throw new System.NotImplementedException(); }
+        public bool isUpdated { get => m_isUpdated; set => m_isUpdated = value; }
+        private bool m_isUpdated;
 
         [System.NonSerialized]
         private bool m_LoadingFinished;
@@ -66,6 +67,11 @@ namespace InteractML
 
             if (TrainingDataSets == null || TrainingDataSets.Count == 0)
                 m_DataSetSize = 0;
+
+            // Add all required dynamic ports
+            // LoadData          
+            this.GetOrCreateDynamicPort("LoadDataPort", typeof(bool), NodePort.IO.Input);
+
         }
 
         // Return the correct value of an output port when requested
@@ -160,7 +166,10 @@ namespace InteractML
 
         public object UpdateFeature()
         {
-            throw new System.NotImplementedException();
+            // Pull inputs from bool event nodeports
+            if (GetInputValue<bool>("LoadDataPort")) LoadDataSets(FolderPath, SpecificNodeID);
+
+            return this;
         }
 
         #endregion

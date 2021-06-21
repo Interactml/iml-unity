@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using XNode;
 #if UNITY_EDITOR
 using UnityEditor;
 using XNodeEditor;
@@ -50,6 +51,16 @@ namespace InteractML
         GUIStyle m_FoldoutEmptyStyle;
         GUIStyle m_ScrollViewStyle;
 
+        /// <summary>
+        /// The label to show on the button port labels
+        /// </summary>
+        protected GUIContent m_ButtonPortLabel;
+        /// <summary>
+        /// NodePort for button. Loaded in OnHeaderHUI()
+        /// </summary>
+        protected NodePort m_ButtonPortLoadData;
+
+
 
         public override void OnHeaderGUI()
         {
@@ -64,6 +75,12 @@ namespace InteractML
                 m_FoldoutEmptyStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("foldoutempty");
             if (m_ScrollViewStyle == null)
                 m_ScrollViewStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview");
+            // Get button port
+            if (m_ButtonPortLoadData == null)
+                m_ButtonPortLoadData = m_NodeDataSet.GetPort("LoadDataPort");
+            // Create inputport button label
+            if (m_ButtonPortLabel == null)
+                m_ButtonPortLabel = new GUIContent("");
 
         }
 
@@ -71,6 +88,10 @@ namespace InteractML
         {
             base.OnBodyGUI();
 
+            // Port LoadDataSets
+            GUILayout.BeginHorizontal();
+            // Draw port
+            IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortLoadData, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
             // Button LoadDataSets
             string buttonText = "";
             if (m_NodeDataSet.LoadingStarted)
@@ -82,6 +103,7 @@ namespace InteractML
                 m_NodeDataSet.LoadDataSets(m_NodeDataSet.FolderPath, specificID: m_NodeDataSet.SpecificNodeID);
 
             }
+            GUILayout.EndHorizontal();
 
             // Show data sets dropdown
             ShowDataSetsDropdown();
