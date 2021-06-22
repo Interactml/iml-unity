@@ -222,7 +222,7 @@ namespace InteractML
         /// <summary>
         /// Is the model training/running asynchronously?
         /// </summary>
-        public bool UseAsync { get { return m_UseAsync; } }
+        public bool UseAsync { get { return m_UseAsync; } set { m_UseAsync = value; } }
         /// <summary>
         /// Change this flag to use or not async methods (training, running models)
         /// </summary>
@@ -1340,15 +1340,64 @@ namespace InteractML
             if (outputPorts == null)
                 outputPorts = new List<XNode.NodePort>();
 
-            // Add as many output ports as we have output types in the training examples node. It will be drawn in the Editor class
-            for (int i = 0; i < trainingExamples.DesiredOutputsConfig.Count; i++)
+            bool matchConfig = true;
+            // Do we already have the same number of ports?
+            if (outputPorts.Count == trainingExamples.DesiredOutputsConfig.Count)
             {
-                // Get reference to current expected output
-                var expectedOutput = trainingExamples.DesiredOutputsConfig[i];
+                // Are they ordered in the same way?
+                for (int i = 0; i < outputPorts.Count; i++)
+                {
+                    switch (trainingExamples.DesiredOutputsConfig[i])
+                    {
+                        case IMLSpecifications.OutputsEnum.Float:
+                            if (outputPorts[i].ValueType != typeof(float)) matchConfig = false;
+                            break;
+                        case IMLSpecifications.OutputsEnum.Integer:
+                            if (outputPorts[i].ValueType != typeof(int)) matchConfig = false;
+                            break;
+                        case IMLSpecifications.OutputsEnum.Vector2:
+                            if (outputPorts[i].ValueType != typeof(Vector2)) matchConfig = false;
+                            break;
+                        case IMLSpecifications.OutputsEnum.Vector3:
+                            if (outputPorts[i].ValueType != typeof(Vector3)) matchConfig = false;
+                            break;
+                        case IMLSpecifications.OutputsEnum.Vector4:
+                            if (outputPorts[i].ValueType != typeof(Vector4)) matchConfig = false;
+                            break;
+                        case IMLSpecifications.OutputsEnum.Array:
+                            if (outputPorts[i].ValueType != typeof(float[])) matchConfig = false;
+                            break;
+                        case IMLSpecifications.OutputsEnum.Boolean:
+                            if (outputPorts[i].ValueType != typeof(bool)) matchConfig = false;
+                            break;
+                        default:
+                            break;
+                    }
 
-                // Add output port based on the type
-                AddDynamicOutputPort(expectedOutput, ref outputPorts);
+                }
+
             }
+
+            // If there is no matching configuration, we need to rebuild the output ports list. Let's rebuild it
+            if (!matchConfig)
+            {
+                // Clear dynamic ports
+                ClearDynamicPorts();
+                outputPorts.Clear();
+
+                // Add as many output ports as we have output types in the training examples node. It will be drawn in the Editor class
+                for (int i = 0; i < trainingExamples.DesiredOutputsConfig.Count; i++)
+                {
+                    // Get reference to current expected output
+                    var expectedOutput = trainingExamples.DesiredOutputsConfig[i];
+
+                    // Add output port based on the type
+                    AddDynamicOutputPort(expectedOutput, ref outputPorts);
+                }
+
+            }
+
+
         }
 
         /// <summary>
@@ -1471,7 +1520,12 @@ namespace InteractML
                         RemoveDynamicPort(port);
                     }
                     // Now reduce size of local list
-                    outputPorts.RemoveRange((outputPorts.Count) - diffAbs, diffAbs);
+                    int indexToRemove = 0;
+                    // Attempt to remove from the end
+                    if (diffAbs < outputPorts.Count && diffAbs * 2 < outputPorts.Count) indexToRemove = diffAbs;
+                    // if not, remove from... beginning?
+                    else indexToRemove = (outputPorts.Count) - diffAbs;
+                    outputPorts.RemoveRange(indexToRemove, diffAbs);
                 }
 
                 // Make sure that all port types and names are matching (expectedOutputs and outputPorts are now the same size)
