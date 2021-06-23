@@ -837,8 +837,28 @@ namespace InteractML
                 {
                     // Unlock the isUpdated flag so that all fields will be properly updated
                     m_UpdatableNodesList[i].isUpdated = false;
-                    // Update the feature
+                    // Update the node
                     m_UpdatableNodesList[i].Update();
+                    // Lock isUpdated so that later on calls don't recalculate certain values (as the velocity for instance)
+                    m_UpdatableNodesList[i].isUpdated = true;
+                }
+            }
+
+        }
+
+        private void RunUpdatablesLateLogic()
+        {
+            if (m_UpdatableNodesList == null) m_UpdatableNodesList = new List<IUpdatableIML>();
+
+            for (int i = 0; i < m_UpdatableNodesList.Count; i++)
+            {
+                // Call the update logic per node ONLY IF THEY ARE UPDATABLE (for performance reasons)
+                if (m_UpdatableNodesList[i].isExternallyUpdatable)
+                {
+                    // Unlock the isUpdated flag so that all fields will be properly updated
+                    m_UpdatableNodesList[i].isUpdated = false;
+                    // Run Late Update (always needs to happen after Update)
+                    m_UpdatableNodesList[i].LateUpdate();
                     // Lock isUpdated so that later on calls don't recalculate certain values (as the velocity for instance)
                     m_UpdatableNodesList[i].isUpdated = true;
                 }
@@ -1603,11 +1623,11 @@ namespace InteractML
                 // Send GameObject data to GONodes
                 SendGameObjectsToIMLController();
 
-                // Run logic for all feature nodes
-                RunFeaturesLogic();
-
                 // Run logic for all updatable nodes
                 RunUpdatablesLogic();
+
+                // Run logic for all feature nodes
+                RunFeaturesLogic();
 
                 // Run logic for all training example nodes
                 RunTraininExamplesLogic();
@@ -1615,8 +1635,11 @@ namespace InteractML
                 // Run logic for all MLSystem nodes
                 RunMLSystemLogic();
 
+                // Run logic for all late updatables
+                RunUpdatablesLateLogic();
 
-            } else
+            }
+            else
             {
                 // get reference to graph & give graph reference to IML Component
                 IMLControllerOwnershipLogic();

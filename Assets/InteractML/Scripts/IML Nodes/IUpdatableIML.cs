@@ -20,5 +20,9 @@ namespace InteractML
         /// </summary>
         void Update();
 
+        /// <summary>
+        /// Called after update has finished
+        /// </summary>
+        void LateUpdate();
     }
 }
