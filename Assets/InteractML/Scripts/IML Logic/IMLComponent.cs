@@ -2322,6 +2322,7 @@ namespace InteractML
                     // Save newnode to graph on disk                              
                     AssetDatabase.AddObjectToAsset(node, graph);
                     // Reload graph into memory since we have modified it on disk
+                    //AssetDatabase.SaveAssets();
                     AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(graph));
 #endif
                 }
@@ -2446,6 +2447,16 @@ namespace InteractML
             {
                 GONode.state = true;
             }
+        }
+
+        /// <summary>
+        /// Add to internal dictionary of GameObject Nodes and GameObjects
+        /// </summary>
+        /// <param name="goNode"></param>
+        /// <param name="go"></param>
+        public void AddToGameObjectNodeDictionary(GameObjectNode goNode, GameObject go)
+        {
+            m_GOsPerGONodes.Add(go, goNode);
         }
 
 #endregion
