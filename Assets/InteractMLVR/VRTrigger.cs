@@ -56,6 +56,11 @@ namespace InteractML.ControllerCustomisers
             button.SetTriggerType(trigger);
         }
 
+        public void OnSideChange()
+        {
+            button.SetController(hand);
+        }
+
         public void OnDestroy()
         {
             // Unscibscribe from all events

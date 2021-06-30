@@ -177,7 +177,10 @@ MonoBehaviour:
       _node: {fileID: -4952908079997644971}
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: inputValue
+        node: {fileID: -521124842690981323}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -225,7 +228,7 @@ MonoBehaviour:
   canCollect: 1
   listNo: 0
   SubFolderDataPath: 
---- !u!114 &-2169874380329991698
+--- !u!114 &-521124842690981323
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -238,21 +241,24 @@ MonoBehaviour:
   m_Name: VR Trigger
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1032, y: -184}
+  position: {x: 744, y: 168}
   ports:
     keys:
     - inputValue
     values:
     - _fieldName: inputValue
-      _node: {fileID: -2169874380329991698}
+      _node: {fileID: -521124842690981323}
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: ToggleRecordingInputBoolPort
+        node: {fileID: -4952908079997644971}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 79f29f9b-9397-470f-8e27-75a85cee19ae
+  id: c509f0e7-f403-4fb7-9116-a2ee6bfb5c46
   numberInComponentList: -1
   inputValue: 0
   inputNo: 1
@@ -263,7 +269,7 @@ MonoBehaviour:
   - Primary
   - Secondary
   name: VRTrigger
-  hand: 0
+  hand: 1
   inputs: 0
   triggerType: 0
 --- !u!114 &11400000
@@ -287,7 +293,7 @@ MonoBehaviour:
   - {fileID: 8373069013392079893}
   - {fileID: -5488533792918054399}
   - {fileID: 8948996071717161829}
-  - {fileID: -2169874380329991698}
+  - {fileID: -521124842690981323}
   SceneComponent: {fileID: 0}
 --- !u!114 &3383320042394773376
 MonoBehaviour:
@@ -564,7 +570,7 @@ MonoBehaviour:
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
   state: 0
-  GOHashCode: 17254
+  GOHashCode: 17590
   CreatedDuringPlaymode: 0
 --- !u!114 &8373069013392079893
 MonoBehaviour:
@@ -636,7 +642,7 @@ MonoBehaviour:
   id: 85b122b5-7814-4367-9adf-1db24e409906
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 17268
+  ScriptHashCode: 17604
   m_PortsPerFieldInfo:
     m_keys: []
   CreatedDuringPlaymode: 0

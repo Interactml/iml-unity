@@ -22,11 +22,21 @@ namespace InteractML.ControllerCustomisers
 
         public override void OnBodyGUI()
         {
-
+            press = target as VRTrigger;
             base.OnBodyGUI();
         }
 
-
+        protected override void ShowBodyFields()
+        {
+            base.ShowBodyFields();
+            press.hand = (IMLSides)EditorGUILayout.EnumPopup(press.hand);
+            if (GUI.changed)
+            {
+                press.OnSideChange();
+                //mark as changed
+                EditorUtility.SetDirty(press);
+            }
+        }
     }
 }
 

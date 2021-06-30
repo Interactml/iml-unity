@@ -171,13 +171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5db8dd2375f76944dbba1ea1e593d099, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graph: {fileID: 196579070}
-  selectedHighlight: {r: 0.53333336, g: 0.5568628, b: 0.96862745, a: 0}
-  trainedColor: {fileID: 2800000, guid: c417d3fdbb88654449462abbdc48680c, type: 3}
-  baseColour: {fileID: 2800000, guid: c4c3665142c39b4459c779bd443b9776, type: 3}
-  recordingColour: {fileID: 2800000, guid: 243854e302a54c04082cefa189303fc6, type: 3}
-  runningColour: {fileID: 2800000, guid: 7886c868007defe40ba0a0cc1ebfc46b, type: 3}
-  current: {fileID: 0}
 --- !u!54 &188509550
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -368,7 +361,7 @@ MonoBehaviour:
   m_ScriptNodesList:
   - {fileID: 8948996071717161829, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
   m_CustomControllerList:
-  - {fileID: 2589602411084043691, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
+  - {fileID: -521124842690981323, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
   FeaturesUpdated: 0
   ComponentsWithIMLData:
   - GameComponent: {fileID: 2117627209}

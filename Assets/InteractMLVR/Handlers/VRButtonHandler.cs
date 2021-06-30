@@ -151,6 +151,7 @@ namespace InteractML
 
         public override void SetButtonNo(int buttonNum)
         {
+            Debug.Log(buttonNum);
             buttonNo = buttonNum;
             imlButton = (IMLControllerInputs)buttonNo;
             SetButton();
@@ -162,6 +163,7 @@ namespace InteractML
         
         public void SetButton()
         {
+            Debug.Log(imlButton);
             switch (imlButton)
             {
                 case IMLControllerInputs.Trigger:
