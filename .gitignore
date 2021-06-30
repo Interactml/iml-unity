@@ -56,6 +56,7 @@ ExportedObj/
 # ===================================== #
 Packages/*.unitypackage
 UnityPackages/
+Logs/
 Assets/Dependencies/OpenCVForUnity
 Assets/StreamingAssets
 Assets/Scripts/OpenCV_Trackers
@@ -80,6 +81,9 @@ Assets/SteamVR_Resources.meta
 *.ide-shm
 *.vs/
 Assets/LowPolyWater_Pack/Plane Meshes/Ocean50x50W750H750.asset
+<<<<<<< HEAD
+
+=======
 Assets/Ludiq/Ludiq.meta
 Assets/Ludiq/Ludiq.Graphs/Generated.meta
 Assets/Ludiq/Ludiq.Graphs.meta
@@ -116,3 +120,4 @@ Assets/Ludiq/Assemblies/Ludiq.Platforms.pdb.meta
 Assets/Ludiq/Assemblies/Ludiq.Graphs.Runtime.pdb.meta
 Assets/Ludiq/Assemblies/Ludiq.Graphs.Editor.pdb.meta
 Assets/InteractML/Scripts/Input/IMLGrab.cs.meta
+>>>>>>> VRInterface

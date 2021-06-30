@@ -1,11 +1,10 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace InteractML
 {
     public class IMLInputHandler : InputHandler
     {
-        public InputDevice device;
+
         public override event IMLEventDispatcher.IMLEvent ButtonFire;
      
         public override void HandleState()

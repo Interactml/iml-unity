@@ -1,29 +1,29 @@
 Using pre-set license
-Built from '2020.3/staging' branch; Version is '2020.3.5f1 (8095aa901b9b) revision 8426922'; Using compiler version '192528614'; Build Type 'Release'
-OS: 'Windows 10 Home; OS build 19042.928; Version 2009; 64bit' Language: 'en' Physical Memory: 16141 MB
+Built from '2020.3/release' branch; Version is '2020.3.7f1 (dd97f2c94397) revision 14522354'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Education; OS build 19042.1052; Version 2009; 64bit' Language: 'en' Physical Memory: 16173 MB
 BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
 
  COMMAND LINE ARGUMENTS:
-C:\Program Files\Unity\Hub\Editor\2020.3.5f1\Editor\Unity.exe
+C:\Program Files\Unity\Hub\Editor\2020.3.7f1\Editor\Unity.exe
 -adb2
 -batchMode
 -noUpm
 -name
 AssetImportWorker0
 -projectPath
-C:/Users/Phoenix/Documents/Unity/InteractMLGithub/iml-unity-github
+C:/Users/Clarice/Documents/4i Project/InteractMLVR
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-60755
-Successfully changed project path to: C:/Users/Phoenix/Documents/Unity/InteractMLGithub/iml-unity-github
-C:/Users/Phoenix/Documents/Unity/InteractMLGithub/iml-unity-github
+8457
+Successfully changed project path to: C:/Users/Clarice/Documents/4i Project/InteractMLVR
+C:/Users/Clarice/Documents/4i Project/InteractMLVR
 Using Asset Import Pipeline V2.
-Refreshing native plugins compatible for Editor in 83.09 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Initialize engine version: 2020.3.5f1 (8095aa901b9b)
-[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.5f1/Editor/Data/Resources/UnitySubsystems
-[Subsystems] Discovering subsystems at path C:/Users/Phoenix/Documents/Unity/InteractMLGithub/iml-unity-github/Assets
+Refreshing native plugins compatible for Editor in 101.79 ms, found 5 plugins.
+Preloading 1 native plugins for Editor in 2.41 ms.
+Initialize engine version: 2020.3.7f1 (dd97f2c94397)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/Clarice/Documents/4i Project/InteractMLVR/Assets
 GfxDevice: creating device client; threaded=0
 Direct3D:
     Version:  Direct3D 11.0 [level 11.1]
@@ -32,1193 +32,363 @@ Direct3D:
     VRAM:     8010 MB
     Driver:   27.21.14.5687
 Initialize mono
-Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.5f1/Editor/Data/Managed'
-Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.5f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
-Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.5f1/Editor/Data/MonoBleedingEdge/etc'
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/MonoBleedingEdge/etc'
 Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56068
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
-Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.5f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.002443 seconds.
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.7f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.003140 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 55.21 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 90.94 ms, found 5 plugins.
+Preloading 1 native plugins for Editor in 0.22 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  2.246 seconds
+- Completed reload, in  3.897 seconds
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.005940 seconds.
+Registered in 0.006865 seconds.
 Begin MonoManager ReloadAssembly
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 55.42 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
+Native extension for OSXStandalone target not found
+Refreshing native plugins compatible for Editor in 54.25 ms, found 5 plugins.
+Preloading 1 native plugins for Editor in 0.12 ms.
+[XR] OculusXRPlugin: registering subsystems
+[XR] Unable to register display lifecyle provider: [1]
+[XR] Oculus Input lifecycle provider registered.
+[XR] Unable to register input lifecyle provider: [1]
+NullReferenceException: Object reference not set to an instance of an object
+  at Unity.XR.Oculus.OculusLoader.AssetPathToAbsolutePath (System.String assetPath) [0x00048] in C:\Users\Clarice\Documents\4i Project\InteractMLVR\Library\PackageCache\com.unity.xr.oculus@1.9.1\Runtime\OculusLoader.cs:249 
+  at Unity.XR.Oculus.OculusLoader.EditorLoadOVRPlugin () [0x0007b] in C:\Users\Clarice\Documents\4i Project\InteractMLVR\Library\PackageCache\com.unity.xr.oculus@1.9.1\Runtime\OculusLoader.cs:234 
+
+(Filename: Library/PackageCache/com.unity.xr.oculus@1.9.1/Runtime/OculusLoader.cs Line: 249)
+
+mismatch in live inputs to trained data
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogWarning (object)
+InteractML.MLSystem:CheckLengthInputsVector () (at Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs:783)
+InteractML.MLSystem:OnRemoveConnection (XNode.NodePort) (at Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs:393)
+XNode.NodePort:Disconnect (XNode.NodePort) (at Assets/Dependencies/xNode/Scripts/NodePort.cs:301)
+XNode.NodePort:ClearConnections () (at Assets/Dependencies/xNode/Scripts/NodePort.cs:326)
+XNode.NodeDataCache:UpdatePorts (XNode.Node,System.Collections.Generic.Dictionary`2<string, XNode.NodePort>) (at Assets/Dependencies/xNode/Scripts/NodeDataCache.cs:46)
+XNode.Node:UpdatePorts () (at Assets/Dependencies/xNode/Scripts/Node.cs:128)
+XNode.Node:OnEnable () (at Assets/Dependencies/xNode/Scripts/Node.cs:122)
+XNodeEditor.NodeEditorAssetModProcessor:OnReloadEditor () (at Assets/Dependencies/xNode/Scripts/Editor/NodeEditorAssetModProcessor.cs:54)
+
+(Filename: Assets/InteractML/Scripts/IML Nodes/MLSystems/MLSystem.cs Line: 783)
+
 Mono: successfully reloaded assembly
-- Completed reload, in  1.641 seconds
+- Completed reload, in  2.279 seconds
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.06 seconds
-Refreshing native plugins compatible for Editor in 0.94 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1931 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 94.0 MB.
-System memory in use after: 93.9 MB.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.12 seconds
+Refreshing native plugins compatible for Editor in 0.68 ms, found 5 plugins.
+Preloading 1 native plugins for Editor in 0.18 ms.
+Unloading 1940 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 95.9 MB.
+System memory in use after: 96.0 MB.
 
-Unloading 128 unused Assets to reduce memory usage. Loaded Objects now: 2366.
-Total: 2.561700 ms (FindLiveObjects: 0.217700 ms CreateObjectMapping: 0.091000 ms MarkObjects: 2.123500 ms  DeleteObjects: 0.128400 ms)
+Unloading 170 unused Assets to reduce memory usage. Loaded Objects now: 2380.
+Total: 5.690200 ms (FindLiveObjects: 0.666700 ms CreateObjectMapping: 0.208600 ms MarkObjects: 4.169200 ms  DeleteObjects: 0.642600 ms)
 
 ========================================================================
 Received Import Request.
-  path: Packages/com.unity.xr.openxr/package.json
-  artifactKey: Guid(763acfe7f0d8c4ac9a7bc96e08f0face) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/package.json using Guid(763acfe7f0d8c4ac9a7bc96e08f0face) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9386b557d62456293aa221f278fa9555') in 0.039044 seconds
-  Import took 0.043420 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.522582 seconds.
-  path: Packages/com.unity.xr.openxr/ConformanceAutomation
-  artifactKey: Guid(20fabbec025701c4b82246a74e8d94fd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/ConformanceAutomation using Guid(20fabbec025701c4b82246a74e8d94fd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c5a69be97f30c37160fe40017ca397d') in 0.007368 seconds
-  Import took 0.010836 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.010233 seconds.
-  path: Packages/com.unity.xr.openxr/ConformanceAutomation
-  artifactKey: Guid(20fabbec025701c4b82246a74e8d94fd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/ConformanceAutomation using Guid(20fabbec025701c4b82246a74e8d94fd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3c5a69be97f30c37160fe40017ca397d') in 0.001924 seconds
-  Import took 0.005612 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.583737 seconds.
-  path: Packages/com.unity.xr.openxr/Editor
-  artifactKey: Guid(e0b8ad5846feb4776aea0ea91472d348) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Editor using Guid(e0b8ad5846feb4776aea0ea91472d348) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2943adb28dbf6bc170d76e6f5ea2bbda') in 0.002586 seconds
-  Import took 0.008395 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000654 seconds.
-  path: Packages/com.unity.xr.openxr/Editor
-  artifactKey: Guid(e0b8ad5846feb4776aea0ea91472d348) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Editor using Guid(e0b8ad5846feb4776aea0ea91472d348) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2943adb28dbf6bc170d76e6f5ea2bbda') in 0.002432 seconds
-  Import took 0.007231 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.187126 seconds.
-  path: Packages/com.unity.xr.openxr/MockDriver
-  artifactKey: Guid(bb7c74ac387fd61438bce0bf9ef5ad09) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/MockDriver using Guid(bb7c74ac387fd61438bce0bf9ef5ad09) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '248ea446825eba183893dcf92fed0090') in 0.008908 seconds
-  Import took 0.012694 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.800235 seconds.
-  path: Packages/com.unity.xr.openxr/TestHelpers
-  artifactKey: Guid(4233f36a836d160479409697ee84a487) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/TestHelpers using Guid(4233f36a836d160479409697ee84a487) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4a7225635abaa292f3c74dbfd56edebd') in 0.014107 seconds
-  Import took 0.018937 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.073769 seconds.
-  path: Packages/com.unity.xr.openxr/TestHelpers/Unity.XR.OpenXR.TestHelpers.asmdef
-  artifactKey: Guid(39d0c2409f8f1ee47af5866dfe5bcd9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/TestHelpers/Unity.XR.OpenXR.TestHelpers.asmdef using Guid(39d0c2409f8f1ee47af5866dfe5bcd9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c285ed2405be2924fac7dd0982e9e3af') in 0.021298 seconds
-  Import took 0.027708 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.868518 seconds.
-  path: Packages/com.unity.xr.openxr/Tests
-  artifactKey: Guid(dc710e17ed34044488ef99237fc04b80) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests using Guid(dc710e17ed34044488ef99237fc04b80) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f5284780a80eef62c2abc13b3c5b3043') in 0.007945 seconds
-  Import took 0.011700 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.847288 seconds.
-  path: Packages/com.unity.xr.openxr/RuntimeDebugger
-  artifactKey: Guid(568f5a2dcbb6d2a41ac60e97c9a900d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/RuntimeDebugger using Guid(568f5a2dcbb6d2a41ac60e97c9a900d2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2bd7f088f936f9814519b29fd114254d') in 0.007005 seconds
-  Import took 0.010660 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.088905 seconds.
-  path: Packages/com.unity.xr.openxr/RuntimeDebugger/Unity.XR.OpenXR.Features.RuntimeDebugger.asmdef
-  artifactKey: Guid(784a7033de40af04db4f8c4de440f481) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/RuntimeDebugger/Unity.XR.OpenXR.Features.RuntimeDebugger.asmdef using Guid(784a7033de40af04db4f8c4de440f481) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3a0c8d96ee047eec5ccce23f19a2ee3e') in 0.006487 seconds
-  Import took 0.010345 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 8.834095 seconds.
-  path: Packages/com.unity.xr.openxr/RuntimeDebugger/windows
-  artifactKey: Guid(7da8d042670146c1af39bea38216e4b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/RuntimeDebugger/windows using Guid(7da8d042670146c1af39bea38216e4b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5350828a07258a91b796749a2daba848') in 0.007243 seconds
-  Import took 0.011226 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.295514 seconds.
-  path: Packages/com.unity.xr.openxr/ConformanceAutomation/Unity.XR.OpenXR.Features.ConformanceAutomation.asmdef
-  artifactKey: Guid(c8303d49cf73f7a4e9390d229bc0aaab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/ConformanceAutomation/Unity.XR.OpenXR.Features.ConformanceAutomation.asmdef using Guid(c8303d49cf73f7a4e9390d229bc0aaab) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b372aefa32ee0206c4a8282814d34f20') in 0.008875 seconds
-  Import took 0.014160 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.025411 seconds.
-  path: Packages/com.unity.xr.openxr/ConformanceAutomation/ConformanceAutomationFeature.cs
-  artifactKey: Guid(486b5e28864f9a94b979b9620ce5006d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/ConformanceAutomation/ConformanceAutomationFeature.cs using Guid(486b5e28864f9a94b979b9620ce5006d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c8f684def194e24fe06b53835ed893cf') in 0.012979 seconds
-  Import took 0.016508 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.006324 seconds.
-  path: Packages/com.unity.xr.openxr/ConformanceAutomation/ConformanceAutomationFeature.cs
-  artifactKey: Guid(486b5e28864f9a94b979b9620ce5006d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/ConformanceAutomation/ConformanceAutomationFeature.cs using Guid(486b5e28864f9a94b979b9620ce5006d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c8f684def194e24fe06b53835ed893cf') in 0.002125 seconds
-  Import took 0.005526 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.084640 seconds.
-  path: Packages/com.unity.xr.openxr/ConformanceAutomation/HelperTypes.cs
-  artifactKey: Guid(418e4d08efe0816488a7f8952b031769) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/ConformanceAutomation/HelperTypes.cs using Guid(418e4d08efe0816488a7f8952b031769) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3718257b99e82c7e4bc80103eb5768cc') in 0.006754 seconds
-  Import took 0.012983 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.001425 seconds.
-  path: Packages/com.unity.xr.openxr/ConformanceAutomation/HelperTypes.cs
-  artifactKey: Guid(418e4d08efe0816488a7f8952b031769) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/ConformanceAutomation/HelperTypes.cs using Guid(418e4d08efe0816488a7f8952b031769) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3718257b99e82c7e4bc80103eb5768cc') in 0.002598 seconds
-  Import took 0.006276 seconds .
-
-========================================================================
-Received Prepare
-Refreshing native plugins compatible for Editor in 13.39 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 21 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 54.3 MB.
-System memory in use after: 54.4 MB.
-
-Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 2366.
-Total: 7.678400 ms (FindLiveObjects: 0.778300 ms CreateObjectMapping: 0.357700 ms MarkObjects: 6.474400 ms  DeleteObjects: 0.060900 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 25.493970 seconds.
-  path: Packages/com.unity.xr.openxr/ConformanceAutomation/windows
-  artifactKey: Guid(f3e26f37a573463381c5747aae6c7be8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/ConformanceAutomation/windows using Guid(f3e26f37a573463381c5747aae6c7be8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd0c96d9159c9cf06877e8980b6ec0546') in 0.002926 seconds
-  Import took 0.007177 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000589 seconds.
-  path: Packages/com.unity.xr.openxr/ConformanceAutomation/windows
-  artifactKey: Guid(f3e26f37a573463381c5747aae6c7be8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/ConformanceAutomation/windows using Guid(f3e26f37a573463381c5747aae6c7be8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd0c96d9159c9cf06877e8980b6ec0546') in 0.002096 seconds
-  Import took 0.005166 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.270447 seconds.
-  path: Packages/com.unity.xr.openxr/ConformanceAutomation/windows/x64
-  artifactKey: Guid(2900a390c09b487abdfc769533573f26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/ConformanceAutomation/windows/x64 using Guid(2900a390c09b487abdfc769533573f26) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6c21424a1a605173e32fb7e7116779dc') in 0.012449 seconds
-  Import took 0.016580 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.668340 seconds.
-  path: Packages/com.unity.xr.openxr/ConformanceAutomation/windows/x64/ConformanceAutomationExt.dll
-  artifactKey: Guid(106e2dab2ea448b18ef8779ac6848f0e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/ConformanceAutomation/windows/x64/ConformanceAutomationExt.dll using Guid(106e2dab2ea448b18ef8779ac6848f0e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd78c9b9a29167c1f7dd62cfdc2c190ce') in 0.020364 seconds
-  Import took 0.024407 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.009814 seconds.
-  path: Packages/com.unity.xr.openxr/ConformanceAutomation/windows/x64/ConformanceAutomationExt.dll
-  artifactKey: Guid(106e2dab2ea448b18ef8779ac6848f0e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/ConformanceAutomation/windows/x64/ConformanceAutomationExt.dll using Guid(106e2dab2ea448b18ef8779ac6848f0e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd78c9b9a29167c1f7dd62cfdc2c190ce') in 0.002203 seconds
-  Import took 0.005346 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 5.922376 seconds.
-  path: Packages/com.unity.xr.openxr/MockDriver/Unity.XR.OpenXR.Features.MockDriver.asmdef
-  artifactKey: Guid(f7f7fe2fdeb58ee4fb7849c64469cac5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/MockDriver/Unity.XR.OpenXR.Features.MockDriver.asmdef using Guid(f7f7fe2fdeb58ee4fb7849c64469cac5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e2ef0a5c1a6de70f552dd79543460ca2') in 0.006944 seconds
-  Import took 0.010460 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.083635 seconds.
-  path: Packages/com.unity.xr.openxr/MockDriver/MockDriver.cs
-  artifactKey: Guid(96efa89124dda0941802f28ad8249b87) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/MockDriver/MockDriver.cs using Guid(96efa89124dda0941802f28ad8249b87) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '73891344e3195a389274ce3f13126c86') in 0.001694 seconds
-  Import took 0.005189 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.006085 seconds.
-  path: Packages/com.unity.xr.openxr/MockDriver/MockDriver.cs
-  artifactKey: Guid(96efa89124dda0941802f28ad8249b87) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/MockDriver/MockDriver.cs using Guid(96efa89124dda0941802f28ad8249b87) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '73891344e3195a389274ce3f13126c86') in 0.002219 seconds
-  Import took 0.005586 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 10.893809 seconds.
-  path: Packages/com.unity.xr.openxr/MockRuntime
-  artifactKey: Guid(b4c20891c0c95644c8e047b2bda749b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/MockRuntime using Guid(b4c20891c0c95644c8e047b2bda749b3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '004b94f1b108554a7311d8cd5d751cbc') in 0.012011 seconds
-  Import took 0.015697 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.398850 seconds.
-  path: Packages/com.unity.xr.openxr/MockRuntime/Unity.XR.OpenXR.Features.MockRuntime.asmdef
-  artifactKey: Guid(6150739e4dc7bff4d833306fd9d5a4f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/MockRuntime/Unity.XR.OpenXR.Features.MockRuntime.asmdef using Guid(6150739e4dc7bff4d833306fd9d5a4f0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '27d7898d388519d658ee8613f0b749d1') in 0.008125 seconds
-  Import took 0.013181 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 7.792386 seconds.
-  path: Packages/com.unity.xr.openxr/MockRuntime/MockRuntimeFeatureSet.cs
-  artifactKey: Guid(dcd9ce9a47c266d469ed6f967ce5be9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/MockRuntime/MockRuntimeFeatureSet.cs using Guid(dcd9ce9a47c266d469ed6f967ce5be9b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ed2cd57d7f315237bb2d2e5dfdf6681a') in 0.006928 seconds
-  Import took 0.011988 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.494627 seconds.
-  path: Packages/com.unity.xr.openxr/MockRuntime/MockRuntime.cs
-  artifactKey: Guid(7de993716e042c6499d0c18eed3a773c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/MockRuntime/MockRuntime.cs using Guid(7de993716e042c6499d0c18eed3a773c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ea0db38fc1c8d4f65fc92cc73806a06c') in 0.002033 seconds
-  Import took 0.005812 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 6.471900 seconds.
-  path: Packages/com.unity.xr.openxr/MockRuntime/windows
-  artifactKey: Guid(43ee61987da84baeacd7f48f6ee2f7ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/MockRuntime/windows using Guid(43ee61987da84baeacd7f48f6ee2f7ff) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '10406f86092c2f6a60c09461df184b14') in 0.002192 seconds
-  Import took 0.006541 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.919202 seconds.
-  path: Assets/InteractML/Resources/Fonts/avenir-font/Avenir-Roman.ttf
-  artifactKey: Guid(2a7d0686c79d37b47a9a49d676946df1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Resources/Fonts/avenir-font/Avenir-Roman.ttf using Guid(2a7d0686c79d37b47a9a49d676946df1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '90aa05fd3d89c751e4c799bab60536f4') in 0.120694 seconds
-  Import took 0.124530 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000263 seconds.
-  path: Assets/InteractML/Resources/Fonts/avenir/AvenirNextLTPro-Regular.ttf
-  artifactKey: Guid(96dbe7ba9409fe7459f917e66cf9e4cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Resources/Fonts/avenir/AvenirNextLTPro-Regular.ttf using Guid(96dbe7ba9409fe7459f917e66cf9e4cc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f94f0c40d69231f1e4534e0b205e67ea') in 0.015500 seconds
-  Import took 0.019433 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000366 seconds.
-  path: Assets/InteractML/Resources/Fonts/avenir-font/AvenirLTStd-Book.otf
-  artifactKey: Guid(56b167476a7c53b43a4ef73de56b6435) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Resources/Fonts/avenir-font/AvenirLTStd-Book.otf using Guid(56b167476a7c53b43a4ef73de56b6435) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cc54d01c4804d1b6796b73e022f147e3') in 0.044304 seconds
-  Import took 0.052871 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000961 seconds.
-  path: Assets/InteractML/Resources/Fonts/avenir-font/AvenirLTStd-Roman.otf
-  artifactKey: Guid(c8ce2b1016680ac4aa39c1335b3214f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Resources/Fonts/avenir-font/AvenirLTStd-Roman.otf using Guid(c8ce2b1016680ac4aa39c1335b3214f4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7fb5ea6706b3f096e20d31b214c13663') in 0.042149 seconds
-  Import took 0.048921 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000299 seconds.
-  path: Assets/InteractML/Resources/Fonts/avenir/AvenirNextLTPro-HeavyCn.ttf
-  artifactKey: Guid(cc847cb103b77c64fb416c951062bd75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Resources/Fonts/avenir/AvenirNextLTPro-HeavyCn.ttf using Guid(cc847cb103b77c64fb416c951062bd75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '84446f65adac2ffae0e14609999208cd') in 0.037210 seconds
-  Import took 0.046138 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000888 seconds.
-  path: Assets/Dependencies/xNode/xNode-examples/MathGraph/New Math Graph.asset
-  artifactKey: Guid(97b11561dfa2a2646a1217518e90411b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Dependencies/xNode/xNode-examples/MathGraph/New Math Graph.asset using Guid(97b11561dfa2a2646a1217518e90411b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1e83578ee7966b53b2418590f3aef4a3') in 0.015802 seconds
-  Import took 0.026246 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000610 seconds.
-  path: Assets/InteractML/Resources/Fonts/avenir/AvenirNextLTPro-HeavyCnIt.ttf
-  artifactKey: Guid(22a2df84db46bd54d88ad69ba29554d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Resources/Fonts/avenir/AvenirNextLTPro-HeavyCnIt.ttf using Guid(22a2df84db46bd54d88ad69ba29554d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0f3fd09286e4cc318b41537b33780194') in 0.038531 seconds
-  Import took 0.046958 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000330 seconds.
-  path: Assets/InteractML_Examples/Mouse_Input/Mouse Sound Generator/IML_Controllers/Mouse_Input_Sinewave_Output.asset
-  artifactKey: Guid(dff98aebdf27d1d4eac59c0e6fed502d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Sound Generator/IML_Controllers/Mouse_Input_Sinewave_Output.asset using Guid(dff98aebdf27d1d4eac59c0e6fed502d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fe0c16a71fb13df138746861c0cb7e33') in 0.016404 seconds
-  Import took 0.023958 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000660 seconds.
-  path: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
-  artifactKey: Guid(2e498d1c8094910479dc3e1b768306a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset using Guid(2e498d1c8094910479dc3e1b768306a4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8829b1df7867162d406da565eda30e52') in 0.143931 seconds
-  Import took 0.151532 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000279 seconds.
-  path: Assets/TextMesh Pro/Fonts/LiberationSans.ttf
-  artifactKey: Guid(e3265ab4bf004d28a9537516768c1c75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/TextMesh Pro/Fonts/LiberationSans.ttf using Guid(e3265ab4bf004d28a9537516768c1c75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e14853f5a452a0f5ff0e77c78b693868') in 0.014953 seconds
-  Import took 0.019306 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000286 seconds.
-  path: Assets/InteractML/Resources/Fonts/avenir-font/Avenir-Book.ttf
-  artifactKey: Guid(d4e6e568293da6749b421d696878c284) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Resources/Fonts/avenir-font/Avenir-Book.ttf using Guid(d4e6e568293da6749b421d696878c284) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5605de4351fbfc7a3e8ae3dc1b1601bc') in 0.019658 seconds
-  Import took 0.025457 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000501 seconds.
-  path: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset
-  artifactKey: Guid(8f586378b4e144a9851e7b34d9b748ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset using Guid(8f586378b4e144a9851e7b34d9b748ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c2c950d1cb2742ea410a659f35189bc2') in 0.064692 seconds
-  Import took 0.071003 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000270 seconds.
-  path: Assets/InteractML/Resources/Fonts/avenir-font/Avenir-Light.ttf
-  artifactKey: Guid(88136b1ae8894e3419e35fa0ea452727) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Resources/Fonts/avenir-font/Avenir-Light.ttf using Guid(88136b1ae8894e3419e35fa0ea452727) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1eb00b314e0d462351d7d2c7a21516b1') in 0.031648 seconds
-  Import took 0.036936 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000323 seconds.
-  path: Assets/InteractMLVR/RadialMenu/Textures/Icons/teachTheMachine.png
-  artifactKey: Guid(9f97a882c5d82544983ee1fef137dbe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractMLVR/RadialMenu/Textures/Icons/teachTheMachine.png using Guid(9f97a882c5d82544983ee1fef137dbe2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '05d2e8630765f7363eb77a8b87466b85') in 0.099880 seconds
-  Import took 0.104159 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000245 seconds.
-  path: Assets/Dependencies/xNode/xNode-examples/RuntimeMathGraph/Prefabs/Nodes/MathNode.prefab
-  artifactKey: Guid(4feddbc48021f37449adc6b750f91afa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Dependencies/xNode/xNode-examples/RuntimeMathGraph/Prefabs/Nodes/MathNode.prefab using Guid(4feddbc48021f37449adc6b750f91afa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fe9a8f103c142261196c2504c88d1dfe') in 0.092406 seconds
-  Import took 0.096292 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000286 seconds.
-  path: Assets/InteractML/Resources/Fonts/avenir/AvenirLTStd-Book.ttf
-  artifactKey: Guid(876c259da463d0c438b296c2a2b4c8b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Resources/Fonts/avenir/AvenirLTStd-Book.ttf using Guid(876c259da463d0c438b296c2a2b4c8b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd407667bebe89e81ad68f2d81dcbc85e') in 0.012335 seconds
-  Import took 0.017535 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000345 seconds.
-  path: Assets/InteractML/Resources/Fonts/avenir-font/AvenirLTStd-Light.otf
-  artifactKey: Guid(e3b84f6c42427f046a1b54242cadd994) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Resources/Fonts/avenir-font/AvenirLTStd-Light.otf using Guid(e3b84f6c42427f046a1b54242cadd994) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1e1f06ccbf81948daffd8235d5ec4c59') in 0.034048 seconds
-  Import took 0.037778 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 6.364794 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime
-  artifactKey: Guid(95a45e2eff66745b1ba7ca6684e8a4b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime using Guid(95a45e2eff66745b1ba7ca6684e8a4b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3297641ce43f9d86e05b06442c0a792f') in 0.008871 seconds
-  Import took 0.012858 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.025160 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/Unity.XR.OpenXR.Tests.asmdef
-  artifactKey: Guid(2023fa18bf9504e98b11fe2174802802) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/Unity.XR.OpenXR.Tests.asmdef using Guid(2023fa18bf9504e98b11fe2174802802) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '855188d5ae176730b2603276d4d87a06') in 0.006060 seconds
-  Import took 0.009133 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.879722 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/LoaderTestSetup.cs
-  artifactKey: Guid(c3fab20e4f2e451dbbc1a5856ce147be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/LoaderTestSetup.cs using Guid(c3fab20e4f2e451dbbc1a5856ce147be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '60d4b9121cf09c035f131c679a21500a') in 0.006548 seconds
-  Import took 0.012315 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.003400 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/LoaderTestSetup.cs
-  artifactKey: Guid(c3fab20e4f2e451dbbc1a5856ce147be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/LoaderTestSetup.cs using Guid(c3fab20e4f2e451dbbc1a5856ce147be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '60d4b9121cf09c035f131c679a21500a') in 0.002204 seconds
-  Import took 0.006204 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 5.603339 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/OpenXRRuntimeTests.cs
-  artifactKey: Guid(6dbd87dbe22dfb9449d36960109d3522) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/OpenXRRuntimeTests.cs using Guid(6dbd87dbe22dfb9449d36960109d3522) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e8594e688ab8f08f78597e5e4bb593f') in 0.008446 seconds
-  Import took 0.013079 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.001355 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/OpenXRRuntimeTests.cs
-  artifactKey: Guid(6dbd87dbe22dfb9449d36960109d3522) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/OpenXRRuntimeTests.cs using Guid(6dbd87dbe22dfb9449d36960109d3522) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e8594e688ab8f08f78597e5e4bb593f') in 0.002409 seconds
-  Import took 0.005528 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.678144 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/OpenXRLoaderTests.cs
-  artifactKey: Guid(dc089751c573dfb4d8d426e22a9fe5ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/OpenXRLoaderTests.cs using Guid(dc089751c573dfb4d8d426e22a9fe5ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7b80c11f3bdac637f4976d655763eaa3') in 0.006950 seconds
-  Import took 0.013082 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.002189 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/OpenXRLoaderTests.cs
-  artifactKey: Guid(dc089751c573dfb4d8d426e22a9fe5ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/OpenXRLoaderTests.cs using Guid(dc089751c573dfb4d8d426e22a9fe5ec) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7b80c11f3bdac637f4976d655763eaa3') in 0.002148 seconds
-  Import took 0.005506 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.520142 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/OpenXRLoaderSetup.cs
-  artifactKey: Guid(9cd6d4e6af6509848ad46f9249bc5a03) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/OpenXRLoaderSetup.cs using Guid(9cd6d4e6af6509848ad46f9249bc5a03) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd0cda77291b5d89b28b375096aa0e223') in 0.007038 seconds
-  Import took 0.011555 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.001432 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/OpenXRLoaderSetup.cs
-  artifactKey: Guid(9cd6d4e6af6509848ad46f9249bc5a03) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/OpenXRLoaderSetup.cs using Guid(9cd6d4e6af6509848ad46f9249bc5a03) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd0cda77291b5d89b28b375096aa0e223') in 0.001965 seconds
-  Import took 0.005826 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.578697 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/OpenXRFeatureTests.cs
-  artifactKey: Guid(9050a5edea0d4cf19f270d6c4ebac796) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/OpenXRFeatureTests.cs using Guid(9050a5edea0d4cf19f270d6c4ebac796) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'aa9a9cedbc51009969fb314e3db1cbed') in 0.010008 seconds
-  Import took 0.013869 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.641240 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/NoRuntimeTests.cs
-  artifactKey: Guid(6040e3f8adec12540a375e422f163de9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/NoRuntimeTests.cs using Guid(6040e3f8adec12540a375e422f163de9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '57851f815e213682fb232813ee78ba21') in 0.007292 seconds
-  Import took 0.011595 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000426 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/NoRuntimeTests.cs
-  artifactKey: Guid(6040e3f8adec12540a375e422f163de9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/NoRuntimeTests.cs using Guid(6040e3f8adec12540a375e422f163de9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '57851f815e213682fb232813ee78ba21') in 0.003563 seconds
-  Import took 0.008444 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.941674 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/MockDriverRuntimeTests.cs
-  artifactKey: Guid(3b727f98ed496a3428842314282a4638) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/MockDriverRuntimeTests.cs using Guid(3b727f98ed496a3428842314282a4638) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3090a8cf4c3ebce3e3e3eade23bb9eb2') in 0.011739 seconds
-  Import took 0.017772 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.003451 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/MockDriverRuntimeTests.cs
-  artifactKey: Guid(3b727f98ed496a3428842314282a4638) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/MockDriverRuntimeTests.cs using Guid(3b727f98ed496a3428842314282a4638) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3090a8cf4c3ebce3e3e3eade23bb9eb2') in 0.004752 seconds
-  Import took 0.011380 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.617569 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/ManagementTestSetup.cs
-  artifactKey: Guid(205f1850c21694e34b2b06a191e3b27b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/ManagementTestSetup.cs using Guid(205f1850c21694e34b2b06a191e3b27b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ebd2b6896a22597103cec9b06cf0699d') in 0.006226 seconds
-  Import took 0.012135 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.002079 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/ManagementTestSetup.cs
-  artifactKey: Guid(205f1850c21694e34b2b06a191e3b27b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/ManagementTestSetup.cs using Guid(205f1850c21694e34b2b06a191e3b27b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ebd2b6896a22597103cec9b06cf0699d') in 0.002141 seconds
-  Import took 0.006365 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.186064 seconds.
-  path: Packages/com.unity.xr.openxr/Tests/Runtime/DiagnosticReportTests.cs
-  artifactKey: Guid(6bf97c878af61544d8e27f6a50a1d9ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Tests/Runtime/DiagnosticReportTests.cs using Guid(6bf97c878af61544d8e27f6a50a1d9ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8522bce3f4994b7c0924a27f5c385e46') in 0.006366 seconds
-  Import took 0.009800 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 8.554139 seconds.
-  path: Packages/com.unity.xr.openxr/RuntimeLoaders
-  artifactKey: Guid(ba7a8ced55f13d74d9b0e12f37800a4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/RuntimeLoaders using Guid(ba7a8ced55f13d74d9b0e12f37800a4d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '747bac346af2b9c0ea39d4435e28d8e8') in 0.007400 seconds
-  Import took 0.011503 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.419518 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime
-  artifactKey: Guid(6f1f11b765b3347a1ac795400986b9be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime using Guid(6f1f11b765b3347a1ac795400986b9be) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bc5342daead4fe4c4d043b2469094de7') in 0.002726 seconds
-  Import took 0.007077 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.132355 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/Unity.XR.OpenXR.asmdef
-  artifactKey: Guid(4847341ff46394e83bb78fbd0652937e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/Unity.XR.OpenXR.asmdef using Guid(4847341ff46394e83bb78fbd0652937e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e0fdbc8bceaff27fdd6f7226ac66c356') in 0.006836 seconds
-  Import took 0.010411 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 3.241080 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/OpenXRAnalytics.cs
-  artifactKey: Guid(b2ee7eecb9814c689a865aa4312a7701) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/OpenXRAnalytics.cs using Guid(b2ee7eecb9814c689a865aa4312a7701) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd0ea17e6b5ff5729d1a93a65813e0e49') in 0.006943 seconds
-  Import took 0.011775 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.778539 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/OpenXRConstants.cs
-  artifactKey: Guid(60ca6545650dbad4a9b77c456f8463ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/OpenXRConstants.cs using Guid(60ca6545650dbad4a9b77c456f8463ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f1a2f2cadcb231ab97473be133ae94c') in 0.008082 seconds
-  Import took 0.012900 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.001277 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/OpenXRConstants.cs
-  artifactKey: Guid(60ca6545650dbad4a9b77c456f8463ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/OpenXRConstants.cs using Guid(60ca6545650dbad4a9b77c456f8463ad) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f1a2f2cadcb231ab97473be133ae94c') in 0.005373 seconds
-  Import took 0.015663 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.757593 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/OpenXRDiagnosticReport.cs
-  artifactKey: Guid(d0a68818db30b844ebe06958ebd83f38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/OpenXRDiagnosticReport.cs using Guid(d0a68818db30b844ebe06958ebd83f38) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '701bb0f28e58a63dcfb23a5d0f1378d1') in 0.005703 seconds
-  Import took 0.010241 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.621160 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/OpenXRLoader.cs
-  artifactKey: Guid(d3552e428dc7646a88de3ed3650f87da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/OpenXRLoader.cs using Guid(d3552e428dc7646a88de3ed3650f87da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8118189171e002154c65477efb61da4d') in 0.006025 seconds
-  Import took 0.009792 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.683617 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/OpenXRLoaderInternal.cs
-  artifactKey: Guid(6b96d3b7766d41dfa17f3c34f2ab18b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/OpenXRLoaderInternal.cs using Guid(6b96d3b7766d41dfa17f3c34f2ab18b1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f1ecb8cf2df49765f2f93f0183a8ff7b') in 0.011205 seconds
-  Import took 0.015743 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.724022 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/OpenXRLoaderNoPreInit.cs
-  artifactKey: Guid(ee62ffd6c7e6f3545899783b1fbdd9d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/OpenXRLoaderNoPreInit.cs using Guid(ee62ffd6c7e6f3545899783b1fbdd9d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3a1095f9649a92fcea5193dbb44d5019') in 0.007101 seconds
-  Import took 0.010341 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.001560 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/OpenXRLoaderNoPreInit.cs
-  artifactKey: Guid(ee62ffd6c7e6f3545899783b1fbdd9d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/OpenXRLoaderNoPreInit.cs using Guid(ee62ffd6c7e6f3545899783b1fbdd9d4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3a1095f9649a92fcea5193dbb44d5019') in 0.002434 seconds
-  Import took 0.005566 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.166292 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/OpenXRProjectValidation.cs
-  artifactKey: Guid(ad4f6b0c01997fa44844397ca09a5544) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/OpenXRProjectValidation.cs using Guid(ad4f6b0c01997fa44844397ca09a5544) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a64593d96a48f61874a1ba39b6258c7c') in 0.011019 seconds
-  Import took 0.015350 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.121621 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/input
-  artifactKey: Guid(5c16015429677a94cbc26b50689a0f2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/input using Guid(5c16015429677a94cbc26b50689a0f2b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd8ba074284db3878c3bd13fb4adf95c0') in 0.007116 seconds
-  Import took 0.011133 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 2.036785 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/input/OpenXRDevice.cs
-  artifactKey: Guid(817760b76f5e57b4698bd2a27c26f55d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/input/OpenXRDevice.cs using Guid(817760b76f5e57b4698bd2a27c26f55d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1eeb10811643dc29bc80657816c935e6') in 0.008989 seconds
-  Import took 0.013339 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000487 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/input/OpenXRDevice.cs
-  artifactKey: Guid(817760b76f5e57b4698bd2a27c26f55d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/input/OpenXRDevice.cs using Guid(817760b76f5e57b4698bd2a27c26f55d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1eeb10811643dc29bc80657816c935e6') in 0.002096 seconds
-  Import took 0.005620 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 9.405547 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/input/OpenXRHmd.cs
-  artifactKey: Guid(8dce6d72fc8d2d34e88488a09129d8a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/input/OpenXRHmd.cs using Guid(8dce6d72fc8d2d34e88488a09129d8a1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9dca780bec239112610e5bd238557c81') in 0.011534 seconds
-  Import took 0.015603 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 4.848796 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/input/OpenXRInput.cs
-  artifactKey: Guid(e3c40c4727414881b56fb6ba2ced6cf2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/input/OpenXRInput.cs using Guid(e3c40c4727414881b56fb6ba2ced6cf2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '30fe6c4d14e09858f48f28b7329f38e2') in 0.007012 seconds
-  Import took 0.010858 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 65.418255 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/input/PoseControl.cs
-  artifactKey: Guid(a97daaeb654fbf449ac3c32bd2785d6c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/input/PoseControl.cs using Guid(a97daaeb654fbf449ac3c32bd2785d6c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '08c48595bfad8c3b1b2c1571ef36f697') in 0.007241 seconds
-  Import took 0.011208 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 133.368964 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/Features
-  artifactKey: Guid(a35b71692a8a6724e89cc63c9a2ca07b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/Features using Guid(a35b71692a8a6724e89cc63c9a2ca07b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cfe1f4e5536ede336ea13118acd37a25') in 0.007773 seconds
-  Import took 0.012646 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 1.475844 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/Features/OpenXRFeature.cs
-  artifactKey: Guid(a921ca457a309d94c96e7d15a0df0554) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/Features/OpenXRFeature.cs using Guid(a921ca457a309d94c96e7d15a0df0554) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ef3a8963397aefdacb1e34f7ee553ac9') in 0.006828 seconds
-  Import took 0.010922 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 6.353896 seconds.
-  path: Packages/com.unity.xr.openxr/Runtime/Features/Interactions
-  artifactKey: Guid(aa266ef62a5d4ede92a5c128da19498c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Packages/com.unity.xr.openxr/Runtime/Features/Interactions using Guid(aa266ef62a5d4ede92a5c128da19498c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd3f63ae6fde99ed97cdde87d6a1c179d') in 0.012731 seconds
-  Import took 0.017112 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 31.559093 seconds.
-  path: Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/DTW_Mouse_Input_ColorChange.asset
-  artifactKey: Guid(4f7c21b001de13743a16ae174908e557) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/DTW_Mouse_Input_ColorChange.asset using Guid(4f7c21b001de13743a16ae174908e557) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4be5d750cfc01ed5c46073f2a99e68c5') in 0.008836 seconds
-  Import took 0.013698 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000536 seconds.
-  path: Assets/InteractML/Resources/Icons/gameobject_transform_img.png
-  artifactKey: Guid(8ad2c47dbdbb961458f52af5a4d2a257) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Resources/Icons/gameobject_transform_img.png using Guid(8ad2c47dbdbb961458f52af5a4d2a257) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '96ce190eaf27dc85810b072d66c4cfc7') in 0.021895 seconds
-  Import took 0.027113 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000253 seconds.
-  path: Assets/Gizmos/FIMSpace/GroundFitter/FSimpleFitter Icon.png
-  artifactKey: Guid(30efe8d694a4d3c4284f7d9208be94c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Gizmos/FIMSpace/GroundFitter/FSimpleFitter Icon.png using Guid(30efe8d694a4d3c4284f7d9208be94c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5d6fc8b45715d1102301259eacef3db9') in 0.024210 seconds
-  Import took 0.027641 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 8.856261 seconds.
-  path: Assets/InteractML/Scripts/IML Logic/IMLComponent.cs
-  artifactKey: Guid(3c477b3f40f547843930edfdcbde5951) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Scripts/IML Logic/IMLComponent.cs using Guid(3c477b3f40f547843930edfdcbde5951) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fa6c6944a79030c221fbc76fec73c85b') in 0.007129 seconds
-  Import took 0.011506 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.016099 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.26 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.805 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 2.43 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1905 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.6 MB.
-System memory in use after: 92.8 MB.
-
-Unloading 128 unused Assets to reduce memory usage. Loaded Objects now: 2419.
-Total: 4.944300 ms (FindLiveObjects: 0.307700 ms CreateObjectMapping: 0.165100 ms MarkObjects: 4.340200 ms  DeleteObjects: 0.125400 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.006637 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 2.05 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  2.035 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.34 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1905 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.7 MB.
-System memory in use after: 92.8 MB.
-
-Unloading 122 unused Assets to reduce memory usage. Loaded Objects now: 2423.
-Total: 5.331700 ms (FindLiveObjects: 0.837100 ms CreateObjectMapping: 0.436500 ms MarkObjects: 3.929100 ms  DeleteObjects: 0.126100 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 121.528931 seconds.
-  path: Assets/InteractML_Examples/VRInterface/IML Graphs/Exercise1.asset
-  artifactKey: Guid(3b683368cff3c0245a5fccdb71a45fa1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/Exercise1.asset using Guid(3b683368cff3c0245a5fccdb71a45fa1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '63c5928e05d7d5dcdda8003e23536a83') in 0.042491 seconds
-  Import took 0.048840 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000387 seconds.
-  path: Assets/InteractML_Examples/VRInterface/IML Graphs/Exercise3.asset
-  artifactKey: Guid(6cf7e0c668e782b4594c8bcaa77ffad4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/Exercise3.asset using Guid(6cf7e0c668e782b4594c8bcaa77ffad4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '53296c613cae7b315714e6d5bca9d606') in 0.020831 seconds
-  Import took 0.028275 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000723 seconds.
-  path: Assets/InteractML_Examples/VRInterface/IML Graphs/Exercise2.asset
-  artifactKey: Guid(b4b1e68a3d3c467438ac0154496f9f9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/Exercise2.asset using Guid(b4b1e68a3d3c467438ac0154496f9f9f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5e9644760412df1ee5e576094b88d259') in 0.022231 seconds
-  Import took 0.031408 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000689 seconds.
   path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
   artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7ffb4c67ce794200744db6d86bc411e2') in 0.020371 seconds
-  Import took 0.034586 seconds .
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a3c52680b24a04d8446a48f5b0129baf') in 0.077469 seconds
+  Import took 0.084283 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000729 seconds.
-  path: Assets/InteractML_Examples/VRInterface/IML Graphs/Exercise1.asset
-  artifactKey: Guid(3b683368cff3c0245a5fccdb71a45fa1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/Exercise1.asset using Guid(3b683368cff3c0245a5fccdb71a45fa1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '63c5928e05d7d5dcdda8003e23536a83') in 0.010923 seconds
-  Import took 0.024175 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.566008 seconds.
+  Time since last request: 0.244988 seconds.
   path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
   artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7ffb4c67ce794200744db6d86bc411e2') in 0.010865 seconds
-  Import took 0.018938 seconds .
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'beff44998999359e450c21150a9725b4') in 0.012359 seconds
+  Import took 0.018838 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.362891 seconds.
+  Time since last request: 0.027080 seconds.
   path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
   artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ffeef9b7114e4c309423c6585afa3ce6') in 0.015152 seconds
-  Import took 0.025002 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.005606 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.63 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.538 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.70 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1905 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.7 MB.
-System memory in use after: 92.8 MB.
-
-Unloading 122 unused Assets to reduce memory usage. Loaded Objects now: 2427.
-Total: 3.395300 ms (FindLiveObjects: 0.283000 ms CreateObjectMapping: 0.108800 ms MarkObjects: 2.879200 ms  DeleteObjects: 0.122100 ms)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'beff44998999359e450c21150a9725b4') in 0.011690 seconds
+  Import took 0.023351 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 132.648980 seconds.
+  Time since last request: 11.431967 seconds.
   path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
   artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '46aa6cdbe6692c789140a1a22c15bb7d') in 0.027885 seconds
-  Import took 0.035304 seconds .
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5f10f60dc1a5ba743f8e894761de0b31') in 0.014229 seconds
+  Import took 0.021790 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.005586 seconds.
+  Time since last request: 0.021195 seconds.
   path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
   artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '46aa6cdbe6692c789140a1a22c15bb7d') in 0.007673 seconds
-  Import took 0.013318 seconds .
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5f10f60dc1a5ba743f8e894761de0b31') in 0.013223 seconds
+  Import took 0.021814 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 6.408608 seconds.
-  path: Assets/InteractMLVR/VRTrigger.cs
-  artifactKey: Guid(b8166fe08bd578f4a90d1fc91b674360) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractMLVR/VRTrigger.cs using Guid(b8166fe08bd578f4a90d1fc91b674360) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '241e6e68b217c616a1da16315013aa08') in 0.009159 seconds
-  Import took 0.013485 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.032964 seconds.
-  path: Assets/InteractMLVR/VRTrigger.cs
-  artifactKey: Guid(b8166fe08bd578f4a90d1fc91b674360) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractMLVR/VRTrigger.cs using Guid(b8166fe08bd578f4a90d1fc91b674360) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '241e6e68b217c616a1da16315013aa08') in 0.002619 seconds
-  Import took 0.006501 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.005731 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.56 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.393 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.58 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1905 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.7 MB.
-System memory in use after: 92.8 MB.
-
-Unloading 122 unused Assets to reduce memory usage. Loaded Objects now: 2431.
-Total: 2.535700 ms (FindLiveObjects: 0.220400 ms CreateObjectMapping: 0.086800 ms MarkObjects: 2.152100 ms  DeleteObjects: 0.075500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.006004 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.73 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.631 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.83 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1904 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.7 MB.
-System memory in use after: 92.8 MB.
-
-Unloading 112 unused Assets to reduce memory usage. Loaded Objects now: 2435.
-Total: 3.513700 ms (FindLiveObjects: 0.435000 ms CreateObjectMapping: 0.145400 ms MarkObjects: 2.803800 ms  DeleteObjects: 0.127300 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.014822 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.66 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.491 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.05 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1905 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.8 MB.
-System memory in use after: 92.9 MB.
-
-Unloading 122 unused Assets to reduce memory usage. Loaded Objects now: 2439.
-Total: 3.506900 ms (FindLiveObjects: 0.308300 ms CreateObjectMapping: 0.125200 ms MarkObjects: 2.961500 ms  DeleteObjects: 0.110300 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.012533 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.91 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.654 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.79 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1905 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.8 MB.
-System memory in use after: 92.9 MB.
-
-Unloading 122 unused Assets to reduce memory usage. Loaded Objects now: 2443.
-Total: 4.410000 ms (FindLiveObjects: 0.363100 ms CreateObjectMapping: 0.153200 ms MarkObjects: 3.783700 ms  DeleteObjects: 0.107500 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.015226 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.66 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.506 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.03 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1905 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.8 MB.
-System memory in use after: 92.9 MB.
-
-Unloading 122 unused Assets to reduce memory usage. Loaded Objects now: 2447.
-Total: 3.297700 ms (FindLiveObjects: 0.261400 ms CreateObjectMapping: 0.099700 ms MarkObjects: 2.843100 ms  DeleteObjects: 0.091700 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.006048 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 1.12 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.703 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.64 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1904 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.8 MB.
-System memory in use after: 92.9 MB.
-
-Unloading 112 unused Assets to reduce memory usage. Loaded Objects now: 2451.
-Total: 3.011500 ms (FindLiveObjects: 0.323600 ms CreateObjectMapping: 0.091000 ms MarkObjects: 2.515000 ms  DeleteObjects: 0.081000 ms)
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.005628 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.60 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.174 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.54 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1905 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.8 MB.
-System memory in use after: 92.9 MB.
-
-Unloading 122 unused Assets to reduce memory usage. Loaded Objects now: 2455.
-Total: 2.588600 ms (FindLiveObjects: 0.296600 ms CreateObjectMapping: 0.090200 ms MarkObjects: 2.136700 ms  DeleteObjects: 0.063900 ms)
-
-========================================================================
-Received Import Request.
-  Time since last request: 403.762568 seconds.
-  path: Assets/InteractML/Resources/Icons/blue_training.png
-  artifactKey: Guid(bcaf99eb39e94b34796fec006ff7f77f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Resources/Icons/blue_training.png using Guid(bcaf99eb39e94b34796fec006ff7f77f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd9fff39f5c9155a900cc6df6655cda2c') in 0.054977 seconds
-  Import took 0.059124 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000333 seconds.
-  path: Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/Regression_Mouse_Input_Color_Output_IML_Controller.asset
-  artifactKey: Guid(45b109d7874046141b6f67afaa5fe7d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/Regression_Mouse_Input_Color_Output_IML_Controller.asset using Guid(45b109d7874046141b6f67afaa5fe7d1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4cf8e5c38b6fa313d86e4de6b4bde960') in 0.017020 seconds
-  Import took 0.022062 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000340 seconds.
-  path: Assets/InteractML_Examples/Mouse_Input/Mouse Console Output/IML_Controllers/Mouse_Input_Console_Output_IML_Controller.asset
-  artifactKey: Guid(a191038540a36244faf78fede7b0bfaa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Console Output/IML_Controllers/Mouse_Input_Console_Output_IML_Controller.asset using Guid(a191038540a36244faf78fede7b0bfaa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '87ba127bfac423929b59a926bdc254ed') in 0.010296 seconds
-  Import took 0.017159 seconds .
-
-========================================================================
-Received Import Request.
-  Time since last request: 0.000556 seconds.
+  Time since last request: 2.387900 seconds.
   path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
   artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5074a031d9c08b91da18f4b62cb21d18') in 0.013092 seconds
-  Import took 0.022576 seconds .
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ff8575ee394c067cf2a6eac54146e2a6') in 0.004955 seconds
+  Import took 0.010046 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000365 seconds.
-  path: Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/Classification_mouse_input_colorchange.asset
-  artifactKey: Guid(9e2fe998361fad74b9687f803bfa59ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/Classification_mouse_input_colorchange.asset using Guid(9e2fe998361fad74b9687f803bfa59ef) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '92a9d044ef1274ec56f103e3d0d42143') in 0.023010 seconds
-  Import took 0.028838 seconds .
+  Time since last request: 0.037140 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ff8575ee394c067cf2a6eac54146e2a6') in 0.007121 seconds
+  Import took 0.012917 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000313 seconds.
-  path: Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/New IML Graph.asset
-  artifactKey: Guid(8f6a86ff2a0e44840add04dbb22e57d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML_Examples/Mouse_Input/Mouse Colour Change/IML_Controllers/New IML Graph.asset using Guid(8f6a86ff2a0e44840add04dbb22e57d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '45dcefb811047e4cdddc042a3196861e') in 0.016987 seconds
-  Import took 0.023684 seconds .
+  Time since last request: 1.954384 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '64267ccad3e75da0798e1d750c18a31d') in 0.009318 seconds
+  Import took 0.014313 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 2.280609 seconds.
-  path: Assets/InteractML/Scripts/IML Nodes/Editor/SeriesTrainingExamplesNodeEditor.cs
-  artifactKey: Guid(8cccc439bd8e76d458598a00301e747f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Scripts/IML Nodes/Editor/SeriesTrainingExamplesNodeEditor.cs using Guid(8cccc439bd8e76d458598a00301e747f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1f3a84e567c64d8243c4fed02f9e8503') in 0.010284 seconds
-  Import took 0.015178 seconds .
+  Time since last request: 0.027899 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '64267ccad3e75da0798e1d750c18a31d') in 0.011399 seconds
+  Import took 0.020376 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000991 seconds.
-  path: Assets/InteractML/Scripts/IML Nodes/Editor/SeriesTrainingExamplesNodeEditor.cs
-  artifactKey: Guid(8cccc439bd8e76d458598a00301e747f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Scripts/IML Nodes/Editor/SeriesTrainingExamplesNodeEditor.cs using Guid(8cccc439bd8e76d458598a00301e747f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1f3a84e567c64d8243c4fed02f9e8503') in 0.002533 seconds
-  Import took 0.006308 seconds .
+  Time since last request: 4.849174 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cde469ef1fcd1752217ab947765ddaf6') in 0.008057 seconds
+  Import took 0.014377 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 7.973448 seconds.
-  path: Assets/InteractML/Scripts/IML Nodes/Editor/TrainingExamplesNodeEditor.cs
-  artifactKey: Guid(8cee00cad736eac48aee0bdd00f0e3dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Scripts/IML Nodes/Editor/TrainingExamplesNodeEditor.cs using Guid(8cee00cad736eac48aee0bdd00f0e3dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '937abe6dd03801cfceb1b2e06715bfdc') in 0.007540 seconds
-  Import took 0.012484 seconds .
+  Time since last request: 0.031203 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cde469ef1fcd1752217ab947765ddaf6') in 0.016994 seconds
+  Import took 0.026663 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.003005 seconds.
-  path: Assets/InteractML/Scripts/IML Nodes/Editor/TrainingExamplesNodeEditor.cs
-  artifactKey: Guid(8cee00cad736eac48aee0bdd00f0e3dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Scripts/IML Nodes/Editor/TrainingExamplesNodeEditor.cs using Guid(8cee00cad736eac48aee0bdd00f0e3dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '937abe6dd03801cfceb1b2e06715bfdc') in 0.004977 seconds
-  Import took 0.012163 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.005928 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.56 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.196 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 0.57 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1905 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.8 MB.
-System memory in use after: 92.9 MB.
-
-Unloading 122 unused Assets to reduce memory usage. Loaded Objects now: 2459.
-Total: 2.723400 ms (FindLiveObjects: 0.326500 ms CreateObjectMapping: 0.107900 ms MarkObjects: 2.206700 ms  DeleteObjects: 0.081200 ms)
+  Time since last request: 8.588230 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '446e51d9f579d21865c9e86575330f06') in 0.009502 seconds
+  Import took 0.016042 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 77.756552 seconds.
-  path: Assets/InteractML/Scripts/IML Nodes/Editor/TrainingExamplesNodeEditor.cs
-  artifactKey: Guid(8cee00cad736eac48aee0bdd00f0e3dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Scripts/IML Nodes/Editor/TrainingExamplesNodeEditor.cs using Guid(8cee00cad736eac48aee0bdd00f0e3dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'bd8b0b9bb7e5129efd1cbfe24388c3d0') in 0.005230 seconds
-  Import took 0.010616 seconds .
-
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.006257 seconds.
-Begin MonoManager ReloadAssembly
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.57 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.484 seconds
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.21 ms, found 6 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 1905 Unused Serialized files (Serialized files now loaded: 0)
-System memory in use before: 92.8 MB.
-System memory in use after: 92.9 MB.
-
-Unloading 122 unused Assets to reduce memory usage. Loaded Objects now: 2463.
-Total: 2.871300 ms (FindLiveObjects: 0.263200 ms CreateObjectMapping: 0.131800 ms MarkObjects: 2.368800 ms  DeleteObjects: 0.105300 ms)
+  Time since last request: 0.028936 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '446e51d9f579d21865c9e86575330f06') in 0.012333 seconds
+  Import took 0.018845 seconds .
 
 ========================================================================
 Received Import Request.
-  Time since last request: 42.330491 seconds.
-  path: Assets/InteractML/Scripts/IML Nodes/Editor/TrainingExamplesNodeEditor.cs
-  artifactKey: Guid(8cee00cad736eac48aee0bdd00f0e3dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/InteractML/Scripts/IML Nodes/Editor/TrainingExamplesNodeEditor.cs using Guid(8cee00cad736eac48aee0bdd00f0e3dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '187325fc543bb60e2cb7ed6d25f8899a') in 0.006544 seconds
-  Import took 0.011870 seconds .
+  Time since last request: 1.658643 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b35aec4169756cbef417e856900cf55d') in 0.011691 seconds
+  Import took 0.019006 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.025133 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b35aec4169756cbef417e856900cf55d') in 0.012941 seconds
+  Import took 0.021786 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.521118 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ab839238f5e9b7277418942ce198fedc') in 0.006829 seconds
+  Import took 0.011526 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.034545 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ab839238f5e9b7277418942ce198fedc') in 0.011166 seconds
+  Import took 0.019849 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 14.395128 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e418eeebe6bbc6184f23078416f4a4fe') in 0.005919 seconds
+  Import took 0.009470 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.035500 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e418eeebe6bbc6184f23078416f4a4fe') in 0.014131 seconds
+  Import took 0.021980 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.994789 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e1c386a27661c53ea38f37b71a2fe2d7') in 0.006465 seconds
+  Import took 0.011706 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.034698 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e1c386a27661c53ea38f37b71a2fe2d7') in 0.011772 seconds
+  Import took 0.021761 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 5.223147 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd31c558266a8ceb03700bcd9e102a18d') in 0.013950 seconds
+  Import took 0.022284 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.024248 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd31c558266a8ceb03700bcd9e102a18d') in 0.015701 seconds
+  Import took 0.023096 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 275.835216 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '70a67043e9da99d54f4d1c5d172e47d7') in 0.006389 seconds
+  Import took 0.013822 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.031841 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '70a67043e9da99d54f4d1c5d172e47d7') in 0.017038 seconds
+  Import took 0.026882 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.894352 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4fdddda0b369a30fff72fa95efa64e2c') in 0.005889 seconds
+  Import took 0.011246 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.030142 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4fdddda0b369a30fff72fa95efa64e2c') in 0.011541 seconds
+  Import took 0.021207 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 2.419933 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '06169d9fa3887f4ebd516ec5535cb40f') in 0.007289 seconds
+  Import took 0.012963 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.032316 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '06169d9fa3887f4ebd516ec5535cb40f') in 0.011632 seconds
+  Import took 0.020513 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 20.023190 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '39d5e6fd375ba37a3616b74834996ecf') in 0.005617 seconds
+  Import took 0.011430 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.034740 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '39d5e6fd375ba37a3616b74834996ecf') in 0.016649 seconds
+  Import took 0.026345 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.174909 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '293f4f497cdf946bb9b970007ca9166d') in 0.005179 seconds
+  Import took 0.010963 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.037377 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '293f4f497cdf946bb9b970007ca9166d') in 0.016325 seconds
+  Import took 0.030870 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.974496 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd81058af8d2f599b8a4c2b22ac8e9f91') in 0.005384 seconds
+  Import took 0.011103 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.035281 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd81058af8d2f599b8a4c2b22ac8e9f91') in 0.018596 seconds
+  Import took 0.027855 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 6.251795 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '765e9594f31b12eee3b29648ff7c78a0') in 0.007328 seconds
+  Import took 0.014336 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.031889 seconds.
+  path: Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset
+  artifactKey: Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/InteractML_Examples/VRInterface/IML Graphs/VRGraph.asset using Guid(93b32fd0d0cc4a242ac69382929594e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '765e9594f31b12eee3b29648ff7c78a0') in 0.013215 seconds
+  Import took 0.023124 seconds .
 
 AssetImportWorkerClient::OnTransportError - code=2 error=End of file

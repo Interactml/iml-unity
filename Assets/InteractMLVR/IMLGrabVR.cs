@@ -22,8 +22,8 @@ namespace InteractML
 
         private void Selected(XRBaseInteractor interactable)
         {
-            imlgrab.Selected();
-            imlgrab.ActivateInterface();
+            //imlgrab.Selected();
+            //imlgrab.ActivateInterface();
         }
 
         public void Update()

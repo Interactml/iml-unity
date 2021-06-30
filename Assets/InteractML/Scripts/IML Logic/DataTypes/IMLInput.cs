@@ -13,8 +13,6 @@ namespace InteractML
         public IMLSpecifications.InputsEnum InputType;
         public IMLBaseDataType InputData;
 
-        
-
         public IMLInput()
         {
             //UnityEngine.Debug.Log("IMLInput Constructor called");

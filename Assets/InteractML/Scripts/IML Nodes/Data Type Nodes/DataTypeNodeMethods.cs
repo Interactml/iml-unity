@@ -119,6 +119,8 @@ namespace InteractML.DataTypeNodes
         /// <return></return>
         public static void CheckArraySizeAgainstFeatureValues<T>(this BaseDataTypeNode<T> node, NodePort from, NodePort to)
         {
+            Debug.Log(from.node);
+            Debug.Log(to.GetInputValue().GetType());
             // if connected a float array to input port
             if (to.GetInputValue().GetType() == typeof(float[]))
             {

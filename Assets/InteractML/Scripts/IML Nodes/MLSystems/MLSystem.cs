@@ -2106,7 +2106,7 @@ namespace InteractML
                 // if the applicsation is not playing show error about running in edit mode 
             } else if (!Application.isPlaying)
             {
-                if (tooltips.BottomError != null)
+                if (tooltips.BottomError != null && tooltips.BottomError.Length > 3)
                     warning = tooltips.BottomError[4];
                 error = true;
             }

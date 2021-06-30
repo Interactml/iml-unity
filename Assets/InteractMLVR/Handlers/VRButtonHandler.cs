@@ -63,14 +63,14 @@ namespace InteractML
 
         public override void HandleState()
         {
-            //Debug.Log(buttonName);
+            Debug.Log(buttonName);
             if (_controllers.Count > 0)
             {
 
                 foreach (UnityEngine.XR.InputDevice controller in _controllers)
                 {
                   
-                    //Debug.Log("found controllers " + _controllers.Count);
+                    Debug.Log("found controllers " + _controllers.Count);
                     bool triggerValue;
                     if (controller.TryGetFeatureValue(_button, out triggerValue) && triggerValue)
                     {
@@ -83,36 +83,36 @@ namespace InteractML
                         if (!previousPress && fValue > 0.5f)
                         {
                             currentController = controller;
-                            //Debug.Log("previous press");
+                            Debug.Log("previous press");
                             previousPress = true;
                             if (triggerType == IMLTriggerTypes.Down)
                             {
                                 ButtonFire?.Invoke(nodeID);
-                                //Debug.Log("down" + controller.characteristics + " " + buttonName);
+                                Debug.Log("down" + controller.characteristics + " " + buttonName);
                             }
                             if (triggerType == IMLTriggerTypes.Hold)
                             {
                                 ButtonFire?.Invoke(nodeID);
-                                //Debug.Log("hold " + controller.characteristics + " " + buttonName);
+                                Debug.Log("hold " + controller.characteristics + " " + buttonName);
                             }
                         } 
                     }
                     else
                     {
                         
-                        //Debug.Log("not event " + buttonName + controller.characteristics.ToString());
+                        Debug.Log("not event " + buttonName + controller.characteristics.ToString());
                         if (previousPress && currentController == controller)
                         {
                             previousPress = false;
                             if (triggerType == IMLTriggerTypes.Up)
                             {
                                 ButtonFire?.Invoke(nodeID);
-                                //Debug.Log("up" + buttonName);
+                                Debug.Log("up" + buttonName);
                             }
                             if (triggerType == IMLTriggerTypes.Hold)
                             {
                                 ButtonFire?.Invoke(nodeID);
-                                //Debug.Log("hold " + controller.characteristics + " " + buttonName);
+                                Debug.Log("hold " + controller.characteristics + " " + buttonName);
                             }
                         }
                     }

@@ -174,7 +174,7 @@ namespace InteractML
             /* if (type.PrettyName() == "InteractML.ControllerCustomisers.MouseClick")
              {
                  return base.GetNodeMenuName(type).Replace("InteractML", "");
-             }
+             }*/
              if (type.PrettyName() == "InteractML.ControllerCustomisers.VRTrigger")
              {
                  return base.GetNodeMenuName(type).Replace("InteractML", "");
@@ -182,7 +182,7 @@ namespace InteractML
              if (type.PrettyName() == "InteractML.ControllerCustomisers.KeyboardPress")
              {
                  return base.GetNodeMenuName(type).Replace("InteractML", "");
-             }*/
+             }
 
             /* CONTROLLER CUSTOMISERS */
             if (type.PrettyName() == "InteractML.ControllerCustomisers.InputSetUp")

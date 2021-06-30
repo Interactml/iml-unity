@@ -5,7 +5,6 @@ using System.Linq;
 using XNode;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
-using InteractML.CustomControllers;
 
 namespace InteractML.ControllerCustomisers
 {
@@ -25,34 +24,78 @@ namespace InteractML.ControllerCustomisers
 
         public override void Initialize()
         {
+            name = "VRTrigger";
+            buttonOptions = InputHelperMethods.deviceEnumSetUp(IMLInputDevices.VRControllers);
             int input = (int)inputs;
             button = new VRButtonHandler(input, hand, triggerType, "VRTrigger");
-        }
-        public override void OnCreateConnection(NodePort from, NodePort to)
-        {
-            IMLNode node = to.node as IMLNode;
-            button.nodeID = node.id;
-
+            inputValue = false;
+            SubscribeDelegates();
         }
 
-        // Return the correct value of an output port when requested
-        public override object GetValue(NodePort port)
-        {
-            m_inputEvent = true;
-
-            return this;
-        }
         public override void UpdateLogic()
         {
+            Debug.Log(inputChange);
+            if (inputChange)
+                inputChange = false;
+            if (button == null)
+            {
+                int input = (int)inputs;
+                button = new VRButtonHandler(input, hand, triggerType, "VRTrigger");
+            }
+                
             button.HandleState();
         }
-        public void OnButtonChange()
+
+        public override void OnButtonChange()
+        {
+            button.SetButtonNo(inputNo);
+        }
+
+        public override void OnTriggerChange()
+        {
+            button.SetTriggerType(trigger);
+        }
+
+        public void OnDestroy()
+        {
+            // Unscibscribe from all events
+            UnsubscribeDelegates();
+
+            // Remove reference of this node in the IMLComponent controlling this node (if any)
+            var MLController = graph as IMLGraph;
+            if (MLController.SceneComponent != null)
+            {
+                MLController.SceneComponent.DeleteCustomControllerNode(this);
+            }
+        }
+
+        private void SubscribeDelegates()
+        {
+            button.ButtonFire += StateChange;
+        }
+        private void UnsubscribeDelegates()
+        {
+            button.ButtonFire -= StateChange;
+        }
+
+        private bool StateChange(string nodeID)
+        {
+            inputChange = true;
+            return inputChange;
+        }
+        
+      /*  public override void UpdateLogic()
+        {
+            Debug.Log("here");
+            button.HandleState();
+        }
+        public override void OnButtonChange()
         {
             //button.imlButton = inputs; 
             button.SetButton();
         }
         
-        public void OnTriggerChange()
+        public override void OnTriggerChange()
         {
             button.SetTriggerType(triggerType);
         }
@@ -75,7 +118,7 @@ namespace InteractML.ControllerCustomisers
             {
                 MLController.SceneComponent.DeleteCustomControllerNode(this);
             }
-        }
+        }*/
     }
 }
 
