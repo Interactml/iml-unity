@@ -588,18 +588,19 @@ MonoBehaviour:
   m_GameObjectNodeList:
   - {fileID: 7776260847769485038, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
   m_ScriptNodesList:
-  - {fileID: 8948996071717161829, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
+  - {fileID: -4626689372730772990, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
   m_CustomControllerList:
-  - {fileID: -521124842690981323, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
+  - {fileID: 5085640904365144148, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
+  - {fileID: 4001523597033850627, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
   FeaturesUpdated: 0
   ComponentsWithIMLData:
-  - GameComponent: {fileID: 2117627209}
+  - GameComponent: {fileID: 673465422}
     ControlClones: 0
   m_MonoBehavioursPerScriptNode:
     m_keys:
-    - {fileID: 2117627209}
+    - {fileID: 673465422}
     m_values:
-    - {fileID: 8948996071717161829, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
+    - {fileID: -4626689372730772990, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
   m_MonobehaviourClones: []
   universalInputActive: 0
 --- !u!4 &196579071
@@ -7843,7 +7844,7 @@ PrefabInstance:
     - target: {fileID: 2122530347406769800, guid: 68d94a8ae834ab84996c04d54cf502ad,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 19.3
       objectReference: {fileID: 0}
     - target: {fileID: 2122530347406769800, guid: 68d94a8ae834ab84996c04d54cf502ad,
         type: 3}
@@ -7853,7 +7854,7 @@ PrefabInstance:
     - target: {fileID: 2122530347406769800, guid: 68d94a8ae834ab84996c04d54cf502ad,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 17.6
       objectReference: {fileID: 0}
     - target: {fileID: 2122530347406769800, guid: 68d94a8ae834ab84996c04d54cf502ad,
         type: 3}

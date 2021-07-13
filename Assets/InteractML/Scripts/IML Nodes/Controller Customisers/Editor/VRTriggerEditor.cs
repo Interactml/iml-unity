@@ -29,6 +29,11 @@ namespace InteractML.ControllerCustomisers
         protected override void ShowBodyFields()
         {
             base.ShowBodyFields();
+            nodeSpace = 50;
+            GUILayout.Space(-80);
+            GUILayout.BeginHorizontal();
+            GUILayout.Space(10);
+            GUILayout.Label("Controller", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(100));
             press.hand = (IMLSides)EditorGUILayout.EnumPopup(press.hand);
             if (GUI.changed)
             {
@@ -36,6 +41,7 @@ namespace InteractML.ControllerCustomisers
                 //mark as changed
                 EditorUtility.SetDirty(press);
             }
+            GUILayout.EndHorizontal();
         }
     }
 }

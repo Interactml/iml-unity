@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Position
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 664, y: 232}
+  position: {x: 632, y: 392}
   ports:
     keys:
     - GameObjectDataIn
@@ -49,7 +49,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -59,9 +59,9 @@ MonoBehaviour:
   GameObjInputMissing: 1
   m_PositionExtracted:
     m_Values:
+    - 19.3
     - 0
-    - 0
-    - 0
+    - 17.6
 --- !u!114 &-4952908079997644971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Name: Series Training Examples
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1064, y: -8}
+  position: {x: 984, y: -152}
   ports:
     keys:
     - InputFeatures
@@ -179,7 +179,7 @@ MonoBehaviour:
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: inputValue
-        node: {fileID: -521124842690981323}
+        node: {fileID: 5085640904365144148}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -228,7 +228,7 @@ MonoBehaviour:
   canCollect: 1
   listNo: 0
   SubFolderDataPath: 
---- !u!114 &-521124842690981323
+--- !u!114 &-4626689372730772990
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -237,41 +237,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8166fe08bd578f4a90d1fc91b674360, type: 3}
-  m_Name: VR Trigger
+  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
+  m_Name: IMLOutputToMalbersInput (Script)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 744, y: 168}
+  position: {x: 2376, y: -248}
   ports:
     keys:
-    - inputValue
+    - motionController
     values:
-    - _fieldName: inputValue
-      _node: {fileID: -521124842690981323}
-      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+    - _fieldName: motionController
+      _node: {fileID: -4626689372730772990}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: ToggleRecordingInputBoolPort
-        node: {fileID: -4952908079997644971}
+      - fieldName: m_Out
+        node: {fileID: 5534068286345460579}
         reroutePoints: []
-      _direction: 1
+      _direction: 0
       _connectionType: 0
       _typeConstraint: 0
-      _dynamic: 0
-  id: c509f0e7-f403-4fb7-9116-a2ee6bfb5c46
+      _dynamic: 1
+  id: 90216825-74a1-4ff6-9a0c-bdf5c716eea8
   numberInComponentList: -1
-  inputValue: 0
-  inputNo: 1
-  trigger: 0
-  buttonOptions:
-  - Trigger
-  - Grip
-  - Primary
-  - Secondary
-  name: VRTrigger
-  hand: 1
-  inputs: 0
-  triggerType: 0
+  m_ScriptInternal: {fileID: 0}
+  ScriptHashCode: 17474
+  m_PortsPerFieldInfo:
+    m_keys: []
+  CreatedDuringPlaymode: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,8 +285,9 @@ MonoBehaviour:
   - {fileID: 7776260847769485038}
   - {fileID: 8373069013392079893}
   - {fileID: -5488533792918054399}
-  - {fileID: 8948996071717161829}
-  - {fileID: -521124842690981323}
+  - {fileID: -4626689372730772990}
+  - {fileID: 5085640904365144148}
+  - {fileID: 4001523597033850627}
   SceneComponent: {fileID: 0}
 --- !u!114 &3383320042394773376
 MonoBehaviour:
@@ -377,7 +371,10 @@ MonoBehaviour:
       _node: {fileID: 3383320042394773376}
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: inputValue
+        node: {fileID: 4001523597033850627}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -386,10 +383,7 @@ MonoBehaviour:
       _node: {fileID: 3383320042394773376}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_In
-        node: {fileID: 5534068286345460579}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -398,7 +392,10 @@ MonoBehaviour:
       _node: {fileID: 3383320042394773376}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: m_In
+        node: {fileID: 5534068286345460579}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -428,6 +425,94 @@ MonoBehaviour:
   warning: You are in edit mode live data in from objects will only workin play mode
   error: 1
   trainOnLoad: 0
+--- !u!114 &4001523597033850627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8166fe08bd578f4a90d1fc91b674360, type: 3}
+  m_Name: VR Trigger
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1240, y: 360}
+  ports:
+    keys:
+    - inputValue
+    values:
+    - _fieldName: inputValue
+      _node: {fileID: 4001523597033850627}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: ToggleRunInputBoolPort
+        node: {fileID: 3383320042394773376}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  id: f13de78e-acc5-43da-9c3f-fd481d7bd583
+  numberInComponentList: -1
+  inputValue: 0
+  inputNo: 0
+  trigger: 2
+  buttonOptions:
+  - Trigger
+  - Grip
+  - Primary
+  - Secondary
+  name: VRTrigger
+  hand: 1
+  inputs: 0
+  triggerType: 0
+--- !u!114 &5085640904365144148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8166fe08bd578f4a90d1fc91b674360, type: 3}
+  m_Name: VR Trigger
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 632, y: -280}
+  ports:
+    keys:
+    - inputValue
+    values:
+    - _fieldName: inputValue
+      _node: {fileID: 5085640904365144148}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: ToggleRecordingInputBoolPort
+        node: {fileID: -4952908079997644971}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  id: 7375f829-ed42-4fea-9a36-43bd00fc9394
+  numberInComponentList: -1
+  inputValue: 0
+  inputNo: 1
+  trigger: 2
+  buttonOptions:
+  - Trigger
+  - Grip
+  - Primary
+  - Secondary
+  name: VRTrigger
+  hand: 1
+  inputs: 0
+  triggerType: 0
 --- !u!114 &5534068286345460579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,7 +526,7 @@ MonoBehaviour:
   m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 2056, y: -328}
+  position: {x: 2040, y: -296}
   ports:
     keys:
     - m_In
@@ -452,7 +537,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: Output 0
+      - fieldName: Out 0 (Int)
         node: {fileID: 3383320042394773376}
         reroutePoints: []
       _direction: 0
@@ -463,7 +548,10 @@ MonoBehaviour:
       _node: {fileID: 5534068286345460579}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: motionController
+        node: {fileID: -4626689372730772990}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -477,7 +565,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -495,7 +583,7 @@ MonoBehaviour:
   m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 664, y: -56}
+  position: {x: 664, y: 104}
   ports:
     keys:
     - m_In
@@ -531,7 +619,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 4
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -549,7 +637,7 @@ MonoBehaviour:
   m_Name: RightHand Controller (GameObject)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 296, y: 360}
+  position: {x: 248, y: 232}
   ports:
     keys:
     - GameObjectDataOut
@@ -570,7 +658,7 @@ MonoBehaviour:
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
   state: 0
-  GOHashCode: 17590
+  GOHashCode: 17662
   CreatedDuringPlaymode: 0
 --- !u!114 &8373069013392079893
 MonoBehaviour:
@@ -592,57 +680,3 @@ MonoBehaviour:
   id: 368a5c12-d425-4c62-ac40-6ba35d8ecbe6
   numberInComponentList: -1
   note: 
---- !u!114 &8948996071717161829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
-  m_Name: colorChanger (Script)
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -1000, y: -488}
-  ports:
-    keys:
-    - SetAbsoluteColour
-    - array1
-    - array2
-    values:
-    - _fieldName: SetAbsoluteColour
-      _node: {fileID: 8948996071717161829}
-      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: array1
-      _node: {fileID: 8948996071717161829}
-      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: array2
-      _node: {fileID: 8948996071717161829}
-      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-  id: 85b122b5-7814-4367-9adf-1db24e409906
-  numberInComponentList: -1
-  m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 17604
-  m_PortsPerFieldInfo:
-    m_keys: []
-  CreatedDuringPlaymode: 0

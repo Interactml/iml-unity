@@ -63,7 +63,9 @@ namespace InteractML
 
         public override void HandleState()
         {
+            SetButton();
             Debug.Log(buttonName);
+            Debug.Log(buttonNo);
             if (_controllers.Count > 0)
             {
 
@@ -173,13 +175,14 @@ namespace InteractML
                 case IMLControllerInputs.Grip:
                     this._button = UnityEngine.XR.CommonUsages.gripButton;
                     this._buttonFloat = UnityEngine.XR.CommonUsages.grip;
+                    Debug.Log(_button);
                     break;
                 case IMLControllerInputs.Primary:
                     this._button = UnityEngine.XR.CommonUsages.primaryButton;
                     this._buttonFloat = new UnityEngine.XR.InputFeatureUsage<float>();
                     break;
                 case IMLControllerInputs.Secondary:
-                   this._button = UnityEngine.XR.CommonUsages.secondaryButton;
+                    this._button = UnityEngine.XR.CommonUsages.secondaryButton;
                     this._buttonFloat = new UnityEngine.XR.InputFeatureUsage<float>();
                     break;
                 default:

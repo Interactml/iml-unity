@@ -40,7 +40,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: d18bd598-85fa-45cf-b67d-7a359505ec02
   numberInComponentList: -1
   ValueName: 
@@ -48,8 +47,9 @@ MonoBehaviour:
   m_Value: {x: 0, y: 0, z: 0}
   m_Out: {x: 0, y: 0, z: 0}
   ReceivingData: 0
+  FeatureValueReceivingData: 000000
   InputConnected: 0
-  Counter: 4
+  Counter: 3
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue:
@@ -96,7 +96,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: 4896f3c3-2823-4b00-bf1f-8dc7df922f7d
   numberInComponentList: -1
   ValueName: 
@@ -104,8 +103,9 @@ MonoBehaviour:
   m_Value: {x: 0, y: 0, z: 0}
   m_Out: {x: 0, y: 0, z: 0}
   ReceivingData: 0
+  FeatureValueReceivingData: 000000
   InputConnected: 1
-  Counter: 4
+  Counter: 3
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue:
@@ -138,6 +138,7 @@ MonoBehaviour:
     - RecordOneInputBoolPort
     - ToggleRecordingInputBoolPort
     - DeleteAllExamplesBoolPort
+    - SubFolderDataPathStringPort
     values:
     - _fieldName: InputFeatures
       _node: {fileID: -1792614922392630227}
@@ -240,7 +241,15 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-  DevMode: 0
+    - _fieldName: SubFolderDataPathStringPort
+      _node: {fileID: -1792614922392630227}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 1
+      _dynamic: 1
   id: e8f6aa54-2d2f-482b-a964-e3c1ac502229
   numberInComponentList: -1
   InputFeatures:
@@ -253,8 +262,6 @@ MonoBehaviour:
   DeleteAllInputBool: 0
   TrainingExamplesNodeToOutput: {fileID: -1792614922392630227}
   ModeOfCollection: 0
-  TrainingExamplesVector: []
-  TrainingSeriesCollection: []
   m_DesiredInputsConfig: 03000000
   m_DesiredOutputsConfig: 03000000
   MLSystemNodesConnected:
@@ -267,6 +274,7 @@ MonoBehaviour:
   showWarning: 0
   canCollect: 1
   listNo: 0
+  SubFolderDataPath: 
 --- !u!114 &-12763039511222254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,13 +305,11 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: d41cd863-1019-4865-900f-3c2591380a40
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  GameObjMissing: 0
   state: 0
-  GOHashCode: 14850
+  GOHashCode: 23100
   CreatedDuringPlaymode: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -371,12 +377,11 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: b7cc9cb2-8a94-4a64-9d03-a89183cf61ac
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 4
+  Counter: 3
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -487,7 +492,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-  DevMode: 0
   id: dd87c4ed-b8e8-414c-b4c3-3b1025eed821
   numberInComponentList: -1
   IMLTrainingExamplesNodes:
@@ -496,10 +500,7 @@ MonoBehaviour:
   - {fileID: 4359672326145209811}
   ToggleTrainInputBool: 0
   ToggleRunInputBool: 0
-  PredictedRapidlibOutput:
-  - 0
-  - 0
-  - 0
+  PredictedRapidlibOutput: []
   DelayedPredictedOutput:
   - 0.6882576652144334
   - -0.14975222485333206
@@ -536,14 +537,12 @@ MonoBehaviour:
   ports:
     keys: []
     values: []
-  DevMode: 0
   id: 3c6a279d-0c09-45e9-90ac-60dd45d8620d
   numberInComponentList: -1
   enableUniversalInterface: 1
   activeUniversalInterface: 0
-  device: 2
-  trainingHand: 1
-  mlsHand: 1
+  deviceNames: []
+  deviceNo: 0
   buttonOptions:
   - Trigger
   - Grip

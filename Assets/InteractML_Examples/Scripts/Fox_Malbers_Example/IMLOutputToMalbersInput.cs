@@ -52,6 +52,7 @@ public class IMLOutputToMalbersInput : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(motionController);
         // Go through all the birds in list
         foreach (var inputScript in m_BirdsInputScripts)
         {
