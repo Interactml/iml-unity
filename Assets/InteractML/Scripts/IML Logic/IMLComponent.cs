@@ -839,9 +839,9 @@ namespace InteractML
         private void SendGameObjectsToIMLController()
         {
 
-            //Debug.Log(GameObjectsToUse.Count);
-            //Debug.Log(m_GOsPerGONodes.Count);
-            //Debug.Log(m_GameObjectNodeList.Count);
+            Debug.Log(GameObjectsToUse.Count);
+            Debug.Log(m_GOsPerGONodes.Count);
+            Debug.Log(m_GameObjectNodeList.Count);
             // Don't do anything if there are no gameObjects from the scene to use
 
 
@@ -858,7 +858,7 @@ namespace InteractML
                 m_GameObjectNodeList = new List<GameObjectNode>();
 
             // Go through GONodes looking for empty entries that could contain memory (lost ref due to unity hotlreload)
-            for (int i = 0; i < m_GameObjectNodeList.Count; i++)
+           /* for (int i = 0; i < m_GameObjectNodeList.Count; i++)
             {
                 var goNode = m_GameObjectNodeList[i];
                 // If we find a null node, remove it!
@@ -909,14 +909,14 @@ namespace InteractML
 
                     }
                 }
-            }
+            }*/
 
             // Go through gameObjects added by the user
-            for (int i = 0; i < GameObjectsToUse.Count; i++)
+           /* for (int i = 0; i < GameObjectsToUse.Count; i++)
             {
                 var go = GameObjectsToUse[i];
 
-                /* ADD GAMEOBJECT NODE */
+                // ADD GAMEOBJECT NODE 
                 GameObjectNode goNode = null;
 
                 // If the gameObject is null, we continue to the next one
@@ -979,7 +979,7 @@ namespace InteractML
 
 
 
-            }
+            }*/
 
             /* OLD LOGIC 
 
