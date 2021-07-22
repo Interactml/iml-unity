@@ -52,6 +52,9 @@ public class IMLEditorManager
             {
                 //Debug.Log("IML Components number: " + m_IMLComponents.Count);
 
+                // Repair list of known iml components if any of them is null
+                if (NullIMLComponents()) RepairIMLComponents();
+
                 // Run each of the updates in the iml components
                 foreach (var MLcomponent in m_IMLComponents)
                 {
@@ -107,7 +110,11 @@ public class IMLEditorManager
     /// <param name="playModeStatus"></param>
     private static void PlayModeStateChangedLogic(PlayModeStateChange playModeStatus)
     {
-        foreach (IMLComponent MLComp in m_IMLComponents) {
+        // Repair list of known iml components if any of them is null
+        if (NullIMLComponents()) RepairIMLComponents();
+
+        foreach (IMLComponent MLComp in m_IMLComponents) 
+        {
             foreach (MLSystem MLS in MLComp.MLSystemNodeList) {
                 if (MLS != null)
                     MLS.UIErrors();
@@ -226,6 +233,24 @@ public class IMLEditorManager
             }
 
         }
+    }
+
+    /// <summary>
+    /// Repairs the list of known IML Components
+    /// </summary>
+    private static void RepairIMLComponents()
+    {
+        ClearIMLComponents();
+        FindIMLComponents();
+    }
+
+    /// <summary>
+    /// Is any of the IMLComponents null?
+    /// </summary>
+    /// <returns></returns>
+    private static bool NullIMLComponents()
+    {
+        return m_IMLComponents.Any(x => x == null) ? true : false;
     }
 
     /// <summary>

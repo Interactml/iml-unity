@@ -652,16 +652,6 @@ namespace InteractML
 
         }
 
-        public void InputTypeAdd()
-        {
-            m_inputSetUp.devices = new InteractML.ControllerCustomisers.IInputType[inputTypes.Count];
-            for(int i =0; i < inputTypes.Count; i++)
-            {
-                var type = inputTypes[i];
-
-            }
-           // m_inputSetUp.devices = inputTypes;
-        }
         
         private void CheckNodeIsCustomController(XNode.Node nodeToAdd, ref List<CustomController> listToAddTo)
         {
@@ -1484,19 +1474,7 @@ namespace InteractML
         /// </summary>
         public void UpdateLogic()
         {
-            //Debug.Log(universalInputEnabled);
-            // Make sure that the icon is init
-            if (icon == null && m_inputSetUp != null)
-                InitializeIMLIndicator();
-
-            if (icon != null)
-            {
-                if (icon.graph == null)
-                {
-                    icon.graph = this;
-                }
-
-            }
+            
             //Debug.Log("Running IMLComponent update...");
 
 
@@ -1576,7 +1554,19 @@ namespace InteractML
         /// </summary>
         public void InputLogic(){
             // if user has enables universal input system
-            if(universalInputEnabled && universalInputActive)
+
+            if (m_CustomControllerList.Count > 0)
+            {
+                foreach (CustomController controller in m_CustomControllerList)
+                {
+                    if (controller == null)
+                        m_CustomControllerList.Remove(controller);
+                    else
+                        controller.UpdateLogic();
+                }
+            }
+            
+            /*if (universalInputEnabled && universalInputActive)
             {
                 //if there is a reference to the node
                 if (m_inputSetUp != null)
@@ -1585,14 +1575,8 @@ namespace InteractML
                 }
             } else
             {
-                foreach(CustomController controller in m_CustomControllerList)
-                {
-                    if (controller == null)
-                        m_CustomControllerList.Remove(controller);
-                    else
-                     controller.UpdateLogic();
-                }
-            }
+                
+            }*/
 
         }
 

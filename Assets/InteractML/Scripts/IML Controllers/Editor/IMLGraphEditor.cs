@@ -91,6 +91,8 @@ namespace InteractML
             //{
             //    return base.GetNodeMenuName(type).Replace("InteractML", "");
             //}
+
+            /* ML SYSTEMS */
             if (type.PrettyName() == "InteractML.ClassificationMLSystem")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML.ClassificationMLSystem", "Machine Learning System - Classification");
@@ -109,6 +111,7 @@ namespace InteractML
             //    return base.GetNodeMenuName(type).Replace("InteractML", "");
             //}
 
+            /* TRAINING EXAMPLES & DATASETS */
             if (type.PrettyName() == "InteractML.SeriesTrainingExamplesNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
@@ -117,10 +120,20 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
+            // Node to hold several single training Examples
+            if (type.PrettyName() == "InteractML.TrainingDataSetsNode")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+
+
+            /* TEXT NOTES */
             if (type.PrettyName() == "InteractML.TextNote")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
+
+            /* MOVEMENT FEATURES */
             if (type.PrettyName() == "InteractML.GameObjectMovementFeatures.DistanceToFirstInputNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
@@ -170,21 +183,43 @@ namespace InteractML
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
             /* if (type.PrettyName() == "InteractML.ControllerCustomisers.MouseClick")
+             {
+                 return base.GetNodeMenuName(type).Replace("InteractML", "");
+             }*/
+             if (type.PrettyName() == "InteractML.ControllerCustomisers.VRTrigger")
+             {
+                 return base.GetNodeMenuName(type).Replace("InteractML", "");
+             }
+             if (type.PrettyName() == "InteractML.ControllerCustomisers.KeyboardPress")
+             {
+                 return base.GetNodeMenuName(type).Replace("InteractML", "");
+             }
+
+            /* CONTROLLER CUSTOMISERS */
+            if (type.PrettyName() == "InteractML.ControllerCustomisers.InputSetUp")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.CustomControllers.InputSetUp")
               {
                   return base.GetNodeMenuName(type).Replace("InteractML", "");
               }
               if (type.PrettyName() == "InteractML.CustomControllers.VRTrigger")
               {
                   return base.GetNodeMenuName(type).Replace("InteractML", "");
-              }*/
+              }
             if (type.PrettyName() == "InteractML.ControllerCustomisers.KeyboardPress")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.ControllerCustomisers.InputSetUp")
+
+#if MECM
+            // This nodes are exclusive to the MECM that Carlos is working on part-time. It won't compile on any other InteractML version
+            if (type.PrettyName().Contains("MECM."))
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
+#endif
 
             else return null;
         }
@@ -255,6 +290,11 @@ namespace InteractML
                     base.OnDropObjects(objects);
                 }
             }
+        }
+        public void OnInspectorUpdate()
+        {
+            Debug.Log("inspector update");
+            window.Repaint();
         }
     }
 }

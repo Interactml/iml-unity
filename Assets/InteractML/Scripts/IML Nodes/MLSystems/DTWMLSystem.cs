@@ -13,6 +13,12 @@ namespace InteractML
     public class DTWMLSystem : MLSystem
     {
 
+        public override void Initialize()
+        {
+            // Disable async training when initializing
+            UseAsync = false;
+            base.Initialize();
+        }
 
         public override RapidlibModel InstantiateRapidlibModel()
         {

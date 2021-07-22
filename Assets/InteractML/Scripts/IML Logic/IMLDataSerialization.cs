@@ -25,7 +25,7 @@ namespace InteractML
         private static string m_FileTrainingSetName;
         private static string m_FileExtension;
         private static string m_FileModelName;
-        private static bool m_SerializeWithJSONDotNet;
+        private static bool m_SerializeWithJSONDotNet = true;
 
         #endregion
 
@@ -215,9 +215,9 @@ namespace InteractML
         /// </summary>
         /// <param name="filePath"></param>
         /// <returns>Returns a list with training set</returns>
-        public static List<IMLTrainingExample> LoadTrainingSetFromDisk(string fileName)
+        public static List<IMLTrainingExample> LoadTrainingSetFromDisk(string fileName, bool ignoreDefaultLocation = false)
         {
-            List<IMLTrainingExample> auxList = LoadTrainingSetFromDisk<IMLTrainingExample>(fileName);
+            List<IMLTrainingExample> auxList = LoadTrainingSetFromDisk<IMLTrainingExample>(fileName, ignoreDefaultLocation);
 
             if (auxList != null)
             {
@@ -229,6 +229,28 @@ namespace InteractML
                 return null;
             }
         }
+
+        /// <summary>
+        /// Loads Training Data Set from Disk Asynchronously
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns>Returns a list with training set</returns>
+
+        public static async Task<List<IMLTrainingExample>> LoadTrainingSetFromDiskAsync(string fileName, bool ignoreDefaultLocation = false)
+        {
+            List<IMLTrainingExample> auxList = await LoadTrainingSetFromDiskAsync<IMLTrainingExample>(fileName, ignoreDefaultLocation);
+
+            if (auxList != null)
+            {
+                return auxList;
+            }
+            else
+            {
+                Debug.LogError("Training set to load from disk is null!");
+                return null;
+            }
+        }
+
 
         /// <summary>
         /// Loads a training series collection from disk (for InteractML)
@@ -475,6 +497,9 @@ namespace InteractML
         /// <param name="fileName"></param>
         private static void SetUpFileNamesAndPaths(string fileName)
         {
+            // First, set up data path and immediate subfolders
+            SetUpIMLDataPath();
+
             string folderInFileName = "";
             // If the file name contains any folders...
             if (fileName.Contains("/"))
@@ -492,9 +517,6 @@ namespace InteractML
             m_FileModelName = fileName + "_Model";
             m_FileTrainingSetName = fileName + "_TrainingSet";
 
-            // Set up training Examples subfolder 
-            m_SubFolderTrainingSetPathName = m_FolderDataPathName + "/Training_Examples";
-            m_SubFolderModelPathName = m_FolderDataPathName + "/Models";
             // If the fileName included desired subfolders...
             if (!String.IsNullOrEmpty(folderInFileName)) 
             {
@@ -503,15 +525,6 @@ namespace InteractML
                 m_SubFolderTrainingSetPathName = string.Concat(m_SubFolderTrainingSetPathName, "/", folderInFileName);
             }
 
-
-            m_AppDataPath = "";
-#if UNITY_STANDALONE || UNITY_EDITOR
-            // in a standalone build or editor, we go to local assets folder
-            m_AppDataPath = Application.dataPath;
-#elif UNITY_ANDROID
-            // on Android it is better to use persistent datapath           
-            m_AppDataPath = Application.persistentDataPath;
-#endif
             // Set up data path (m_AppDataPath + FolderName + FileName + FileExtension)
             m_DataPathModel = Path.Combine(m_AppDataPath, m_FolderDataPathName + m_FileModelName + m_FileExtension);
             // Training set is not having the extension added yet
@@ -520,6 +533,26 @@ namespace InteractML
 
             // Mark the class to use json serialization
             m_SerializeWithJSONDotNet = true;
+
+        }
+
+        /// <summary>
+        /// Only sets up the IML data path, but not specific training example files
+        /// </summary>
+        private static void SetUpIMLDataPath() 
+        {
+            // Set up training Examples subfolder 
+            m_SubFolderTrainingSetPathName = m_FolderDataPathName + "/Training_Examples";
+            m_SubFolderModelPathName = m_FolderDataPathName + "/Models";
+
+            //m_AppDataPath = "";
+#if UNITY_STANDALONE || UNITY_EDITOR
+            // in a standalone build or editor, we go to local assets folder
+            if (string.IsNullOrEmpty(m_AppDataPath)) m_AppDataPath = Application.dataPath;
+#elif UNITY_ANDROID
+            // on Android it is better to use persistent datapath           
+            if (string.IsNullOrEmpty(m_AppDataPath)) m_AppDataPath = Application.persistentDataPath;
+#endif
 
         }
 
@@ -587,25 +620,43 @@ namespace InteractML
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        private static List<T> LoadTrainingSetFromDisk<T>(string fileName)
+        private static List<T> LoadTrainingSetFromDisk<T>(string fileName, bool ignoreDefaultLocation = false)
         {
-            SetUpFileNamesAndPaths(fileName);
-
-            //Debug.Log("Load training set from disk called! FolderDataPath: " + m_FolderDataPathName);
-
-            string subFolderPath = CheckOrCreateFoldersAndSubfoldersTrainingSet();
+            bool canLoad = false;
+            string auxFilePath = "";
 
             List<T> auxList = new List<T>();
 
             // If the option to serialize witht JSON dot net is active...
             if (m_SerializeWithJSONDotNet)
             {
-                // We calculate the entire input/output list file name
-                string auxFilePath = subFolderPath + "/" + m_FileTrainingSetName + "_Inputs_Outputs" + m_FileExtension;
-                //Debug.Log("File to load is: >>> " + auxFilePath);
-                //Debug.Log("File name to read is: " + auxFilePath);
-                // We check if the file is there before reading from it
-                if (File.Exists(auxFilePath))
+                if (ignoreDefaultLocation)
+                {
+                    auxFilePath = fileName;
+                    if (File.Exists(auxFilePath)) 
+                        canLoad = true;
+                }
+                else 
+                {
+                    SetUpFileNamesAndPaths(fileName);
+
+                    //Debug.Log("Load training set from disk called! FolderDataPath: " + m_FolderDataPathName);
+
+                    string subFolderPath = CheckOrCreateFoldersAndSubfoldersTrainingSet();
+
+                    // We calculate the entire input/output list file name
+                    auxFilePath = subFolderPath + "/" + m_FileTrainingSetName + "_Inputs_Outputs" + m_FileExtension;
+                    //Debug.Log("File to load is: >>> " + auxFilePath);
+                    //Debug.Log("File name to read is: " + auxFilePath);
+                    // We check if the file is there before reading from it
+                    if (File.Exists(auxFilePath))
+                        canLoad = true;
+                    //else
+                    //    Debug.LogError($"Error when loading file: {fileName}. It doesn't exist!");
+                }
+
+                // Load file if possible
+                if (canLoad)
                 {
                     try
                     {
@@ -626,9 +677,10 @@ namespace InteractML
                         Debug.LogError(e.Message);
                     }
                     //Debug.Log("The file exists and we read from it!");
-                    
+
 
                     //Debug.Log("What we read is: " + jsonTrainingExamplesList);
+
                 }
             }
 
@@ -636,6 +688,81 @@ namespace InteractML
 
 
         }
+
+        private static async Task<List<T>> LoadTrainingSetFromDiskAsync<T>(string fileName, bool ignoreDefaultLocation = false)
+        {
+            bool canLoad = false;
+            string auxFilePath = "";
+
+            List<T> auxList = new List<T>();
+
+            // If the option to serialize witht JSON dot net is active...
+            if (m_SerializeWithJSONDotNet)
+            {
+                if (ignoreDefaultLocation)
+                {
+                    auxFilePath = fileName;
+                    if (File.Exists(auxFilePath))
+                        canLoad = true;
+                }
+                else
+                {
+                    SetUpFileNamesAndPaths(fileName);
+
+                    //Debug.Log("Load training set from disk called! FolderDataPath: " + m_FolderDataPathName);
+
+                    string subFolderPath = CheckOrCreateFoldersAndSubfoldersTrainingSet();
+
+                    // We calculate the entire input/output list file name
+                    auxFilePath = subFolderPath + "/" + m_FileTrainingSetName + "_Inputs_Outputs" + m_FileExtension;
+                    //Debug.Log("File to load is: >>> " + auxFilePath);
+                    //Debug.Log("File name to read is: " + auxFilePath);
+                    // We check if the file is there before reading from it
+                    if (File.Exists(auxFilePath))
+                        canLoad = true;
+                    else
+                        Debug.LogError($"Error when loading file: {fileName}. It doesn't exist!");
+                }
+
+                // Load file if possible
+                if (canLoad)
+                {
+                    try
+                    {
+                        using (var reader = File.OpenText(auxFilePath))
+                        {
+                            string jsonTrainingExamplesList = await reader.ReadToEndAsync();
+                            if (jsonTrainingExamplesList != null)
+                            {
+                                //Debug.Log("Examples are not null, loading the text");
+                                //Debug.Log(jsonTrainingExamplesList);
+                                auxList = JsonConvert.DeserializeObject<List<T>>(jsonTrainingExamplesList);
+                            }
+
+                        }
+                    }
+                    catch (FileNotFoundException e)
+                    {
+                        Debug.Log(e.Message);
+                    }
+                    catch (IOException e)
+                    {
+                        Debug.LogError(e.Message);
+                    }
+                    //Debug.Log("The file exists and we read from it!");
+
+
+                    //Debug.Log("What we read is: " + jsonTrainingExamplesList);
+
+                }
+            }
+
+            return auxList;
+
+
+
+        }
+
 
         /// <summary>
         /// Private method that saves Training Data Set to disk
@@ -694,7 +821,7 @@ namespace InteractML
         private static async void SaveTrainingSetToDiskAsync<T>(List<T> listToSave, string gameObjectName)
         {
             // Launch the task in a thread
-            Task savingTask = Task.Run(async () => 
+            await Task.Run(async () => 
             {
             // We make sure paths and filenames are set properly
             SetUpFileNamesAndPaths(gameObjectName);
@@ -742,39 +869,42 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Returns path for the Assets folder (SetUpFileNamesAndPaths() should have been called beforehand)
+        /// Returns path for the Assets folder 
         /// </summary>
         /// <returns></returns>
         public static string GetAssetsPath()
         {
+            SetUpIMLDataPath();
             return m_AppDataPath;
         }
 
         /// <summary>
-        /// Returns path for InteractML/Data (SetUpFileNamesAndPaths() should have been called beforehand)
+        /// Returns path for InteractML/Data
         /// </summary>
         /// <returns></returns>
         public static string GetDataPath()
         {
-            // This assumes that SetUpFileNamesAndPaths() has been called previously in this scene
+            SetUpIMLDataPath();
             return Path.Combine(m_AppDataPath, m_FolderDataPathName);
         }
 
         /// <summary>
-        /// Returns path for InteractML/Data/Training_Examples (SetUpFileNamesAndPaths() should have been called beforehand)
+        /// Returns path for InteractML/Data/Training_Examples 
         /// </summary>
         /// <returns></returns>
         public static string GetTrainingExamplesDataPath()
         {
+            SetUpIMLDataPath();
             return Path.Combine(m_AppDataPath, m_FolderDataPathName, "Training_Examples");
         }
 
         /// <summary>
-        /// Returns path for InteractML/Data/Models (SetUpFileNamesAndPaths() should have been called beforehand)
+        /// Returns path for InteractML/Data/Models 
         /// </summary>
         /// <returns></returns>
         public static string GetModelsDataPath()
         {
+            SetUpIMLDataPath();
             return Path.Combine(GetDataPath(), "Models");
         }
 

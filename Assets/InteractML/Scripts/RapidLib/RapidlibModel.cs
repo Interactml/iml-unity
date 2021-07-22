@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace InteractML
@@ -245,10 +246,12 @@ namespace InteractML
             switch (m_TypeOfModel)
             {
                 case ModelType.kNN:
+                    m_ModelStatus = IMLSpecifications.ModelStatus.Training;
                     trainingSetAddress = TransformTrainingExamplesForRapidlib(trainingExamples);
                     isTrained = RapidlibLinkerDLL.TrainClassification(m_ModelAddress, trainingSetAddress);
                     break;
                 case ModelType.NeuralNetwork:
+                    m_ModelStatus = IMLSpecifications.ModelStatus.Training;
                     trainingSetAddress = TransformTrainingExamplesForRapidlib(trainingExamples);
                     isTrained = RapidlibLinkerDLL.TrainRegression(m_ModelAddress, trainingSetAddress);
                     break;
@@ -263,6 +266,11 @@ namespace InteractML
             if (isTrained)
             {
                 m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+            }
+            else
+            {
+                Debug.LogError($"Failed to Train {Enum.GetName(typeof(ModelType), m_TypeOfModel)} model!");
+                m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
             }
                 
 
@@ -303,6 +311,7 @@ namespace InteractML
                     else if (trainingSeries.Any(i => String.IsNullOrEmpty(i.LabelSerie)))
                         throw new NullReferenceException("Can't train a DTW model when the Training Series Outputs are null or empty.");
 
+                    m_ModelStatus = IMLSpecifications.ModelStatus.Training;
                     // Reset model in dll memory
                     RapidlibLinkerDLL.ResetSeriesClassification(m_ModelAddress);
                     // Create rapidlib training series collection in rapidlib dll memory
@@ -323,9 +332,147 @@ namespace InteractML
             {
                 m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
             }
-                
+            else
+            {
+                Debug.LogError("Failed to train DTW model!");
+                m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+            }
+
 
             return isTrained;
+        }
+
+        /// <summary>
+        /// Trains the model with a list of training examples (classification or regression)
+        /// </summary>
+        /// <param name="trainingExamples">True if training succeeded</param>
+        public async void TrainAsync(List<RapidlibTrainingExample> trainingExamples)
+        {
+            m_ModelStatus = IMLSpecifications.ModelStatus.Training;
+            await Task.Run(async () => 
+            {
+                if (m_ModelAddress == (IntPtr)0)
+                {
+                    m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+                    throw new Exception("Error when training Model. Model pointer lost! Try resetting the model");
+                }
+
+                bool isTrained = false;
+                IntPtr trainingSetAddress = (IntPtr)0;
+                // Only allow training of classification and regression (because of the format of the training data)
+                switch (m_TypeOfModel)
+                {
+                    case ModelType.kNN:
+                        m_ModelStatus = IMLSpecifications.ModelStatus.Training;
+                        trainingSetAddress = TransformTrainingExamplesForRapidlib(trainingExamples);
+                        isTrained = await RapidlibLinkerDLL.TrainClassificationAsync(m_ModelAddress, trainingSetAddress);
+                        break;
+                    case ModelType.NeuralNetwork:
+                        m_ModelStatus = IMLSpecifications.ModelStatus.Training;
+                        trainingSetAddress = TransformTrainingExamplesForRapidlib(trainingExamples);
+                        Debug.Log("Beginnning Training...");
+                        isTrained = await RapidlibLinkerDLL.TrainRegressionAsync(m_ModelAddress, trainingSetAddress);
+                        Debug.Log($"Training finished with result: {isTrained}!");
+                        break;
+                    case ModelType.DTW:
+                        m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+                        throw new Exception("A list of training series is required to train a DTW model!");
+                    case ModelType.None:
+                        m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+                        throw new Exception("You can't train on an unitialised model!");
+                    default:
+                        break;
+                }
+
+                if (isTrained)
+                {
+                    m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+                }
+                else
+                {
+                    Debug.LogError($"Failed to Train {Enum.GetName(typeof(ModelType), m_TypeOfModel)} model!");
+                    m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+                }
+
+
+                // Once the training is done, we need to destroy the c++ training list outside of the GC scope
+                RapidlibLinkerDLL.DestroyTrainingSet(trainingSetAddress);                
+
+            });
+
+        }
+
+        /// <summary>
+        /// Trains the model with a list of training series (DTW)
+        /// </summary>
+        /// <param name="trainingSeries"></param>
+        /// <returns>True if training succeeded</returns>
+        public async void TrainAsync(List<RapidlibTrainingSerie> trainingSeries)
+        {
+            m_ModelStatus = IMLSpecifications.ModelStatus.Training;
+            await Task.Run(async () => 
+            {
+                if (m_ModelAddress == (IntPtr)0)
+                {
+                    m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+                    throw new Exception("Error when training Model. Model pointer lost! Try resetting the model");                    
+                }
+
+                bool isTrained = true;
+                // Only allow training of DTW (because of the format of the training data)
+                switch (m_TypeOfModel)
+                {
+                    case ModelType.kNN:
+                        isTrained = false;
+                        m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+                        throw new Exception("A list of training examples, not series is required to train a classification model!");
+                    case ModelType.NeuralNetwork:
+                        isTrained = false;
+                        m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+                        throw new Exception("A list of training examples, not series is required to train a regression model!");
+                    case ModelType.DTW:
+                        string nullRefText = "";
+                        // We make sure that nothing is null
+                        if (trainingSeries == null)
+                            nullRefText = "Can't train a DTW model when the Training Series is null.";
+                        else if (trainingSeries.Any(i => (i.ExampleSerie == null || i.ExampleSerie.Count == 0)))
+                            nullRefText = "Can't train a DTW model when the Training Series Inputs are null or empty.";
+                        else if (trainingSeries.Any(i => String.IsNullOrEmpty(i.LabelSerie)))
+                            nullRefText = "Can't train a DTW model when the Training Series Outputs are null or empty.";
+
+                        if (!string.IsNullOrEmpty(nullRefText))
+                        {
+                            m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+                            throw new NullReferenceException(nullRefText);
+                        }
+                        m_ModelStatus = IMLSpecifications.ModelStatus.Training;
+                        // Reset model in dll memory
+                        RapidlibLinkerDLL.ResetSeriesClassification(m_ModelAddress);
+                        // Create rapidlib training series collection in rapidlib dll memory
+                        IntPtr dtwSeriesCollectionAddress = TransformTrainingSeriesCollectionForRapidlib(this, trainingSeries);
+                        // Train dtw model with that unmanaged series collection
+                        isTrained = await RapidlibLinkerDLL.TrainSeriesClassificationAsync(m_ModelAddress, dtwSeriesCollectionAddress);
+                        // Destroy unmanaged training series collection 
+                        RapidlibLinkerDLL.DestroyTrainingSeriesCollection(dtwSeriesCollectionAddress);
+                        break;
+                    case ModelType.None:
+                        isTrained = false;
+                        throw new Exception("You can't train on an unitialised model!");
+                    default:
+                        break;
+                }
+
+                if (isTrained)
+                {
+                    m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
+                }
+                else
+                {
+                    Debug.LogError("Failed to train DTW model!");
+                    m_ModelStatus = IMLSpecifications.ModelStatus.Untrained;
+                }
+
+            });
         }
 
         /* MODEL CONFIGURATION */
@@ -564,6 +711,7 @@ namespace InteractML
                     example.Input, example.Input.Length,
                     example.Output, example.Output.Length);
             }
+            Debug.Log($"TrainingSetAdress created!");
             // Return the address for the training set in memory
             return rapidlibTrainingSetAddress;
         }

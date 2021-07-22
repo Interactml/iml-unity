@@ -53,7 +53,7 @@ namespace InteractML.DataTypeNodes
 
             PreviousFeatureValues = new IMLArray();
 
-            m_MaximumArraySize = 35;
+            m_MaximumArraySize = 150;
 
             base.Initialize();
         }
@@ -130,12 +130,13 @@ namespace InteractML.DataTypeNodes
             if (arrayIn == null)
                 throw new System.Exception("Array In is null when attempting to copy in Array node.");
             if (arrayOut == null)
-                throw new System.Exception("Array out is null when attempting to copy in Array node.");
+                arrayOut = new float[arrayIn.Length];
+                //throw new System.Exception("Array out is null when attempting to copy in Array node.");
             // Length check
             if (arrayIn.Length != arrayOut.Length)
                 arrayOut = new float[arrayIn.Length];
             // Copy contents to array out
-            arrayIn.CopyTo(arrayOut, 0);
+            arrayIn.CopyTo(arrayOut, 0);            
             // return arrayout
             return arrayOut;
         }

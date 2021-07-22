@@ -190,7 +190,7 @@ namespace InteractML
 
 
         /// <summary>
-        /// Disconnect if at least not one of the types is found in the FROM node
+        /// Disconnect if all types are NOT FOUND in FROM node (relaxed)
         /// </summary>
         /// <param name="node"></param>
         /// <param name="from"></param>

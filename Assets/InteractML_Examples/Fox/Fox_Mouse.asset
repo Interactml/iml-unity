@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -888, y: 104}
+  position: {x: -824, y: 88}
   ports:
     keys:
     - m_In
@@ -49,7 +49,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 1
+  Counter: 0
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -291,8 +291,8 @@ MonoBehaviour:
   id: 875147eb-6317-4770-a68d-f6bd16bd103e
   numberInComponentList: -1
   ReceivingData: 0
-  FeatureValueReceivingData: 000000
-  Counter: 1
+  FeatureValueReceivingData: 010101
+  Counter: 0
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -328,6 +328,7 @@ MonoBehaviour:
     - ToggleTrainInputBoolPort
     - ToggleRunInputBoolPort
     - Output 0
+    - Out 0 (Int)
     values:
     - _fieldName: IMLTrainingExamplesNodes
       _node: {fileID: 1681949129486989380}
@@ -398,6 +399,15 @@ MonoBehaviour:
       _node: {fileID: 1681949129486989380}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Out 0 (Int)
+      _node: {fileID: 1681949129486989380}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: m_In
         node: {fileID: 5909617796180734430}
@@ -416,7 +426,7 @@ MonoBehaviour:
   ToggleRunInputBool: 0
   PredictedRapidlibOutput: []
   DelayedPredictedOutput: []
-  m_NumExamplesTrainedOn: 3
+  m_NumExamplesTrainedOn: 0
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_trainingType: 1
@@ -444,7 +454,7 @@ MonoBehaviour:
   m_Name: Keyboard Press
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -440, y: 232}
+  position: {x: -488, y: 232}
   ports:
     keys:
     - inputValue
@@ -807,7 +817,7 @@ MonoBehaviour:
   m_Name: Keyboard Press
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1256, y: 216}
+  position: {x: -1224, y: 168}
   ports:
     keys:
     - inputValue
@@ -1181,7 +1191,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: Output 0
+      - fieldName: Out 0 (Int)
         node: {fileID: 1681949129486989380}
         reroutePoints: []
       _direction: 0
@@ -1209,7 +1219,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 1
+  Counter: 0
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -1247,21 +1257,9 @@ MonoBehaviour:
   id: b770b61b-4249-4971-9cfd-f9d194e3d371
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 17094
+  ScriptHashCode: 23282
   m_PortsPerFieldInfo:
-    m_keys:
-    - _fieldName: motionController
-      _node: {fileID: 6045335021653310370}
-      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_Out
-        node: {fileID: 5909617796180734430}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
+    m_keys: []
   CreatedDuringPlaymode: 0
 --- !u!114 &7448238671356331999
 MonoBehaviour:
@@ -1297,5 +1295,5 @@ MonoBehaviour:
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
   state: 1
-  GOHashCode: 16932
+  GOHashCode: 23120
   CreatedDuringPlaymode: 0

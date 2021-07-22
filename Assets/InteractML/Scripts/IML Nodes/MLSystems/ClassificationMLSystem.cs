@@ -12,7 +12,12 @@ namespace InteractML
     [CreateNodeMenuAttribute("Interact ML/Machine Learning System/MLS Classification")]
     public class ClassificationMLSystem: MLSystem
     {
-
+        public override void Initialize()
+        {
+            // Disable async training when initializing
+            UseAsync = false;
+            base.Initialize();
+        }
 
         #region Protected Methods
         // used for UI set what the user facing machine learning algorithm is called

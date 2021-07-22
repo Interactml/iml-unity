@@ -97,5 +97,18 @@ namespace InteractML
 
             }
         }
+
+        /// <summary>
+        /// Copies the id from this node to clipboard
+        /// </summary>
+        [ContextMenu("Copy Node ID")]
+        public void CopyNodeIDToClipboard()
+        {
+#if UNITY_EDITOR
+            // Gets or sets the id
+            id = NodeID.CheckNodeID(id, this);
+            UnityEditor.EditorGUIUtility.systemCopyBuffer = id;
+#endif
+        }
     }
 }

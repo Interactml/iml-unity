@@ -12,7 +12,7 @@ namespace InteractML
     /// Holds the information and list of a training examples node
     /// </summary>
     [NodeWidth(300)]
-    public class TrainingExamplesNode : IMLNode
+    public class TrainingExamplesNode : IMLNode, IDataSetIML
     {
 
         #region Variables
@@ -196,6 +196,9 @@ namespace InteractML
 
         public override void OnCreateConnection(NodePort from, NodePort to)
         {
+            if (m_TrainingExamplesVector == null) m_TrainingExamplesVector = new List<IMLTrainingExample>();
+            if (m_TrainingSeriesCollection == null) m_TrainingSeriesCollection = new List<IMLTrainingSeries>();
+
             // If there is a connection to any of the button ports...
             if (to.fieldName == "RecordOneInputBoolPort")
             {
@@ -243,11 +246,19 @@ namespace InteractML
             // bool for tracking whether there are training examples recorded
             bool trainingExamplesExist = false;
             // if you are not connecting a ifeatureiml node then disconnect
-            if (this.DisconnectIfNotType<TrainingExamplesNode, IFeatureIML>(from, to) && from.fieldName != "TrainingExamplesNodeToOutput")
+            if (to.fieldName == "MovementData")
             {
-                from.Disconnect(to);
-                return;
+                // check incoming node type and port data type is accepted by input port
+                System.Type[] nodeTypesAccept = new System.Type[] { typeof(IFeatureIML) }; // discriminate based on type of node connected
+                this.DisconnectFROMPortIsNotTypes(from, to, nodeTypesAccept);                
+
             }
+            //if (this.DisconnectIfNotType<TrainingExamplesNode, IFeatureIML>(from, to) && from.fieldName != "TrainingExamplesNodeToOutput")
+            //{
+            //    from.Disconnect(to);
+            //    return;
+            //}
+            
             // if there are training examples set the bool to true 
             if (m_TrainingExamplesVector.Count > 0 || m_TrainingSeriesCollection.Count > 0)
             {
@@ -370,7 +381,9 @@ namespace InteractML
         public override void OnRemoveConnection(NodePort port)
         {
             base.OnRemoveConnection(port);
-            
+
+            if (m_TrainingExamplesVector == null) m_TrainingExamplesVector = new List<IMLTrainingExample>();
+            if (m_TrainingSeriesCollection == null) m_TrainingSeriesCollection = new List<IMLTrainingSeries>();
 
             if (m_TrainingExamplesVector.Count == 0 && m_TrainingSeriesCollection.Count == 0)
             {
@@ -433,12 +446,23 @@ namespace InteractML
 
         #region Unity Messages
 
-        //public void OnValidate()
-        //{
-        //    // Check that the output list is being updated properly
-        //    //UpdateOutputsList();
+        public void OnValidate()
+        {
+            // Check that the output list is being updated properly
+            //UpdateOutputsList();
 
-        //}
+            if (((IMLGraph)graph).IsGraphRunning && m_TrainingExamplesVector != null && m_TrainingSeriesCollection!= null)
+            {
+                // Attempt to load data if needed
+                if (m_TrainingExamplesVector.Count == 0 && m_TrainingSeriesCollection.Count == 0)
+                {
+                    LoadDataFromDisk();
+                }
+
+            }
+
+
+        }
         //check 
         protected void OnDestroy()
         {
@@ -514,6 +538,22 @@ namespace InteractML
             // SubFolderDataPathStringPort
             this.GetOrCreateDynamicPort("SubFolderDataPathStringPort", typeof(string), NodePort.IO.Input, ConnectionType.Override, TypeConstraint.Inherited);
 
+            // Pull inputs from bool event nodeports
+            if (GetInputValue<bool>("RecordOneInputBoolPort"))
+                IMLEventDispatcher.RecordOneCallback(this.id);
+            if (GetInputValue<bool>("ToggleRecordingInputBoolPort"))
+                IMLEventDispatcher.ToggleRecordCallback(this.id);
+            if (GetInputValue<bool>("DeleteAllExamplesBoolPort"))
+                IMLEventDispatcher.DeleteAllExamplesInNodeCallback(this.id);
+            // Pull input from string subfolderDataPath nodeport
+            SubFolderDataPath = GetInputValue<string>("SubFolderDataPathStringPort");
+
+            // Attempt to load data
+            if (m_TrainingExamplesVector.Count == 0 && m_TrainingSeriesCollection.Count == 0)
+            {
+                LoadDataFromDisk();
+            }
+
         }
 
 
@@ -582,7 +622,7 @@ namespace InteractML
         /// <summary>
         /// Update logic per node
         /// </summary>
-        public void UpdateLogic()
+        public virtual void UpdateLogic()
         {
             // Pull inputs from bool event nodeports
             if (GetInputValue<bool>("RecordOneInputBoolPort"))
@@ -593,11 +633,15 @@ namespace InteractML
                 IMLEventDispatcher.DeleteAllExamplesInNodeCallback(this.id);
             // Pull input from string subfolderDataPath nodeport
             SubFolderDataPath = GetInputValue<string>("SubFolderDataPathStringPort");
-            // Attempt to load data
-            if (m_TrainingExamplesVector.Count == 0 && m_TrainingSeriesCollection.Count == 0)
-            {
-                LoadDataFromDisk();
-            }
+
+
+            // loading if empty moved to init and onvalidate
+            //// Attempt to load data
+            //if (m_TrainingExamplesVector.Count == 0 && m_TrainingSeriesCollection.Count == 0)
+            //{
+            //    LoadDataFromDisk();
+            //}
+
             // Run examples logic in case we need to start/stop collecting examples
             CollectExamplesLogic();
 
@@ -707,50 +751,123 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Updates the configuration list of inputs
+        /// Updates the configuration list of desired inputs and outputs from the internal training examples list
         /// </summary>
-        protected void UpdateInputConfigListLoadedData()
+        /// <param name="updateDesiredFeatures">Update list of desired features as well? </param>
+        public void UpdateDesiredInputOutputConfigFromDataVector(bool updateDesiredFeatures = false)
         {
             // Make sure that the list is initialised
+            // Expected configuration
             if (m_DesiredInputsConfig == null)
                 m_DesiredInputsConfig = new List<IMLSpecifications.InputsEnum>();
+            if (m_DesiredOutputsConfig == null)
+                m_DesiredOutputsConfig = new List<IMLSpecifications.OutputsEnum>();
+            // Expected features
+            if (updateDesiredFeatures && m_DesiredInputFeatures == null)
+                m_DesiredInputFeatures = new List<IMLBaseDataType>();
+            if (updateDesiredFeatures && m_DesiredOutputFeatures == null)
+                m_DesiredOutputFeatures = new List<IMLBaseDataType>();
+
 
             // Adjust the desired inputs list based on nodes connected
+            // Expected Configs
             m_DesiredInputsConfig.Clear();
             m_DesiredOutputsConfig.Clear();
-            // if there are inputfestures connected 
+            // Expected Features
+            if (updateDesiredFeatures) 
+            {
+                m_DesiredInputFeatures.Clear();
+                m_DesiredOutputFeatures.Clear();
+            }
+            // if there are training examples loaded...
             if (m_TrainingSeriesCollection != null||m_TrainingExamplesVector != null)
             {
+                // Training Series
                 if (this is SeriesTrainingExamplesNode)
                 {
+                    // Check for null
+                    if (m_TrainingSeriesCollection[0].Series[0] == null || m_TrainingSeriesCollection[0].LabelSeries == null)
+                    {
+                        NodeDebug.LogWarning("Null Reference in Series! Can't configure dataset for model.", this, debugToConsole: true);
+                        return;
+                    }
+                    // Inputs
                     for (int i = 0; i < m_TrainingSeriesCollection[0].Series[0].Count; i++)
                     {
+                        // Check for null
+                        if (m_TrainingSeriesCollection[0].Series[0][i] == null || m_TrainingSeriesCollection[0].Series[0][i].InputData == null)
+                        {
+                            NodeDebug.LogWarning("Null Reference in Input for Series! Can't configure dataset for model.", this, debugToConsole: true);
+                            return;
+                        }
+
+                        // Expected config
                         m_DesiredInputsConfig.Add((IMLSpecifications.InputsEnum)m_TrainingSeriesCollection[0].Series[0][i].InputData.DataType);
-                        
+                        // Expected features
+                        if (updateDesiredFeatures)
+                            m_DesiredInputFeatures.Add(m_TrainingSeriesCollection[0].Series[0][i].InputData);
                     }
                     //inputFeaturesInSeries[j][k].InputData.Values.Length
+                    
+                    // Outputs
                     //Debug.Log(TrainingSeriesCollection[0].LabelSeries);
                     List<IMLBaseDataType> labels = IMLDataSerialization.ParseJSONToIMLFeature(m_TrainingSeriesCollection[0].LabelSeries);
                     //Debug.Log(labels.Count);
                     for (int i = 0; i < labels.Count; i++)
                     {
+                        // Check for null
+                        if (labels[i] == null)
+                        {
+                            NodeDebug.LogWarning("Null Reference in Series Label! Can't configure dataset for model.", this, debugToConsole: true);
+                            return;
+                        }
+                        // Expected config
                         m_DesiredOutputsConfig.Add((IMLSpecifications.OutputsEnum)labels[i].DataType);
-                        
+                        // Expected features
+                        if (updateDesiredFeatures)
+                            m_DesiredOutputFeatures.Add(labels[i]);
                     }
                 }
-                else
+                // Single training examples
+                else if (m_TrainingExamplesVector.Count > 0)
                 {
-                    var inputFeatures = m_TrainingExamplesVector[0].Inputs;
+                    // Check for null
+                    if (m_TrainingExamplesVector[0] == null || m_TrainingExamplesVector[0].Inputs == null || m_TrainingExamplesVector[0].Outputs == null)
+                    {
+                        NodeDebug.LogWarning("Null Reference in Training Examples! Can't configure dataset for model.", this, debugToConsole: true);
+                        return;
+                    }
+                    // Inputs
+                    var recordedInputFeatures = m_TrainingExamplesVector[0].Inputs;
                     for (int i = 0; i < m_TrainingExamplesVector[0].Inputs.Count; i++)
                     {
-                        m_DesiredInputsConfig.Add((IMLSpecifications.InputsEnum)inputFeatures[i].InputData.DataType);
-
+                        // Check for null
+                        if (recordedInputFeatures[i].InputData == null || recordedInputFeatures[i].InputData.Values == null)
+                        {
+                            NodeDebug.LogWarning("Null Reference in Training Examples Input! Can't configure dataset for model.", this, debugToConsole: true);
+                            return;
+                        }
+                        // Expected config
+                        m_DesiredInputsConfig.Add((IMLSpecifications.InputsEnum)recordedInputFeatures[i].InputData.DataType);
+                        // Expected features
+                        if (updateDesiredFeatures)
+                            m_DesiredInputFeatures.Add(recordedInputFeatures[i].InputData);
                     }
+                    // Outputs
                     var outputFeatures = m_TrainingExamplesVector[0].Outputs;
                     for (int i = 0; i < outputFeatures.Count; i++)
                     {
+                        // Check for null
+                        if (outputFeatures[i] == null || outputFeatures[i].OutputData == null)
+                        {
+                            NodeDebug.LogWarning("Null Reference in Training Examples Output! Can't configure dataset for model.", this, debugToConsole: true);
+                            return;
+                        }
+                        // Expected config
                         m_DesiredOutputsConfig.Add((IMLSpecifications.OutputsEnum)outputFeatures[i].OutputData.DataType);
-
+                        // Expected features
+                        if (updateDesiredFeatures)
+                            m_DesiredOutputFeatures.Add(outputFeatures[i].OutputData);
                     }
                 }
                 
@@ -990,7 +1107,7 @@ namespace InteractML
 
             if (m_TrainingExamplesVector.Count > 0 || m_TrainingSeriesCollection.Count > 0)
             {
-                UpdateInputConfigListLoadedData();
+                UpdateDesiredInputOutputConfigFromDataVector();
             }
         }
 
@@ -1028,11 +1145,16 @@ namespace InteractML
 
         protected void UpdateDesiredOutputFeatures()
         {
-            DesiredOutputFeatures.Clear();
+            if (DesiredOutputFeatures == null)
+                m_DesiredOutputFeatures = new List<IMLBaseDataType>();
+            else
+                m_DesiredOutputFeatures.Clear();
+
+            if (TargetValues == null) return;
             for(int i = 0; i<TargetValues.Count; i++)
             {
                 IFeatureIML targetValue = TargetValues[i] as IFeatureIML;
-                DesiredOutputFeatures.Add(targetValue.FeatureValues);
+                m_DesiredOutputFeatures.Add(targetValue.FeatureValues);
                
             }
 
@@ -1040,7 +1162,12 @@ namespace InteractML
 
         protected void UpdateDesiredInputFeatures()
         {
-            m_DesiredInputFeatures.Clear();
+            if (m_DesiredInputFeatures == null)
+                m_DesiredInputFeatures = new List<IMLBaseDataType>();
+            else
+                m_DesiredInputFeatures.Clear();
+            
+            if (InputFeatures == null) return;
             for (int i = 0; i < InputFeatures.Count; i++)
             {
                 IFeatureIML inputValue = InputFeatures[i] as IFeatureIML;

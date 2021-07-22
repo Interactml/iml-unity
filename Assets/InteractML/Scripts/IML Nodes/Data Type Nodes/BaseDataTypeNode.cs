@@ -201,13 +201,47 @@ namespace InteractML.DataTypeNodes
         protected virtual object Update()
         {
             // Read input (if it returns default(T) there is no connection)
-            var inputReceived = GetInputValue<T>("m_In");
-            
+            string inputPortName = "m_In";
+            var inputReceived = GetInputValue<T>(inputPortName);
+            IMLBaseDataType inputFeatureValues = null;
+
             // Check if we have something connected to the input port
             if (inputReceived != null)
             {
                 // Update the value of this data node
-                Value = inputReceived;   
+                Value = inputReceived;
+            }
+            // In case the input is null, check if we can extract a feature from the connection
+            else
+            {
+                var inputPort = GetPort(inputPortName);
+                if (inputPort != null && inputPort.Connection != null)
+                {
+                    // Get input featureValues from connected node
+                    var nodeConnected = inputPort.Connection.node;
+                    if (nodeConnected is IFeatureIML)
+                        inputFeatureValues = (nodeConnected as IFeatureIML).FeatureValues;
+
+                    if (inputFeatureValues != null)
+                    {
+                        // Are the inputFeatureValues the same type than our featureValues?
+                        var emptyDataInstance = IMLBaseDataType.GetDataTypeInstance(typeof(T));
+                        if (emptyDataInstance != null && inputFeatureValues.DataType.Equals(emptyDataInstance.DataType))
+                        {
+                            // If so, attempt to pull data 
+                            if (inputFeatureValues.Values != null)
+                            {
+                                // Attempt to set our own featureValues
+                                if (FeatureValues != null) FeatureValues.SetValues(inputFeatureValues.Values);
+                                // Attempt to set our C# value field
+                                T auxValue = default(T);
+                                CastIMLDataToData(inputFeatureValues, ref auxValue);
+                                Value = auxValue;
+                            }
+                        }
+                    }
+                }
+
             }
 
             // Return entire node to satisfy IFeatureIML requirements
@@ -216,5 +250,45 @@ namespace InteractML.DataTypeNodes
 
         #endregion
 
+        #region BaseDataType Methods
+        
+        /// <summary>
+        /// Casts any base IMLBaseDataType into its equivalen C# type
+        /// </summary>
+        /// <param name="imlData"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public virtual void CastIMLDataToData(IMLBaseDataType imlData, ref T data)
+        {
+            switch (imlData.DataType)
+            {
+                case IMLSpecifications.DataTypes.Float:
+                    if(typeof(T) == typeof(float)) data = (T)(object)(imlData as IMLFloat).GetValue();
+                    break;
+                case IMLSpecifications.DataTypes.Integer:
+                    if (typeof(T) == typeof(int)) data = (T)(object)(imlData as IMLInteger).GetValue();
+                    break;
+                case IMLSpecifications.DataTypes.Vector2:
+                    if (typeof(T) == typeof(Vector2)) data = (T)(object)(imlData as IMLVector2).GetValues();
+                    break;
+                case IMLSpecifications.DataTypes.Vector3:
+                    if (typeof(T) == typeof(Vector3)) data = (T)(object)(imlData as IMLVector3).GetValues();
+                    break;
+                case IMLSpecifications.DataTypes.Vector4:
+                    if (typeof(T) == typeof(Vector4)) data = (T)(object)(imlData as IMLVector4).GetValues();
+                    break;
+                case IMLSpecifications.DataTypes.Array:
+                    if (typeof(T) == typeof(float[])) data = (T)(object)(imlData as IMLArray).GetValues();
+                    break;
+                case IMLSpecifications.DataTypes.Boolean:
+                    if (typeof(T) == typeof(bool)) data = (T)(object)(imlData as IMLBoolean).GetValue();
+                    break;
+                default:
+                    data = default(T);
+                    break;
+            }
+        } 
+
+        #endregion
     }
 }

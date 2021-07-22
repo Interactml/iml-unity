@@ -20,6 +20,12 @@ namespace InteractML
         public abstract IMLSpecifications.DataTypes DataType { get; }
 
         /// <summary>
+        /// Sets the internal values of the data structure
+        /// </summary>
+        /// <param name="newValues"></param>
+        public abstract void SetValues(float[] newValues);
+
+        /// <summary>
         /// Returns an instance of an IMLDataType based on the type passed in
         /// </summary>
         /// <param name="type"></param>
@@ -37,9 +43,10 @@ namespace InteractML
                 return new IMLVector4();
             else if (type == typeof(bool))
                 return new IMLBoolean();
+            else if (type == typeof(float[]))
+                return new IMLArray();
             else
                 return null; // not implement datatype is null
-
         }
 
     }
