@@ -11,11 +11,24 @@ namespace InteractML
     [CustomNodeGraphEditor(typeof(IMLGraph))]
     public class IMLGraphEditor : NodeGraphEditor
     {
+        // reference to the graph
+        private IMLGraph graph;
+
+        /// <summary>
+        /// initialise graph reference when created
+        /// </summary>
+        public override void OnCreate()
+        {
+            // get reference to current graph
+            graph = (target as IMLGraph);
+            base.OnCreate();
+        }
+
 
         public override void OnOpen()
         {
             base.OnOpen();
-           
+
             window.titleContent.text = "InteractML";
 
             // Set the background color and highlight color
@@ -141,8 +154,6 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-
-            /* DATA TYPES */
             if (type.PrettyName() == "InteractML.DataTypeNodes.BooleanNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
@@ -190,6 +201,14 @@ namespace InteractML
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
             if (type.PrettyName() == "InteractML.CustomControllers.InputSetUp")
+              {
+                  return base.GetNodeMenuName(type).Replace("InteractML", "");
+              }
+              if (type.PrettyName() == "InteractML.CustomControllers.VRTrigger")
+              {
+                  return base.GetNodeMenuName(type).Replace("InteractML", "");
+              }
+            if (type.PrettyName() == "InteractML.ControllerCustomisers.KeyboardPress")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
@@ -234,6 +253,48 @@ namespace InteractML
             base.RemoveNode(node);
         }
 
-    }
+        /// <summary>
+        /// Add gameObject nodes when dragged into a graph from scene hierarchy
+        /// </summary>
+        /// <param name="objects"></param>
+        public override void OnDropObjects(UnityEngine.Object[] objects)
+        {
+            // for every object dragged into graph
+            foreach (UnityEngine.Object ob in objects)
+            {
+                // check if the object dragged into the graph is a gameobject type
+                if (ob.GetType() == typeof(GameObject))
+                {
+                    // check if the gameobject is in the scene hierarchy
+                    if ((ob as GameObject).scene.IsValid())
+                    {
+                        // create a new gameObject node and add it to the internal gameobject node list
+                        var goNode = graph.AddNode<GameObjectNode>();
 
+                        // set position of node to dropped position
+                        goNode.position = NodeEditorWindow.current.WindowToGridPosition(Event.current.mousePosition);
+
+                        // configure node with game object dropped in
+                        goNode.SetGameObject((GameObject)ob);
+
+                        // add gameobject to internal list of game objects
+                        graph.SceneComponent.GameObjectsToUse.Add((GameObject)ob);
+
+                        // add to internal dictionary of goNodes and gameobjects
+                        graph.SceneComponent.AddToGameObjectNodeDictionary(goNode, (GameObject)ob);
+
+                    }
+                }
+                else
+                {
+                    base.OnDropObjects(objects);
+                }
+            }
+        }
+        public void OnInspectorUpdate()
+        {
+            Debug.Log("inspector update");
+            window.Repaint();
+        }
+    }
 }
