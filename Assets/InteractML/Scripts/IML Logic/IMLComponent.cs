@@ -12,6 +12,8 @@ using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
 using UnityEditor;
 using InteractML.ControllerCustomisers;
+using TMPro;
+using UnityEngine.UI;
 #endif
 
 namespace InteractML
@@ -52,6 +54,11 @@ namespace InteractML
         /// bool to check whether MLS nodes are loaded before running
         /// </summary>
         private bool nodesLoaded;
+
+        public TextMeshProUGUI TrainingUI;
+        public TextMeshProUGUI MLSUI;
+
+        private string ttm_status;
 
         #region Private Lists of Nodes (Fields)
         /* Private Lists of nodes that we can have in the graph */
@@ -143,6 +150,7 @@ namespace InteractML
         private IMLGrab icon;
         private bool isSubscribed = false;
 
+        private string mls_status;
         #endregion
 
         #region Unity Messages
@@ -227,6 +235,27 @@ namespace InteractML
             UpdateLogic();
 
 #endif
+            mls_status = "";
+            int i = 0;
+            foreach (MLSystem mlsnode in MLSystemNodeList)
+            {
+                mls_status += "MLS Node " + i + "\n";
+                mls_status += mlsnode.GetStatus(mlsnode.id) + "\n";
+                i++;
+            }
+            MLSUI.text = mls_status;
+
+            i = 0;
+            ttm_status = "";
+            foreach (TrainingExamplesNode ttmnode in TrainingExamplesNodesList)
+            {
+                ttm_status += "TTM Node " + i + "\n";
+                ttm_status += ttmnode.GetStatus(ttmnode.id) + "\n";
+                i++;
+            }
+            TrainingUI.text = ttm_status;
+
+
         }
 
 
@@ -833,9 +862,6 @@ namespace InteractML
             Debug.Log(m_GOsPerGONodes.Count);
             Debug.Log(m_GameObjectNodeList.Count);
             // Don't do anything if there are no gameObjects from the scene to use
-
-
-
             if (GameObjectsToUse == null || GameObjectsToUse.Count == 0)
             {
                 return;
@@ -1547,8 +1573,10 @@ namespace InteractML
             }
             // input logic 
             InputLogic();
+            
 
         }
+
         /// <summary>
         /// Update logic for input modules
         /// </summary>
@@ -2482,6 +2510,10 @@ namespace InteractML
             //Debug.Log(icon == null);
             if (success && icon != null)
                 icon.SetBody(icon.trainedColor);
+            if (MLSUI != null)
+            {
+                MLSUI.text = "Machine Learning System \n Trained";
+            }
             // returns true if nodeID exists and whether training successful
             return success;
         }
@@ -2492,6 +2524,7 @@ namespace InteractML
         /// <returns></returns>
         private bool ToggleRunning(string nodeID)
         {
+         
             bool success = false;
             //iterate through all mls nodes
             foreach (MLSystem MLSNode in MLSystemNodeList)
@@ -2513,8 +2546,8 @@ namespace InteractML
                         //else
                             //icon.SetBody(icon.current);
                     }
-                        
 
+                    mls_status = MLSNode.GetStatus(nodeID);
                 }
             }
             // return true if nodeID exists and running started
@@ -2605,6 +2638,7 @@ namespace InteractML
                             if (icon != null)
                                 icon.SetBody(icon.current);
                         }
+                        
                     }
                         
                 }

@@ -40,7 +40,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: f428bce9-df9b-49c7-b9cf-985f5327e435
   numberInComponentList: -1
   ValueName: 
@@ -48,6 +47,7 @@ MonoBehaviour:
   m_Value: 0
   m_Out: 0
   ReceivingData: 0
+  FeatureValueReceivingData: 00
   InputConnected: 1
   Counter: 4
   Count: 5
@@ -77,6 +77,7 @@ MonoBehaviour:
     - ToggleTrainInputBoolPort
     - ToggleRunInputBoolPort
     - Output 0
+    - Out 0 (Int)
     values:
     - _fieldName: IMLTrainingExamplesNodes
       _node: {fileID: -7273799662840517630}
@@ -152,7 +153,15 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-  DevMode: 0
+    - _fieldName: Out 0 (Int)
+      _node: {fileID: -7273799662840517630}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   id: 1b864d43-1fcb-431f-914f-8544b208ffa8
   numberInComponentList: -1
   IMLTrainingExamplesNodes:
@@ -191,7 +200,7 @@ MonoBehaviour:
   m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 725.8378, y: 659.9373}
+  position: {x: 472, y: 616}
   ports:
     keys:
     - m_In
@@ -218,7 +227,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: aa4aa146-d0c7-42ed-b9cc-3e825a370b9a
   numberInComponentList: -1
   ValueName: 
@@ -226,6 +234,7 @@ MonoBehaviour:
   m_Value: 0
   m_Out: 0
   ReceivingData: 0
+  FeatureValueReceivingData: 00
   InputConnected: 0
   Counter: 4
   Count: 5
@@ -258,6 +267,7 @@ MonoBehaviour:
     - RecordOneInputBoolPort
     - ToggleRecordingInputBoolPort
     - DeleteAllExamplesBoolPort
+    - SubFolderDataPathStringPort
     values:
     - _fieldName: InputFeatures
       _node: {fileID: -976289201941022306}
@@ -360,7 +370,15 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-  DevMode: 0
+    - _fieldName: SubFolderDataPathStringPort
+      _node: {fileID: -976289201941022306}
+      _typeQualifiedName: System.String, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 1
+      _dynamic: 1
   id: e1926e2e-c109-407f-8342-4f5f9e176da9
   numberInComponentList: -1
   InputFeatures:
@@ -373,8 +391,6 @@ MonoBehaviour:
   DeleteAllInputBool: 0
   TrainingExamplesNodeToOutput: {fileID: -976289201941022306}
   ModeOfCollection: 1
-  TrainingExamplesVector: []
-  TrainingSeriesCollection: []
   m_DesiredInputsConfig: 04000000
   m_DesiredOutputsConfig: 01000000
   MLSystemNodesConnected:
@@ -384,9 +400,10 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 0
-  showWarning: 1
+  showWarning: 0
   canCollect: 1
   listNo: 0
+  SubFolderDataPath: 
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,63 +417,14 @@ MonoBehaviour:
   m_Name: Exercise3
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: 66848979013747667}
-  - {fileID: 3118569777541098807}
   - {fileID: 5452177174110760924}
   - {fileID: -6678949267173148016}
   - {fileID: -976289201941022306}
   - {fileID: -7273799662840517630}
   - {fileID: -8619442953340953581}
+  - {fileID: 49883485752128861}
   SceneComponent: {fileID: 0}
---- !u!114 &66848979013747667
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9aed23916b1ab864c8093dcc28b280f8, type: 3}
-  m_Name: Input Set Up
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -110.61084, y: 128.95047}
-  ports:
-    keys: []
-    values: []
-  DevMode: 0
-  id: 6a4e72cb-ea3b-4b5d-9bb7-67c28bce5283
-  numberInComponentList: -1
-  enableUniversalInterface: 1
-  activeUniversalInterface: 1
-  device: 2
-  trainingHand: 1
-  mlsHand: 1
-  buttonOptions:
-  - Trigger
-  - Grip
-  - Primary
-  - Secondary
-  mlsID: 
-  trainingID: 
-  deleteLastButtonNo: 0
-  deleteLastButtonTT: 0
-  deleteAllButtonNo: 2
-  deleteAllButtonTT: 1
-  toggleRecordButtonNo: 0
-  recordOneButtonTT: 0
-  recordOneButtonNo: 1
-  toggleRecordButtonTT: 2
-  trainButtonNo: 1
-  trainButtonTT: 0
-  toggleRunButtonNo: 0
-  toggleRunButtonTT: 2
-  currentMLS: 
-  currentTraining: 
-  selectedMLS: 
-  selectedTraining: 
---- !u!114 &3118569777541098807
+--- !u!114 &49883485752128861
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -469,13 +437,13 @@ MonoBehaviour:
   m_Name: LeftHand Controller (GameObject)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 360, y: 232}
+  position: {x: 72, y: 232}
   ports:
     keys:
     - GameObjectDataOut
     values:
     - _fieldName: GameObjectDataOut
-      _node: {fileID: 3118569777541098807}
+      _node: {fileID: 49883485752128861}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       connections:
@@ -486,13 +454,11 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
-  id: c39aa0fb-d67f-417e-8e8b-6880ac3c6f8d
+  id: 827d2b8a-49d5-4d68-ac03-e517c1bc6dd4
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  GameObjMissing: 0
   state: 0
-  GOHashCode: 25070
+  GOHashCode: 18374
   CreatedDuringPlaymode: 0
 --- !u!114 &5452177174110760924
 MonoBehaviour:
@@ -519,7 +485,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectDataOut
-        node: {fileID: 3118569777541098807}
+        node: {fileID: 49883485752128861}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -539,7 +505,6 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  DevMode: 0
   id: 7d7a322e-f760-4891-84c9-2d8cb838d8cc
   numberInComponentList: -1
   ReceivingData: 0

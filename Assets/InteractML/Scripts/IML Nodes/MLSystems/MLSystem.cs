@@ -2198,7 +2198,7 @@ namespace InteractML
                 IMLEventDispatcher.getText -= GetStatus;
             return true;
         }
-        private string GetStatus(string nodeid)
+        public string GetStatus(string nodeid)
         {
             if (nodeid == this.id)
             {
