@@ -75,18 +75,11 @@ namespace InteractML.ControllerCustomisers
         public string selectedMLS;
         public string selectedTraining;
 
+        // delegate that adds all devices to menu 
+       
 
         public override void Initialize()
         {
-            devices = new IInputType[0];
-            KeyboardInput keyboard = new KeyboardInput();
-            //Debug.Log(keyboard.inputName);
-            //Debug.Log(devices.Length);
-            AddDeviceType(keyboard);
-            Debug.Log(devices.Length);
-            //Debug.Log(device.inputName);
-            //device.LoadDeviceInfo();
-            OnInputDeviceChange();
             trainingHandlers = new List<InputHandler>();
             //trainingHandlers.Add(DeleteLast);
             trainingHandlers.Add(DeleteAll);
@@ -135,7 +128,7 @@ namespace InteractML.ControllerCustomisers
         {
             if (device == null)
                 device = devices[0];
-            DeleteAll = device.InitializeButtonHandler(deleteAllButtonNo, deleteAllButtonTT, deleteAllName);
+            //DeleteAll = device.InitializeButtonHandler(deleteAllButtonNo, deleteAllButtonTT, deleteAllName);
         }
 
         /// <summary>
@@ -190,15 +183,14 @@ namespace InteractML.ControllerCustomisers
             return true;
         }
 
-        public void AddDeviceType(IInputType inputType)
+      
+        // add all available devices to input setup
+        public void AddDevices(List<IInputType> inputTypes)
         {
-            if (devices == null)
-                devices = new IInputType[0];
-            UnityEditor.ArrayUtility.Add<IInputType>(ref devices, inputType);
-            Debug.Log(inputType.inputName);
-            UnityEditor.ArrayUtility.Add<string>(ref deviceNames, inputType.inputName);
+            devices = inputTypes.ToArray();
+            OnInputDeviceChange();
         }
-       
+
 
         private void ActivateInput(IMLComponent graph)
         {

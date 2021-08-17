@@ -166,6 +166,9 @@ namespace InteractML.ControllerCustomisers
             // set gui changed to false so thar we know if they have selected a new input 
             GUI.changed = false;
             // set the device to user chosen input
+            Debug.Log(m_InputSetUp);
+            Debug.Log(m_InputSetUp.deviceNo);
+            Debug.Log(m_InputSetUp.deviceNames);
             m_InputSetUp.deviceNo = EditorGUILayout.Popup(m_InputSetUp.deviceNo, m_InputSetUp.deviceNames);
 
 
