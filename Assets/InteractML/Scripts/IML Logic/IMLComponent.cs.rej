@@ -1,9 +1,9 @@
 diff a/Assets/InteractML/Scripts/IML Logic/IMLComponent.cs b/Assets/InteractML/Scripts/IML Logic/IMLComponent.cs	(rejected hunks)
-@@ -11,7 +11,6 @@
- #if UNITY_EDITOR
- using UnityEditor.SceneManagement;
- using UnityEditor;
--using InteractML.ControllerCustomisers;
- #endif
+@@ -150,7 +150,6 @@
+         private IMLGrab icon;
+         private bool isSubscribed = false;
  
- namespace InteractML
+-        //input delegate event 
+         private string mls_status;
+         #endregion
+ 

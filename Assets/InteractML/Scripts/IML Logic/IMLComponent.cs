@@ -74,7 +74,7 @@ namespace InteractML
         private InteractML.ControllerCustomisers.InputSetUp m_inputSetUp;
         [SerializeField, HideInInspector]
         private List<CustomController> m_CustomControllerList;
-        public List<Type> inputTypes;
+        public List<IInputType> inputTypes;
 
         #endregion
 
@@ -150,7 +150,11 @@ namespace InteractML
         private IMLGrab icon;
         private bool isSubscribed = false;
 
+        public delegate void AddDevices();
+        public AddDevices m_addDevice;
+
         private string mls_status;
+
         #endregion
 
         #region Unity Messages
@@ -510,6 +514,7 @@ namespace InteractML
             // IMLEventDispatcher.DeleteLastCallback +=
 
             IMLEventDispatcher.UniversalControlChange += UniversalInterface;
+            m_addDevice += AddKeyboard;
         }
         /// <summary>
         /// 
@@ -532,6 +537,8 @@ namespace InteractML
             IMLEventDispatcher.DeleteAllTrainingExamplesInGraphCallback -= DeleteAllTrainingExamplesInGraph;
 
             IMLEventDispatcher.UniversalControlChange -= UniversalInterface;
+            m_addDevice -= AddKeyboard;
+
         }
         /// <summary>
         /// Checks if an IMLController is owned and properly updates it when needed
@@ -673,8 +680,10 @@ namespace InteractML
                 {
                     m_inputSetUp = inputNode;
                     if (inputTypes == null)
-                        inputTypes = new List<Type>();
-                    inputTypes.Add(typeof(InteractML.ControllerCustomisers.KeyboardInput));
+                        inputTypes = new List<IInputType>();
+                    m_addDevice?.Invoke();
+                    AddKeyboard();
+                    Debug.Log(inputTypes[0].inputTypes);
                    
                 }
             }
@@ -864,7 +873,62 @@ namespace InteractML
             // Don't do anything if there are no gameObjects from the scene to use
             if (GameObjectsToUse == null || GameObjectsToUse.Count == 0)
             {
-                return;
+                if (GameObjectsToUse == null || GameObjectsToUse.Count == 0)
+                {
+                    Debug.Log("here");
+                    for (int i = 0; i < m_GOsPerGONodes.Count; i++)
+                    {
+                        Debug.Log("here");
+                        var goNode = m_GameObjectNodeList[i];
+                        // If we find a null node, remove it!
+                        if (goNode == null)
+                        {
+                            Debug.Log("here");
+                            // Remove null reference
+                            m_GameObjectNodeList.RemoveAt(i);
+                            // Adjust index
+                            i--;
+                            continue;
+                        }
+
+                        Debug.Log("here");
+                        //if node doesn't have a game object reference
+                        if (!goNode.IsTaken)
+                        {
+                            Debug.Log("here");
+                            // If there is a scriptHashCode from a previous GO...
+                            if (!goNode.GOHashCode.Equals(default))
+                            {
+                                Debug.Log("here");
+                                // Check if the GOsPerGONodes dictionary contains the node and its GO
+                                var gameObject = m_GOsPerGONodes.GetKey(goNode);
+                                // Set GO if we found it
+                                if (gameObject != null)
+                                {
+                                    goNode.SetGameObject(gameObject);
+                                    GameObjectsToUse.Add(gameObject);
+                                }
+                                // If we didn't find it...
+                                else
+                                {
+                                    Debug.Log("here");
+                                    m_GameObjectNodeList.Remove(goNode);
+                                    // Iterate through copy, but modify original
+                                    foreach (KeyValuePair<GameObject, GameObjectNode> dicItem in m_GOsPerGONodes)
+                                    {
+                                        if (!m_GameObjectNodeList.Contains(dicItem.Value))
+                                        {
+                                            // Modify original list
+                                            m_GOsPerGONodes.Remove(dicItem);
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                    return;
+                }
             }
 
             // Make sure dictionaries and lists are init
@@ -874,7 +938,7 @@ namespace InteractML
                 m_GameObjectNodeList = new List<GameObjectNode>();
 
             // Go through GONodes looking for empty entries that could contain memory (lost ref due to unity hotlreload)
-           /* for (int i = 0; i < m_GameObjectNodeList.Count; i++)
+            for (int i = 0; i < m_GameObjectNodeList.Count; i++)
             {
                 var goNode = m_GameObjectNodeList[i];
                 // If we find a null node, remove it!
@@ -925,10 +989,10 @@ namespace InteractML
 
                     }
                 }
-            }*/
+            }
 
             // Go through gameObjects added by the user
-           /* for (int i = 0; i < GameObjectsToUse.Count; i++)
+            for (int i = 0; i < GameObjectsToUse.Count; i++)
             {
                 var go = GameObjectsToUse[i];
 
@@ -995,7 +1059,7 @@ namespace InteractML
 
 
 
-            }*/
+            }
 
             /* OLD LOGIC 
 
@@ -2724,6 +2788,9 @@ namespace InteractML
                 TrainingExamplesNodesList[i].listNo = i;
             }
         }
+
+        
+        
 
 #endregion
     }
