@@ -38,12 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028401, g: 0.22571425, b: 0.30692324, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 11
   m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -118,8 +118,6 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
-    maxJobWorkers: 0
-    preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
@@ -155,7 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbd2a755098f5f46814744bfc36b3e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MLComponent: {fileID: 0}
+  SetAbsoluteColour: 0
 --- !u!65 &51870785
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -184,7 +182,6 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -209,7 +206,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &51870787
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -241,24 +237,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 170667244821327780, guid: 68d94a8ae834ab84996c04d54cf502ad,
         type: 3}
-      propertyPath: innerMenu
-      value: 
-      objectReference: {fileID: 115161051}
-    - target: {fileID: 170667244821327780, guid: 68d94a8ae834ab84996c04d54cf502ad,
-        type: 3}
       propertyPath: controller
       value: 
       objectReference: {fileID: 115161050}
+    - target: {fileID: 170667244821327780, guid: 68d94a8ae834ab84996c04d54cf502ad,
+        type: 3}
+      propertyPath: innerMenu
+      value: 
+      objectReference: {fileID: 115161051}
     - target: {fileID: 2122530346578314926, guid: 68d94a8ae834ab84996c04d54cf502ad,
         type: 3}
       propertyPath: m_InteractionManager
       value: 
       objectReference: {fileID: 627737950}
-    - target: {fileID: 2122530347406769800, guid: 68d94a8ae834ab84996c04d54cf502ad,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2122530347406769800, guid: 68d94a8ae834ab84996c04d54cf502ad,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -276,11 +267,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2122530347406769800, guid: 68d94a8ae834ab84996c04d54cf502ad,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2122530347406769800, guid: 68d94a8ae834ab84996c04d54cf502ad,
-        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -293,6 +279,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2122530347406769800, guid: 68d94a8ae834ab84996c04d54cf502ad,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2122530347406769800, guid: 68d94a8ae834ab84996c04d54cf502ad,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2122530347406769800, guid: 68d94a8ae834ab84996c04d54cf502ad,
         type: 3}
@@ -350,7 +346,6 @@ GameObject:
   m_Component:
   - component: {fileID: 275004358}
   - component: {fileID: 275004357}
-  - component: {fileID: 275004359}
   m_Layer: 0
   m_Name: IML System
   m_TagString: Untagged
@@ -371,6 +366,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000, guid: 6cf7e0c668e782b4594c8bcaa77ffad4, type: 2}
+  GameObjectsToUse:
+  - {fileID: 453515205}
   m_GOsPerGONodes:
     m_keys:
     - {fileID: 453515205}
@@ -402,19 +399,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &275004359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 275004356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f47a07a9b12c17f4f910c34b02f218f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  imlSystem: {fileID: 275004357}
 --- !u!1 &453515205 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2122530346562721075, guid: 68d94a8ae834ab84996c04d54cf502ad,
@@ -468,6 +452,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9158b678fd7f994caf28762f33405ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_InteractionManager: {fileID: 0}
+  m_Colliders: []
+  m_InteractionLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_OnFirstHoverEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnHoverEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnHoverExit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnLastHoverExit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnSelectEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 578186104}
+        m_MethodName: Selected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 578186104}
+        m_MethodName: ActivateVRInterface
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_OnSelectExit:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnActivate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_OnDeactivate:
+    m_PersistentCalls:
+      m_Calls: []
+  m_CustomReticle: {fileID: 0}
+  graph: {fileID: 275004357}
+  selectedHighlight: {r: 0.72156864, g: 0.73333335, b: 0.98039216, a: 0}
+  trainedColor: {fileID: 2800000, guid: c417d3fdbb88654449462abbdc48680c, type: 3}
+  baseColour: {fileID: 2800000, guid: c4c3665142c39b4459c779bd443b9776, type: 3}
+  recordingColour: {fileID: 2800000, guid: 243854e302a54c04082cefa189303fc6, type: 3}
+  runningColour: {fileID: 2800000, guid: 7886c868007defe40ba0a0cc1ebfc46b, type: 3}
+  current: {fileID: 0}
 --- !u!54 &578186105
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -512,7 +555,6 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -537,7 +579,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &578186108
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -634,7 +675,6 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!4 &1108424008
@@ -699,7 +739,6 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -724,7 +763,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1881178546
 MeshFilter:
   m_ObjectHideFlags: 0

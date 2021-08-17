@@ -10,10 +10,12 @@ namespace InteractML
     {
         public IMLComponent imlSystem;
         public VRControllerInput vrController;
+
         private void Reset()
         {
             AddIMLGrab();
         }
+
         private void OnEnable()
         {
 
@@ -59,16 +61,18 @@ namespace InteractML
         {
             imlSystem.m_addDevice -= AddVRControllers;
         }
+
+
+
         private void AddIMLGrab()
         {
-            IMLGrab grab = this.GetComponentInChildren<IMLGrab>();
+            IMLGrab  grab = this.GetComponentInChildren<IMLGrab>();
             if(grab != null)
             {
                 grab.gameObject.AddComponent<IMLGrabVR>();
             }
             
         }
-
         // subscribed to addDevices - adds VR controllers to the list of input devices in iml component
         private void AddVRControllers()
         {
