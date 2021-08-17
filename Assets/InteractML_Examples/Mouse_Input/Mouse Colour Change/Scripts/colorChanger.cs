@@ -8,9 +8,9 @@ public class colorChanger : MonoBehaviour
     /// <summary>
     /// The IML component from where we are getting the outputs
     /// </summary>
-    [SerializeField]
-    private IMLComponent m_MLComponent;
 
+    [PullFromIMLGraph]
+    public int colour; 
     Renderer renderer;
     Color[] colors;
     float transitionTime = 5f;
@@ -31,40 +31,19 @@ public class colorChanger : MonoBehaviour
 
     void Update()
     {
-        if (m_MLComponent)
+        switch (colour)
         {
-            if (m_MLComponent.IMLControllerOutputs.Count > 0)
-            {
-                switch (m_MLComponent.IMLControllerOutputs[0][0])
-                {
-                    case 1:
-    /*                    while (transitionRate < 1) {
-
-                            //this next line is how we change our material color property. We Lerp between the current color and newColor
-
-                            renderer.material.SetColor("_Color", Color.Lerp(renderer.material.color, newColor, Time.deltaTime * transitionRate));
-
-                            transitionRate += Time.deltaTime / transitionTime; // Increment transitionRate over the length of transitionTime
-
-                            yield return null; // wait for a frame then loop again
-
-                        }
-
-                        yield return null; // wait for a frame then loop again
-
-                } */
+            case 1:
                 renderer.material.SetColor("_Color", colors[1]);
-                        break;
-                    case 2:
-                        renderer.material.SetColor("_Color", colors[2]);
-                        break;
-                    case 3:
-                        renderer.material.SetColor("_Color", colors[0]);
-                        break;
-                    default:
-                        break;
-                }
-            }
+                break;
+            case 2:
+                renderer.material.SetColor("_Color", colors[2]);
+                break;
+            case 3:
+                renderer.material.SetColor("_Color", colors[0]);
+                break;
+            default:
+                break;
         }
     }
 }

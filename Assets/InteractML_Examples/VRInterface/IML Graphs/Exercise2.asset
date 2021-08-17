@@ -49,7 +49,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 000000
   InputConnected: 0
-  Counter: 3
+  Counter: 2
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue:
@@ -105,7 +105,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 000000
   InputConnected: 1
-  Counter: 3
+  Counter: 2
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue:
@@ -309,7 +309,7 @@ MonoBehaviour:
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
   state: 0
-  GOHashCode: 23100
+  GOHashCode: 20934
   CreatedDuringPlaymode: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -324,7 +324,6 @@ MonoBehaviour:
   m_Name: Exercise2
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: 8163933493956499260}
   - {fileID: -12763039511222254}
   - {fileID: 4359672326145209811}
   - {fileID: -7338782252310453512}
@@ -381,7 +380,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 3
+  Counter: 2
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -417,6 +416,7 @@ MonoBehaviour:
     - ToggleTrainInputBoolPort
     - ToggleRunInputBoolPort
     - Output 0
+    - Out 0 (V3)
     values:
     - _fieldName: IMLTrainingExamplesNodes
       _node: {fileID: 5989071261893766201}
@@ -492,6 +492,15 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+    - _fieldName: Out 0 (V3)
+      _node: {fileID: 5989071261893766201}
+      _typeQualifiedName: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   id: dd87c4ed-b8e8-414c-b4c3-3b1025eed821
   numberInComponentList: -1
   IMLTrainingExamplesNodes:
@@ -500,12 +509,15 @@ MonoBehaviour:
   - {fileID: 4359672326145209811}
   ToggleTrainInputBool: 0
   ToggleRunInputBool: 0
-  PredictedRapidlibOutput: []
+  PredictedRapidlibOutput:
+  - 0
+  - 0
+  - 0
   DelayedPredictedOutput:
   - 0.6882576652144334
   - -0.14975222485333206
   - 0.9697252218447103
-  m_NumExamplesTrainedOn: 8
+  m_NumExamplesTrainedOn: 0
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 03000000
   m_trainingType: 0
@@ -520,49 +532,3 @@ MonoBehaviour:
   warning: You are in edit mode live data in from objects will only workin play mode
   error: 1
   trainOnLoad: 0
---- !u!114 &8163933493956499260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9aed23916b1ab864c8093dcc28b280f8, type: 3}
-  m_Name: Input Set Up
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 23.499403, y: -16.050892}
-  ports:
-    keys: []
-    values: []
-  id: 3c6a279d-0c09-45e9-90ac-60dd45d8620d
-  numberInComponentList: -1
-  enableUniversalInterface: 1
-  activeUniversalInterface: 0
-  deviceNames: []
-  deviceNo: 0
-  buttonOptions:
-  - Trigger
-  - Grip
-  - Primary
-  - Secondary
-  mlsID: 
-  trainingID: 
-  deleteLastButtonNo: 0
-  deleteLastButtonTT: 0
-  deleteAllButtonNo: 2
-  deleteAllButtonTT: 1
-  toggleRecordButtonNo: 0
-  recordOneButtonTT: 0
-  recordOneButtonNo: 1
-  toggleRecordButtonTT: 2
-  trainButtonNo: 1
-  trainButtonTT: 0
-  toggleRunButtonNo: 0
-  toggleRunButtonTT: 2
-  currentMLS: 
-  currentTraining: 
-  selectedMLS: 
-  selectedTraining: 

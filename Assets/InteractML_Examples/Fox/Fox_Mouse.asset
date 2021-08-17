@@ -49,7 +49,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 0
+  Counter: 3
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -291,8 +291,8 @@ MonoBehaviour:
   id: 875147eb-6317-4770-a68d-f6bd16bd103e
   numberInComponentList: -1
   ReceivingData: 0
-  FeatureValueReceivingData: 010101
-  Counter: 0
+  FeatureValueReceivingData: 000000
+  Counter: 3
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -1219,7 +1219,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 0
+  Counter: 3
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -1257,9 +1257,21 @@ MonoBehaviour:
   id: b770b61b-4249-4971-9cfd-f9d194e3d371
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 23282
+  ScriptHashCode: 21934
   m_PortsPerFieldInfo:
-    m_keys: []
+    m_keys:
+    - _fieldName: motionController
+      _node: {fileID: 6045335021653310370}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: 5909617796180734430}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   CreatedDuringPlaymode: 0
 --- !u!114 &7448238671356331999
 MonoBehaviour:
@@ -1295,5 +1307,5 @@ MonoBehaviour:
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
   state: 1
-  GOHashCode: 23120
+  GOHashCode: 21772
   CreatedDuringPlaymode: 0

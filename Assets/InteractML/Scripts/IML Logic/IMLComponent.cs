@@ -12,6 +12,8 @@ using UnityEngine.SceneManagement;
 using UnityEditor.SceneManagement;
 using UnityEditor;
 using InteractML.ControllerCustomisers;
+using TMPro;
+using UnityEngine.UI;
 #endif
 
 namespace InteractML
@@ -53,6 +55,11 @@ namespace InteractML
         /// </summary>
         private bool nodesLoaded;
 
+        public TextMeshProUGUI TrainingUI;
+        public TextMeshProUGUI MLSUI;
+
+        private string ttm_status;
+
         #region Private Lists of Nodes (Fields)
         /* Private Lists of nodes that we can have in the graph */
         private List<TextNote> m_TextNoteNodesList;
@@ -67,7 +74,7 @@ namespace InteractML
         private InteractML.ControllerCustomisers.InputSetUp m_inputSetUp;
         [SerializeField, HideInInspector]
         private List<CustomController> m_CustomControllerList;
-        public List<IInputType> inputTypes;
+        public List<Type> inputTypes;
 
         #endregion
 
@@ -143,13 +150,7 @@ namespace InteractML
         private IMLGrab icon;
         private bool isSubscribed = false;
 
-        // standard inputs for control of graph 
-        public KeyboardInput keyboard;
-
-        //input delegate event 
-        public delegate void AddDevices();
-        public AddDevices m_addDevice;
-
+        private string mls_status;
         #endregion
 
         #region Unity Messages
@@ -234,6 +235,27 @@ namespace InteractML
             UpdateLogic();
 
 #endif
+            mls_status = "";
+            int i = 0;
+            foreach (MLSystem mlsnode in MLSystemNodeList)
+            {
+                mls_status += "MLS Node " + i + "\n";
+                mls_status += mlsnode.GetStatus(mlsnode.id) + "\n";
+                i++;
+            }
+            MLSUI.text = mls_status;
+
+            i = 0;
+            ttm_status = "";
+            foreach (TrainingExamplesNode ttmnode in TrainingExamplesNodesList)
+            {
+                ttm_status += "TTM Node " + i + "\n";
+                ttm_status += ttmnode.GetStatus(ttmnode.id) + "\n";
+                i++;
+            }
+            TrainingUI.text = ttm_status;
+
+
         }
 
 
@@ -354,7 +376,7 @@ namespace InteractML
             InitializeEvent();
             // train models
             LoadDataForModels();
-            
+
 
         }
 
@@ -471,7 +493,7 @@ namespace InteractML
             //Debug.Log("subscribe");
             // DIRTY CODE
             // I am unsubscribing from all delegates first since there are issue with ToggleRecordCallback having the same method twice
-            // UnsubscribeToDelegates();
+           // UnsubscribeToDelegates();
             
             // dispatchers for MLSystem node events
             IMLEventDispatcher.TrainMLSCallback += Train;
@@ -488,8 +510,6 @@ namespace InteractML
             // IMLEventDispatcher.DeleteLastCallback +=
 
             IMLEventDispatcher.UniversalControlChange += UniversalInterface;
-            Debug.Log("subscribing");
-            m_addDevice += AddKeyboard;
         }
         /// <summary>
         /// 
@@ -512,8 +532,6 @@ namespace InteractML
             IMLEventDispatcher.DeleteAllTrainingExamplesInGraphCallback -= DeleteAllTrainingExamplesInGraph;
 
             IMLEventDispatcher.UniversalControlChange -= UniversalInterface;
-
-            m_addDevice -= AddKeyboard;
         }
         /// <summary>
         /// Checks if an IMLController is owned and properly updates it when needed
@@ -655,11 +673,9 @@ namespace InteractML
                 {
                     m_inputSetUp = inputNode;
                     if (inputTypes == null)
-                        inputTypes = new List<IInputType>();
-                    m_addDevice?.Invoke();
-                    AddKeyboard();
-                    Debug.Log(inputTypes[0].inputName);
-                    m_inputSetUp.AddDevices(inputTypes);
+                        inputTypes = new List<Type>();
+                    inputTypes.Add(typeof(InteractML.ControllerCustomisers.KeyboardInput));
+                   
                 }
             }
 
@@ -846,61 +862,8 @@ namespace InteractML
             Debug.Log(m_GOsPerGONodes.Count);
             Debug.Log(m_GameObjectNodeList.Count);
             // Don't do anything if there are no gameObjects from the scene to use
-
             if (GameObjectsToUse == null || GameObjectsToUse.Count == 0)
             {
-                Debug.Log("here");
-                for (int i = 0; i < m_GOsPerGONodes.Count; i++)
-                {
-                    Debug.Log("here");
-                    var goNode = m_GameObjectNodeList[i];
-                    // If we find a null node, remove it!
-                    if (goNode == null)
-                    {
-                        Debug.Log("here");
-                        // Remove null reference
-                        m_GameObjectNodeList.RemoveAt(i);
-                        // Adjust index
-                        i--;
-                        continue;
-                    }
-
-                    Debug.Log("here");
-                    //if node doesn't have a game object reference
-                    if (!goNode.IsTaken)
-                    {
-                        Debug.Log("here");
-                        // If there is a scriptHashCode from a previous GO...
-                        if (!goNode.GOHashCode.Equals(default))
-                        {
-                            Debug.Log("here");
-                            // Check if the GOsPerGONodes dictionary contains the node and its GO
-                            var gameObject = m_GOsPerGONodes.GetKey(goNode);
-                            // Set GO if we found it
-                            if (gameObject != null)
-                            {
-                                goNode.SetGameObject(gameObject);
-                                GameObjectsToUse.Add(gameObject);
-                            }
-                            // If we didn't find it...
-                            else
-                            {
-                                Debug.Log("here");
-                                m_GameObjectNodeList.Remove(goNode);
-                                // Iterate through copy, but modify original
-                                foreach (KeyValuePair<GameObject, GameObjectNode> dicItem in m_GOsPerGONodes)
-                                {
-                                    if (!m_GameObjectNodeList.Contains(dicItem.Value))
-                                    {
-                                        // Modify original list
-                                        m_GOsPerGONodes.Remove(dicItem);
-                                    }
-                                }
-                            }
-
-                        }
-                    }
-                }
                 return;
             }
 
@@ -911,9 +874,8 @@ namespace InteractML
                 m_GameObjectNodeList = new List<GameObjectNode>();
 
             // Go through GONodes looking for empty entries that could contain memory (lost ref due to unity hotlreload)
-            for (int i = 0; i < m_GameObjectNodeList.Count; i++)
+           /* for (int i = 0; i < m_GameObjectNodeList.Count; i++)
             {
-                Debug.Log("here");
                 var goNode = m_GameObjectNodeList[i];
                 // If we find a null node, remove it!
                 if (goNode == null)
@@ -924,10 +886,8 @@ namespace InteractML
                     i--;
                     continue;
                 }
-                Debug.Log("here");
                 if (!goNode.IsTaken)
                 {
-                    Debug.Log("here");
                     // If there is a scriptHashCode from a previous GO...
                     if (!goNode.GOHashCode.Equals(default))
                     {
@@ -965,10 +925,10 @@ namespace InteractML
 
                     }
                 }
-            }
+            }*/
 
             // Go through gameObjects added by the user
-            for (int i = 0; i < GameObjectsToUse.Count; i++)
+           /* for (int i = 0; i < GameObjectsToUse.Count; i++)
             {
                 var go = GameObjectsToUse[i];
 
@@ -1035,7 +995,7 @@ namespace InteractML
 
 
 
-            }
+            }*/
 
             /* OLD LOGIC 
 
@@ -1613,8 +1573,10 @@ namespace InteractML
             }
             // input logic 
             InputLogic();
+            
 
         }
+
         /// <summary>
         /// Update logic for input modules
         /// </summary>
@@ -1683,7 +1645,6 @@ namespace InteractML
                     // If this GO node is not contained in the logic dictionary...
                     if (!m_GOsPerGONodes.ContainsValue(goNode))
                     {
-                        Debug.Log("go node not here");
                         // Destroy node
                         graph.RemoveNode(goNode);
                         // Decrease counter to not delete the wrong element later
@@ -1692,10 +1653,10 @@ namespace InteractML
                         goNode = null;
                     }
                 }
+
                 // Now if the node wasn't removed, make sure that there is a gameobject that the node is controlling in the scene list that the user controls
                 if (goNode != null)
                 {
-                    Debug.Log("not removed");
                     // If we are switching playmodes, it is very likely that we lost the reference to the GO?
                     if (changingPlayMode)
                     {
@@ -1718,11 +1679,9 @@ namespace InteractML
                             }
                         }
                     }
-                    Debug.Log(goNode.GameObjectDataOut);
                     // If we have a reference to the go the node controls...
                     if (goNode.GameObjectDataOut != null)
                     {
-                        Debug.Log("not null");
                         // Make sure is managed in the scene list of GOs
                         if (!GameObjectsToUse.Contains(goNode.GameObjectDataOut))
                         {
@@ -2551,6 +2510,10 @@ namespace InteractML
             //Debug.Log(icon == null);
             if (success && icon != null)
                 icon.SetBody(icon.trainedColor);
+            if (MLSUI != null)
+            {
+                MLSUI.text = "Machine Learning System \n Trained";
+            }
             // returns true if nodeID exists and whether training successful
             return success;
         }
@@ -2561,6 +2524,7 @@ namespace InteractML
         /// <returns></returns>
         private bool ToggleRunning(string nodeID)
         {
+         
             bool success = false;
             //iterate through all mls nodes
             foreach (MLSystem MLSNode in MLSystemNodeList)
@@ -2582,8 +2546,8 @@ namespace InteractML
                         //else
                             //icon.SetBody(icon.current);
                     }
-                        
 
+                    mls_status = MLSNode.GetStatus(nodeID);
                 }
             }
             // return true if nodeID exists and running started
@@ -2674,6 +2638,7 @@ namespace InteractML
                             if (icon != null)
                                 icon.SetBody(icon.current);
                         }
+                        
                     }
                         
                 }
@@ -2758,13 +2723,6 @@ namespace InteractML
             for(int i = 0; i < TrainingExamplesNodesList.Count; i++){
                 TrainingExamplesNodesList[i].listNo = i;
             }
-        }
-
-        private void AddKeyboard()
-        {
-            Debug.Log("keyboard");
-            keyboard = new KeyboardInput();
-            inputTypes.Add(keyboard);
         }
 
 #endregion
