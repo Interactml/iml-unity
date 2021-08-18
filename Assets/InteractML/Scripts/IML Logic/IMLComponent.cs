@@ -60,6 +60,8 @@ namespace InteractML
 
         private string ttm_status;
 
+        public KeyboardInput keyboard;
+
         #region Private Lists of Nodes (Fields)
         /* Private Lists of nodes that we can have in the graph */
         private List<TextNote> m_TextNoteNodesList;
@@ -683,8 +685,6 @@ namespace InteractML
                         inputTypes = new List<IInputType>();
                     m_addDevice?.Invoke();
                     AddKeyboard();
-                    Debug.Log(inputTypes[0].inputTypes);
-                   
                 }
             }
 
@@ -2789,7 +2789,11 @@ namespace InteractML
             }
         }
 
-        
+        private void AddKeyboard()
+        {
+            keyboard = new KeyboardInput();
+            inputTypes.Add(keyboard);
+        }
         
 
 #endregion

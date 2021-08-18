@@ -261,9 +261,21 @@ MonoBehaviour:
   id: 90216825-74a1-4ff6-9a0c-bdf5c716eea8
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 17474
+  ScriptHashCode: 38406
   m_PortsPerFieldInfo:
-    m_keys: []
+    m_keys:
+    - _fieldName: motionController
+      _node: {fileID: -4626689372730772990}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: 5534068286345460579}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   CreatedDuringPlaymode: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -657,8 +669,8 @@ MonoBehaviour:
   id: b1a5d577-bf88-478e-b11e-f2ec4b4a52bc
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  state: 0
-  GOHashCode: 17662
+  state: 1
+  GOHashCode: 38884
   CreatedDuringPlaymode: 0
 --- !u!114 &8373069013392079893
 MonoBehaviour:
