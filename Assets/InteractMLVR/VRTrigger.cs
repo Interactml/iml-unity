@@ -35,7 +35,7 @@ namespace InteractML.ControllerCustomisers
 
         public override void UpdateLogic()
         {
-            Debug.Log(inputChange);
+            //Debug.Log(inputChange);
             if (inputChange)
                 inputChange = false;
             if (button == null)

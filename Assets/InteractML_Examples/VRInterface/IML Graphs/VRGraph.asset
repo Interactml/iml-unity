@@ -228,7 +228,7 @@ MonoBehaviour:
   canCollect: 1
   listNo: 0
   SubFolderDataPath: 
---- !u!114 &-4626689372730772990
+--- !u!114 &-1094369175185378172
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -241,41 +241,26 @@ MonoBehaviour:
   m_Name: IMLOutputToMalbersInput (Script)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 2376, y: -248}
+  position: {x: 0, y: 0}
   ports:
     keys:
     - motionController
     values:
     - _fieldName: motionController
-      _node: {fileID: -4626689372730772990}
+      _node: {fileID: -1094369175185378172}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_Out
-        node: {fileID: 5534068286345460579}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
-  id: 90216825-74a1-4ff6-9a0c-bdf5c716eea8
+  id: 0f9eb084-d225-4768-a087-cf4c53fb4b09
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 38406
+  ScriptHashCode: 26466
   m_PortsPerFieldInfo:
-    m_keys:
-    - _fieldName: motionController
-      _node: {fileID: -4626689372730772990}
-      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_Out
-        node: {fileID: 5534068286345460579}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
+    m_keys: []
   CreatedDuringPlaymode: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -297,9 +282,9 @@ MonoBehaviour:
   - {fileID: 7776260847769485038}
   - {fileID: 8373069013392079893}
   - {fileID: -5488533792918054399}
-  - {fileID: -4626689372730772990}
   - {fileID: 5085640904365144148}
   - {fileID: 4001523597033850627}
+  - {fileID: -1094369175185378172}
   SceneComponent: {fileID: 0}
 --- !u!114 &3383320042394773376
 MonoBehaviour:
@@ -560,10 +545,7 @@ MonoBehaviour:
       _node: {fileID: 5534068286345460579}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: motionController
-        node: {fileID: -4626689372730772990}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -595,7 +577,7 @@ MonoBehaviour:
   m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 664, y: 104}
+  position: {x: 616, y: 24}
   ports:
     keys:
     - m_In
@@ -670,7 +652,7 @@ MonoBehaviour:
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
   state: 1
-  GOHashCode: 38884
+  GOHashCode: 20326
   CreatedDuringPlaymode: 0
 --- !u!114 &8373069013392079893
 MonoBehaviour:

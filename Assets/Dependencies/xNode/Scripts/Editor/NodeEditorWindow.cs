@@ -212,5 +212,11 @@ namespace XNodeEditor {
                 windows[i].Repaint();
             }
         }
+
+        public void OnInspectorUpdate()
+        {
+            //Debug.Log("inspector update");
+            this.Repaint();
+        }
     }
 }

@@ -185,7 +185,6 @@ namespace InteractML
                 nameButton = "Training";
             else
                 nameButton = "Train Model";
-
             if (m_MLSystem.Model != null && m_MLSystem.TotalNumTrainingDataConnected > 0 && !m_MLSystem.Running && !m_MLSystem.Training)
             {
                 // Enable UI
@@ -249,7 +248,7 @@ namespace InteractML
             if ((m_MLSystem.Model == null || m_MLSystem.Model.ModelAddress == (IntPtr)0 || m_MLSystem.Training || m_MLSystem.Untrained || !m_MLSystem.matchLiveDataInputs || !m_MLSystem.matchVectorLength) && !m_MLSystem.Running)
             {
                /* Debug.Log(m_MLSystem.Model == null);
-                Debug.Log(m_MLSystem.Model.ModelAddress != (IntPtr)0);
+                Debug.Log(m_MLSystem.Model.ModelAddress == (IntPtr)0);
                 Debug.Log(m_MLSystem.Training);
                 Debug.Log(m_MLSystem.Untrained);
                 Debug.Log(!m_MLSystem.matchLiveDataInputs);

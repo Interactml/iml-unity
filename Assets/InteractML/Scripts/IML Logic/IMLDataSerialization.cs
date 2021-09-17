@@ -316,7 +316,7 @@ namespace InteractML
         public static void SaveRapidlibModelToDisk(string modelToSave, string fileName)
         {
             SetUpFileNamesAndPaths(fileName);
-
+            Debug.Log("save model");
             string subFolderPath = CheckOrCreateFoldersAndSubfoldersModel();
 
             // We save the entire input/output list as a JSON
@@ -360,6 +360,7 @@ namespace InteractML
             // Check if there is NOT already a JSON file created
             if (File.Exists(auxFilePath))
             {
+                Debug.Log("file found");
                 var file = File.ReadAllText(auxFilePath);
                 if (file != null && file != "")
                 {
@@ -808,6 +809,7 @@ namespace InteractML
                 //Debug.Log(jsonTrainingeExamplesList);
                 // Write on the path
                 File.WriteAllText(auxFilePath, jsonTrainingeExamplesList);
+                Debug.Log("written to disk");
             }
 
 

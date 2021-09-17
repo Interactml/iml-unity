@@ -585,21 +585,19 @@ MonoBehaviour:
     - {fileID: 1195285047}
     m_values:
     - {fileID: 7776260847769485038, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
+  TrainingUI: {fileID: 0}
+  MLSUI: {fileID: 0}
   m_GameObjectNodeList:
   - {fileID: 7776260847769485038, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
-  m_ScriptNodesList:
-  - {fileID: 8948996071717161829, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
+  m_ScriptNodesList: []
   m_CustomControllerList:
-  - {fileID: -521124842690981323, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
+  - {fileID: 5085640904365144148, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
+  - {fileID: 4001523597033850627, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
   FeaturesUpdated: 0
-  ComponentsWithIMLData:
-  - GameComponent: {fileID: 2117627209}
-    ControlClones: 0
+  ComponentsWithIMLData: []
   m_MonoBehavioursPerScriptNode:
-    m_keys:
-    - {fileID: 2117627209}
-    m_values:
-    - {fileID: 8948996071717161829, guid: 93b32fd0d0cc4a242ac69382929594e6, type: 2}
+    m_keys: []
+    m_values: []
   m_MonobehaviourClones: []
   universalInputActive: 0
 --- !u!4 &196579071
@@ -629,6 +627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f47a07a9b12c17f4f910c34b02f218f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  imlSystem: {fileID: 196579070}
 --- !u!1 &209244276
 GameObject:
   m_ObjectHideFlags: 0
@@ -7656,7 +7655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbd2a755098f5f46814744bfc36b3e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MLComponent: {fileID: 0}
+  colour: 0
 --- !u!65 &2117627210
 BoxCollider:
   m_ObjectHideFlags: 0

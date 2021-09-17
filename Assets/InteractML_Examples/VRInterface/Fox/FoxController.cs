@@ -5,7 +5,7 @@ using InteractML;
 
 public class FoxController : MonoBehaviour
 {
-    //[PullFromIMLGraph]
+    [PullFromIMLGraph]
     public int trick;
 
     // Start is called before the first frame update

@@ -64,8 +64,8 @@ namespace InteractML
         public override void HandleState()
         {
             SetButton();
-            Debug.Log(buttonName);
-            Debug.Log(buttonNo);
+            //Debug.Log(buttonName);
+            //Debug.Log(buttonNo);
             if (_controllers.Count > 0)
             {
 
@@ -165,7 +165,7 @@ namespace InteractML
         
         public void SetButton()
         {
-            Debug.Log(imlButton);
+            //Debug.Log(imlButton);
             switch (imlButton)
             {
                 case IMLControllerInputs.Trigger:

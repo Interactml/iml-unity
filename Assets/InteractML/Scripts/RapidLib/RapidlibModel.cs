@@ -386,6 +386,7 @@ namespace InteractML
 
                 if (isTrained)
                 {
+                    Debug.Log("trained");
                     m_ModelStatus = IMLSpecifications.ModelStatus.Trained;
                 }
                 else
@@ -604,7 +605,7 @@ namespace InteractML
 
             // Attempt to load model
             string stringLoaded = IMLDataSerialization.LoadRapidlibModelFromDisk(fileName);
-
+            
             // If we loaded something...
             if (!String.IsNullOrEmpty(stringLoaded))
             {
@@ -672,6 +673,7 @@ namespace InteractML
         {
             // We first make sure that we don't have any model in memory...
             DestroyModel();
+            Debug.Log("create model regression");
             // We create the new model in memory and get its address
             m_ModelAddress = RapidlibLinkerDLL.CreateRegressionModel();
             // We set the type of model to kNN

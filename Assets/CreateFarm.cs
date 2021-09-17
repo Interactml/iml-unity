@@ -5,6 +5,7 @@ using InteractML;
 
 public class CreateFarm : MonoBehaviour
 {
+    [PullFromIMLGraph]
     public int creation;
 
     private int lastCreation;
@@ -27,8 +28,10 @@ public class CreateFarm : MonoBehaviour
         {
             if(creation != 0)
             {
-                Vector3 position = person.transform.position + new Vector3(0, 0, 10);
-                Instantiate(creations[creation - 1], position, Quaternion.identity);
+                Vector3 position = (person.transform.forward * 4) + person.transform.position;
+                position.y = -2;
+                Instantiate(creations[creation - 1], position, person.transform.rotation);
+                
             }
             lastCreation = creation;
         }

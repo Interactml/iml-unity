@@ -55,7 +55,7 @@ namespace InteractML
         /// </summary>
         private bool nodesLoaded;
 
-        public TextMeshProUGUI TrainingUI;
+        public TextMeshProUGUI RecordingUI;
         public TextMeshProUGUI MLSUI;
 
         private string ttm_status;
@@ -245,11 +245,17 @@ namespace InteractML
             int i = 0;
             foreach (MLSystem mlsnode in MLSystemNodeList)
             {
+                
                 mls_status += "MLS Node " + i + "\n";
                 mls_status += mlsnode.GetStatus(mlsnode.id) + "\n";
+                if (mlsnode.Running)
+                    MLSUI.transform.GetChild(0).gameObject.SetActive(true);
+                else
+                    MLSUI.transform.GetChild(0).gameObject.SetActive(false);
                 i++;
             }
             MLSUI.text = mls_status;
+
 
             i = 0;
             ttm_status = "";
@@ -258,8 +264,14 @@ namespace InteractML
                 ttm_status += "TTM Node " + i + "\n";
                 ttm_status += ttmnode.GetStatus(ttmnode.id) + "\n";
                 i++;
+                if (ttmnode.CollectingData)
+                    RecordingUI.transform.GetChild(0).gameObject.SetActive(true);
+                else
+                    RecordingUI.transform.GetChild(0).gameObject.SetActive(false);
+                
+
             }
-            TrainingUI.text = ttm_status;
+            RecordingUI.text = ttm_status;
 
 
         }
@@ -867,9 +879,9 @@ namespace InteractML
         private void SendGameObjectsToIMLController()
         {
 
-            Debug.Log(GameObjectsToUse.Count);
-            Debug.Log(m_GOsPerGONodes.Count);
-            Debug.Log(m_GameObjectNodeList.Count);
+            //Debug.Log(GameObjectsToUse.Count);
+            //Debug.Log(m_GOsPerGONodes.Count);
+            //Debug.Log(m_GameObjectNodeList.Count);
             // Don't do anything if there are no gameObjects from the scene to use
             if (GameObjectsToUse == null || GameObjectsToUse.Count == 0)
             {
@@ -1895,11 +1907,17 @@ namespace InteractML
             if (MLSystemNodeList.Count > 0)
             {
                 Debug.Log("load models");
+                if (!(bool)IMLEventDispatcher.LoadModelsCallback?.Invoke())
+                {
+                    yield return new WaitForSeconds(0.5f);
+                    IMLEventDispatcher.LoadModelsCallback?.Invoke();
+
+                }/*
                 while (!(bool)IMLEventDispatcher.LoadModelsCallback?.Invoke())
                 {
                     // wait for a frame until models are retrained
                     yield return null;
-                }
+                }*/
             }
             
 
@@ -2566,6 +2584,7 @@ namespace InteractML
                     
                     // train model
                     success = MLSNode.TrainModel();
+                    Debug.Log(success);
                     // if this is successful save model to the disk
                     if (success)
                         MLSNode.SaveModelToDisk();

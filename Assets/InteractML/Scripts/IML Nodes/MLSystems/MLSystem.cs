@@ -617,6 +617,7 @@ namespace InteractML
                     if (m_UseAsync || useAsync)
                     {
                         TrainModelPrivateAsync();
+                        isTrained = true;
                     }
                     else
                     {
@@ -910,7 +911,7 @@ namespace InteractML
         public virtual bool LoadModelFromDisk(bool reCreateModel = false)
         {
             bool success = false;
-
+            Debug.Log("here load");
             // Make sure to re-instantiate the model if null or flag is true
             if (m_Model == null || reCreateModel || m_Model.ModelAddress == (IntPtr)0)
                 m_Model = InstantiateRapidlibModel();
@@ -2143,9 +2144,9 @@ namespace InteractML
         public void UpdateLogic()
         {
             //test
-            //Debug.Log(Model.ModelAddress);
-            //Debug.Log(Model.ModelStatus);
-            //Debug.Log(Trained);
+            Debug.Log(Model.ModelAddress);
+            Debug.Log(Model.ModelStatus);
+            Debug.Log(Trained);
             //Debug.Log(m_trainingType);
             //Debug.Log(m_Model.TypeOfModel);
             
@@ -2163,6 +2164,7 @@ namespace InteractML
 
         private bool LoadOrTrain()
         {
+            Debug.Log("here");
             ResetModel();
             //Debug.Log(trainOnLoad);
             //Debug.Log(Model.TypeOfModel);
