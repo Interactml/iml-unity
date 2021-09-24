@@ -1,3 +1,5 @@
+#if !UNITY_ANDROID
+
 using UnityEngine;
 using System.IO.Ports;
 using InteractML;
@@ -40,4 +42,4 @@ public class NanoConnect : MonoBehaviour
     }
 }
 
-    
+#endif 

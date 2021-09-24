@@ -396,8 +396,8 @@ MonoBehaviour:
   id: a40a137d-354d-44e1-a255-8f5d2877cd52
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  state: 0
-  GOHashCode: 72042
+  state: 1
+  GOHashCode: 20388
   CreatedDuringPlaymode: 0
 --- !u!114 &-4154900678697874246
 MonoBehaviour:
@@ -448,7 +448,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 1
+  Counter: 3
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -502,7 +502,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 1
+  Counter: 3
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -896,6 +896,7 @@ MonoBehaviour:
     keys:
     - SetAbsoluteColour
     - send
+    - colour
     values:
     - _fieldName: SetAbsoluteColour
       _node: {fileID: -1782623515577210966}
@@ -915,12 +916,36 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+    - _fieldName: colour
+      _node: {fileID: -1782623515577210966}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: 5098491896399601409}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   id: fa5aea1c-de3c-4df6-b415-deeae4c900f1
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 72084
+  ScriptHashCode: 20430
   m_PortsPerFieldInfo:
-    m_keys: []
+    m_keys:
+    - _fieldName: colour
+      _node: {fileID: -1782623515577210966}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: 5098491896399601409}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   CreatedDuringPlaymode: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -1111,7 +1136,7 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 0
-  showWarning: 0
+  showWarning: 1
   canCollect: 1
   listNo: 0
   SubFolderDataPath: 
@@ -1502,7 +1527,7 @@ MonoBehaviour:
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: Output 0
+      - fieldName: Out 0 (Int)
         node: {fileID: 6506855110079472755}
         reroutePoints: []
       _direction: 0
@@ -1513,7 +1538,10 @@ MonoBehaviour:
       _node: {fileID: 5098491896399601409}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: colour
+        node: {fileID: -1782623515577210966}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -1527,7 +1555,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 1
+  Counter: 3
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -1555,6 +1583,7 @@ MonoBehaviour:
     - ToggleTrainInputBoolPort
     - ToggleRunInputBoolPort
     - Output 0
+    - Out 0 (Int)
     values:
     - _fieldName: IMLTrainingExamplesNodes
       _node: {fileID: 6506855110079472755}
@@ -1625,6 +1654,15 @@ MonoBehaviour:
       _node: {fileID: 6506855110079472755}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+    - _fieldName: Out 0 (Int)
+      _node: {fileID: 6506855110079472755}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: m_In
         node: {fileID: 5098491896399601409}
@@ -1645,7 +1683,7 @@ MonoBehaviour:
   - 0
   DelayedPredictedOutput:
   - 2
-  m_NumExamplesTrainedOn: 0
+  m_NumExamplesTrainedOn: 3
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_trainingType: 0

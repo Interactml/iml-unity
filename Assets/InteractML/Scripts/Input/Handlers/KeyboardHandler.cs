@@ -7,7 +7,9 @@ using InteractML.ControllerCustomisers;
 
 namespace InteractML
 {
+#if !UNITY_ANDROID
     [InitializeOnLoad]
+#endif
     public class KeyboardHandler : InputHandler
     {
         //public InputHelpers.Button button = InputHelpers.Button.Trigger;
