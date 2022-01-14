@@ -55,12 +55,9 @@ namespace InteractML.ControllerCustomisers
             // set button choice for delete last
             m_controller.inputNo = EditorGUILayout.Popup(m_controller.inputNo, m_controller.buttonOptions);
             //Event.current.type == EventType.Repaint
-            if (GUI.changed)
-            {
                 m_controller.OnButtonChange();
                 //mark as changed
                 EditorUtility.SetDirty(m_controller);
-            }
             GUI.changed = false;
             GUILayout.Space(10);
             m_controller.trigger = (IMLTriggerTypes)EditorGUILayout.EnumPopup(m_controller.trigger);

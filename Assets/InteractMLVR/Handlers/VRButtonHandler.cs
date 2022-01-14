@@ -63,8 +63,7 @@ namespace InteractML
 
         public override void HandleState()
         {
-            SetButton();
-            //Debug.Log(buttonName);
+            SetButtonNo(buttonNo);
             //Debug.Log(buttonNo);
             if (_controllers.Count > 0)
             {
@@ -153,9 +152,9 @@ namespace InteractML
 
         public override void SetButtonNo(int buttonNum)
         {
-            Debug.Log(buttonNum);
             buttonNo = buttonNum;
             imlButton = (IMLControllerInputs)buttonNo;
+            //Debug.Log(imlButton);
             SetButton();
         }
         public override void SetTriggerType(IMLTriggerTypes triggerT)
@@ -163,7 +162,7 @@ namespace InteractML
             triggerType = triggerT;
         }
         
-        public void SetButton()
+        private void SetButton()
         {
             //Debug.Log(imlButton);
             switch (imlButton)
@@ -175,7 +174,7 @@ namespace InteractML
                 case IMLControllerInputs.Grip:
                     this._button = UnityEngine.XR.CommonUsages.gripButton;
                     this._buttonFloat = UnityEngine.XR.CommonUsages.grip;
-                    Debug.Log(_button);
+                    //Debug.Log(_button);
                     break;
                 case IMLControllerInputs.Primary:
                     this._button = UnityEngine.XR.CommonUsages.primaryButton;

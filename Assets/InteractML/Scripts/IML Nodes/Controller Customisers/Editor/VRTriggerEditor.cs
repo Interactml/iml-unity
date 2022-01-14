@@ -20,11 +20,13 @@ namespace InteractML.ControllerCustomisers
         int count = 0;
         int counter = 4;
 
+
         public override void OnBodyGUI()
         {
             press = target as VRTrigger;
             base.OnBodyGUI();
         }
+
 
         protected override void ShowBodyFields()
         {
@@ -35,12 +37,9 @@ namespace InteractML.ControllerCustomisers
             GUILayout.Space(10);
             GUILayout.Label("Controller", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(100));
             press.hand = (IMLSides)EditorGUILayout.EnumPopup(press.hand);
-            if (GUI.changed)
-            {
                 press.OnSideChange();
                 //mark as changed
                 EditorUtility.SetDirty(press);
-            }
             GUILayout.EndHorizontal();
         }
     }

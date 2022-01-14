@@ -52,7 +52,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 5
+  Counter: 1
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -260,56 +260,9 @@ MonoBehaviour:
   id: 15ad975f-ff8e-41ba-84ed-70451cf1cfe1
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  state: 1
-  GOHashCode: 17508
+  state: 0
+  GOHashCode: 17536
   CreatedDuringPlaymode: 0
---- !u!114 &-4954804819616642675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8166fe08bd578f4a90d1fc91b674360, type: 3}
-  m_Name: VR Trigger
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 1064, y: 632}
-  ports:
-    keys:
-    - inputValue
-    values:
-    - _fieldName: inputValue
-      _node: {fileID: -4954804819616642675}
-      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: ToggleRunInputBoolPort
-        node: {fileID: 8239086640292624661}
-        reroutePoints: []
-      - fieldName: ToggleTrainInputBoolPort
-        node: {fileID: 8239086640292624661}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  id: 736b2e26-65ad-4aae-acb7-14fc701f38be
-  numberInComponentList: -1
-  inputValue: 0
-  inputNo: 0
-  trigger: 0
-  buttonOptions:
-  - Trigger
-  - Grip
-  - Primary
-  - Secondary
-  name: VRTrigger
-  hand: 0
-  inputs: 0
-  triggerType: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,12 +279,12 @@ MonoBehaviour:
   - {fileID: 1162064179241753246}
   - {fileID: -7689302540981507504}
   - {fileID: 8239086640292624661}
-  - {fileID: -4954804819616642675}
   - {fileID: 291810699303341295}
   - {fileID: -8666782483576288707}
   - {fileID: 4497173141881622046}
   - {fileID: 714661979984720267}
   - {fileID: -6829918993947975504}
+  - {fileID: 5446841135596281851}
   SceneComponent: {fileID: 0}
 --- !u!114 &291810699303341295
 MonoBehaviour:
@@ -382,7 +335,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 5
+  Counter: 1
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -436,7 +389,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 5
+  Counter: 1
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -498,7 +451,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 5
+  Counter: 1
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -544,7 +497,7 @@ MonoBehaviour:
   id: f14fc2cc-de74-4d9d-bb62-54f08bc1304b
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 17768
+  ScriptHashCode: 17796
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: trick
@@ -560,6 +513,48 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 1
   CreatedDuringPlaymode: 0
+--- !u!114 &5446841135596281851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aed23916b1ab864c8093dcc28b280f8, type: 3}
+  m_Name: Input Set Up
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1188.8442, y: 714.8028}
+  ports:
+    keys: []
+    values: []
+  id: 5cc88762-3ebf-47dd-9ba9-0ebf73335416
+  numberInComponentList: -1
+  enableUniversalInterface: 0
+  activeUniversalInterface: 0
+  deviceNames: []
+  deviceNo: 0
+  buttonOptions: []
+  mlsID: 
+  trainingID: 
+  deleteLastButtonNo: 0
+  deleteLastButtonTT: 0
+  deleteAllButtonNo: 0
+  deleteAllButtonTT: 0
+  toggleRecordButtonNo: 0
+  recordOneButtonTT: 0
+  recordOneButtonNo: 0
+  toggleRecordButtonTT: 0
+  trainButtonNo: 0
+  trainButtonTT: 0
+  toggleRunButtonNo: 0
+  toggleRunButtonTT: 0
+  currentMLS: 
+  currentTraining: 
+  selectedMLS: 
+  selectedTraining: 
 --- !u!114 &8239086640292624661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -635,10 +630,7 @@ MonoBehaviour:
       _node: {fileID: 8239086640292624661}
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: inputValue
-        node: {fileID: -4954804819616642675}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -647,10 +639,7 @@ MonoBehaviour:
       _node: {fileID: 8239086640292624661}
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: inputValue
-        node: {fileID: -4954804819616642675}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
