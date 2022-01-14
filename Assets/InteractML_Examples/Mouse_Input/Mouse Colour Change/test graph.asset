@@ -397,7 +397,7 @@ MonoBehaviour:
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
   state: 1
-  GOHashCode: 20388
+  GOHashCode: 27452
   CreatedDuringPlaymode: 0
 --- !u!114 &-4154900678697874246
 MonoBehaviour:
@@ -448,7 +448,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 3
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -502,7 +502,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 3
+  Counter: 5
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -931,7 +931,7 @@ MonoBehaviour:
   id: fa5aea1c-de3c-4df6-b415-deeae4c900f1
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 20430
+  ScriptHashCode: 27494
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: colour
@@ -1136,7 +1136,7 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 0
-  showWarning: 1
+  showWarning: 0
   canCollect: 1
   listNo: 0
   SubFolderDataPath: 
@@ -1555,7 +1555,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 3
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -1683,7 +1683,7 @@ MonoBehaviour:
   - 0
   DelayedPredictedOutput:
   - 2
-  m_NumExamplesTrainedOn: 3
+  m_NumExamplesTrainedOn: 0
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_trainingType: 0
