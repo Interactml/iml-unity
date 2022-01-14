@@ -8,11 +8,12 @@ using UnityEngine.Serialization;
 using ReusableMethods;
 using XNode.Examples.MathNodes;
 using UnityEngine.SceneManagement;
+using InteractML.ControllerCustomisers;
+using TMPro;
+
 #if UNITY_EDITOR
 using UnityEditor.SceneManagement;
 using UnityEditor;
-using InteractML.ControllerCustomisers;
-using TMPro;
 using UnityEngine.UI;
 #endif
 
