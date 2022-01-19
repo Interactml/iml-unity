@@ -36,10 +36,16 @@ That’s it! The InteractML folder will appear in your assets folder along with 
 ### Documentation
 Visit the [wiki to have a look at our how-to guides.](https://github.com/Interactml/iml-unity/wiki)
 
+### Machine Learning Details
+The machine learning back-end is the [RapidLib](https://github.com/mzed/RapidLib) C++ library. RapidLib's implementation mirrors that of [Wekinator](http://www.wekinator.org/), whose current choice of algorithms and default parameterisations have been informed by more than a decade of use by creative practitioners, ensuring that they work well off-the-shelf for many IML tasks involving small training sets and human motion modeling tasks. InteractML currently implements:
+* Classification through a [kNN algorithm](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm).
+* Regression through a [Multilater Perceptron (MLP)](https://en.wikipedia.org/wiki/Multilayer_perceptron) with one hidden layer. 
+* Dynamic Time Warping (DTW) as a classification algorithm for a time series dataset (i.e. gesturing over time).
+
 ### Dependencies
 InteractML is built with 
 * [xNode](https://github.com/Siccity/xNode) - xNode is visual node framework that lets you view and edit node graphs inside Unity.
 * [JsonNetForUnity](https://assetstore.unity.com/packages/tools/input-management/json-net-for-unity-11347) - brings the power of Json and Bson serialization to Unity with support for 4.7.2 and up and is compatible with both .NET and IL2CPP backends.
-* [Rapidlib](https://github.com/mzed/RapidLib) - RapidLib is a lightweight library for interactive machine learning written in C++. It currently features classification (using kNN), regression (multilayer perceptron), and series classification (using dynamic time warping).
+* [RapidLib](https://github.com/mzed/RapidLib) - RapidLib is a lightweight library for interactive machine learning written in C++. It currently features classification (using kNN), regression (multilayer perceptron), and series classification (using dynamic time warping).
 
 
