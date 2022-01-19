@@ -39,7 +39,7 @@ Visit the [wiki to have a look at our how-to guides.](https://github.com/Interac
 ### Machine Learning Algorithms
 The machine learning back-end is the [RapidLib](https://github.com/mzed/RapidLib) C++ library. RapidLib's implementation mirrors that of [Wekinator](http://www.wekinator.org/), whose current choice of algorithms and default parameterisations have been informed by more than a decade of use by creative practitioners, ensuring that they work well off-the-shelf for many IML tasks involving small training sets and human motion modeling tasks. InteractML currently implements:
 * Classification through a [kNN algorithm](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm).
-* Regression through a [Multilater Perceptron (MLP)](https://en.wikipedia.org/wiki/Multilayer_perceptron) with one hidden layer. 
+* Regression through a [Multilayer Perceptron (MLP)](https://en.wikipedia.org/wiki/Multilayer_perceptron) with one hidden layer. 
 * [Dynamic Time Warping (DTW)](https://en.wikipedia.org/wiki/Dynamic_time_warping) as a classification algorithm for a time series dataset (i.e. gesturing over time).
 
 ### Dependencies
