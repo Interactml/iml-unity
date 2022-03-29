@@ -250,12 +250,18 @@ namespace InteractML
                 mls_status += "MLS Node " + i + "\n";
                 mls_status += mlsnode.GetStatus(mlsnode.id) + "\n";
                 if (mlsnode.Running)
-                    MLSUI.transform.GetChild(0).gameObject.SetActive(true);
+                {
+                    if (MLSUI != null && MLSUI.transform.GetChild(0) != null) 
+                        MLSUI.transform.GetChild(0).gameObject.SetActive(true);
+                }
                 else
-                    MLSUI.transform.GetChild(0).gameObject.SetActive(false);
+                {
+                    if (MLSUI != null && MLSUI.transform.GetChild(0) != null)
+                        MLSUI.transform.GetChild(0).gameObject.SetActive(false);
+                }
                 i++;
             }
-            MLSUI.text = mls_status;
+            if (MLSUI != null) MLSUI.text = mls_status;
 
 
             i = 0;
@@ -266,13 +272,17 @@ namespace InteractML
                 ttm_status += ttmnode.GetStatus(ttmnode.id) + "\n";
                 i++;
                 if (ttmnode.CollectingData)
-                    RecordingUI.transform.GetChild(0).gameObject.SetActive(true);
+                {
+                    if (RecordingUI != null && RecordingUI.transform.GetChild(0) != null)
+                        RecordingUI.transform.GetChild(0).gameObject.SetActive(true);
+                }
                 else
-                    RecordingUI.transform.GetChild(0).gameObject.SetActive(false);
-                
-
+                {
+                    if (RecordingUI != null && RecordingUI.transform.GetChild(0) != null)
+                        RecordingUI.transform.GetChild(0).gameObject.SetActive(false);
+                }                
             }
-            RecordingUI.text = ttm_status;
+            if (RecordingUI != null) RecordingUI.text = ttm_status;
 
 
         }
