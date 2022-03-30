@@ -169,12 +169,19 @@ namespace InteractML
 
         private void OnEnable()
         {
+#if UNITY_EDITOR
+            // Subscribe to the editor manager so that our update loop gets called
+            IMLEditorManager.SubscribeIMLComponent(this);
+#endif
 
 #if !UNITY_EDITOR
             SubscribeToDelegates();
             Initialize();
 
 #endif
+            // Make sure to have the current scene updated
+            m_OurScene = EditorSceneManager.GetActiveScene();
+
             //InitializeIMLIndicator();
         }
 
@@ -187,12 +194,11 @@ namespace InteractML
             IMLEditorManager.SubscribeIMLComponent(this);
 
             IMLControllerOwnershipLogic();
-            //SubscribeToDelegates();
-            if (IMLEventDispatcher.TrainMLSCallback == null)
-            {
-                SubscribeToDelegates();
-                
-            }
+            SubscribeToDelegates();
+            /* I am removing the if check because I can't get IML graphs with one training examples node
+             * to start collecting data. Anyway, what is this null check suppose to do?
+             * LEAVE ANSWER HERE */
+            //if (IMLEventDispatcher.TrainMLSCallback == null) SubscribeToDelegates();
             Initialize();
             
 #endif
@@ -424,7 +430,7 @@ namespace InteractML
             InitializeNodeType(MLSystemNodeList);
             //Initialise Script nodes
             InitializeNodeType(m_ScriptNodesList);
-            //Initialise Script nodes
+            //Initialise custom controllers nodes
             InitializeNodeType(m_CustomControllerList);
             //Initialize input set up
             if (m_inputSetUp != null)
@@ -520,10 +526,11 @@ namespace InteractML
         /// </summary>
         private void SubscribeToDelegates() {
             //Debug.Log("subscribe");
-            // DIRTY CODE
-            // I am unsubscribing from all delegates first since there are issue with ToggleRecordCallback having the same method twice
-           // UnsubscribeToDelegates();
             
+            // DIRTY CODE
+            // I am unsubscribing from all delegates first since there are issues with ToggleRecordCallback having the same method twice
+            UnsubscribeToDelegates();
+
             // dispatchers for MLSystem node events
             IMLEventDispatcher.TrainMLSCallback += Train;
             IMLEventDispatcher.ToggleRunCallback += ToggleRunning;
