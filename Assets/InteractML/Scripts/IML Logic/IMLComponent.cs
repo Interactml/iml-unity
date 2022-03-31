@@ -905,15 +905,12 @@ namespace InteractML
             {
                 if (GameObjectsToUse == null || GameObjectsToUse.Count == 0)
                 {
-                    Debug.Log("here");
                     for (int i = 0; i < m_GOsPerGONodes.Count; i++)
                     {
-                        Debug.Log("here");
                         var goNode = m_GameObjectNodeList[i];
                         // If we find a null node, remove it!
                         if (goNode == null)
                         {
-                            Debug.Log("here");
                             // Remove null reference
                             m_GameObjectNodeList.RemoveAt(i);
                             // Adjust index
@@ -921,15 +918,12 @@ namespace InteractML
                             continue;
                         }
 
-                        Debug.Log("here");
                         //if node doesn't have a game object reference
                         if (!goNode.IsTaken)
                         {
-                            Debug.Log("here");
                             // If there is a scriptHashCode from a previous GO...
                             if (!goNode.GOHashCode.Equals(default))
                             {
-                                Debug.Log("here");
                                 // Check if the GOsPerGONodes dictionary contains the node and its GO
                                 var gameObject = m_GOsPerGONodes.GetKey(goNode);
                                 // Set GO if we found it
@@ -941,7 +935,6 @@ namespace InteractML
                                 // If we didn't find it...
                                 else
                                 {
-                                    Debug.Log("here");
                                     m_GameObjectNodeList.Remove(goNode);
                                     // Iterate through copy, but modify original
                                     foreach (KeyValuePair<GameObject, GameObjectNode> dicItem in m_GOsPerGONodes)
