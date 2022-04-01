@@ -150,8 +150,10 @@ namespace InteractML
         public bool universalInputActive = false;
 
 
-        private IMLGrab icon;
-        private bool isSubscribed = false;
+        private IMLGrab icon;     
+        [System.NonSerialized]
+        private bool m_IsSubscribedToDelegates = false;
+        public bool IsSubscribedToDelegates { get { return m_IsSubscribedToDelegates; } }
 
         public delegate void AddDevices();
         public AddDevices m_addDevice;
@@ -172,13 +174,12 @@ namespace InteractML
 #if UNITY_EDITOR
             // Subscribe to the editor manager so that our update loop gets called
             IMLEditorManager.SubscribeIMLComponent(this);
-#endif
-
-#if !UNITY_EDITOR
+#else
+            // These two are called during subscription to IMLEditorManager, hence we don't need to call them again unless we are outside of the editor (in a build)
             SubscribeToDelegates();
             Initialize();
-
 #endif
+
             // Make sure to have the current scene updated
             m_OurScene = EditorSceneManager.GetActiveScene();
 
@@ -194,12 +195,16 @@ namespace InteractML
             IMLEditorManager.SubscribeIMLComponent(this);
 
             IMLControllerOwnershipLogic();
-            SubscribeToDelegates();
-            /* I am removing the if check because I can't get IML graphs with one training examples node
-             * to start collecting data. Anyway, what is this null check suppose to do?
-             * LEAVE ANSWER HERE */
-            //if (IMLEventDispatcher.TrainMLSCallback == null) SubscribeToDelegates();
-            Initialize();
+
+            // All of these is called once in OnEnable, it should be enough
+            //SubscribeToDelegates();
+            ///* I am removing the if check because I can't get IML graphs with one training examples node
+            // * to start collecting data. Anyway, what is this null check suppose to do?
+            // * LEAVE ANSWER HERE */
+            ////if (IMLEventDispatcher.TrainMLSCallback == null) SubscribeToDelegates();
+            
+            // Recalling initalize to make sure things are init when there are changes. There are checks to not re-init things twice
+            // Initialize();
             
 #endif
         }
@@ -293,24 +298,27 @@ namespace InteractML
 
         }
 
-
-        // On Destroy gets called before the component is removed
-        private void OnDestroy()
+        private void OnDisable()
         {
             // Stop running all models and stop collecting examples (if any)
             StopAllModels();
             StopAllCollectingExamples();
-            // We unsubscribe the component from the editor manager to avoid messing up with the list
-            IMLEditorManager.UnsubscribeIMLComponent(this);
             //Unsubscribe this from the event dispatcher 
             UnsubscribeToDelegates();
+            // We unsubscribe the component from the editor manager to avoid messing up with the list
+            IMLEditorManager.UnsubscribeIMLComponent(this);
+        }
+
+        // On Destroy gets called before the component is removed
+        private void OnDestroy()
+        {
         }
 #endregion
 
 #region Private Methods
 
 
-        private void Initialize()
+        public void Initialize()
         {
             // ensure universal input in inactive on open
             universalInputActive = false;
@@ -524,9 +532,11 @@ namespace InteractML
         /// <summary>
         /// Subscribe to all delegates called in initialize
         /// </summary>
-        private void SubscribeToDelegates() {
-            //Debug.Log("subscribe");
-            
+        public void SubscribeToDelegates() 
+        {
+            // Only subscribe once
+            if (m_IsSubscribedToDelegates) return;
+
             // DIRTY CODE
             // I am unsubscribing from all delegates first since there are issues with ToggleRecordCallback having the same method twice
             UnsubscribeToDelegates();
@@ -547,6 +557,8 @@ namespace InteractML
 
             IMLEventDispatcher.UniversalControlChange += UniversalInterface;
             m_addDevice += AddKeyboard;
+
+            m_IsSubscribedToDelegates = true;
         }
         /// <summary>
         /// 
@@ -554,7 +566,6 @@ namespace InteractML
         /// </summary>
         private void UnsubscribeToDelegates()
         {
-            //Debug.Log("unsubscribe from delegates");
             // dispatchers for MLSystem node event
             IMLEventDispatcher.TrainMLSCallback -= Train;
             IMLEventDispatcher.ToggleRunCallback -= ToggleRunning;
@@ -571,6 +582,7 @@ namespace InteractML
             IMLEventDispatcher.UniversalControlChange -= UniversalInterface;
             m_addDevice -= AddKeyboard;
 
+            m_IsSubscribedToDelegates = false;
         }
         /// <summary>
         /// Checks if an IMLController is owned and properly updates it when needed
@@ -772,6 +784,10 @@ namespace InteractML
 
         private void CheckNodeIsMLSystem(XNode.Node nodeToAdd, ref List<MLSystem> listToAddTo)
         {
+            if (m_MLSystemNodeList == null)
+            {
+                m_MLSystemNodeList = new List<MLSystem>();
+            }
             // We first check that the node ref is not null
             if (nodeToAdd != null)
             {
@@ -870,6 +886,7 @@ namespace InteractML
         {
             if (m_MLSystemNodeList == null)
             {
+                m_MLSystemNodeList = new List<MLSystem>();
                 GetAllNodes();
             }
             for (int i = 0; i < m_MLSystemNodeList.Count; i++)
@@ -1553,9 +1570,9 @@ namespace InteractML
 
         }
 
-        #endregion
+#endregion
 
-        #region Public Methods
+#region Public Methods
 
         [ContextMenu("Clear Lists (Use in Case of null ref errors)")]
         public void ClearLists()

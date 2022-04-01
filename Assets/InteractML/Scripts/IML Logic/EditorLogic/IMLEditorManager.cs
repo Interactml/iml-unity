@@ -25,48 +25,62 @@ public class IMLEditorManager
 #if UNITY_EDITOR
     // CALLBACKS FOR OTHER EDITOR SCRIPTS
     /// <summary>
-    /// Public external editor callbacks for scene opened
+    /// Public external EARLY editor callbacks for scene opened (called before regular IMLEditorManager SceneOpened logic)
     /// </summary>
-    public static EditorSceneManager.SceneOpenedCallback SceneOpenedCallbacks;
+    public static EditorSceneManager.SceneOpenedCallback EarlySceneOpenedCallbacks;
     /// <summary>
-    /// Public external editor callbacks for update
+    /// Public external EARLY editor callbacks for update (called before regular IMLEditorManager Update logic)
     /// </summary>
-    public static EditorApplication.CallbackFunction UpdateCallbacks;
+    public static EditorApplication.CallbackFunction EarlyUpdateCallbacks;
     /// <summary>
-    /// Public external editor callbacks for playmodeStateChanged
+    /// Public external editor EARLY callbacks for playmodeStateChanged (called before regular PlayModeStateChanged logic)
     /// </summary>
-    public static System.Action<PlayModeStateChange> PlayModeStateChangedCallbacks;
+    public static System.Action<PlayModeStateChange> EarlyPlayModeStateChangedCallbacks;
+    /// <summary>
+    /// Public external editor EARLY callbacks for scripts hot relaod (called before regular script hot reload logic)
+    /// </summary>
+    public static System.Action EarlyScriptReloadCallbacks;
 #endif
 
     static IMLEditorManager()
     {
+        Initiliaze();
+    }
+
+
+    private static void Initiliaze()
+    {
 #if UNITY_EDITOR
         // Make sure the list is init
-        if (m_IMLComponents == null)
-            m_IMLComponents = new List<IMLComponent>();
+        if (m_IMLComponents == null) m_IMLComponents = new List<IMLComponent>();
+        if (m_IMLAddons == null) m_IMLAddons = new List<IAddonIML>();
+
+        // Make sure editor callbacks are up to date before doing anything else
+        UnsubscribeEditorCallbacks();
+        SubscribeEditorCallbacks();
 
         // When the project starts for the first time, we find the iml components present in that scene
-        FindIMLComponents();
+        if (m_IMLComponents.Count == 0) FindIMLComponents();
         // Also find addons
-        FindIMLAddons();
+        if (m_IMLAddons.Count == 0) FindIMLComponents();
+#endif
 
-        // Subscribe this manager to the editor update loop
-        EditorApplication.update += UpdateLogic;
-        EditorApplication.update += UpdateCallbacks; // External
+    }
 
-
-        //Debug.Log("New IMLEditorManager created in scene " + EditorSceneManager.GetActiveScene().name);
-        
-        // Subscribe manager event to the sceneOpened event
-        EditorSceneManager.sceneOpened += SceneOpenedLogic;
-        EditorSceneManager.sceneOpened += SceneOpenedCallbacks; // External
-
-        // Subscribe manager event to the playModeStateChanged event
-        EditorApplication.playModeStateChanged += PlayModeStateChangedLogic;
-        EditorApplication.playModeStateChanged += PlayModeStateChangedCallbacks; // External
-
-
-        
+#if UNITY_EDITOR
+    /// <summary>
+    /// Refind and re-subscribe components when scripts reload (we loose all refs on hot reload)
+    /// </summary>
+    [UnityEditor.Callbacks.DidReloadScripts]
+    private static void ScriptsReloadedLogic()
+    {
+        if (!EditorApplication.isPlayingOrWillChangePlaymode)
+        {
+            // Invoke any early callbacks for when script reloads (also include external ones)
+            if (EarlyScriptReloadCallbacks != null) EarlyScriptReloadCallbacks.Invoke();
+            // Init class
+            Initiliaze();
+        }
 #endif
     }
 
@@ -128,8 +142,7 @@ public class IMLEditorManager
     private static void SceneOpenedLogic(UnityEngine.SceneManagement.Scene scene, UnityEditor.SceneManagement.OpenSceneMode mode)
     {
         // IML Components
-        ClearIMLComponents();
-        FindIMLComponents();
+        if (NullIMLComponents()) RepairIMLComponents();
         // Reload all models (if we can) when we enter playmode or when we come back to the editor
         foreach (var MLComponent in m_IMLComponents)
         {
@@ -149,8 +162,7 @@ public class IMLEditorManager
         }
 
         // Addons
-        ClearIMLAddons();
-        FindIMLAddons();
+        if (NullIMLAddons()) RepairIMLAddons();
         foreach (var addon in m_IMLAddons)
         {
             if (addon != null)
@@ -316,15 +328,17 @@ public class IMLEditorManager
     /// </summary>
     private static void ClearIMLComponents()
     {
+        if (m_IMLComponents == null) m_IMLComponents = new List<IMLComponent>();
         // Clear private list
         m_IMLComponents.Clear();
     }
 
     /// <summary>
-    /// Finds all the iml components already present in the scene (to be called after 
+    /// Finds all the iml components already present in the scene 
     /// </summary>
     private static void FindIMLComponents()
     {
+        //Debug.Log("FindIMLComponents called  ");
         // Get all iml components in scene
         var componentsFound = Object.FindObjectsOfType<IMLComponent>();
 
@@ -344,6 +358,9 @@ public class IMLEditorManager
     /// </summary>
     private static void RepairIMLComponents()
     {
+        // If we have null references, we need to clear all callbacks in event dispatcher
+        // as we will lose the ref to all IML components! We avoid ghost refs to null IML Components
+        if (NullIMLComponents()) IMLEventDispatcher.ClearAllCallbacks();
         ClearIMLComponents();
         FindIMLComponents();
     }
@@ -357,6 +374,26 @@ public class IMLEditorManager
         return m_IMLComponents.Any(x => x == null) ? true : false;
     }
 
+    private static void IninIMLComponentList()
+    {
+        if (m_IMLComponents == null) m_IMLComponents = new List<IMLComponent>();
+        for (int i = 0; i < m_IMLComponents.Count; i++)
+        {
+            var component = m_IMLComponents[i];
+            InitIMLComponent(ref component);
+        }
+    }
+
+    private static void InitIMLComponent(ref IMLComponent component)
+    {
+        if (component != null)
+        {
+            // Using this as the equivalent of "OnEnable" in Edit mode
+            component.Initialize();
+            component.SubscribeToDelegates();
+        }
+    }
+
     #endregion
 
     #region IMLAddons Search
@@ -366,6 +403,7 @@ public class IMLEditorManager
     /// </summary>
     private static void ClearIMLAddons()
     {
+        if (m_IMLAddons == null) m_IMLAddons = new List<IAddonIML>();
         // Clear private list
         m_IMLAddons.Clear();
     }
@@ -411,7 +449,49 @@ public class IMLEditorManager
     #endregion
 
 
-    #region IMLComponents Subscriptions
+    #region Subscriptions
+
+    private static void SubscribeEditorCallbacks()
+    {
+#if UNITY_EDITOR
+        // Subscribe this manager to the editor update loop
+        EditorApplication.update += EarlyUpdateCallbacks; // External also
+        EditorApplication.update += UpdateLogic;
+
+        //Debug.Log("New IMLEditorManager created in scene " + EditorSceneManager.GetActiveScene().name);
+
+        // Subscribe manager event to the sceneOpened event
+        EditorSceneManager.sceneOpened += EarlySceneOpenedCallbacks; // External also
+        EditorSceneManager.sceneOpened += SceneOpenedLogic;
+
+        // Subscribe manager event to the playModeStateChanged event
+        EditorApplication.playModeStateChanged += EarlyPlayModeStateChangedCallbacks; // External also
+        EditorApplication.playModeStateChanged += PlayModeStateChangedLogic;
+
+
+#endif
+    }
+
+    private static void UnsubscribeEditorCallbacks()
+    {
+#if UNITY_EDITOR
+        // Subscribe this manager to the editor update loop
+        EditorApplication.update -= UpdateLogic;
+        EditorApplication.update -= EarlyUpdateCallbacks; // External
+
+
+        //Debug.Log("New IMLEditorManager created in scene " - EditorSceneManager.GetActiveScene().name);
+
+        // Subscribe manager event to the sceneOpened event
+        EditorSceneManager.sceneOpened -= SceneOpenedLogic;
+        EditorSceneManager.sceneOpened -= EarlySceneOpenedCallbacks; // External
+
+        // Subscribe manager event to the playModeStateChanged event
+        EditorApplication.playModeStateChanged -= PlayModeStateChangedLogic;
+        EditorApplication.playModeStateChanged -= EarlyPlayModeStateChangedCallbacks; // External
+
+#endif
+    }
 
     /// <summary>
     /// Subscribes an imlcomponent to the list (avoiding duplicates)
@@ -430,6 +510,8 @@ public class IMLEditorManager
         {
             // We add the component if it it is not in the list already
             m_IMLComponents.Add(newComponentToAdd);
+            // Init Component (and subscribe to Event Distpatcher delegates). In runtime, the init is handled inside IMLComponent.Awake()
+            InitIMLComponent(ref newComponentToAdd);
         }
     }
 
@@ -454,11 +536,6 @@ public class IMLEditorManager
 
 
     }
-
-    #endregion
-
-
-    #region IMLAddons Subscriptions
 
     /// <summary>
     /// Subscribes an imlcomponent to the list (avoiding duplicates)

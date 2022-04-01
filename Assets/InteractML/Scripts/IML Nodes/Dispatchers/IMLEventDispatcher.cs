@@ -175,5 +175,79 @@ namespace InteractML
         public static IMLEvent DisactivateUniversalControl;
         public static RunOnPlay DestroyIMLGrab;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        static IMLEventDispatcher()
+        {
+        }
+
+        /// <summary>
+        /// Clears all callbacks
+        /// </summary>
+        public static void ClearAllCallbacks()
+        {
+            TrainMLSCallback = null;
+            ToggleRunCallback = null;
+            StartRunCallback = null;
+            StopRunCallback = null;
+            ResetModelCallback = null;
+            
+            // Training Inputs Config Changed
+            InputConfigChangeCallback = null;
+            LabelsConfigChangeCallback = null;
+            // Model Setup changed
+            ModelSetUpChangeCallback = null;
+
+            RecordOneCallback = null;
+            ToggleRecordCallback = null;
+            StartRecordCallback = null;
+            StopRecordCallback = null;
+
+            // Training Examples Updated
+            TrainingExamplesUpdatedCallback = null;
+
+            DeleteLastCallback = null;
+            DeleteAllExamplesInNodeCallback = null;
+
+            // Delete All Training Examples
+            DeleteAllTrainingExamplesInGraphCallback = null;
+            // Load all training examples
+            LoadTrainingExamplesCallback = null;
+            // Load models
+            LoadModelsCallback = null;
+            // Run on play
+            RunOnPlayCallback = null;
+
+            // Graph Selection
+            selectGraph = null;
+            deselectGraph = null;
+
+            // Enable Radial
+            EnableTraining = null;
+            DisableTraining = null;
+
+            SetUniversalTrainingID = null;
+            SetUniversalMLSID = null;
+
+            UnSetUniversalTrainingID = null;
+            UnSetUniversalMLSID = null;
+
+            // Get text
+            getText = null;
+
+            listenText = null;
+
+            // TrainingNodeChange
+            tNodeChange = null;
+            // IMLBoolChange
+            UniversalControlChange = null;
+
+            ActivateUniversalControl = null;
+            DisactivateUniversalControl = null;
+
+            //RunOnPlay 
+            DestroyIMLGrab = null;
     }
+}
 }

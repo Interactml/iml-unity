@@ -26,6 +26,10 @@ namespace InteractML.Debugging
                 }
 
             }
+            else
+            {
+                Debug.Log("No methods in ToggleRecordCallback!");
+            }
         }
 
     }
