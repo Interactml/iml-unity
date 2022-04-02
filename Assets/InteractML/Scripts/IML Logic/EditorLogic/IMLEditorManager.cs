@@ -24,6 +24,8 @@ public class IMLEditorManager
 
 #if UNITY_EDITOR
     // CALLBACKS FOR OTHER EDITOR SCRIPTS
+
+    #region Early Callbacks
     /// <summary>
     /// Public external EARLY editor callbacks for scene opened (called before regular IMLEditorManager SceneOpened logic)
     /// </summary>
@@ -40,6 +42,15 @@ public class IMLEditorManager
     /// Public external editor EARLY callbacks for scripts hot relaod (called before regular script hot reload logic)
     /// </summary>
     public static System.Action EarlyScriptReloadCallbacks;
+    #endregion
+
+    #region IMLSystem Instantiation
+    /// <summary>
+    /// Call after an IML System has been created in the editor
+    /// </summary>
+    public static System.Action<IMLComponent> IMLSystemCreatedCallback;
+    #endregion
+
 #endif
 
     static IMLEditorManager()
@@ -593,15 +604,9 @@ public class IMLEditorManager
         // Create a custom IML game object
         GameObject imlSystem = new GameObject("IML System");
         // Add IML Component
-        imlSystem.AddComponent<IMLComponent>();
-        // Add any addons that should go together with the IMLComponent
-        if (m_IMLAddons != null && m_IMLAddons.Count > 0)
-        {
-            foreach (var addon in m_IMLAddons)
-            {
-                if (addon != null) addon.AddAddonToGameObject(imlSystem);
-            }
-        }
+        var imlComponent = imlSystem.AddComponent<IMLComponent>();
+        // Any external logic to needs to access the creation of IMLComponent (i.e. addons)
+        IMLSystemCreatedCallback.Invoke(imlComponent);
         // Ensure it gets reparented if this was a context click (otherwise does nothing)
         GameObjectUtility.SetParentAndAlign(imlSystem, menuCommand.context as GameObject);
         // Register the creation in the undo system
