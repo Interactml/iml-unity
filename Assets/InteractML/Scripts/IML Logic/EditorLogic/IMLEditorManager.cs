@@ -73,7 +73,7 @@ public class IMLEditorManager
         // When the project starts for the first time, we find the iml components present in that scene
         if (m_IMLComponents.Count == 0) FindIMLComponents();
         // Also find addons
-        if (m_IMLAddons.Count == 0) FindIMLComponents();
+        if (m_IMLAddons.Count == 0) FindIMLAddons();
 #endif
 
     }
@@ -190,8 +190,21 @@ public class IMLEditorManager
     /// <param name="playModeStatus"></param>
     private static void PlayModeStateChangedLogic(PlayModeStateChange playModeStatus)
     {
+        bool nullIMLComponents = false;
+        bool nullIMLAddons = false;
         // Repair list of known iml components if any of them is null
-        if (NullIMLComponents()) RepairIMLComponents();
+        if (NullIMLComponents()) nullIMLComponents = true;
+        if (NullIMLAddons()) nullIMLAddons = true;
+
+        if (nullIMLComponents || nullIMLAddons)
+        {
+            // If we have null references, we need to clear all callbacks in event dispatcher
+            // as we will lose the ref to all IML components! We avoid ghost refs to null IML Components
+            IMLEventDispatcher.ClearAllCallbacks();
+            if (nullIMLComponents) RepairIMLComponents();
+            // Repair list of addons too
+            if (nullIMLAddons) RepairIMLAddons();
+        }
 
         foreach (IMLComponent MLComp in m_IMLComponents) 
         {
@@ -202,9 +215,6 @@ public class IMLEditorManager
                     Debug.LogWarning("Null reference to a MLComponent in IMLEditorManager.PlayModeStateChangedLogic()");
             }
         }
-
-        // Repair list of addons
-        if (NullIMLAddons()) RepairIMLAddons();
 
         #region Enter Events
 
@@ -263,7 +273,7 @@ public class IMLEditorManager
             // IML Addons
             foreach (var addon in m_IMLAddons)
             {
-                if (addon != null)
+                if (addon != null && (addon as MonoBehaviour) != null)
                 {
                     addon.EditorEnteredEditMode();
                 }
@@ -369,11 +379,8 @@ public class IMLEditorManager
     /// </summary>
     private static void RepairIMLComponents()
     {
-        // If we have null references, we need to clear all callbacks in event dispatcher
-        // as we will lose the ref to all IML components! We avoid ghost refs to null IML Components
-        if (NullIMLComponents()) IMLEventDispatcher.ClearAllCallbacks();
         ClearIMLComponents();
-        FindIMLComponents();
+        FindIMLComponents();        
     }
 
     /// <summary>
@@ -385,22 +392,21 @@ public class IMLEditorManager
         return m_IMLComponents.Any(x => x == null) ? true : false;
     }
 
-    private static void IninIMLComponentList()
-    {
-        if (m_IMLComponents == null) m_IMLComponents = new List<IMLComponent>();
-        for (int i = 0; i < m_IMLComponents.Count; i++)
-        {
-            var component = m_IMLComponents[i];
-            InitIMLComponent(ref component);
-        }
-    }
-
     private static void InitIMLComponent(ref IMLComponent component)
     {
         if (component != null)
         {
             // Using this as the equivalent of "OnEnable" in Edit mode
             component.Initialize();
+            //component.SubscribeToDelegates();
+        }
+    }
+
+    private static void SubscribeIMLComponentsToEvenDispatcher(ref IMLComponent component)
+    {
+        if (component != null)
+        {
+            // Using this as the equivalent of "OnEnable" in Edit mode
             component.SubscribeToDelegates();
         }
     }
@@ -551,8 +557,8 @@ public class IMLEditorManager
     /// <summary>
     /// Subscribes an imlcomponent to the list (avoiding duplicates)
     /// </summary>
-    /// <param name="newComponentToAdd"></param>
-    public static void SubscribeIMLAddon(IAddonIML newComponentToAdd)
+    /// <param name="newAddon"></param>
+    public static void SubscribeIMLAddon(IAddonIML newAddon)
     {
         // Make sure the list is initialised
         if (m_IMLAddons == null)
@@ -561,12 +567,14 @@ public class IMLEditorManager
         }
 
         // Make sure the list doesn't contain already the component we want to add
-        if (!m_IMLAddons.Contains(newComponentToAdd))
+        if (!m_IMLAddons.Contains(newAddon))
         {
             // We add the component if it it is not in the list already
-            m_IMLAddons.Add(newComponentToAdd);
-            // We init it if not yet done
-            if (!newComponentToAdd.IsInit()) newComponentToAdd.Initialize();
+            m_IMLAddons.Add(newAddon);
+            // Init IML Addon
+            newAddon.Initialize();
+
+
         }
     }
 

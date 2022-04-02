@@ -25,6 +25,11 @@ namespace InteractML.Addons
         /// <param name="GO"></param>
         void AddAddonToGameObject(GameObject GO);
 
+        /// <summary>
+        /// Subscribes whichever methods the addon needs to the IML Event Dispatcher
+        /// </summary>
+        void SubscribeToIMLEventDispatcher();
+
         #region Consumed by IMLEditorManager
 
         // The following are methods consumed by the IMLEditorManager

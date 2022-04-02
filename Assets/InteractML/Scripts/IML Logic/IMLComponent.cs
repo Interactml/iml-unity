@@ -420,7 +420,7 @@ namespace InteractML
             // train models
             LoadDataForModels();
 
-
+            SubscribeToDelegates();
         }
 
         /// <summary>
