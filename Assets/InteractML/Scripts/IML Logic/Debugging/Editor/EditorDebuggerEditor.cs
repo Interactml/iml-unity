@@ -19,9 +19,19 @@ namespace InteractML.Debugging
             m_Debugger = target as EditorDebugger;
 
             // BUTTONS
-            if (GUILayout.Button("PrintIMLEventToggleTrainMethods"))
+            if (GUILayout.Button("PrintIMLEventToggleRecordMethods"))
             {
-                EditorDebugger.PrintIMLEventToggleTrainMethods();
+                EditorDebugger.PrintIMLEventToggleRecordMethods();
+            }
+
+            if (GUILayout.Button("PrintIMLEventStartRecordMethods"))
+            {
+                EditorDebugger.PrintIMLEventStartRecordMethods();
+            }
+
+            if (GUILayout.Button("PrintIMLEventStopRecordMethods"))
+            {
+                EditorDebugger.PrintIMLEventStopRecordMethods();
             }
 
         }

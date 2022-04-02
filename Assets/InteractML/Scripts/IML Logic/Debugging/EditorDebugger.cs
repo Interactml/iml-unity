@@ -10,7 +10,7 @@ namespace InteractML.Debugging
     /// </summary>
     public class EditorDebugger : MonoBehaviour
     {
-        public static void PrintIMLEventToggleTrainMethods()
+        public static void PrintIMLEventToggleRecordMethods()
         {
             if (IMLEventDispatcher.ToggleRecordCallback != null)
             {
@@ -29,6 +29,50 @@ namespace InteractML.Debugging
             else
             {
                 Debug.Log("No methods in ToggleRecordCallback!");
+            }
+        }
+
+        public static void PrintIMLEventStartRecordMethods()
+        {
+            if (IMLEventDispatcher.StartRecordCallback != null)
+            {
+                var methodList = IMLEventDispatcher.StartRecordCallback.GetInvocationList();
+                if (methodList != null)
+                {
+                    if (methodList.Length == 0) Debug.Log("No methods in StartRecordCallback!");
+                    foreach (var method in methodList)
+                    {
+                        Debug.Log($"{method.GetMethodInfo().Name}");
+                    }
+
+                }
+
+            }
+            else
+            {
+                Debug.Log("No methods in StartRecordCallback!");
+            }
+        }
+
+        public static void PrintIMLEventStopRecordMethods()
+        {
+            if (IMLEventDispatcher.StopRecordCallback != null)
+            {
+                var methodList = IMLEventDispatcher.StopRecordCallback.GetInvocationList();
+                if (methodList != null)
+                {
+                    if (methodList.Length == 0) Debug.Log("No methods in StopRecordCallback!");
+                    foreach (var method in methodList)
+                    {
+                        Debug.Log($"{method.GetMethodInfo().Name}");
+                    }
+
+                }
+
+            }
+            else
+            {
+                Debug.Log("No methods in StopRecordCallback!");
             }
         }
 
