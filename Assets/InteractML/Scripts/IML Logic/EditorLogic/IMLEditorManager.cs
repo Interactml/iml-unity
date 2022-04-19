@@ -463,6 +463,20 @@ public class IMLEditorManager
         return m_IMLAddons.Any(x => x == null) ? true : false;
     }
 
+    /// <summary>
+    /// Is the addon registered in list?
+    /// </summary>
+    /// <param name="addon"></param>
+    /// <returns></returns>
+    public static bool IsRegistered(IAddonIML addon) 
+    {
+        if (addon != null && m_IMLAddons != null)
+            return m_IMLAddons.Contains(addon);
+        else
+            return false;
+    }
+
+
     #endregion
 
 
