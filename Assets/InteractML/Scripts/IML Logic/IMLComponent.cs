@@ -2412,7 +2412,6 @@ namespace InteractML
                 {
                     m_ScriptNodesList.Add(node);
                     nodeAdded = true;
-
 #if UNITY_EDITOR
                     // Mark node as created During Playmode if required
                     if (EditorApplication.isPlaying) node.CreatedDuringPlaymode = true;
@@ -2587,9 +2586,27 @@ namespace InteractML
             m_GOsPerGONodes.Add(go, goNode);
         }
 
-#endregion
+        /// <summary>
+        /// Adds to internal dictionary of scriptNodes and scripts
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="script"></param>
+        public void AddToScriptNodeDictionaries(ScriptNode node, MonoBehaviour script)
+        {
+            if (!m_MonoBehavioursPerScriptNode.Contains(script))
+            {
+                // serialized dictionary
+                m_MonoBehavioursPerScriptNode.Add(script, node);
+                // reflection list to draw ports on graphs on scriptNodes
+                IMLMonoBehaviourContainer container = new IMLMonoBehaviourContainer(script);
+                ComponentsWithIMLData.Add(container);
+            }
 
-#region SceneLoading
+        }
+
+        #endregion
+
+        #region SceneLoading
 
 #if UNITY_EDITOR
         private void SceneOpenedLogic(UnityEngine.SceneManagement.Scene scene, UnityEditor.SceneManagement.OpenSceneMode mode)

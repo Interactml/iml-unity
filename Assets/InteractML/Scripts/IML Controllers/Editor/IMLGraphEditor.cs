@@ -262,6 +262,7 @@ namespace InteractML
             // for every object dragged into graph
             foreach (UnityEngine.Object ob in objects)
             {
+                var type = ob.GetType();
                 // check if the object dragged into the graph is a gameobject type
                 if (ob.GetType() == typeof(GameObject))
                 {
@@ -270,19 +271,33 @@ namespace InteractML
                     {
                         // create a new gameObject node and add it to the internal gameobject node list
                         var goNode = graph.AddNode<GameObjectNode>();
-
                         // set position of node to dropped position
                         goNode.position = NodeEditorWindow.current.WindowToGridPosition(Event.current.mousePosition);
-
                         // configure node with game object dropped in
                         goNode.SetGameObject((GameObject)ob);
-
                         // add gameobject to internal list of game objects
                         graph.SceneComponent.GameObjectsToUse.Add((GameObject)ob);
-
                         // add to internal dictionary of goNodes and gameobjects
                         graph.SceneComponent.AddToGameObjectNodeDictionary(goNode, (GameObject)ob);
-
+                    }
+                }
+                else if (ob is MonoBehaviour)
+                {
+                    var script = ob as MonoBehaviour;
+                    // check if the script is in a gameobject and the GO is in the scene hierarchy
+                    if (script.gameObject != null && script.gameObject.scene.IsValid())
+                    {
+                        // Create a new scriptNode and add it to the internal scriptNode list
+                        var scriptNode = graph.AddNode<ScriptNode>();
+                        // set position of node to dropped position
+                        scriptNode.position = NodeEditorWindow.current.WindowToGridPosition(Event.current.mousePosition);
+                        // configure node with script dropped in
+                        scriptNode.SetScript(script);
+                        // add to internal list of scripts
+                        graph.SceneComponent.AddScriptNode(scriptNode);
+                        // add to internal dictionary of scriptNodes and scripts
+                        graph.SceneComponent.AddToScriptNodeDictionaries(scriptNode, script);
+                        
                     }
                 }
                 else
