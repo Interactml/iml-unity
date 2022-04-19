@@ -75,14 +75,14 @@ namespace InteractML
         /// <returns></returns>
         public static IMLEvent ToggleRecordCallback;
         /// <summary>
-        /// Event for when recording data starts
+        /// Event called after recording data starts (it DOESN'T trigger data collection. Use Toggle record data instead)
         /// </summary>
         /// <param name="nodeID"></param>
         /// <returns></returns>
         public static IMLEvent StartRecordCallback;
-        
+
         /// <summary>
-        /// Event for when recording data starts
+        /// Event called after recording data stops (it DOESN'T trigger data collection. Use Toggle record data instead)
         /// </summary>
         /// <param name="nodeID"></param>
         /// <returns></returns>
@@ -187,6 +187,7 @@ namespace InteractML
         /// </summary>
         public static void ClearAllCallbacks()
         {
+            Debug.Log("Clear All Calbakcs called!");
             TrainMLSCallback = null;
             ToggleRunCallback = null;
             StartRunCallback = null;

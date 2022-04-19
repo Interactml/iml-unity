@@ -549,8 +549,11 @@ namespace InteractML
             // dispatchers for training examples node events
             IMLEventDispatcher.RecordOneCallback += RecordOne;
             IMLEventDispatcher.ToggleRecordCallback += ToggleRecording;
-            IMLEventDispatcher.StartRecordCallback += StartRecording;
-            IMLEventDispatcher.StopRecordCallback += StopRecording;
+
+            /* start/stop record can't be added to the callbacks to avoid double calling it (the UI button already handles this)  */
+            //IMLEventDispatcher.StartRecordCallback += StartRecording; 
+            //IMLEventDispatcher.StopRecordCallback += StopRecording;
+
             IMLEventDispatcher.DeleteAllExamplesInNodeCallback += DeleteAllTrainingExamplesInNode;
             IMLEventDispatcher.DeleteAllTrainingExamplesInGraphCallback += DeleteAllTrainingExamplesInGraph;
             // IMLEventDispatcher.DeleteLastCallback +=
@@ -574,8 +577,11 @@ namespace InteractML
             // dispatchers for training examples node events
             IMLEventDispatcher.RecordOneCallback -= RecordOne;
             IMLEventDispatcher.ToggleRecordCallback -= ToggleRecording;
-            IMLEventDispatcher.StartRecordCallback -= StartRecording;
-            IMLEventDispatcher.StopRecordCallback -= StopRecording;
+
+            /* start/stop record can't be added to the callbacks to avoid double calling it (the UI button already handles this)  */
+            //IMLEventDispatcher.StartRecordCallback -= StartRecording;
+            //IMLEventDispatcher.StopRecordCallback -= StopRecording;
+
             IMLEventDispatcher.DeleteAllExamplesInNodeCallback -= DeleteAllTrainingExamplesInNode;
             IMLEventDispatcher.DeleteAllTrainingExamplesInGraphCallback -= DeleteAllTrainingExamplesInGraph;
 

@@ -576,8 +576,10 @@ namespace InteractML
             CheckSetUp();
             // if the node is set up with input features and it is not currently collecting data start collecting data
             if (InputFeatures.Count > 0 && TargetValues.Count > 0 && !m_CollectingData && canCollect)
-            {
+            {                
                 StartCollectingData();
+                // Callbacks from event dispatcher
+                IMLEventDispatcher.StartRecordCallback(this.id);
                 return true;
             } else
             {
@@ -595,6 +597,8 @@ namespace InteractML
             if (m_CollectingData)
             {
                 StopCollectingData();
+                // Callbacks from event dispatcher
+                IMLEventDispatcher.StopRecordCallback(this.id);
                 return true;
             } else
             {
