@@ -2144,9 +2144,9 @@ namespace InteractML
         public void UpdateLogic()
         {
             //test
-            Debug.Log(Model.ModelAddress);
-            Debug.Log(Model.ModelStatus);
-            Debug.Log(Trained);
+            //Debug.Log(Model.ModelAddress);
+            //Debug.Log(Model.ModelStatus);
+            //Debug.Log(Trained);
             //Debug.Log(m_trainingType);
             //Debug.Log(m_Model.TypeOfModel);
             
