@@ -216,9 +216,6 @@ namespace InteractML
             // We use the scene managers to make sure we flush the ownership of the controller when the scene loads/unloads
 #if UNITY_EDITOR
             m_OurScene = EditorSceneManager.GetActiveScene();
-
-            // Subscribe to the editor manager so that our update loop gets called
-            IMLEditorManager.SubscribeIMLComponent(this);
 #else
             m_OurScene = SceneManager.GetActiveScene();
 #endif
@@ -231,7 +228,12 @@ namespace InteractML
                 // Run Models on Play if we are on a build
                 RunModelsOnPlay();
 #endif
-            
+
+#if UNITY_EDITOR
+            // Subscribe to the editor manager so that our update loop gets called
+            IMLEditorManager.SubscribeIMLComponent(this);
+#endif
+
         }
 
         // Update is called once per frame
@@ -1427,9 +1429,16 @@ namespace InteractML
                 if (goNode == null)
                     continue;
 
+                // There is a case where we reach here with GameObjectsToUse being null (I assume because of hot-reloading in editor)
+                // Make sure list isn't null
+                if (GameObjectsToUse == null) GameObjectsToUse = new List<GameObject>();
+
                 // Check node name to see if it matches one of the gameObjects to use in the scene
                 foreach (var go in GameObjectsToUse)
                 {
+                    // skip iteration if null
+                    if (go == null) continue;
+
                     string goName = go.name + " (GameObject)";
                     if (goName.Equals(goNode.name))
                     {
@@ -1896,7 +1905,7 @@ namespace InteractML
         /// </summary>
         private void LoadDataForModels()
         {
-            if(this != null)
+            if(this != null && this.gameObject.activeInHierarchy)
             {
                 // There will be waits for things to init. Take into account
                 IEnumerator coroutine = LoadDataForModelsCoroutine();
