@@ -579,7 +579,7 @@ namespace InteractML
             {                
                 StartCollectingData();
                 // Callbacks from event dispatcher
-                IMLEventDispatcher.StartRecordCallback(this.id);
+                IMLEventDispatcher.StartRecordCallback?.Invoke(this.id);
                 return true;
             } else
             {
@@ -598,7 +598,7 @@ namespace InteractML
             {
                 StopCollectingData();
                 // Callbacks from event dispatcher
-                IMLEventDispatcher.StopRecordCallback(this.id);
+                IMLEventDispatcher.StopRecordCallback?.Invoke(this.id);
                 return true;
             } else
             {
@@ -784,20 +784,30 @@ namespace InteractML
                 m_DesiredOutputFeatures.Clear();
             }
             // if there are training examples loaded...
-            if (m_TrainingSeriesCollection != null||m_TrainingExamplesVector != null)
+            if ((m_TrainingSeriesCollection != null && m_TrainingSeriesCollection.Count > 0) 
+                || (m_TrainingExamplesVector != null && m_TrainingExamplesVector.Count > 0))
             {
                 // Training Series
                 if (this is SeriesTrainingExamplesNode)
-                {
+                {                    
                     // Check for null
-                    if (m_TrainingSeriesCollection[0].Series[0] == null || m_TrainingSeriesCollection[0].LabelSeries == null)
+                    if ((m_TrainingSeriesCollection.Count > 0) 
+                        && (m_TrainingSeriesCollection[0].Series == null || m_TrainingSeriesCollection[0].LabelSeries == null) 
+                        && (m_TrainingSeriesCollection[0].Series[0] == null || m_TrainingSeriesCollection[0].LabelSeries == null))
                     {
                         NodeDebug.LogWarning("Null Reference in Series! Can't configure dataset for model.", this, debugToConsole: true);
+                        return;
+                    }
+                    // Check for empty series
+                    if (m_TrainingSeriesCollection[0].Series.Count == 0)
+                    {
+                        NodeDebug.LogWarning("Series is empty! Can't configure dataset for model.", this, debugToConsole: true);
                         return;
                     }
                     // Inputs
                     for (int i = 0; i < m_TrainingSeriesCollection[0].Series[0].Count; i++)
                     {
+                        Debug.Log($"i is {i}");
                         // Check for null
                         if (m_TrainingSeriesCollection[0].Series[0][i] == null || m_TrainingSeriesCollection[0].Series[0][i].InputData == null)
                         {
