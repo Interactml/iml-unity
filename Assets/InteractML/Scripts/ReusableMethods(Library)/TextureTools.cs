@@ -448,8 +448,11 @@ public class TextureScale
                 PointScale(threadData);
             }
         }
-
+#if UNITY_2021_1_OR_NEWER
+        tex.Reinitialize(newWidth, newHeight);
+#else
         tex.Resize(newWidth, newHeight);
+#endif
         tex.SetPixels(newColors);
         tex.Apply();
 

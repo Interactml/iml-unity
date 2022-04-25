@@ -62,7 +62,7 @@ namespace InteractML
             {
                 // Get all entries from queue
                 var queue = m_LogsQueue.Where(x => x.Key.Equals(node));
-                KeyValuePair<Node, string> entryToDelete;
+                KeyValuePair<Node, string> entryToDelete = new KeyValuePair<Node, string>();
                 // Show first entry
                 foreach (var entry in queue)
                 {
