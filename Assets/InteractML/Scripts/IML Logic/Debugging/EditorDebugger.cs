@@ -76,6 +76,26 @@ namespace InteractML.Debugging
             }
         }
 
+        public static void PrintIMLEventSelectGraphMethods()
+        {
+            if (IMLEventDispatcher.selectGraph != null)
+            {
+                var methodList = IMLEventDispatcher.selectGraph.GetInvocationList();
+                if (methodList != null)
+                {
+                    if (methodList.Length == 0) Debug.Log("No methods in SelectGraphCallback!");
+                    foreach (var method in methodList)
+                    {
+                        Debug.Log($"{method.GetMethodInfo().Name}");
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("No methods in SelectGraphCallback!");
+            }
+        }
+
     }
 
 }

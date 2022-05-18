@@ -34,6 +34,11 @@ namespace InteractML.Debugging
                 EditorDebugger.PrintIMLEventStopRecordMethods();
             }
 
+            if (GUILayout.Button("PrintIMLEventSelectGraphMethods"))
+            {
+                EditorDebugger.PrintIMLEventSelectGraphMethods();
+            }
+
         }
     }
 
