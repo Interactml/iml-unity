@@ -47,8 +47,12 @@ namespace InteractML {
       
         public void HandleState()
           {
-            
 
+            if (controller == null)
+            {
+                Debug.LogError("XR Controllers aren't connected!");
+                return;
+            }
               Vector2 value = GetValue(controller);
               if (value != previousValue)
               {
