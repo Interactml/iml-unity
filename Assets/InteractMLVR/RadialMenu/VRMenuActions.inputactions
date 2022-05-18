@@ -1,0 +1,45 @@
+{
+    "name": "VRMenuActions",
+    "maps": [
+        {
+            "name": "Menu",
+            "id": "f8107ed5-5d08-4c85-9fa5-bd0da74d588f",
+            "actions": [
+                {
+                    "name": "ToggleOpen",
+                    "type": "Button",
+                    "id": "ed9c09ff-df79-4dc4-b584-6019e8efde2e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "08195881-2dd1-4756-a488-ff3712bbb41b",
+                    "path": "<XRController>{RightHand}/joystickClicked",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleOpen",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "75179c6d-33a3-419a-9140-d8fb2d732d6a",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ToggleOpen",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
