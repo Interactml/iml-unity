@@ -460,7 +460,24 @@ public class IMLEditorManager
     /// <returns></returns>
     private static bool NullIMLAddons()
     {
-        return m_IMLAddons.Any(x => x == null) ? true : false;
+        bool isNull = false;
+        // Check if the interfaces are null
+        isNull = m_IMLAddons.Any(x => x == null) ? true : false;
+        // Check if the interfaces casted as monobehaviours are null (the monohevaiour gets garbage collected but not the interface in memory?)
+        if (!isNull) 
+        {
+            for (int i = 0; i < m_IMLAddons.Count; i++)
+            {
+                var addon = m_IMLAddons[i];
+                // If the addon is a MonoBehavour, check if it is null (the monohevaiour gets garbage collected but not the interface in memory?)
+                if (addon is MonoBehaviour) isNull = (addon as MonoBehaviour) == null;
+                // If the addon isn't a MonoBehaviour, do nothing
+                else continue;
+                // Once we find a positive, break loop. No need to search any longer
+                if (isNull) break;
+            }
+        }
+        return isNull;
     }
 
     /// <summary>
