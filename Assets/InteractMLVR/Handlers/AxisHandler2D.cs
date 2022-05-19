@@ -2,7 +2,8 @@
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
-namespace InteractML {
+namespace InteractML.VR
+{
     public class AxisHandler2D : MonoBehaviour, ISerializationCallbackReceiver
     {
         public enum Axis2d

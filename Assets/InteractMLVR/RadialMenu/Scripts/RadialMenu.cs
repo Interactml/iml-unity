@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using InteractML.Addons;
 
-namespace InteractML
+namespace InteractML.VR
 {
-    public class RadialMenu : MonoBehaviour
+    public class RadialMenu : MonoBehaviour, IAddonIML
     {
         [HideInInspector]
         public IMLComponent graph;
@@ -63,17 +64,43 @@ namespace InteractML
 
         private int counter = 60;
 
-        
-        private void Awake()
-        {
+        /// <summary>
+        /// Initialized? (Used by IMLAddon logic)
+        /// </summary>
+        [System.NonSerialized]
+        private bool m_IsInit;
 
-            SubscribeToEvents();
+        private void OnEnable()
+        {
+#if UNITY_EDITOR
+            // Subscribe to the editor manager so that our update loop gets called
+            // Subscription also calls initialize
+            IMLEditorManager.SubscribeIMLAddon(this);
+#else
+            // In case class isn't init
+            if (!m_IsInit) Initialize();
+#endif
+        }
+
+        private void Start()
+        {
+#if UNITY_EDITOR
+            // In case the addon didn't subscribe...
+            // Subscribe to the editor manager so that our update loop gets called
+            // Subscription also calls initialize
+            if (!IMLEditorManager.IsRegistered(this))
+                IMLEditorManager.SubscribeIMLAddon(this);
+#else
+            // In case class isn't init
+            if (!m_IsInit) Initialize();
+#endif
         }
 
         private void OnDestroy()
         {
             UnsubscribeToEvents();
         }
+
         private void CreateAndSetUpSections()
         {
             firstSelections = new List<RadialSection>()
@@ -252,6 +279,7 @@ namespace InteractML
 
         private void SubscribeToEvents()
         {
+            UnsubscribeToEvents(); // unsubscribing first to avoid duplicates
             IMLEventDispatcher.selectGraph += MenuOpen;
             
         }
@@ -380,6 +408,7 @@ namespace InteractML
 
         private void MenuOpen(IMLComponent graphToControl)
         {
+            Debug.Log("RadialMenu.MenuOpen");
             transform.Find("radial").gameObject.SetActive(true);
             on = true;
             CreateAndSetUpSections();
@@ -424,6 +453,63 @@ namespace InteractML
         {
             IMLEventDispatcher.SetUniversalTrainingID(trainingSelected);
         }
+
+#region IMLAddon
+
+        public bool IsInit()
+        {
+            return m_IsInit;
+        }
+
+        public void Initialize()
+        {
+            // if it is subscribed already it is fine, it will not duplicate the subscription
+            SubscribeToEvents();
+            m_IsInit = true;
+        }
+
+        public void AddAddonToGameObject(GameObject GO)
+        {
+            // do nothing
+        }
+
+        public void SubscribeToIMLEventDispatcher()
+        {
+            // if it is subscribed already it is fine, it will not duplicate the subscription
+            SubscribeToEvents();
+        }
+
+        public void EditorUpdateLogic()
+        {
+            // do nothing
+        }
+
+        public void EditorSceneOpened()
+        {
+            Initialize();
+        }
+
+        public void EditorEnteredPlayMode()
+        {
+            Initialize();
+        }
+
+        public void EditorEnteredEditMode()
+        {
+            Initialize();
+        }
+
+        public void EditorExitingPlayMode()
+        {
+            // do nothing
+        }
+
+        public void EditorExitingEditMode()
+        {
+            // do nothing
+        }
+#endregion
+
     }
 }
 
