@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.XR;
 using UnityEngine.XR.Interaction.Toolkit;
 
@@ -13,7 +15,16 @@ namespace InteractML.VR
             Secondary2DAxis
         }
 
-        private XRController controller;
+        // device-based controller
+        public XRController deviceXRController;
+        // Actions from action-based controller
+        public ActionBasedController actionXRController;
+        public InputActionReference ToggleMenuOpen;
+        public InputActionReference SelectMenu;
+        public InputActionReference JoystickAxis2D;
+        // Controller mode (device, action)
+        public enum XRControllerModeEnum { device, action }
+        public XRControllerModeEnum XRControllerMode;
 
         public delegate void ValueChange(XRController controller, Vector2 value);
         public event ValueChange OnValueChange;
@@ -27,14 +38,37 @@ namespace InteractML.VR
 
         void Start()
         {
-            controller = this.GetComponentInParent<XRController>();
-            innerMenu = this.GetComponent<RadialMenu>();
+            // Accommodating either device based xr rig or action based xr rig
+            if (deviceXRController == null) deviceXRController = this.GetComponentInParent<XRController>();
+            if (actionXRController == null) actionXRController = this.GetComponentInParent<ActionBasedController>();
+            if (deviceXRController != null) XRControllerMode = XRControllerModeEnum.device;
+            else if (actionXRController != null)
+            {
+                XRControllerMode = XRControllerModeEnum.action;
+                // Assign actions methods
+                if (SelectMenu != null)
+                {
+                    SelectMenu.action.started += PullActionSelect;
+                }
+                if (JoystickAxis2D != null)
+                {
+                    JoystickAxis2D.action.performed += PullActionAxis2D;
+                }
+
+            }
+            // throw error if no xrcontroller found
+            if (deviceXRController == null && actionXRController == null) Debug.LogError("XRController not found!");
+
+            innerMenu = this.GetComponent<RadialMenu>();           
         }
-        
+
+
         public void Update()
         {
-            HandleState();
+            // only device-based
+            HandleDeviceState();
         }
+
         public void OnAfterDeserialize()
         {
             inputFeature = new InputFeatureUsage<Vector2>();
@@ -46,23 +80,26 @@ namespace InteractML.VR
         }
 
       
-        public void HandleState()
-          {
-
-            if (controller == null)
+        /// <summary>
+        /// Pull inputs from device-based xrcontroller
+        /// </summary>
+        public void HandleDeviceState()
+        {
+            if (deviceXRController != null)
             {
-                Debug.LogError("XR Controllers aren't connected!");
-                return;
+                Vector2 value = GetValue(deviceXRController);
+                if (value != previousValue)
+                {
+                    previousValue = value;
+                    OnValueChange?.Invoke(deviceXRController, value);
+                }
+                GetClick();
             }
-              Vector2 value = GetValue(controller);
-              if (value != previousValue)
-              {
-                  previousValue = value;
-                  OnValueChange?.Invoke(controller, value);
-              }
-            GetClick();
-          }
+        }
 
+        /// <summary>
+        /// Device joystick value (device-based)
+        /// </summary>
         public Vector2 GetValue(XRController controller)
         {
 
@@ -84,10 +121,13 @@ namespace InteractML.VR
             
         }
 
+        /// <summary>
+        /// Device click (device-based)
+        /// </summary>
         private void GetClick()
         {
 
-            if (controller.inputDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out bool click))
+            if (deviceXRController.inputDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out bool click))
             {
 
                 if (click)
@@ -97,7 +137,7 @@ namespace InteractML.VR
             }
 
 
-            if (controller.inputDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out bool click2))
+            if (deviceXRController.inputDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.primary2DAxisClick, out bool click2))
             {
                 if (click2)
                 {
@@ -105,6 +145,27 @@ namespace InteractML.VR
                 }
             }
         }
+        /// <summary>
+        /// Equivalent action to joystick value (action-based)        
+        /// </summary>
+        private void PullActionAxis2D(InputAction.CallbackContext context)
+        {
+            var axisValue = context.ReadValue<Vector2>();
+            if (axisValue != previousValue)
+            {
+                previousValue = axisValue;
+            }
+            innerMenu.SetTouchPosition(axisValue);
+        }
+
+        /// <summary>
+        /// Equivalent action to device click (action-based)
+        /// </summary>
+        private void PullActionSelect(InputAction.CallbackContext context)
+        {
+            innerMenu.ActivateHighlightedSection();
+        }
+
     }
 }
 
