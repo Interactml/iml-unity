@@ -206,6 +206,8 @@ namespace InteractML.VR
         public void SetTouchPosition(Vector2 newValue)
         {
             touchPosition = newValue;
+            // Update highlighted section if needed
+            MoveHiglightSection(); 
         }
 
         private void SetSelectionRotation(float newRotation)
@@ -255,11 +257,22 @@ namespace InteractML.VR
 
         }
 
-        public void ActivateHighlightedSection()
+        /// <summary>
+        /// Moves the highlight section of the radialMenu 
+        /// </summary>
+        public void MoveHiglightSection()
         {
             Vector2 direction = Vector2.zero + touchPosition;
             float rotation = GetDegree(direction);
             SetSelectionRotation(rotation);
+        }
+
+        /// <summary>
+        /// Selects highlighted section
+        /// </summary>
+        public void ActivateHighlightedSection()
+        {
+            MoveHiglightSection();
             if (highlightedSelection != null)
             {
                 RadialSectionNode section = highlightedSelection as RadialSectionNode;

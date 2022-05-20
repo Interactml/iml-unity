@@ -37,7 +37,7 @@
                 {
                     "name": "",
                     "id": "08195881-2dd1-4756-a488-ff3712bbb41b",
-                    "path": "<XRController>{RightHand}/joystickClicked",
+                    "path": "*/{Primary2DAxisClick}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -59,7 +59,7 @@
                 {
                     "name": "",
                     "id": "ec188ef3-543c-4614-850d-8347d90e38f5",
-                    "path": "<XRController>{RightHand}/primary2DAxisClick",
+                    "path": "*/{Primary2DAxisClick}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -70,7 +70,7 @@
                 {
                     "name": "",
                     "id": "c688312f-b521-400a-be72-0871305ba511",
-                    "path": "<XRController>{RightHand}/secondary2DAxisClick",
+                    "path": "*/{Secondary2DAxisClick}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -81,7 +81,7 @@
                 {
                     "name": "",
                     "id": "f6868cb3-22c5-447b-8722-23945b60fde5",
-                    "path": "<XRController>{RightHand}/primary2DAxis",
+                    "path": "*/{Primary2DAxis}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -92,7 +92,7 @@
                 {
                     "name": "",
                     "id": "1934362b-5b85-4f9d-98e5-a0088eb97504",
-                    "path": "<XRController>{RightHand}/secondary2DAxis",
+                    "path": "*/{Secondary2DAxis}",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

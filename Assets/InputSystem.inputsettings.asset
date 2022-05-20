@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: InputSystem.inputsettings
   m_EditorClassIdentifier: 
   m_SupportedDevices:
+  - Keyboard
+  - OpenXRHmd
   - ViveWand
   - OpenVRHMD
-  - OpenXRHmd
   - OculusHMD
   - ViveController
   - XRController
-  - Keyboard
-  - Mouse
   m_UpdateMode: 1
   m_MaxEventBytesPerUpdate: 5242880
   m_MaxQueuedEventsPerUpdate: 1000
