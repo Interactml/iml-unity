@@ -464,7 +464,7 @@ namespace InteractML.VR
 
         private void TrainingNodeSelected()
         {
-            IMLEventDispatcher.SetUniversalTrainingID(trainingSelected);
+            IMLEventDispatcher.SetUniversalTrainingID?.Invoke(trainingSelected);
         }
 
 #region IMLAddon
