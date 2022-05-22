@@ -855,6 +855,8 @@ namespace InteractML
                 m_Running = false;
                 // Stop model
                 m_Model.StopRunning();
+                // For the moment, we consider the end of a running a model the end of a model steering iteration
+                IMLEventDispatcher.ModelSteeringIterationFinished?.Invoke(this.id);
                 return true;
             }
             return false; 

@@ -144,6 +144,11 @@ namespace InteractML
         public delegate void RunOnPlay();
         public static RunOnPlay RunOnPlayCallback;
 
+        /// <summary>
+        /// The model steering iteration (collect data->train->evaluate model) is finished. Node passed is which model finished the iteration
+        /// </summary>
+        public static IMLEvent ModelSteeringIterationFinished; 
+
 
         // Delete node event ???
 
@@ -249,6 +254,9 @@ namespace InteractML
 
             //RunOnPlay 
             DestroyIMLGrab = null;
+
+            // End of model steering iteration
+            ModelSteeringIterationFinished = null;
     }
 }
 }
