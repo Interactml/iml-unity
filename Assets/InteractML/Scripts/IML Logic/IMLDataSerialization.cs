@@ -451,31 +451,56 @@ namespace InteractML
         /// </summary>
         /// <param name="ObjToLoad"></param>
         /// <returns></returns>
-        public static object LoadObjectFromDisk(object ObjToLoad)
+        public static T LoadObjectFromDisk<T>(T ObjToLoad, string path = null, string fileName = null)
         {
             //Debug.Log("Load object from disk called! " + filePath);
 
-            string objName = "Obj_" + ObjToLoad.GetType().Name;
-            SetUpFileNamesAndPaths(objName);
-
-            // Check if there is NOT a folder with the folder name
-            if (!Directory.Exists(Path.Combine(m_AppDataPath, m_FolderDataPathName)))
+            string objName = "";
+            if (fileName == null)
             {
-                // If there is not, we create it
-                Directory.CreateDirectory(Path.Combine(m_AppDataPath, m_FolderDataPathName));
+                objName = "Obj_" + ObjToLoad.GetType().Name;
+            }
+            else
+            {
+                objName = fileName;
             }
 
-            string subFolderPath = Path.Combine(m_AppDataPath, m_FolderDataPathName + objName);
-            //Debug.Log("SUBFOLDER PATH IS: " + subFolderPath);
+            string subFolderPath = "";
 
-            // Check if there is NOT a subfolder with the component name
-            if (!Directory.Exists(subFolderPath))
+            // Without prespecified path
+            // (a bit buggy, it sabes under InteractML/DataObj_ObjName/ObjName.json instead of InteractML/Data/Obj/Obj_Name.json)
+            if (path == null) 
             {
-                // If there is not, we create it
-                Directory.CreateDirectory(subFolderPath);
-            }
+                SetUpFileNamesAndPaths(objName);
 
-            var auxObj = new object();
+                // Check if there is NOT a folder with the folder name
+                if (!Directory.Exists(Path.Combine(m_AppDataPath, m_FolderDataPathName)))
+                {
+                    // If there is not, we create it
+                    Directory.CreateDirectory(Path.Combine(m_AppDataPath, m_FolderDataPathName));
+                }
+
+                subFolderPath = Path.Combine(m_AppDataPath, m_FolderDataPathName + objName);
+                //Debug.Log("SUBFOLDER PATH IS: " + subFolderPath);
+
+                // Check if there is NOT a subfolder with the component name
+                if (!Directory.Exists(subFolderPath))
+                {
+                    // If there is not, we create it
+                    Directory.CreateDirectory(subFolderPath);
+                }
+
+            }
+            // With prespecified path...
+            else
+            {
+                // Check if path exists, if not, create it
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                subFolderPath = path;
+            }
 
             // If the option to serialize witht JSON dot net is active...
             if (m_SerializeWithJSONDotNet)
@@ -489,14 +514,14 @@ namespace InteractML
                     //Debug.Log("The file exists and we read from it!");
                     string objJSONData = File.ReadAllText(auxFilePath);
                     if (objJSONData != null)
-                        auxObj = JsonConvert.DeserializeObject<object>(objJSONData);
+                        return JsonConvert.DeserializeObject<T>(objJSONData);
 
                     //Debug.Log("What we read is: " + jsonTrainingExamplesList);
                 }
             }
 
-            return auxObj;
-
+            // Return empty default if not loading with json.net
+            return default(T);
         }
 
         public static string GetValueFromJSON(string valueName, string jsonFile)
