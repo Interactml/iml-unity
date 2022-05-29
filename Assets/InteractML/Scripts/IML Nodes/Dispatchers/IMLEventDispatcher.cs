@@ -145,6 +145,10 @@ namespace InteractML
         public static RunOnPlay RunOnPlayCallback;
 
         /// <summary>
+        /// The model steering iteration (collect data->train->evaluate model) is started. Node passed is which model started the iteration. Empty if started on graph open
+        /// </summary>
+        public static IMLEvent ModelSteeringIterationStarted;
+        /// <summary>
         /// The model steering iteration (collect data->train->evaluate model) is finished. Node passed is which model finished the iteration
         /// </summary>
         public static IMLEvent ModelSteeringIterationFinished; 
@@ -255,6 +259,8 @@ namespace InteractML
             //RunOnPlay 
             DestroyIMLGrab = null;
 
+            // Start of model steering iteration
+            ModelSteeringIterationStarted = null;
             // End of model steering iteration
             ModelSteeringIterationFinished = null;
     }

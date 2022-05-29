@@ -51,6 +51,16 @@ namespace InteractML
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(List<TrainingExamplesNode>))] = hexToColor("#74DF84");
             NodeEditorPreferences.GetSettings().typeColors[NodeEditorUtilities.PrettyName(typeof(MLSystem))] = hexToColor("#5EB3F9");
             NodeEditorPreferences.GetSettings().portTooltips = false;
+
+            // We consider this the start of a model steering iteration
+            // Start an iteration per model
+            if (graph.SceneComponent != null && graph.SceneComponent.MLSystemNodeList != null)
+            {
+                foreach (var model in graph.SceneComponent.MLSystemNodeList)
+                {
+                    IMLEventDispatcher.ModelSteeringIterationStarted?.Invoke($"{model.id}");
+                }
+            }
         }
 
 
