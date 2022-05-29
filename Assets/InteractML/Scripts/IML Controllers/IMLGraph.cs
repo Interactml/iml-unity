@@ -23,6 +23,13 @@ namespace InteractML
         public bool IsGraphRunning { get { return (SceneComponent != null); } }
 
         /// <summary>
+        /// Unique GUID for this graph
+        /// </summary>
+        public string ID { get { CheckID(); return m_ID; } }
+        [SerializeField, HideInInspector]
+        private string m_ID;
+
+        /// <summary>
         /// Override addNode to account for custom adding logic
         /// </summary>
         /// <param name="type"></param>
@@ -120,6 +127,17 @@ namespace InteractML
             node.ClearConnections();
             nodes.Remove(node);
             if (Application.isPlaying) DestroyImmediate(node, true);
+        }
+
+        /// <summary>
+        /// Creates a GUID for this graph if not present already
+        /// </summary>
+        public void CheckID()
+        {
+            if (string.IsNullOrEmpty(m_ID))
+            {
+                m_ID = Guid.NewGuid().ToString(); 
+            }
         }
 
     }
