@@ -88,10 +88,10 @@ namespace InteractML.GameObjectMovementFeatures
             ReceivingData = MovementFeatureMethods.IsReceivingData(this);
 
             // gameobject input
-            var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
+            GameObjectDataIn = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
 
             // check if there's a gameobject connected
-            if (gameObjRef == null)
+            if (GameObjectDataIn == null)
             {
                 if ((graph as IMLGraph).IsGraphRunning)
                 {
@@ -104,9 +104,9 @@ namespace InteractML.GameObjectMovementFeatures
             {
                 // Set values of our feature extracted
                 if(LocalSpace)
-                    m_RotationQuaternionExtracted.SetValues(gameObjRef.transform.localRotation);
+                    m_RotationQuaternionExtracted.SetValues(GameObjectDataIn.transform.localRotation);
                 else
-                    m_RotationQuaternionExtracted.SetValues(gameObjRef.transform.rotation);
+                    m_RotationQuaternionExtracted.SetValues(GameObjectDataIn.transform.rotation);
 
                 GameObjInputMissing = false;
             }

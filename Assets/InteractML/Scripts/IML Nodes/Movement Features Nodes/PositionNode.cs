@@ -90,10 +90,10 @@ namespace InteractML.GameObjectMovementFeatures
         {
             
             // gameobject input
-            var gameObjRef = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
+            GameObjectDataIn = GetInputValue<GameObject>("GameObjectDataIn", this.GameObjectDataIn);
 
             // check if there's a gameobject connected
-            if (gameObjRef == null)
+            if (GameObjectDataIn == null)
             {
                 GameObjInputMissing = true;
             }
@@ -101,9 +101,9 @@ namespace InteractML.GameObjectMovementFeatures
             {
                 // Set values of our feature extracted
                 if (LocalSpace)
-                    m_PositionExtracted.SetValues(gameObjRef.transform.localPosition);
+                    m_PositionExtracted.SetValues(GameObjectDataIn.transform.localPosition);
                 else 
-                    m_PositionExtracted.SetValues(gameObjRef.transform.position);
+                    m_PositionExtracted.SetValues(GameObjectDataIn.transform.position);
             }
 
             // update if node is receiving data
