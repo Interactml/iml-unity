@@ -625,7 +625,7 @@ namespace InteractML
             if (m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
             {
                 EditorGUI.indentLevel++;
-                GUILayout.Label("Number of unique classes: " + m_TrainingExamplesNode.TrainingClasses.Count, m_HeaderSmallStyle);
+                GUILayout.Label("Number of unique classes: " + m_TrainingExamplesNode.UniqueClasses.Count, m_HeaderSmallStyle);
                 EditorGUI.indentLevel--;
             }
             // TO DO: Also show unique training classes for DTW
@@ -688,7 +688,7 @@ namespace InteractML
                     // Single training examples (classification, regression) (up to 1000 for performance reasons)
                     if (m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
                     {
-                        m_ScrollPos = EditorGUILayout.BeginScrollView(m_ScrollPos, GUILayout.Width(GetWidth() - 10), GUILayout.Height(GetWidth() - 50));
+                        m_ScrollPos = EditorGUILayout.BeginScrollView(m_ScrollPos, GUILayout.Width(GetWidth() - 20), GUILayout.Height(GetWidth() - 50));
 
                         for (int i = 0; i < entriesShown; i++)
                         {
@@ -924,9 +924,9 @@ namespace InteractML
         {
             int numEntries = 0;
             int numEntriesSeries = 0;
-            if (m_TrainingExamplesNode.TrainingClasses != null && m_TrainingExamplesNode.TrainingClasses.Count > 0)
+            if (m_TrainingExamplesNode.UniqueClasses != null && m_TrainingExamplesNode.UniqueClasses.Count > 0)
             {
-                numEntries = m_TrainingExamplesNode.TrainingClasses.Count;
+                numEntries = m_TrainingExamplesNode.UniqueClasses.Count;
             }
             //if (m_TrainingExamplesNode.TrainingSeriesCollection != null && m_TrainingExamplesNode.TrainingSeriesCollection.Count > 0)
             //{
@@ -958,7 +958,7 @@ namespace InteractML
 
                 EditorGUI.indentLevel++;
 
-                if (m_TrainingExamplesNode.TrainingClasses.Count == 0)
+                if (m_TrainingExamplesNode.UniqueClasses.Count == 0)
                 {
                     EditorGUILayout.LabelField("Unique Training Classes List is empty", m_FoldoutEmptyStyle);
                 }
@@ -972,16 +972,16 @@ namespace InteractML
                     // Single training examples (classification, regression) (up to 1000 for performance reasons)
                     if (m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
                     {
-                        m_UniqueClassesScrollPos = EditorGUILayout.BeginScrollView(m_ScrollPos, GUILayout.Width(GetWidth() - 10), GUILayout.Height(GetWidth() - 50));
+                        m_UniqueClassesScrollPos = EditorGUILayout.BeginScrollView(m_UniqueClassesScrollPos, GUILayout.Width(GetWidth() - 20), GUILayout.Height(GetWidth() - 50));
 
                         for (int i = 0; i < entriesShown; i++)
                         {
-                            EditorGUILayout.LabelField("Training Example " + (i + 1), m_ScrollViewStyle);
+                            EditorGUILayout.LabelField("Unique Class " + (i + 1), m_ScrollViewStyle);
 
                             EditorGUI.indentLevel++;
 
-                            var inputFeatures = m_TrainingExamplesNode.TrainingClasses[i].Inputs;
-                            var outputFeatures = m_TrainingExamplesNode.TrainingClasses[i].Outputs;
+                            var inputFeatures = m_TrainingExamplesNode.UniqueClasses[i].Inputs;
+                            var outputFeatures = m_TrainingExamplesNode.UniqueClasses[i].Outputs;
 
                             // If the input features are not null...
                             if (inputFeatures != null)
@@ -1001,14 +1001,15 @@ namespace InteractML
 
                                     EditorGUILayout.LabelField("Input " + (j + 1) + " (" + inputFeatures[j].InputData.DataType + ")", m_ScrollViewStyle);
 
-                                    for (int k = 0; k < inputFeatures[j].InputData.Values.Length; k++)
-                                    {
-                                        EditorGUI.indentLevel++;
+                                    //for (int k = 0; k < inputFeatures[j].InputData.Values.Length; k++)
+                                    //{
+                                    EditorGUI.indentLevel++;
 
-                                        EditorGUILayout.LabelField(inputFeatures[j].InputData.Values[k].ToString(), m_ScrollViewStyle);
+                                    //EditorGUILayout.LabelField(inputFeatures[j].InputData.Values[k].ToString(), m_ScrollViewStyle);
+                                    EditorGUILayout.LabelField("Any", m_ScrollViewStyle);
 
-                                        EditorGUI.indentLevel--;
-                                    }
+                                    EditorGUI.indentLevel--;
+                                    //}
 
                                     EditorGUI.indentLevel--;
                                 }
@@ -1033,7 +1034,7 @@ namespace InteractML
 
                                     EditorGUI.indentLevel++;
 
-                                    EditorGUILayout.LabelField("Output " + (j + 1) + " (" + outputFeatures[j].OutputData.DataType + ")", m_ScrollViewStyle);
+                                    EditorGUILayout.LabelField("Output Class" + (j + 1) + " (" + outputFeatures[j].OutputData.DataType + ")", m_ScrollViewStyle);
 
 
                                     for (int k = 0; k < outputFeatures[j].OutputData.Values.Length; k++)
@@ -1064,127 +1065,127 @@ namespace InteractML
                         EditorGUI.indentLevel = indentLevel;
                         EditorGUILayout.EndScrollView();
                     }
-                    // Series training examples (DTW)
+                    // TO DO: Series unique training classes (DTW)
                     else
-                    {                        
-                        // init dropdowns
-                        if (m_UniqueClassesDropdownsLvl0 == null || m_UniqueClassesDropdownsLvl0.Length != m_TrainingExamplesNode.TrainingSeriesCollection.Count)
-                            m_UniqueClassesDropdownsLvl0 = new bool[m_TrainingExamplesNode.TrainingSeriesCollection.Count];
+                    {
+                        //// init dropdowns
+                        //if (m_UniqueClassesDropdownsLvl0 == null || m_UniqueClassesDropdownsLvl0.Length != m_TrainingExamplesNode.TrainingSeriesCollection.Count)
+                        //    m_UniqueClassesDropdownsLvl0 = new bool[m_TrainingExamplesNode.TrainingSeriesCollection.Count];
 
-                        m_ScrollPos = EditorGUILayout.BeginScrollView(m_ScrollPos, GUILayout.Width(GetWidth() - 25), GUILayout.Height(GetWidth() - 100));
+                        //m_ScrollPos = EditorGUILayout.BeginScrollView(m_ScrollPos, GUILayout.Width(GetWidth() - 25), GUILayout.Height(GetWidth() - 100));
 
-                        // Go Series by Series (only up to 1000)
-                        for (int i = 0; i < entriesShown; i++)
-                        {
-                            string numSeries = (m_TrainingExamplesNode.TrainingSeriesCollection[i].Series == null) ? "null" : m_TrainingExamplesNode.TrainingSeriesCollection[i].Series.Count.ToString();
+                        //// Go Series by Series (only up to 1000)
+                        //for (int i = 0; i < entriesShown; i++)
+                        //{
+                        //    string numSeries = (m_TrainingExamplesNode.TrainingSeriesCollection[i].Series == null) ? "null" : m_TrainingExamplesNode.TrainingSeriesCollection[i].Series.Count.ToString();
 
-                            //EditorGUILayout.LabelField("Training Series " + i, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
-                            m_UniqueClassesDropdownsLvl0[i] = EditorGUILayout.Foldout(m_UniqueClassesDropdownsLvl0[i], $"Training Series {i} ({numSeries} Entries)", m_FoldoutStyle);
+                        //    //EditorGUILayout.LabelField("Training Series " + i, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+                        //    m_UniqueClassesDropdownsLvl0[i] = EditorGUILayout.Foldout(m_UniqueClassesDropdownsLvl0[i], $"Training Series {i} ({numSeries} Entries)", m_FoldoutStyle);
 
-                            EditorGUI.indentLevel++;
+                        //    EditorGUI.indentLevel++;
 
-                            if (m_UniqueClassesDropdownsLvl0[i])
-                            {
-                                var inputFeaturesInSeries = m_TrainingExamplesNode.TrainingSeriesCollection[i].Series;
-                                var labelSeries = m_TrainingExamplesNode.TrainingSeriesCollection[i].LabelSeries;
+                        //    if (m_UniqueClassesDropdownsLvl0[i])
+                        //    {
+                        //        var inputFeaturesInSeries = m_TrainingExamplesNode.TrainingSeriesCollection[i].Series;
+                        //        var labelSeries = m_TrainingExamplesNode.TrainingSeriesCollection[i].LabelSeries;
 
-                                // If the input features are not null...
-                                if (inputFeaturesInSeries != null)
-                                {
-                                    // If features are empty...
-                                    if (inputFeaturesInSeries.Count == 0)
-                                    {
-                                        EditorGUILayout.LabelField("Empty series, but not null!", m_ScrollViewStyle);
-                                    }
-                                    // If there are features...
-                                    else
-                                    {
-                                        // init dropdowns
-                                        if (m_UniqueClassesDropdownsLvl1 == null || m_UniqueClassesDropdownsLvl1.Length != inputFeaturesInSeries.Count)
-                                            m_UniqueClassesDropdownsLvl1 = new bool[inputFeaturesInSeries.Count];
+                        //        // If the input features are not null...
+                        //        if (inputFeaturesInSeries != null)
+                        //        {
+                        //            // If features are empty...
+                        //            if (inputFeaturesInSeries.Count == 0)
+                        //            {
+                        //                EditorGUILayout.LabelField("Empty series, but not null!", m_ScrollViewStyle);
+                        //            }
+                        //            // If there are features...
+                        //            else
+                        //            {
+                        //                // init dropdowns
+                        //                if (m_UniqueClassesDropdownsLvl1 == null || m_UniqueClassesDropdownsLvl1.Length != inputFeaturesInSeries.Count)
+                        //                    m_UniqueClassesDropdownsLvl1 = new bool[inputFeaturesInSeries.Count];
 
-                                        for (int k = 0; k < inputFeaturesInSeries.Count; i++)
-                                        {
-                                            //EditorGUILayout.LabelField("No. Examples: " + inputFeaturesInSeries.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
-                                            m_UniqueClassesDropdownsLvl1[k] = EditorGUILayout.Foldout(m_UniqueClassesDropdownsLvl1[k], $"No. Examples: {inputFeaturesInSeries.Count}", m_FoldoutStyle);
+                        //                for (int k = 0; k < inputFeaturesInSeries.Count; i++)
+                        //                {
+                        //                    //EditorGUILayout.LabelField("No. Examples: " + inputFeaturesInSeries.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview"));
+                        //                    m_UniqueClassesDropdownsLvl1[k] = EditorGUILayout.Foldout(m_UniqueClassesDropdownsLvl1[k], $"No. Examples: {inputFeaturesInSeries.Count}", m_FoldoutStyle);
 
-                                            EditorGUI.indentLevel++;
+                        //                    EditorGUI.indentLevel++;
 
-                                            if (m_UniqueClassesDropdownsLvl1[k])
-                                            {
-                                                // Draw inputs
-                                                for (int j = 0; j < inputFeaturesInSeries.Count; j++)
-                                                {
-                                                    EditorGUI.indentLevel++;
+                        //                    if (m_UniqueClassesDropdownsLvl1[k])
+                        //                    {
+                        //                        // Draw inputs
+                        //                        for (int j = 0; j < inputFeaturesInSeries.Count; j++)
+                        //                        {
+                        //                            EditorGUI.indentLevel++;
 
-                                                    EditorGUILayout.LabelField("Input Feature " + j, m_ScrollViewStyle);
+                        //                            EditorGUILayout.LabelField("Input Feature " + j, m_ScrollViewStyle);
 
-                                                    // Are there any examples in series?
-                                                    if (inputFeaturesInSeries[j] == null)
-                                                    {
-                                                        EditorGUILayout.LabelField("Inputs are null ", m_ScrollViewStyle);
-                                                        break;
-                                                    }
+                        //                            // Are there any examples in series?
+                        //                            if (inputFeaturesInSeries[j] == null)
+                        //                            {
+                        //                                EditorGUILayout.LabelField("Inputs are null ", m_ScrollViewStyle);
+                        //                                break;
+                        //                            }
 
-                                                    EditorGUI.indentLevel++;
+                        //                            EditorGUI.indentLevel++;
 
-                                                    for (int z = 0; z < inputFeaturesInSeries[j].Count; z++)
-                                                    {
-                                                        EditorGUILayout.LabelField("Input " + z + " (" + inputFeaturesInSeries[j][z].InputData.DataType + ")", m_ScrollViewStyle);
+                        //                            for (int z = 0; z < inputFeaturesInSeries[j].Count; z++)
+                        //                            {
+                        //                                EditorGUILayout.LabelField("Input " + z + " (" + inputFeaturesInSeries[j][z].InputData.DataType + ")", m_ScrollViewStyle);
 
-                                                        for (int w = 0; w < inputFeaturesInSeries[j][z].InputData.Values.Length; w++)
-                                                        {
-                                                            EditorGUI.indentLevel++;
+                        //                                for (int w = 0; w < inputFeaturesInSeries[j][z].InputData.Values.Length; w++)
+                        //                                {
+                        //                                    EditorGUI.indentLevel++;
 
-                                                            EditorGUILayout.LabelField(inputFeaturesInSeries[j][z].InputData.Values[w].ToString(), m_ScrollViewStyle);
+                        //                                    EditorGUILayout.LabelField(inputFeaturesInSeries[j][z].InputData.Values[w].ToString(), m_ScrollViewStyle);
 
-                                                            EditorGUI.indentLevel--;
-                                                        }
+                        //                                    EditorGUI.indentLevel--;
+                        //                                }
 
 
-                                                    }
+                        //                            }
 
-                                                    EditorGUI.indentLevel--;
-                                                    EditorGUI.indentLevel--;
-                                                }
+                        //                            EditorGUI.indentLevel--;
+                        //                            EditorGUI.indentLevel--;
+                        //                        }
 
-                                            }
+                        //                    }
 
-                                            EditorGUI.indentLevel--;
+                        //                    EditorGUI.indentLevel--;
 
-                                        }
+                        //                }
 
-                                    }
-                                }
-                                // If the input features are null...
-                                else
-                                {
-                                    EditorGUILayout.LabelField("Input Features in series are null", m_ScrollViewStyle);
-                                }
+                        //            }
+                        //        }
+                        //        // If the input features are null...
+                        //        else
+                        //        {
+                        //            EditorGUILayout.LabelField("Input Features in series are null", m_ScrollViewStyle);
+                        //        }
 
-                                // If the output features for the entire series are not null...
-                                if (labelSeries != null)
-                                {
-                                    // Draw output
-                                    EditorGUI.indentLevel++;
+                        //        // If the output features for the entire series are not null...
+                        //        if (labelSeries != null)
+                        //        {
+                        //            // Draw output
+                        //            EditorGUI.indentLevel++;
 
-                                    EditorGUILayout.TextArea(labelSeries, m_ScrollViewStyle);
-                                    //EditorGUILayout.LabelField("TEST");
+                        //            EditorGUILayout.TextArea(labelSeries, m_ScrollViewStyle);
+                        //            //EditorGUILayout.LabelField("TEST");
 
-                                    EditorGUI.indentLevel--;
-                                }
-                                else
-                                {
-                                    EditorGUILayout.LabelField("Series Target Values are null ", m_ScrollViewStyle);
-                                }
-                            }
+                        //            EditorGUI.indentLevel--;
+                        //        }
+                        //        else
+                        //        {
+                        //            EditorGUILayout.LabelField("Series Target Values are null ", m_ScrollViewStyle);
+                        //        }
+                        //    }
 
-                            EditorGUI.indentLevel--;
-                        }
+                        //    EditorGUI.indentLevel--;
+                        //}
 
-                        // Ends Vertical Scroll
-                        EditorGUI.indentLevel = indentLevel;
-                        EditorGUILayout.EndScrollView();
+                        //// Ends Vertical Scroll
+                        //EditorGUI.indentLevel = indentLevel;
+                        //EditorGUILayout.EndScrollView();
                     }
 
                     EditorGUILayout.EndVertical();

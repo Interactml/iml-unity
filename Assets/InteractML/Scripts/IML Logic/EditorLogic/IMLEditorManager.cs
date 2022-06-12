@@ -9,6 +9,9 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 #endif
 
+/// <summary>
+/// Manages InteractML logic during editor time. NOT Editor scripts
+/// </summary>
 #if UNITY_EDITOR
 [InitializeOnLoad]
 #endif

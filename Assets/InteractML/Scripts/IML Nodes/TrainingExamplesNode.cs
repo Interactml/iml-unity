@@ -128,6 +128,27 @@ namespace InteractML
         /// </summary>
         public int TotalNumberOfTrainingExamples { get { return m_TotalNumberOfTrainingExamples; } }
 
+        #region Unique Classes Vars
+
+        /// <summary>
+        /// All unique types of training classes in dataset
+        /// </summary>
+        [SerializeField, HideInInspector]
+        protected List<IMLTrainingExample> m_UniqueClasses;
+        /// <summary>
+        /// Unique types of training classes in dataset
+        /// </summary>
+        public List<IMLTrainingExample> UniqueClasses { get { return m_UniqueClasses; } }
+
+        protected int m_NumUniqueClasses;
+        /// <summary>
+        /// How many different training classes is this dataset storing?
+        /// </summary>
+        public int NumUniqueClasses { get { return m_NumUniqueClasses; } }
+
+        #endregion
+
+
         /// <summary>
         /// Used to store the different lengths of features during feature extraction
         /// </summary>
@@ -670,6 +691,10 @@ namespace InteractML
                 default:
                     break;
             }
+
+            // Delete known unique training classes
+            m_UniqueClasses.Clear();
+            m_NumUniqueClasses = 0;
             
             if (deleteFromDisk)
                 // clear data on disk
@@ -933,7 +958,53 @@ namespace InteractML
             
         }
 
+        #region Unique Classes Methods
 
+        /// <summary>
+        /// Gets all the Unique Classes from Data Vector
+        /// </summary>
+        protected void UpdateUniqueClassesFromDataVector()
+        {
+            // Make sure unique classes list is init
+            if (m_UniqueClasses == null) m_UniqueClasses = new List<IMLTrainingExample>();
+            // Clear previously known classes
+            m_UniqueClasses.Clear();
+            m_NumUniqueClasses = 0;
+
+            // if there are training examples loaded...
+            if ((m_TrainingSeriesCollection != null && m_TrainingSeriesCollection.Count > 0)
+                || (m_TrainingExamplesVector != null && m_TrainingExamplesVector.Count > 0))
+            {
+                // Training Series
+                if (this is SeriesTrainingExamplesNode)
+                {
+                    // TO DO: load unique classes from DTW dataset
+                }
+                // Single training examples
+                else if (m_TrainingExamplesVector.Count > 0)
+                {
+                    // Go through dataset
+                    foreach (var trainingExample in m_TrainingExamplesVector)
+                    {
+                        // If list of unique training classes doesn't contain output...
+                        if (!m_UniqueClasses.Where(trainingClass => NodeExtensionMethods.OutputsEqual(trainingClass.Outputs, trainingExample.Outputs)).Any())
+                        {                            
+                            // Is a new training class, add it to list
+                            m_UniqueClasses.Add(trainingExample);
+                            m_NumUniqueClasses++;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                
+            }
+
+        }
+
+
+        #endregion
 
         /// <summary>
         /// Logic to collect examples. Needs to be called in an Update loop
@@ -993,10 +1064,23 @@ namespace InteractML
             {
                 newExample.AddOutputExample((TargetValues[i] as IFeatureIML).FeatureValues);
             }
-            
+
+
             // Add the training example to the vector
             m_TrainingExamplesVector.Add(newExample);
-            
+
+            // UNIQUE CLASSES LOGIC
+            // Make sure unique classes list is init
+            if (m_UniqueClasses == null) m_UniqueClasses = new List<IMLTrainingExample>();
+
+            // If list of unique training classes doesn't contain output...
+            if (!m_UniqueClasses.Where(trainingClass => NodeExtensionMethods.OutputsEqual(trainingClass.Outputs, newExample.Outputs)).Any())
+            {
+                // Is a new training class, add it to list
+                m_UniqueClasses.Add(newExample);
+                m_NumUniqueClasses++;
+            }
+
             // Commented this as it is slowing down released builds
             //SaveDataToDisk();
             //update connected MLSystem node with no of training examples
@@ -1122,6 +1206,7 @@ namespace InteractML
             if (m_TrainingExamplesVector.Count > 0 || m_TrainingSeriesCollection.Count > 0)
             {
                 UpdateDesiredInputOutputConfigFromDataVector();
+                UpdateUniqueClassesFromDataVector();
             }
         }
 

@@ -480,5 +480,53 @@ namespace InteractML
             // Return nodeport
             return auxPort;
         }
+
+        /// <summary>
+        /// Equality list of IMLOutputs
+        /// </summary>
+        /// <param name="newClass"></param>
+        /// <param name="existingUniqueClass"></param>
+        /// <returns></returns>
+        public static bool OutputsEqual(List<IMLOutput> newClass, List<IMLOutput> existingUniqueClass)
+        {
+            if (newClass == null || existingUniqueClass == null)
+            {
+                Debug.LogError("Null reference when comparing outputs!");
+                return false;
+            }
+
+            // First we compare size
+            bool sizeIsEqual = newClass.Count == existingUniqueClass.Count ? true : false;
+            if (!sizeIsEqual) return false;
+
+            // Compare values (knowing that sizes are equal)
+            bool valuesEqual = true;
+            for (int i = 0; i < newClass.Count; i++)
+            {
+                var newOutput = newClass[i];
+                var uniqueOutputKnown = existingUniqueClass[i];
+                // no nullrefs
+                if (newOutput != null && newOutput.OutputData != null && newOutput.OutputData.Values != null
+                    && uniqueOutputKnown != null && uniqueOutputKnown.OutputData != null && uniqueOutputKnown.OutputData.Values != null
+                    // and datatypes mach
+                    && newOutput.OutputData.DataType == uniqueOutputKnown.OutputData.DataType)
+                {
+                    // Compare each value
+                    for (int j = 0; j < newOutput.OutputData.Values.Length; j++)
+                    {
+                        if (newOutput.OutputData.Values[j] != uniqueOutputKnown.OutputData.Values[j])
+                            valuesEqual = false;
+                    }
+                }
+                // there were nullrefs or data types didn't match
+                else
+                {
+                    valuesEqual = false;
+                }
+            }
+            return valuesEqual;
+
+        }
+
     }
 }
