@@ -56,12 +56,20 @@ namespace InteractML
         /// </summary>
         protected Vector2 m_ScrollPos;
 
+        // Styles
         /// <summary>
         /// Style of foldout
         /// </summary>
         GUIStyle m_FoldoutStyle;
         GUIStyle m_FoldoutEmptyStyle;
         GUIStyle m_ScrollViewStyle;
+        GUIStyle m_RecordButtonStyle;
+        GUIStyle m_DeleteButtonStyle;
+        GUIStyle m_RecordOneButtonStyle;
+        GUIStyle m_RecordButtonGreenStyle;
+        GUIStyle m_DeleteButtonPinkStyle;
+        GUIStyle m_HeaderSmallStyle;
+
 
         /// <summary>
         /// holds the base height of the node for recalculating height
@@ -117,6 +125,18 @@ namespace InteractML
                 m_ScrollViewStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("scrollview");
             if (m_FoldoutStyle == null)
                 SetDropdownStyle(out m_FoldoutStyle);
+            if (m_RecordButtonStyle == null)
+                m_RecordButtonStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button");
+            if (m_DeleteButtonStyle == null)
+                m_DeleteButtonStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button");
+            if (m_RecordOneButtonStyle == null)
+                m_RecordOneButtonStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record One Button");
+            if (m_RecordButtonGreenStyle == null)
+                m_RecordButtonGreenStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green");
+            if (m_DeleteButtonPinkStyle == null)
+                m_DeleteButtonPinkStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button Pink");
+            if (m_HeaderSmallStyle == null)
+                m_HeaderSmallStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small");
 
             // Create inputport button label
             if (m_ButtonPortLabel == null)
@@ -260,7 +280,7 @@ namespace InteractML
                 GUI.enabled = false;
             }
 
-            if (GUILayout.Button("Record Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button")))
+            if (GUILayout.Button("Record Data", m_RecordButtonStyle))
             {
                 IMLEventDispatcher.ToggleRecordCallback(m_TrainingExamplesNode.id);
             }
@@ -291,7 +311,9 @@ namespace InteractML
         /// </summary>
         protected void SetDropdownStyle(out GUIStyle myFoldoutStyle)
         {
-            GUI.skin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+            if (m_NodeSkin == null) m_NodeSkin = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin");
+
+            GUI.skin = m_NodeSkin;
             myFoldoutStyle = new GUIStyle(EditorStyles.foldout);
             Color myStyleColor = Color.white;
             myFoldoutStyle.fontStyle = FontStyle.Bold;
@@ -325,7 +347,7 @@ namespace InteractML
                 // Draw button
                 if (disableButton)
                     GUI.enabled = false;
-                if (GUILayout.Button("Delete Data", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button")))
+                if (GUILayout.Button("Delete Data", m_DeleteButtonStyle))
                 {
                     IMLEventDispatcher.DeleteAllExamplesInNodeCallback(m_TrainingExamplesNode.id);               
                 }
@@ -476,14 +498,14 @@ namespace InteractML
                 // Draw port                
                 IMLNodeEditor.PortField(m_ButtonPortLabel, m_ButtonPortRecordOneInput, m_NodeSkin.GetStyle("Port Label"), GUILayout.MaxWidth(10));
                 GUILayout.Space(offset);
-                if (GUILayout.Button(new GUIContent(""), Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record One Button")))
+                if (GUILayout.Button(new GUIContent(""), m_RecordOneButtonStyle))
                 {
                     IMLEventDispatcher.RecordOneCallback?.Invoke(m_TrainingExamplesNode.id);
                 }
                 GUILayout.Space(5);
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(10);
-                GUILayout.Label("record one example", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
+                GUILayout.Label("record one example", m_RecordButtonGreenStyle);
                 GUILayout.Label("");
                 GUILayout.EndHorizontal();
                 
@@ -524,7 +546,7 @@ namespace InteractML
             // draw record label
             GUILayout.BeginHorizontal();
             GUILayout.Space(10);
-            GUILayout.Label(recordNameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green"));
+            GUILayout.Label(recordNameButton, m_RecordButtonGreenStyle);
             GUILayout.Label("");
             GUILayout.EndHorizontal();
 
@@ -545,7 +567,7 @@ namespace InteractML
             GUILayout.Space(5);
             GUILayout.BeginHorizontal();
             GUILayout.Space(10);
-            GUILayout.Label("delete all recordings", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button Pink"));
+            GUILayout.Label("delete all recordings", m_DeleteButtonPinkStyle);
             GUILayout.Label("");
             GUILayout.EndHorizontal();
             GUILayout.EndHorizontal();
@@ -555,10 +577,12 @@ namespace InteractML
             GUILayout.Space(15);
             if (m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
             {
-                GUILayout.Label("Number of training pairs: " + m_TrainingExamplesNode.TrainingExamplesVector.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"));
+                GUILayout.Label("Number of training pairs: " + m_TrainingExamplesNode.TrainingExamplesVector.Count, m_HeaderSmallStyle);
+                GUILayout.Label("Number of unique classes: " + m_TrainingExamplesNode.TrainingExamplesVector.Count, m_HeaderSmallStyle);
             }
-            else{
-                GUILayout.Label("Number of training examples: " + m_TrainingExamplesNode.TrainingSeriesCollection.Count, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Header Small"));
+            else
+            {
+                GUILayout.Label("Number of training examples: " + m_TrainingExamplesNode.TrainingSeriesCollection.Count, m_HeaderSmallStyle);
             }
             
             GUILayout.EndHorizontal();
@@ -607,7 +631,7 @@ namespace InteractML
 
                 if (m_TrainingExamplesNode.TrainingExamplesVector.Count > 0 && m_TrainingExamplesNode.TrainingSeriesCollection.Count > 0)
                 {
-                    EditorGUILayout.LabelField("Training Examples List is empty", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("foldoutempty"));
+                    EditorGUILayout.LabelField("Training Examples List is empty", m_FoldoutEmptyStyle);
                 }
                 else
                 {
