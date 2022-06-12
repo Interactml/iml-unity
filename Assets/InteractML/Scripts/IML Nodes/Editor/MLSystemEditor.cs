@@ -76,15 +76,28 @@ namespace InteractML
             ShowButtons(m_MLSystem);
             GUILayout.Space(20);
             ShowRunOnAwakeToggle(m_MLSystem as MLSystem);
+            GUILayout.Space(10);
+            ShowUniqueClassesLabel();
             GUILayout.Space(20);
             // if there is an error show the correct warning
             if (m_MLSystem.error)
             {
 
                 nodeSpace = 60;
-                m_BodyRect.height = m_BodyRect.height + HeaderRect.height + 40;
+                m_BodyRect.height = m_BodyRect.height + HeaderRect.height + 35;
                 ShowWarning(m_MLSystem.warning);
             }
+        }
+
+        /// <summary>
+        /// Shows label with number of unique classes trained on
+        /// </summary>
+        protected void ShowUniqueClassesLabel()
+        {
+            int indentNumber = 5;
+            EditorGUI.indentLevel += indentNumber;
+            EditorGUILayout.LabelField($"Unique Classes Trained On: {m_MLSystem.TotalNumUniqueClasses}", m_NodeSkin.GetStyle("Node Local Space Label"));
+            EditorGUI.indentLevel -= indentNumber;
         }
 
         /// <summary>

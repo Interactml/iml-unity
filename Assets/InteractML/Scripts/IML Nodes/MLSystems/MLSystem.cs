@@ -133,6 +133,10 @@ namespace InteractML
         public bool Training { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Training); } }
         public bool Trained { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Trained); } }
         public bool Untrained { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Untrained); } }
+        /// <summary>
+        /// Is the node collecting testing data for this model?
+        /// </summary>
+        public bool Testing { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Testing); } }
 
         /// <summary>
         /// Reference to the rapidlib model this node is holding
@@ -157,6 +161,26 @@ namespace InteractML
         /// Training series for MLSystem training in series 
         /// </summary>
         protected IMLTrainingSeries m_RunningSeries;
+
+        /// <summary>
+        /// How many different classes is the model trained on?
+        /// </summary>
+        [SerializeField, HideInInspector]
+        protected int m_TotalNumUniqueClasses;
+        public int TotalNumUniqueClasses { get { return m_TotalNumUniqueClasses; } }
+        /// <summary>
+        /// All the unique training classes for this model
+        /// </summary>
+        [SerializeField, HideInInspector]
+        protected List<IMLTrainingExample> m_TotalUniqueTrainingClasses;
+        /// <summary>
+        /// Data used for testing (Classification/Regression only)
+        /// </summary>
+        public List<IMLTrainingExample> TestingData { get { return m_TestingData; } }
+        /// <summary>
+        /// Data used for testing (Classification/Regression only)
+        /// </summary>
+        protected List<IMLTrainingExample> m_TestingData;
 
         /// <summary>
         /// Vector used to compute the realtime predictions in rapidlib based on the training data
@@ -602,7 +626,7 @@ namespace InteractML
         {
             bool isTrained = false;
             //if the MLS is not running, training and the model is not null and the total number of training data is bigger than 0
-            if (!Running && !Training && Model != null && TotalNumTrainingDataConnected > 0)
+            if (!Running && !Training && !Testing && Model != null && TotalNumTrainingDataConnected > 0)
             {
                 
                 //come back to this
@@ -679,6 +703,8 @@ namespace InteractML
 
              // Trains rapidlib with the examples added
              isTrained = m_Model.Train(m_RapidlibTrainingExamples);
+
+            Debug.Log($"Model trained with {m_TotalNumUniqueClasses} unique classes");
 
             return isTrained;
         }
@@ -793,7 +819,7 @@ namespace InteractML
 
         public bool ToggleRunning()
         {
-            if (!m_Running)
+            if (!m_Running && !Testing)
             {
                 return StartRunning();
             } else
@@ -926,6 +952,8 @@ namespace InteractML
                     case RapidlibModel.ModelType.kNN:
                         // Configure inputs and outputs
                         PredictedOutput = new List<IMLBaseDataType>(m_Model.GetNumExpectedOutputs());
+                        // Reload unique outputs
+                        ReloadUniqueOutputs(IMLTrainingExamplesNodes, ref m_TotalUniqueTrainingClasses, ref m_TotalNumUniqueClasses);
                         // TO DO
                         // Still left to configure inputs
                         // Still left to configure the type of the inputs and outputs
@@ -933,7 +961,10 @@ namespace InteractML
                     case RapidlibModel.ModelType.NeuralNetwork:
                         // Configure inputs and outputs
                         PredictedOutput = new List<IMLBaseDataType>(m_Model.GetNumExpectedOutputs());
+                        // Reload unique outputs
+                        ReloadUniqueOutputs(IMLTrainingExamplesNodes, ref m_TotalUniqueTrainingClasses, ref m_TotalNumUniqueClasses);
                         // TO DO
+                        // Reload unique outputs for DTW
                         // Still left to configure inputs
                         // Still left to configure the type of the inputs and outputs
                         break;
@@ -1778,6 +1809,12 @@ namespace InteractML
             // Reset counter examples trained on
             numExamples = 0;
 
+            // Make sure unique training classes is init
+            if (m_TotalUniqueTrainingClasses == null) m_TotalUniqueTrainingClasses = new List<IMLTrainingExample>();
+            // Empty unique training classes (we are going to retrain the model)
+            m_TotalUniqueTrainingClasses.Clear();
+            m_TotalNumUniqueClasses = 0;
+
             // Go through all the IML Training Examples if we can
             if (!Lists.IsNullOrEmpty(ref trainingNodesIML))
             {
@@ -1790,6 +1827,9 @@ namespace InteractML
                     // If there are training examples in this node...
                     if (trainingNodesIML[i].TrainingExamplesVector.Count > 0)
                     {
+                        // Pull all unique classes the model will be trained on
+                        AddUniqueOutputs(trainingNodesIML[i], ref m_TotalUniqueTrainingClasses, ref m_TotalNumUniqueClasses);
+
                         // Go through all the training examples
                         for (int j = 0; j < trainingNodesIML[i].TrainingExamplesVector.Count; j++)
                         {
@@ -2247,6 +2287,104 @@ namespace InteractML
                 return status;
             }
             return null;
+        }
+
+        #endregion
+
+        #region Unique Training Classes Methods
+
+        /// <summary>
+        /// Adds all unique training classes from the outputs in a training dataset
+        /// </summary>
+        /// <param name="trainingExamplesNode"></param>
+        /// <param name="uniqueClassesKnown"></param>
+        protected void AddUniqueOutputs(TrainingExamplesNode trainingExamplesNode, ref List<IMLTrainingExample> uniqueClassesKnown, ref int totalNumUniqueClasses)
+        {
+            if (uniqueClassesKnown == null)
+                uniqueClassesKnown = new List<IMLTrainingExample>();
+
+            // Pull all unique classes the model will be trained on
+            if (trainingExamplesNode.UniqueClasses != null && trainingExamplesNode.UniqueClasses.Count > 0)
+            {
+                foreach (var trainingClass in trainingExamplesNode.UniqueClasses)
+                {
+                    // Is there a new unique trainingClass in this node? 
+                    if (!uniqueClassesKnown.Where(uniqueClassKnown => NodeExtensionMethods.OutputsEqual(uniqueClassKnown.Outputs, trainingClass.Outputs)).Any())
+                    {
+                        // If so, add it to our list of unique trainingClasses
+                        var newUniqueTrainingClass = new IMLTrainingExample();
+                        newUniqueTrainingClass.Outputs = trainingClass.Outputs;
+                        uniqueClassesKnown.Add(newUniqueTrainingClass);
+                        totalNumUniqueClasses++;
+                    }
+                }
+            }
+
+        }
+
+        /// <summary>
+        /// Reloads all unique outputs based on training examples nodes passed in
+        /// </summary>
+        /// <param name="trainingExamplesNodes"></param>
+        /// <param name="uniqueClassesKnown"></param>
+        protected void ReloadUniqueOutputs(List<TrainingExamplesNode> trainingExamplesNodes, ref List<IMLTrainingExample> uniqueClassesKnown, ref int totalNumUniqueClasses)
+        {
+            // Make sure unique training classes is init
+            if (uniqueClassesKnown == null) uniqueClassesKnown = new List<IMLTrainingExample>();
+            // Empty unique training classes (we are going to retrain the model)
+            uniqueClassesKnown.Clear();
+            totalNumUniqueClasses = 0;
+
+            // Go through all the IML Training Examples if we can
+            if (!Lists.IsNullOrEmpty(ref trainingExamplesNodes))
+            {
+                // Go through each node
+                for (int i = 0; i < trainingExamplesNodes.Count; i++)
+                {
+                    // If there are training examples in this node...
+                    if (trainingExamplesNodes[i].TrainingExamplesVector.Count > 0)
+                    {
+                        // Pull all unique classes the model will be trained on
+                        AddUniqueOutputs(trainingExamplesNodes[i], ref uniqueClassesKnown, ref totalNumUniqueClasses);
+                    }
+                }
+            }
+
+        }
+
+        #endregion
+
+        #region Collecting Testing Data Methods
+
+        protected void TestingLogic()
+        {
+
+        }
+
+        /// <summary>
+        /// Collects testing data for a specified class label
+        /// </summary>
+        /// <param name="classLabel"></param>
+        protected void CollectTestExample (IMLBaseDataType classLabel)
+        {
+            if (classLabel != null)
+            {
+                // Make sure list is init
+                if (m_TestingData == null) m_TestingData = new List<IMLTrainingExample>();
+
+                var newTestingExample = new IMLTrainingExample();
+                // output is the classlabel passed in
+                newTestingExample.AddOutputExample(classLabel);
+
+                // Add all the live input features to the testing example being recorded
+                for (int i = 0; i < InputFeatures.Count; i++)
+                {
+                    newTestingExample.AddInputExample((InputFeatures[i] as IFeatureIML).FeatureValues);
+                }
+
+                // Add to testing data list
+                m_TestingData.Add(newTestingExample);
+            }
         }
 
         #endregion

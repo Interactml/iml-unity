@@ -50,7 +50,7 @@ namespace InteractML
         /// <summary>
         /// Defines the possible status of the training process
         /// </summary>
-        public enum ModelStatus { Untrained, Training, Trained, Running }
+        public enum ModelStatus { Untrained, Training, Trained, Running, Testing }
 
         public enum TrainingSetType { SingleTrainingExamples, SeriesTrainingExamples }
 

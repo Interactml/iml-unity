@@ -625,7 +625,7 @@ namespace InteractML
             if (m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
             {
                 EditorGUI.indentLevel++;
-                GUILayout.Label("Number of unique classes: " + m_TrainingExamplesNode.UniqueClasses.Count, m_HeaderSmallStyle);
+                GUILayout.Label("Number of unique classes: " + m_TrainingExamplesNode.NumUniqueClasses, m_HeaderSmallStyle);
                 EditorGUI.indentLevel--;
             }
             // TO DO: Also show unique training classes for DTW
