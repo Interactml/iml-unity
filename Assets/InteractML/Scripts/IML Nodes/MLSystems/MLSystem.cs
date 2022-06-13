@@ -133,10 +133,6 @@ namespace InteractML
         public bool Training { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Training); } }
         public bool Trained { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Trained); } }
         public bool Untrained { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Untrained); } }
-        /// <summary>
-        /// Is the node collecting testing data for this model?
-        /// </summary>
-        public bool Testing { get { return (m_ModelStatus == IMLSpecifications.ModelStatus.Testing); } }
 
         /// <summary>
         /// Reference to the rapidlib model this node is holding
@@ -173,14 +169,6 @@ namespace InteractML
         /// </summary>
         [SerializeField, HideInInspector]
         protected List<IMLTrainingExample> m_TotalUniqueTrainingClasses;
-        /// <summary>
-        /// Data used for testing (Classification/Regression only)
-        /// </summary>
-        public List<IMLTrainingExample> TestingData { get { return m_TestingData; } }
-        /// <summary>
-        /// Data used for testing (Classification/Regression only)
-        /// </summary>
-        protected List<IMLTrainingExample> m_TestingData;
 
         /// <summary>
         /// Vector used to compute the realtime predictions in rapidlib based on the training data
@@ -250,7 +238,37 @@ namespace InteractML
         /// <summary>
         /// Change this flag to use or not async methods (training, running models)
         /// </summary>
-        private bool m_UseAsync = true;        
+        private bool m_UseAsync = true;
+
+        #region Testing Variables
+
+        /// <summary>
+        /// Are we using a testing state after running the model?
+        /// </summary>
+        public bool UseTestingState { get => m_UseTestingState; set => m_UseTestingState = value; }
+        /// <summary>
+        /// Change this flag to use or not the testing state after the running state
+        /// </summary>
+        private bool m_UseTestingState = true;
+        /// <summary>
+        /// Is the node collecting testing data for this model?
+        /// </summary>
+        protected bool m_Testing;
+        /// <summary>
+        /// Is the node collecting testing data for this model?
+        /// </summary>
+        public bool Testing { get { return m_Testing; } }
+        /// <summary>
+        /// Data used for testing (Classification/Regression only)
+        /// </summary>
+        public List<IMLTrainingExample> TestingData { get { return m_TestingData; } }
+        /// <summary>
+        /// Data used for testing (Classification/Regression only)
+        /// </summary>
+        protected List<IMLTrainingExample> m_TestingData;
+
+
+        #endregion
 
         #endregion
 
@@ -819,13 +837,39 @@ namespace InteractML
 
         public bool ToggleRunning()
         {
-            if (!m_Running && !Testing)
+            bool success = false;
+            // Is the testing state allowed 
+            if (m_UseTestingState)
             {
-                return StartRunning();
-            } else
-            {
-                return StopRunning();
+                if (!m_Running && !Testing)
+                {
+                    success = StartRunning();
+                }
+                else if (m_Running && !Testing)
+                {
+                    StartTesting();
+                    success = true;
+                }
+                // Stop testing and stop running will only be controlled from StopTesting() now
+                //else if (m_Running && Testing)
+                //{
+                //    StopTesting();
+                //    success = StopRunning();
+                //}
             }
+            // Default InteractML behaviour start/stop running
+            else
+            {
+                if (!m_Running)
+                {
+                    success = StartRunning();
+                }                
+                else if (m_Running)
+                {
+                    success = StopRunning();
+                }
+            }
+            return success; 
         }
         /// <summary>
         /// Sets running boolean to true 
@@ -2202,6 +2246,10 @@ namespace InteractML
             // Perform running logic (it will account for DTW and Classification/Regression) only if there is a predicted output            
             RunningLogic();
 
+            // Do testing logic 
+            TestingLogic();
+
+
         }
 
         private bool LoadOrTrain()
@@ -2358,7 +2406,28 @@ namespace InteractML
 
         protected void TestingLogic()
         {
+            if (m_Testing)
+            {
+                // Only allow testing if the model is running
+                if (!m_Running)
+                {
+                    m_Testing = false;
+                    return;
+                }
+                // DO SOMETHING
+                Debug.Log($"MODEL TESTING!! ID: {id}");
+            }
+        }
 
+        public void StartTesting()
+        {
+            // Set model status to testing
+            m_Testing = true;
+        }
+
+        public void StopTesting()
+        {
+            m_Testing = false;
         }
 
         /// <summary>

@@ -2675,16 +2675,13 @@ namespace InteractML
                 // if nodeID matches
                 if (nodeID == MLSNode.id)
                 {
-                    if (MLSNode.Running)
+                    success = MLSNode.ToggleRunning();
+                    if (!MLSNode.Running && success && icon != null)
                     {
-                        success = MLSNode.StopRunning();
-                        if(success && icon != null)
                             icon.SetBody(icon.baseColour);
                     }
-                    else
+                    else if (MLSNode.Running && success && icon != null)
                     {
-                        success = MLSNode.StartRunning();
-                        if (success && icon != null)
                             icon.SetBody(icon.runningColour);
                         //else
                             //icon.SetBody(icon.current);

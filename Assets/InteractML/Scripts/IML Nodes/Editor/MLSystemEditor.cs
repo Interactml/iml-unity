@@ -68,6 +68,7 @@ namespace InteractML
             //previous nodespace 330
             m_BodyRect.height = 350;
             base.OnBodyGUI();
+            ShowTestingPanel();
         }
 
         protected override void ShowBodyFields()
@@ -309,6 +310,61 @@ namespace InteractML
                 buttonTipHelper = false;
             }
         }
+
+        #region Testing Interface 
+
+        /// <summary>
+        /// Shows the testing panel on top of node
+        /// </summary>
+        protected virtual void ShowTestingPanel()
+        {
+            // Only draw if the testing state is used and active
+            if (m_MLSystem.UseTestingState && m_MLSystem.Testing)
+            {
+                /*
+                 *          protected Rect m_ToolRect;
+                            protected Rect m_BodyRect;
+                            protected Rect m_PortRect;
+                            protected Rect m_InnerBodyRect;
+                            protected Rect m_HelpRect;
+                            protected Rect m_WarningRect;
+                            protected Rect m_InnerWarningRect;
+                            protected Rect m_InnerInnerWarningRect;
+                            public Rect ToolTipRect;
+
+                            public float bodyheight;
+                 */
+                // Create a new rect that occupies the entire node interface
+                float UIWidth = HeaderRect.width;
+                float UIHeight = HeaderRect.height + m_BodyRect.height + m_InnerBodyRect.height + m_WarningRect.height + m_InnerWarningRect.height + m_PortRect.height;
+                Vector2 UISize = new Vector2(UIWidth, UIHeight);
+                Rect TestingUIRect = new Rect(HeaderRect.position, UISize);
+
+                GUILayout.BeginArea(TestingUIRect);
+                
+                Texture2D texture = GetColorTextureFromHexString("#3b4675");
+                // Draw background panel
+                GUI.DrawTexture(TestingUIRect, texture);
+                //EditorGUI.DrawRect(TestingUIRect, Color.white);
+
+                // Content of panel
+                GUILayout.Label("TESTING UI", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(200));
+                GUILayout.Label("Subcontent", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
+
+                if (GUILayout.Button("Stop Testing", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Run")))
+                {
+                    m_MLSystem.StopTesting();
+                    m_MLSystem.StopRunning();
+                }
+
+                GUILayout.EndArea();
+
+
+                //EditorGUI.DrawRect();
+            }
+        }
+
+        #endregion
 
     }
 }
