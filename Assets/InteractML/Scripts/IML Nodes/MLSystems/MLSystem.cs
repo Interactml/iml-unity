@@ -281,6 +281,14 @@ namespace InteractML
         /// Are all testing classes collected?
         /// </summary>
         public bool AllTestingClassesCollected { get => m_CurrentTestingClassCollected >= m_TestingClassesCollected.Length; }
+        /// <summary>
+        /// Collecting testing data?
+        /// </summary>
+        private bool m_CollectingTestingData;
+        /// <summary>
+        /// Collecting testing data?
+        /// </summary>
+        public bool CollectingTestingData { get => m_CollectingTestingData; }
 
 
         #endregion

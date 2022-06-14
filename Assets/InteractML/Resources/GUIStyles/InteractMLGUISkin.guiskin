@@ -3894,9 +3894,145 @@ MonoBehaviour:
     m_FixedHeight: 0
     m_StretchWidth: 1
     m_StretchHeight: 0
+  - m_Name: White Button Long
+    m_Normal:
+      m_Background: {fileID: 2800000, guid: ac725b1a64ba30f4d8f1956c98689443, type: 3}
+      m_ScaledBackgrounds:
+      - {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Hover:
+      m_Background: {fileID: 2800000, guid: 5a12bf51acbcd4a42a2b632e04801da7, type: 3}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
+    m_Active:
+      m_Background: {fileID: 2800000, guid: 5a12bf51acbcd4a42a2b632e04801da7, type: 3}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 0.4056604, g: 0.4056604, b: 0.4056604, a: 1}
+    m_Focused:
+      m_Background: {fileID: 2800000, guid: 5a12bf51acbcd4a42a2b632e04801da7, type: 3}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
+    m_OnNormal:
+      m_Background: {fileID: 2800000, guid: bcaf99eb39e94b34796fec006ff7f77f, type: 3}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+    m_OnHover:
+      m_Background: {fileID: 2800000, guid: bcaf99eb39e94b34796fec006ff7f77f, type: 3}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+    m_OnActive:
+      m_Background: {fileID: 2800000, guid: bcaf99eb39e94b34796fec006ff7f77f, type: 3}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+    m_OnFocused:
+      m_Background: {fileID: 2800000, guid: bcaf99eb39e94b34796fec006ff7f77f, type: 3}
+      m_ScaledBackgrounds:
+      - {fileID: 0}
+      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+    m_Border:
+      m_Left: 0
+      m_Right: -38
+      m_Top: 0
+      m_Bottom: 0
+    m_Margin:
+      m_Left: 5
+      m_Right: 5
+      m_Top: 0
+      m_Bottom: 0
+    m_Padding:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Overflow:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Font: {fileID: 12800000, guid: 876c259da463d0c438b296c2a2b4c8b4, type: 3}
+    m_FontSize: 12
+    m_FontStyle: 0
+    m_Alignment: 4
+    m_WordWrap: 0
+    m_RichText: 0
+    m_TextClipping: 0
+    m_ImagePosition: 1
+    m_ContentOffset: {x: 0, y: 0}
+    m_FixedWidth: 0
+    m_FixedHeight: 30
+    m_StretchWidth: 1
+    m_StretchHeight: 0
+  - m_Name: White Button Short
+    m_Normal:
+      m_Background: {fileID: 2800000, guid: ac725b1a64ba30f4d8f1956c98689443, type: 3}
+      m_ScaledBackgrounds:
+      - {fileID: 0}
+      m_TextColor: {r: 0, g: 0, b: 0, a: 1}
+    m_Hover:
+      m_Background: {fileID: 2800000, guid: 5a12bf51acbcd4a42a2b632e04801da7, type: 3}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
+    m_Active:
+      m_Background: {fileID: 2800000, guid: 5a12bf51acbcd4a42a2b632e04801da7, type: 3}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 0.4056604, g: 0.4056604, b: 0.4056604, a: 1}
+    m_Focused:
+      m_Background: {fileID: 2800000, guid: 5a12bf51acbcd4a42a2b632e04801da7, type: 3}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
+    m_OnNormal:
+      m_Background: {fileID: 2800000, guid: bcaf99eb39e94b34796fec006ff7f77f, type: 3}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+    m_OnHover:
+      m_Background: {fileID: 2800000, guid: bcaf99eb39e94b34796fec006ff7f77f, type: 3}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+    m_OnActive:
+      m_Background: {fileID: 2800000, guid: bcaf99eb39e94b34796fec006ff7f77f, type: 3}
+      m_ScaledBackgrounds: []
+      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+    m_OnFocused:
+      m_Background: {fileID: 2800000, guid: bcaf99eb39e94b34796fec006ff7f77f, type: 3}
+      m_ScaledBackgrounds:
+      - {fileID: 0}
+      m_TextColor: {r: 1, g: 1, b: 1, a: 1}
+    m_Border:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Margin:
+      m_Left: 40
+      m_Right: 40
+      m_Top: 0
+      m_Bottom: 0
+    m_Padding:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Overflow:
+      m_Left: 0
+      m_Right: 0
+      m_Top: 0
+      m_Bottom: 0
+    m_Font: {fileID: 12800000, guid: 876c259da463d0c438b296c2a2b4c8b4, type: 3}
+    m_FontSize: 12
+    m_FontStyle: 0
+    m_Alignment: 4
+    m_WordWrap: 0
+    m_RichText: 0
+    m_TextClipping: 0
+    m_ImagePosition: 1
+    m_ContentOffset: {x: 0, y: 0}
+    m_FixedWidth: 0
+    m_FixedHeight: 30
+    m_StretchWidth: 1
+    m_StretchHeight: 0
   m_Settings:
     m_DoubleClickSelectsWord: 1
     m_TripleClickSelectsLine: 1
     m_CursorColor: {r: 1, g: 1, b: 1, a: 1}
-    m_CursorFlashSpeed: -1
+    m_CursorFlashSpeed: 0.1
     m_SelectionColor: {r: 1, g: 1, b: 1, a: 0}

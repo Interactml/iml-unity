@@ -275,9 +275,9 @@ namespace InteractML
                 GUI.enabled = true;
             }
 
-            if (GUILayout.Button(nameButton, Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Run")))
+            if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Run")))
             {
-                IMLEventDispatcher.ToggleRunCallback(m_MLSystem.id);
+                IMLEventDispatcher.ToggleRunCallback?.Invoke(m_MLSystem.id);
             }
 
             
@@ -355,8 +355,10 @@ namespace InteractML
 
 
                 // If there are classes not yet collected...
-                if (m_MLSystem.TestingClassesCollected.Where(collected => collected == false).Any())
+                if (m_MLSystem.TestingClassesCollected != null && m_MLSystem.TestingClassesCollected.Where(collected => collected == false).Any())
                 {
+                    if (m_MLSystem.TotalUniqueTrainingClasses == null && m_MLSystem.TotalUniqueTrainingClasses.Count == 0 || m_MLSystem.CurrentTestingClassCollected > m_MLSystem.TotalUniqueTrainingClasses.Count-1) 
+                        return;                    
                     var expectedOutputClass = m_MLSystem.TotalUniqueTrainingClasses[m_MLSystem.CurrentTestingClassCollected].Outputs;
                     string expectedOutputClassString = "{ ";
                     foreach (var expectedOutput in expectedOutputClass)
@@ -381,18 +383,55 @@ namespace InteractML
                     GUILayout.Space(space);
                     GUILayout.Label($"{expectedOutputClassString}", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
                     GUILayout.Space(space);
+
+                    // Record testing examples button
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Space(20);
+                    string nameButton = "";
+                    if (m_MLSystem.CollectingTestingData)
+                        nameButton = $"Stop Recording {m_MLSystem.TestingData.Count}";
+                    else
+                        nameButton = $"Record Testing Examples for Class {m_MLSystem.CurrentTestingClassCollected}";
+                    Texture icon = Resources.Load("record_examples") as Texture;
+                    GUIContent content = new GUIContent(nameButton, icon);
+                    if (GUILayout.Button(content, m_NodeSkin.GetStyle("White Button Long")))
+                    {
+                        // TODO: Collect testing data logic
+                    }
+                    GUILayout.Box("", m_NodeSkin.GetStyle("Record Button"));
+                    GUILayout.Space(20);
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.Space(10);
+
+                    // Delete testing examples button
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Space(20);
+                    if (m_MLSystem.CollectingTestingData) GUI.enabled = false;
+                    if (GUILayout.Button("Delete", m_NodeSkin.GetStyle("White Button Long")))
+                    {
+                        // TODO: Delete testing data logic
+                    }
+                    GUILayout.Box("", m_NodeSkin.GetStyle("Delete Button"));
+                    GUILayout.Space(20);
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.Space(20);
                     GUILayout.Label($"PLACE BUTTONS HERE!!", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
 
-                    if (GUILayout.Button("Next Testing Class", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Run")))
+                    // Next button
+                    if (GUILayout.Button("Next Testing Class", m_NodeSkin.GetStyle("White Button Short")))
                     {
                         m_MLSystem.NextTestingClass();
                     }
+                    GUI.enabled = true;
+
 
                 }
                 // All testing classes having collected
                 else
                 {
-                    if (GUILayout.Button("Stop Testing", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Run")))
+                    if (GUILayout.Button("Stop Testing", m_NodeSkin.GetStyle("White Button Short")))
                     {
                         m_MLSystem.StopTesting();
                         m_MLSystem.StopRunning();
