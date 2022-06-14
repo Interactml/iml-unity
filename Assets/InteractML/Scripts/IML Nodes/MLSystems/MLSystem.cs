@@ -262,11 +262,11 @@ namespace InteractML
         /// <summary>
         /// Data used for testing (Classification/Regression only)
         /// </summary>
-        public List<IMLTrainingExample> TestingData { get { return m_TestingData; } }
+        public List<List<IMLTrainingExample>> TestingData { get { return m_TestingData; } }
         /// <summary>
         /// Data used for testing (Classification/Regression only)
         /// </summary>
-        protected List<IMLTrainingExample> m_TestingData;
+        protected List<List<IMLTrainingExample>> m_TestingData;
         /// <summary>
         /// How many testing classes have been collected?
         /// </summary>
@@ -289,6 +289,17 @@ namespace InteractML
         /// Collecting testing data?
         /// </summary>
         public bool CollectingTestingData { get => m_CollectingTestingData; }
+        /// <summary>
+        /// Variables for setting delay in time for collecting data
+        /// </summary>
+        [HideInInspector]
+        public float StartDelay = 0.0f;
+        [HideInInspector]
+        public float CaptureRate = 10.0f;
+        [HideInInspector]
+        public float RecordTime = -1.0f;
+        protected float m_TimeToNextCapture = 0.0f;
+        protected float m_TimeToStopCapture = 0.0f;
 
 
         #endregion
@@ -2432,21 +2443,6 @@ namespace InteractML
 
         #region Collecting Testing Data Methods
 
-        protected void TestingLogic()
-        {
-            if (m_Testing)
-            {
-                // Only allow testing if the model is running
-                if (!m_Running)
-                {
-                    m_Testing = false;
-                    return;
-                }
-                // DO SOMETHING
-                Debug.Log($"MODEL TESTING!! ID: {id}");
-            }
-        }
-
         public void StartTesting()
         {
             // Set model status to testing
@@ -2478,16 +2474,25 @@ namespace InteractML
         /// Collects testing data for a specified class label
         /// </summary>
         /// <param name="classLabel"></param>
-        protected void CollectTestExample (IMLBaseDataType classLabel)
+        protected void CollectTestExample (List<IMLOutput> classLabel, int indexClass)
         {
             if (classLabel != null)
             {
                 // Make sure list is init
-                if (m_TestingData == null) m_TestingData = new List<IMLTrainingExample>();
+                if (m_TestingData == null) m_TestingData = new List<List<IMLTrainingExample>>();
+                List<IMLTrainingExample> ourTrainingDataList = null;
+                // Make we have a sublist ready, if not init it
+                if (indexClass >= m_TestingData.Count) m_TestingData.Add(new List<IMLTrainingExample>());
+                // get sublist if already exists
+                if (indexClass <= m_TestingData.Count - 1) ourTrainingDataList = m_TestingData[indexClass];
+                else Debug.LogError($"Index Class is out of bounds! Index: {indexClass}");
 
                 var newTestingExample = new IMLTrainingExample();
                 // output is the classlabel passed in
-                newTestingExample.AddOutputExample(classLabel);
+                foreach (var label in classLabel)
+                {
+                    newTestingExample.AddOutputExample(label.OutputData);
+                }
 
                 // Add all the live input features to the testing example being recorded
                 for (int i = 0; i < InputFeatures.Count; i++)
@@ -2496,8 +2501,67 @@ namespace InteractML
                 }
 
                 // Add to testing data list
-                m_TestingData.Add(newTestingExample);
+                ourTrainingDataList.Add(newTestingExample);
             }
+        }
+
+        protected void TestingLogic()
+        {
+            if (m_Testing)
+            {
+                // Only allow testing if the model is running
+                if (!m_Running)
+                {
+                    m_Testing = false;
+                    return;
+                }
+
+                if (m_CollectingTestingData)
+                {
+                    if (Application.isPlaying && m_TimeToStopCapture > 0 && Time.time >= m_TimeToStopCapture)
+                    {
+                        //Debug.Log("collecting false");
+                        m_CollectingTestingData = false;
+                    }
+                    else if (!Application.isPlaying || Time.time >= m_TimeToNextCapture)
+                    {
+                        // Collect testing data for the current testing class
+                        CollectTestExample(m_TotalUniqueTrainingClasses[m_CurrentTestingClassCollected].Outputs, m_CurrentTestingClassCollected);
+                        m_TimeToNextCapture = Time.time + 1.0f / CaptureRate;
+                    }
+
+                }
+
+                // DO SOMETHING
+                Debug.Log($"MODEL TESTING!! ID: {id}");
+            }
+        }
+
+        /// <summary>
+        /// Toggles collect testing data flag for a specific class
+        /// </summary>
+        /// <param name="indexClass"></param>
+        public void ToggleCollectTestingData()
+        {
+            m_CollectingTestingData = !m_CollectingTestingData;
+        }
+
+        /// <summary>
+        /// Deletes the testing dataset for a specific class
+        /// </summary>
+        /// <param name="indexClass"></param>
+        public void DeleteTestingDataForClass (int indexClass)
+        {
+            // Make sure list is init
+            if (m_TestingData == null) m_TestingData = new List<List<IMLTrainingExample>>();
+            List<IMLTrainingExample> ourTrainingDataList = null;
+            // Make we have a sublist ready, if not init it
+            if (indexClass >= m_TestingData.Count) m_TestingData.Add(new List<IMLTrainingExample>());
+            // get sublist if already exists
+            if (indexClass <= m_TestingData.Count - 1) ourTrainingDataList = m_TestingData[indexClass];
+            else Debug.LogError($"Index Class is out of bounds! Index: {indexClass}");
+
+            ourTrainingDataList.Clear();
         }
 
         #endregion

@@ -387,16 +387,19 @@ namespace InteractML
                     // Record testing examples button
                     GUILayout.BeginHorizontal();
                     GUILayout.Space(20);
+                    int numTestingExamples = 0;
+                    if (m_MLSystem.TestingData != null && m_MLSystem.CurrentTestingClassCollected < m_MLSystem.TestingData.Count) 
+                        numTestingExamples = m_MLSystem.TestingData[m_MLSystem.CurrentTestingClassCollected].Count;
                     string nameButton = "";
                     if (m_MLSystem.CollectingTestingData)
-                        nameButton = $"Stop Recording {m_MLSystem.TestingData.Count}";
+                        nameButton = $"Stop Recording {numTestingExamples}";
                     else
                         nameButton = $"Record Testing Examples for Class {m_MLSystem.CurrentTestingClassCollected}";
                     Texture icon = Resources.Load("record_examples") as Texture;
                     GUIContent content = new GUIContent(nameButton, icon);
                     if (GUILayout.Button(content, m_NodeSkin.GetStyle("White Button Long")))
                     {
-                        // TODO: Collect testing data logic
+                        m_MLSystem.ToggleCollectTestingData();
                     }
                     GUILayout.Box("", m_NodeSkin.GetStyle("Record Button"));
                     GUILayout.Space(20);
@@ -408,9 +411,9 @@ namespace InteractML
                     GUILayout.BeginHorizontal();
                     GUILayout.Space(20);
                     if (m_MLSystem.CollectingTestingData) GUI.enabled = false;
-                    if (GUILayout.Button("Delete", m_NodeSkin.GetStyle("White Button Long")))
+                    if (GUILayout.Button($"Delete {numTestingExamples} Testing Examples", m_NodeSkin.GetStyle("White Button Long")))
                     {
-                        // TODO: Delete testing data logic
+                        m_MLSystem.DeleteTestingDataForClass(m_MLSystem.CurrentTestingClassCollected);
                     }
                     GUILayout.Box("", m_NodeSkin.GetStyle("Delete Button"));
                     GUILayout.Space(20);
