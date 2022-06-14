@@ -321,7 +321,7 @@ namespace InteractML
             // Only draw if the testing state is used and active
             if (m_MLSystem.UseTestingState && m_MLSystem.Testing)
             {
-                /*
+                /*  THESE ARE ALL THE NODE RECTS ADDED TO IML NODES
                  *          protected Rect m_ToolRect;
                             protected Rect m_BodyRect;
                             protected Rect m_PortRect;
@@ -350,12 +350,55 @@ namespace InteractML
                 // Content of panel
                 GUILayout.Label("TESTING UI", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(200));
                 GUILayout.Label("Subcontent", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
+                int space = 5;
+                GUILayout.Space(space);
 
-                if (GUILayout.Button("Stop Testing", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Run")))
+
+                // If there are classes not yet collected...
+                if (m_MLSystem.TestingClassesCollected.Where(collected => collected == false).Any())
                 {
-                    m_MLSystem.StopTesting();
-                    m_MLSystem.StopRunning();
+                    var expectedOutputClass = m_MLSystem.TotalUniqueTrainingClasses[m_MLSystem.CurrentTestingClassCollected].Outputs;
+                    string expectedOutputClassString = "{ ";
+                    foreach (var expectedOutput in expectedOutputClass)
+                    {
+                        if (expectedOutput == null || expectedOutput.OutputData == null || expectedOutput.OutputData.Values == null) return;
+                        expectedOutputClassString = string.Concat(expectedOutputClassString, "{ ");
+                        for (int i = 0; i < expectedOutput.OutputData.Values.Length; i++)
+                        {
+                            var value = expectedOutput.OutputData.Values[i];
+                            expectedOutputClassString = string.Concat(expectedOutputClassString, value.ToString());
+                            // there are more values after
+                            if (i < expectedOutput.OutputData.Values.Length-1) expectedOutputClassString = string.Concat(expectedOutputClassString, ", ");
+                            // this is the last value
+                            else expectedOutputClassString = string.Concat(expectedOutputClassString, " } ");
+                        }
+                    }
+                    expectedOutputClassString = string.Concat(expectedOutputClassString, " }");
+
+                    GUILayout.Label($"Collecting testing data", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
+                    GUILayout.Space(space);
+                    GUILayout.Label($"Class {m_MLSystem.CurrentTestingClassCollected} with expected output:", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
+                    GUILayout.Space(space);
+                    GUILayout.Label($"{expectedOutputClassString}", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
+                    GUILayout.Space(space);
+                    GUILayout.Label($"PLACE BUTTONS HERE!!", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
+
+                    if (GUILayout.Button("Next Testing Class", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Run")))
+                    {
+                        m_MLSystem.NextTestingClass();
+                    }
+
                 }
+                // All testing classes having collected
+                else
+                {
+                    if (GUILayout.Button("Stop Testing", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Run")))
+                    {
+                        m_MLSystem.StopTesting();
+                        m_MLSystem.StopRunning();
+                    }
+                }
+
 
                 GUILayout.EndArea();
 

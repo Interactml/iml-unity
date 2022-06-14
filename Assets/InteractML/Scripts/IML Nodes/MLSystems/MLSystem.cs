@@ -169,6 +169,7 @@ namespace InteractML
         /// </summary>
         [SerializeField, HideInInspector]
         protected List<IMLTrainingExample> m_TotalUniqueTrainingClasses;
+        public List<IMLTrainingExample> TotalUniqueTrainingClasses { get => m_TotalUniqueTrainingClasses; }
 
         /// <summary>
         /// Vector used to compute the realtime predictions in rapidlib based on the training data
@@ -266,6 +267,20 @@ namespace InteractML
         /// Data used for testing (Classification/Regression only)
         /// </summary>
         protected List<IMLTrainingExample> m_TestingData;
+        /// <summary>
+        /// How many testing classes have been collected?
+        /// </summary>
+        public bool[] TestingClassesCollected { get => m_TestingClassesCollected; }
+        private bool[] m_TestingClassesCollected;
+        /// <summary>
+        /// Which testing class is being collected?
+        /// </summary>
+        public int CurrentTestingClassCollected { get => m_CurrentTestingClassCollected; }
+        private int m_CurrentTestingClassCollected;
+        /// <summary>
+        /// Are all testing classes collected?
+        /// </summary>
+        public bool AllTestingClassesCollected { get => m_CurrentTestingClassCollected >= m_TestingClassesCollected.Length; }
 
 
         #endregion
@@ -850,8 +865,13 @@ namespace InteractML
                     StartTesting();
                     success = true;
                 }
-                // Stop testing and stop running will only be controlled from StopTesting() now
-                //else if (m_Running && Testing)
+                //// Move to next testing class if not all testing data collected
+                //else if (m_Running && Testing && !AllTestingClassesCollected)
+                //{
+                //    NextTestingClass();
+                //}
+                //// We can now stop testing and running
+                //else if (m_Running && Testing && AllTestingClassesCollected)
                 //{
                 //    StopTesting();
                 //    success = StopRunning();
@@ -2423,11 +2443,27 @@ namespace InteractML
         {
             // Set model status to testing
             m_Testing = true;
+            // How many classes do we need to collect?
+            m_TestingClassesCollected = new bool[m_TotalNumUniqueClasses];
+            // Reset index to start collecting testing classes
+            m_CurrentTestingClassCollected = 0;
         }
 
         public void StopTesting()
         {
             m_Testing = false;
+        }
+
+        public void NextTestingClass()
+        {
+            // Flag current testing class as collected
+            m_TestingClassesCollected[m_CurrentTestingClassCollected] = true;
+            // Move index collecting testing classes forward
+            m_CurrentTestingClassCollected++;
+            // Make sure we don't pass limit
+            if (m_CurrentTestingClassCollected >= m_TestingClassesCollected.Length)
+                m_CurrentTestingClassCollected = m_TestingClassesCollected.Length - 1;
+
         }
 
         /// <summary>
