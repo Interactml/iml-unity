@@ -702,6 +702,8 @@ namespace InteractML
                 }
                 
             }
+            // Clear testing data everytime we train the model (only when using testing state)
+            if (UseTestingState && isTrained && m_TestingData != null) m_TestingData.Clear();
             return isTrained;
         }
 
@@ -2487,21 +2489,24 @@ namespace InteractML
                 if (indexClass <= m_TestingData.Count - 1) ourTrainingDataList = m_TestingData[indexClass];
                 else Debug.LogError($"Index Class is out of bounds! Index: {indexClass}");
 
-                var newTestingExample = new IMLTrainingExample();
-                // output is the classlabel passed in
-                foreach (var label in classLabel)
+                if (ourTrainingDataList != null)
                 {
-                    newTestingExample.AddOutputExample(label.OutputData);
-                }
+                    var newTestingExample = new IMLTrainingExample();
+                    // output is the classlabel passed in
+                    foreach (var label in classLabel)
+                    {
+                        newTestingExample.AddOutputExample(label.OutputData);
+                    }
 
-                // Add all the live input features to the testing example being recorded
-                for (int i = 0; i < InputFeatures.Count; i++)
-                {
-                    newTestingExample.AddInputExample((InputFeatures[i] as IFeatureIML).FeatureValues);
-                }
+                    // Add all the live input features to the testing example being recorded
+                    for (int i = 0; i < InputFeatures.Count; i++)
+                    {
+                        newTestingExample.AddInputExample((InputFeatures[i] as IFeatureIML).FeatureValues);
+                    }
 
-                // Add to testing data list
-                ourTrainingDataList.Add(newTestingExample);
+                    // Add to testing data list
+                    ourTrainingDataList.Add(newTestingExample);
+                }
             }
         }
 
@@ -2531,9 +2536,6 @@ namespace InteractML
                     }
 
                 }
-
-                // DO SOMETHING
-                Debug.Log($"MODEL TESTING!! ID: {id}");
             }
         }
 
@@ -2543,7 +2545,21 @@ namespace InteractML
         /// <param name="indexClass"></param>
         public void ToggleCollectTestingData()
         {
-            m_CollectingTestingData = !m_CollectingTestingData;
+            if (!m_CollectingTestingData) StartCollectingTestingData();
+            else StopCollectingTestingData();
+        }
+
+        private void StartCollectingTestingData()
+        {
+            m_CollectingTestingData = true;
+            // make sure list is init
+            if (m_TestingData == null) m_TestingData = new List<List<IMLTrainingExample>>();
+            //m_TestingData.Clear();
+        }
+
+        private void StopCollectingTestingData()
+        {
+            m_CollectingTestingData = false;
         }
 
         /// <summary>
