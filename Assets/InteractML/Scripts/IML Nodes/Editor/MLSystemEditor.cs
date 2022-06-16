@@ -199,12 +199,12 @@ namespace InteractML
                 nameButton = "Training";
             else
                 nameButton = "Train Model";
-            if (m_MLSystem.Model != null && m_MLSystem.TotalNumTrainingDataConnected > 0 && !m_MLSystem.Running && !m_MLSystem.Training)
+            if ((m_MLSystem.Model != null && m_MLSystem.TotalNumTrainingDataConnected > 0 && !m_MLSystem.Running && !m_MLSystem.Training) || (!m_MLSystem.UseTestingState && !m_MLSystem.Testing))
             {
                 // Enable UI
                 GUI.enabled = true;
             }
-            // If rapidlib reference is null we draw a disabled button or if it is running or training
+            // If rapidlib reference is null we draw a disabled button or if it is running or training (or testing if such state is being used)
             else
             {
                 GUI.enabled = false;
@@ -250,6 +250,8 @@ namespace InteractML
             if (m_MLSystem.Running)
             {
                 nameButton = "STOP";
+                // In case we are using the testing state
+                if (m_MLSystem.UseTestingState) nameButton = "STOP & START TEST RECORDING";
             }
             else
             {
@@ -259,7 +261,11 @@ namespace InteractML
                     nameButton = "Run";
             }
             // If rapidlib reference is null we draw a disabled button
-            if ((m_MLSystem.Model == null || m_MLSystem.Model.ModelAddress == (IntPtr)0 || m_MLSystem.Training || m_MLSystem.Untrained || !m_MLSystem.matchLiveDataInputs || !m_MLSystem.matchVectorLength) && !m_MLSystem.Running)
+            if (((m_MLSystem.Model == null || m_MLSystem.Model.ModelAddress == (IntPtr)0 || m_MLSystem.Training || m_MLSystem.Untrained || !m_MLSystem.matchLiveDataInputs || !m_MLSystem.matchVectorLength)
+                // And If the system isn't running as well
+                && !m_MLSystem.Running)
+                // OR if the node is testing!
+                || (m_MLSystem.UseTestingState && m_MLSystem.Testing))
             {
                /* Debug.Log(m_MLSystem.Model == null);
                 Debug.Log(m_MLSystem.Model.ModelAddress == (IntPtr)0);
@@ -334,11 +340,13 @@ namespace InteractML
 
                             public float bodyheight;
                  */
-                // Create a new rect that occupies the entire node interface
-                float UIWidth = HeaderRect.width;
-                float UIHeight = HeaderRect.height + m_BodyRect.height + m_InnerBodyRect.height + m_WarningRect.height + m_InnerWarningRect.height + m_PortRect.height;
+                // Create a new rect that occupies part of the node interface
+                Vector2 UIPosition = m_BodyRect.position;
+                UIPosition.x -= 10;
+                float UIWidth = HeaderRect.width + 20;
+                float UIHeight = m_BodyRect.height - 60;
                 Vector2 UISize = new Vector2(UIWidth, UIHeight);
-                Rect TestingUIRect = new Rect(HeaderRect.position, UISize);
+                Rect TestingUIRect = new Rect(UIPosition, UISize);
 
                 GUILayout.BeginArea(TestingUIRect);
                 
@@ -348,8 +356,19 @@ namespace InteractML
                 //EditorGUI.DrawRect(TestingUIRect, Color.white);
 
                 // Content of panel
-                GUILayout.Label("TESTING UI", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(200));
-                GUILayout.Label("Subcontent", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
+                //GUILayout.Label("MACHINE LEARNING SYSTEM", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(300));
+                GUILayout.Space(120);
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Provide Testing Examples", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(275));
+                // Cross to close the window (only when all the data is collected)
+                if (!m_MLSystem.AllTestingClassesCollected) GUI.enabled = false;
+                if (GUILayout.Button("", m_NodeSkin.GetStyle("Cross")))
+                {
+                    m_MLSystem.StopTesting();
+                    m_MLSystem.StopRunning();
+                }
+                GUI.enabled = true;
+                GUILayout.EndHorizontal();
                 int space = 5;
                 GUILayout.Space(space);
 
@@ -357,6 +376,7 @@ namespace InteractML
                 // If there are classes not yet collected...
                 if (m_MLSystem.TestingClassesCollected != null && m_MLSystem.TestingClassesCollected.Where(collected => collected == false).Any())
                 {
+                    // Draw details of current class being collected
                     if (m_MLSystem.TotalUniqueTrainingClasses == null && m_MLSystem.TotalUniqueTrainingClasses.Count == 0 || m_MLSystem.CurrentTestingClassCollected > m_MLSystem.TotalUniqueTrainingClasses.Count-1) 
                         return;                    
                     var expectedOutputClass = m_MLSystem.TotalUniqueTrainingClasses[m_MLSystem.CurrentTestingClassCollected].Outputs;
@@ -375,21 +395,34 @@ namespace InteractML
                             else expectedOutputClassString = string.Concat(expectedOutputClassString, " } ");
                         }
                     }
-                    expectedOutputClassString = string.Concat(expectedOutputClassString, " }");
+                    expectedOutputClassString = string.Concat(expectedOutputClassString, "}");
+                    int numTestingExamples = 0;
+                    int classesCompleted = m_MLSystem.CurrentTestingClassCollected > 0 ? m_MLSystem.CurrentTestingClassCollected : 0;
+                    if (m_MLSystem.TestingData != null && m_MLSystem.CurrentTestingClassCollected < m_MLSystem.TestingData.Count)
+                    {
+                        numTestingExamples = m_MLSystem.TestingData[m_MLSystem.CurrentTestingClassCollected].Count;
+                        classesCompleted = 0;
+                        foreach (var sublist in m_MLSystem.TestingData)
+                        {
+                            if (sublist != null && sublist.Count > 0)
+                            {
+                                classesCompleted++;
+                            }
+                        }
+                    }
 
-                    GUILayout.Label($"Collecting testing data", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
+
                     GUILayout.Space(space);
-                    GUILayout.Label($"Class {m_MLSystem.CurrentTestingClassCollected} with expected output:", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
+                    GUILayout.Label($"Class {m_MLSystem.CurrentTestingClassCollected}. Number of Testing Examples: {numTestingExamples}", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(300));
+                    GUILayout.Space(space); 
+                    GUILayout.Label($"Expected output: {expectedOutputClassString}", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
                     GUILayout.Space(space);
-                    GUILayout.Label($"{expectedOutputClassString}", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
+                    GUILayout.Label($"{classesCompleted}/{m_MLSystem.TotalNumUniqueClasses} Classes Completed", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
                     GUILayout.Space(space);
 
                     // Record testing examples button
                     GUILayout.BeginHorizontal();
                     GUILayout.Space(20);
-                    int numTestingExamples = 0;
-                    if (m_MLSystem.TestingData != null && m_MLSystem.CurrentTestingClassCollected < m_MLSystem.TestingData.Count) 
-                        numTestingExamples = m_MLSystem.TestingData[m_MLSystem.CurrentTestingClassCollected].Count;
                     string nameButton = "";
                     if (m_MLSystem.CollectingTestingData)
                         nameButton = $"Stop Recording {numTestingExamples}";
@@ -410,7 +443,7 @@ namespace InteractML
                     // Delete testing examples button
                     GUILayout.BeginHorizontal();
                     GUILayout.Space(20);
-                    if (m_MLSystem.CollectingTestingData) GUI.enabled = false;
+                    if (m_MLSystem.CollectingTestingData || numTestingExamples == 0) GUI.enabled = false;
                     if (GUILayout.Button($"Delete {numTestingExamples} Testing Examples", m_NodeSkin.GetStyle("White Button Long")))
                     {
                         m_MLSystem.DeleteTestingDataForClass(m_MLSystem.CurrentTestingClassCollected);
@@ -420,12 +453,24 @@ namespace InteractML
                     GUILayout.EndHorizontal();
 
                     GUILayout.Space(20);
-                    GUILayout.Label($"PLACE BUTTONS HERE!!", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
 
-                    // Next button
-                    if (GUILayout.Button("Next Testing Class", m_NodeSkin.GetStyle("White Button Short")))
+                    // Check whether it is the last class and we finished collecting
+                    if (m_MLSystem.CurrentTestingClassCollected == m_MLSystem.TotalNumUniqueClasses-1 && m_MLSystem.AllTestingClassesCollected)
                     {
-                        m_MLSystem.NextTestingClass();
+                        if (GUILayout.Button("Stop Testing", m_NodeSkin.GetStyle("White Button Short")))
+                        {
+                            m_MLSystem.StopTesting();
+                            m_MLSystem.StopRunning();
+                        }
+                    }
+                    // We still have more classes to collect
+                    else
+                    {
+                        // Next button
+                        if (GUILayout.Button("Next Testing Class", m_NodeSkin.GetStyle("White Button Short")))
+                        {
+                            m_MLSystem.NextTestingClass();
+                        }
                     }
                     GUI.enabled = true;
 
@@ -434,6 +479,25 @@ namespace InteractML
                 // All testing classes having collected
                 else
                 {
+                    int numTestingExamples = 0;
+                    int classesCompleted = m_MLSystem.CurrentTestingClassCollected > 0 ? m_MLSystem.CurrentTestingClassCollected : 0;
+                    if (m_MLSystem.TestingData != null && m_MLSystem.CurrentTestingClassCollected < m_MLSystem.TestingData.Count)
+                    {
+                        numTestingExamples = m_MLSystem.TestingData[m_MLSystem.CurrentTestingClassCollected].Count;
+                        classesCompleted = 0;
+                        foreach (var sublist in m_MLSystem.TestingData)
+                        {
+                            if (sublist != null && sublist.Count > 0)
+                            {
+                                classesCompleted++;
+                            }
+                        }
+                    }
+
+                    GUILayout.Space(space);
+                    GUILayout.Label($"{classesCompleted}/{m_MLSystem.TotalNumUniqueClasses} Classes Completed", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
+                    GUILayout.Space(space);
+
                     if (GUILayout.Button("Stop Testing", m_NodeSkin.GetStyle("White Button Short")))
                     {
                         m_MLSystem.StopTesting();

@@ -280,7 +280,7 @@ namespace InteractML
         /// <summary>
         /// Are all testing classes collected?
         /// </summary>
-        public bool AllTestingClassesCollected { get => m_CurrentTestingClassCollected >= m_TestingClassesCollected.Length; }
+        public bool AllTestingClassesCollected { get => (!m_TestingClassesCollected.Where(collected => collected == false).Any() && TestingData != null && TestingData.Count == TotalNumUniqueClasses); }
         /// <summary>
         /// Collecting testing data?
         /// </summary>
@@ -886,17 +886,40 @@ namespace InteractML
                     StartTesting();
                     success = true;
                 }
-                //// Move to next testing class if not all testing data collected
-                //else if (m_Running && Testing && !AllTestingClassesCollected)
-                //{
-                //    NextTestingClass();
-                //}
-                //// We can now stop testing and running
-                //else if (m_Running && Testing && AllTestingClassesCollected)
-                //{
-                //    StopTesting();
-                //    success = StopRunning();
-                //}
+                // Allow to move through testing UI states when this function is called
+                else if (m_Running && Testing && !AllTestingClassesCollected)
+                {
+                    int numTestingExamples = 0;
+                    // Collecting or stopped 
+                    if (CurrentTestingClassCollected < TotalNumUniqueClasses)
+                    {
+                        if (TestingData == null) m_TestingData = new List<List<IMLTrainingExample>>();
+                        if (CurrentTestingClassCollected < TestingData.Count && TestingData[CurrentTestingClassCollected] != null) 
+                            numTestingExamples = TestingData[CurrentTestingClassCollected].Count;
+                        // If not yet collected for the first time
+                        if (numTestingExamples == 0 && !CollectingTestingData)
+                            ToggleCollectTestingData();
+                        // If we are in the middle of collecting data
+                        else if (numTestingExamples > 0 && CollectingTestingData)
+                            ToggleCollectTestingData();
+                        // If we finished collecting data for this class we can move to the next 
+                        else if (numTestingExamples > 0 && !CollectingTestingData)
+                            NextTestingClass();
+                        // If we finished collecting data all classes
+                        if (AllTestingClassesCollected) 
+                        {
+                            StopCollectingTestingData();
+                            success = StopRunning();
+                        }
+                    }
+
+                }
+                // We can now stop testing and running
+                else if (m_Running && Testing && AllTestingClassesCollected)
+                {
+                    StopTesting();
+                    success = StopRunning();
+                }
             }
             // Default InteractML behaviour start/stop running
             else
@@ -2449,8 +2472,9 @@ namespace InteractML
         {
             // Set model status to testing
             m_Testing = true;
-            // How many classes do we need to collect?
-            m_TestingClassesCollected = new bool[m_TotalNumUniqueClasses];
+            // How many classes do we need to collect? (only rebuild array when needed)
+            if (m_TestingClassesCollected == null || m_TestingClassesCollected.Length != m_TotalNumUniqueClasses || !AllTestingClassesCollected)
+                m_TestingClassesCollected = new bool[m_TotalNumUniqueClasses];
             // Reset index to start collecting testing classes
             m_CurrentTestingClassCollected = 0;
         }
@@ -2467,8 +2491,10 @@ namespace InteractML
             // Move index collecting testing classes forward
             m_CurrentTestingClassCollected++;
             // Make sure we don't pass limit
-            if (m_CurrentTestingClassCollected >= m_TestingClassesCollected.Length)
+            if (m_CurrentTestingClassCollected >= m_TestingClassesCollected.Length) 
+            {
                 m_CurrentTestingClassCollected = m_TestingClassesCollected.Length - 1;
+            }
 
         }
 
@@ -2578,6 +2604,9 @@ namespace InteractML
             else Debug.LogError($"Index Class is out of bounds! Index: {indexClass}");
 
             ourTrainingDataList.Clear();
+            // Mark this class as not collected
+            if (m_TestingClassesCollected != null && indexClass <= m_TestingClassesCollected.Length - 1) 
+                m_TestingClassesCollected[indexClass] = false;
         }
 
         #endregion
