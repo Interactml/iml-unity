@@ -18,6 +18,8 @@ namespace InteractML.ControllerCustomisers
         public string name;
         protected bool inputChange;
 
+        public bool InputChange { get => inputChange; }
+
         public abstract void UpdateLogic();
         public abstract void OnButtonChange();
        // public abstract void OnButtonChange(int buttonNo);

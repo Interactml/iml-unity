@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ReusableMethods;
 #if UNITY_EDITOR
 using UnityEditor;
 using XNodeEditor;
@@ -19,7 +20,18 @@ namespace InteractML.ControllerCustomisers
         /// </summary>
         private CustomController m_controller;
 
-
+        /// <summary>
+        /// Timer for toggle visualizaton
+        /// </summary>
+        private Timer m_ToggleTimer;
+        /// <summary>
+        /// How long will the visual toggle remain active?
+        /// </summary>
+        private float m_TimeToggleTrue = 0.3f;
+        /// <summary>
+        /// Flag to keep track of when input was true
+        /// </summary>
+        private bool m_InputDetected;
 
         /// <summary>
         /// Initialise node specific interface labels and parameters
@@ -51,7 +63,20 @@ namespace InteractML.ControllerCustomisers
             // show hand choice method from inputsetupeditor using m_controller.hand
             GUI.changed = false;
             GUILayout.Space(10);
-            GUILayout.Label("Button", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(100));
+
+            if (m_controller.inputValue) m_InputDetected = true;
+            //draw toggle and show active for more than a frame (for visualitation purposes)
+            if (m_InputDetected)
+            {
+                if (m_ToggleTimer == null) m_ToggleTimer = new Timer();
+                // Take a some time until we set the flag to false (shows true toggle for a bit)
+                if (m_ToggleTimer.GenericCountDown(m_TimeToggleTrue)) m_InputDetected = false;              
+            }
+            // Draw toggle
+            EditorGUILayout.Toggle(m_controller.InputChange, IMLNodeEditorMethods.DataInToggle(this, m_InputDetected));
+
+            // Label
+            GUILayout.Label("Button", m_NodeSkin.GetStyle("Port Label"), GUILayout.MinWidth(50));
             // set button choice for delete last
             m_controller.inputNo = EditorGUILayout.Popup(m_controller.inputNo, m_controller.buttonOptions);
             //Event.current.type == EventType.Repaint
@@ -67,9 +92,19 @@ namespace InteractML.ControllerCustomisers
                 EditorUtility.SetDirty(m_controller);
             }
             GUILayout.EndHorizontal();
+
+            //// Show visualization of when the button is pressed
+            //GUILayout.BeginHorizontal();
+            //GUILayout.Space(10);
+            ////draw toggle
+            //EditorGUILayout.Toggle(m_controller.inputValue, IMLNodeEditorMethods.DataInToggle(this, m_controller.inputValue));
+            ////draw label
+            //EditorGUILayout.LabelField($"Bool out: {m_controller.inputValue}", this.m_NodeSkin.GetStyle("Node Body Label Axis"));
+            //GUILayout.EndHorizontal();
+            //EditorGUILayout.Space();
+
             GUILayout.Space(100);
             //show button method from InputSetUpEditor using m_controller.triggerButton*/
-
         }
 
 
