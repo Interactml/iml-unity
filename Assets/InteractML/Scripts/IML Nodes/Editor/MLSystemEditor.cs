@@ -424,13 +424,23 @@ namespace InteractML
                     GUILayout.BeginHorizontal();
                     GUILayout.Space(20);
                     string nameButton = "";
+                    GUIStyle buttonStyle = null;
                     if (m_MLSystem.CollectingTestingData)
+                    {
                         nameButton = $"Stop Recording {numTestingExamples}";
+                        buttonStyle = m_NodeSkin.GetStyle("Yellow Button Long");
+                    }
                     else
+                    {
                         nameButton = $"Record Testing Examples for Class {m_MLSystem.CurrentTestingClassCollected}";
+                        // Green button if any examples collected 
+                        if (numTestingExamples > 0) buttonStyle = m_NodeSkin.GetStyle("Green Button Long");
+                        // White button if empty
+                        else buttonStyle = m_NodeSkin.GetStyle("White Button Long");
+                    }
                     Texture icon = Resources.Load("record_examples") as Texture;
                     GUIContent content = new GUIContent(nameButton, icon);
-                    if (GUILayout.Button(content, m_NodeSkin.GetStyle("White Button Long")))
+                    if (GUILayout.Button(content, buttonStyle))
                     {
                         m_MLSystem.ToggleCollectTestingData();
                     }
@@ -443,8 +453,11 @@ namespace InteractML
                     // Delete testing examples button
                     GUILayout.BeginHorizontal();
                     GUILayout.Space(20);
-                    if (m_MLSystem.CollectingTestingData || numTestingExamples == 0) GUI.enabled = false;
-                    if (GUILayout.Button($"Delete {numTestingExamples} Testing Examples", m_NodeSkin.GetStyle("White Button Long")))
+                    if (m_MLSystem.CollectingTestingData || numTestingExamples == 0) GUI.enabled = false;                        
+                    // Delete button should be red when available and white when not available
+                    if (numTestingExamples > 0 && GUI.enabled == true) buttonStyle = m_NodeSkin.GetStyle("White Button Long");
+                    else buttonStyle = m_NodeSkin.GetStyle("Red Button Long");
+                    if (GUILayout.Button($"Delete {numTestingExamples} Testing Examples", m_NodeSkin.GetStyle("Red Button Long")))
                     {
                         m_MLSystem.DeleteTestingDataForClass(m_MLSystem.CurrentTestingClassCollected);
                     }
