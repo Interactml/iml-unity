@@ -99,6 +99,7 @@ namespace InteractML
             EditorGUI.indentLevel += indentNumber;
             EditorGUILayout.LabelField($"Unique Classes Trained On: {m_MLSystem.TotalNumUniqueClasses}", m_NodeSkin.GetStyle("Node Local Space Label"));
             EditorGUI.indentLevel -= indentNumber;
+            GUILayout.Space(5);
         }
 
         /// <summary>
@@ -199,10 +200,21 @@ namespace InteractML
                 nameButton = "Training";
             else
                 nameButton = "Train Model";
-            if ((m_MLSystem.Model != null && m_MLSystem.TotalNumTrainingDataConnected > 0 && !m_MLSystem.Running && !m_MLSystem.Training) || (!m_MLSystem.UseTestingState && !m_MLSystem.Testing))
+            if ((m_MLSystem.Model != null && m_MLSystem.TotalNumTrainingDataConnected > 0 && !m_MLSystem.Running && !m_MLSystem.Training))
             {
-                // Enable UI
-                GUI.enabled = true;
+                // If testing state used...
+                if (m_MLSystem.UseTestingState)
+                {
+                    // If we are testing, disable gui
+                    if (m_MLSystem.Testing) GUI.enabled = false;
+                    else GUI.enabled = true;
+                }
+                // Default behaviour, not worried about testing logic at all
+                else
+                {
+                    // Enable UI
+                    GUI.enabled = true;
+                }
             }
             // If rapidlib reference is null we draw a disabled button or if it is running or training (or testing if such state is being used)
             else
@@ -240,6 +252,9 @@ namespace InteractML
                 buttonTip = true;
                 buttonTipHelper = false;
             }
+
+            // Reenable GUI afterwards
+            GUI.enabled = true;
         }
         /// <summary>
         /// Run button for MLS node
@@ -251,14 +266,17 @@ namespace InteractML
             {
                 nameButton = "STOP";
                 // In case we are using the testing state
-                if (m_MLSystem.UseTestingState) nameButton = "STOP & START TEST RECORDING";
+                if (m_MLSystem.UseTestingState) nameButton = "STOP & RATE";
             }
             else
             {
                 if (m_MLSystem.TrainingType == IMLSpecifications.TrainingSetType.SeriesTrainingExamples)
                     nameButton = "Populate";
                 else
-                    nameButton = "Run";
+                {
+                    if (m_MLSystem.UseTestingState && !m_MLSystem.AllTestingClassesCollected) nameButton = "Test & Run";
+                    else nameButton = "Run";
+                }
             }
             // If rapidlib reference is null we draw a disabled button
             if (((m_MLSystem.Model == null || m_MLSystem.Model.ModelAddress == (IntPtr)0 || m_MLSystem.Training || m_MLSystem.Untrained || !m_MLSystem.matchLiveDataInputs || !m_MLSystem.matchVectorLength)
@@ -327,24 +345,18 @@ namespace InteractML
             // Only draw if the testing state is used and active
             if (m_MLSystem.UseTestingState && m_MLSystem.Testing)
             {
-                /*  THESE ARE ALL THE NODE RECTS ADDED TO IML NODES
-                 *          protected Rect m_ToolRect;
-                            protected Rect m_BodyRect;
-                            protected Rect m_PortRect;
-                            protected Rect m_InnerBodyRect;
-                            protected Rect m_HelpRect;
-                            protected Rect m_WarningRect;
-                            protected Rect m_InnerWarningRect;
-                            protected Rect m_InnerInnerWarningRect;
-                            public Rect ToolTipRect;
+                // Avoid testing in a hotreload (needed vars are not properly populated)
+                if (m_MLSystem.TotalUniqueTrainingClasses == null && m_MLSystem.TotalUniqueTrainingClasses.Count == 0 || m_MLSystem.CurrentTestingClassCollected > m_MLSystem.TotalUniqueTrainingClasses.Count - 1)
+                {
+                    m_MLSystem.StopTesting();
+                    return;
+                }
 
-                            public float bodyheight;
-                 */
                 // Create a new rect that occupies part of the node interface
                 Vector2 UIPosition = m_BodyRect.position;
                 UIPosition.x -= 10;
                 float UIWidth = HeaderRect.width + 20;
-                float UIHeight = m_BodyRect.height - 60;
+                float UIHeight = 380; // 380 is the height of the buttons in the MLSNode (roughly similar to bodyrect.height without the warning height)
                 Vector2 UISize = new Vector2(UIWidth, UIHeight);
                 Rect TestingUIRect = new Rect(UIPosition, UISize);
 
@@ -374,11 +386,9 @@ namespace InteractML
 
 
                 // If there are classes not yet collected...
-                if (m_MLSystem.TestingClassesCollected != null && m_MLSystem.TestingClassesCollected.Where(collected => collected == false).Any())
+                if (!m_MLSystem.AllTestingClassesCollected)
                 {
                     // Draw details of current class being collected
-                    if (m_MLSystem.TotalUniqueTrainingClasses == null && m_MLSystem.TotalUniqueTrainingClasses.Count == 0 || m_MLSystem.CurrentTestingClassCollected > m_MLSystem.TotalUniqueTrainingClasses.Count-1) 
-                        return;                    
                     var expectedOutputClass = m_MLSystem.TotalUniqueTrainingClasses[m_MLSystem.CurrentTestingClassCollected].Outputs;
                     string expectedOutputClassString = "{ ";
                     foreach (var expectedOutput in expectedOutputClass)
@@ -470,10 +480,10 @@ namespace InteractML
                     // Check whether it is the last class and we finished collecting
                     if (m_MLSystem.CurrentTestingClassCollected == m_MLSystem.TotalNumUniqueClasses-1 && m_MLSystem.AllTestingClassesCollected)
                     {
-                        if (GUILayout.Button("Stop Testing", m_NodeSkin.GetStyle("White Button Short")))
+                        if (GUILayout.Button("Run Model", m_NodeSkin.GetStyle("White Button Short")))
                         {
                             m_MLSystem.StopTesting();
-                            m_MLSystem.StopRunning();
+                            m_MLSystem.StartRunning();
                         }
                     }
                     // We still have more classes to collect
@@ -511,10 +521,10 @@ namespace InteractML
                     GUILayout.Label($"{classesCompleted}/{m_MLSystem.TotalNumUniqueClasses} Classes Completed", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
                     GUILayout.Space(space);
 
-                    if (GUILayout.Button("Stop Testing", m_NodeSkin.GetStyle("White Button Short")))
+                    if (GUILayout.Button("Run Model", m_NodeSkin.GetStyle("White Button Short")))
                     {
                         m_MLSystem.StopTesting();
-                        m_MLSystem.StopRunning();
+                        m_MLSystem.StartRunning();
                     }
                 }
 

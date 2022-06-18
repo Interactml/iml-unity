@@ -278,9 +278,14 @@ namespace InteractML
         public int CurrentTestingClassCollected { get => m_CurrentTestingClassCollected; }
         private int m_CurrentTestingClassCollected;
         /// <summary>
+        /// Has testing data been collected this iteration?
+        /// </summary>
+        [SerializeField, HideInInspector]
+        private bool m_TestingDataCollectedThisIteration;
+        /// <summary>
         /// Are all testing classes collected?
         /// </summary>
-        public bool AllTestingClassesCollected { get => (!m_TestingClassesCollected.Where(collected => collected == false).Any() && TestingData != null && TestingData.Count == TotalNumUniqueClasses); }
+        public bool AllTestingClassesCollected { get => (m_TestingClassesCollected != null && !m_TestingClassesCollected.Where(collected => collected == false).Any() && TestingData != null && TestingData.Count == TotalNumUniqueClasses || m_TestingDataCollectedThisIteration); }
         /// <summary>
         /// Collecting testing data?
         /// </summary>
@@ -750,13 +755,16 @@ namespace InteractML
 
         private bool SingleExamplesTrain()
         {
-             bool isTrained = false;
+            bool isTrained = false;
             
-             // Transform the IML Training Examples into a format suitable for Rapidlib
-             m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
+            // Transform the IML Training Examples into a format suitable for Rapidlib
+            m_RapidlibTrainingExamples = TransformIMLDataToRapidlib(IMLTrainingExamplesNodes, out m_NumExamplesTrainedOn);
 
-             // Trains rapidlib with the examples added
-             isTrained = m_Model.Train(m_RapidlibTrainingExamples);
+            // Trains rapidlib with the examples added
+            isTrained = m_Model.Train(m_RapidlibTrainingExamples);
+
+            // If using testing state, reset flag to allow testing
+            if (UseTestingState && isTrained) m_TestingDataCollectedThisIteration = false;
 
             Debug.Log($"Model trained with {m_TotalNumUniqueClasses} unique classes");
 
@@ -877,17 +885,14 @@ namespace InteractML
             // Is the testing state allowed 
             if (m_UseTestingState)
             {
-                if (!m_Running && !Testing)
-                {
-                    success = StartRunning();
-                }
-                else if (m_Running && !Testing)
+                // At first, if the testing hasn't been done, do collecting testing data!
+                if (!m_Running && !Testing && !AllTestingClassesCollected)
                 {
                     StartTesting();
                     success = true;
                 }
                 // Allow to move through testing UI states when this function is called
-                else if (m_Running && Testing && !AllTestingClassesCollected)
+                else if (Testing && !AllTestingClassesCollected)
                 {
                     int numTestingExamples = 0;
                     // Collecting or stopped 
@@ -909,16 +914,22 @@ namespace InteractML
                         if (AllTestingClassesCollected) 
                         {
                             StopCollectingTestingData();
-                            success = StopRunning();
                         }
                     }
 
                 }
-                // We can now stop testing and running
-                else if (m_Running && Testing && AllTestingClassesCollected)
+                // All classes have been collected
+                else if (AllTestingClassesCollected)
                 {
-                    StopTesting();
-                    success = StopRunning();
+                    if (!m_Running)
+                    {
+                        StopTesting();
+                        success = StartRunning();
+                    }
+                    else
+                    {
+                        success = StopRunning();
+                    }
                 }
             }
             // Default InteractML behaviour start/stop running
@@ -2477,15 +2488,19 @@ namespace InteractML
                 m_TestingClassesCollected = new bool[m_TotalNumUniqueClasses];
             // Reset index to start collecting testing classes
             m_CurrentTestingClassCollected = 0;
+            m_TestingDataCollectedThisIteration = false;
         }
 
         public void StopTesting()
         {
             m_Testing = false;
+            m_TestingDataCollectedThisIteration = true;
         }
 
         public void NextTestingClass()
         {
+            if (m_TestingClassesCollected == null || m_TestingClassesCollected.Length == 0)
+                m_TestingClassesCollected = new bool[m_TotalNumUniqueClasses];
             // Flag current testing class as collected
             m_TestingClassesCollected[m_CurrentTestingClassCollected] = true;
             // Move index collecting testing classes forward
@@ -2494,6 +2509,7 @@ namespace InteractML
             if (m_CurrentTestingClassCollected >= m_TestingClassesCollected.Length) 
             {
                 m_CurrentTestingClassCollected = m_TestingClassesCollected.Length - 1;
+                m_TestingDataCollectedThisIteration = true;
             }
 
         }
@@ -2540,8 +2556,8 @@ namespace InteractML
         {
             if (m_Testing)
             {
-                // Only allow testing if the model is running
-                if (!m_Running)
+                // Don't allow testing if the model is running
+                if (m_Running)
                 {
                     m_Testing = false;
                     return;
