@@ -1031,6 +1031,15 @@ namespace InteractML
             // We reset the running flag
             m_Running = false;
 
+            // Reset delegates
+            UnsubscribeDelegates();
+            SubscribeDelegates();
+            if ((this.graph as IMLGraph).SceneComponent != null)
+            {
+                var sceneComponent = (graph as IMLGraph).SceneComponent;
+                if (!sceneComponent.IsSubscribedToDelegates) sceneComponent.SubscribeToDelegates();
+            }
+            //
         }
 
         /// <summary>
