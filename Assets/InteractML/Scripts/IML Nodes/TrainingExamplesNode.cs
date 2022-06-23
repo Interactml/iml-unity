@@ -170,6 +170,10 @@ namespace InteractML
         public float RecordTime = -1.0f;
         protected float m_TimeToNextCapture = 0.0f;
         protected float m_TimeToStopCapture = 0.0f;
+        /// <summary>
+        /// Timer used to collect examples
+        /// </summary>
+        protected TimerRecorder m_Timer;
 
         /// <summary>
         /// boolean for whether collecting data or not 
@@ -1013,12 +1017,16 @@ namespace InteractML
         {
             if (m_CollectingData)
             {
-                if (Application.isPlaying && m_TimeToStopCapture > 0 && Time.time >= m_TimeToStopCapture)
+                // Make sure timer is init
+                if (m_Timer == null) m_Timer = new TimerRecorder();
+                if (Application.isPlaying && m_TimeToStopCapture > 0 && Time.time >= m_TimeToStopCapture )
                 {
                     //Debug.Log("collecting false");
                     m_CollectingData = false;
                 }
-                else if (!Application.isPlaying || Time.time >= m_TimeToNextCapture)
+                else if (/* !Application.isPlaying || */
+                    m_Timer.RecorderCountdown(1.0f, CaptureRate)
+                    /*|| Time.time >= m_TimeToNextCapture */)
                 {
                     //check 
                     // We check which modality of collection is selected
@@ -1038,7 +1046,7 @@ namespace InteractML
                             break;
                     }
 
-                    m_TimeToNextCapture = Time.time + 1.0f / CaptureRate;
+                    //m_TimeToNextCapture = Time.time + 1.0f / CaptureRate;
                 }
 
             }
@@ -1138,15 +1146,19 @@ namespace InteractML
         protected void StartCollectingData()
         {
             m_CollectingData = true;
-            m_TimeToNextCapture = Time.time + StartDelay;
-            if (RecordTime > 0)
-            {
-                m_TimeToStopCapture = Time.time + StartDelay + RecordTime;
-            }
-            else
-            {
-                m_TimeToStopCapture = -1;
-            }
+            // Make sure to init timer
+            if (m_Timer == null) m_Timer = new TimerRecorder();
+            // Prepare timer with a potential delay
+            m_Timer.PrepareTimer(StartDelay, RecordTime);
+            //m_TimeToNextCapture = Time.time + StartDelay;
+            //if (RecordTime > 0)
+            //{
+            //    m_TimeToStopCapture = Time.time + StartDelay + RecordTime;
+            //}
+            //else
+            //{
+            //    m_TimeToStopCapture = -1;
+            //}
 
         }
 
@@ -1156,6 +1168,8 @@ namespace InteractML
         protected void StopCollectingData()
         {
             m_CollectingData = false;
+            if (m_Timer == null) m_Timer = new TimerRecorder();
+            m_Timer.StopTimer();
 
             // If we are in collect series mode...
             if (ModeOfCollection == CollectionMode.Series)

@@ -136,7 +136,7 @@ namespace ReusableMethods
         /// <summary>
         /// The function to start the timer
         /// </summary>
-        private void StartTimer()
+        protected void StartTimer()
         {
             if (TimerState != TimerStateEnum.Started)
             {
@@ -146,6 +146,7 @@ namespace ReusableMethods
 
             //Debug.Log("Timer started!");
         }
+
 
         /// <summary>
         /// The function to completely stop the timer. It will allow to reset the timer next time GenericCountdown is called
