@@ -2621,6 +2621,8 @@ namespace InteractML
         private void StopCollectingTestingData()
         {
             m_CollectingTestingData = false;
+            if (m_Timer == null) m_Timer = new TimerRecorder();
+            m_Timer.StopTimer();
         }
 
         /// <summary>
