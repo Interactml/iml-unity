@@ -144,6 +144,8 @@ namespace InteractML
         public delegate void RunOnPlay();
         public static RunOnPlay RunOnPlayCallback;
 
+        #region Model Steering callbacks (i.e. used in telemetry module)
+
         /// <summary>
         /// The model steering iteration (collect data->train->evaluate model) is started. Node passed is which model started the iteration. Empty if started on graph open
         /// </summary>
@@ -151,8 +153,33 @@ namespace InteractML
         /// <summary>
         /// The model steering iteration (collect data->train->evaluate model) is finished. Node passed is which model finished the iteration
         /// </summary>
-        public static IMLEvent ModelSteeringIterationFinished; 
+        public static IMLEvent ModelSteeringIterationFinished;
 
+        #endregion
+
+        #region Testing Data Collection callbacks (only used when testing state is active in MLS node)
+
+        /// <summary>
+        /// Event for when recording testing data starts
+        /// </summary>
+        /// <param name="nodeID"></param>
+        /// <returns></returns>
+        public static IMLEvent ToggleRecordTestingCallback;
+        /// <summary>
+        /// Event called after recording testing data starts (it DOESN'T trigger data collection. Use Toggle record data instead)
+        /// </summary>
+        /// <param name="nodeID"></param>
+        /// <returns></returns>
+        public static IMLEvent StartRecordTestingCallback;
+
+        /// <summary>
+        /// Event called after recording testing data stops (it DOESN'T trigger data collection. Use Toggle record data instead)
+        /// </summary>
+        /// <param name="nodeID"></param>
+        /// <returns></returns>
+        public static IMLEvent StopRecordTestingCallback;
+
+        #endregion
 
         // Delete node event ???
 
@@ -263,6 +290,11 @@ namespace InteractML
             ModelSteeringIterationStarted = null;
             // End of model steering iteration
             ModelSteeringIterationFinished = null;
+
+            // Testing
+            ToggleRecordTestingCallback = null;
+            StartRecordTestingCallback = null;
+            StopRecordTestingCallback = null;
     }
 }
 }

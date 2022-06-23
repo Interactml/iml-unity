@@ -2603,6 +2603,9 @@ namespace InteractML
         {
             if (!m_CollectingTestingData) StartCollectingTestingData();
             else StopCollectingTestingData();
+
+            // Trigger event callback
+            IMLEventDispatcher.ToggleRecordTestingCallback?.Invoke(this.id);
         }
 
         private void StartCollectingTestingData()
@@ -2616,6 +2619,8 @@ namespace InteractML
             // Prepare timer with a potential delay
             m_Timer.PrepareTimer(StartDelay, RecordTime);
 
+            // Trigger event callback
+            IMLEventDispatcher.StartRecordTestingCallback?.Invoke(this.id);
         }
 
         private void StopCollectingTestingData()
@@ -2623,6 +2628,9 @@ namespace InteractML
             m_CollectingTestingData = false;
             if (m_Timer == null) m_Timer = new TimerRecorder();
             m_Timer.StopTimer();
+
+            // Trigger event callback
+            IMLEventDispatcher.StopRecordTestingCallback?.Invoke(this.id);
         }
 
         /// <summary>
