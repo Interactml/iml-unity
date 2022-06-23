@@ -2542,7 +2542,13 @@ namespace InteractML
                 if (indexClass >= m_TestingData.Count) m_TestingData.Add(new List<IMLTrainingExample>());
                 // get sublist if already exists
                 if (indexClass <= m_TestingData.Count - 1) ourTrainingDataList = m_TestingData[indexClass];
-                else Debug.LogError($"Index Class is out of bounds! Index: {indexClass}");
+                else
+                {
+                    Debug.LogError($"Index Class is out of bounds! Index: {indexClass}");
+                    // Abort testing data collection
+                    StopCollectingTestingData();
+                    return;
+                }
 
                 if (ourTrainingDataList != null)
                 {
