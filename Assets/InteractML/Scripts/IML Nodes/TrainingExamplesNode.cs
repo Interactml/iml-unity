@@ -1025,7 +1025,7 @@ namespace InteractML
                     m_CollectingData = false;
                 }
                 else if (/* !Application.isPlaying || */
-                    m_Timer.RecorderCountdown(1.0f, CaptureRate)
+                    m_Timer.RecorderCountdown(1.0f, CaptureRate) // refactored to use timer class (keeps rate and logic consistent accross project)
                     /*|| Time.time >= m_TimeToNextCapture */)
                 {
                     //check 

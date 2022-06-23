@@ -305,6 +305,10 @@ namespace InteractML
         public float RecordTime = -1.0f;
         protected float m_TimeToNextCapture = 0.0f;
         protected float m_TimeToStopCapture = 0.0f;
+        /// <summary>
+        /// Timer used to collect examples
+        /// </summary>
+        protected TimerRecorder m_Timer;
 
 
         #endregion
@@ -2574,16 +2578,17 @@ namespace InteractML
 
                 if (m_CollectingTestingData)
                 {
+                    // Make sure timer is init
+                    if (m_Timer == null) m_Timer = new TimerRecorder();
                     if (Application.isPlaying && m_TimeToStopCapture > 0 && Time.time >= m_TimeToStopCapture)
                     {
                         //Debug.Log("collecting false");
                         m_CollectingTestingData = false;
                     }
-                    else if (!Application.isPlaying || Time.time >= m_TimeToNextCapture)
+                    else if (m_Timer.RecorderCountdown(1f, CaptureRate))
                     {
                         // Collect testing data for the current testing class
                         CollectTestExample(m_TotalUniqueTrainingClasses[m_CurrentTestingClassCollected].Outputs, m_CurrentTestingClassCollected);
-                        m_TimeToNextCapture = Time.time + 1.0f / CaptureRate;
                     }
 
                 }
@@ -2606,6 +2611,11 @@ namespace InteractML
             // make sure list is init
             if (m_TestingData == null) m_TestingData = new List<List<IMLTrainingExample>>();
             //m_TestingData.Clear();
+            // Make sure to init timer
+            if (m_Timer == null) m_Timer = new TimerRecorder();
+            // Prepare timer with a potential delay
+            m_Timer.PrepareTimer(StartDelay, RecordTime);
+
         }
 
         private void StopCollectingTestingData()
