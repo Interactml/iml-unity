@@ -10,6 +10,7 @@ namespace InteractML.GameObjectMovementFeatures
     /// Extract the velocity from any other Feature
     /// </summary>
     [NodeWidth(250)]
+    [CreateNodeMenuAttribute("Interact ML/Movement Features/Velocity of Other Features")]
     public class VelocityNode : BaseMovementFeatureNode, IFeatureIML
     {
         /// <summary>

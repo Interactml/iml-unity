@@ -11,6 +11,7 @@ namespace InteractML.GameObjectMovementFeatures
     /// Extracts the distance from one or several features to another one (i.e. fingers to the palm of the hand)
     /// </summary>
     [NodeWidth(250)]
+    [CreateNodeMenuAttribute("Interact ML/Movement Features/Distance Between Inputs")]
     public class DistanceToFirstInputNode : BaseMovementFeatureNode, IFeatureIML
     {
         /// <summary>

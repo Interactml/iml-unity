@@ -10,6 +10,7 @@ namespace InteractML.GameObjectMovementFeatures
     /// Feature extractor for euler rotations
     /// </summary>
     [NodeWidth(250)]
+    [CreateNodeMenuAttribute("Interact ML/Movement Features/Rotation (Euler)")]
     public class RotationEulerNode : BaseMovementFeatureNode, IFeatureIML
     {
         /// <summary>

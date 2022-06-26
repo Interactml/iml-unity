@@ -8,6 +8,7 @@ namespace InteractML.GameObjectMovementFeatures
     /// Feature extractor for positions
     /// </summary>
     [NodeWidth(250)]
+    [CreateNodeMenuAttribute("Interact ML/Movement Features/Position")]
     public class PositionNode : BaseMovementFeatureNode, IFeatureIML
     {
         /// <summary>

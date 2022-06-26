@@ -10,6 +10,7 @@ namespace InteractML.GameObjectMovementFeatures
     /// Feature extractor for rotations
     /// </summary>
     [NodeWidth(250)]
+    [CreateNodeMenuAttribute("Interact ML/Movement Features/Rotation (Quaternion)")]
     public class RotationQuaternionNode : BaseMovementFeatureNode, IFeatureIML
     {
         /// <summary>
