@@ -19,7 +19,7 @@ namespace InteractML.GameObjectMovementFeatures
         /// The list of features that are being input to this node
         /// </summary>
         [Input]
-        public List<IFeatureIML> FeaturesAsInput;
+        public List<Node> FeaturesAsInput;
 
         /// <summary>
         /// The window sent outside of this node onwards
@@ -45,11 +45,14 @@ namespace InteractML.GameObjectMovementFeatures
         /// Size of the window to calculate (including feature length + num samples)
         /// </summary>
         private int m_WindowTotalSize;
-        /// <summary>
-        /// How many samples are 
-        /// </summary>
+        [SerializeField]
+        private int m_LastWindowSamples;
         [SerializeField]
         private int m_WindowSamples = 1;
+        /// <summary>
+        /// How many samples are taken for the window
+        /// </summary>
+        public int WindowSamples { get => m_WindowSamples; set => m_WindowSamples = value; }
 
         /// <summary>
         /// Lets external classes known if they should call UpdateFeature
@@ -72,14 +75,14 @@ namespace InteractML.GameObjectMovementFeatures
 
         public override void Initialize()
         {
-            // The velocity extractor expects any other feature extracted to make calculations
-            FeaturesAsInput = GetInputValue<List<IFeatureIML>>("FeaturesAsInput");
+            // This extractor expects any other feature extracted to make calculations
+            GetInputFeatures(ref FeaturesAsInput);
 
             // If we managed to get the inputs
             if (FeaturesAsInput != null && FeaturesAsInput.Count > 0 && m_WindowSamples > 0)
             {
                 RecalculateWindowSize(FeaturesAsInput, m_WindowSamples, 
-                    ref m_WindowTotalSize, ref m_WindowRawValues, ref m_WindowExtracted);
+                    ref m_LastWindowSamples, ref m_WindowTotalSize, ref m_WindowRawValues, ref m_WindowExtracted);
             }
             else
             {
@@ -97,9 +100,12 @@ namespace InteractML.GameObjectMovementFeatures
         }
 
         public object UpdateFeature()
-        {
+        {            
             // This extractor expects any other feature extracted to make calculations
-            FeaturesAsInput = GetInputValue<List<IFeatureIML>>("FeaturesAsInput");
+            GetInputFeatures(ref FeaturesAsInput);
+
+            if (m_LastWindowSamples != m_WindowSamples) RecalculateWindowSize(FeaturesAsInput, m_WindowSamples, 
+                ref m_LastWindowSamples, ref m_WindowTotalSize, ref m_WindowRawValues, ref m_WindowExtracted);
 
             // If we managed to get the inputs
             if (FeaturesAsInput != null && FeaturesAsInput.Count > 0 && m_WindowSamples > 0 && m_WindowTotalSize > 0)
@@ -144,7 +150,20 @@ namespace InteractML.GameObjectMovementFeatures
 
         #region Private Methods
 
-        private void RecalculateWindowSize(List<IFeatureIML> features, int windowSamples, ref int windowTotalSize, ref float[] windowRawValues, ref IMLArray windowExtracted)
+        private void GetInputFeatures(ref List<Node> FeatureValues)
+        {
+            FeaturesAsInput = GetInputValue<List<Node>>("FeaturesAsInput");
+            if (FeaturesAsInput == null) FeaturesAsInput = new List<Node>();
+            var featuresConnected = this.GetInputNodesConnected("FeaturesAsInput");
+            if (featuresConnected == null) return;
+            foreach (var feature in featuresConnected)
+            {
+                if (!FeaturesAsInput.Contains(feature)) FeaturesAsInput.Add(feature);
+            }
+
+        }
+
+        private void RecalculateWindowSize(List<Node> features, int windowSamples, ref int lastWindowSamples, ref int windowTotalSize, ref float[] windowRawValues, ref IMLArray windowExtracted)
         {
             // If we managed to get the inputs
             if (features != null && features.Count > 0 && windowSamples > 0)
@@ -170,6 +189,9 @@ namespace InteractML.GameObjectMovementFeatures
                 // check if inputs have changed and update size of toggle bool array and receiving data bool array
                 MovementFeatureMethods.UpdateToggleSwitchArray(this, windowRawValues.Length);
                 MovementFeatureMethods.UpdateReceivingDataArray(this, windowRawValues.Length);
+
+                // save last window samples in case of a change of sample
+                lastWindowSamples = windowSamples;
             }
 
         }

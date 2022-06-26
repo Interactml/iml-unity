@@ -53,9 +53,15 @@ namespace InteractML.GameObjectMovementFeatures
 
             if (m_ExtractWindowNode.FeatureValues.Values != null)
             {
+                float extraSpace = 40;
                 // dynamically adjust node length based on amount of features
-                nodeSpace = 120 + (m_ExtractWindowNode.FeatureValues.Values.Length * 20);
-                m_BodyRect.height = 60 + (m_ExtractWindowNode.FeatureValues.Values.Length * 20);
+                nodeSpace = 120 + (m_ExtractWindowNode.FeatureValues.Values.Length * extraSpace);
+                m_BodyRect.height = 60 + (m_ExtractWindowNode.FeatureValues.Values.Length * extraSpace);
+
+                EditorGUILayout.LabelField("Sample Size");
+                // Draw slider to select size of window
+                m_ExtractWindowNode.WindowSamples =  EditorGUILayout.IntSlider(m_ExtractWindowNode.WindowSamples, 1, 100);
+                EditorGUILayout.Space(5);
 
                 // draw each window values
                 MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractWindowNode);
