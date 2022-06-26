@@ -4,6 +4,7 @@ using XNode;
 namespace InteractML.DataTypeNodes
 {
     [NodeWidth(250)]
+    [CreateNodeMenuAttribute("Interact ML/Variables/Array")]
     public class ArrayNode : BaseDataTypeNode<float[]>
     {
         // Override set behaviour to avoid passing data by reference because of arrays

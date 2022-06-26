@@ -4,6 +4,7 @@ using XNode;
 namespace InteractML.DataTypeNodes
 {
     [NodeWidth(250)]
+    [CreateNodeMenuAttribute("Interact ML/Variables/Integer")]
     public class IntegerNode : BaseDataTypeNode<int>
     {                
         // IML Feature

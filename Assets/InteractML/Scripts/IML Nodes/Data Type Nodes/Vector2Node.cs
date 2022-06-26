@@ -4,6 +4,7 @@ using XNode;
 namespace InteractML.DataTypeNodes
 {
     [NodeWidth(250)]
+    [CreateNodeMenuAttribute("Interact ML/Variables/Vector2")]
     public class Vector2Node : BaseDataTypeNode<Vector2>
     {
         // IML Feature

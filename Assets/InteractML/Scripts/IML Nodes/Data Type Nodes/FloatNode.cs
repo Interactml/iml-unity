@@ -7,6 +7,7 @@ namespace InteractML.DataTypeNodes
     /// Node containing IMLFloat Feature - receiving a float or editable float field 
     /// </summary>
     [NodeWidth(250)]
+    [CreateNodeMenuAttribute("Interact ML/Variables/Float")]
     public class FloatNode : BaseDataTypeNode<float>
     {
 

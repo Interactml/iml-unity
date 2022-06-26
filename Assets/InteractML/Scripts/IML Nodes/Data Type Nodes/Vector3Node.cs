@@ -4,6 +4,7 @@ using XNode;
 namespace InteractML.DataTypeNodes
 {
     [NodeWidth(250)]
+    [CreateNodeMenuAttribute("Interact ML/Variables/Vector3")]
     public class Vector3Node : BaseDataTypeNode<Vector3>, IFeatureIML
     {
         /// <summary>

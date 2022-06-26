@@ -3,6 +3,7 @@ using XNode;
 
 namespace InteractML.DataTypeNodes
 {
+    [CreateNodeMenuAttribute("Interact ML/Variables/Boolean")]
     public class BooleanNode : BaseDataTypeNode<bool>
     {
         // IML Feature
