@@ -6,6 +6,7 @@ using XNode;
 namespace InteractML
 {
     [NodeWidth(200)]
+    [CreateNodeMenuAttribute("Interact ML/Note")]
     public class TextNote : IMLNode
     {
         public string note;
