@@ -12,6 +12,7 @@ namespace InteractML.ControllerCustomisers
     /// VR Trigger
     /// </summary>
     [NodeWidth(250)]
+    [CreateNodeMenuAttribute("Interact ML/Hardware Input/VR Trigger")]
     public class VRTrigger : CustomController
     {
 

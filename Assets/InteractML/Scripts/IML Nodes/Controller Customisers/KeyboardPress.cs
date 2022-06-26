@@ -10,6 +10,7 @@ namespace InteractML.ControllerCustomisers
     /// Keyboard press 
     /// </summary>
     [NodeWidth(250)]
+    [CreateNodeMenuAttribute("Interact ML/Hardware Input/Keyboard Press")]
     public class KeyboardPress : CustomController
     {
 
