@@ -14,6 +14,8 @@ namespace InteractML
         // reference to the graph
         private IMLGraph graph;
 
+        private bool m_UseTestingState = true;
+
         /// <summary>
         /// initialise graph reference when created
         /// </summary>
@@ -102,16 +104,16 @@ namespace InteractML
             //    return base.GetNodeMenuName(type).Replace("InteractML", "");
             //}
 
-            /* ML SYSTEMS */
+            /* ML SYSTEMS (only classification is shown when using testing state)*/ 
             if (type.PrettyName() == "InteractML.ClassificationMLSystem")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML.ClassificationMLSystem", "Machine Learning System - Classification");
             }
-            if (type.PrettyName() == "InteractML.RegressionMLSystem")
+            if (type.PrettyName() == "InteractML.RegressionMLSystem" && !m_UseTestingState )
             {
                 return base.GetNodeMenuName(type).Replace("InteractML.RegressionMLSystem", "Machine Learning System - Regression");
             }
-            if (type.PrettyName() == "InteractML.DTWMLSystem")
+            if (type.PrettyName() == "InteractML.DTWMLSystem" && !m_UseTestingState)
             {
                 return base.GetNodeMenuName(type);
             }
@@ -122,16 +124,16 @@ namespace InteractML
             //}
 
             /* TRAINING EXAMPLES & DATASETS */
-            if (type.PrettyName() == "InteractML.SeriesTrainingExamplesNode")
-            {
-                return base.GetNodeMenuName(type).Replace("InteractML", "");
-            }
             if (type.PrettyName() == "InteractML.SingleTrainingExamplesNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
+            if (type.PrettyName() == "InteractML.SeriesTrainingExamplesNode" && !m_UseTestingState)
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
             // Node to hold several single training Examples
-            if (type.PrettyName() == "InteractML.TrainingDataSetsNode")
+            if (type.PrettyName() == "InteractML.TrainingDataSetsNode" && !m_UseTestingState)
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
@@ -140,10 +142,14 @@ namespace InteractML
             /* TEXT NOTES */
             if (type.PrettyName() == "InteractML.TextNote")
             {
-                return base.GetNodeMenuName(type).Replace("InteractML", "");
+                return base.GetNodeMenuName(type).Replace("InteractML.TextNote", "Note");
             }
 
             /* MOVEMENT FEATURES */
+            if (type.PrettyName() == "InteractML.GameObjectMovementFeatures.WindowFeatureNode")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
             if (type.PrettyName() == "InteractML.GameObjectMovementFeatures.DistanceToFirstInputNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
@@ -164,6 +170,8 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
+
+            /* VARIABLES */
             if (type.PrettyName() == "InteractML.DataTypeNodes.BooleanNode")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
@@ -192,11 +200,13 @@ namespace InteractML
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
+
+            /* HARDWARE INPUT */
             /* if (type.PrettyName() == "InteractML.ControllerCustomisers.MouseClick")
              {
                  return base.GetNodeMenuName(type).Replace("InteractML", "");
              }*/
-             if (type.PrettyName() == "InteractML.ControllerCustomisers.VRTrigger")
+            if (type.PrettyName() == "InteractML.ControllerCustomisers.VRTrigger")
              {
                  return base.GetNodeMenuName(type).Replace("InteractML", "");
              }
@@ -205,20 +215,20 @@ namespace InteractML
                  return base.GetNodeMenuName(type).Replace("InteractML", "");
              }
 
-            /* CONTROLLER CUSTOMISERS */
-            if (type.PrettyName() == "InteractML.ControllerCustomisers.InputSetUp")
+            /* UNIVERSAL INPUT */
+            if (type.PrettyName() == "InteractML.ControllerCustomisers.InputSetUp" && !m_UseTestingState)
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
-            if (type.PrettyName() == "InteractML.CustomControllers.InputSetUp")
-              {
-                  return base.GetNodeMenuName(type).Replace("InteractML", "");
-              }
-              if (type.PrettyName() == "InteractML.CustomControllers.VRTrigger")
-              {
-                  return base.GetNodeMenuName(type).Replace("InteractML", "");
-              }
-            if (type.PrettyName() == "InteractML.ControllerCustomisers.KeyboardPress")
+            if (type.PrettyName() == "InteractML.CustomControllers.InputSetUp" && !m_UseTestingState)
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.CustomControllers.VRTrigger")
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+            if (type.PrettyName() == "InteractML.CustomControllers.KeyboardPress")
             {
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
@@ -318,7 +328,7 @@ namespace InteractML
         }
         public void OnInspectorUpdate()
         {
-            Debug.Log("inspector update");
+            //Debug.Log("inspector update");
             window.Repaint();
         }
     }
