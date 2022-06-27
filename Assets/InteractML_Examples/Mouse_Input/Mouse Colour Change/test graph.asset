@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Keyboard Press
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -297.02203, y: 558.24994}
+  position: {x: -376, y: 952}
   ports:
     keys:
     - inputValue
@@ -396,8 +396,8 @@ MonoBehaviour:
   id: a40a137d-354d-44e1-a255-8f5d2877cd52
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  state: 1
-  GOHashCode: 20388
+  state: 0
+  GOHashCode: 19350
   CreatedDuringPlaymode: 0
 --- !u!114 &-4154900678697874246
 MonoBehaviour:
@@ -412,7 +412,7 @@ MonoBehaviour:
   m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1192, y: 328}
+  position: {x: -1080, y: 328}
   ports:
     keys:
     - m_In
@@ -448,7 +448,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 3
+  Counter: 0
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -501,8 +501,8 @@ MonoBehaviour:
   id: c8c1538c-fe82-4506-885e-cb3b46e51183
   numberInComponentList: -1
   ReceivingData: 0
-  FeatureValueReceivingData: 000000
-  Counter: 3
+  FeatureValueReceivingData: 010101
+  Counter: 0
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -528,7 +528,7 @@ MonoBehaviour:
   m_Name: Keyboard Press
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -808, y: 280}
+  position: {x: -1032, y: 744}
   ports:
     keys:
     - inputValue
@@ -931,21 +931,9 @@ MonoBehaviour:
   id: fa5aea1c-de3c-4df6-b415-deeae4c900f1
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 20430
+  ScriptHashCode: 19392
   m_PortsPerFieldInfo:
-    m_keys:
-    - _fieldName: colour
-      _node: {fileID: -1782623515577210966}
-      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_Out
-        node: {fileID: 5098491896399601409}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
+    m_keys: []
   CreatedDuringPlaymode: 0
 --- !u!114 &11400000
 MonoBehaviour:
@@ -971,6 +959,7 @@ MonoBehaviour:
   - {fileID: 5098491896399601409}
   - {fileID: -1782623515577210966}
   SceneComponent: {fileID: 0}
+  m_ID: 
 --- !u!114 &368116255625411910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1129,6 +1118,7 @@ MonoBehaviour:
   ModeOfCollection: 0
   m_DesiredInputsConfig: 03000000
   m_DesiredOutputsConfig: 01000000
+  m_UniqueClasses: []
   MLSystemNodesConnected:
   - {fileID: 6506855110079472755}
   StartDelay: 0
@@ -1153,7 +1143,7 @@ MonoBehaviour:
   m_Name: Keyboard Press
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -776, y: 584}
+  position: {x: -1000, y: 1016}
   ports:
     keys:
     - inputValue
@@ -1555,7 +1545,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 3
+  Counter: 0
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -1683,7 +1673,7 @@ MonoBehaviour:
   - 0
   DelayedPredictedOutput:
   - 2
-  m_NumExamplesTrainedOn: 3
+  m_NumExamplesTrainedOn: 256
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_trainingType: 0
@@ -1691,6 +1681,8 @@ MonoBehaviour:
   EnableKeyboardControl: 1
   TrainingKey: 116
   RunningKey: 0
+  m_TotalNumUniqueClasses: 3
+  m_TotalUniqueTrainingClasses: []
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
   matchLiveDataInputs: 1
@@ -1698,3 +1690,7 @@ MonoBehaviour:
   warning: You are in edit mode live data in from objects will only workin play mode
   error: 1
   trainOnLoad: 1
+  m_TestingDataCollectedThisIteration: 1
+  StartDelay: 0
+  CaptureRate: 10
+  RecordTime: -1

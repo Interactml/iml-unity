@@ -98,8 +98,8 @@ MonoBehaviour:
   id: 5294d2d0-4e46-4ed9-9c29-b74d3d21ee7d
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  state: 1
-  GOHashCode: 23596
+  state: 0
+  GOHashCode: 65022
   CreatedDuringPlaymode: 0
 --- !u!114 &-6745337859861498136
 MonoBehaviour:
@@ -226,7 +226,7 @@ MonoBehaviour:
   - 0
   DelayedPredictedOutput:
   - 0
-  m_NumExamplesTrainedOn: 21
+  m_NumExamplesTrainedOn: 0
   m_ExpectedInputList: 03000000030000000300000003000000
   m_ExpectedOutputList: 01000000
   m_trainingType: 0
@@ -370,7 +370,7 @@ MonoBehaviour:
   m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 2792, y: 536}
+  position: {x: 2968, y: 536}
   ports:
     keys:
     - m_In
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_Name: Single Training Examples
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1989.9115, y: 514.74695}
+  position: {x: 2008, y: 520}
   ports:
     keys:
     - InputFeatures
@@ -629,7 +629,7 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 0
-  showWarning: 1
+  showWarning: 0
   canCollect: 1
   listNo: 0
   SubFolderDataPath: 
@@ -646,7 +646,7 @@ MonoBehaviour:
   m_Name: Position
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1208, y: 72}
+  position: {x: 1176, y: 72}
   ports:
     keys:
     - GameObjectDataIn
@@ -734,7 +734,7 @@ MonoBehaviour:
   m_Name: CreateFarm (Script)
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 3160, y: 568}
+  position: {x: 3368, y: 600}
   ports:
     keys:
     - creation
@@ -754,7 +754,7 @@ MonoBehaviour:
   id: 4c2c9101-0555-4372-a4fd-08cfb14bf967
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 23288
+  ScriptHashCode: 64714
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: creation
@@ -806,8 +806,8 @@ MonoBehaviour:
   id: 27203592-c3c2-4560-a295-abd32f1bdefa
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  state: 1
-  GOHashCode: 23274
+  state: 0
+  GOHashCode: 64700
   CreatedDuringPlaymode: 0
 --- !u!114 &5814590136299666517
 MonoBehaviour:

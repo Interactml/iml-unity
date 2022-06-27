@@ -49,7 +49,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 5
+  Counter: 4
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -59,9 +59,9 @@ MonoBehaviour:
   GameObjInputMissing: 1
   m_PositionExtracted:
     m_Values:
-    - 19.3
     - 0
-    - 17.6
+    - 0
+    - 0
 --- !u!114 &-4952908079997644971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Name: VR Trigger
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1240, y: 360}
+  position: {x: 1288, y: 488}
   ports:
     keys:
     - inputValue
@@ -559,7 +559,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 5
+  Counter: 4
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -613,7 +613,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 5
+  Counter: 4
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -651,8 +651,8 @@ MonoBehaviour:
   id: b1a5d577-bf88-478e-b11e-f2ec4b4a52bc
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  state: 1
-  GOHashCode: 20326
+  state: 0
+  GOHashCode: 19718
   CreatedDuringPlaymode: 0
 --- !u!114 &8373069013392079893
 MonoBehaviour:
