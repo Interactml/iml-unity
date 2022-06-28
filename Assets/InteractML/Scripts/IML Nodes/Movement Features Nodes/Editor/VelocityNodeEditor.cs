@@ -55,9 +55,10 @@ namespace InteractML.GameObjectMovementFeatures
 
             if (m_ExtractVelocity.FeatureValues.Values != null)
             {
+                float extraSpace = 30;
                 // dynamically adjust node length based on amount of velocity features
-                nodeSpace = 120 + (m_ExtractVelocity.FeatureValues.Values.Length * 20);
-                m_BodyRect.height = 60 + (m_ExtractVelocity.FeatureValues.Values.Length * 20);
+                nodeSpace = 120 + (m_ExtractVelocity.FeatureValues.Values.Length * extraSpace);
+                m_BodyRect.height = 60 + (m_ExtractVelocity.FeatureValues.Values.Length * extraSpace);
 
                 // draw each velocity values
                 MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractVelocity);
