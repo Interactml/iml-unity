@@ -53,18 +53,43 @@ namespace InteractML.GameObjectMovementFeatures
 
             if (m_ExtractWindowNode.FeatureValues.Values != null)
             {
-                float extraSpace = 40;
+                float extraSpace = 55;
+                if (m_ExtractWindowNode.FeatureValues.Values.Length > 10) extraSpace = 40; // avoid adding too much space if we have a lot of elements
+                int maxElements = 20;
                 // dynamically adjust node length based on amount of features
-                nodeSpace = 120 + (m_ExtractWindowNode.FeatureValues.Values.Length * extraSpace);
-                m_BodyRect.height = 60 + (m_ExtractWindowNode.FeatureValues.Values.Length * extraSpace);
+                float elements = m_ExtractWindowNode.FeatureValues.Values.Length > maxElements ? maxElements : m_ExtractWindowNode.FeatureValues.Values.Length;
+                nodeSpace = 120 + (elements * extraSpace);
+                m_BodyRect.height = 60 + (elements * extraSpace);
 
-                EditorGUILayout.LabelField("Sample Size");
+                EditorGUILayout.LabelField($"Sample Size: ", m_NodeSkin.GetStyle("Node Body Label Axis"));
                 // Draw slider to select size of window
                 m_ExtractWindowNode.WindowSamples =  EditorGUILayout.IntSlider(m_ExtractWindowNode.WindowSamples, 1, 100);
                 EditorGUILayout.Space(5);
 
+                // Draw what each input is
+                if (m_ExtractWindowNode.FeaturesAsInput != null)
+                {
+                    string featureNames = "";
+                    for (int i = 0; i < m_ExtractWindowNode.FeaturesAsInput.Count; i++)
+                    {
+                        var input = m_ExtractWindowNode.FeaturesAsInput[i];
+                        var inputFeature = (IFeatureIML)input;
+                        if (input == null || inputFeature.FeatureValues == null || inputFeature.FeatureValues.Values == null) continue;
+                        // If this is the last element, add a '* sampleSize' at the end
+                        if (i == m_ExtractWindowNode.FeaturesAsInput.Count - 1)
+                            featureNames = string.Concat(featureNames, $"{input.name} ({inputFeature.FeatureValues.Values.Length}) * Sample Size ({m_ExtractWindowNode.WindowSamples}) = {m_ExtractWindowNode.FeatureValues.Values.Length} elements");
+                        // If we still have features to show, add a '+' to the end
+                        else
+                            featureNames = string.Concat(featureNames, $"{input.name} ({inputFeature.FeatureValues.Values.Length}) + ");
+                    }
+                    EditorGUILayout.LabelField($"Window Size: ");
+                    EditorGUILayout.LabelField($"{featureNames}");
+                    EditorStyles.label.wordWrap = true; // allow wordwrap
+                    EditorGUILayout.Space(5);
+                }
+
                 // draw each window values
-                MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractWindowNode);
+                MovementFeatureEditorMethods.DrawFeatureValueToggleAndLabelDynamic(this, m_ExtractWindowNode, maxElements);
             }
             else
             {

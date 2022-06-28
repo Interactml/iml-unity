@@ -112,7 +112,7 @@ namespace InteractML.GameObjectMovementFeatures
             {
                 if (!isUpdated)
                 {
-                    // iterate through features
+                    // iterate through features, taking into account the sample size
                     int arrayIndex = 0;
                     foreach (var feature in FeaturesAsInput)
                     {
@@ -121,6 +121,15 @@ namespace InteractML.GameObjectMovementFeatures
                         {
                             // Add feature values to raw features array
                             featureToUse.Values.CopyTo(m_WindowRawValues, arrayIndex);
+                            // do we have several window samples? copy values in corresponding indexes
+                            if (WindowSamples > 1)
+                            {
+                                for (int i = 1; i < WindowSamples; i++)
+                                {
+                                    int windowSlice = m_WindowTotalSize / m_WindowSamples;
+                                    featureToUse.Values.CopyTo(m_WindowRawValues, arrayIndex + (windowSlice * i));
+                                }
+                            }
                             arrayIndex += featureToUse.Values.Length;
                         }
                     }

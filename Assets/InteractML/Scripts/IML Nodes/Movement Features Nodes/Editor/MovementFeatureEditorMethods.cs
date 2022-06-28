@@ -51,15 +51,24 @@ namespace InteractML.GameObjectMovementFeatures
         /// <param name="node editor"></param>
         /// <param name="int number of features"></param>
         /// <param name="toggle GUIStyle"></param>
-        public static void DrawFeatureValueToggleAndLabelDynamic(this IMLNodeEditor nodeEditor, BaseMovementFeatureNode node)
+        public static void DrawFeatureValueToggleAndLabelDynamic(this IMLNodeEditor nodeEditor, BaseMovementFeatureNode node, int maxElements = 20)
         {
             // check number of feature values sent as parameter matches the amount of feature values in the node    
             if (node.ToggleSwitches != null && node.FeatureValues.Values != null)
             {
                 if (node.ToggleSwitches.Length == node.FeatureValues.Values.Length)
                 {
-                    // for each of the features in the data type
-                    for (int i = 0; i < node.FeatureValues.Values.Length; i++)
+                    // Show number of elements
+                    string elementsCountLabel = $"Elements ({node.FeatureValues.Values.Length})";
+                    if (node.FeatureValues.Values.Length > maxElements)
+                        elementsCountLabel = $"Elements ({node.FeatureValues.Values.Length}, showing {maxElements})";
+
+                    EditorGUILayout.LabelField(elementsCountLabel, nodeEditor.m_NodeSkin.GetStyle("Node Body Label Axis"));
+                    EditorGUILayout.Space(5);
+
+
+                    // for each of the features in the data type (show max 20 features)
+                    for (int i = 0; (i < node.FeatureValues.Values.Length); i++)
                     {
                         // Draw each feature on a single line
                         GUILayout.BeginHorizontal();
@@ -73,6 +82,17 @@ namespace InteractML.GameObjectMovementFeatures
 
                         GUILayout.EndHorizontal();
                         EditorGUILayout.Space();
+
+                        // limit how many features are shown for performance reasons
+                        if (i == maxElements)
+                        {
+                            int indentOffset = 3;
+                            EditorGUI.indentLevel += indentOffset;
+                            EditorGUILayout.LabelField($"...", nodeEditor.m_NodeSkin.GetStyle("Node Body Label Axis"));
+                            EditorGUI.indentLevel -= indentOffset;
+                            break;
+                        }
+
                     }
                 }
                 else
