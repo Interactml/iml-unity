@@ -893,7 +893,9 @@ namespace InteractML
                 if (!m_Running && !Testing && !AllTestingClassesCollected)
                 {
                     StartTesting();
-                    success = true;
+                    //success = true;
+                    success = StartRunning(); // start running when testing commences
+
                 }
                 // Allow to move through testing UI states when this function is called
                 else if (Testing && !AllTestingClassesCollected)
@@ -925,14 +927,14 @@ namespace InteractML
                 // All classes have been collected
                 else if (AllTestingClassesCollected)
                 {
-                    if (!m_Running)
+                    if (/*!Running*/ Testing) // allow to run while testing  
                     {
                         StopTesting();
-                        success = StartRunning();
+                        //success = StartRunning(); // it should be running already
                     }
                     else
                     {
-                        success = StopRunning();
+                        success = StopRunning(); // stop running after testing and running are done. 
                     }
                 }
             }
