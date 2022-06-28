@@ -934,7 +934,15 @@ namespace InteractML
                     }
                     else
                     {
-                        success = StopRunning(); // stop running after testing and running are done. 
+                        // default behaviour after testing is completed in this iteration
+                        if (!m_Running)
+                        {
+                            success = StartRunning();
+                        }
+                        else if (m_Running)
+                        {
+                            success = StopRunning();
+                        }
                     }
                 }
             }
