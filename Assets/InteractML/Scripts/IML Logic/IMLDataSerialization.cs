@@ -360,7 +360,7 @@ namespace InteractML
             // Check if there is NOT already a JSON file created
             if (File.Exists(auxFilePath))
             {
-                Debug.Log("file found");
+                //Debug.Log("file found");
                 var file = File.ReadAllText(auxFilePath);
                 if (file != null && file != "")
                 {
@@ -439,7 +439,7 @@ namespace InteractML
                 }
                 // Generate JSON string from the entire list
                 var jsonObjToSave = JsonConvert.SerializeObject(ObjToSave, Formatting.Indented);
-                Debug.Log($"Saving json to {auxFilePath}");
+                //Debug.Log($"Saving json to {auxFilePath}");
                 // Write on the path
                 File.WriteAllText(auxFilePath, jsonObjToSave);
             }
@@ -862,7 +862,7 @@ namespace InteractML
                 //Debug.Log(jsonTrainingeExamplesList);
                 // Write on the path
                 File.WriteAllText(auxFilePath, jsonTrainingeExamplesList);
-                Debug.Log("written to disk");
+                //Debug.Log("written to disk");
             }
 
 

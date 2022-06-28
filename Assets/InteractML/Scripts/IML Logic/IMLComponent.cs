@@ -1949,7 +1949,7 @@ namespace InteractML
             // if there are mlsystem nodes in the graph
             if (MLSystemNodeList.Count > 0)
             {
-                Debug.Log("load models");
+                //Debug.Log("load models");
                 if (!(bool)IMLEventDispatcher.LoadModelsCallback?.Invoke())
                 {
                     yield return new WaitForSeconds(0.5f);
@@ -2162,7 +2162,7 @@ namespace InteractML
         /// </summary>
         public bool RunAllModels()
         {
-            Debug.Log("run all models");
+            //Debug.Log("run all models");
             bool success = false;
             foreach (var MLSystemNode in m_MLSystemNodeList)
             {

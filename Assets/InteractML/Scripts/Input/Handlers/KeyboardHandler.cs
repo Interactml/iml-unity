@@ -47,7 +47,7 @@ namespace InteractML
                 // if it hasn't been pressed previously
                 if (!previousPress)
                 {
-                    Debug.Log("hold " + buttonName);
+                    // Debug.Log("hold " + buttonName);
                     // fire event 
                     ButtonFire?.Invoke(nodeID);
                     // set previous press to true
@@ -58,7 +58,7 @@ namespace InteractML
                 // if it was previously pressed
                 if (previousPress)
                 {
-                    Debug.Log("hold");
+                    //Debug.Log("hold");
                     // fire 
                     ButtonFire?.Invoke(nodeID);
                     previousPress = false;
@@ -67,27 +67,27 @@ namespace InteractML
             // if button key is down and trigger type is down 
             if (Input.GetKeyDown(_button) && triggerType == IMLTriggerTypes.Down)
             {
-                Debug.Log("down");
+                //Debug.Log("down");
                 ButtonFire?.Invoke(nodeID);
             }
             // if button key is up and trigger type is up
             if (Input.GetKeyUp(_button) && triggerType == IMLTriggerTypes.Up)
             {
-                Debug.Log("up" + buttonName);
+                //Debug.Log("up" + buttonName);
                 ButtonFire?.Invoke(nodeID);
             }
             
         }
         public void HandleStateEditor()
         {
-            Debug.Log("here");
+            //Debug.Log("here");
             // if the button is held and the trigger type is hold
             if (triggerType == IMLTriggerTypes.Hold)
             {
                 // if it hasn't been pressed previously
                 if (!previousPress)
                 {
-                    Debug.Log("hold " + buttonName);
+                    //Debug.Log("hold " + buttonName);
                     // fire event 
                     ButtonFire?.Invoke(nodeID);
                     // set previous press to true
@@ -98,7 +98,7 @@ namespace InteractML
                 // if it was previously pressed
                 if (previousPress)
                 {
-                    Debug.Log("hold");
+                    //Debug.Log("hold");
                     // fire 
                     ButtonFire?.Invoke(nodeID);
                     previousPress = false;
@@ -107,13 +107,13 @@ namespace InteractML
             // if button key is down and trigger type is down 
             if (triggerType == IMLTriggerTypes.Down)
             {
-                Debug.Log("down");
+                // Debug.Log("down");
                 ButtonFire?.Invoke(nodeID);
             }
             // if button key is up and trigger type is up
             if (triggerType == IMLTriggerTypes.Up)
             {
-                Debug.Log("up" + buttonName);
+                // Debug.Log("up" + buttonName);
                 ButtonFire?.Invoke(nodeID);
             }
             

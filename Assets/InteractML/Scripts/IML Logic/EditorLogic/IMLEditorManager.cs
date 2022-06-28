@@ -439,7 +439,7 @@ public class IMLEditorManager
         // If we found any components, try to subscribe them to the list
         if (componentsFound != null)
         {
-            Debug.Log($"{componentsFound.Count()} addons found in scene!");
+            //Debug.Log($"{componentsFound.Count()} addons found in scene!");
             foreach (var component in componentsFound)
             {
                 SubscribeIMLAddon(component);

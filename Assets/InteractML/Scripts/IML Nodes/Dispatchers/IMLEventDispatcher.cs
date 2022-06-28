@@ -223,7 +223,7 @@ namespace InteractML
         /// </summary>
         public static void ClearAllCallbacks()
         {
-            Debug.Log("Clear All Calbakcs called!");
+            //Debug.Log("Clear All Calbakcs called!");
             TrainMLSCallback = null;
             ToggleRunCallback = null;
             StartRunCallback = null;
