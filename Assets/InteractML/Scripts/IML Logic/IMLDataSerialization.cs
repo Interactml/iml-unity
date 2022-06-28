@@ -316,7 +316,7 @@ namespace InteractML
         public static void SaveRapidlibModelToDisk(string modelToSave, string fileName)
         {
             SetUpFileNamesAndPaths(fileName);
-            Debug.Log("save model");
+            //Debug.Log("save model");
             string subFolderPath = CheckOrCreateFoldersAndSubfoldersModel();
 
             // We save the entire input/output list as a JSON

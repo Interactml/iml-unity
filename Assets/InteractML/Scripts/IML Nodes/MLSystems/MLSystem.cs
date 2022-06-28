@@ -770,7 +770,7 @@ namespace InteractML
             // If using testing state, reset flag to allow testing
             if (UseTestingState && isTrained) m_TestingDataCollectedThisIteration = false;
 
-            Debug.Log($"Model trained with {m_TotalNumUniqueClasses} unique classes");
+            //Debug.Log($"Model trained with {m_TotalNumUniqueClasses} unique classes");
 
             return isTrained;
         }

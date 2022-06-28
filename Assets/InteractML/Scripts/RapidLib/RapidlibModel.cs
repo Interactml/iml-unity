@@ -713,7 +713,7 @@ namespace InteractML
                     example.Input, example.Input.Length,
                     example.Output, example.Output.Length);
             }
-            Debug.Log($"TrainingSetAdress created!");
+            //Debug.Log($"TrainingSetAdress created!");
             // Return the address for the training set in memory
             return rapidlibTrainingSetAddress;
         }

@@ -2644,7 +2644,7 @@ namespace InteractML
                     
                     // train model
                     success = MLSNode.TrainModel();
-                    Debug.Log(success);
+                    //Debug.Log(success);
                     // if this is successful save model to the disk
                     if (success)
                         MLSNode.SaveModelToDisk();
