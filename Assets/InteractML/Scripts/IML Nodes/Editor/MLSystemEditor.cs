@@ -69,6 +69,7 @@ namespace InteractML
             m_BodyRect.height = 350;
             base.OnBodyGUI();
             ShowTestingPanel();
+            //ShowRatingPanel();
         }
 
         protected override void ShowBodyFields()
@@ -534,6 +535,143 @@ namespace InteractML
 
                 //EditorGUI.DrawRect();
             }
+        }
+
+        protected virtual void ShowRatingPanel()
+        {
+            // Only draw if the rating state is used and active
+            if (m_MLSystem.UseRatingState && m_MLSystem.Rating)
+            {
+                // Avoid rating in a hotreload (needed vars are not properly populated)
+                if (m_MLSystem.AllRatingQuestionsAnswered)
+                {
+                    // Stop rating
+                    m_MLSystem.StopRating();
+                    return;
+                }
+
+                // Create a new rect that occupies part of the node interface
+                Vector2 UIPosition = m_BodyRect.position;
+                UIPosition.x -= 10;
+                float UIWidth = HeaderRect.width + 20;
+                float UIHeight = 380; // 380 is the height of the buttons in the MLSNode (roughly similar to bodyrect.height without the warning height)
+                Vector2 UISize = new Vector2(UIWidth, UIHeight);
+                Rect TestingUIRect = new Rect(UIPosition, UISize);
+
+                GUILayout.BeginArea(TestingUIRect);
+
+                Texture2D texture = GetColorTextureFromHexString("#3b4675");
+                // Draw background panel
+                GUI.DrawTexture(TestingUIRect, texture);
+                //EditorGUI.DrawRect(TestingUIRect, Color.white);
+
+                // Content of panel
+                //GUILayout.Label("MACHINE LEARNING SYSTEM", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(300));
+                GUILayout.Space(120);
+                GUILayout.BeginHorizontal();
+                GUILayout.Label("Rate Model", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(275));
+                // Cross to close the window (only when all the data is collected)
+                if (!m_MLSystem.AllRatingQuestionsAnswered) GUI.enabled = false;
+                if (GUILayout.Button("", m_NodeSkin.GetStyle("Cross")))
+                {
+                    m_MLSystem.StopRating();
+                }
+                GUI.enabled = true;
+                GUILayout.EndHorizontal();
+                int space = 5;
+                GUILayout.Space(space);
+
+
+                // If there are questions not yet answered...
+                if (!m_MLSystem.AllRatingQuestionsAnswered)
+                {
+                    // Draw details of each question 
+                    // Q1
+                    GUILayout.Space(space);
+                    GUILayout.Label($"The movement interaction is enjoyable to use", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(300));
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label($"Disagree");
+                    bool q1Answer = false;
+                    q1Answer = EditorGUILayout.Toggle(q1Answer);
+                    q1Answer = EditorGUILayout.Toggle(q1Answer);
+                    q1Answer = EditorGUILayout.Toggle(q1Answer);
+                    q1Answer = EditorGUILayout.Toggle(q1Answer);
+                    q1Answer = EditorGUILayout.Toggle(q1Answer);
+                    q1Answer = EditorGUILayout.Toggle(q1Answer);
+                    GUILayout.Label($"Agree");
+                    GUILayout.EndHorizontal();
+                    
+                    // Q2
+                    GUILayout.Space(space);
+                    GUILayout.Label($"The interaction feels and behaves as I intended", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(300));
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label($"Disagree");
+                    bool q2Answer = false;
+                    q2Answer = EditorGUILayout.Toggle(q1Answer);
+                    q2Answer = EditorGUILayout.Toggle(q1Answer);
+                    q2Answer = EditorGUILayout.Toggle(q1Answer);
+                    q2Answer = EditorGUILayout.Toggle(q1Answer);
+                    q2Answer = EditorGUILayout.Toggle(q1Answer);
+                    q2Answer = EditorGUILayout.Toggle(q1Answer);
+                    GUILayout.Label($"Agree");
+                    GUILayout.EndHorizontal();
+
+                    // Q3
+                    GUILayout.Space(space);
+                    GUILayout.Label($"The model recognises my movements accurately", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(300));
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label($"Disagree");
+                    bool q3Answer = false;
+                    q3Answer = EditorGUILayout.Toggle(q1Answer);
+                    q3Answer = EditorGUILayout.Toggle(q1Answer);
+                    q3Answer = EditorGUILayout.Toggle(q1Answer);
+                    q3Answer = EditorGUILayout.Toggle(q1Answer);
+                    q3Answer = EditorGUILayout.Toggle(q1Answer);
+                    q3Answer = EditorGUILayout.Toggle(q1Answer);
+                    GUILayout.Label($"Agree");
+                    GUILayout.EndHorizontal();
+
+                    // Q4
+                    GUILayout.Space(space);
+                    GUILayout.Label($"I got the results I wanted after editing InteractML", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(300));
+                    GUILayout.Space(space);
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Label($"Disagree");
+                    bool q4Answer = false;
+                    q4Answer = EditorGUILayout.Toggle(q1Answer);
+                    q4Answer = EditorGUILayout.Toggle(q1Answer);
+                    q4Answer = EditorGUILayout.Toggle(q1Answer);
+                    q4Answer = EditorGUILayout.Toggle(q1Answer);
+                    q4Answer = EditorGUILayout.Toggle(q1Answer);
+                    q4Answer = EditorGUILayout.Toggle(q1Answer);
+                    GUILayout.Label($"Agree");
+                    GUILayout.EndHorizontal();
+
+
+                    // Check whether each question has an answer but isn't submitted yet
+                    // TODO
+
+                    // Submit answers button
+                    if (GUILayout.Button("Submit", m_NodeSkin.GetStyle("White Button Short")))
+                    {
+                        // Stop rating
+                        m_MLSystem.StopRating();
+                    }
+
+
+                }
+                // All rating questions are answered
+                else
+                {
+                }
+
+
+                GUILayout.EndArea();
+
+
+                //EditorGUI.DrawRect();
+            }
+
         }
 
         #endregion

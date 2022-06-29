@@ -313,6 +313,31 @@ namespace InteractML
 
         #endregion
 
+        #region Rate Model Variables
+
+        /// <summary>
+        /// Are we using a Rating state after running the model?
+        /// </summary>
+        public bool UseRatingState { get => m_UseRatingState; set => m_UseRatingState = value; }
+        /// <summary>
+        /// Change this flag to use or not the Rating state after the running state
+        /// </summary>
+        private bool m_UseRatingState = true;
+        /// <summary>
+        /// Is the node collecting Rating data for this model?
+        /// </summary>
+        protected bool m_Rating;
+        /// <summary>
+        /// Is the node collecting Rating data for this model?
+        /// </summary>
+        public bool Rating { get { return m_Rating; } }
+        public bool AllRatingQuestionsAnswered { get => m_AllRatingQuestionsAnswered; set => AllRatingQuestionsAnswered = value; }
+        [SerializeField, HideInInspector]
+        private bool m_AllRatingQuestionsAnswered;
+
+
+        #endregion
+
         #endregion
 
         #region XNode Messages
@@ -2669,6 +2694,28 @@ namespace InteractML
             // Mark this class as not collected
             if (m_TestingClassesCollected != null && indexClass <= m_TestingClassesCollected.Length - 1) 
                 m_TestingClassesCollected[indexClass] = false;
+        }
+
+        #endregion
+
+        #region Rating Model Methods
+
+        private void StartRating()
+        {
+            m_Rating = true;
+
+            // DIRTY
+            m_AllRatingQuestionsAnswered = false;
+
+        }
+
+        public void StopRating()
+        {
+            m_Rating = false;
+            // DIRTY
+            m_AllRatingQuestionsAnswered = true;
+            // TO DO event for stop rating this iteration
+
         }
 
         #endregion
