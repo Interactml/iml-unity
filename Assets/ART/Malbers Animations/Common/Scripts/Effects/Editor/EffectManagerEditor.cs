@@ -231,9 +231,16 @@ namespace MalbersAnimations.Utilities
 
         bool IsPrefab(GameObject gameObject)
         {
+#if UNITY_2020_3_OR_NEWER
+            bool isPrefabInstance = PrefabUtility.GetCorrespondingObjectFromSource(gameObject) != null && PrefabUtility.GetPrefabInstanceHandle(gameObject.transform) != null;
+            bool isPrefabOriginal = PrefabUtility.GetCorrespondingObjectFromSource(gameObject) == null && PrefabUtility.GetPrefabInstanceHandle(gameObject.transform) != null;
+            bool isDisconnectedPrefabInstance = PrefabUtility.GetCorrespondingObjectFromSource(gameObject) != null && PrefabUtility.GetPrefabInstanceHandle(gameObject.transform) == null;
+
+#else
             bool isPrefabInstance = PrefabUtility.GetPrefabParent(gameObject) != null && PrefabUtility.GetPrefabObject(gameObject.transform) != null;
             bool isPrefabOriginal = PrefabUtility.GetPrefabParent(gameObject) == null && PrefabUtility.GetPrefabObject(gameObject.transform) != null;
             bool isDisconnectedPrefabInstance = PrefabUtility.GetPrefabParent(gameObject) != null && PrefabUtility.GetPrefabObject(gameObject.transform) == null;
+#endif
 
             return isPrefabOriginal || isPrefabInstance || isDisconnectedPrefabInstance;
         }
