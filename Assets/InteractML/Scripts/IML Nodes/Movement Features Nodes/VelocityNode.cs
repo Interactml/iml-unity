@@ -132,6 +132,9 @@ namespace InteractML.GameObjectMovementFeatures
                         // update if node is receiving data
                         ReceivingData = MovementFeatureMethods.IsReceivingData(this);
 
+                        // Make sure vars aren't null
+                        if (m_CurrentVelocity == null) m_CurrentVelocity = new float[0];
+
                         // Calculate velocity itself
                         for (int i = 0; i < m_CurrentVelocity.Length; i++)
                             m_CurrentVelocity[i] = (featureToUse.Values[i] - m_LastFrameFeatureValue[i]) / Time.smoothDeltaTime;
