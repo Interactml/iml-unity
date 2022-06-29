@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColorChanger : MonoBehaviour
+public class ColorChangerRadial : MonoBehaviour
 {
     public Material one;
     public Material two;
