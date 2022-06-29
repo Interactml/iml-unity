@@ -1442,7 +1442,8 @@ namespace InteractML
                     if (inputFeature != null)
                     {
                         // We add the feature to the desired inputs config
-                        m_ExpectedInputList.Add((IMLSpecifications.InputsEnum)inputFeature.FeatureValues.DataType);
+                        if (inputFeature.FeatureValues != null && inputFeature.FeatureValues.Values != null)
+                            m_ExpectedInputList.Add((IMLSpecifications.InputsEnum)inputFeature.FeatureValues.DataType);
                     }
                 }
             }
