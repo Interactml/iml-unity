@@ -24,22 +24,22 @@ public class colorChanger : MonoBehaviour
         switch (colour)
         {
             case 0:
-                rendererToChange.material.SetColor("_Color", Color.white);
+                if (rendererToChange != null) rendererToChange.material.SetColor("_Color", Color.white);
                 break;
             case 1:
-                rendererToChange.material.SetColor("_Color", Color.green);
+                if (rendererToChange != null) rendererToChange.material.SetColor("_Color", Color.green);
                 break;
             case 2:
-                rendererToChange.material.SetColor("_Color", Color.black);
+                if (rendererToChange != null) rendererToChange.material.SetColor("_Color", Color.black);
                 break;
             case 3:
-                rendererToChange.material.SetColor("_Color", Color.blue);
+                if (rendererToChange != null) rendererToChange.material.SetColor("_Color", Color.blue);
                 break;
             case 4:
-                rendererToChange.material.SetColor("_Color", Color.yellow);
+                if (rendererToChange != null) rendererToChange.material.SetColor("_Color", Color.yellow);
                 break;
             case 5:
-                rendererToChange.material.SetColor("_Color", Color.magenta);
+                if (rendererToChange != null) rendererToChange.material.SetColor("_Color", Color.magenta);
                 break;
             default:
                 break;

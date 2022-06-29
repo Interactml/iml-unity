@@ -160,7 +160,7 @@ namespace InteractML.GameObjectMovementFeatures
                         MovementFeatureMethods.UpdateReceivingDataArray(this, m_DistancesExtracted.Values.Length);
 
                         // initialise helper variables
-                        if (PreviousFeatureValues.Values == null)
+                        if (PreviousFeatureValues != null && PreviousFeatureValues.Values == null)
                             PreviousFeatureValues = new IMLArray(m_DistancesExtracted);
 
                         // update if node is receiving data
@@ -205,7 +205,10 @@ namespace InteractML.GameObjectMovementFeatures
                 if (to.fieldName == "FirstInput")
                 {
                     // only allow 1 connection (but don't override the original - user must disconnect original input to connect a different one)
-                    if (this.GetInputNodesConnected("FirstInput").Count > 1) { from.Disconnect(to); }
+                    if (this.GetInputNodesConnected("FirstInput") != null && this.GetInputNodesConnected("FirstInput").Count > 1) 
+                    { 
+                        from.Disconnect(to); 
+                    }
 
                     // check if there is a connection to the second input
                     if (this.GetInputPort("SecondInputs").IsConnected)
@@ -234,7 +237,7 @@ namespace InteractML.GameObjectMovementFeatures
                     }
 
                     // check if there is another connection to the second input
-                    if (this.GetInputNodesConnected("SecondInputs").Count > 1)
+                    if (this.GetInputNodesConnected("SecondInputs") != null && this.GetInputNodesConnected("SecondInputs").Count > 1)
                     {
                         // check if the inputted type has the same number of features as connected types, otherwise disconnect
                         if ((this.GetInputNodesConnected("SecondInputs")[0] as IFeatureIML).FeatureValues.Values.Length != (to.node.GetInputNodesConnected("SecondInputs")[this.GetInputNodesConnected("SecondInputs").Count - 1] as IFeatureIML).FeatureValues.Values.Length)

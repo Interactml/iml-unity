@@ -212,7 +212,7 @@ namespace XNodeEditor {
                 foreach (var conn in port.GetConnections())
                     Undo.RecordObject(conn.node, "Delete Node");
             target.RemoveNode(node);
-            Undo.DestroyObjectImmediate(node);
+            if (node != null) Undo.DestroyObjectImmediate(node);
             if (NodeEditorPreferences.GetSettings().autoSave) AssetDatabase.SaveAssets();
         }
 
