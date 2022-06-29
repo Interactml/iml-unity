@@ -28,13 +28,6 @@ namespace InteractML
             // LIST OF IML CONTROLLER OUTPUTS
             //ShowIMLControllerOutputs();
 
-            // BUTTON OBJECTS UPDATE
-            if (GUILayout.Button("Add New GameObject"))
-            {
-                imlComponent.UpdateGameObjectNodes();
-                imlComponent.GetAllNodes();
-            }
-
         }
 
         private void ShowIMLControllerOutputs()
