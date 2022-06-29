@@ -399,7 +399,7 @@ namespace InteractML
         /// <param name="to"></param>
         public override void OnCreateConnection(XNode.NodePort from, XNode.NodePort to)
         {
-            Debug.Log(from.GetType().ToString());
+            //Debug.Log(from.GetType().ToString());
             base.OnCreateConnection(from, to);
 
             // If there is a connection to any of the button ports...
@@ -842,7 +842,8 @@ namespace InteractML
             {
                 foreach (var feature in tNode.DesiredInputFeatures)
                 {
-                    trainingVector += feature.Values.Length; 
+                    if (feature != null && feature.Values != null)
+                        trainingVector += feature.Values.Length; 
                 }
             }
             // If there are no recorded examples, calculate from connected inputs
@@ -851,7 +852,8 @@ namespace InteractML
                 foreach (Node node in tNode.InputFeatures)
                 {
                     IFeatureIML feature = node as IFeatureIML;
-                    trainingVector += feature.FeatureValues.Values.Length;
+                    if (feature != null && feature.FeatureValues != null && feature.FeatureValues.Values != null) 
+                        trainingVector += feature.FeatureValues.Values.Length;
                 }
 
             }
@@ -2209,7 +2211,7 @@ namespace InteractML
                     Type[] typesAccepted = { typeof(SingleTrainingExamplesNode), typeof(IDataSetIML) };
                     isNotTrainingExamplesNode = this.DisconnectFROMPortIsNotTypes(from, to, typesAccepted);
                     //isNotTrainingExamplesNode = this.DisconnectIfNotType<MLSystem, SingleTrainingExamplesNode>(from, to);
-                    Debug.Log(isNotTrainingExamplesNode);
+                    //Debug.Log(isNotTrainingExamplesNode);
                 }
                 else
                 {

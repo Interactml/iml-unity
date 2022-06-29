@@ -25,7 +25,7 @@ namespace InteractML.ControllerCustomisers
 
         public override void Initialize()
         {
-            Debug.Log("initialize");
+            //Debug.Log("initialize");
             name = "VRTrigger";
             buttonOptions = InputHelperMethods.deviceEnumSetUp(IMLInputDevices.VRControllers);
             int input = (int)inputs;
