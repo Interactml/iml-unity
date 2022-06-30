@@ -368,7 +368,7 @@ namespace InteractML
 
             bool disableButton = false;
 
-            if (m_TrainingExamplesNode.TrainingExamplesVector.Count > 0)
+            if (m_TrainingExamplesNode.TrainingExamplesVector != null && m_TrainingExamplesNode.TrainingExamplesVector.Count > 0)
             {
                 disableButton = false;
             }
