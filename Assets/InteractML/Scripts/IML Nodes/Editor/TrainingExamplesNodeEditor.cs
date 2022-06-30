@@ -611,10 +611,12 @@ namespace InteractML
             GUILayout.Space(15);
             if (m_TrainingExamplesNode.ModeOfCollection == TrainingExamplesNode.CollectionMode.SingleExample)
             {
-                GUILayout.Label("Number of training pairs: " + m_TrainingExamplesNode.TrainingExamplesVector.Count, m_HeaderSmallStyle);
+                int numExamples = m_TrainingExamplesNode.TrainingExamplesVector != null ? m_TrainingExamplesNode.TrainingExamplesVector.Count : 0;
+                GUILayout.Label("Number of training pairs: " + numExamples, m_HeaderSmallStyle);
             }
             else
             {
+                int numExamples = m_TrainingExamplesNode.TrainingSeriesCollection != null ? m_TrainingExamplesNode.TrainingSeriesCollection.Count : 0;
                 GUILayout.Label("Number of training examples: " + m_TrainingExamplesNode.TrainingSeriesCollection.Count, m_HeaderSmallStyle);
             }
             
@@ -674,7 +676,7 @@ namespace InteractML
 
                 EditorGUI.indentLevel++;
 
-                if (m_TrainingExamplesNode.TrainingExamplesVector.Count > 0 && m_TrainingExamplesNode.TrainingSeriesCollection.Count > 0)
+                if (m_TrainingExamplesNode.TrainingExamplesVector != null && m_TrainingExamplesNode.TrainingExamplesVector.Count > 0 && m_TrainingExamplesNode.TrainingSeriesCollection != null && m_TrainingExamplesNode.TrainingSeriesCollection.Count > 0)
                 {
                     EditorGUILayout.LabelField("Training Examples List is empty", m_FoldoutEmptyStyle);
                 }
