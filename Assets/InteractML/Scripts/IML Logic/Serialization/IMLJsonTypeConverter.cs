@@ -29,6 +29,11 @@ public class IMLJsonTypeConverter : JsonConverter
 
     public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
     {
+        if (reader == null)
+        {
+            Debug.LogError("Reader is null, something is wrong when calling ReadJson");
+            return null;
+        }
         JObject jo = JObject.Load(reader);
         //Debug.Log("Calling readjson IMLBaseDataType. Object type is: " + objectType.ToString());
 
