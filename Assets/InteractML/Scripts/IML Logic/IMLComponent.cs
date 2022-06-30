@@ -1210,8 +1210,8 @@ namespace InteractML
                                 // Lambda statement, selecting the script that matches the hashcode from our scriptNode
                                 var resultSearch = ComponentsWithIMLData.Select(container => container.GameComponent).Where(gameComponent =>
                                     {
-                                        MonoBehaviour scriptToReturn = null;
-                                        if (gameComponent.GetHashCode().Equals(m_ScriptNodesList[i].ScriptHashCode))
+                                        MonoBehaviour scriptToReturn = null;                                        
+                                        if (gameComponent != null && gameComponent.GetHashCode().Equals(m_ScriptNodesList[i].ScriptHashCode))
                                             scriptToReturn = gameComponent;
                                         return scriptToReturn;
                                     }
