@@ -1526,6 +1526,10 @@ namespace InteractML
                 // We are going to check  he existing script name in the scriptNode to see if it matches one of the scripts to use in the scene
                 foreach (IMLMonoBehaviourContainer scriptContainer in ComponentsWithIMLData)
                 {
+                    if (scriptContainer == null || scriptContainer.GameComponent == null)
+                    {                        
+                        continue;
+                    }
                     string scriptName = scriptContainer.GameComponent.GetType().Name + " (Script)";
                     if (scriptName.Equals(scriptNode.name))
                     {
