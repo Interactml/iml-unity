@@ -1790,7 +1790,7 @@ namespace InteractML
                             if (goNode.GOHashCode != default(int))
                             {
                                 // Check if the script is contained in the scene list
-                                var result = GameObjectsToUse.Select(x => x).Where(go => go.GetHashCode().Equals(goNode.GetHashCode()) );
+                                var result = GameObjectsToUse.Select(x => x).Where(go => go != null && goNode != null && go.GetHashCode().Equals(goNode.GetHashCode()) );
                                 var goFound = result.FirstOrDefault();
                                 // If we found the go...
                                 if (goFound != null)
