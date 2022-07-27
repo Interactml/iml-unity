@@ -67,6 +67,14 @@ namespace InteractML
             // Set size of preview box
             if (m_PreviewRect == null)
                 m_PreviewRect = new Rect(m_BodyRect.x + 20, m_BodyRect.y, m_BodyRect.width - 40, m_BodyRect.height);
+            else
+            {
+                m_PreviewRect.x = m_BodyRect.x + 20;
+                m_PreviewRect.y = m_BodyRect.y;
+                m_PreviewRect.width = m_BodyRect.width - 40;
+                m_PreviewRect.height = m_BodyRect.height;
+            }
+            //m_PreviewRect = new Rect(m_BodyRect.x + 20, m_BodyRect.y, m_BodyRect.width - 40, m_BodyRect.height);
             //Rect previewBox = new Rect(m_BodyRect.x + 20, m_BodyRect.y, m_BodyRect.width - 40, m_BodyRect.height);
 
             GUILayout.BeginArea(m_PreviewRect);
@@ -179,6 +187,11 @@ namespace InteractML
 
                     if (m_PreviewTexRect == null)
                         m_PreviewTexRect = new Rect(0f, 35f, m_NoMeshTexture.width, m_NoMeshTexture.height);
+                    else
+                    {
+                        m_PreviewTexRect.width = m_NoMeshTexture.width;
+                        m_PreviewTexRect.height = m_NoMeshTexture.height;
+                    }
 
                     // Draw texture
                     EditorGUI.DrawPreviewTexture(m_PreviewTexRect, m_NoMeshTexture);
