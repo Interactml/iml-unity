@@ -515,7 +515,7 @@ public class TextureScale
 public class TextureTools
 {
 
-    public static Texture2D ResampleAndCrop(Texture2D source, int targetWidth, int targetHeight)
+    public static Texture2D ResampleAndCrop(Texture2D source, int targetWidth, int targetHeight, ref Texture2D tex)
     {
         int sourceWidth = source.width;
         int sourceHeight = source.height;
@@ -573,7 +573,9 @@ public class TextureTools
             }
         }
 
-        var tex = new Texture2D(targetWidth, targetHeight);
+        //var tex = new Texture2D(targetWidth, targetHeight);
+        tex.width = targetWidth;
+        tex.height = targetHeight;
         tex.SetPixels32(data2);
         tex.Apply(true);
         return tex;

@@ -21,6 +21,7 @@ namespace InteractML
         /// </summary>
        // Rect m_BodyRect;
 
+        private Texture2D m_YellowColor;
 
         Vector2 scrollWindow;
         string noteText;
@@ -38,6 +39,8 @@ namespace InteractML
             InitHeaderRects();
 
             NodeColor = GetColorTextureFromHexString("#3A3B5B");
+            if (m_YellowColor == null)
+                m_YellowColor = GetColorTextureFromHexString("#F6C46F");
 
             // Set node width
             NodeWidth = 200;
@@ -47,7 +50,7 @@ namespace InteractML
                 // Draw header background Rect
                 GUI.DrawTexture(HeaderRect, NodeColor);
                 // Draw line below header
-                GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#F6C46F"));
+                GUI.DrawTexture(LineBelowHeader, m_YellowColor);
             }
 
             //Display Node name

@@ -33,6 +33,13 @@ namespace InteractML
         /// </summary>
         protected NodePort m_ButtonPortToggleRunInput;
 
+        // Testing UI vars        
+        Texture2D m_TestingBGColor;
+        Vector2 m_TestingUIPosition;
+        float m_TestingUIWidth;
+        float m_TestingUIHeight; 
+        Vector2 m_TestingUISize;
+        Rect m_TestingUIRect;
 
         public override void OnHeaderGUI()
         {
@@ -354,18 +361,23 @@ namespace InteractML
                 }
 
                 // Create a new rect that occupies part of the node interface
-                Vector2 UIPosition = m_BodyRect.position;
-                UIPosition.x -= 10;
-                float UIWidth = HeaderRect.width + 20;
-                float UIHeight = 380; // 380 is the height of the buttons in the MLSNode (roughly similar to bodyrect.height without the warning height)
-                Vector2 UISize = new Vector2(UIWidth, UIHeight);
-                Rect TestingUIRect = new Rect(UIPosition, UISize);
+                m_TestingUIPosition = m_BodyRect.position;
+                m_TestingUIPosition.x -= 10;
+                m_TestingUIWidth = HeaderRect.width + 20;
+                m_TestingUIHeight = 380; // 380 is the height of the buttons in the MLSNode (roughly similar to bodyrect.height without the warning height)
+                if (m_TestingUISize == null) m_TestingUISize = new Vector2();
+                m_TestingUISize.x = m_TestingUIWidth;
+                m_TestingUISize.y = m_TestingUIHeight;
+                if (m_TestingUIRect == null) m_TestingUIRect = new Rect();
+                m_TestingUIRect.position = m_TestingUIPosition;
+                m_TestingUIRect.size = m_TestingUISize;
 
-                GUILayout.BeginArea(TestingUIRect);
+                GUILayout.BeginArea(m_TestingUIRect);
                 
-                Texture2D texture = GetColorTextureFromHexString("#3b4675");
+                if (m_TestingBGColor == null)
+                    m_TestingBGColor = GetColorTextureFromHexString("#3b4675");
                 // Draw background panel
-                GUI.DrawTexture(TestingUIRect, texture);
+                GUI.DrawTexture(m_TestingUIRect, m_TestingBGColor);
                 //EditorGUI.DrawRect(TestingUIRect, Color.white);
 
                 // Content of panel
@@ -551,18 +563,24 @@ namespace InteractML
                 }
 
                 // Create a new rect that occupies part of the node interface
-                Vector2 UIPosition = m_BodyRect.position;
-                UIPosition.x -= 10;
-                float UIWidth = HeaderRect.width + 20;
-                float UIHeight = 380; // 380 is the height of the buttons in the MLSNode (roughly similar to bodyrect.height without the warning height)
-                Vector2 UISize = new Vector2(UIWidth, UIHeight);
-                Rect TestingUIRect = new Rect(UIPosition, UISize);
+                m_TestingUIPosition = m_BodyRect.position;
+                m_TestingUIPosition.x -= 10;
+                m_TestingUIWidth = HeaderRect.width + 20;
+                m_TestingUIHeight = 380; // 380 is the height of the buttons in the MLSNode (roughly similar to bodyrect.height without the warning height)
+                if (m_TestingUISize == null) m_TestingUISize = new Vector2();
+                m_TestingUISize.x = m_TestingUIWidth;
+                m_TestingUISize.y = m_TestingUIHeight;
+                if (m_TestingUIRect == null) m_TestingUIRect = new Rect();
+                m_TestingUIRect.position = m_TestingUIPosition;
+                m_TestingUIRect.size = m_TestingUISize;
 
-                GUILayout.BeginArea(TestingUIRect);
 
-                Texture2D texture = GetColorTextureFromHexString("#3b4675");
+                GUILayout.BeginArea(m_TestingUIRect);
+
+                if (m_TestingBGColor == null)
+                    m_TestingBGColor = GetColorTextureFromHexString("#3b4675");
                 // Draw background panel
-                GUI.DrawTexture(TestingUIRect, texture);
+                GUI.DrawTexture(m_TestingUIRect, m_TestingBGColor);
                 //EditorGUI.DrawRect(TestingUIRect, Color.white);
 
                 // Content of panel

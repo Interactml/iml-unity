@@ -27,6 +27,9 @@ namespace InteractML
         Texture2D m_NoMeshTexture;
         float m_TexHeightMultiplier = 0.45f;
 
+        Rect m_PreviewRect;
+        Rect m_PreviewTexRect;
+
         /// <summary>
         /// Initialise node specific interface labels and parameters
         /// </summary>
@@ -62,9 +65,11 @@ namespace InteractML
         private void ShowGameObjectPreview()
         {
             // Set size of preview box
-            Rect previewBox = new Rect(m_BodyRect.x + 20, m_BodyRect.y, m_BodyRect.width - 40, m_BodyRect.height);
+            if (m_PreviewRect == null)
+                m_PreviewRect = new Rect(m_BodyRect.x + 20, m_BodyRect.y, m_BodyRect.width - 40, m_BodyRect.height);
+            //Rect previewBox = new Rect(m_BodyRect.x + 20, m_BodyRect.y, m_BodyRect.width - 40, m_BodyRect.height);
 
-            GUILayout.BeginArea(previewBox);
+            GUILayout.BeginArea(m_PreviewRect);
 
             EditorGUILayout.Space();
             EditorGUILayout.Space();
@@ -141,7 +146,7 @@ namespace InteractML
                         if (m_NoMeshTexture == null)
                         {
                             // Create new empty texture
-                            m_NoMeshTexture = new Texture2D(1, 1);
+                            if (m_NoMeshTexture == null) m_NoMeshTexture = new Texture2D(1, 1);
                             // Read texture from memory
                             try
                             {
@@ -167,13 +172,16 @@ namespace InteractML
                             // Only resize it if the loading was successful
                             if (m_NoMeshTexture.width != 1)
                                 // Resize it
-                                m_NoMeshTexture = TextureTools.ResampleAndCrop(m_NoMeshTexture, (int)NodeWidth, (int)(NodeWidth * m_TexHeightMultiplier));
+                                TextureTools.ResampleAndCrop(m_NoMeshTexture, (int)NodeWidth, (int)(NodeWidth * m_TexHeightMultiplier), ref m_NoMeshTexture);
 
                         }
                     }
 
+                    if (m_PreviewTexRect == null)
+                        m_PreviewTexRect = new Rect(0f, 35f, m_NoMeshTexture.width, m_NoMeshTexture.height);
+
                     // Draw texture
-                    EditorGUI.DrawPreviewTexture(new Rect(0f, 35f, m_NoMeshTexture.width, m_NoMeshTexture.height), m_NoMeshTexture);
+                    EditorGUI.DrawPreviewTexture(m_PreviewTexRect, m_NoMeshTexture);
                 }
             }
             // If it is null, we warn the user

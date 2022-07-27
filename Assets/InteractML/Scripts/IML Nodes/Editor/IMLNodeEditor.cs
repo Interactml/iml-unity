@@ -27,6 +27,7 @@ namespace InteractML
         /// </summary>
         /// <returns></returns>
         protected Texture2D NodeColor { get; set; }  
+        protected Texture2D TooltipColor { get; set; }
 
         /// <summary>
         /// Float value for line weight
@@ -60,6 +61,12 @@ namespace InteractML
         protected Rect m_InnerWarningRect;
         protected Rect m_InnerInnerWarningRect;
         public Rect ToolTipRect;
+
+        // Rect and tex for lines in tooltips
+        protected Rect m_LineRect;
+        protected Texture2D m_LineTex;
+        protected Rect m_HelpButtonRect;
+
 
         public float bodyheight;
         protected int dataWidth = 45;
@@ -238,7 +245,8 @@ namespace InteractML
                     // Initialise header background Rects
                     InitHeaderRects();
 
-                    NodeColor = GetColorTextureFromHexString("#3A3B5B");
+                    if (NodeColor == null) NodeColor = GetColorTextureFromHexString("#3A3B5B");
+                    if (TooltipColor == null) TooltipColor = GetColorTextureFromHexString("#888EF7");
 
                     if (Event.current.type == EventType.Repaint)
                     {
@@ -246,7 +254,7 @@ namespace InteractML
                         //GUI.DrawTexture(new Rect(6, 6, GetWidth() - 12, 24), NodeColor);
 
                         // Draw line below header
-                        GUI.DrawTexture(LineBelowHeader, GetColorTextureFromHexString("#888EF7"));
+                        GUI.DrawTexture(LineBelowHeader, TooltipColor);
                     }
                     //Display Node name
                     if (String.IsNullOrEmpty(NodeName))
@@ -523,11 +531,21 @@ namespace InteractML
             if (Event.current.type == EventType.Repaint)
             {
                 // Calculate rect for line below ports
-                Rect lineRect = new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine);
-                Texture2D lineTex = GetColorTextureFromHexString("#888EF7");
+                if (m_LineRect == null)
+                {
+                    //m_LineRect = new Rect(m_PortRect.x, HeaderRect.height + m_PortRect.height - WeightOfSectionLine, m_PortRect.width, WeightOfSectionLine);
+                    m_LineRect = new Rect();
+                }
+                m_LineRect.x = m_PortRect.x;
+                m_LineRect.y = HeaderRect.height + m_PortRect.height - WeightOfSectionLine;
+                m_LineRect.width = m_PortRect.width;
+                m_LineRect.height = WeightOfSectionLine;
+
+                if (m_LineTex == null)
+                    m_LineTex = GetColorTextureFromHexString("#888EF7");
 
                 // Draw line below ports
-                GUI.DrawTexture(lineRect, lineTex);
+                GUI.DrawTexture(m_LineRect, m_LineTex);
             }
         }
 
@@ -770,13 +788,19 @@ namespace InteractML
            
             //if (Event.current.type == EventType.Repaint)
             //{
-                m_HelpRect.x = 5;
-                m_HelpRect.y = y;
-                m_HelpRect.width = NodeWidth - 10;
-                m_HelpRect.height = 40;
-                Texture2D texture = GetColorTextureFromHexString("#888EF7");
-                //Draw separator line
-                GUI.DrawTexture(new Rect(m_HelpRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_HelpRect.width, WeightOfSeparatorLine * 2), texture);
+            m_HelpRect.x = 5;
+            m_HelpRect.y = y;
+            m_HelpRect.width = NodeWidth - 10;
+            m_HelpRect.height = 40;
+            if (TooltipColor == null) TooltipColor = GetColorTextureFromHexString("#888EF7");
+            //Draw separator line
+            if (m_HelpButtonRect == null) m_HelpButtonRect = new Rect();
+            m_HelpButtonRect.x = m_HelpRect.x;
+            m_HelpButtonRect.y = HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine;
+            m_HelpButtonRect.width = m_HelpRect.width;
+            m_HelpButtonRect.height = WeightOfSeparatorLine * 2;
+            //GUI.DrawTexture(new Rect(m_HelpRect.x, HeaderRect.height + m_PortRect.height + m_BodyRect.height - WeightOfSeparatorLine, m_HelpRect.width, WeightOfSeparatorLine * 2), TooltipColor);
+            GUI.DrawTexture(m_HelpButtonRect, TooltipColor);
             //}
         }
 
