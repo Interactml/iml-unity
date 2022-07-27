@@ -1625,32 +1625,52 @@ namespace InteractML
                 outputPorts = new List<XNode.NodePort>();
 
             // Prepare output port
-            XNode.NodePort dynamicOutputPort;
+            XNode.NodePort dynamicOutputPort = null;
+            Type portType = null;
+            string portFieldName = "";
             // Add a specific kind of type for the output node depending on the expected type. The index will be the current length of the outputPorts list (since we are adding new ones, it will constantly increase)
             switch (type)
             {
                 case IMLSpecifications.OutputsEnum.Float:
-                    dynamicOutputPort = AddDynamicOutput(typeof(float), fieldName: $"Out {outputPorts.Count} (Float)");
+                    portType = typeof(float);
+                    portFieldName = $"Out {outputPorts.Count} (Float)";
+                    //dynamicOutputPort = AddDynamicOutput(typeof(float), fieldName: $"Out {outputPorts.Count} (Float)");
                     break;
                 case IMLSpecifications.OutputsEnum.Integer:
-                    dynamicOutputPort = AddDynamicOutput(typeof(int), fieldName: $"Out {outputPorts.Count} (Int)");
+                    portType = typeof(int);
+                    portFieldName = $"Out {outputPorts.Count} (Int)";
+                    //dynamicOutputPort = AddDynamicOutput(typeof(int), fieldName: $"Out {outputPorts.Count} (Int)");
                     break;
                 case IMLSpecifications.OutputsEnum.Vector2:
-                    dynamicOutputPort = AddDynamicOutput(typeof(Vector2), fieldName: $"Out {outputPorts.Count} (V2)");
+                    portType = typeof(Vector2);
+                    portFieldName = $"Out {outputPorts.Count} (V2)";
+                    //dynamicOutputPort = AddDynamicOutput(typeof(Vector2), fieldName: $"Out {outputPorts.Count} (V2)");
                     break;
                 case IMLSpecifications.OutputsEnum.Vector3:
-                    dynamicOutputPort = AddDynamicOutput(typeof(Vector3), fieldName: $"Out {outputPorts.Count} (V3)");
+                    portType = typeof(Vector3);
+                    portFieldName = $"Out {outputPorts.Count} (V3)";
+                    //dynamicOutputPort = AddDynamicOutput(typeof(Vector3), fieldName: $"Out {outputPorts.Count} (V3)");
                     break;
                 case IMLSpecifications.OutputsEnum.Vector4:
-                    dynamicOutputPort = AddDynamicOutput(typeof(Vector4), fieldName: $"Out {outputPorts.Count} (V4)");
+                    portType = typeof(Vector4);
+                    portFieldName = $"Out {outputPorts.Count} (V4)";
+                    //dynamicOutputPort = AddDynamicOutput(typeof(Vector4), fieldName: $"Out {outputPorts.Count} (V4)");
                     break;
                 case IMLSpecifications.OutputsEnum.Array:
-                    dynamicOutputPort = AddDynamicOutput(typeof(float[]), fieldName: $"Out {outputPorts.Count} (Array)");
+                    portType = typeof(float[]);
+                    portFieldName = $"Out {outputPorts.Count} (Array)";
+                    //dynamicOutputPort = AddDynamicOutput(typeof(float[]), fieldName: $"Out {outputPorts.Count} (Array)");
                     break;
                 default:
                     dynamicOutputPort = null;
                     break;
             }
+
+            // Add or get the port itself
+            if (HasPort(portFieldName))
+                dynamicOutputPort = GetPort(portFieldName);
+            else if (dynamicOutputPort != null)
+                dynamicOutputPort = AddDynamicOutput(portType, fieldName: portFieldName);
 
             // If we got one output port to add, we add it
             if (dynamicOutputPort != null && !outputPorts.Contains(dynamicOutputPort))
