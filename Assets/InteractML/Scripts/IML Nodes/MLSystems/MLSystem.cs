@@ -474,13 +474,16 @@ namespace InteractML
             if (m_DynamicOutputPorts == null)
                 m_DynamicOutputPorts = new List<XNode.NodePort>();
 
-               //look at how this happens in new events based system 
-              // IF expected outputs don't match with dynamic output ports, a training examples node was disconnected
-              if (m_ExpectedOutputList.Count != m_DynamicOutputPorts.Count)
-              {
-                  // Refresh all dynamic output ports to the right size
-                  UpdateDynamicOutputPorts(IMLTrainingExamplesNodes, m_ExpectedOutputList, ref m_DynamicOutputPorts);
-              }
+            // Repair any potential IMLTrainingExamplesNodes
+            RepairConnectedIMLTrainingExamples();
+
+            //look at how this happens in new events based system 
+            // IF expected outputs don't match with dynamic output ports, a training examples node was disconnected
+            if (m_ExpectedOutputList.Count != m_DynamicOutputPorts.Count)
+            {
+                // Refresh all dynamic output ports to the right size
+                UpdateDynamicOutputPorts(IMLTrainingExamplesNodes, m_ExpectedOutputList, ref m_DynamicOutputPorts);
+            }
 
             // We call logic for adapting arrays and inputs/outputs for ML models
             // Create input feature vector for realtime rapidlib predictions
@@ -499,6 +502,7 @@ namespace InteractML
             {
                 InputFeatures = this.GetInputNodesConnected("InputFeatures");
             }
+
             CheckLiveDataInputMatchesTrainingExamples();
             CheckLengthInputsVector();
             UIErrors();
@@ -652,6 +656,9 @@ namespace InteractML
             //m_NodeConnectionChanged = false;
 
             m_LastKnownRapidlibOutputVectorSize = 0;
+
+            // Check whether any repairs are needed in the collected list of training examples nodes
+            RepairConnectedIMLTrainingExamples();
 
             // We call logic for adapting arrays and inputs/outputs for ML models
             // Create input feature vector for realtime rapidlib predictions
@@ -1874,8 +1881,7 @@ namespace InteractML
             // The total number will start from 0 and keep adding the total amount of training examples from nodes connected
             m_TotalNumTrainingDataConnected = 0;
             if (!Lists.IsNullOrEmpty(ref IMLTrainingExamplesNodes))
-            {
-                
+            {                
                 for (int i = 0; i < IMLTrainingExamplesNodes.Count; i++)
                 {
                     if (IMLTrainingExamplesNodes[i] != null)
@@ -2343,7 +2349,9 @@ namespace InteractML
 
         public void OnDataInChanged()
         {
-            
+            // In case there needs to be any 
+            RepairConnectedIMLTrainingExamples();
+
             // Update Input Config List
             UpdateInputConfigList();
 
@@ -2462,6 +2470,31 @@ namespace InteractML
             }
             return null;
         }
+
+
+        #region Repair Lists Methods
+
+        /// <summary>
+        /// Repairs connected IMLTrainingExamples from null references
+        /// </summary>
+        protected void RepairConnectedIMLTrainingExamples()
+        {
+            var TExamplesNodesPort = GetPort("IMLTrainingExamplesNodes");
+            if (IMLTrainingExamplesNodes != null && TExamplesNodesPort != null)
+            {       
+                // Any node is null?
+                if (IMLTrainingExamplesNodes.Where(x => x == null).Any())
+                {
+                    TExamplesNodesPort.VerifyConnections();
+                    UpdateTotalNumberTrainingExamples(); // this updates as well IMLTrainingExamplesNodes list
+                    // Recursive attempt to repair connections (it won't go in if there are no null refs)
+                    RepairConnectedIMLTrainingExamples();
+                }
+            }
+
+        }
+
+        #endregion
 
         #endregion
 
