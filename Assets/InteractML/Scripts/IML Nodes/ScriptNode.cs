@@ -164,12 +164,24 @@ namespace InteractML
                         NodePort newPort = null;
                         // Add port to node
                         if (isInputData)
-                            newPort = AddDynamicOutput(fieldToUse.FieldType, fieldName: fieldToUse.Name);
+                        {
+                            if (HasPort(fieldToUse.Name))
+                                newPort = GetPort(fieldToUse.Name);
+                            else
+                                newPort = AddDynamicOutput(fieldToUse.FieldType, fieldName: fieldToUse.Name);
+                        }
                         else if (isOutputData)
-                            newPort = AddDynamicInput(fieldToUse.FieldType, fieldName: fieldToUse.Name);
+                        {
+                            if (HasPort(fieldToUse.Name))
+                                newPort = GetPort(fieldToUse.Name);
+                            else
+                                newPort = AddDynamicInput(fieldToUse.FieldType, fieldName: fieldToUse.Name);
+                        }
 
                         // Add that to the dictionary
                         m_PortsPerFieldInfo.Add(newPort, fieldToUse);
+                        //Debug.Log($"There are {m_PortsPerFieldInfo.Count} entries in dictionary that hosts field {fieldToUse.Name}");
+
 
                     }
                     // If the dictionary already contains a fieldInfo (and it is output), update it
