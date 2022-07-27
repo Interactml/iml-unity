@@ -199,18 +199,18 @@ namespace InteractML
         /// <returns></returns>
         public static bool DisconnectFROMPortIsNotTypes(this Node node, NodePort from, NodePort to, Type[] typesAccepted)
         {
-            bool disconnect = false;
+            bool disconnect = true;
             // If not types are passed, then do nothing
             if (typesAccepted == null || typesAccepted.Length < 1)
             {
                 disconnect = false;
                 return disconnect;
             }
-            bool typesEqual = false;
+            bool typesEqual = true;
             // If one of the types is detected as equal, don't disconnect
             for (int i = 0; i < typesAccepted.Length; i++)
             {
-                typesEqual = from.ValueType.Equals(typesAccepted);
+                typesEqual = CheckNodeEqualTypes(node, from, to, typesAccepted);
                 if (typesEqual)
                 {
                     disconnect = false;

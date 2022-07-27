@@ -1495,6 +1495,8 @@ namespace InteractML
             // Loop through all training examples nodes connected
             foreach (var trainingExamplesNode in IMLTrainingExamplesNodes)
             {
+                // skip entry if null
+                if (trainingExamplesNode == null) continue;
                 // Access the list of expected outputs config from the training node connected
                 if (trainingExamplesNode.DesiredOutputsConfig != null && trainingExamplesNode.DesiredOutputsConfig.Count > 0)
                 {
@@ -1963,6 +1965,8 @@ namespace InteractML
                 else
                 {
                     Debug.LogError("There is a null reference in training examples node connected!");
+                    // attempt a repair 
+                    RepairConnectedIMLTrainingExamples();
                 }
             }
 
@@ -2488,7 +2492,8 @@ namespace InteractML
                     TExamplesNodesPort.VerifyConnections();
                     UpdateTotalNumberTrainingExamples(); // this updates as well IMLTrainingExamplesNodes list
                     // Recursive attempt to repair connections (it won't go in if there are no null refs)
-                    RepairConnectedIMLTrainingExamples();
+                    //RepairConnectedIMLTrainingExamples();
+
                 }
             }
 
