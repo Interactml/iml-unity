@@ -93,9 +93,11 @@ namespace InteractML
         GUIStyle m_FoldoutEmptyStyle;
         GUIStyle m_ScrollViewStyle;
         GUIStyle m_RecordButtonStyle;
+        GUIStyle m_RecordButtonYellowTextStyle;
         GUIStyle m_DeleteButtonStyle;
         GUIStyle m_RecordOneButtonStyle;
-        GUIStyle m_RecordButtonGreenStyle;
+        GUIStyle m_RecordButtonGreenTextStyle;
+        GUIStyle m_RecordButtonYellowStyle;
         GUIStyle m_DeleteButtonPinkStyle;
         GUIStyle m_HeaderSmallStyle;
 
@@ -155,13 +157,17 @@ namespace InteractML
             if (m_FoldoutStyle == null)
                 SetDropdownStyle(out m_FoldoutStyle);
             if (m_RecordButtonStyle == null)
-                m_RecordButtonStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button");
+                m_RecordButtonStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green");
+            if (m_RecordButtonYellowStyle == null)
+                m_RecordButtonYellowStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Yellow");
             if (m_DeleteButtonStyle == null)
                 m_DeleteButtonStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button");
             if (m_RecordOneButtonStyle == null)
                 m_RecordOneButtonStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record One Button");
-            if (m_RecordButtonGreenStyle == null)
-                m_RecordButtonGreenStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green");
+            if (m_RecordButtonGreenTextStyle == null)
+                m_RecordButtonGreenTextStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Green Text");
+            if (m_RecordButtonYellowTextStyle == null)
+                m_RecordButtonYellowTextStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Record Button Yellow Text");
             if (m_DeleteButtonPinkStyle == null)
                 m_DeleteButtonPinkStyle = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Delete Button Pink");
             if (m_HeaderSmallStyle == null)
@@ -296,16 +302,18 @@ namespace InteractML
         protected string ShowRecordExamplesButton()
         {
             string nameButton = "";
+            GUIStyle buttonStyle = m_RecordButtonStyle;
 
             //// Only run button logic when there are features to extract from
 
             if (m_TrainingExamplesNode.CollectingData)
             {
-                nameButton = "stop recording";
+                nameButton = "Stop Recording";
+                buttonStyle = m_RecordButtonYellowStyle;
             }
             else
             {
-                nameButton = "start recording";
+                nameButton = "Record Data";
             }
 
             if (!m_TrainingExamplesNode.canCollect)
@@ -313,7 +321,7 @@ namespace InteractML
                 GUI.enabled = false;
             }
 
-            if (GUILayout.Button("Record Data", m_RecordButtonStyle))
+            if (GUILayout.Button(nameButton, buttonStyle))
             {
                 IMLEventDispatcher.ToggleRecordCallback(m_TrainingExamplesNode.id);
             }
@@ -538,7 +546,7 @@ namespace InteractML
                 GUILayout.Space(5);
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(10);
-                GUILayout.Label("record one example", m_RecordButtonGreenStyle);
+                GUILayout.Label("record one example", m_RecordButtonGreenTextStyle);
                 GUILayout.Label("");
                 GUILayout.EndHorizontal();
                 
@@ -579,7 +587,8 @@ namespace InteractML
             // draw record label
             GUILayout.BeginHorizontal();
             GUILayout.Space(10);
-            GUILayout.Label(recordNameButton, m_RecordButtonGreenStyle);
+            GUIStyle styleText = m_TrainingExamplesNode.CollectingData ? m_RecordButtonYellowTextStyle : m_RecordButtonGreenTextStyle;
+            GUILayout.Label(recordNameButton, styleText);
             GUILayout.Label("");
             GUILayout.EndHorizontal();
 
