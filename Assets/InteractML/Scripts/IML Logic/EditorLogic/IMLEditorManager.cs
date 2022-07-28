@@ -128,7 +128,7 @@ public class IMLEditorManager
             if (m_IMLAddons != null && m_IMLAddons.Count > 0)
             {
                 // Repair list of known addons if any of them is null
-                if (NullIMLAddons()) RepairIMLAddons();
+                if (NullOrEmptyIMLAddons()) RepairIMLAddons();
 
                 // Run each of the updates in the addons
                 foreach (var addon in m_IMLAddons)
@@ -176,7 +176,7 @@ public class IMLEditorManager
         }
 
         // Addons
-        if (NullIMLAddons()) RepairIMLAddons();
+        if (NullOrEmptyIMLAddons()) RepairIMLAddons();
         foreach (var addon in m_IMLAddons)
         {
             if (addon != null)
@@ -195,9 +195,9 @@ public class IMLEditorManager
     {
         bool nullIMLComponents = false;
         bool nullIMLAddons = false;
-        // Repair list of known iml components if any of them is null
+        // Repair list of known iml components if any of them is null or empty (just in case)
         if (NullIMLComponents()) nullIMLComponents = true;
-        if (NullIMLAddons()) nullIMLAddons = true;
+        if (NullOrEmptyIMLAddons()) nullIMLAddons = true;
 
         if (nullIMLComponents || nullIMLAddons)
         {
@@ -461,26 +461,32 @@ public class IMLEditorManager
     /// Is any of the IMLAddons null?
     /// </summary>
     /// <returns></returns>
-    private static bool NullIMLAddons()
+    private static bool NullOrEmptyIMLAddons()
     {
-        bool isNull = false;
+        bool isNullOrEmpty = false;
+        // Check if the list is init and has any count
+        if (m_IMLAddons == null || m_IMLAddons.Count == 0)
+        {
+            isNullOrEmpty = true;
+            return isNullOrEmpty;
+        }
         // Check if the interfaces are null
-        isNull = m_IMLAddons.Any(x => x == null) ? true : false;
+        isNullOrEmpty = m_IMLAddons.Any(x => x == null) ? true : false;
         // Check if the interfaces casted as monobehaviours are null (the monohevaiour gets garbage collected but not the interface in memory?)
-        if (!isNull) 
+        if (!isNullOrEmpty) 
         {
             for (int i = 0; i < m_IMLAddons.Count; i++)
             {
                 var addon = m_IMLAddons[i];
                 // If the addon is a MonoBehavour, check if it is null (the monohevaiour gets garbage collected but not the interface in memory?)
-                if (addon is MonoBehaviour) isNull = (addon as MonoBehaviour) == null;
+                if (addon is MonoBehaviour) isNullOrEmpty = (addon as MonoBehaviour) == null;
                 // If the addon isn't a MonoBehaviour, do nothing
                 else continue;
                 // Once we find a positive, break loop. No need to search any longer
-                if (isNull) break;
+                if (isNullOrEmpty) break;
             }
         }
-        return isNull;
+        return isNullOrEmpty;
     }
 
     /// <summary>
