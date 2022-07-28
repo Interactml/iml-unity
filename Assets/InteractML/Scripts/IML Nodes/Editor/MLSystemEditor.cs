@@ -467,7 +467,7 @@ namespace InteractML
                     {
                         m_MLSystem.ToggleCollectTestingData();
                     }
-                    GUILayout.Box("", m_NodeSkin.GetStyle("Record Button"));
+                    GUILayout.Box("", m_NodeSkin.GetStyle("Record Button Green"));
                     GUILayout.Space(20);
                     GUILayout.EndHorizontal();
 
