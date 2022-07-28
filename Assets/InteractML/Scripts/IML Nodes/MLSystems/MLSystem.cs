@@ -907,7 +907,7 @@ namespace InteractML
                 }
                 else
                 {
-                    Debug.LogWarning("mismatch in live inputs to trained data");
+                    Debug.LogWarning("Live inputs connected to MLSystem don't match the inputs connected to Teach the Machine. Are you sure the input features are the same?");
                     matchVectorLength = false;
                 }
             } else {
