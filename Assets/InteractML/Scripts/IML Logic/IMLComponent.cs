@@ -1708,14 +1708,20 @@ namespace InteractML
         public void InputLogic(){
             // if user has enables universal input system
 
-            if (m_CustomControllerList.Count > 0)
+            if (m_CustomControllerList != null && m_CustomControllerList.Count > 0)
             {
-                foreach (CustomController controller in m_CustomControllerList)
+                for (int i = 0; i < m_CustomControllerList.Count; i++)
                 {
+                    var controller = m_CustomControllerList[i];
                     if (controller == null)
-                        m_CustomControllerList.Remove(controller);
+                    {
+                        m_CustomControllerList.RemoveAt(i);
+                        i--;
+                    }
                     else
+                    {
                         controller.UpdateLogic();
+                    }
                 }
             }
             
