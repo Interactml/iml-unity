@@ -56,7 +56,9 @@ namespace InteractML
         /// </summary>
         private bool nodesLoaded;
 
+        [HideInInspector]
         public TextMeshProUGUI RecordingUI;
+        [HideInInspector]
         public TextMeshProUGUI MLSUI;
 
         private string ttm_status;
