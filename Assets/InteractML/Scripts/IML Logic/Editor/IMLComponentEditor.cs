@@ -25,6 +25,16 @@ namespace InteractML
 
             imlComponent = target as IMLComponent;
 
+            if (imlComponent.graph == null)
+                GUI.enabled = false;
+            // Open Graph button
+            if (GUILayout.Button("Open Graph"))
+            {
+                if (imlComponent.graph != null)
+                    XNodeEditor.NodeEditorWindow.Open(imlComponent.graph);
+            }
+            GUI.enabled = true;
+
             // LIST OF IML CONTROLLER OUTPUTS
             //ShowIMLControllerOutputs();
 
