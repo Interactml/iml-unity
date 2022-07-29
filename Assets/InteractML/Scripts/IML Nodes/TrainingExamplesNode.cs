@@ -565,9 +565,9 @@ namespace InteractML
 
             // Pull inputs from bool event nodeports
             if (GetInputValue<bool>("RecordOneInputBoolPort"))
-                IMLEventDispatcher.RecordOneCallback(this.id);
+                IMLEventDispatcher.RecordOneCallback?.Invoke(this.id);
             if (GetInputValue<bool>("ToggleRecordingInputBoolPort"))
-                IMLEventDispatcher.ToggleRecordCallback(this.id);
+                IMLEventDispatcher.ToggleRecordCallback?.Invoke(this.id);
             if (GetInputValue<bool>("DeleteAllExamplesBoolPort"))
                 IMLEventDispatcher.DeleteAllExamplesInNodeCallback(this.id);
             // Pull input from string subfolderDataPath nodeport
