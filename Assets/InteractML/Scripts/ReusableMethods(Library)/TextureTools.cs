@@ -573,9 +573,10 @@ public class TextureTools
             }
         }
 
-        //var tex = new Texture2D(targetWidth, targetHeight);
-        tex.width = targetWidth;
-        tex.height = targetHeight;
+        tex = null;
+        tex = new Texture2D(targetWidth, targetHeight);
+        //tex.width = targetWidth;
+        //tex.height = targetHeight;
         tex.SetPixels32(data2);
         tex.Apply(true);
         return tex;
