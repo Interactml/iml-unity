@@ -38,6 +38,16 @@ namespace InteractML
 
         }
 
+        public IMLBoolean(bool newData)
+        {
+            if (m_Values == null)
+                m_Values = new float[1];
+
+            m_DataType = IMLSpecifications.DataTypes.Float;
+            
+            SetValues(newData);
+        }
+
         public override void SetValues(float[] newValues)
         {
             if (m_Values == null) m_Values = new float[1];

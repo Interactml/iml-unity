@@ -33,7 +33,7 @@ namespace InteractML.DataTypeNodes
         {
             // initialise variables
             PreviousFeatureValues = new IMLBoolean();
-            UserInput = new IMLBoolean();
+            UserInput = new IMLBoolean(Value);
 
             base.Initialize();
         }
