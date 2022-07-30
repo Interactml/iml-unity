@@ -32,7 +32,7 @@ namespace InteractML.DataTypeNodes
         {
             // initialise variables
             PreviousFeatureValues = new IMLInteger();
-            UserInput = new IMLInteger();
+            UserInput = new IMLInteger(Value);
 
             base.Initialize();
         }

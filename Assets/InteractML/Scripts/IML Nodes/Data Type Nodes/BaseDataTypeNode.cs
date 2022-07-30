@@ -84,7 +84,7 @@ namespace InteractML.DataTypeNodes
             get
             {
                 if (m_UserInput == null)
-                {
+                {                     
                     Debug.LogError($"User Input from {this.name} is null! Returning default values...");
                     return IMLBaseDataType.GetDataTypeInstance(typeof(T));
                 }
@@ -94,6 +94,7 @@ namespace InteractML.DataTypeNodes
                 }
             }
             set { m_UserInput = value; } }
+        [SerializeField, HideInInspector]
         private IMLBaseDataType m_UserInput;
 
         /// <summary>

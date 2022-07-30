@@ -32,6 +32,7 @@ namespace InteractML.DataTypeNodes
         /// <summary>
         /// Local specific Vector3 Value (for converting vectors)
         /// </summary>
+        [SerializeField, HideInInspector]
         private Vector3 m_UpdatedValue;
 
         // Use this for initialization
@@ -39,8 +40,8 @@ namespace InteractML.DataTypeNodes
         {
             // initialise variables
             PreviousFeatureValues = new IMLVector3();
-            UserInput = new IMLVector3();
-            m_UpdatedValue = new Vector3();
+            if (m_UpdatedValue == null) m_UpdatedValue = new Vector3();
+            UserInput = new IMLVector3(m_UpdatedValue);
 
             base.Initialize();    
         }

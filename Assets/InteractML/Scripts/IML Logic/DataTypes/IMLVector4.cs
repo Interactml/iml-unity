@@ -39,6 +39,17 @@ namespace InteractML
                 SetValues(newData.Values);
         }
 
+        public IMLVector4(Vector4 newData)
+        {
+            if (m_Values == null)
+                m_Values = new float[4];
+
+            m_DataType = IMLSpecifications.DataTypes.Vector4;
+
+            if (newData != null)
+                SetValues(newData);
+        }
+
         public override void SetValues(float[] newValues)
         {
             if (newValues.Length == m_Values.Length)

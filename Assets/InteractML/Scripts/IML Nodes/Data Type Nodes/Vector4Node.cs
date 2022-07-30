@@ -30,6 +30,7 @@ namespace InteractML.DataTypeNodes
         /// <summary>
         /// Local specific Vector4 Value
         /// </summary>
+        [SerializeField, HideInInspector]
         private Vector4 m_UpdatedValue;
 
         // Use this for initialization
@@ -37,8 +38,8 @@ namespace InteractML.DataTypeNodes
         {
             // initialise variables
             PreviousFeatureValues = new IMLVector4();
-            UserInput = new IMLVector4();
-            m_UpdatedValue = new Vector4();
+            if (m_UpdatedValue == null) m_UpdatedValue = new Vector4();
+            UserInput = new IMLVector4(m_UpdatedValue);
 
             base.Initialize();
         }

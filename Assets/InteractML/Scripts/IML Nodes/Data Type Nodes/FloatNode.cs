@@ -28,6 +28,7 @@ namespace InteractML.DataTypeNodes
         /// <summary>
         /// Local specific IML data type
         /// </summary>
+        [SerializeField, HideInInspector]
         private IMLFloat m_FeatureValues;
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace InteractML.DataTypeNodes
         {
             // initialise variables
             PreviousFeatureValues = new IMLFloat();
-            UserInput = new IMLFloat();
+            UserInput = new IMLFloat(Value);
 
             base.Initialize();
         }
