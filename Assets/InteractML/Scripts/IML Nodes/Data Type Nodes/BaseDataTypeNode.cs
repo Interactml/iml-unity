@@ -207,7 +207,7 @@ namespace InteractML.DataTypeNodes
             IMLBaseDataType inputFeatureValues = null;
 
             // Check if we have something connected to the input port
-            if (inputReceived != null)
+            if (inputReceived != null && !Equals(inputReceived, default(T)))
             {
                 // Update the value of this data node
                 Value = inputReceived;
