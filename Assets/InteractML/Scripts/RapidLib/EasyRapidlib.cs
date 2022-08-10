@@ -204,6 +204,29 @@ namespace InteractML
 
         }
 
+        /// <summary>
+        /// Clears internal list of training examples
+        /// </summary>
+        public void ClearTrainingExamples()
+        {
+            if (m_TrainingExamples == null)
+                m_TrainingExamples = new List<RapidlibTrainingExample>();
+            else
+                m_TrainingExamples.Clear();
+        }
+
+        /// <summary>
+        /// Clears internal list of training series (DTW)
+        /// </summary>
+        public void ClearTrainingSeries()
+        {
+            if (m_TrainingExamplesSeries == null)
+                m_TrainingExamplesSeries = new List<RapidlibTrainingSerie>();
+            else
+                m_TrainingExamplesSeries.Clear();
+
+        }
+
         /* TRAINING AND RUNNING METHODS */
 
         /// <summary>
