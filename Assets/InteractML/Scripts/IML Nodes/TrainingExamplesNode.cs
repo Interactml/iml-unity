@@ -967,45 +967,34 @@ namespace InteractML
         /// <summary>
         /// Gets all the Unique Classes from Data Vector
         /// </summary>
-        protected void UpdateUniqueClassesFromDataVector()
+        public static void SetUniqueClassesFromDataVector(ref List<IMLTrainingExample> uniqueClassesList, ref int numUniqueClasses, List<IMLTrainingExample> trainingExamplesList)
         {
             // Make sure unique classes list is init
-            if (m_UniqueClasses == null) m_UniqueClasses = new List<IMLTrainingExample>();
+            if (uniqueClassesList == null) uniqueClassesList = new List<IMLTrainingExample>();
             // Clear previously known classes
-            m_UniqueClasses.Clear();
-            m_NumUniqueClasses = 0;
+            uniqueClassesList.Clear();
+            numUniqueClasses = 0;
 
             // if there are training examples loaded...
-            if ((m_TrainingSeriesCollection != null && m_TrainingSeriesCollection.Count > 0)
-                || (m_TrainingExamplesVector != null && m_TrainingExamplesVector.Count > 0))
+            if (trainingExamplesList != null && trainingExamplesList.Count > 0)
             {
-                // Training Series
-                if (this is SeriesTrainingExamplesNode)
+                // Go through dataset
+                foreach (var trainingExample in trainingExamplesList)
                 {
-                    // TO DO: load unique classes from DTW dataset
-                }
-                // Single training examples
-                else if (m_TrainingExamplesVector.Count > 0)
-                {
-                    // Go through dataset
-                    foreach (var trainingExample in m_TrainingExamplesVector)
+                    // If list of unique training classes doesn't contain output...
+                    if (!uniqueClassesList.Where(trainingClass => NodeExtensionMethods.OutputsEqual(trainingClass.Outputs, trainingExample.Outputs)).Any())
                     {
-                        // If list of unique training classes doesn't contain output...
-                        if (!m_UniqueClasses.Where(trainingClass => NodeExtensionMethods.OutputsEqual(trainingClass.Outputs, trainingExample.Outputs)).Any())
-                        {                            
-                            // Is a new training class, add it to list
-                            m_UniqueClasses.Add(trainingExample);
-                            m_NumUniqueClasses++;
-                        }
+                        // Is a new training class, add it to list
+                        uniqueClassesList.Add(trainingExample);
+                        numUniqueClasses++;
                     }
                 }
             }
-            else
-            {
-                
-            }
+
 
         }
+
+        // TO DO: load unique classes from DTW dataset
 
 
         #endregion
@@ -1220,7 +1209,7 @@ namespace InteractML
             if (m_TrainingExamplesVector.Count > 0 || m_TrainingSeriesCollection.Count > 0)
             {
                 UpdateDesiredInputOutputConfigFromDataVector();
-                UpdateUniqueClassesFromDataVector();
+                SetUniqueClassesFromDataVector(ref m_UniqueClasses, ref m_NumUniqueClasses, m_TrainingExamplesVector);
             }
         }
 
