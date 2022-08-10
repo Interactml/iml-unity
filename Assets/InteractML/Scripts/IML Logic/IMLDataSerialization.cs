@@ -524,6 +524,20 @@ namespace InteractML
             return default(T);
         }
 
+        /// <summary>
+        /// (Needs to be awaited) Loads a generic object from disk asynchronously 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ObjToLoad"></param>
+        /// <param name="path"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static async Task<T> LoadObjectFromDiskAsync<T>(T ObjToLoad, string path = null, string fileName = null)
+        {
+            T result = LoadObjectFromDisk<T>(ObjToLoad, path, fileName);
+            return result;
+        }
+
         public static string GetValueFromJSON(string valueName, string jsonFile)
         {
             int index = jsonFile.IndexOf(valueName);
