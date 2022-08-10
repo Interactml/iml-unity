@@ -160,6 +160,22 @@ namespace InteractML
         }
 
         /// <summary>
+        /// Adds an entire training dataset to the internal list
+        /// </summary>
+        /// <param name="trainingDataset"></param>
+        public void AddTrainingDataSet(List<IMLTrainingExample> trainingDataset)
+        {
+            if (trainingDataset == null)
+                return;
+            // Add all examples to internal list
+            foreach (var trainingExample in trainingDataset)
+            {
+                if (trainingExample != null && trainingExample.Inputs != null && trainingExample.Outputs != null)
+                    AddTrainingExample(trainingExample.GetInputs(), trainingExample.GetOutputs());
+            }
+        }
+
+        /// <summary>
         /// Adds a new training example serie with the raw data to the internal list
         /// </summary>
         /// <param name="inputSerie">The example serie of values to train on </param>
