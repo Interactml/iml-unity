@@ -456,7 +456,7 @@ namespace InteractML
             //Debug.Log("Load object from disk called! " + filePath);
 
             string objName = "";
-            if (fileName == null)
+            if (fileName == null && ObjToLoad != null)
             {
                 objName = "Obj_" + ObjToLoad.GetType().Name;
             }
@@ -465,11 +465,48 @@ namespace InteractML
                 objName = fileName;
             }
 
+            return LoadObjectFromDisk<T>(path, fileName);
+        }
+
+        /// <summary>
+        /// Loads a generic object from disk
+        /// </summary>
+        /// <returns></returns>
+        public static T LoadObjectFromDisk<T>(string path = null, string fileName = null, string fileExtension = null)
+        {
+            string objName = "";
+            if (fileName != null)
+                objName = fileName;
+            else
+                objName = typeof(T).ToString();
+
+            if (fileExtension == null)
+            {
+                // Use expected extension 
+                if (m_FileExtension != null)
+                {
+                    fileExtension = m_FileExtension;
+                }
+                // If expected extension isn't present...
+                else
+                {
+                    // see if we can get the file extension from name
+                    if (Path.HasExtension(fileName))
+                        fileExtension = Path.GetExtension(fileName);
+                    else
+                    {
+                        Debug.LogError("Can't load a file without extension!");
+                        return default(T);
+                    }
+
+                }
+            }
+            
             string subFolderPath = "";
 
             // Without prespecified path
             // (a bit buggy, it sabes under InteractML/DataObj_ObjName/ObjName.json instead of InteractML/Data/Obj/Obj_Name.json)
-            if (path == null) 
+            if (path == null)
             {
                 SetUpFileNamesAndPaths(objName);
 
@@ -506,37 +543,52 @@ namespace InteractML
             if (m_SerializeWithJSONDotNet)
             {
                 // We calculate the entire input/output list file name
-                string auxFilePath = subFolderPath + "/" + objName + m_FileExtension;
+                //string auxFilePath = subFolderPath + "/" + objName + fileExtension;
+                string auxFilePath = Path.Combine(subFolderPath, objName + fileExtension);
                 //Debug.Log("File name to read is: " + auxFilePath);
-                // We check if the file is there before reading from it
-                if (File.Exists(auxFilePath))
-                {
-                    //Debug.Log("The file exists and we read from it!");
-                    string objJSONData = File.ReadAllText(auxFilePath);
-                    if (objJSONData != null)
-                        return JsonConvert.DeserializeObject<T>(objJSONData);
-
-                    //Debug.Log("What we read is: " + jsonTrainingExamplesList);
-                }
+                return LoadObjectFromDisk<T>(auxFilePath);
             }
 
             // Return empty default if not loading with json.net
             return default(T);
         }
 
+        public static T LoadObjectFromDisk<T>(string fullPath)
+        {
+            // We check if the file is there before reading from it
+            if (File.Exists(fullPath))
+            {
+                //Debug.Log("The file exists and we read from it!");
+                string objJSONData = File.ReadAllText(fullPath);
+                if (objJSONData != null)
+                    return JsonConvert.DeserializeObject<T>(objJSONData);
+
+                //Debug.Log("What we read is: " + jsonTrainingExamplesList);
+            }
+            
+            return default(T);
+
+        }
+
         /// <summary>
         /// (Needs to be awaited) Loads a generic object from disk asynchronously 
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="ObjToLoad"></param>
         /// <param name="path"></param>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public static async Task<T> LoadObjectFromDiskAsync<T>(T ObjToLoad, string path = null, string fileName = null)
+        public static async Task<T> LoadObjectFromDiskAsync<T>(string path, string fileName, string fileExtension = null)
         {
-            T result = LoadObjectFromDisk<T>(ObjToLoad, path, fileName);
+            T result = LoadObjectFromDisk<T>(path, fileName, fileExtension);
             return result;
         }
+
+        public static async Task<T> LoadObjectFromDiskAsync<T>(string fullPath)
+        {            
+            T result = LoadObjectFromDisk<T>(fullPath);
+            return result;
+        }
+
 
         public static string GetValueFromJSON(string valueName, string jsonFile)
         {
