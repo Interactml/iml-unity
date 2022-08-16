@@ -83,8 +83,8 @@ namespace InteractML.GameObjectMovementFeatures
                             featureNames = string.Concat(featureNames, $"{input.name} ({inputFeature.FeatureValues.Values.Length}) + ");
                     }
                     EditorGUILayout.LabelField($"Window Size: ");
-                    EditorGUILayout.LabelField($"{featureNames}");
-                    EditorStyles.label.wordWrap = true; // allow wordwrap
+                    EditorGUILayout.LabelField($"{featureNames}", EditorStyles.wordWrappedLabel);
+                    //EditorStyles.label.wordWrap = true; // allow wordwrap
                     EditorGUILayout.Space(5);
                 }
 
@@ -102,10 +102,6 @@ namespace InteractML.GameObjectMovementFeatures
             }
 
             GUILayout.EndArea();
-
         }
-
-
-
     }
 }
