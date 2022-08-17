@@ -377,8 +377,9 @@ namespace InteractML
         /// Saves a generic object to disk
         /// </summary>
         /// <param name="ObjToSave"></param>
-        public static void SaveObjectToDisk(object ObjToSave, string path = null, string fileName = null)
+        public static bool SaveObjectToDisk(object ObjToSave, string path = null, string fileName = null, string fileExtension = null)
         {
+            bool success = false;
             string objName = "";
             if (fileName == null)
             {
@@ -387,6 +388,27 @@ namespace InteractML
             else
             {
                 objName = fileName;
+            }
+
+            if (fileExtension == null)
+            {
+                // Use expected extension 
+                if (m_FileExtension != null)
+                {
+                    fileExtension = m_FileExtension;
+                }
+                // If expected extension isn't present...
+                else
+                {
+                    // see if we can get the file extension from name
+                    if (Path.HasExtension(fileName))
+                        fileExtension = Path.GetExtension(fileName);
+                    else
+                    {
+                        Debug.LogError("Can't save a file without extension!");
+                        return false;
+                    }
+                }
             }
 
             string subFolderPath = "";
@@ -430,7 +452,7 @@ namespace InteractML
             if (m_SerializeWithJSONDotNet)
             {
                 // We save the object passed in as a JSON
-                string auxFilePath = subFolderPath + "/" + objName + m_FileExtension;
+                string auxFilePath = subFolderPath + "/" + Path.GetFileNameWithoutExtension(objName) + fileExtension;
                 // Check if there is already a JSON file created for this training example
                 if (File.Exists(auxFilePath))
                 {
@@ -442,8 +464,25 @@ namespace InteractML
                 //Debug.Log($"Saving json to {auxFilePath}");
                 // Write on the path
                 File.WriteAllText(auxFilePath, jsonObjToSave);
+
+                success = true;
             }
 
+            return success;
+        }
+
+        /// <summary>
+        /// (Needs to be awaited) Saves a generic object to disk.
+        /// </summary>
+        /// <param name="ObjToSave"></param>
+        /// <param name="path"></param>
+        /// <param name="fileName"></param>
+        public static async Task<Task> SaveObjectToDiskAsync(object ObjToSave, string path, string fileName = null)
+        {
+            Task task = Task.Run( () => { 
+                SaveObjectToDisk(ObjToSave, path, fileName);
+            });
+            return task;
         }
 
         /// <summary>
@@ -492,7 +531,10 @@ namespace InteractML
                 {
                     // see if we can get the file extension from name
                     if (Path.HasExtension(fileName))
+                    {
                         fileExtension = Path.GetExtension(fileName);
+                        fileName = Path.GetFileNameWithoutExtension(fileName);
+                    }
                     else
                     {
                         Debug.LogError("Can't load a file without extension!");
@@ -544,6 +586,12 @@ namespace InteractML
             {
                 // We calculate the entire input/output list file name
                 //string auxFilePath = subFolderPath + "/" + objName + fileExtension;
+                
+                // if we have double extension (i.e. .json.json)
+                if (Path.HasExtension(objName) && !string.IsNullOrEmpty(fileExtension))
+                {
+                    objName = Path.GetFileNameWithoutExtension(objName);
+                }
                 string auxFilePath = Path.Combine(subFolderPath, objName + fileExtension);
                 //Debug.Log("File name to read is: " + auxFilePath);
                 return LoadObjectFromDisk<T>(auxFilePath);
