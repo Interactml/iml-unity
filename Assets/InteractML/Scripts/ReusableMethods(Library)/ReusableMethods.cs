@@ -777,6 +777,24 @@ namespace ReusableMethods
 
     }
 
+    /// <summary>
+    /// Helper class for strings
+    /// </summary>
+    public static class Strings
+    {
+        /// <summary>
+        /// Truncates a string to have a maxlength
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="maxLength"></param>
+        /// <returns></returns>
+        public static string Truncate(this string value, int maxLength)
+        {
+            if (string.IsNullOrEmpty(value)) return value;
+            return value.Length <= maxLength ? value : value.Substring(0, maxLength);
+        }
+    }
+
     public static class Types
     {
         /// <summary>
