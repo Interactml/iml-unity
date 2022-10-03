@@ -452,7 +452,8 @@ namespace InteractML
             if (m_SerializeWithJSONDotNet)
             {
                 // We save the object passed in as a JSON
-                string auxFilePath = subFolderPath + "/" + Path.GetFileNameWithoutExtension(objName) + fileExtension;
+                //string auxFilePath = subFolderPath + "/" + Path.GetFileNameWithoutExtension(objName) + fileExtension;
+                string auxFilePath = Path.Combine(subFolderPath, Path.GetFileNameWithoutExtension(objName) + fileExtension);
                 // Check if there is already a JSON file created for this training example
                 if (File.Exists(auxFilePath))
                 {
@@ -534,6 +535,10 @@ namespace InteractML
                     {
                         fileExtension = Path.GetExtension(fileName);
                         fileName = Path.GetFileNameWithoutExtension(fileName);
+                    }
+                    else if (m_SerializeWithJSONDotNet)
+                    {
+                        fileExtension = ".json";
                     }
                     else
                     {
