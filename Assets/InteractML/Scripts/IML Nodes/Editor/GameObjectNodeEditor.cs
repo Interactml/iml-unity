@@ -186,7 +186,7 @@ namespace InteractML
                     }
 
                     if (m_PreviewTexRect == null)
-                        m_PreviewTexRect = new Rect(0f, 35f, m_NoMeshTexture.width, m_NoMeshTexture.height);
+                        m_PreviewTexRect = new Rect(0f, 0f, m_NoMeshTexture.width, m_NoMeshTexture.height);
                     else
                     {
                         m_PreviewTexRect.width = m_NoMeshTexture.width;
@@ -194,6 +194,7 @@ namespace InteractML
                     }
 
                     // Draw texture
+                    m_PreviewTexRect.y = 50f;
                     EditorGUI.DrawPreviewTexture(m_PreviewTexRect, m_NoMeshTexture);
                 }
             }
