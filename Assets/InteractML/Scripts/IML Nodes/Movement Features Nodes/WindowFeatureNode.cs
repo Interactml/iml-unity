@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using XNode;
+using ReusableMethods;
 
 namespace InteractML.GameObjectMovementFeatures
 {
@@ -69,6 +70,26 @@ namespace InteractML.GameObjectMovementFeatures
         /// </summary>
         public bool isUpdated { get; set; }
 
+        /// <summary>
+        /// Variables for setting delay in time for collecting data
+        /// </summary>
+        [HideInInspector]
+        public float StartDelay = 0.0f;
+        [HideInInspector]
+        public float CaptureRate = 10.0f;
+        [HideInInspector]
+        public float RecordTime = -1.0f;
+        protected float m_TimeToNextCapture = 0.0f;
+        protected float m_TimeToStopCapture = 0.0f;
+        /// <summary>
+        /// Timer used to collect examples
+        /// </summary>
+        protected TimerRecorder m_Timer;
+        private int m_SamplesAdded = 0;
+        // array index used to populate window
+        private int m_WindowArrayIndex = 0;
+
+
         #endregion
 
         #region IML Feature Methods
@@ -97,6 +118,12 @@ namespace InteractML.GameObjectMovementFeatures
             // initialise counters to change toggle colour
             Counter = 0;
             Count = 5;
+
+            // Make sure to init timer
+            if (m_Timer == null) m_Timer = new TimerRecorder();
+            // Prepare timer with a potential delay
+            m_Timer.PrepareTimer(StartDelay, RecordTime);
+
         }
 
         public object UpdateFeature()
@@ -104,37 +131,80 @@ namespace InteractML.GameObjectMovementFeatures
             // This extractor expects any other feature extracted to make calculations
             GetInputFeatures(ref FeaturesAsInput);
 
-            if (m_LastWindowSamples != m_WindowSamples) RecalculateWindowSize(FeaturesAsInput, m_WindowSamples, 
+            if (m_LastWindowSamples != m_WindowSamples)
+            {
+                RecalculateWindowSize(FeaturesAsInput, m_WindowSamples,
                 ref m_LastWindowSamples, ref m_WindowTotalSize, ref m_WindowRawValues, ref m_WindowExtracted);
+                // Reset counter and array index 
+                m_SamplesAdded = 0;
+                m_WindowArrayIndex = 0;
+            }
 
             // If we managed to get the inputs
             if (FeaturesAsInput != null && FeaturesAsInput.Count > 0 && m_WindowSamples > 0 && m_WindowTotalSize > 0)
             {
                 if (!isUpdated)
                 {
-                    // iterate through features, taking into account the sample size
-                    int arrayIndex = 0;
-                    foreach (var feature in FeaturesAsInput)
+                    // Make sure timer is init
+                    if (m_Timer == null) m_Timer = new TimerRecorder();
+                    if (Application.isPlaying && m_TimeToStopCapture > 0 && Time.time >= m_TimeToStopCapture)
                     {
-                        var featureToUse = (feature as IFeatureIML).FeatureValues;
-                        if (featureToUse != null && arrayIndex < m_WindowRawValues.Length)
-                        {
-                            // Add feature values to raw features array
-                            featureToUse.Values.CopyTo(m_WindowRawValues, arrayIndex);
-                            // do we have several window samples? copy values in corresponding indexes
-                            if (WindowSamples > 1)
-                            {
-                                for (int i = 1; i < WindowSamples; i++)
-                                {
-                                    int windowSlice = m_WindowTotalSize / m_WindowSamples;
-                                    featureToUse.Values.CopyTo(m_WindowRawValues, arrayIndex + (windowSlice * i));
-                                }
-                            }
-                            arrayIndex += featureToUse.Values.Length;
-                        }
+                        //Debug.Log("collecting false");
                     }
-                    // Populate IML array from window values
-                    m_WindowExtracted.SetValues(m_WindowRawValues);
+                    else if (m_Timer.RecorderCountdown(1f, CaptureRate))
+                    {
+                        // Collect one sample of feature data in the window
+                        // iterate through features, taking into account the sample size
+                        foreach (var feature in FeaturesAsInput)
+                        {
+                            var featureToUse = (feature as IFeatureIML).FeatureValues;
+                            if (featureToUse != null && m_WindowArrayIndex < m_WindowRawValues.Length)
+                            {
+                                // Add feature values to raw features array
+                                featureToUse.Values.CopyTo(m_WindowRawValues, m_WindowArrayIndex);
+                                m_WindowArrayIndex += featureToUse.Values.Length;
+                            }
+                        }
+                        // increase counter by 1
+                        m_SamplesAdded++;
+                        // do we have several window samples? copy values in corresponding indexes
+                        if (m_SamplesAdded == WindowSamples)
+                        {
+                            // when counter == size of window, then override current window to output
+                            // Populate IML array from window values
+                            m_WindowExtracted.SetValues(m_WindowRawValues);
+                            // reset counter and array index
+                            m_SamplesAdded = 0;
+                            m_WindowArrayIndex = 0;
+                        }
+
+                    }
+
+
+                    /** COMMENTING SINCE THIS ONLY DUPLICATES SAMPLES IN ONE FRAME**/
+                    //// iterate through features, taking into account the sample size
+                    //m_WindowArrayIndex = 0;
+                    //foreach (var feature in FeaturesAsInput)
+                    //{
+                    //    var featureToUse = (feature as IFeatureIML).FeatureValues;
+                    //    if (featureToUse != null && m_WindowArrayIndex < m_WindowRawValues.Length)
+                    //    {
+                    //        // Add feature values to raw features array
+                    //        featureToUse.Values.CopyTo(m_WindowRawValues, m_WindowArrayIndex);
+                    //        // do we have several window samples? copy values in corresponding indexes
+                    //        if (WindowSamples > 1)
+                    //        {
+                    //            for (int i = 1; i < WindowSamples; i++)
+                    //            {
+                    //                int windowSlice = m_WindowTotalSize / m_WindowSamples;
+                    //                featureToUse.Values.CopyTo(m_WindowRawValues, m_WindowArrayIndex + (windowSlice * i));
+                    //            }
+                    //        }
+                    //        m_WindowArrayIndex += featureToUse.Values.Length;
+                    //    }
+                    //}
+                    //// Populate IML array from window values
+                    //m_WindowExtracted.SetValues(m_WindowRawValues);
 
                     // check if inputs have changed and update size of toggle bool array and receiving data bool array
                     MovementFeatureMethods.UpdateToggleSwitchArray(this, m_WindowRawValues.Length);
