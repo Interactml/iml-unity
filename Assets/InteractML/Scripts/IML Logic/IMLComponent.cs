@@ -1020,7 +1020,7 @@ namespace InteractML
                             var resultSearch = GameObjectsToUse.Select(GO => GO).Where(GO => GO.GetHashCode().Equals(goNode.GOHashCode));
                             if (resultSearch.Any())
                             {
-                                var goToAdd = resultSearch.First(x => x != null);
+                                var goToAdd = resultSearch.FirstOrDefault(x => x != null);
                                 // If we found a matching GO...
                                 if (goToAdd != null)
                                 {
@@ -1049,9 +1049,38 @@ namespace InteractML
                 // ADD GAMEOBJECT NODE 
                 GameObjectNode goNode = null;
 
-                // If the gameObject is null, we continue to the next one
+                // If the gameObject is null, we attempt a NULL cleanup of list and dictionary
                 if (go == null)
                 {
+                    KeyValuePair<GameObject, GameObjectNode> pairWithNullKey;
+                    for (int j = 0; j < m_GOsPerGONodes.Count; j++)
+                    {
+                        // entry is completely null in dict, remove directly
+                        if (m_GOsPerGONodes[j] == null)
+                        {
+                            m_GOsPerGONodes.ToList().RemoveAt(j);
+                        }
+                        // entry has info in dict
+                        else
+                        {
+                            pairWithNullKey = (KeyValuePair<GameObject, GameObjectNode>)m_GOsPerGONodes[j];
+                            // if there is a GONode without a GO, remove node
+                            if (pairWithNullKey.Key == null && pairWithNullKey.Value != null)
+                            {
+                                var goNodeToDestroy = pairWithNullKey.Value;
+                                // inform user in console and destroy node
+                                Debug.Log($"Destroying GameObject Node {goNodeToDestroy}");
+                                graph.RemoveNode(goNodeToDestroy);
+                                // remove entry in dictionary
+                                m_GOsPerGONodes.ToList().RemoveAt(j);
+                                // only destroy one entry at a time
+                                continue;
+                            }
+                        }
+                    }
+                    // remove current null go entry in GameObjectsToUse and modify counter to iterate list correctly
+                    GameObjectsToUse.RemoveAt(i);
+                    i--;
                     continue;
                 }
 
@@ -1069,9 +1098,14 @@ namespace InteractML
                     foreach (KeyValuePair<GameObject, GameObjectNode> dicItem in goPerGONodesCopy)
                     {
                         if (!m_GameObjectNodeList.Contains(dicItem.Value)){
-                            Debug.Log("doesn't contain");
-                            // Modify original list
+                            // Modify original list and destroy node if possible
+                            var goNodeToDestroy = dicItem.Value;                           
                             m_GOsPerGONodes.Remove(dicItem);
+                            if (goNodeToDestroy != null)
+                            {
+                                Debug.Log($"Destroying GameObject Node {goNodeToDestroy} because of missing reference!");
+                                graph.RemoveNode(goNodeToDestroy);
+                            }
                         }
                     }                    
                 }
