@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using XNodeEditor;
+using UnityEditor;
 #endif
 
 namespace InteractML
@@ -289,10 +290,18 @@ namespace InteractML
                     // check if the gameobject is in the scene hierarchy
                     if ((ob as GameObject).scene.IsValid())
                     {
+                        // The undo call allows to 'setDirty' the scene and ensure that the user is prompted to save the scene
+                        Undo.RecordObject(graph, "Creating gameObject node");
+
                         // create a new gameObject node and add it to the internal gameobject node list
                         var goNode = graph.AddNode<GameObjectNode>();
+
+
+                        Undo.RecordObjects(new UnityEngine.Object[] { goNode, graph.SceneComponent }, "Creating gameObject node");
+
                         // set position of node to dropped position
                         goNode.position = NodeEditorWindow.current.WindowToGridPosition(Event.current.mousePosition);
+                        
                         // configure node with game object dropped in
                         goNode.SetGameObject((GameObject)ob);
                         // add gameobject to internal list of game objects
@@ -326,6 +335,7 @@ namespace InteractML
                 }
             }
         }
+        
         public void OnInspectorUpdate()
         {
             //Debug.Log("inspector update");

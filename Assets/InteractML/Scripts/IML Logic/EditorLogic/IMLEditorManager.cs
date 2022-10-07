@@ -45,6 +45,10 @@ public class IMLEditorManager
     /// Public external editor EARLY callbacks for scripts hot relaod (called before regular script hot reload logic)
     /// </summary>
     public static System.Action EarlyScriptReloadCallbacks;
+    /// <summary>
+    /// Public external editor callbacks for scripts hot relaod (called after IMLEditorManager initializes)
+    /// </summary>
+    public static System.Action ScriptReloadCallbacks;
     #endregion
 
     #region IMLSystem Instantiation
@@ -91,9 +95,26 @@ public class IMLEditorManager
         if (!EditorApplication.isPlayingOrWillChangePlaymode)
         {
             // Invoke any early callbacks for when script reloads (also include external ones)
-            if (EarlyScriptReloadCallbacks != null) EarlyScriptReloadCallbacks.Invoke();
+            EarlyScriptReloadCallbacks?.Invoke();
             // Init class
             Initiliaze();
+            
+            // IML Components
+            foreach (var MLComponent in m_IMLComponents)
+            {
+                if (MLComponent != null)
+                {
+                    MLComponent.UpdateGameObjectNodes(changingPlayMode: true);
+                    MLComponent.UpdateScriptNodes(changingPlayMode: true);
+                }
+                else
+                {
+                    Debug.LogWarning("Null reference to a MLComponent in IMLEditorManager.ScriptsReloadedLogic()");
+                }
+            }
+
+            // Callbacks for when script reloads
+            ScriptReloadCallbacks?.Invoke();
         }
 #endif
     }
@@ -168,6 +189,9 @@ public class IMLEditorManager
                 //MLComponent.LoadAllModelsFromDisk(reCreateModels: true);
                 //// Run them (if marked with RunOnAwake)
                 //MLComponent.RunAllModels();
+
+                // Attempt to repair broken gameObject nodes
+                //MLComponent.UpdateGameObjectNodes();
             }
             else
             {
@@ -183,6 +207,29 @@ public class IMLEditorManager
             {
                 addon.EditorSceneOpened();
             }
+        }
+    }
+
+    private static void SceneClosingLogic(UnityEngine.SceneManagement.Scene scene, bool removingScene)
+    {
+        // IML Components
+        if (NullIMLComponents()) RepairIMLComponents();
+        foreach (var MLComponent in m_IMLComponents)
+        {
+            if (MLComponent != null)
+            {
+                // Make sure that any unsaved changes to serialized variables are saved (avoids losing GOs references when unloading a scene)
+                SerializedObject serializedMLComponent = new SerializedObject(MLComponent);
+
+                //MLComponent.UpdateGameObjectNodes();
+
+                serializedMLComponent.ApplyModifiedProperties();
+            }
+            else
+            {
+                Debug.LogWarning("There is a null reference to a MLComponent in IMLEditorManager.SceneOpenedLogic()");
+            }
+
         }
     }
 
@@ -520,6 +567,7 @@ public class IMLEditorManager
         // Subscribe manager event to the sceneOpened event
         EditorSceneManager.sceneOpened += EarlySceneOpenedCallbacks; // External also
         EditorSceneManager.sceneOpened += SceneOpenedLogic;
+        EditorSceneManager.sceneClosing += SceneClosingLogic;
 
         // Subscribe manager event to the playModeStateChanged event
         EditorApplication.playModeStateChanged += EarlyPlayModeStateChangedCallbacks; // External also
@@ -542,6 +590,7 @@ public class IMLEditorManager
         // Subscribe manager event to the sceneOpened event
         EditorSceneManager.sceneOpened -= SceneOpenedLogic;
         EditorSceneManager.sceneOpened -= EarlySceneOpenedCallbacks; // External
+        EditorSceneManager.sceneClosing -= SceneClosingLogic;
 
         // Subscribe manager event to the playModeStateChanged event
         EditorApplication.playModeStateChanged -= PlayModeStateChangedLogic;

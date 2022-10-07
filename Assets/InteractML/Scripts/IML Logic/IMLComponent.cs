@@ -404,6 +404,7 @@ namespace InteractML
             // SendGameObjectsToIMLController();
             // UpdateGameObjectImage();
 
+
 #if !UNITY_EDITOR
             // If we are not on the editor...
             if (Application.isPlaying)
@@ -1103,7 +1104,7 @@ namespace InteractML
                             m_GOsPerGONodes.Remove(dicItem);
                             if (goNodeToDestroy != null)
                             {
-                                Debug.Log($"Destroying GameObject Node {goNodeToDestroy} because of missing reference!");
+                                Debug.LogWarning($"Destroying GameObject Node {goNodeToDestroy} because of missing reference!");
                                 graph.RemoveNode(goNodeToDestroy);
                             }
                         }
@@ -1469,6 +1470,15 @@ namespace InteractML
                 // Make sure list isn't null
                 if (GameObjectsToUse == null) GameObjectsToUse = new List<GameObject>();
 
+                if (goNode.IsTaken)
+                {
+                    // skip if the reference is working well
+                    continue;
+                }
+
+                bool repair = false;
+                GameObject goFound = null;
+
                 // Check node name to see if it matches one of the gameObjects to use in the scene
                 foreach (var go in GameObjectsToUse)
                 {
@@ -1486,46 +1496,83 @@ namespace InteractML
                         }
                         else
                         {
-                            // We can recycle this goNode
-                            goNode.SetGameObject(go);
-                            // Make sure that the pair GO, GONode is present in dictionary
-                            if (m_GOsPerGONodes.ContainsKey(go))
-                            {
-                                GameObjectNode auxGONode;
-                                // If there is already a gameobject key in dictionary, update its goNode key
-                                m_GOsPerGONodes.TryGetValue(go, out auxGONode);
-                                
-                                if (auxGONode == null)
-                                {
-                                    // Maybe there is an entry corrupted in the dictionary, attempt a repair
-                                    while (m_GOsPerGONodes.Contains(go))
-                                    {
-                                        m_GOsPerGONodes.TryGetValue(go, out auxGONode);
-                                        if (auxGONode == null)
-                                            m_GOsPerGONodes.Remove(go);
-                                        else
-                                            break;
-                                    }
-                                    if (auxGONode == null)
-                                        // Add GO, GONode pair to dictionary since there is not one present
-                                        m_GOsPerGONodes.Add(go, goNode);
-                                }
-                                // If the found goNode in dictionary doesn't match our recycled node...
-                                if (auxGONode != null && !auxGONode.Equals(goNode))
-                                {
-                                    // Override it
-                                    m_GOsPerGONodes.Remove(go);
-                                    m_GOsPerGONodes.Add(go, goNode);
-                                }
-                            }
+                            goFound = go;
+                            repair = true;
                             // Stop iterating
                             break;
-
                         }
                     }
                 }
-                
-                // The foreach loop should have taken care of the recycling logic :)
+
+                // If none of this works, attempt a search in the scene (EXPENSIVE)
+                if (goFound == null)
+                {
+                    string goToFind = goNode.name.Replace(" (GameObject)", "");
+                    goFound = GameObject.Find(goToFind);
+                    if (goFound != null) repair = true;
+                }
+
+                // Repair if a suitable gameobject found
+                if (repair)
+                {
+                    // We can recycle this goNode
+                    goNode.SetGameObject(goFound);
+                    // Make sure that the pair GO, GONode is present in dictionary
+                    if (m_GOsPerGONodes.ContainsKey(goFound))
+                    {
+                        GameObjectNode auxGONode;
+                        // If there is already a gameobject key in dictionary, update its goNode key
+                        m_GOsPerGONodes.TryGetValue(goFound, out auxGONode);
+
+                        if (auxGONode == null)
+                        {
+                            // Maybe there is an entry corrupted in the dictionary, attempt a repair
+                            while (m_GOsPerGONodes.Contains(goFound))
+                            {
+                                m_GOsPerGONodes.TryGetValue(goFound, out auxGONode);
+                                if (auxGONode == null)
+                                    m_GOsPerGONodes.Remove(goFound);
+                                else
+                                    break;
+                            }
+                            if (auxGONode == null)
+                                // Add GO, GONode pair to dictionary since there is not one present
+                                m_GOsPerGONodes.Add(goFound, goNode);
+                        }
+                        // If the found goNode in dictionary doesn't match our recycled node...
+                        if (auxGONode != null && !auxGONode.Equals(goNode))
+                        {
+                            // Override it
+                            m_GOsPerGONodes.Remove(goFound);
+                            m_GOsPerGONodes.Add(goFound, goNode);
+                        }
+                    }
+                    else
+                    {
+                        m_GOsPerGONodes.Add(goFound, goNode);
+                    }
+                }
+                // Destroy node if no possible repair
+                else
+                {
+                    // Notify user through console
+                    Debug.LogWarning($"Destroying GameObjectNode {goNode.name} because of missing reference");
+                    // Destroy node
+                    graph.RemoveNode(goNode);
+                    if (i < m_GameObjectNodeList.Count && goNode.Equals(m_GameObjectNodeList[i]))
+                    {
+                        // It might take some time to update the internal lists after calling removenode. Do not assumme the list is immediately modified!
+                    }
+                    else
+                    {
+                        // Decrease counter to not delete the wrong element later
+                        i--;
+                        // Force scriptNode reference to null
+                        goNode = null;
+                    }
+                }
+
+                // The FOR loop should have taken care of the recycling logic :)
             }
 
         }
@@ -1806,10 +1853,11 @@ namespace InteractML
 #endif
                 // Check if we need to remove the goNode from the list
                 else
-                {
+                {                    
                     // If this GO node is not contained in the logic dictionary...
                     if (!m_GOsPerGONodes.ContainsValue(goNode))
                     {
+                        Debug.LogWarning($"Destroying GameObjectNode {goNode.name} because of missing reference");
                         // Destroy node
                         graph.RemoveNode(goNode);
                         // Decrease counter to not delete the wrong element later
@@ -2523,6 +2571,11 @@ namespace InteractML
         /// <param name="nodeToDelete"></param>
         public void DeleteGameObjectNode(GameObjectNode nodeToDelete)
         {
+#if UNITY_EDITOR
+            // Allows to set scene as dirty and keep consistency when a node is removed
+            UnityEditor.Undo.RecordObjects(new UnityEngine.Object[] { this, nodeToDelete }, "Removing node");
+#endif
+
             if (m_GameObjectNodeList.Contains(nodeToDelete))
                 m_GameObjectNodeList.Remove(nodeToDelete);
 
@@ -2536,7 +2589,7 @@ namespace InteractML
             // GOs per GONodes dictionary
             if (m_GOsPerGONodes == null)
                 m_GOsPerGONodes = new GOPerGONodeDictionary();
-            else if (nodeToDelete.GameObjectDataOut != null && m_GOsPerGONodes.ContainsKey(nodeToDelete.GameObjectDataOut))
+            else if (m_GOsPerGONodes.ContainsKey(nodeToDelete.GameObjectDataOut))
                 m_GOsPerGONodes.Remove(nodeToDelete.GameObjectDataOut);
 
             // GONodes list
@@ -2599,6 +2652,12 @@ namespace InteractML
         public void DeleteScriptNode(ScriptNode node)
         {
             var container = new IMLMonoBehaviourContainer(node.GetScript());
+
+#if UNITY_EDITOR
+            // Allows to set scene as dirty and keep consistency when a node is removed
+            UnityEditor.Undo.RecordObjects(new UnityEngine.Object[] { this, node }, "Removing node");
+#endif
+
 
             // Components with IML Data list
             if (ComponentsWithIMLData == null)

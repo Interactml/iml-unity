@@ -99,23 +99,28 @@ namespace InteractML
         /// <param name="node"></param>
         public override void RemoveNode(Node node)
         {
-            if (SceneComponent != null)
+            if (node != null)
             {
+                #if UNITY_EDITOR
+                // Allows to set scene as dirty and keep consistency when a node is removed
+                UnityEditor.Undo.RecordObjects(new UnityEngine.Object[] {this, SceneComponent, node }, "Removing node");
+                #endif
+
                 // If we are deleting a scriptNode...
                 if (node is ScriptNode)
                 {
                     var scriptNode = node as ScriptNode;
                     // Remove scriptNode.script from all lists
-                    SceneComponent.DeleteScriptNode(scriptNode);
+                    if (scriptNode != null) SceneComponent.DeleteScriptNode(scriptNode);
                 }
                 // GameObjectNode
                 if (node is GameObjectNode)
                 {
                     var goNode = node as GameObjectNode;
-                    SceneComponent.DeleteGameObjectNode(goNode);
+                    if (goNode != null) SceneComponent.DeleteGameObjectNode(goNode);
                 }
+                RemoveNodeImmediate(node);
             }
-            RemoveNodeImmediate(node);  
         }
 
         /// <summary>
