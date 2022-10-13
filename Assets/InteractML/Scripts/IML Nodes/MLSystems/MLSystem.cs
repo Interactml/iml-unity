@@ -2624,6 +2624,48 @@ namespace InteractML
         }
 
         /// <summary>
+        /// Retrieves the current testing label in use while collecting testing examples
+        /// </summary>
+        /// <returns></returns>
+        public List<IMLOutput> GetCurrentTestingLabel()
+        {
+            if (m_TotalUniqueTrainingClasses != null && m_CurrentTestingClassCollected < m_TotalUniqueTrainingClasses.Count)
+            {
+                return m_TotalUniqueTrainingClasses[m_CurrentTestingClassCollected].Outputs;
+            }
+            else
+            {
+                Debug.LogError("Can't retrieve testing class because testing list isn't configured correctly!");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the current testing label in use while collecting testing examples
+        /// </summary>
+        /// <returns></returns>
+        public float[] GetCurrentTestingLabelFlat()
+        {
+            var testingLabel = GetCurrentTestingLabel();
+            if (testingLabel != null)
+            {
+                List<float> labelValues = new List<float>();
+                foreach (var label in testingLabel)
+                {
+                    if (label != null && label.OutputData != null && label.OutputData.Values != null)
+                    {
+                        foreach (var values in label.OutputData.Values)
+                        {
+                            labelValues.Add(values);
+                        }
+                    }
+                }
+                return labelValues.ToArray();
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Collects testing data for a specified class label
         /// </summary>
         /// <param name="classLabel"></param>
