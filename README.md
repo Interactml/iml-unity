@@ -15,13 +15,13 @@ InteractML is an Unity3d Plugin that enables developers to configure, train, and
 * Windows/Mac full support 
 
 ### Limitations
-* Alpha stage
+* Beta stage
 * Anything not Windows/Mac not tested or currently supported
 
 ### Installation
 
 ## Install InteractML as a released package
-The releases page is currently outdated, don't download from there! While we are working to produce a new stable package, try downloading the master branch and see if one the examples scene work for you. 
+The releases page is currently *heavily* outdated, don't download from there! While we are working to produce a new stable package, try downloading the master branch and see if one the examples scene work for you. You can also download the most up-to-date branch which is [VRInterace](https://github.com/Interactml/iml-unity/tree/VRInterface)
 
 ~~Don't download the master branch! It currently contains several dependencies that might break your project. Instead, download one of the relase packages as follows:~~
 
