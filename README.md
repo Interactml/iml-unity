@@ -21,7 +21,7 @@ InteractML is an Unity3d Plugin that enables developers to configure, train, and
 ### Installation
 
 ## Install InteractML as a released package
-The releases page is currently *heavily* outdated, don't download from there! While we are working to produce a new stable package, you can clone this branch or install InteractML to your project as a git submodule (more info below).
+The releases page is currently **heavily** outdated, don't download from there! While we are working to produce a new stable package, you can clone this branch or install InteractML to your project as a git submodule (more info below).
 
 ~~Don't download the master branch! It currently contains several dependencies that might break your project. Instead, download one of the relase packages as follows:~~
 
