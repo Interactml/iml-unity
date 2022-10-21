@@ -44,7 +44,7 @@ git clone URL [your_repository]
 cd [your_repository]
 
 # add InteractML as a submodule
-git submodule add -b master --force https://github.com/Interactml/iml-unity.git Assets/iml-unity
+git submodule add -b VRInterface --force https://github.com/Interactml/iml-unity.git Assets/iml-unity
 
 # If you don't want the clutter from the examples...
 # go to iml submodule folder
