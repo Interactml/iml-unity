@@ -1557,18 +1557,22 @@ namespace InteractML
                 {
                     // Notify user through console
                     Debug.LogWarning($"Destroying GameObjectNode {goNode.name} because of missing reference");
-                    // Destroy node
-                    graph.RemoveNode(goNode);
-                    if (i < m_GameObjectNodeList.Count && goNode.Equals(m_GameObjectNodeList[i]))
+                    if (goNode != null && graph != null)
                     {
-                        // It might take some time to update the internal lists after calling removenode. Do not assumme the list is immediately modified!
-                    }
-                    else
-                    {
-                        // Decrease counter to not delete the wrong element later
-                        i--;
-                        // Force scriptNode reference to null
-                        goNode = null;
+                        // Destroy node
+                        graph.RemoveNode(goNode);
+                        if (i < m_GameObjectNodeList.Count && goNode.Equals(m_GameObjectNodeList[i]))
+                        {
+                            // It might take some time to update the internal lists after calling removenode. Do not assumme the list is immediately modified!
+                        }
+                        else
+                        {
+                            // Decrease counter to not delete the wrong element later
+                            i--;
+                            // Force scriptNode reference to null
+                            goNode = null;
+                        }
+
                     }
                 }
 
