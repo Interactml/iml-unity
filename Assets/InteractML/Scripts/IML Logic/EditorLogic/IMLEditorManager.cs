@@ -102,7 +102,7 @@ public class IMLEditorManager
             // IML Components
             foreach (var MLComponent in m_IMLComponents)
             {
-                if (MLComponent != null)
+                if (MLComponent != null && MLComponent.gameObject.activeInHierarchy) // checking if the mlComponent is in this scene
                 {
                     MLComponent.UpdateGameObjectNodes(changingPlayMode: true);
                     MLComponent.UpdateScriptNodes(changingPlayMode: true);
