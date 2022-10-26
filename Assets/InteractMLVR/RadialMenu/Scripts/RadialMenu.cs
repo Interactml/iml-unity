@@ -168,6 +168,7 @@ namespace InteractML.VR
                     {
                         if (trainingSelected != null)
                         {
+                            // Listens and draws information about the currently selected training examples node
                             IMLEventDispatcher.listenText?.Invoke(trainingSelected);
                             status.text = IMLEventDispatcher.getText?.Invoke(trainingSelected);
                         }
@@ -175,6 +176,7 @@ namespace InteractML.VR
                     }
                     else
                     {
+                        // Listens and draws information about the currently selected MLS node
                         IMLEventDispatcher.listenText?.Invoke(mlsSelected);
                         status.text = IMLEventDispatcher.getText?.Invoke(mlsSelected);
                     }
@@ -299,7 +301,7 @@ namespace InteractML.VR
 
         IEnumerator SlowSubscribe()
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
             OnactivateFirstEvents();
         }
 
@@ -361,7 +363,7 @@ namespace InteractML.VR
 
         private void exitMenu()
         {
-            Debug.Log("here");
+            Debug.Log("Exit Radial Menu");
             on = false;
             IMLEventDispatcher.deselectGraph?.Invoke(graph);
             //graph = null;

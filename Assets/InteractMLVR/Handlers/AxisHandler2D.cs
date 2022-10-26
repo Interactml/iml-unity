@@ -26,6 +26,9 @@ namespace InteractML.VR
         public enum XRControllerModeEnum { device, action }
         public XRControllerModeEnum XRControllerMode;
 
+        // Actions from mouse&keyboard allowed
+        public bool UseMouse;
+
         public delegate void ValueChange(XRController controller, Vector2 value);
         public event ValueChange OnValueChange;
 
@@ -42,14 +45,15 @@ namespace InteractML.VR
             if (deviceXRController == null) deviceXRController = this.GetComponentInParent<XRController>();
             if (actionXRController == null) actionXRController = this.GetComponentInParent<ActionBasedController>();
             if (deviceXRController != null) XRControllerMode = XRControllerModeEnum.device;
-            else if (actionXRController != null)
+            else if (actionXRController != null || UseMouse)
             {
-                XRControllerMode = XRControllerModeEnum.action;
                 // Assign actions methods
                 if (SelectMenu != null)
                 {
+                    XRControllerMode = XRControllerModeEnum.action; // still using actions even if we only have a mouse
                     SelectMenu.action.started += PullActionSelect;
                 }
+
                 if (JoystickAxis2D != null)
                 {
                     JoystickAxis2D.action.performed += PullActionAxis2D;
@@ -57,7 +61,7 @@ namespace InteractML.VR
 
             }
             // throw error if no xrcontroller found
-            if (deviceXRController == null && actionXRController == null) Debug.LogError("XRController not found!");
+            if (deviceXRController == null && (actionXRController == null && !UseMouse)) Debug.LogError("XRController or Mouse not found!");
 
             innerMenu = this.GetComponent<RadialMenu>();           
         }

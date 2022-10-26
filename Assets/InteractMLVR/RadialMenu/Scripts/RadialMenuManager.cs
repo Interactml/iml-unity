@@ -24,6 +24,13 @@ namespace InteractML.VR
         public GameObject ControllerToUse;
         private XRController DeviceXRController;
         private ActionBasedController ActionXRController;
+        private bool m_ControllerPresent;
+
+        /// <summary>
+        /// If mouse can be used
+        /// </summary>
+        [SerializeField]
+        private bool m_UseMouse;
 
         private void Awake()
         {
@@ -41,15 +48,21 @@ namespace InteractML.VR
                 DeviceXRController = ControllerToUse.GetComponent<XRController>();
                 ActionXRController = ControllerToUse.GetComponent<ActionBasedController>();
 
-                // Assign a controller to use the radialMenu in
-                if (radialMenu != null)
+                m_ControllerPresent = true;
+            }
+
+            // Assign a device to control the radialMenu witg
+            if (radialMenu != null && (m_ControllerPresent || m_UseMouse))
+            {
+                var axisHandler2D = radialMenu.GetComponent<AxisHandler2D>();
+                if (axisHandler2D != null)
                 {
-                    var axisHandler2D = radialMenu.GetComponent<AxisHandler2D>();
-                    if (axisHandler2D != null)
+                    // XR Controller actions
+                    if (m_ControllerPresent)
                     {
                         // one of these two will be null (because it is either device OR action based)
                         if (DeviceXRController != null)
-                            axisHandler2D.deviceXRController = DeviceXRController; 
+                            axisHandler2D.deviceXRController = DeviceXRController;
                         else if (ActionXRController != null)
                         {
                             // controller
@@ -60,10 +73,20 @@ namespace InteractML.VR
                             axisHandler2D.JoystickAxis2D = JoystickAxis2D;
                         }
                     }
-
+                    // Mouse actions
+                    else if (m_UseMouse)
+                    {
+                        // enable mouse
+                        axisHandler2D.UseMouse = true;
+                        // Actions
+                        axisHandler2D.ToggleMenuOpen = ToggleMenuOpen;
+                        axisHandler2D.SelectMenu = SelectMenu;
+                        axisHandler2D.JoystickAxis2D = JoystickAxis2D;
+                    }
                 }
 
             }
+
 
         }
 
