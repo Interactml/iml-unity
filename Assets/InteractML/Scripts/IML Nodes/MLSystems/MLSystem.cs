@@ -2448,6 +2448,12 @@ namespace InteractML
                 IMLEventDispatcher.getText -= GetStatus;
             return true;
         }
+
+        /// <summary>
+        /// Returns status of node as string
+        /// </summary>
+        /// <param name="nodeid"></param>
+        /// <returns></returns>
         public string GetStatus(string nodeid)
         {
             if (nodeid == this.id)

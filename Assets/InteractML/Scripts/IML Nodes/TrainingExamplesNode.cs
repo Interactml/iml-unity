@@ -1341,6 +1341,11 @@ namespace InteractML
             IMLEventDispatcher.listenText -= ListenText;
         }
 
+        /// <summary>
+        /// Called to display node information on RadialMenu
+        /// </summary>
+        /// <param name="nodeid"></param>
+        /// <returns></returns>
         private bool ListenText(string nodeid)
         {
             bool listening;
@@ -1350,6 +1355,12 @@ namespace InteractML
                 IMLEventDispatcher.getText -= GetStatus;
             return true;
         }
+
+        /// <summary>
+        /// Returns status of node as string
+        /// </summary>
+        /// <param name="nodeid"></param>
+        /// <returns></returns>
         public string GetStatus(string nodeid)
         {
             
