@@ -116,11 +116,28 @@ namespace InteractML
         /// <param name="configNode">Node to be controlled</param>
         protected void ShowRunOnAwakeToggle(MLSystem configNode)
         {
+            // If testing state used...
+            if (m_MLSystem.UseTestingState)
+            {
+                // If we are testing, disable gui
+                if (m_MLSystem.Testing) GUI.enabled = false;
+                else GUI.enabled = true;
+            }
+            // Default behaviour, not worried about testing logic at all
+            else
+            {
+                // Enable UI
+                GUI.enabled = true;
+            }
+
             GUILayout.BeginHorizontal();
             GUILayout.Space(15);
             configNode.RunOnAwake = EditorGUILayout.Toggle(configNode.RunOnAwake, m_NodeSkin.GetStyle("Local Space Toggle"));
             EditorGUILayout.LabelField("Run Model On Play", m_NodeSkin.GetStyle("Node Local Space Label"));
             GUILayout.EndHorizontal();
+            
+            // make sure GUI is enabled
+            GUI.enabled = true;
         }
         /// <summary>
         /// Show MLS Algorithm icon 
