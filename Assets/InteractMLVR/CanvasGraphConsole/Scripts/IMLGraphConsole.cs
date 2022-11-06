@@ -125,7 +125,7 @@ namespace InteractML
             {
                 foreach (var MLSNode in MLComponent.MLSystemNodeList)
                 {
-                    status += $"Model {Strings.Truncate(MLSNode.id, 8)}{System.Environment.NewLine}";
+                    status += $"Model Node {Strings.Truncate(MLSNode.id, 8)}{System.Environment.NewLine}";
                     status += MLSNode.GetStatus(MLSNode.id);
                     status += System.Environment.NewLine;
                     status += System.Environment.NewLine;
