@@ -403,13 +403,14 @@ namespace InteractML
                 GUILayout.BeginHorizontal();
                 GUILayout.Label("Provide Testing Examples", m_NodeSkin.GetStyle("Header"), GUILayout.MinWidth(275));
                 // Cross to close the window (only when all the data is collected)
-                if (!m_MLSystem.AllTestingClassesCollected) GUI.enabled = false;
-                if (GUILayout.Button("", m_NodeSkin.GetStyle("Cross")))
+                if (m_MLSystem.AllTestingClassesCollected)
                 {
-                    m_MLSystem.StopTesting();
-                    m_MLSystem.StopRunning();
-                }
-                GUI.enabled = true;
+                    if (GUILayout.Button("", m_NodeSkin.GetStyle("Cross")))
+                    {
+                        m_MLSystem.StopTesting();
+                        m_MLSystem.StopRunning();
+                    }
+                }                                
                 GUILayout.EndHorizontal();
                 int space = 5;
                 GUILayout.Space(space);
