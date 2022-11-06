@@ -206,7 +206,10 @@ namespace InteractML
 
         public bool canCollect; // this needs a comment (what, why)
 
-        public int listNo; // this needs a comment (what, why)
+        /// <summary>
+        /// What position is this node occupying in the list? Used to display info on UI consistently
+        /// </summary>
+        public int listNo; 
 
         /// <summary>
         /// Specifies a subfolder to save the training examples
