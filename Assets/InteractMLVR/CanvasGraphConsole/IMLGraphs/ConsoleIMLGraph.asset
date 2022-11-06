@@ -242,7 +242,7 @@ MonoBehaviour:
   - 0
   DelayedPredictedOutput:
   - 2
-  m_NumExamplesTrainedOn: 3
+  m_NumExamplesTrainedOn: 5
   m_ExpectedInputList: 00000000
   m_ExpectedOutputList: 01000000
   m_trainingType: 0
@@ -257,7 +257,7 @@ MonoBehaviour:
   matchLiveDataInputs: 1
   matchVectorLength: 1
   warning: You are in edit mode live data in from objects will only workin play mode
-  error: 0
+  error: 1
   trainOnLoad: 1
   m_TestingDataCollectedThisIteration: 1
   StartDelay: 0
