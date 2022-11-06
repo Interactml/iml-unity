@@ -474,6 +474,12 @@ namespace InteractML
                     else
                     {
                         nameButton = $"Record Testing Examples for Class {m_MLSystem.CurrentTestingClassCollected}";
+                        // Is there hardware input to listen and class collected? Add tip that the class can be skipped
+                        if (m_MLSystem.IsRunKeyButtonConnected() && m_MLSystem.IsTestClassCollected(m_MLSystem.CurrentTestingClassCollected))
+                        {                            
+                            nameButton += System.Environment.NewLine;
+                            nameButton += $" ({m_MLSystem.GetRunKeyButtonName()} Skip to Next Class) ";
+                        }
                         // Green button if any examples collected 
                         if (numTestingExamples > 0) buttonStyle = m_NodeSkin.GetStyle("Green Button Long");
                         // White button if empty
@@ -520,8 +526,16 @@ namespace InteractML
                     // We still have more classes to collect
                     else
                     {
+                        string nextButtonText = "Next Testing Class";
+                        // Is there hardware input to listen?
+                        if (m_MLSystem.IsRunKeyButtonConnected())
+                        {
+                            if (m_MLSystem.IsTestClassCollected(m_MLSystem.CurrentTestingClassCollected))
+                                nextButtonText = $"Press {m_MLSystem.GetRunKeyButtonName()} or Click for Next Testing Class";
+                        }
+
                         // Next button
-                        if (GUILayout.Button("Next Testing Class", m_NodeSkin.GetStyle("White Button Short")))
+                        if (GUILayout.Button(nextButtonText, m_NodeSkin.GetStyle("White Button Short")))
                         {
                             m_MLSystem.NextTestingClass();
                         }

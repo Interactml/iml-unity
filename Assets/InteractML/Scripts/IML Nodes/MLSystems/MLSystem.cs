@@ -2397,9 +2397,9 @@ namespace InteractML
             //UpdateDynamicOutputPorts(IMLTrainingExamplesNodes, m_ExpectedOutputList, ref m_DynamicOutputPorts);
             // Pull inputs from bool event nodeports
             if (GetInputValue<bool>("ToggleTrainInputBoolPort"))
-                IMLEventDispatcher.TrainMLSCallback(this.id);
+                IMLEventDispatcher.TrainMLSCallback?.Invoke(this.id);
             if (GetInputValue<bool>("ToggleRunInputBoolPort"))
-                IMLEventDispatcher.ToggleRunCallback(this.id);
+                IMLEventDispatcher.ToggleRunCallback?.Invoke(this.id);
 
             // Perform running logic (it will account for DTW and Classification/Regression) only if there is a predicted output            
             RunningLogic();
@@ -2561,7 +2561,12 @@ namespace InteractML
                 else
                 {
                     status += $" AWAITING TO TEST";
-                }                
+                    // Is there hardware input to listen and class collected? Add tip that the class can be skipped
+                    if (IsRunKeyButtonConnected() && IsTestClassCollected(CurrentTestingClassCollected))
+                    {
+                        status += $" ( Press {GetRunKeyButtonName()} Skip to Next Class) ";
+                    }
+                }
             }
             // All testing classes are collected
             else
@@ -2584,6 +2589,33 @@ namespace InteractML
                 status += $"{classesCompleted}/{TotalNumUniqueClasses} Classes Completed";
             }
             status += System.Environment.NewLine;
+        }
+
+        /// <summary>
+        /// Is there a key/button connected to the run nodeport?
+        /// </summary>
+        /// <returns></returns>
+        public bool IsRunKeyButtonConnected()
+        {
+            var port = GetPort("ToggleRunInputBoolPort");
+            return port.IsConnected;
+        }
+
+        /// <summary>
+        /// Returns the name of the key / button connected to the Run nodeport
+        /// </summary>
+        /// <returns></returns>
+        public string GetRunKeyButtonName()
+        {
+            string buttonName = "";
+            var port = GetPort("ToggleRunInputBoolPort");
+            if (port.IsConnected)
+            {
+                var hardwareInputPort = port.GetConnection(0);
+                var hardwareInputNode = hardwareInputPort.node as ControllerCustomisers.CustomController;
+                if (hardwareInputNode != null) buttonName = hardwareInputNode.GetButtonName();
+            }
+            return buttonName;
         }
 
         #region Repair Lists Methods
@@ -2711,6 +2743,34 @@ namespace InteractML
                 m_TestingDataCollectedThisIteration = true;
             }
 
+        }
+
+        /// <summary>
+        /// Is the testing class already having training examples?
+        /// </summary>
+        /// <param name="which"></param>
+        /// <returns></returns>
+        public bool IsTestClassCollected(int which)
+        {
+            bool result = false;
+            if (m_TestingClassesCollected != null && which >= 0 && which < m_TestingClassesCollected.Length)
+            {
+                // pull result from array of flags
+                result = m_TestingClassesCollected[which];
+                // Check if the class has any training data as well to make sure
+                if (TestingData != null && CurrentTestingClassCollected < TestingData.Count)
+                {
+                    int numTestingExamples = 0;
+                    numTestingExamples = TestingData[CurrentTestingClassCollected].Count;
+                    if (CurrentTestingClassCollected < TestingData.Count && TestingData[CurrentTestingClassCollected] != null)
+                        numTestingExamples = TestingData[CurrentTestingClassCollected].Count;
+                    // If we finished collecting data for this class we mark it as collected
+                    if (numTestingExamples > 0 && !CollectingTestingData)
+                        result = true;
+
+                }
+            }
+            return result;
         }
 
         /// <summary>
