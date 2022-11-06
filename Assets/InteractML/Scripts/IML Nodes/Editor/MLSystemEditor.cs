@@ -454,11 +454,11 @@ namespace InteractML
 
 
                     GUILayout.Space(space);
-                    GUILayout.Label($"Class {m_MLSystem.CurrentTestingClassCollected}. Number of Testing Examples: {numTestingExamples}", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(300));
+                    GUILayout.Label($"Class {m_MLSystem.CurrentTestingClassCollected}/{m_MLSystem.TotalNumUniqueClasses}. Number of Testing Examples: {numTestingExamples}", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(300));
                     GUILayout.Space(space); 
                     GUILayout.Label($"Expected output: {expectedOutputClassString}", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
                     GUILayout.Space(space);
-                    GUILayout.Label($"{classesCompleted}/{m_MLSystem.TotalNumUniqueClasses} Classes Completed", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
+                    GUILayout.Label($"Classes Completed: {classesCompleted}/{m_MLSystem.TotalNumUniqueClasses}.", m_NodeSkin.GetStyle("Header Small"), GUILayout.MinWidth(200));
                     GUILayout.Space(space);
 
                     // Record testing examples button
