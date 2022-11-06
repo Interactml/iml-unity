@@ -2467,8 +2467,17 @@ namespace InteractML
                 
                 if (Running)
                 {
-                    status += "Running \n";
-                    if(LearningType != IMLSpecifications.LearningType.DTW)
+                    // Only display this section if testing state is enabled
+                    if (UseTestingState)
+                    {
+                        GestTestingStatus(ref status);
+                    }
+                    // Regular state, only display when it's running
+                    else
+                    {
+                        status += "Running \n";
+                    }
+                    if (LearningType != IMLSpecifications.LearningType.DTW)
                     {
                         int i = 0;
                         foreach (IMLBaseDataType dataType in PredictedOutput)
@@ -2501,6 +2510,81 @@ namespace InteractML
             return null;
         }
 
+        /// <summary>
+        /// Returns testing status of node as string
+        /// </summary>
+        /// <param name="status"></param>
+        public void GestTestingStatus(ref string status)
+        {
+            // In the process of collecting testing data...
+            if (!AllTestingClassesCollected)
+            {
+                // Draw details of current class being collected
+                var expectedOutputClass = TotalUniqueTrainingClasses[CurrentTestingClassCollected].Outputs;
+                string expectedOutputClassString = "{ ";
+                foreach (var expectedOutput in expectedOutputClass)
+                {
+                    if (expectedOutput == null || expectedOutput.OutputData == null || expectedOutput.OutputData.Values == null) return;
+                    expectedOutputClassString = string.Concat(expectedOutputClassString, "{ ");
+                    for (int i = 0; i < expectedOutput.OutputData.Values.Length; i++)
+                    {
+                        var value = expectedOutput.OutputData.Values[i];
+                        expectedOutputClassString = string.Concat(expectedOutputClassString, value.ToString());
+                        // there are more values after
+                        if (i < expectedOutput.OutputData.Values.Length - 1) expectedOutputClassString = string.Concat(expectedOutputClassString, ", ");
+                        // this is the last value
+                        else expectedOutputClassString = string.Concat(expectedOutputClassString, " } ");
+                    }
+                }
+                expectedOutputClassString = string.Concat(expectedOutputClassString, "}");
+                int numTestingExamples = 0;
+                int classesCompleted = CurrentTestingClassCollected > 0 ? CurrentTestingClassCollected : 0;
+                if (TestingData != null && CurrentTestingClassCollected < TestingData.Count)
+                {
+                    numTestingExamples = TestingData[CurrentTestingClassCollected].Count;
+                    classesCompleted = 0;
+                    foreach (var sublist in TestingData)
+                    {
+                        if (sublist != null && sublist.Count > 0)
+                        {
+                            classesCompleted++;
+                        }
+                    }
+                }
+                // Display status
+                status += $"Class {CurrentTestingClassCollected}/{TotalNumUniqueClasses}. No Test Examples: {numTestingExamples}";
+                status += $", Expected Output {expectedOutputClassString}";
+                if (CollectingTestingData)
+                {
+                    status += $" TESTING CLASS {CurrentTestingClassCollected}/{TotalNumUniqueClasses}";
+                }
+                else
+                {
+                    status += $" AWAITING TO TEST";
+                }                
+            }
+            // All testing classes are collected
+            else
+            {
+                int numTestingExamples = 0;
+                int classesCompleted = CurrentTestingClassCollected > 0 ? CurrentTestingClassCollected : 0;
+                if (TestingData != null && CurrentTestingClassCollected < TestingData.Count)
+                {
+                    numTestingExamples = TestingData[CurrentTestingClassCollected].Count;
+                    classesCompleted = 0;
+                    foreach (var sublist in TestingData)
+                    {
+                        if (sublist != null && sublist.Count > 0)
+                        {
+                            classesCompleted++;
+                        }
+                    }
+                }
+
+                status += $"{classesCompleted}/{TotalNumUniqueClasses} Classes Completed";
+            }
+            status += System.Environment.NewLine;
+        }
 
         #region Repair Lists Methods
 

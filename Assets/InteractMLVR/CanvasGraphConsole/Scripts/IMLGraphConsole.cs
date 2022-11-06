@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using ReusableMethods;
 
 namespace InteractML
 {
@@ -112,7 +113,9 @@ namespace InteractML
             {
                 foreach (var TENode in MLComponent.TrainingExamplesNodesList)
                 {
+                    status += $"Teach Node {Strings.Truncate(TENode.id, 8)}{System.Environment.NewLine}";
                     status += TENode.GetStatus(TENode.id);
+                    status += System.Environment.NewLine;
                     status += System.Environment.NewLine;
                 }
             }
@@ -122,7 +125,9 @@ namespace InteractML
             {
                 foreach (var MLSNode in MLComponent.MLSystemNodeList)
                 {
+                    status += $"Model {Strings.Truncate(MLSNode.id, 8)}{System.Environment.NewLine}";
                     status += MLSNode.GetStatus(MLSNode.id);
+                    status += System.Environment.NewLine;
                     status += System.Environment.NewLine;
                 }
             }
