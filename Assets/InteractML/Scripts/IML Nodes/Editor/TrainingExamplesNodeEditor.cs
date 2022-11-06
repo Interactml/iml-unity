@@ -148,6 +148,8 @@ namespace InteractML
             {
                 NodeSubtitle = "DTW training examples";
             }
+            NodeSubtitle += System.Environment.NewLine;
+            NodeSubtitle += $"ID: {Strings.Truncate(m_TrainingExamplesNode.id, 8)}";
 
             // get refs
             if (m_FoldoutEmptyStyle == null)

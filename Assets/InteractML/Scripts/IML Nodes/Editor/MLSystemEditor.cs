@@ -51,7 +51,7 @@ namespace InteractML
             if (m_MLSystem.numberInComponentList != -1)
                 arrayNo = m_MLSystem.numberInComponentList.ToString();
             NodeName = "MACHINE LEARNING SYSTEM " + arrayNo;
-
+            NodeSubtitle = $"ID: {Strings.Truncate(m_MLSystem.id, 8)}";
             // Create inputport button label
             if (m_ButtonPortLabel == null)
                 m_ButtonPortLabel = new GUIContent("");
