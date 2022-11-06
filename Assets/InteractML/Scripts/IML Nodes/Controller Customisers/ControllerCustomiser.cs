@@ -24,6 +24,11 @@ namespace InteractML.ControllerCustomisers
         public abstract void OnButtonChange();
        // public abstract void OnButtonChange(int buttonNo);
         public abstract void OnTriggerChange();
+        /// <summary>
+        /// Returns the current button/key in use as string (i.e. T, Escape, TriggerButton, etc.)
+        /// </summary>
+        /// <returns></returns>
+        public abstract string GetButtonName();
 
         public override object GetValue(NodePort port)
         {
@@ -31,6 +36,7 @@ namespace InteractML.ControllerCustomisers
 
             return inputValue;
         }
+
 
     }
 }

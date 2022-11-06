@@ -47,6 +47,12 @@ namespace InteractML.ControllerCustomisers
             handler.SetTriggerType(trigger);
         }
 
+        public override string GetButtonName()
+        {
+            string buttonName = handler.button.ToString();
+            return buttonName;
+        }
+
         public void OnDestroy()
         {
             // Unscibscribe from all events
@@ -74,6 +80,7 @@ namespace InteractML.ControllerCustomisers
             inputChange = true;
             return inputChange;
         }
+
     }
 }
 

@@ -58,6 +58,12 @@ namespace InteractML.ControllerCustomisers
             button.SetTriggerType(trigger);
         }
 
+        public override string GetButtonName()
+        {
+            string buttonName = button.button.name;
+            return buttonName;
+        }
+
         public void OnSideChange()
         {
             button.SetController(hand);
@@ -90,42 +96,42 @@ namespace InteractML.ControllerCustomisers
             inputChange = true;
             return inputChange;
         }
-        
-      /*  public override void UpdateLogic()
-        {
-            Debug.Log("here");
-            button.HandleState();
-        }
-        public override void OnButtonChange()
-        {
-            //button.imlButton = inputs; 
-            button.SetButton();
-        }
-        
-        public override void OnTriggerChange()
-        {
-            button.SetTriggerType(triggerType);
-        }
-        
-        public void OnHandChange()
-        {
-            button.SetController(hand);
-        }
-        private bool SetBool()
-        {
-            Debug.Log("fire");
-            return true;
-        }
 
-        public void OnDestroy()
-        {
-            Debug.Log("here");
-            var MLController = graph as IMLGraph;
-            if (MLController.SceneComponent != null)
-            {
-                MLController.SceneComponent.DeleteCustomControllerNode(this);
-            }
-        }*/
+        /*  public override void UpdateLogic()
+          {
+              Debug.Log("here");
+              button.HandleState();
+          }
+          public override void OnButtonChange()
+          {
+              //button.imlButton = inputs; 
+              button.SetButton();
+          }
+
+          public override void OnTriggerChange()
+          {
+              button.SetTriggerType(triggerType);
+          }
+
+          public void OnHandChange()
+          {
+              button.SetController(hand);
+          }
+          private bool SetBool()
+          {
+              Debug.Log("fire");
+              return true;
+          }
+
+          public void OnDestroy()
+          {
+              Debug.Log("here");
+              var MLController = graph as IMLGraph;
+              if (MLController.SceneComponent != null)
+              {
+                  MLController.SceneComponent.DeleteCustomControllerNode(this);
+              }
+          }*/
     }
 }
 
