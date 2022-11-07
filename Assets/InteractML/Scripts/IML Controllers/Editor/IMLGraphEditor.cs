@@ -234,6 +234,13 @@ namespace InteractML
                 return base.GetNodeMenuName(type).Replace("InteractML", "");
             }
 
+            // FUNCTIONS
+            if (type.PrettyName().Contains("InteractML.Functions"))
+            {
+                return base.GetNodeMenuName(type).Replace("InteractML", "");
+            }
+
+
 #if MECM
             // This nodes are exclusive to the MECM that Carlos is working on part-time. It won't compile on any other InteractML version
             if (type.PrettyName().Contains("MECM."))
