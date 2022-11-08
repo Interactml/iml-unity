@@ -385,7 +385,7 @@ namespace InteractML
                     }
                 }
                 // if there is a mls classification connected and there is one or more target values break connection otherwise update list of connected wtarget values 
-                if (MLSClassification && TargetValues.Count >= 1 )
+                if (MLSClassification && TargetValues != null && TargetValues.Count >= 1 )
                 {
                     from.Disconnect(to);
                     return;
