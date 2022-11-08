@@ -57,6 +57,7 @@ namespace InteractML
                 if (!isValidType)
                 {
                     from.Disconnect(to);
+                    NodeDebug.LogError($"Can't connect {from.fieldName} because node doesn't match expected type: {typeof(T)}, {typeof(U)}", node);
                 }
             }
 
@@ -89,6 +90,7 @@ namespace InteractML
                 // If we reach here, it is not a validType
                 from.Disconnect(to);
                 disconnect = true;
+                NodeDebug.LogError($"Can't connect {from.fieldName} because node doesn't match expected type: {typeof(T)}, {typeof(U)}, {typeof(W)}", node);
             }
 
             return disconnect;
@@ -120,6 +122,7 @@ namespace InteractML
                     // We disconnect the nodes
                     from.Disconnect(to);
                     disconnect = true;
+                    NodeDebug.LogError($"Can't connect {from.fieldName} because node doesn't match expected data type node: {typeof(T)}", node);
                 }
             }
 
@@ -150,6 +153,7 @@ namespace InteractML
                     {
                         from.Disconnect(to);
                         disconnect = true;
+                        NodeDebug.LogError($"Can't connect {from.fieldName} because node doesn't match expected feature types: {expectedType}", node);
                     }
                 }
 
@@ -182,6 +186,7 @@ namespace InteractML
                     {
                         from.Disconnect(to);
                         disconnect = true;
+                        NodeDebug.LogError($"Can't connect {from.fieldName} because node doesn't match expected IML data type: {expectedType}", node);
                     }
                 }
             }
@@ -220,7 +225,10 @@ namespace InteractML
             }
 
             if (disconnect)
+            {
                 from.Disconnect(to);
+                NodeDebug.LogError($"Can't connect {from.fieldName} because node doesn't match expected types: {string.Join(",", Array.ConvertAll(typesAccepted, item => item.ToString()))}", node);
+            }
 
             return disconnect;
             
@@ -383,20 +391,20 @@ namespace InteractML
             // Init equals
             bool equalPorts = false;
             bool equalNodeType = false;
-            
+
             // If null or empty, allow connections
             // Port Types
             if (typesPort == null && typesPort.Length < 1)
                 equalPorts = true;
             else
                 equalPorts = CheckPortEqualTypes(node, from, to, typesPort);
-            
+
             // Node Types
             if (typesNode == null && typesNode.Length < 1)
                 equalNodeType = true;
             else
                 equalNodeType = CheckNodeEqualTypes(node, from, to, typesNode);
-            
+
             // If any of them is true, DON'T disconnect
             if (equalPorts || equalNodeType)
             {
@@ -406,6 +414,7 @@ namespace InteractML
             else
             {
                 from.Disconnect(to);
+                NodeDebug.LogError($"Can't connect {from.fieldName} because port or node don't match expected port types: {string.Join(",", Array.ConvertAll(typesPort, item => item.ToString()))} or expected node types: {string.Join(",", Array.ConvertAll(typesNode, item => item.ToString()))}", node);
                 return false;
             }
         }
@@ -446,6 +455,7 @@ namespace InteractML
             // If any of them is false, DO disconnect
             else
             {
+                NodeDebug.LogError($"Can't connect {from.fieldName} because doesn't match expected port types:  {string.Join(",", Array.ConvertAll(typesPort, item => item.ToString()))} and node types: {string.Join(",", Array.ConvertAll(typesNode, item => item.ToString()))}", node);
                 from.Disconnect(to);
                 return false;
             }
