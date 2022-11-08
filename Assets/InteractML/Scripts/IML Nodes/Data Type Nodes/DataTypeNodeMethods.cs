@@ -121,8 +121,13 @@ namespace InteractML.DataTypeNodes
         {
             //Debug.Log(from.node);
             //Debug.Log(to.GetInputValue().GetType());
+            if (to.GetInputValue() == null)
+            {
+                from.Disconnect(to);
+                NodeDebug.LogError($"Can't connect because {from.fieldName} is null", node);
+            }
             // if connected a float array to input port
-            if (to.GetInputValue().GetType() == typeof(float[]))
+            else if (to.GetInputValue().GetType() == typeof(float[]))
             {
                 // check that it size matches features in data type otherwise disconnect float array
                 if (to.node.GetInputValue<float[]>("m_In").Length != node.FeatureValues.Values.Length) { from.Disconnect(to); }

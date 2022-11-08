@@ -204,7 +204,7 @@ namespace InteractML.DataTypeNodes
             // Read input (if it returns default(T) there is no connection)
             string inputPortName = "m_In";
             var inputReceived = GetInputValue<T>(inputPortName);
-            IMLBaseDataType inputFeatureValues = null;
+            IMLBaseDataType inputIMLValues = null;
 
             // Check if we have something connected to the input port
             if (inputReceived != null && !Equals(inputReceived, default(T)))
@@ -212,7 +212,7 @@ namespace InteractML.DataTypeNodes
                 // Update the value of this data node
                 Value = inputReceived;
             }
-            // In case the input is null, check if we can extract a feature from the connection
+            // In case the input is null, check if we can extract a feature or float array from the connection
             else
             {
                 var inputPort = GetPort(inputPortName);
@@ -220,23 +220,29 @@ namespace InteractML.DataTypeNodes
                 {
                     // Get input featureValues from connected node
                     var nodeConnected = inputPort.Connection.node;
+                    var valuesRaw = inputPort.Connection.GetOutputValue();
+                    // admit Features
                     if (nodeConnected is IFeatureIML)
-                        inputFeatureValues = (nodeConnected as IFeatureIML).FeatureValues;
+                        inputIMLValues = (nodeConnected as IFeatureIML).FeatureValues;
+                    // admit float[] port and values
+                    else if (inputPort.Connection.ValueType == typeof(float[]) && valuesRaw != null && valuesRaw is float[])
+                        inputIMLValues = IMLBaseDataType.GetDataTypeInstance(typeof(T), valuesRaw);
 
-                    if (inputFeatureValues != null)
+
+                    if (inputIMLValues != null)
                     {
                         // Are the inputFeatureValues the same type than our featureValues?
                         var emptyDataInstance = IMLBaseDataType.GetDataTypeInstance(typeof(T));
-                        if (emptyDataInstance != null && inputFeatureValues.DataType.Equals(emptyDataInstance.DataType))
+                        if (emptyDataInstance != null && inputIMLValues.DataType.Equals(emptyDataInstance.DataType))
                         {
                             // If so, attempt to pull data 
-                            if (inputFeatureValues.Values != null)
+                            if (inputIMLValues.Values != null)
                             {
                                 // Attempt to set our own featureValues
-                                if (FeatureValues != null) FeatureValues.SetValues(inputFeatureValues.Values);
+                                if (FeatureValues != null) FeatureValues.SetValues(inputIMLValues.Values);
                                 // Attempt to set our C# value field
                                 T auxValue = default(T);
-                                CastIMLDataToData(inputFeatureValues, ref auxValue);
+                                CastIMLDataToData(inputIMLValues, ref auxValue);
                                 Value = auxValue;
                             }
                         }
