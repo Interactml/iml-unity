@@ -62,7 +62,6 @@ namespace InteractML.Functions
 
 				m_OutDataType = In.Add(Amount);
 				m_IsUpdated = true;
-				Debug.Log("ADD!");
 			}
         }
 

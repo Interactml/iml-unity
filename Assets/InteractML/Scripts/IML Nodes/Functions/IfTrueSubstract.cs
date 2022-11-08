@@ -64,7 +64,6 @@ namespace InteractML.Functions
 
 				m_OutDataType = In.Substract(Amount);
 				m_IsUpdated = true;
-				Debug.Log("REMOVE!");
 			}
 		}
 
