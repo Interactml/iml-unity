@@ -79,25 +79,90 @@ namespace InteractML
             return this;
         }
 
+        /// <summary>
+        /// Returns an instance of an IMLDataType based on the type passed in (value can be passed to set the instance value)
+        /// </summary>
+        /// <param name="type">i.e. float, int, Vector3...</param>
+        public static IMLBaseDataType GetDataTypeInstance (System.Type type, object value = null)
         {
             if (type == typeof(float))
-                return new IMLFloat();
+            {
+                var result = new IMLFloat();
+                if (value != null)
+                {
+                     if (value is float) result.SetValues((float)value);
+                     else if (value is float[]) result.SetValues((float[])value);
+                }
+                return result;
+            }
             else if (type == typeof(int))
-                return new IMLInteger();
+            {
+                var result = new IMLInteger();
+                if (value != null)
+                {
+                    if (value is float) result.SetValues((int)value);
+                    else if (value is float[]) result.SetValues((float[])value);
+                }
+
+                return result;
+            }
             else if (type == typeof(Vector2))
-                return new IMLVector2();
+            {
+                var result = new IMLVector2();
+                if (value != null)
+                {
+                    if (value is float) result.SetValues((Vector2)value);
+                    else if (value is float[]) result.SetValues((float[])value);
+                }
+
+                return result;
+            }
             else if (type == typeof(Vector3))
-                return new IMLVector3();
+            {
+                var result = new IMLVector3();
+                if (value != null)
+                {
+                    if (value is float) result.SetValues((Vector3)value);
+                    else if (value is float[]) result.SetValues((float[])value);
+                }
+
+                return result;
+            }
             else if (type == typeof(Vector4))
-                return new IMLVector4();
+            {
+                var result = new IMLVector4();
+                if (value != null)
+                {
+                    if (value is float) result.SetValues((Vector4)value);
+                    else if (value is float[]) result.SetValues((float[])value);
+                }
+
+                return result;
+            }
             else if (type == typeof(bool))
-                return new IMLBoolean();
+            {
+                var result = new IMLBoolean();
+                if (value != null)
+                {
+                    if (value is float) result.SetValues((bool)value);
+                    else if (value is float[]) result.SetValues((float[])value);
+                }
+
+                return result;
+            }
             else if (type == typeof(float[]))
-                return new IMLArray();
+            {
+                var result = new IMLArray();
+                if (value != null)
+                {
+                    if (value is float[]) result.SetValues((float[])value);
+                }
+
+                return result;
+            }
             else
                 return null; // not implement datatype is null
         }
-
     }
 
 }
