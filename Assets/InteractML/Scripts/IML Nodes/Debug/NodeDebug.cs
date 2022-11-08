@@ -33,25 +33,23 @@ namespace InteractML
         /// </summary>
         /// <param name="text"></param>
         /// <param name="node"></param>
-        public static void LogWarning(string text, Node node, bool debugToConsole = false) 
+        public static void LogWarning(string text, Node node, bool debugToConsole = true) 
         {
-            if (m_Logs == null)
-                m_Logs = new Dictionary<Node, string>();
+            AddToQueue(text, node);
+            if (debugToConsole) Debug.LogWarning($"{text} \n In {node}");
+        }
 
-            if (!m_Logs.ContainsKey(node))
-                m_Logs.Add(node, text);
-            else
-                AddToQueue(text, node);
-
-            if (debugToConsole)
-                Debug.LogWarning($"{text} \n In {node}");
+        public static void LogError(string text, Node node, bool debugToConsole = true)
+        {
+            AddToQueue(text, node);
+            if (debugToConsole) Debug.LogError($"{text} \n In {node}");
         }
 
         /// <summary>
         /// Deletes the current log warning displayed for a node
         /// </summary>
         /// <param name="node"></param>
-        public static void DeleteLogWarning(Node node)
+        public static void DeleteLog(Node node)
         {
             // Remove
             if (m_Logs.ContainsKey(node))
@@ -87,12 +85,19 @@ namespace InteractML
         /// <param name="node"></param>
         private static void AddToQueue(string text, Node node)
         {
-            if (m_LogsQueue == null)
-                m_LogsQueue = new List<KeyValuePair<Node, string>>();
+            if (m_Logs == null)
+                m_Logs = new Dictionary<Node, string>();
 
-            var element = new KeyValuePair<Node, string>(node, text);
-            m_LogsQueue.Add(element);
+            if (!m_Logs.ContainsKey(node))
+                m_Logs.Add(node, text);
+            else
+            {
+                if (m_LogsQueue == null)
+                    m_LogsQueue = new List<KeyValuePair<Node, string>>();
 
+                var element = new KeyValuePair<Node, string>(node, text);
+                m_LogsQueue.Add(element);
+            }
         }
     }
 }
