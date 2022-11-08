@@ -26,10 +26,59 @@ namespace InteractML
         public abstract void SetValues(float[] newValues);
 
         /// <summary>
-        /// Returns an instance of an IMLDataType based on the type passed in
+        /// Adds an amount to the internal data structure
         /// </summary>
-        /// <param name="type"></param>
-        public static IMLBaseDataType GetDataTypeInstance (System.Type type)
+        /// <param name="amount"></param>
+        public virtual IMLBaseDataType Add(IMLBaseDataType amount)
+        {
+            if (amount != null && amount.Values != null && amount.Values.Length > 0)
+            {
+                if (amount.DataType == DataType)
+                {
+                    for (int i = 0; i < amount.Values.Length; i++)
+                    {
+                        Values[i] += amount.Values[i];                       
+                    }
+                }
+                else
+                {
+                    UnityEngine.Debug.LogError("Wrong type passed in data type operation");
+                }
+            }
+            else
+            {
+                UnityEngine.Debug.LogError("Null reference in data type operation");
+            }
+            return this;
+        }
+
+        /// <summary>
+        /// Substract an amount to the internal data structure
+        /// </summary>
+        /// <param name="amount"></param>
+        public virtual IMLBaseDataType Substract(IMLBaseDataType amount)
+        {
+            if (amount != null && amount.Values != null && amount.Values.Length > 0)
+            {
+                if (amount.DataType == DataType)
+                {
+                    for (int i = 0; i < amount.Values.Length; i++)
+                    {
+                        Values[i] -= amount.Values[i];
+                    }
+                }
+                else
+                {
+                    UnityEngine.Debug.LogError("Wrong type passed in data type operation");
+                }
+            }
+            else
+            {
+                UnityEngine.Debug.LogError("Null reference in data type operation");
+            }
+            return this;
+        }
+
         {
             if (type == typeof(float))
                 return new IMLFloat();

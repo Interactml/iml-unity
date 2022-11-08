@@ -17,7 +17,7 @@ namespace InteractML.DataTypeNodes
                     m_FeatureValues = new IMLInteger();
 
                 // Update local IML Data copy
-                m_FeatureValues.SetValue(Value);
+                m_FeatureValues.SetValues(Value);
                 return m_FeatureValues;
             }
         }

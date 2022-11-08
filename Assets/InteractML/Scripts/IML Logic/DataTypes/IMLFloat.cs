@@ -66,6 +66,45 @@ namespace InteractML
             return m_Values[0];
         }
 
+        public override IMLBaseDataType Add(IMLBaseDataType amount)
+        {
+            if (amount != null && amount.Values != null && amount.Values.Length > 0)
+            {
+                if (amount.DataType == DataType || amount.DataType == IMLSpecifications.DataTypes.Integer)
+                {
+                    SetValues(m_Values[0] + amount.Values[0]);
+                }
+                else
+                {
+                    Debug.LogError("Wrong type passed in data type operation");
+                }
+            }
+            else
+            {
+                Debug.LogError("Null reference in data type operation");
+            }
+            return this;
+        }
+
+        public override IMLBaseDataType Substract(IMLBaseDataType amount)
+        {
+            if (amount != null && amount.Values != null && amount.Values.Length > 0)
+            {
+                if (amount.DataType == DataType || amount.DataType == IMLSpecifications.DataTypes.Integer)
+                {
+                    SetValues(m_Values[0] - amount.Values[0]);
+                }
+                else
+                {
+                    Debug.LogError("Wrong type passed in data type operation");
+                }
+            }
+            else
+            {
+                Debug.LogError("Null reference in data type operation");
+            }
+            return this;
+        }
     }
 
 }
