@@ -19,10 +19,14 @@ namespace InteractML.Functions
 		[Output]
 		public IMLBaseDataType Out;
 
-        public bool isExternallyUpdatable => !m_IsUpdated;
+        public bool isExternallyUpdatable => true;
 
         public bool isUpdated { get => m_IsUpdated; set => m_IsUpdated = value; }
-		private bool m_IsUpdated;
+        public bool isLateUpdated { get => m_IsLateUpdated; set => m_IsLateUpdated = value; }
+
+        private bool m_IsUpdated;
+
+		private bool m_IsLateUpdated;
 
         // Use this for initialization
         protected override void Init()
@@ -45,16 +49,11 @@ namespace InteractML.Functions
 				m_IsUpdated = true;
 				Debug.Log("ADD!");
             }
-			Debug.Log("Update called!");
         }
 
         public void LateUpdate()
         {
-            if (m_IsUpdated)
-            {
-				m_IsUpdated = false;
-				Debug.Log("Late update called!");
-            }
+			// do nothing
         }
     }
 }

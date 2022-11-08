@@ -119,6 +119,11 @@ namespace InteractML
                     var goNode = node as GameObjectNode;
                     if (goNode != null) SceneComponent.DeleteGameObjectNode(goNode);
                 }
+                // IUpdatable
+                if (node is IUpdatableIML)
+                {
+                    SceneComponent.DeleteUpdatableNode(node as IUpdatableIML);
+                }
                 RemoveNodeImmediate(node);
             }
         }

@@ -80,6 +80,7 @@ namespace InteractML
         [SerializeField, HideInInspector]
         private List<CustomController> m_CustomControllerList;
         public List<IInputType> inputTypes;
+        public List<IUpdatableIML> m_UpdatablesList;
 
         #endregion
 
@@ -348,6 +349,9 @@ namespace InteractML
 
             if (Lists.IsNullOrEmpty(ref FeatureNodesList))
                 FeatureNodesList = new List<IFeatureIML>();
+
+            if (Lists.IsNullOrEmpty(ref m_UpdatablesList))
+                m_UpdatablesList = new List<IUpdatableIML>();
             
             if (Lists.IsNullOrEmpty(ref m_CustomControllerList))
                 m_CustomControllerList = new List<CustomController>();
@@ -685,6 +689,9 @@ namespace InteractML
 
                     // check node is custom controller 
                     CheckNodeIsCustomController(node, ref m_CustomControllerList);
+
+                    // updatables
+                    CheckNodeIsUpdatable(node, ref m_UpdatablesList);
                 }
 
             }
@@ -857,6 +864,34 @@ namespace InteractML
 
         }
 
+        /// <summary>
+        /// Adds an updatable node to the list of updatables
+        /// </summary>
+        /// <param name="nodeToAdd"></param>
+        /// <param name="listToAddTo"></param>
+        private void CheckNodeIsUpdatable(XNode.Node nodeToAdd, ref List<IUpdatableIML> listToAddTo)
+        {
+            // We first check that the node ref is not null
+            if (nodeToAdd != null)
+            {
+                // Then check that the node is a feature
+                var featureNode = nodeToAdd as IUpdatableIML;
+                if (featureNode != null)
+                {
+                    // Make sure the list is init
+                    if (listToAddTo == null)
+                        listToAddTo = new List<IUpdatableIML>();
+
+                    // If we got a feature, we add it to the list (if it is not there already)
+                    if (!listToAddTo.Contains(featureNode))
+                    {
+                        listToAddTo.Add(featureNode);
+                    }
+
+                }
+            }
+        }
+
         private void RunFeaturesLogic()
         {
             if (FeatureNodesList == null)
@@ -875,6 +910,44 @@ namespace InteractML
                     FeatureNodesList[i].isUpdated = true;
                 }
             }
+        }
+
+        private void RunUpdatablesLogic()
+        {
+            if (m_UpdatablesList == null) return;
+            for (int i = 0; i < m_UpdatablesList.Count; i++)
+            {
+                // Call the update logic per node ONLY IF THEY ARE UPDATABLE (for performance reasons)
+                if (m_UpdatablesList[i].isExternallyUpdatable)
+                {
+                    // Unlock the isUpdated flag so that all fields will be properly updated
+                    m_UpdatablesList[i].isUpdated = false;
+                    // Update the feature
+                    m_UpdatablesList[i].Update();
+                    // Lock isUpdated so that later on calls don't recalculate certain values (as the velocity for instance)
+                    m_UpdatablesList[i].isUpdated = true;
+                }
+            }
+        }
+
+        private void RunLateUpdatablesLogic()
+        {
+            if (m_UpdatablesList == null) return;
+            for (int i = 0; i < m_UpdatablesList.Count; i++)
+            {
+                // Call the update logic per node ONLY IF THEY ARE UPDATABLE (for performance reasons)
+                if (m_UpdatablesList[i].isExternallyUpdatable)
+                {
+                    // Unlock the isUpdated flag so that all fields will be properly updated
+                    m_UpdatablesList[i].isLateUpdated = false;
+                    // Update the feature
+                    m_UpdatablesList[i].LateUpdate();
+                    // Lock isUpdated so that later on calls don't recalculate certain values (as the velocity for instance)
+                    m_UpdatablesList[i].isLateUpdated = true;
+                }
+
+            }
+
         }
 
         /// <summary>
@@ -1766,6 +1839,9 @@ namespace InteractML
                 // Send GameObject data to GONodes
                 SendGameObjectsToIMLController();
 
+                // Run logic for all updatables
+                RunUpdatablesLogic();
+
                 // Run logic for all feature nodes
                 RunFeaturesLogic();
 
@@ -1775,6 +1851,8 @@ namespace InteractML
                 // Run logic for all MLSystem nodes
                 RunMLSystemLogic();
 
+                // Run logic for all lateUpdatables
+                RunLateUpdatablesLogic();
 
             } else
             {
@@ -2647,6 +2725,12 @@ namespace InteractML
         {
             if (FeatureNodesList.Contains(nodeToDelete))
                 FeatureNodesList.Remove(nodeToDelete);
+        }
+
+        public void DeleteUpdatableNode(IUpdatableIML nodeToDelete)
+        {
+            if (m_UpdatablesList.Contains(nodeToDelete))
+                m_UpdatablesList.Remove(nodeToDelete);
         }
 
         /// <summary>

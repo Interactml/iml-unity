@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace InteractML
 {
+    /// <summary>
+    /// Allows a node to implement the Update and LateUpdate methods
+    /// </summary>
     public interface IUpdatableIML
     {
         /// <summary>
@@ -16,6 +19,11 @@ namespace InteractML
         bool isUpdated { get; set; }
 
         /// <summary>
+        /// Flag to check if the class is late updated already
+        /// </summary>
+        bool isLateUpdated { get; set; }
+
+        /// <summary>
         /// Function to call to run code to update class
         /// </summary>
         void Update();
@@ -24,5 +32,6 @@ namespace InteractML
         /// Called after update has finished
         /// </summary>
         void LateUpdate();
+
     }
 }
