@@ -77,11 +77,6 @@ namespace InteractML
             m_ValuesToReturn.z = m_Values[2];
             return m_ValuesToReturn;
         }
-
-        public static implicit operator Vector3(IMLVector3 v)
-        {
-            throw new NotImplementedException();
-        }
     }
 
 }
