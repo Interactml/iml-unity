@@ -462,6 +462,10 @@ namespace InteractML
         {
             base.OnRemoveConnection(port);
 
+            // don't run this logic if this graph isn't active!
+            if (graph == null || (graph as IMLGraph).SceneComponent == null || (graph as IMLGraph).SceneComponent.isActiveAndEnabled)
+                return;
+
             // to be deleted when new events completely tested
             //m_NodeConnectionChanged = true;
 
@@ -907,7 +911,7 @@ namespace InteractML
                 }
                 else
                 {
-                    Debug.LogWarning("Live inputs connected to MLSystem don't match the inputs connected to Teach the Machine. Are you sure the input features are the same?");
+                    Debug.LogError("Live inputs connected to MLSystem don't match the inputs connected to Teach the Machine. Are you sure the input features and live inputs are the same?");
                     matchVectorLength = false;
                 }
             } else {
