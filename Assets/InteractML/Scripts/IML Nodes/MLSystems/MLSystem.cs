@@ -2466,7 +2466,8 @@ namespace InteractML
                 string status = "";
                 if (Trained)
                 {
-                    status = "Trained " + m_NumExamplesTrainedOn.ToString() + "\n";
+                    status = "Trained " + m_NumExamplesTrainedOn.ToString() + "\n";                
+                    // TO DO: ifTrainKeyPresent && canTrain then display "press key to train"
                 }
                 
                 if (Running)

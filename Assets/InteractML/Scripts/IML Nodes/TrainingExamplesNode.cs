@@ -1366,7 +1366,9 @@ namespace InteractML
         /// <returns></returns>
         public string GetStatus(string nodeid)
         {
-            
+            // TO DO: ADD INSTRUCTIONS ifCollectKeyPresent, ifDeleteKeyPresent
+
+
             if (nodeid == this.id)
             {
                 string status = "";
