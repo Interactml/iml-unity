@@ -33,6 +33,13 @@ namespace InteractML
         /// </summary>
         private int m_NumFramesToWait = 10;
 
+        /// <summary>
+        /// What is the console logging?
+        /// </summary>
+        private enum LogOptionsEnum { all, trainingExamples, MLsystem }
+        [SerializeField]
+        private LogOptionsEnum m_LogOptions;
+
         #endregion
 
         #region Unity Messages
@@ -107,9 +114,11 @@ namespace InteractML
         private string PullStatus(IMLComponent MLComponent)
         {
             string status = "";
+            bool logTENodes = m_LogOptions == LogOptionsEnum.all || m_LogOptions == LogOptionsEnum.trainingExamples ? true : false;
+            bool logMLSNodes = m_LogOptions == LogOptionsEnum.all || m_LogOptions == LogOptionsEnum.MLsystem ? true : false;
 
             // Training Examples
-            if (MLComponent.TrainingExamplesNodesList != null)
+            if (logTENodes && MLComponent.TrainingExamplesNodesList != null)
             {
                 foreach (var TENode in MLComponent.TrainingExamplesNodesList)
                 {
@@ -121,7 +130,7 @@ namespace InteractML
             }
 
             // MLSystems
-            if (MLComponent.MLSystemNodeList != null)
+            if (logMLSNodes && MLComponent.MLSystemNodeList != null)
             {
                 foreach (var MLSNode in MLComponent.MLSystemNodeList)
                 {
