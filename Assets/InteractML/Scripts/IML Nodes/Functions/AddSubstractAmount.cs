@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using XNode;
@@ -6,21 +6,22 @@ using XNode;
 namespace InteractML.Functions
 {
 	/// <summary>
-	/// <summary>
-	/// Node that substracts an amount to a variable
+	/// Node that adds or substracts an amount to a variable
 	/// </summary>
-	/// </summary>
-	public class IfTrueSubstract : IMLNode, IUpdatableIML
-	{
-		[Input(typeConstraint = TypeConstraint.Strict, connectionType = ConnectionType.Override)]
-		public bool True;
-		[Input(connectionType = ConnectionType.Override)]
-		public IMLBaseDataType Amount;
+    public class AddSubstractAmount : IMLNode, IUpdatableIML
+    {
 		[Input(connectionType = ConnectionType.Override)]
 		public IMLBaseDataType In;
 		[Output]
 		public float[] Out;
 		private IMLBaseDataType m_OutDataType;
+		[Input(connectionType = ConnectionType.Override)]
+		public IMLBaseDataType Amount;
+		[Input(typeConstraint = TypeConstraint.Strict, connectionType = ConnectionType.Override)]
+		public bool Add;
+		[Input(typeConstraint = TypeConstraint.Strict, connectionType = ConnectionType.Override)]
+		public bool Substract;
+
 
 		public bool isExternallyUpdatable => true;
 
@@ -59,11 +60,19 @@ namespace InteractML.Functions
 		{
 			In = PullData("In");
 			Amount = PullData("Amount");
-			if (In != null && Amount != null && GetInputValue<bool>("True"))
+			if (In != null && Amount != null)
 			{
+                if (GetInputValue<bool>("Add"))
+                {
+					m_OutDataType = In.Add(Amount);
+					m_IsUpdated = true;
 
-				m_OutDataType = In.Substract(Amount);
-				m_IsUpdated = true;
+				}
+				else if (GetInputValue<bool>("Substract"))
+                {
+					m_OutDataType = In.Substract(Amount);
+					m_IsUpdated = true;
+				}
 			}
 		}
 
@@ -108,4 +117,5 @@ namespace InteractML.Functions
 
 		#endregion
 	}
+
 }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8617577383709102119
+--- !u!114 &-8963238612936491206
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,72 +9,361 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 797eb4ce602125f41af5bf050a2d8b80, type: 3}
-  m_Name: If True Add
+  m_Script: {fileID: 11500000, guid: 6cd80d6ec5a1f7540bcf4649926cc13f, type: 3}
+  m_Name: Keyboard Press
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 510.34976, y: 682.6419}
+  position: {x: -1384, y: 680}
   ports:
     keys:
-    - True
-    - In
-    - Amount
-    - Out
+    - inputValue
     values:
-    - _fieldName: True
-      _node: {fileID: -8617577383709102119}
+    - _fieldName: inputValue
+      _node: {fileID: -8963238612936491206}
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: inputValue
-        node: {fileID: 860140333848191702}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 1
-      _typeConstraint: 2
-      _dynamic: 0
-    - _fieldName: In
-      _node: {fileID: -8617577383709102119}
-      _typeQualifiedName: InteractML.IMLBaseDataType, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: m_Out
-        node: {fileID: -336232600155695314}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Amount
-      _node: {fileID: -8617577383709102119}
-      _typeQualifiedName: InteractML.IMLBaseDataType, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: m_Out
-        node: {fileID: -1794692272339360637}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Out
-      _node: {fileID: -8617577383709102119}
-      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_In
-        node: {fileID: -336232600155695314}
+      - fieldName: Add
+        node: {fileID: 3742855642755047641}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: ea2d1135-439d-4af4-bb9a-7a3895a8b552
+  id: 818a6690-25eb-4cf3-adae-ece5cd791651
   numberInComponentList: -1
-  True: 0
-  Out:
-  - -51
---- !u!114 &-4517976382709170468
+  inputValue: 0
+  inputNo: 94
+  trigger: 0
+  buttonOptions:
+  - None
+  - Backspace
+  - Tab
+  - Clear
+  - Return
+  - Pause
+  - Escape
+  - Space
+  - Exclaim
+  - DoubleQuote
+  - Hash
+  - Dollar
+  - Percent
+  - Ampersand
+  - Quote
+  - LeftParen
+  - RightParen
+  - Asterisk
+  - Plus
+  - Comma
+  - Minus
+  - Period
+  - Slash
+  - Alpha0
+  - Alpha1
+  - Alpha2
+  - Alpha3
+  - Alpha4
+  - Alpha5
+  - Alpha6
+  - Alpha7
+  - Alpha8
+  - Alpha9
+  - Colon
+  - Semicolon
+  - Less
+  - Equals
+  - Greater
+  - Question
+  - At
+  - LeftBracket
+  - Backslash
+  - RightBracket
+  - Caret
+  - Underscore
+  - BackQuote
+  - A
+  - B
+  - C
+  - D
+  - E
+  - F
+  - G
+  - H
+  - I
+  - J
+  - K
+  - L
+  - M
+  - N
+  - O
+  - P
+  - Q
+  - R
+  - S
+  - T
+  - U
+  - V
+  - W
+  - X
+  - Y
+  - Z
+  - LeftCurlyBracket
+  - Pipe
+  - RightCurlyBracket
+  - Tilde
+  - Delete
+  - Keypad0
+  - Keypad1
+  - Keypad2
+  - Keypad3
+  - Keypad4
+  - Keypad5
+  - Keypad6
+  - Keypad7
+  - Keypad8
+  - Keypad9
+  - KeypadPeriod
+  - KeypadDivide
+  - KeypadMultiply
+  - KeypadMinus
+  - KeypadPlus
+  - KeypadEnter
+  - KeypadEquals
+  - UpArrow
+  - DownArrow
+  - RightArrow
+  - LeftArrow
+  - Insert
+  - Home
+  - End
+  - PageUp
+  - PageDown
+  - F1
+  - F2
+  - F3
+  - F4
+  - F5
+  - F6
+  - F7
+  - F8
+  - F9
+  - F10
+  - F11
+  - F12
+  - F13
+  - F14
+  - F15
+  - Numlock
+  - CapsLock
+  - ScrollLock
+  - RightShift
+  - LeftShift
+  - RightControl
+  - LeftControl
+  - RightAlt
+  - LeftAlt
+  - RightCommand
+  - RightApple
+  - LeftCommand
+  - LeftApple
+  - LeftWindows
+  - RightWindows
+  - AltGr
+  - Help
+  - Print
+  - SysReq
+  - Break
+  - Menu
+  - Mouse0
+  - Mouse1
+  - Mouse2
+  - Mouse3
+  - Mouse4
+  - Mouse5
+  - Mouse6
+  - JoystickButton0
+  - JoystickButton1
+  - JoystickButton2
+  - JoystickButton3
+  - JoystickButton4
+  - JoystickButton5
+  - JoystickButton6
+  - JoystickButton7
+  - JoystickButton8
+  - JoystickButton9
+  - JoystickButton10
+  - JoystickButton11
+  - JoystickButton12
+  - JoystickButton13
+  - JoystickButton14
+  - JoystickButton15
+  - JoystickButton16
+  - JoystickButton17
+  - JoystickButton18
+  - JoystickButton19
+  - Joystick1Button0
+  - Joystick1Button1
+  - Joystick1Button2
+  - Joystick1Button3
+  - Joystick1Button4
+  - Joystick1Button5
+  - Joystick1Button6
+  - Joystick1Button7
+  - Joystick1Button8
+  - Joystick1Button9
+  - Joystick1Button10
+  - Joystick1Button11
+  - Joystick1Button12
+  - Joystick1Button13
+  - Joystick1Button14
+  - Joystick1Button15
+  - Joystick1Button16
+  - Joystick1Button17
+  - Joystick1Button18
+  - Joystick1Button19
+  - Joystick2Button0
+  - Joystick2Button1
+  - Joystick2Button2
+  - Joystick2Button3
+  - Joystick2Button4
+  - Joystick2Button5
+  - Joystick2Button6
+  - Joystick2Button7
+  - Joystick2Button8
+  - Joystick2Button9
+  - Joystick2Button10
+  - Joystick2Button11
+  - Joystick2Button12
+  - Joystick2Button13
+  - Joystick2Button14
+  - Joystick2Button15
+  - Joystick2Button16
+  - Joystick2Button17
+  - Joystick2Button18
+  - Joystick2Button19
+  - Joystick3Button0
+  - Joystick3Button1
+  - Joystick3Button2
+  - Joystick3Button3
+  - Joystick3Button4
+  - Joystick3Button5
+  - Joystick3Button6
+  - Joystick3Button7
+  - Joystick3Button8
+  - Joystick3Button9
+  - Joystick3Button10
+  - Joystick3Button11
+  - Joystick3Button12
+  - Joystick3Button13
+  - Joystick3Button14
+  - Joystick3Button15
+  - Joystick3Button16
+  - Joystick3Button17
+  - Joystick3Button18
+  - Joystick3Button19
+  - Joystick4Button0
+  - Joystick4Button1
+  - Joystick4Button2
+  - Joystick4Button3
+  - Joystick4Button4
+  - Joystick4Button5
+  - Joystick4Button6
+  - Joystick4Button7
+  - Joystick4Button8
+  - Joystick4Button9
+  - Joystick4Button10
+  - Joystick4Button11
+  - Joystick4Button12
+  - Joystick4Button13
+  - Joystick4Button14
+  - Joystick4Button15
+  - Joystick4Button16
+  - Joystick4Button17
+  - Joystick4Button18
+  - Joystick4Button19
+  - Joystick5Button0
+  - Joystick5Button1
+  - Joystick5Button2
+  - Joystick5Button3
+  - Joystick5Button4
+  - Joystick5Button5
+  - Joystick5Button6
+  - Joystick5Button7
+  - Joystick5Button8
+  - Joystick5Button9
+  - Joystick5Button10
+  - Joystick5Button11
+  - Joystick5Button12
+  - Joystick5Button13
+  - Joystick5Button14
+  - Joystick5Button15
+  - Joystick5Button16
+  - Joystick5Button17
+  - Joystick5Button18
+  - Joystick5Button19
+  - Joystick6Button0
+  - Joystick6Button1
+  - Joystick6Button2
+  - Joystick6Button3
+  - Joystick6Button4
+  - Joystick6Button5
+  - Joystick6Button6
+  - Joystick6Button7
+  - Joystick6Button8
+  - Joystick6Button9
+  - Joystick6Button10
+  - Joystick6Button11
+  - Joystick6Button12
+  - Joystick6Button13
+  - Joystick6Button14
+  - Joystick6Button15
+  - Joystick6Button16
+  - Joystick6Button17
+  - Joystick6Button18
+  - Joystick6Button19
+  - Joystick7Button0
+  - Joystick7Button1
+  - Joystick7Button2
+  - Joystick7Button3
+  - Joystick7Button4
+  - Joystick7Button5
+  - Joystick7Button6
+  - Joystick7Button7
+  - Joystick7Button8
+  - Joystick7Button9
+  - Joystick7Button10
+  - Joystick7Button11
+  - Joystick7Button12
+  - Joystick7Button13
+  - Joystick7Button14
+  - Joystick7Button15
+  - Joystick7Button16
+  - Joystick7Button17
+  - Joystick7Button18
+  - Joystick7Button19
+  - Joystick8Button0
+  - Joystick8Button1
+  - Joystick8Button2
+  - Joystick8Button3
+  - Joystick8Button4
+  - Joystick8Button5
+  - Joystick8Button6
+  - Joystick8Button7
+  - Joystick8Button8
+  - Joystick8Button9
+  - Joystick8Button10
+  - Joystick8Button11
+  - Joystick8Button12
+  - Joystick8Button13
+  - Joystick8Button14
+  - Joystick8Button15
+  - Joystick8Button16
+  - Joystick8Button17
+  - Joystick8Button18
+  - Joystick8Button19
+  name: Keyboard Input
+--- !u!114 &-5260664203624429952
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -83,91 +372,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a19e741e423c3c4abced594a9e6f303, type: 3}
-  m_Name: Float
+  m_Script: {fileID: 11500000, guid: 80f0248e28ba54147ba54c8ab1f33558, type: 3}
+  m_Name: Position
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1048, y: 1368}
+  position: {x: -952, y: -376}
   ports:
     keys:
-    - m_In
-    - m_Out
+    - GameObjectDataIn
+    - LiveDataOut
     values:
-    - _fieldName: m_In
-      _node: {fileID: -4517976382709170468}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
+    - _fieldName: GameObjectDataIn
+      _node: {fileID: -5260664203624429952}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
       connections:
-      - fieldName: Out
-        node: {fileID: 4595884858365923681}
+      - fieldName: GameObjectDataOut
+        node: {fileID: 3993017981179710926}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-    - _fieldName: m_Out
-      _node: {fileID: -4517976382709170468}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: In
-        node: {fileID: 4595884858365923681}
-        reroutePoints:
-        - {x: 1038.9774, y: 1881.1829}
-        - {x: 679.23987, y: 1766.42}
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  id: 4ba5f66a-4858-4bd2-8965-936607112a3d
-  numberInComponentList: -1
-  ValueName: 
-  m_In: 0
-  m_Value: -49
-  m_Out: -49
-  ReceivingData: 0
-  FeatureValueReceivingData: 00
-  InputConnected: 1
-  Counter: 4
-  Count: 5
-  ToggleSwitches: 01
-  ReceivedValue:
-  - -49
-  m_FeatureValues:
-    m_Values:
-    - -49
---- !u!114 &-3723057345519979888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a19e741e423c3c4abced594a9e6f303, type: 3}
-  m_Name: Float
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -616, y: -264}
-  ports:
-    keys:
-    - m_In
-    - m_Out
-    values:
-    - _fieldName: m_In
-      _node: {fileID: -3723057345519979888}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: m_Out
-      _node: {fileID: -3723057345519979888}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
+    - _fieldName: LiveDataOut
+      _node: {fileID: -5260664203624429952}
+      _typeQualifiedName: XNode.Node, XNode, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: InputFeatures
         node: {fileID: 7273924063985917102}
@@ -176,24 +405,24 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 4e04ed31-6708-4546-afb9-338540d0a512
+  id: 5f285a76-c036-4be7-8a81-c62281e77023
   numberInComponentList: -1
-  ValueName: 
-  m_In: 0
-  m_Value: 2
-  m_Out: 0
   ReceivingData: 0
-  FeatureValueReceivingData: 00
-  InputConnected: 0
-  Counter: 3
+  FeatureValueReceivingData: 010101
+  Counter: 0
   Count: 5
-  ToggleSwitches: 01
-  ReceivedValue:
-  - 2
-  m_FeatureValues:
+  ToggleSwitches: 010101
+  ReceivedValue: []
+  GameObjectDataIn: {fileID: 0}
+  LiveDataOut: {fileID: 0}
+  LocalSpace: 0
+  GameObjInputMissing: 0
+  m_PositionExtracted:
     m_Values:
-    - 2
---- !u!114 &-1794692272339360637
+    - 0
+    - 0
+    - 8
+--- !u!114 &-2159249642620680303
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -202,19 +431,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a19e741e423c3c4abced594a9e6f303, type: 3}
-  m_Name: Float
+  m_Script: {fileID: 11500000, guid: 0d534d44a87f50e4f80bf8cd2142328f, type: 3}
+  m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 120, y: 1128}
+  position: {x: -1384, y: 376}
   ports:
     keys:
     - m_In
     - m_Out
     values:
     - _fieldName: m_In
-      _node: {fileID: -1794692272339360637}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+      _node: {fileID: -2159249642620680303}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections: []
       _direction: 0
@@ -222,35 +451,32 @@ MonoBehaviour:
       _typeConstraint: 0
       _dynamic: 0
     - _fieldName: m_Out
-      _node: {fileID: -1794692272339360637}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+      _node: {fileID: -2159249642620680303}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
       - fieldName: Amount
-        node: {fileID: -8617577383709102119}
+        node: {fileID: 3742855642755047641}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: c97da771-7064-41ee-8e5b-2bb3a43bd0a8
+  id: 1801c833-4c59-4b3e-beb3-4b4f98a6eff5
   numberInComponentList: -1
   ValueName: 
   m_In: 0
-  m_Value: -2
-  m_Out: -2
+  m_Value: 1
+  m_Out: 1
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 3
+  Counter: 0
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
-  - -2
-  m_FeatureValues:
-    m_Values:
-    - -2
---- !u!114 &-336232600155695314
+  - 0
+--- !u!114 &-706788082532722074
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -259,60 +485,723 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a19e741e423c3c4abced594a9e6f303, type: 3}
-  m_Name: Float
+  m_Script: {fileID: 11500000, guid: 6cd80d6ec5a1f7540bcf4649926cc13f, type: 3}
+  m_Name: Keyboard Press
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 808, y: 664}
+  position: {x: -1368, y: 968}
   ports:
     keys:
-    - m_In
-    - m_Out
+    - inputValue
     values:
-    - _fieldName: m_In
-      _node: {fileID: -336232600155695314}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+    - _fieldName: inputValue
+      _node: {fileID: -706788082532722074}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: Out
-        node: {fileID: -8617577383709102119}
+      - fieldName: Substract
+        node: {fileID: 3742855642755047641}
         reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: m_Out
-      _node: {fileID: -336232600155695314}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: In
-        node: {fileID: -8617577383709102119}
-        reroutePoints:
-        - {x: 1192.1003, y: 1079.685}
-        - {x: 970.1042, y: 1237.3022}
-        - {x: 446.19327, y: 1095.2247}
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 18e23204-931b-4c50-885b-b6696c87a323
+  id: 11b12606-3804-489c-a460-d8cc4a6f5662
   numberInComponentList: -1
-  ValueName: 
-  m_In: 0
-  m_Value: -51
-  m_Out: -51
-  ReceivingData: 0
-  FeatureValueReceivingData: 00
-  InputConnected: 1
-  Counter: 3
-  Count: 5
-  ToggleSwitches: 01
-  ReceivedValue:
-  - -51
-  m_FeatureValues:
-    m_Values:
-    - -51
+  inputValue: 0
+  inputNo: 95
+  trigger: 0
+  buttonOptions:
+  - None
+  - Backspace
+  - Tab
+  - Clear
+  - Return
+  - Pause
+  - Escape
+  - Space
+  - Exclaim
+  - DoubleQuote
+  - Hash
+  - Dollar
+  - Percent
+  - Ampersand
+  - Quote
+  - LeftParen
+  - RightParen
+  - Asterisk
+  - Plus
+  - Comma
+  - Minus
+  - Period
+  - Slash
+  - Alpha0
+  - Alpha1
+  - Alpha2
+  - Alpha3
+  - Alpha4
+  - Alpha5
+  - Alpha6
+  - Alpha7
+  - Alpha8
+  - Alpha9
+  - Colon
+  - Semicolon
+  - Less
+  - Equals
+  - Greater
+  - Question
+  - At
+  - LeftBracket
+  - Backslash
+  - RightBracket
+  - Caret
+  - Underscore
+  - BackQuote
+  - A
+  - B
+  - C
+  - D
+  - E
+  - F
+  - G
+  - H
+  - I
+  - J
+  - K
+  - L
+  - M
+  - N
+  - O
+  - P
+  - Q
+  - R
+  - S
+  - T
+  - U
+  - V
+  - W
+  - X
+  - Y
+  - Z
+  - LeftCurlyBracket
+  - Pipe
+  - RightCurlyBracket
+  - Tilde
+  - Delete
+  - Keypad0
+  - Keypad1
+  - Keypad2
+  - Keypad3
+  - Keypad4
+  - Keypad5
+  - Keypad6
+  - Keypad7
+  - Keypad8
+  - Keypad9
+  - KeypadPeriod
+  - KeypadDivide
+  - KeypadMultiply
+  - KeypadMinus
+  - KeypadPlus
+  - KeypadEnter
+  - KeypadEquals
+  - UpArrow
+  - DownArrow
+  - RightArrow
+  - LeftArrow
+  - Insert
+  - Home
+  - End
+  - PageUp
+  - PageDown
+  - F1
+  - F2
+  - F3
+  - F4
+  - F5
+  - F6
+  - F7
+  - F8
+  - F9
+  - F10
+  - F11
+  - F12
+  - F13
+  - F14
+  - F15
+  - Numlock
+  - CapsLock
+  - ScrollLock
+  - RightShift
+  - LeftShift
+  - RightControl
+  - LeftControl
+  - RightAlt
+  - LeftAlt
+  - RightCommand
+  - RightApple
+  - LeftCommand
+  - LeftApple
+  - LeftWindows
+  - RightWindows
+  - AltGr
+  - Help
+  - Print
+  - SysReq
+  - Break
+  - Menu
+  - Mouse0
+  - Mouse1
+  - Mouse2
+  - Mouse3
+  - Mouse4
+  - Mouse5
+  - Mouse6
+  - JoystickButton0
+  - JoystickButton1
+  - JoystickButton2
+  - JoystickButton3
+  - JoystickButton4
+  - JoystickButton5
+  - JoystickButton6
+  - JoystickButton7
+  - JoystickButton8
+  - JoystickButton9
+  - JoystickButton10
+  - JoystickButton11
+  - JoystickButton12
+  - JoystickButton13
+  - JoystickButton14
+  - JoystickButton15
+  - JoystickButton16
+  - JoystickButton17
+  - JoystickButton18
+  - JoystickButton19
+  - Joystick1Button0
+  - Joystick1Button1
+  - Joystick1Button2
+  - Joystick1Button3
+  - Joystick1Button4
+  - Joystick1Button5
+  - Joystick1Button6
+  - Joystick1Button7
+  - Joystick1Button8
+  - Joystick1Button9
+  - Joystick1Button10
+  - Joystick1Button11
+  - Joystick1Button12
+  - Joystick1Button13
+  - Joystick1Button14
+  - Joystick1Button15
+  - Joystick1Button16
+  - Joystick1Button17
+  - Joystick1Button18
+  - Joystick1Button19
+  - Joystick2Button0
+  - Joystick2Button1
+  - Joystick2Button2
+  - Joystick2Button3
+  - Joystick2Button4
+  - Joystick2Button5
+  - Joystick2Button6
+  - Joystick2Button7
+  - Joystick2Button8
+  - Joystick2Button9
+  - Joystick2Button10
+  - Joystick2Button11
+  - Joystick2Button12
+  - Joystick2Button13
+  - Joystick2Button14
+  - Joystick2Button15
+  - Joystick2Button16
+  - Joystick2Button17
+  - Joystick2Button18
+  - Joystick2Button19
+  - Joystick3Button0
+  - Joystick3Button1
+  - Joystick3Button2
+  - Joystick3Button3
+  - Joystick3Button4
+  - Joystick3Button5
+  - Joystick3Button6
+  - Joystick3Button7
+  - Joystick3Button8
+  - Joystick3Button9
+  - Joystick3Button10
+  - Joystick3Button11
+  - Joystick3Button12
+  - Joystick3Button13
+  - Joystick3Button14
+  - Joystick3Button15
+  - Joystick3Button16
+  - Joystick3Button17
+  - Joystick3Button18
+  - Joystick3Button19
+  - Joystick4Button0
+  - Joystick4Button1
+  - Joystick4Button2
+  - Joystick4Button3
+  - Joystick4Button4
+  - Joystick4Button5
+  - Joystick4Button6
+  - Joystick4Button7
+  - Joystick4Button8
+  - Joystick4Button9
+  - Joystick4Button10
+  - Joystick4Button11
+  - Joystick4Button12
+  - Joystick4Button13
+  - Joystick4Button14
+  - Joystick4Button15
+  - Joystick4Button16
+  - Joystick4Button17
+  - Joystick4Button18
+  - Joystick4Button19
+  - Joystick5Button0
+  - Joystick5Button1
+  - Joystick5Button2
+  - Joystick5Button3
+  - Joystick5Button4
+  - Joystick5Button5
+  - Joystick5Button6
+  - Joystick5Button7
+  - Joystick5Button8
+  - Joystick5Button9
+  - Joystick5Button10
+  - Joystick5Button11
+  - Joystick5Button12
+  - Joystick5Button13
+  - Joystick5Button14
+  - Joystick5Button15
+  - Joystick5Button16
+  - Joystick5Button17
+  - Joystick5Button18
+  - Joystick5Button19
+  - Joystick6Button0
+  - Joystick6Button1
+  - Joystick6Button2
+  - Joystick6Button3
+  - Joystick6Button4
+  - Joystick6Button5
+  - Joystick6Button6
+  - Joystick6Button7
+  - Joystick6Button8
+  - Joystick6Button9
+  - Joystick6Button10
+  - Joystick6Button11
+  - Joystick6Button12
+  - Joystick6Button13
+  - Joystick6Button14
+  - Joystick6Button15
+  - Joystick6Button16
+  - Joystick6Button17
+  - Joystick6Button18
+  - Joystick6Button19
+  - Joystick7Button0
+  - Joystick7Button1
+  - Joystick7Button2
+  - Joystick7Button3
+  - Joystick7Button4
+  - Joystick7Button5
+  - Joystick7Button6
+  - Joystick7Button7
+  - Joystick7Button8
+  - Joystick7Button9
+  - Joystick7Button10
+  - Joystick7Button11
+  - Joystick7Button12
+  - Joystick7Button13
+  - Joystick7Button14
+  - Joystick7Button15
+  - Joystick7Button16
+  - Joystick7Button17
+  - Joystick7Button18
+  - Joystick7Button19
+  - Joystick8Button0
+  - Joystick8Button1
+  - Joystick8Button2
+  - Joystick8Button3
+  - Joystick8Button4
+  - Joystick8Button5
+  - Joystick8Button6
+  - Joystick8Button7
+  - Joystick8Button8
+  - Joystick8Button9
+  - Joystick8Button10
+  - Joystick8Button11
+  - Joystick8Button12
+  - Joystick8Button13
+  - Joystick8Button14
+  - Joystick8Button15
+  - Joystick8Button16
+  - Joystick8Button17
+  - Joystick8Button18
+  - Joystick8Button19
+  name: Keyboard Input
+--- !u!114 &-281847439397707344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd80d6ec5a1f7540bcf4649926cc13f, type: 3}
+  m_Name: Keyboard Press
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -584, y: -152}
+  ports:
+    keys:
+    - inputValue
+    values:
+    - _fieldName: inputValue
+      _node: {fileID: -281847439397707344}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: ToggleRecordingInputBoolPort
+        node: {fileID: 7273924063985917102}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  id: a28ea317-6af8-4ae5-bb47-bbb196fefb55
+  numberInComponentList: -1
+  inputValue: 0
+  inputNo: 7
+  trigger: 0
+  buttonOptions:
+  - None
+  - Backspace
+  - Tab
+  - Clear
+  - Return
+  - Pause
+  - Escape
+  - Space
+  - Exclaim
+  - DoubleQuote
+  - Hash
+  - Dollar
+  - Percent
+  - Ampersand
+  - Quote
+  - LeftParen
+  - RightParen
+  - Asterisk
+  - Plus
+  - Comma
+  - Minus
+  - Period
+  - Slash
+  - Alpha0
+  - Alpha1
+  - Alpha2
+  - Alpha3
+  - Alpha4
+  - Alpha5
+  - Alpha6
+  - Alpha7
+  - Alpha8
+  - Alpha9
+  - Colon
+  - Semicolon
+  - Less
+  - Equals
+  - Greater
+  - Question
+  - At
+  - LeftBracket
+  - Backslash
+  - RightBracket
+  - Caret
+  - Underscore
+  - BackQuote
+  - A
+  - B
+  - C
+  - D
+  - E
+  - F
+  - G
+  - H
+  - I
+  - J
+  - K
+  - L
+  - M
+  - N
+  - O
+  - P
+  - Q
+  - R
+  - S
+  - T
+  - U
+  - V
+  - W
+  - X
+  - Y
+  - Z
+  - LeftCurlyBracket
+  - Pipe
+  - RightCurlyBracket
+  - Tilde
+  - Delete
+  - Keypad0
+  - Keypad1
+  - Keypad2
+  - Keypad3
+  - Keypad4
+  - Keypad5
+  - Keypad6
+  - Keypad7
+  - Keypad8
+  - Keypad9
+  - KeypadPeriod
+  - KeypadDivide
+  - KeypadMultiply
+  - KeypadMinus
+  - KeypadPlus
+  - KeypadEnter
+  - KeypadEquals
+  - UpArrow
+  - DownArrow
+  - RightArrow
+  - LeftArrow
+  - Insert
+  - Home
+  - End
+  - PageUp
+  - PageDown
+  - F1
+  - F2
+  - F3
+  - F4
+  - F5
+  - F6
+  - F7
+  - F8
+  - F9
+  - F10
+  - F11
+  - F12
+  - F13
+  - F14
+  - F15
+  - Numlock
+  - CapsLock
+  - ScrollLock
+  - RightShift
+  - LeftShift
+  - RightControl
+  - LeftControl
+  - RightAlt
+  - LeftAlt
+  - RightCommand
+  - RightApple
+  - LeftCommand
+  - LeftApple
+  - LeftWindows
+  - RightWindows
+  - AltGr
+  - Help
+  - Print
+  - SysReq
+  - Break
+  - Menu
+  - Mouse0
+  - Mouse1
+  - Mouse2
+  - Mouse3
+  - Mouse4
+  - Mouse5
+  - Mouse6
+  - JoystickButton0
+  - JoystickButton1
+  - JoystickButton2
+  - JoystickButton3
+  - JoystickButton4
+  - JoystickButton5
+  - JoystickButton6
+  - JoystickButton7
+  - JoystickButton8
+  - JoystickButton9
+  - JoystickButton10
+  - JoystickButton11
+  - JoystickButton12
+  - JoystickButton13
+  - JoystickButton14
+  - JoystickButton15
+  - JoystickButton16
+  - JoystickButton17
+  - JoystickButton18
+  - JoystickButton19
+  - Joystick1Button0
+  - Joystick1Button1
+  - Joystick1Button2
+  - Joystick1Button3
+  - Joystick1Button4
+  - Joystick1Button5
+  - Joystick1Button6
+  - Joystick1Button7
+  - Joystick1Button8
+  - Joystick1Button9
+  - Joystick1Button10
+  - Joystick1Button11
+  - Joystick1Button12
+  - Joystick1Button13
+  - Joystick1Button14
+  - Joystick1Button15
+  - Joystick1Button16
+  - Joystick1Button17
+  - Joystick1Button18
+  - Joystick1Button19
+  - Joystick2Button0
+  - Joystick2Button1
+  - Joystick2Button2
+  - Joystick2Button3
+  - Joystick2Button4
+  - Joystick2Button5
+  - Joystick2Button6
+  - Joystick2Button7
+  - Joystick2Button8
+  - Joystick2Button9
+  - Joystick2Button10
+  - Joystick2Button11
+  - Joystick2Button12
+  - Joystick2Button13
+  - Joystick2Button14
+  - Joystick2Button15
+  - Joystick2Button16
+  - Joystick2Button17
+  - Joystick2Button18
+  - Joystick2Button19
+  - Joystick3Button0
+  - Joystick3Button1
+  - Joystick3Button2
+  - Joystick3Button3
+  - Joystick3Button4
+  - Joystick3Button5
+  - Joystick3Button6
+  - Joystick3Button7
+  - Joystick3Button8
+  - Joystick3Button9
+  - Joystick3Button10
+  - Joystick3Button11
+  - Joystick3Button12
+  - Joystick3Button13
+  - Joystick3Button14
+  - Joystick3Button15
+  - Joystick3Button16
+  - Joystick3Button17
+  - Joystick3Button18
+  - Joystick3Button19
+  - Joystick4Button0
+  - Joystick4Button1
+  - Joystick4Button2
+  - Joystick4Button3
+  - Joystick4Button4
+  - Joystick4Button5
+  - Joystick4Button6
+  - Joystick4Button7
+  - Joystick4Button8
+  - Joystick4Button9
+  - Joystick4Button10
+  - Joystick4Button11
+  - Joystick4Button12
+  - Joystick4Button13
+  - Joystick4Button14
+  - Joystick4Button15
+  - Joystick4Button16
+  - Joystick4Button17
+  - Joystick4Button18
+  - Joystick4Button19
+  - Joystick5Button0
+  - Joystick5Button1
+  - Joystick5Button2
+  - Joystick5Button3
+  - Joystick5Button4
+  - Joystick5Button5
+  - Joystick5Button6
+  - Joystick5Button7
+  - Joystick5Button8
+  - Joystick5Button9
+  - Joystick5Button10
+  - Joystick5Button11
+  - Joystick5Button12
+  - Joystick5Button13
+  - Joystick5Button14
+  - Joystick5Button15
+  - Joystick5Button16
+  - Joystick5Button17
+  - Joystick5Button18
+  - Joystick5Button19
+  - Joystick6Button0
+  - Joystick6Button1
+  - Joystick6Button2
+  - Joystick6Button3
+  - Joystick6Button4
+  - Joystick6Button5
+  - Joystick6Button6
+  - Joystick6Button7
+  - Joystick6Button8
+  - Joystick6Button9
+  - Joystick6Button10
+  - Joystick6Button11
+  - Joystick6Button12
+  - Joystick6Button13
+  - Joystick6Button14
+  - Joystick6Button15
+  - Joystick6Button16
+  - Joystick6Button17
+  - Joystick6Button18
+  - Joystick6Button19
+  - Joystick7Button0
+  - Joystick7Button1
+  - Joystick7Button2
+  - Joystick7Button3
+  - Joystick7Button4
+  - Joystick7Button5
+  - Joystick7Button6
+  - Joystick7Button7
+  - Joystick7Button8
+  - Joystick7Button9
+  - Joystick7Button10
+  - Joystick7Button11
+  - Joystick7Button12
+  - Joystick7Button13
+  - Joystick7Button14
+  - Joystick7Button15
+  - Joystick7Button16
+  - Joystick7Button17
+  - Joystick7Button18
+  - Joystick7Button19
+  - Joystick8Button0
+  - Joystick8Button1
+  - Joystick8Button2
+  - Joystick8Button3
+  - Joystick8Button4
+  - Joystick8Button5
+  - Joystick8Button6
+  - Joystick8Button7
+  - Joystick8Button8
+  - Joystick8Button9
+  - Joystick8Button10
+  - Joystick8Button11
+  - Joystick8Button12
+  - Joystick8Button13
+  - Joystick8Button14
+  - Joystick8Button15
+  - Joystick8Button16
+  - Joystick8Button17
+  - Joystick8Button18
+  - Joystick8Button19
+  name: Keyboard Input
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,20 +1217,58 @@ MonoBehaviour:
   nodes:
   - {fileID: 7273924063985917102}
   - {fileID: 2843359955181269894}
-  - {fileID: -3723057345519979888}
   - {fileID: 6908503629522924389}
   - {fileID: 1866566088243699053}
   - {fileID: 4402661756408627305}
   - {fileID: 860140333848191702}
-  - {fileID: -8617577383709102119}
-  - {fileID: 1324209981920678470}
-  - {fileID: -1794692272339360637}
-  - {fileID: -336232600155695314}
-  - {fileID: 4595884858365923681}
-  - {fileID: -4517976382709170468}
-  - {fileID: 8224780228138141648}
+  - {fileID: 6706033486161563140}
+  - {fileID: 844799477856839789}
+  - {fileID: 3993017981179710926}
+  - {fileID: -5260664203624429952}
+  - {fileID: -8963238612936491206}
+  - {fileID: -706788082532722074}
+  - {fileID: -2159249642620680303}
+  - {fileID: 3742855642755047641}
+  - {fileID: -281847439397707344}
   SceneComponent: {fileID: 0}
   m_ID: 12601f8e-ea7f-4b4b-b5e6-4bc70404ca62
+--- !u!114 &844799477856839789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
+  m_Name: colorChanger (Script)
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1784, y: -152}
+  ports:
+    keys:
+    - colour
+    values:
+    - _fieldName: colour
+      _node: {fileID: 844799477856839789}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: 1866566088243699053}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  id: 793b582e-2a56-4e56-8b98-db6ef9239645
+  numberInComponentList: -1
+  m_ScriptInternal: {fileID: 0}
+  ScriptHashCode: -25996
+  m_PortsPerFieldInfo:
+    m_keys: []
+  CreatedDuringPlaymode: 0
 --- !u!114 &860140333848191702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,7 +1282,7 @@ MonoBehaviour:
   m_Name: Keyboard Press
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 200, y: 472}
+  position: {x: 200, y: 872}
   ports:
     keys:
     - inputValue
@@ -365,11 +1292,8 @@ MonoBehaviour:
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: True
-        node: {fileID: -8617577383709102119}
-        reroutePoints: []
-      - fieldName: True
-        node: {fileID: 4595884858365923681}
+      - fieldName: ToggleRunInputBoolPort
+        node: {fileID: 2843359955181269894}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -708,60 +1632,6 @@ MonoBehaviour:
   - Joystick8Button18
   - Joystick8Button19
   name: Keyboard Input
---- !u!114 &1324209981920678470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a19e741e423c3c4abced594a9e6f303, type: 3}
-  m_Name: Float
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 72, y: 840}
-  ports:
-    keys:
-    - m_In
-    - m_Out
-    values:
-    - _fieldName: m_In
-      _node: {fileID: 1324209981920678470}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: m_Out
-      _node: {fileID: 1324209981920678470}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  id: f874b1df-9eb2-43f5-86e3-58a3e929fe90
-  numberInComponentList: -1
-  ValueName: 
-  m_In: 0
-  m_Value: 1
-  m_Out: 1
-  ReceivingData: 0
-  FeatureValueReceivingData: 00
-  InputConnected: 0
-  Counter: 3
-  Count: 5
-  ToggleSwitches: 01
-  ReceivedValue:
-  - 1
-  m_FeatureValues:
-    m_Values:
-    - 1
 --- !u!114 &1866566088243699053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -775,7 +1645,7 @@ MonoBehaviour:
   m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 1048, y: -24}
+  position: {x: 1176, y: -200}
   ports:
     keys:
     - m_In
@@ -797,7 +1667,10 @@ MonoBehaviour:
       _node: {fileID: 1866566088243699053}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: colour
+        node: {fileID: 844799477856839789}
+        reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -807,15 +1680,15 @@ MonoBehaviour:
   ValueName: 
   m_In: 0
   m_Value: 2
-  m_Out: 0
+  m_Out: 2
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 3
+  Counter: 0
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
-  - 2
+  - 0
 --- !u!114 &2843359955181269894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,7 +1702,7 @@ MonoBehaviour:
   m_Name: Classification ML System
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 616, y: -56}
+  position: {x: 712, y: -88}
   ports:
     keys:
     - IMLTrainingExamplesNodes
@@ -888,7 +1761,10 @@ MonoBehaviour:
       _node: {fileID: 2843359955181269894}
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: inputValue
+        node: {fileID: 6706033486161563140}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -897,7 +1773,10 @@ MonoBehaviour:
       _node: {fileID: 2843359955181269894}
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: inputValue
+        node: {fileID: 860140333848191702}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -926,7 +1805,7 @@ MonoBehaviour:
   - 0
   DelayedPredictedOutput:
   - 2
-  m_NumExamplesTrainedOn: 5
+  m_NumExamplesTrainedOn: 32
   m_ExpectedInputList: 00000000
   m_ExpectedOutputList: 01000000
   m_trainingType: 0
@@ -939,8 +1818,8 @@ MonoBehaviour:
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
   matchLiveDataInputs: 1
-  matchVectorLength: 1
-  warning: You are in edit mode live data in from objects will only workin play mode
+  matchVectorLength: 0
+  warning: Live data in does not match the trained examples
   error: 1
   trainOnLoad: 1
   m_TestingDataCollectedThisIteration: 1
@@ -948,6 +1827,130 @@ MonoBehaviour:
   CaptureRate: 10
   RecordTime: -1
   m_AllRatingQuestionsAnswered: 0
+--- !u!114 &3742855642755047641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d28ecf18e4f9f4788a9489f019e8be, type: 3}
+  m_Name: Add Substract Amount
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -856, y: 520}
+  ports:
+    keys:
+    - In
+    - Out
+    - Amount
+    - Add
+    - Substract
+    values:
+    - _fieldName: In
+      _node: {fileID: 3742855642755047641}
+      _typeQualifiedName: InteractML.IMLBaseDataType, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: m_Out
+        node: {fileID: 6908503629522924389}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Out
+      _node: {fileID: 3742855642755047641}
+      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_In
+        node: {fileID: 6908503629522924389}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Amount
+      _node: {fileID: 3742855642755047641}
+      _typeQualifiedName: InteractML.IMLBaseDataType, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: m_Out
+        node: {fileID: -2159249642620680303}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: Add
+      _node: {fileID: 3742855642755047641}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: inputValue
+        node: {fileID: -8963238612936491206}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 2
+      _dynamic: 0
+    - _fieldName: Substract
+      _node: {fileID: 3742855642755047641}
+      _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: inputValue
+        node: {fileID: -706788082532722074}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 1
+      _typeConstraint: 2
+      _dynamic: 0
+  id: da169a6a-9278-46e0-9e99-80fcf6949b6d
+  numberInComponentList: -1
+  Out:
+  - 2
+  Add: 0
+  Substract: 0
+--- !u!114 &3993017981179710926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
+  m_Name: MouseMoverCapsule (GameObject)
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -1352, y: -296}
+  ports:
+    keys:
+    - GameObjectDataOut
+    values:
+    - _fieldName: GameObjectDataOut
+      _node: {fileID: 3993017981179710926}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: GameObjectDataIn
+        node: {fileID: -5260664203624429952}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  id: 2ec5d66c-818a-4e86-bb5a-78cb98627060
+  numberInComponentList: -1
+  GameObjectDataOut: {fileID: 0}
+  state: 1
+  GOHashCode: -15814
+  CreatedDuringPlaymode: 0
 --- !u!114 &4402661756408627305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -997,15 +2000,15 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 3
+  Counter: 0
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
-  - 2
+  - 0
   m_FeatureValues:
     m_Values:
     - 2
---- !u!114 &4595884858365923681
+--- !u!114 &6706033486161563140
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1014,71 +2017,360 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6202216dd63425e4880464aeb2e86172, type: 3}
-  m_Name: If True Substract
+  m_Script: {fileID: 11500000, guid: 6cd80d6ec5a1f7540bcf4649926cc13f, type: 3}
+  m_Name: Keyboard Press
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: 744, y: 1416}
+  position: {x: 168, y: 520}
   ports:
     keys:
-    - True
-    - Amount
-    - In
-    - Out
+    - inputValue
     values:
-    - _fieldName: True
-      _node: {fileID: 4595884858365923681}
+    - _fieldName: inputValue
+      _node: {fileID: 6706033486161563140}
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: inputValue
-        node: {fileID: 860140333848191702}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 1
-      _typeConstraint: 2
-      _dynamic: 0
-    - _fieldName: Amount
-      _node: {fileID: 4595884858365923681}
-      _typeQualifiedName: InteractML.IMLBaseDataType, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: m_Out
-        node: {fileID: 8224780228138141648}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: In
-      _node: {fileID: 4595884858365923681}
-      _typeQualifiedName: InteractML.IMLBaseDataType, Assembly-CSharp, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: m_Out
-        node: {fileID: -4517976382709170468}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 1
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: Out
-      _node: {fileID: 4595884858365923681}
-      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_In
-        node: {fileID: -4517976382709170468}
+      - fieldName: ToggleTrainInputBoolPort
+        node: {fileID: 2843359955181269894}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
-  id: 1f12f51d-db49-4007-9e5c-27a79b7a47e6
+  id: c5fe63b0-cb65-4260-b94f-f9212f6c88f5
   numberInComponentList: -1
-  True: 0
-  Out:
-  - -49
+  inputValue: 0
+  inputNo: 65
+  trigger: 0
+  buttonOptions:
+  - None
+  - Backspace
+  - Tab
+  - Clear
+  - Return
+  - Pause
+  - Escape
+  - Space
+  - Exclaim
+  - DoubleQuote
+  - Hash
+  - Dollar
+  - Percent
+  - Ampersand
+  - Quote
+  - LeftParen
+  - RightParen
+  - Asterisk
+  - Plus
+  - Comma
+  - Minus
+  - Period
+  - Slash
+  - Alpha0
+  - Alpha1
+  - Alpha2
+  - Alpha3
+  - Alpha4
+  - Alpha5
+  - Alpha6
+  - Alpha7
+  - Alpha8
+  - Alpha9
+  - Colon
+  - Semicolon
+  - Less
+  - Equals
+  - Greater
+  - Question
+  - At
+  - LeftBracket
+  - Backslash
+  - RightBracket
+  - Caret
+  - Underscore
+  - BackQuote
+  - A
+  - B
+  - C
+  - D
+  - E
+  - F
+  - G
+  - H
+  - I
+  - J
+  - K
+  - L
+  - M
+  - N
+  - O
+  - P
+  - Q
+  - R
+  - S
+  - T
+  - U
+  - V
+  - W
+  - X
+  - Y
+  - Z
+  - LeftCurlyBracket
+  - Pipe
+  - RightCurlyBracket
+  - Tilde
+  - Delete
+  - Keypad0
+  - Keypad1
+  - Keypad2
+  - Keypad3
+  - Keypad4
+  - Keypad5
+  - Keypad6
+  - Keypad7
+  - Keypad8
+  - Keypad9
+  - KeypadPeriod
+  - KeypadDivide
+  - KeypadMultiply
+  - KeypadMinus
+  - KeypadPlus
+  - KeypadEnter
+  - KeypadEquals
+  - UpArrow
+  - DownArrow
+  - RightArrow
+  - LeftArrow
+  - Insert
+  - Home
+  - End
+  - PageUp
+  - PageDown
+  - F1
+  - F2
+  - F3
+  - F4
+  - F5
+  - F6
+  - F7
+  - F8
+  - F9
+  - F10
+  - F11
+  - F12
+  - F13
+  - F14
+  - F15
+  - Numlock
+  - CapsLock
+  - ScrollLock
+  - RightShift
+  - LeftShift
+  - RightControl
+  - LeftControl
+  - RightAlt
+  - LeftAlt
+  - RightCommand
+  - RightApple
+  - LeftCommand
+  - LeftApple
+  - LeftWindows
+  - RightWindows
+  - AltGr
+  - Help
+  - Print
+  - SysReq
+  - Break
+  - Menu
+  - Mouse0
+  - Mouse1
+  - Mouse2
+  - Mouse3
+  - Mouse4
+  - Mouse5
+  - Mouse6
+  - JoystickButton0
+  - JoystickButton1
+  - JoystickButton2
+  - JoystickButton3
+  - JoystickButton4
+  - JoystickButton5
+  - JoystickButton6
+  - JoystickButton7
+  - JoystickButton8
+  - JoystickButton9
+  - JoystickButton10
+  - JoystickButton11
+  - JoystickButton12
+  - JoystickButton13
+  - JoystickButton14
+  - JoystickButton15
+  - JoystickButton16
+  - JoystickButton17
+  - JoystickButton18
+  - JoystickButton19
+  - Joystick1Button0
+  - Joystick1Button1
+  - Joystick1Button2
+  - Joystick1Button3
+  - Joystick1Button4
+  - Joystick1Button5
+  - Joystick1Button6
+  - Joystick1Button7
+  - Joystick1Button8
+  - Joystick1Button9
+  - Joystick1Button10
+  - Joystick1Button11
+  - Joystick1Button12
+  - Joystick1Button13
+  - Joystick1Button14
+  - Joystick1Button15
+  - Joystick1Button16
+  - Joystick1Button17
+  - Joystick1Button18
+  - Joystick1Button19
+  - Joystick2Button0
+  - Joystick2Button1
+  - Joystick2Button2
+  - Joystick2Button3
+  - Joystick2Button4
+  - Joystick2Button5
+  - Joystick2Button6
+  - Joystick2Button7
+  - Joystick2Button8
+  - Joystick2Button9
+  - Joystick2Button10
+  - Joystick2Button11
+  - Joystick2Button12
+  - Joystick2Button13
+  - Joystick2Button14
+  - Joystick2Button15
+  - Joystick2Button16
+  - Joystick2Button17
+  - Joystick2Button18
+  - Joystick2Button19
+  - Joystick3Button0
+  - Joystick3Button1
+  - Joystick3Button2
+  - Joystick3Button3
+  - Joystick3Button4
+  - Joystick3Button5
+  - Joystick3Button6
+  - Joystick3Button7
+  - Joystick3Button8
+  - Joystick3Button9
+  - Joystick3Button10
+  - Joystick3Button11
+  - Joystick3Button12
+  - Joystick3Button13
+  - Joystick3Button14
+  - Joystick3Button15
+  - Joystick3Button16
+  - Joystick3Button17
+  - Joystick3Button18
+  - Joystick3Button19
+  - Joystick4Button0
+  - Joystick4Button1
+  - Joystick4Button2
+  - Joystick4Button3
+  - Joystick4Button4
+  - Joystick4Button5
+  - Joystick4Button6
+  - Joystick4Button7
+  - Joystick4Button8
+  - Joystick4Button9
+  - Joystick4Button10
+  - Joystick4Button11
+  - Joystick4Button12
+  - Joystick4Button13
+  - Joystick4Button14
+  - Joystick4Button15
+  - Joystick4Button16
+  - Joystick4Button17
+  - Joystick4Button18
+  - Joystick4Button19
+  - Joystick5Button0
+  - Joystick5Button1
+  - Joystick5Button2
+  - Joystick5Button3
+  - Joystick5Button4
+  - Joystick5Button5
+  - Joystick5Button6
+  - Joystick5Button7
+  - Joystick5Button8
+  - Joystick5Button9
+  - Joystick5Button10
+  - Joystick5Button11
+  - Joystick5Button12
+  - Joystick5Button13
+  - Joystick5Button14
+  - Joystick5Button15
+  - Joystick5Button16
+  - Joystick5Button17
+  - Joystick5Button18
+  - Joystick5Button19
+  - Joystick6Button0
+  - Joystick6Button1
+  - Joystick6Button2
+  - Joystick6Button3
+  - Joystick6Button4
+  - Joystick6Button5
+  - Joystick6Button6
+  - Joystick6Button7
+  - Joystick6Button8
+  - Joystick6Button9
+  - Joystick6Button10
+  - Joystick6Button11
+  - Joystick6Button12
+  - Joystick6Button13
+  - Joystick6Button14
+  - Joystick6Button15
+  - Joystick6Button16
+  - Joystick6Button17
+  - Joystick6Button18
+  - Joystick6Button19
+  - Joystick7Button0
+  - Joystick7Button1
+  - Joystick7Button2
+  - Joystick7Button3
+  - Joystick7Button4
+  - Joystick7Button5
+  - Joystick7Button6
+  - Joystick7Button7
+  - Joystick7Button8
+  - Joystick7Button9
+  - Joystick7Button10
+  - Joystick7Button11
+  - Joystick7Button12
+  - Joystick7Button13
+  - Joystick7Button14
+  - Joystick7Button15
+  - Joystick7Button16
+  - Joystick7Button17
+  - Joystick7Button18
+  - Joystick7Button19
+  - Joystick8Button0
+  - Joystick8Button1
+  - Joystick8Button2
+  - Joystick8Button3
+  - Joystick8Button4
+  - Joystick8Button5
+  - Joystick8Button6
+  - Joystick8Button7
+  - Joystick8Button8
+  - Joystick8Button9
+  - Joystick8Button10
+  - Joystick8Button11
+  - Joystick8Button12
+  - Joystick8Button13
+  - Joystick8Button14
+  - Joystick8Button15
+  - Joystick8Button16
+  - Joystick8Button17
+  - Joystick8Button18
+  - Joystick8Button19
+  name: Keyboard Input
 --- !u!114 &6908503629522924389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1092,7 +2384,7 @@ MonoBehaviour:
   m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -523.0189, y: 68.56186}
+  position: {x: -456, y: 456}
   ports:
     keys:
     - m_In
@@ -1102,7 +2394,10 @@ MonoBehaviour:
       _node: {fileID: 6908503629522924389}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: Out
+        node: {fileID: 3742855642755047641}
+        reroutePoints: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -1115,6 +2410,11 @@ MonoBehaviour:
       - fieldName: TargetValues
         node: {fileID: 7273924063985917102}
         reroutePoints: []
+      - fieldName: In
+        node: {fileID: 3742855642755047641}
+        reroutePoints:
+        - {x: -166.07175, y: 363.75623}
+        - {x: -781.0453, y: 341.0993}
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -1127,12 +2427,12 @@ MonoBehaviour:
   m_Out: 2
   ReceivingData: 0
   FeatureValueReceivingData: 00
-  InputConnected: 0
-  Counter: 3
+  InputConnected: 1
+  Counter: 0
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
-  - 2
+  - 0
 --- !u!114 &7273924063985917102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1146,7 +2446,7 @@ MonoBehaviour:
   m_Name: Single Training Examples
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -168, y: -120}
+  position: {x: -56, y: -200}
   ports:
     keys:
     - InputFeatures
@@ -1167,8 +2467,8 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: m_Out
-        node: {fileID: -3723057345519979888}
+      - fieldName: LiveDataOut
+        node: {fileID: -5260664203624429952}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1248,7 +2548,10 @@ MonoBehaviour:
       _node: {fileID: 7273924063985917102}
       _typeQualifiedName: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections: []
+      connections:
+      - fieldName: inputValue
+        node: {fileID: -281847439397707344}
+        reroutePoints: []
       _direction: 0
       _connectionType: 1
       _typeConstraint: 1
@@ -1274,7 +2577,7 @@ MonoBehaviour:
   id: e2b43d43-b3f6-43c5-920c-e0eedceb4cc7
   numberInComponentList: -1
   InputFeatures:
-  - {fileID: -3723057345519979888}
+  - {fileID: -5260664203624429952}
   TargetValues:
   - {fileID: 6908503629522924389}
   RecordOneInputBool: 0
@@ -1283,7 +2586,7 @@ MonoBehaviour:
   DeleteAllInputBool: 0
   TrainingExamplesNodeToOutput: {fileID: 7273924063985917102}
   ModeOfCollection: 0
-  m_DesiredInputsConfig: 00000000
+  m_DesiredInputsConfig: 03000000
   m_DesiredOutputsConfig: 01000000
   m_UniqueClasses: []
   MLSystemNodesConnected:
@@ -1297,60 +2600,3 @@ MonoBehaviour:
   canCollect: 1
   listNo: 0
   SubFolderDataPath: 
---- !u!114 &8224780228138141648
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a19e741e423c3c4abced594a9e6f303, type: 3}
-  m_Name: Float
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 328, y: 1480}
-  ports:
-    keys:
-    - m_In
-    - m_Out
-    values:
-    - _fieldName: m_In
-      _node: {fileID: 8224780228138141648}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: m_Out
-      _node: {fileID: 8224780228138141648}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: Amount
-        node: {fileID: 4595884858365923681}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  id: 76d1da15-574c-4942-abf3-4703483e3a71
-  numberInComponentList: -1
-  ValueName: 
-  m_In: 0
-  m_Value: 2
-  m_Out: 2
-  ReceivingData: 0
-  FeatureValueReceivingData: 00
-  InputConnected: 0
-  Counter: 2
-  Count: 5
-  ToggleSwitches: 01
-  ReceivedValue:
-  - 2
-  m_FeatureValues:
-    m_Values:
-    - 2
