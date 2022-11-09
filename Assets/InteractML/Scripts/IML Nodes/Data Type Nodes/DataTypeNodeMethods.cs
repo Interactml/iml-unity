@@ -31,8 +31,15 @@ namespace InteractML.DataTypeNodes
                 // Check for null
                 if (node.PreviousFeatureValues == null || node.PreviousFeatureValues.Values == null)
                 {
-                    Debug.LogError("There are null references in node, aborting data pulling!");
-                    return false;
+                    // attempt a repair
+                    if (!node.IsInitialized) node.Initialize();
+
+                    // if the problem persists, log error and return
+                    if (node.PreviousFeatureValues == null || node.PreviousFeatureValues.Values == null)
+                    {
+                        Debug.LogError("There are null references in node, aborting data pulling!");
+                        return false;
+                    }
                 }
 
                 // check if storage types for new feature values and previous values hold the same number of values to compare
