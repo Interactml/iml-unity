@@ -392,7 +392,7 @@ namespace InteractML
                     GUI.enabled = false;
                 if (GUILayout.Button("Delete Data", m_DeleteButtonStyle))
                 {
-                    IMLEventDispatcher.DeleteAllExamplesInNodeCallback(m_TrainingExamplesNode.id);               
+                    IMLEventDispatcher.DeleteAllExamplesInNodeCallback?.Invoke(m_TrainingExamplesNode.id);               
                 }
                 if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition))
                 {
