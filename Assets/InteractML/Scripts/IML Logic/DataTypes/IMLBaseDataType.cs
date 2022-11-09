@@ -100,7 +100,7 @@ namespace InteractML
                 var result = new IMLInteger();
                 if (value != null)
                 {
-                    if (value is float) result.SetValues((int)value);
+                    if (value is int) result.SetValues((int)value);
                     else if (value is float[]) result.SetValues((float[])value);
                 }
 
@@ -111,7 +111,7 @@ namespace InteractML
                 var result = new IMLVector2();
                 if (value != null)
                 {
-                    if (value is float) result.SetValues((Vector2)value);
+                    if (value is Vector2) result.SetValues((Vector2)value);
                     else if (value is float[]) result.SetValues((float[])value);
                 }
 
@@ -122,7 +122,7 @@ namespace InteractML
                 var result = new IMLVector3();
                 if (value != null)
                 {
-                    if (value is float) result.SetValues((Vector3)value);
+                    if (value is Vector3) result.SetValues((Vector3)value);
                     else if (value is float[]) result.SetValues((float[])value);
                 }
 
@@ -133,7 +133,7 @@ namespace InteractML
                 var result = new IMLVector4();
                 if (value != null)
                 {
-                    if (value is float) result.SetValues((Vector4)value);
+                    if (value is Vector4) result.SetValues((Vector4)value);
                     else if (value is float[]) result.SetValues((float[])value);
                 }
 
@@ -144,7 +144,7 @@ namespace InteractML
                 var result = new IMLBoolean();
                 if (value != null)
                 {
-                    if (value is float) result.SetValues((bool)value);
+                    if (value is bool) result.SetValues((bool)value);
                     else if (value is float[]) result.SetValues((float[])value);
                 }
 
