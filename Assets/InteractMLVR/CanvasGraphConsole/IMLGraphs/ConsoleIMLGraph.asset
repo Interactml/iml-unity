@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Keyboard Press
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1384, y: 680}
+  position: {x: -1608, y: 632}
   ports:
     keys:
     - inputValue
@@ -401,6 +401,10 @@ MonoBehaviour:
       - fieldName: InputFeatures
         node: {fileID: 7273924063985917102}
         reroutePoints: []
+      - fieldName: InputFeatures
+        node: {fileID: 2843359955181269894}
+        reroutePoints:
+        - {x: 32, y: 304}
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -419,8 +423,8 @@ MonoBehaviour:
   GameObjInputMissing: 0
   m_PositionExtracted:
     m_Values:
-    - 0
-    - 0
+    - -27.039488
+    - 7.49836
     - 8
 --- !u!114 &-2159249642620680303
 MonoBehaviour:
@@ -435,7 +439,7 @@ MonoBehaviour:
   m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1384, y: 376}
+  position: {x: -1608, y: 328}
   ports:
     keys:
     - m_In
@@ -489,7 +493,7 @@ MonoBehaviour:
   m_Name: Keyboard Press
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -1368, y: 968}
+  position: {x: -1592, y: 920}
   ports:
     keys:
     - inputValue
@@ -1219,7 +1223,6 @@ MonoBehaviour:
   - {fileID: 2843359955181269894}
   - {fileID: 6908503629522924389}
   - {fileID: 1866566088243699053}
-  - {fileID: 4402661756408627305}
   - {fileID: 860140333848191702}
   - {fileID: 6706033486161563140}
   - {fileID: 844799477856839789}
@@ -1679,8 +1682,8 @@ MonoBehaviour:
   numberInComponentList: -1
   ValueName: 
   m_In: 0
-  m_Value: 2
-  m_Out: 2
+  m_Value: 1
+  m_Out: 1
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
@@ -1732,8 +1735,8 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: m_Out
-        node: {fileID: 4402661756408627305}
+      - fieldName: LiveDataOut
+        node: {fileID: -5260664203624429952}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -1798,15 +1801,15 @@ MonoBehaviour:
   IMLTrainingExamplesNodes:
   - {fileID: 7273924063985917102}
   InputFeatures:
-  - {fileID: 4402661756408627305}
+  - {fileID: -5260664203624429952}
   ToggleTrainInputBool: 0
   ToggleRunInputBool: 0
   PredictedRapidlibOutput:
-  - 0
+  - 1
   DelayedPredictedOutput:
-  - 2
+  - 1
   m_NumExamplesTrainedOn: 32
-  m_ExpectedInputList: 00000000
+  m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_trainingType: 0
   m_LearningType: 0
@@ -1818,8 +1821,8 @@ MonoBehaviour:
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
   matchLiveDataInputs: 1
-  matchVectorLength: 0
-  warning: Live data in does not match the trained examples
+  matchVectorLength: 1
+  warning: You are in edit mode live data in from objects will only workin play mode
   error: 1
   trainOnLoad: 1
   m_TestingDataCollectedThisIteration: 1
@@ -1840,7 +1843,7 @@ MonoBehaviour:
   m_Name: Add Substract Amount
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -856, y: 520}
+  position: {x: -1080, y: 472}
   ports:
     keys:
     - In
@@ -1948,66 +1951,9 @@ MonoBehaviour:
   id: 2ec5d66c-818a-4e86-bb5a-78cb98627060
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  state: 1
+  state: 0
   GOHashCode: -15814
   CreatedDuringPlaymode: 0
---- !u!114 &4402661756408627305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a19e741e423c3c4abced594a9e6f303, type: 3}
-  m_Name: Float
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 248, y: 120}
-  ports:
-    keys:
-    - m_In
-    - m_Out
-    values:
-    - _fieldName: m_In
-      _node: {fileID: 4402661756408627305}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-    - _fieldName: m_Out
-      _node: {fileID: 4402661756408627305}
-      _typeQualifiedName: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: InputFeatures
-        node: {fileID: 2843359955181269894}
-        reroutePoints: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  id: 3fa5b206-b8ed-4576-a733-46b339b4974f
-  numberInComponentList: -1
-  ValueName: 
-  m_In: 0
-  m_Value: 2
-  m_Out: 0
-  ReceivingData: 0
-  FeatureValueReceivingData: 00
-  InputConnected: 0
-  Counter: 0
-  Count: 5
-  ToggleSwitches: 01
-  ReceivedValue:
-  - 0
-  m_FeatureValues:
-    m_Values:
-    - 2
 --- !u!114 &6706033486161563140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2384,7 +2330,7 @@ MonoBehaviour:
   m_Name: Integer
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -456, y: 456}
+  position: {x: -680, y: 408}
   ports:
     keys:
     - m_In
@@ -2413,8 +2359,8 @@ MonoBehaviour:
       - fieldName: In
         node: {fileID: 3742855642755047641}
         reroutePoints:
-        - {x: -166.07175, y: 363.75623}
-        - {x: -781.0453, y: 341.0993}
+        - {x: -384, y: 320}
+        - {x: -1008, y: 304}
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -2446,7 +2392,7 @@ MonoBehaviour:
   m_Name: Single Training Examples
   m_EditorClassIdentifier: 
   graph: {fileID: 11400000}
-  position: {x: -56, y: -200}
+  position: {x: -56, y: -408}
   ports:
     keys:
     - InputFeatures

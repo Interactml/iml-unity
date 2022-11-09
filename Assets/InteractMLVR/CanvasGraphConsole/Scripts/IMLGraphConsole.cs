@@ -122,7 +122,7 @@ namespace InteractML
             {
                 foreach (var TENode in MLComponent.TrainingExamplesNodesList)
                 {
-                    status += $"Teach Node {Strings.Truncate(TENode.id, 8)}{System.Environment.NewLine}";
+                    status += $"Teach Node {Strings.Truncate(TENode.id, 8)}{System.Environment.NewLine}"; // show only first 8 digits of id
                     status += TENode.GetStatus(TENode.id);
                     status += System.Environment.NewLine;
                     status += System.Environment.NewLine;
@@ -134,7 +134,7 @@ namespace InteractML
             {
                 foreach (var MLSNode in MLComponent.MLSystemNodeList)
                 {
-                    status += $"Model Node {Strings.Truncate(MLSNode.id, 8)}{System.Environment.NewLine}";
+                    status += $"Model Node {Strings.Truncate(MLSNode.id, 8)}{System.Environment.NewLine}"; // show only first 8 digits of id
                     status += MLSNode.GetStatus(MLSNode.id);
                     status += System.Environment.NewLine;
                     status += System.Environment.NewLine;

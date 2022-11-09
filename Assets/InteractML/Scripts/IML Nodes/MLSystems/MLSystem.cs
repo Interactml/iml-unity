@@ -2564,7 +2564,7 @@ namespace InteractML
                     // Is there hardware input to listen and class collected? Add tip that the class can be skipped
                     if (IsRunKeyButtonConnected() && IsTestClassCollected(CurrentTestingClassCollected))
                     {
-                        status += $" ( Press {GetRunKeyButtonName()} Skip to Next Class) ";
+                        status += $" (Press {GetRunKeyButtonName()} Skip to Next Class) ";
                     }
                 }
             }
@@ -2586,7 +2586,20 @@ namespace InteractML
                     }
                 }
 
-                status += $"{classesCompleted}/{TotalNumUniqueClasses} Classes Completed";
+                status += $"{classesCompleted}/{TotalNumUniqueClasses} Classes Completed. ";
+                // Is there hardware input to listen and class collected? Add tip that the class can be skipped
+                if (IsRunKeyButtonConnected())
+                {
+                    if (Testing)
+                    {
+                        status += $" (Press {GetRunKeyButtonName()} to Run Model) ";
+                    }
+                    else
+                    {
+                        status += $" (Press {GetRunKeyButtonName()} to STOP & RATE) ";
+                    }
+                }
+
             }
             status += System.Environment.NewLine;
         }
