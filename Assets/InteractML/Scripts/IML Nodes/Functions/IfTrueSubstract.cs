@@ -74,6 +74,21 @@ namespace InteractML.Functions
 
 		#endregion
 
+		#region Node Messages
+
+		public override void OnCreateConnection(NodePort from, NodePort to)
+		{
+			base.OnCreateConnection(from, to);
+			if (In != null && In.Values != null)
+			{
+				m_OutDataType = In;
+
+				Out = m_OutDataType.Values;
+			}
+		}
+
+		#endregion
+
 		#region Private Methods
 
 		private IMLBaseDataType PullData(string port)
