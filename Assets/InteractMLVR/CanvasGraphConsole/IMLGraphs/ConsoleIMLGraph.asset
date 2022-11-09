@@ -423,8 +423,8 @@ MonoBehaviour:
   GameObjInputMissing: 0
   m_PositionExtracted:
     m_Values:
-    - -27.039488
-    - 7.49836
+    - 0
+    - 0
     - 8
 --- !u!114 &-2159249642620680303
 MonoBehaviour:
@@ -1682,8 +1682,8 @@ MonoBehaviour:
   numberInComponentList: -1
   ValueName: 
   m_In: 0
-  m_Value: 1
-  m_Out: 1
+  m_Value: 2
+  m_Out: 2
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
@@ -1805,9 +1805,9 @@ MonoBehaviour:
   ToggleTrainInputBool: 0
   ToggleRunInputBool: 0
   PredictedRapidlibOutput:
-  - 1
+  - 0
   DelayedPredictedOutput:
-  - 1
+  - 2
   m_NumExamplesTrainedOn: 32
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
