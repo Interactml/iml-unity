@@ -2471,16 +2471,18 @@ namespace InteractML
                 
                 if (Running)
                 {
+                    // Display when model runs only when it is not testing
+                    if (!Testing)
+                    {
+                        status += "Running \n";
+                    }
                     // Only display this section if testing state is enabled
                     if (UseTestingState)
                     {
                         GestTestingStatus(ref status);
                     }
-                    // Regular state, only display when it's running
-                    else
-                    {
-                        status += "Running \n";
-                    }
+                    
+                    // Classification regression 
                     if (LearningType != IMLSpecifications.LearningType.DTW)
                     {
                         int i = 0;
@@ -2491,11 +2493,13 @@ namespace InteractML
                             foreach (float f in dataType.Values)
                                 status += f.ToString() + "\n";
                         }
-
                     }
                     
-                } else
+                } 
+                // not running
+                else
                 {
+                    //dtw
                     if(LearningType == IMLSpecifications.LearningType.DTW)
                     {
                         int i = 0;
@@ -2505,6 +2509,19 @@ namespace InteractML
                             i++;
                             foreach (float f in dataType.Values)
                                 status += f.ToString() + "\n";
+                        }
+                    }
+                    // classification regression
+                    else
+                    {
+                        status += "Not Running";
+                        if (IsRunKeyButtonConnected())
+                        {
+                            string state = "";
+                            if (UseTestingState && !AllTestingClassesCollected) state = "Test & Run";
+                            else state = "Run";
+
+                            status += $" (Press {GetRunKeyButtonName()} to {state})";
                         }
                     }
                 }
@@ -2555,42 +2572,62 @@ namespace InteractML
                         }
                     }
                 }
+
                 // Display status
-                status += $"Class {CurrentTestingClassCollected}/{TotalNumUniqueClasses}. No Test Examples: {numTestingExamples}";
-                status += $", Expected Output {expectedOutputClassString}";
                 if (CollectingTestingData)
                 {
-                    status += $" TESTING CLASS {CurrentTestingClassCollected}/{TotalNumUniqueClasses}";
+                    status += $"TESTING CLASS {CurrentTestingClassCollected}/{TotalNumUniqueClasses} {System.Environment.NewLine}";
+                    // Is hardware input add instruction that user can stop
+                    if (IsRunKeyButtonConnected())
+                    {
+                        status += $" (Press {GetRunKeyButtonName()} to Stop Recording) ";
+                    }
                 }
                 else
                 {
-                    status += $" AWAITING TO TEST";
+                    status += $"AWAITING TO TEST CLASS {CurrentTestingClassCollected}/{TotalNumUniqueClasses} {System.Environment.NewLine}";
                     // Is there hardware input to listen and class collected? Add tip that the class can be skipped
-                    if (IsRunKeyButtonConnected() && IsTestClassCollected(CurrentTestingClassCollected))
+                    if (IsRunKeyButtonConnected())
                     {
-                        status += $" (Press {GetRunKeyButtonName()} Skip to Next Class) ";
-                    }
-                }
-            }
-            // All testing classes are collected
-            else
-            {
-                int numTestingExamples = 0;
-                int classesCompleted = CurrentTestingClassCollected > 0 ? CurrentTestingClassCollected : 0;
-                if (TestingData != null && CurrentTestingClassCollected < TestingData.Count)
-                {
-                    numTestingExamples = TestingData[CurrentTestingClassCollected].Count;
-                    classesCompleted = 0;
-                    foreach (var sublist in TestingData)
-                    {
-                        if (sublist != null && sublist.Count > 0)
+                        if (IsTestClassCollected(CurrentTestingClassCollected))
                         {
-                            classesCompleted++;
+                            status += $" (Press {GetRunKeyButtonName()} Skip to Next Class) ";
+                        }
+                        else
+                        {
+                            status += $" (Press {GetRunKeyButtonName()} Record Test Examples) ";
                         }
                     }
                 }
 
-                status += $"{classesCompleted}/{TotalNumUniqueClasses} Classes Completed. ";
+                status += System.Environment.NewLine;
+                // Display info of classes collected
+                status += $"Class {CurrentTestingClassCollected}/{TotalNumUniqueClasses}. No Test Examples: {numTestingExamples}";
+                status += $", Expected Output {expectedOutputClassString}";
+            }
+            // All testing classes are collected
+            else
+            {
+                if (Testing)
+                {
+                    // how many classes are completed? 
+                    int numTestingExamples = 0;
+                    int classesCompleted = CurrentTestingClassCollected > 0 ? CurrentTestingClassCollected : 0;
+                    if (TestingData != null && CurrentTestingClassCollected < TestingData.Count)
+                    {
+                        numTestingExamples = TestingData[CurrentTestingClassCollected].Count;
+                        classesCompleted = 0;
+                        foreach (var sublist in TestingData)
+                        {
+                            if (sublist != null && sublist.Count > 0)
+                            {
+                                classesCompleted++;
+                            }
+                        }
+                    }
+                    // display info on completed classes
+                    status += $"{classesCompleted}/{TotalNumUniqueClasses} Classes Completed. ";
+                }
                 // Is there hardware input to listen and class collected? Add tip that the class can be skipped
                 if (IsRunKeyButtonConnected())
                 {
