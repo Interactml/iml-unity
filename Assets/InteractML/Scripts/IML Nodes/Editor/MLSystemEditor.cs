@@ -225,28 +225,8 @@ namespace InteractML
                 nameButton = "Training";
             else
                 nameButton = "Train Model";
-            if ((m_MLSystem.Model != null && m_MLSystem.TotalNumTrainingDataConnected > 0 && !m_MLSystem.Running && !m_MLSystem.Training))
-            {
-                // If testing state used...
-                if (m_MLSystem.UseTestingState)
-                {
-                    // If we are testing, disable gui
-                    if (m_MLSystem.Testing) GUI.enabled = false;
-                    else GUI.enabled = true;
-                }
-                // Default behaviour, not worried about testing logic at all
-                else
-                {
-                    // Enable UI
-                    GUI.enabled = true;
-                }
-            }
-            // If rapidlib reference is null we draw a disabled button or if it is running or training (or testing if such state is being used)
-            else
-            {
-                GUI.enabled = false;
-
-            }
+            // Enable GUI only we can train the model
+            GUI.enabled = m_MLSystem.CanTrain();
             if (GUILayout.Button(nameButton, m_NodeSkin.GetStyle("Train")))
             {
                 IMLEventDispatcher.TrainMLSCallback?.Invoke(m_MLSystem.id);

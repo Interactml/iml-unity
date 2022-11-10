@@ -716,6 +716,37 @@ namespace InteractML
         #endregion
 
         /// <summary>
+        /// Can the model be trained?
+        /// </summary>
+        /// <returns></returns>
+        public bool CanTrain()
+        {
+            bool canTrain = false;
+            if ((Model != null && TotalNumTrainingDataConnected > 0 && !Running && !Training))
+            {
+                // If testing state used...
+                if (UseTestingState)
+                {
+                    // If we are testing, can't train
+                    if (Testing) canTrain = false;
+                    else canTrain = true;
+                }
+                // Default behaviour, not worried about testing logic at all
+                else
+                {
+                    //can train
+                    canTrain = true;
+                }
+            }
+            // If rapidlib reference is null can't train or if it is running or training (or testing if such state is being used)
+            else
+            {
+                canTrain = false;
+            }
+            return canTrain;
+        }
+
+        /// <summary>
         /// Trains the ML model
         /// </summary>
         /// <returns></returns>
