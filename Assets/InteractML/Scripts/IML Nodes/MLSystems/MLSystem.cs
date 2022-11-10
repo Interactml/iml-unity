@@ -2497,14 +2497,13 @@ namespace InteractML
                 string status = "";
                 if (Trained)
                 {
-                    status = $"Trained on {m_NumExamplesTrainedOn} Examples";
-                    // TO DO: ifTrainKeyPresent && canTrain then display "press key to train"
+                    status = $"Trained on {m_NumExamplesTrainedOn} Examples ";
                     if (IsTrainKeyButtonConnected() && CanTrain())
                     {
                         status += $"(Press {GetTrainKeyButtonName()} to Retrain) {System.Environment.NewLine}";
                     }
                 }
-                else
+                else if (!Running)
                 {
                     status = $"Not Trained {System.Environment.NewLine}";                   
                     if (IsTrainKeyButtonConnected() && CanTrain())
