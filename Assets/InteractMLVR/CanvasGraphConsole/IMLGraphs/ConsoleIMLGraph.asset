@@ -412,8 +412,8 @@ MonoBehaviour:
   id: 5f285a76-c036-4be7-8a81-c62281e77023
   numberInComponentList: -1
   ReceivingData: 0
-  FeatureValueReceivingData: 010101
-  Counter: 0
+  FeatureValueReceivingData: 000000
+  Counter: 5
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -475,11 +475,11 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 0
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
-  - 0
+  - 1
 --- !u!114 &-706788082532722074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1268,9 +1268,21 @@ MonoBehaviour:
   id: 793b582e-2a56-4e56-8b98-db6ef9239645
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: -25996
+  ScriptHashCode: 19890
   m_PortsPerFieldInfo:
-    m_keys: []
+    m_keys:
+    - _fieldName: colour
+      _node: {fileID: 844799477856839789}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: 1866566088243699053}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   CreatedDuringPlaymode: 0
 --- !u!114 &860140333848191702
 MonoBehaviour:
@@ -1687,11 +1699,11 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 0
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
-  - 0
+  - 2
 --- !u!114 &2843359955181269894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1808,7 +1820,7 @@ MonoBehaviour:
   - 0
   DelayedPredictedOutput:
   - 2
-  m_NumExamplesTrainedOn: 32
+  m_NumExamplesTrainedOn: 90
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_trainingType: 0
@@ -1951,8 +1963,8 @@ MonoBehaviour:
   id: 2ec5d66c-818a-4e86-bb5a-78cb98627060
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  state: 0
-  GOHashCode: -15814
+  state: 1
+  GOHashCode: 19858
   CreatedDuringPlaymode: 0
 --- !u!114 &6706033486161563140
 MonoBehaviour:
@@ -2374,11 +2386,11 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 0
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
-  - 0
+  - 2
 --- !u!114 &7273924063985917102
 MonoBehaviour:
   m_ObjectHideFlags: 0
