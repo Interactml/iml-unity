@@ -1366,9 +1366,6 @@ namespace InteractML
         /// <returns></returns>
         public string GetStatus(string nodeid)
         {
-            // TO DO: ADD INSTRUCTIONS ifCollectKeyPresent, ifDeleteKeyPresent
-
-
             if (nodeid == this.id)
             {
                 string status = "";
@@ -1383,7 +1380,18 @@ namespace InteractML
                     i++;
                 }
                 if (CollectingData)
-                    status += "Recording \n";
+                {
+                    status += "Recording";
+                    if (IsToggleRecordingKeyButtonConnected())
+                        status += $"(Press {GetToggleRecordingKeyButtonName()} to Stop)";
+                    status += System.Environment.NewLine;
+                }
+                else
+                {
+                    if (IsToggleRecordingKeyButtonConnected())
+                        status += $"(Press {GetToggleRecordingKeyButtonName()} to Start Recording*)";
+                    status += System.Environment.NewLine;
+                }
 
                 status += "Examples: ";
                 if (ModeOfCollection == CollectionMode.SingleExample)
@@ -1394,6 +1402,12 @@ namespace InteractML
                 {
                     status += m_TrainingSeriesCollection.Count.ToString();
                 }
+
+                if (TotalNumberOfTrainingExamples > 0 && IsDeleteAllKeyButtonConnected())
+                {
+                    status += $"(Press {GetDeleteAllKeyButtonName()} to Delete All Examples)";
+                }
+
                 return status;
             }
             return "here";
@@ -1405,7 +1419,7 @@ namespace InteractML
         /// <returns></returns>
         public bool IsRecordOneKeyButtonConnected()
         {
-            var port = GetPort("RecordOneInputBool");
+            var port = GetPort("RecordOneInputBoolPort");
             return port.IsConnected;
         }
 
@@ -1415,7 +1429,7 @@ namespace InteractML
         /// <returns></returns>
         public bool IsToggleRecordingKeyButtonConnected()
         {
-            var port = GetPort("ToggleRecordingInputBool");
+            var port = GetPort("ToggleRecordingInputBoolPort");
             return port.IsConnected;
         }
 
@@ -1425,7 +1439,7 @@ namespace InteractML
         /// <returns></returns>
         public bool IsDeleteAllKeyButtonConnected()
         {
-            var port = GetPort("DeleteAllInputBool");
+            var port = GetPort("DeleteAllExamplesBoolPort");
             return port.IsConnected;
         }
 
@@ -1435,7 +1449,7 @@ namespace InteractML
         /// <returns></returns>
         public string GetRecordOneKeyButtonName()
         {
-            return this.GetConnectedKeyButtonName("RecordOneInputBool");
+            return this.GetConnectedKeyButtonName("RecordOneInputBoolPort");
         }
 
         /// <summary>
@@ -1444,7 +1458,7 @@ namespace InteractML
         /// <returns></returns>
         public string GetToggleRecordingKeyButtonName()
         {
-            return this.GetConnectedKeyButtonName("ToggleRecordingInputBool");
+            return this.GetConnectedKeyButtonName("ToggleRecordingInputBoolPort");
         }
 
         /// <summary>
@@ -1453,7 +1467,7 @@ namespace InteractML
         /// <returns></returns>
         public string GetDeleteAllKeyButtonName()
         {
-            return this.GetConnectedKeyButtonName("DeleteAllInputBool");
+            return this.GetConnectedKeyButtonName("DeleteAllExamplesBoolPort");
         }
 
 
