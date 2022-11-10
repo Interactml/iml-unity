@@ -1399,6 +1399,64 @@ namespace InteractML
             return "here";
         }
 
+        /// <summary>
+        /// Is there a key/button connected to the record one nodeport?
+        /// </summary>
+        /// <returns></returns>
+        public bool IsRecordOneKeyButtonConnected()
+        {
+            var port = GetPort("RecordOneInputBool");
+            return port.IsConnected;
+        }
+
+        /// <summary>
+        /// Is there a key/button connected to the toggle recording nodeport?
+        /// </summary>
+        /// <returns></returns>
+        public bool IsToggleRecordingKeyButtonConnected()
+        {
+            var port = GetPort("ToggleRecordingInputBool");
+            return port.IsConnected;
+        }
+
+        /// <summary>
+        /// Is there a key/button connected to the delete examples nodeport?
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDeleteAllKeyButtonConnected()
+        {
+            var port = GetPort("DeleteAllInputBool");
+            return port.IsConnected;
+        }
+
+        /// <summary>
+        /// Returns name of connected hardware input node to Record One (keyboard key, VRTrigger button, etc)
+        /// </summary>
+        /// <returns></returns>
+        public string GetRecordOneKeyButtonName()
+        {
+            return this.GetConnectedKeyButtonName("RecordOneInputBool");
+        }
+
+        /// <summary>
+        /// Returns name of connected hardware input node to ToggleRecording (keyboard key, VRTrigger button, etc)
+        /// </summary>
+        /// <returns></returns>
+        public string GetToggleRecordingKeyButtonName()
+        {
+            return this.GetConnectedKeyButtonName("ToggleRecordingInputBool");
+        }
+
+        /// <summary>
+        /// Returns name of connected hardware input node to DeleteAllInputBool (keyboard key, VRTrigger button, etc)
+        /// </summary>
+        /// <returns></returns>
+        public string GetDeleteAllKeyButtonName()
+        {
+            return this.GetConnectedKeyButtonName("DeleteAllInputBool");
+        }
+
+
         #endregion
 
     }
