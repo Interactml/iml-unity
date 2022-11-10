@@ -413,7 +413,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 5
+  Counter: 4
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -423,8 +423,8 @@ MonoBehaviour:
   GameObjInputMissing: 0
   m_PositionExtracted:
     m_Values:
-    - 0
-    - 0
+    - 16.614698
+    - 3.2105086
     - 8
 --- !u!114 &-2159249642620680303
 MonoBehaviour:
@@ -475,7 +475,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 5
+  Counter: 4
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -1699,7 +1699,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 5
+  Counter: 4
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -1835,7 +1835,7 @@ MonoBehaviour:
   matchLiveDataInputs: 1
   matchVectorLength: 1
   warning: You are in edit mode live data in from objects will only workin play mode
-  error: 1
+  error: 0
   trainOnLoad: 1
   m_TestingDataCollectedThisIteration: 1
   StartDelay: 0
@@ -1963,7 +1963,7 @@ MonoBehaviour:
   id: 2ec5d66c-818a-4e86-bb5a-78cb98627060
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  state: 1
+  state: 0
   GOHashCode: 19858
   CreatedDuringPlaymode: 0
 --- !u!114 &6706033486161563140
@@ -2386,7 +2386,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 5
+  Counter: 4
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:

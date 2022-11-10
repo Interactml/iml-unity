@@ -976,15 +976,15 @@ namespace InteractML
                         if (TestingData == null) m_TestingData = new List<List<IMLTrainingExample>>();
                         if (CurrentTestingClassCollected < TestingData.Count && TestingData[CurrentTestingClassCollected] != null) 
                             numTestingExamples = TestingData[CurrentTestingClassCollected].Count;
-                        // If not yet collected for the first time
+                        // If not yet collected for the first time, start collecting test data
                         if (numTestingExamples == 0 && !CollectingTestingData)
                             ToggleCollectTestingData();
                         // If we are in the middle of collecting data
                         else if (numTestingExamples > 0 && CollectingTestingData)
-                            ToggleCollectTestingData();
-                        // If we finished collecting data for this class we can move to the next 
-                        else if (numTestingExamples > 0 && !CollectingTestingData)
-                            NextTestingClass();
+                        {
+                            ToggleCollectTestingData(); // stop collecting test data
+                            NextTestingClass(); // Move to the next class to avoid pressing the button twice
+                        }
                         // If we finished collecting data all classes
                         if (AllTestingClassesCollected) 
                         {
