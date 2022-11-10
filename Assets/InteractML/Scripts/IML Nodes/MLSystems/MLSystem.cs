@@ -2710,26 +2710,13 @@ namespace InteractML
             return port.IsConnected;
         }
 
-        public string GetConnectedKeyButtonName(string portName)
-        {
-            string buttonName = "";
-            var port = GetPort(portName);
-            if (port.IsConnected)
-            {
-                var hardwareInputPort = port.GetConnection(0);
-                var hardwareInputNode = hardwareInputPort.node as ControllerCustomisers.CustomController;
-                if (hardwareInputNode != null) buttonName = hardwareInputNode.GetButtonName();
-            }
-            return buttonName;
-        }
-
         /// <summary>
         /// Returns the name of the key / button connected to the Run nodeport
         /// </summary>
         /// <returns></returns>
         public string GetRunKeyButtonName()
         {
-            return GetConnectedKeyButtonName("ToggleRunInputBoolPort");
+            return this.GetConnectedKeyButtonName("ToggleRunInputBoolPort");
         }
 
         /// <summary>
@@ -2738,7 +2725,7 @@ namespace InteractML
         /// <returns></returns>
         public string GetTrainKeyButtonName()
         {
-            return GetConnectedKeyButtonName("ToggleTrainInputBoolPort");
+            return this.GetConnectedKeyButtonName("ToggleTrainInputBoolPort");
         }
 
         #region Repair Lists Methods

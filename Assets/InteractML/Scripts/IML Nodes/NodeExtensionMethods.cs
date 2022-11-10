@@ -7,8 +7,13 @@ using XNode;
 
 namespace InteractML
 {
+    /// <summary>
+    /// Extension methods for nodes
+    /// </summary>
     public static class NodeExtensionMethods
     {
+        #region Information On Connected Nodes
+
         /// <summary>
         /// Returns the list of all nodes connected
         /// </summary>
@@ -37,6 +42,29 @@ namespace InteractML
                 return null;
             }
         }
+
+        /// <summary>
+        /// Returns the name of a connected hardware input (keyboard press, VR Trigger, etc.)
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="portName"></param>
+        /// <returns></returns>
+        public static string GetConnectedKeyButtonName(this Node node, string portName)
+        {
+            string buttonName = "";
+            var port = node.GetPort(portName);
+            if (port.IsConnected)
+            {
+                var hardwareInputPort = port.GetConnection(0);
+                var hardwareInputNode = hardwareInputPort.node as ControllerCustomisers.CustomController;
+                if (hardwareInputNode != null) buttonName = hardwareInputNode.GetButtonName();
+            }
+            return buttonName;
+        }
+
+        #endregion
+
+        #region Conditional Disconnect Methods
 
         /// <summary>
         /// Disconnects two nodes if types don't match
@@ -491,6 +519,10 @@ namespace InteractML
             return auxPort;
         }
 
+        #endregion
+
+        #region Comparison IMLOutputs
+
         /// <summary>
         /// Equality list of IMLOutputs
         /// </summary>
@@ -539,4 +571,7 @@ namespace InteractML
         }
 
     }
+
+    #endregion
+
 }
