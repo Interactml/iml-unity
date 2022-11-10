@@ -2497,10 +2497,23 @@ namespace InteractML
                 string status = "";
                 if (Trained)
                 {
-                    status = "Trained " + m_NumExamplesTrainedOn.ToString() + "\n";                
+                    status = $"Trained on {m_NumExamplesTrainedOn} Examples";
                     // TO DO: ifTrainKeyPresent && canTrain then display "press key to train"
+                    if (IsTrainKeyButtonConnected() && CanTrain())
+                    {
+                        status += $"(Press {GetTrainKeyButtonName()} to Retrain) {System.Environment.NewLine}";
+                    }
                 }
-                
+                else
+                {
+                    status = $"Not Trained {System.Environment.NewLine}";                   
+                    if (IsTrainKeyButtonConnected() && CanTrain())
+                    {
+                        status += $"(Press {GetTrainKeyButtonName()} to Train) {System.Environment.NewLine}";
+
+                    }
+                }
+
                 if (Running)
                 {
                     // Display when model runs only when it is not testing
@@ -2688,13 +2701,19 @@ namespace InteractML
         }
 
         /// <summary>
-        /// Returns the name of the key / button connected to the Run nodeport
+        /// Is there a key/button connected to the train button?
         /// </summary>
         /// <returns></returns>
-        public string GetRunKeyButtonName()
+        public bool IsTrainKeyButtonConnected()
+        {
+            var port = GetPort("ToggleTrainInputBoolPort");
+            return port.IsConnected;
+        }
+
+        public string GetConnectedKeyButtonName(string portName)
         {
             string buttonName = "";
-            var port = GetPort("ToggleRunInputBoolPort");
+            var port = GetPort(portName);
             if (port.IsConnected)
             {
                 var hardwareInputPort = port.GetConnection(0);
@@ -2702,6 +2721,24 @@ namespace InteractML
                 if (hardwareInputNode != null) buttonName = hardwareInputNode.GetButtonName();
             }
             return buttonName;
+        }
+
+        /// <summary>
+        /// Returns the name of the key / button connected to the Run nodeport
+        /// </summary>
+        /// <returns></returns>
+        public string GetRunKeyButtonName()
+        {
+            return GetConnectedKeyButtonName("ToggleRunInputBoolPort");
+        }
+
+        /// <summary>
+        /// Returns the name of the key / button connected to the Train nodeport
+        /// </summary>
+        /// <returns></returns>
+        public string GetTrainKeyButtonName()
+        {
+            return GetConnectedKeyButtonName("ToggleTrainInputBoolPort");
         }
 
         #region Repair Lists Methods
