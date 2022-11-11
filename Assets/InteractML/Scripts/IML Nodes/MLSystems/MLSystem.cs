@@ -2932,6 +2932,17 @@ namespace InteractML
         {
             if (classLabel != null)
             {
+                if (InputFeatures == null)
+                {
+                    // attempt a repair
+                    // Update Input Config List
+                    UpdateInputConfigList();
+                    //Check if the vector length of connected inputs matches the training examples connected
+                    CheckLengthInputsVector();
+                    //Check if number of inputs connected matches training examples 
+                    CheckLiveDataInputMatchesTrainingExamples();
+                }
+
                 // Make sure list is init
                 if (m_TestingData == null) m_TestingData = new List<List<IMLTrainingExample>>();
                 List<IMLTrainingExample> ourTrainingDataList = null;
