@@ -413,7 +413,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 4
+  Counter: 3
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -423,8 +423,8 @@ MonoBehaviour:
   GameObjInputMissing: 0
   m_PositionExtracted:
     m_Values:
-    - 16.614698
-    - 3.2105086
+    - 0
+    - 0
     - 8
 --- !u!114 &-2159249642620680303
 MonoBehaviour:
@@ -475,7 +475,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 4
+  Counter: 3
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -1268,7 +1268,7 @@ MonoBehaviour:
   id: 793b582e-2a56-4e56-8b98-db6ef9239645
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 19890
+  ScriptHashCode: 20414
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: colour
@@ -1699,7 +1699,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 4
+  Counter: 3
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -1820,7 +1820,7 @@ MonoBehaviour:
   - 0
   DelayedPredictedOutput:
   - 2
-  m_NumExamplesTrainedOn: 90
+  m_NumExamplesTrainedOn: 11
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_trainingType: 0
@@ -1828,14 +1828,14 @@ MonoBehaviour:
   EnableKeyboardControl: 1
   TrainingKey: 116
   RunningKey: 0
-  m_TotalNumUniqueClasses: 2
+  m_TotalNumUniqueClasses: 1
   m_TotalUniqueTrainingClasses: []
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
   matchLiveDataInputs: 1
   matchVectorLength: 1
   warning: You are in edit mode live data in from objects will only workin play mode
-  error: 0
+  error: 1
   trainOnLoad: 1
   m_TestingDataCollectedThisIteration: 1
   StartDelay: 0
@@ -1963,8 +1963,8 @@ MonoBehaviour:
   id: 2ec5d66c-818a-4e86-bb5a-78cb98627060
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
-  state: 0
-  GOHashCode: 19858
+  state: 1
+  GOHashCode: 20382
   CreatedDuringPlaymode: 0
 --- !u!114 &6706033486161563140
 MonoBehaviour:
@@ -2386,7 +2386,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 4
+  Counter: 3
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
