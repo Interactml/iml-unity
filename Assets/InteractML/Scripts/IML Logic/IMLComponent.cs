@@ -2048,7 +2048,7 @@ namespace InteractML
                             if (scriptNode.ScriptHashCode != default(int))
                             {
                                 // Check if the script is contained in the components with IML Data
-                                var result = ComponentsWithIMLData.Select(x => x.GameComponent).Where(gameComponent => gameComponent.GetHashCode() == scriptNode.ScriptHashCode);                                
+                                var result = ComponentsWithIMLData.Select(x => x.GameComponent).Where(gameComponent => gameComponent != null && gameComponent.GetHashCode() == scriptNode.ScriptHashCode);                                
                                 var script = result.FirstOrDefault();
                                 // If we found the script...
                                 if (script != null)
