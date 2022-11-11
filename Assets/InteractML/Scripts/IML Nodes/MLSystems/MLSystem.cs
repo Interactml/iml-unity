@@ -1959,7 +1959,7 @@ namespace InteractML
                     }
                     else
                     {
-                        Debug.Log("Training Examples Node [" + i + "] is null!");
+                        //Debug.Log("Training Examples Node [" + i + "] is null!");
                     }
                 }
             }
