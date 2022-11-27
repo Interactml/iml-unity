@@ -978,7 +978,7 @@ namespace InteractML
             if (m_UseTestingState)
             {
                 // At first, if the testing hasn't been done, do collecting testing data!
-                if (!m_Running && !Testing && !AllTestingClassesCollected)
+                if (!m_Running && !Testing && !AllTestingClassesCollected && CanRun())
                 {
                     StartTesting();
                     //success = true;
