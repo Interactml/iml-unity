@@ -284,7 +284,7 @@ namespace InteractML
                 }
             }
             // If rapidlib reference is null we draw a disabled button
-            if (((m_MLSystem.Model == null || m_MLSystem.Model.ModelAddress == (IntPtr)0 || m_MLSystem.Training || m_MLSystem.Untrained || !m_MLSystem.matchLiveDataInputs || !m_MLSystem.matchVectorLength)
+            if (((!m_MLSystem.CanRun())
                 // And If the system isn't running as well
                 && !m_MLSystem.Running)
                 // OR if the node is testing!

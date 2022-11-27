@@ -21,6 +21,11 @@ namespace InteractML
         /// </summary>
         public IntPtr ModelAddress { get => m_ModelAddress; }
 
+        /// <summary>
+        /// Is the model init?
+        /// </summary>
+        public bool IsInit { get => m_ModelAddress != null || m_ModelAddress != (IntPtr)0 ? true : false; }
+
         string m_ModelJSONString;
         /// <summary>
         /// The json string containing all info of a model

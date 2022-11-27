@@ -952,6 +952,25 @@ namespace InteractML
             
         }
 
+        /// <summary>
+        /// Method with conditions that need to be met to run the model
+        /// </summary> 
+        public bool CanRun()
+        {
+            bool canRun = false;
+            // If the system is not running and it is trained, it is not traing and the vectors match 
+            if (Model.IsInit && TotalNumTrainingDataConnected > 0 && !m_Running && Trained && !Training && matchLiveDataInputs && matchVectorLength) 
+            {
+                canRun = true;
+            }
+            else
+            {
+                canRun = false;
+            }
+
+            return canRun;
+        }
+
         public bool ToggleRunning()
         {
             bool success = false;
@@ -1038,8 +1057,8 @@ namespace InteractML
             if (!m_Running)
             {
                 UpdateOutputFormat();
-                // If the system is not running and it is trained, it is not traing and the vectors match 
-                if (!m_Running && Trained && !Training && matchLiveDataInputs && matchVectorLength)
+                
+                if (CanRun())
                 {
                     // Set flag to true if running inputs/outputs are not null and the model is trained or it is a series 
                     if (((m_RapidlibInputVector != null && m_RapidlibOutputVector != null) || m_trainingType == IMLSpecifications.TrainingSetType.SeriesTrainingExamples))
