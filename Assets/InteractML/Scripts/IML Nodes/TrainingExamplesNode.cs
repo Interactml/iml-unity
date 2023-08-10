@@ -140,6 +140,16 @@ namespace InteractML
         /// </summary>
         public List<IMLTrainingExample> UniqueClasses { get { return m_UniqueClasses; } }
 
+        /// <summary>
+        /// All unique types of training series classes in dataset
+        /// </summary>
+        [SerializeField, HideInInspector]
+        protected List<string> m_UniqueSeriesClasses;
+        /// <summary>
+        /// Unique types of training classes in dataset
+        /// </summary>
+        public List<string> UniqueSeriesClasses { get { return m_UniqueSeriesClasses; } }
+
         protected int m_NumUniqueClasses;
         /// <summary>
         /// How many different training classes is this dataset storing?
@@ -700,7 +710,8 @@ namespace InteractML
             }
 
             // Delete known unique training classes
-            m_UniqueClasses.Clear();
+            if (m_UniqueClasses != null) m_UniqueClasses.Clear();
+            if (m_UniqueSeriesClasses != null) m_UniqueSeriesClasses.Clear();
             m_NumUniqueClasses = 0;
             
             if (deleteFromDisk)
@@ -998,6 +1009,32 @@ namespace InteractML
         }
 
         // TO DO: load unique classes from DTW dataset
+        public static void SetUniqueSeriesClassesFromDataVector(ref List<string> uniqueClassesList, ref int numUniqueClasses, List<IMLTrainingSeries> trainingSeriesList)
+        {
+            // Make sure unique classes list is init
+            if (uniqueClassesList == null) uniqueClassesList = new List<string>();
+            // Clear previously known classes
+            uniqueClassesList.Clear();
+            numUniqueClasses = 0;
+
+            // if there are training examples loaded...
+            if (trainingSeriesList != null && trainingSeriesList.Count > 0)
+            {
+                // Go through dataset
+                foreach (var trainingExample in trainingSeriesList)
+                {
+                    // If list of unique training classes doesn't contain output...
+                    if (!uniqueClassesList.Where(trainingClass => string.Equals(trainingClass, trainingExample.LabelSeries)).Any())
+                    {
+                        // Is a new training class, add it to list
+                        uniqueClassesList.Add(trainingExample.LabelSeries);
+                        numUniqueClasses++;
+                    }
+                }
+            }
+
+
+        }
 
 
         #endregion
@@ -1108,6 +1145,22 @@ namespace InteractML
 
                 // Add features to series
                 m_SingleSeries.AddFeatures(featuresInput, label);
+
+                // UNIQUE CLASSES LOGIC
+                // Make sure unique classes list is init
+                if (m_UniqueSeriesClasses == null) m_UniqueSeriesClasses = new List<string>();
+
+                // If list of unique training classes doesn't contain output...
+                if (!m_UniqueSeriesClasses.Where(trainingClass => string.Equals(trainingClass, label)).Any())
+                {
+                    // Is a new training class, add it to list
+                    m_UniqueSeriesClasses.Add(label);
+                    m_NumUniqueClasses++;
+                }
+
+                //update connected MLSystem node with no of training examples
+                UpdateConnectMLSystems();
+
             }
         }
 
@@ -1212,7 +1265,10 @@ namespace InteractML
             if (m_TrainingExamplesVector.Count > 0 || m_TrainingSeriesCollection.Count > 0)
             {
                 UpdateDesiredInputOutputConfigFromDataVector();
-                SetUniqueClassesFromDataVector(ref m_UniqueClasses, ref m_NumUniqueClasses, m_TrainingExamplesVector);
+                if (m_TrainingExamplesVector.Count > 0)
+                    SetUniqueClassesFromDataVector(ref m_UniqueClasses, ref m_NumUniqueClasses, m_TrainingExamplesVector);
+                else if (m_TrainingSeriesCollection.Count > 0)
+                    SetUniqueSeriesClassesFromDataVector(ref m_UniqueSeriesClasses, ref m_NumUniqueClasses, m_TrainingSeriesCollection);
             }
         }
 

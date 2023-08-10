@@ -170,6 +170,12 @@ namespace InteractML
         [SerializeField, HideInInspector]
         protected List<IMLTrainingExample> m_TotalUniqueTrainingClasses;
         public List<IMLTrainingExample> TotalUniqueTrainingClasses { get => m_TotalUniqueTrainingClasses; }
+        /// <summary>
+        /// All the unique training series classes for this model
+        /// </summary>
+        [SerializeField, HideInInspector]
+        protected List<string> m_TotalUniqueTrainingSeriesClasses;
+        public List<string> TotalUniqueTrainingSeriesClasses { get => m_TotalUniqueTrainingSeriesClasses; }
 
         /// <summary>
         /// Vector used to compute the realtime predictions in rapidlib based on the training data
@@ -2124,6 +2130,14 @@ namespace InteractML
             List<RapidlibTrainingSerie> seriesToReturn = new List<RapidlibTrainingSerie>();
             // Reset number of series
             numSeries = 0;
+
+            // Make sure unique training classes is init
+            if (m_TotalUniqueTrainingSeriesClasses == null) m_TotalUniqueTrainingSeriesClasses = new List<string>();
+            // Empty unique training classes (we are going to retrain the model)
+            m_TotalUniqueTrainingSeriesClasses.Clear();
+            m_TotalNumUniqueClasses = 0;
+
+
             // Go through all the IML Training Examples if we can
             if (!Lists.IsNullOrEmpty(ref trainingNodesIML))
             {
@@ -2133,6 +2147,9 @@ namespace InteractML
                     // If there are training series in this node...
                     if (trainingNodesIML[i].TrainingSeriesCollection.Count > 0)
                     {
+                        // Pull all unique classes the model will be trained on
+                        AddUniqueOutputs(trainingNodesIML[i], ref m_TotalUniqueTrainingSeriesClasses, ref m_TotalNumUniqueClasses);
+
                         foreach (var IMLSeries in trainingNodesIML[i].TrainingSeriesCollection)
                         {
                             // Add each series to the rapidlib series list to return
@@ -2803,6 +2820,34 @@ namespace InteractML
             }
 
         }
+
+        /// <summary>
+        /// Adds all unique training classes from the outputs in a training dataset
+        /// </summary>
+        /// <param name="trainingExamplesNode"></param>
+        /// <param name="uniqueClassesKnown"></param>
+        protected void AddUniqueOutputs(TrainingExamplesNode trainingExamplesNode, ref List<string> uniqueClassesKnown, ref int totalNumUniqueClasses)
+        {
+            if (uniqueClassesKnown == null)
+                uniqueClassesKnown = new List<string>();
+
+            // Pull all unique classes the model will be trained on
+            if (trainingExamplesNode.UniqueSeriesClasses != null && trainingExamplesNode.UniqueSeriesClasses.Count > 0)
+            {
+                foreach (var trainingClass in trainingExamplesNode.UniqueSeriesClasses)
+                {
+                    // Is there a new unique trainingClass in this node? 
+                    if (!uniqueClassesKnown.Where(uniqueClassKnown => string.Equals(trainingClass, uniqueClassKnown)).Any())
+                    {
+                        // If so, add it to our list of unique trainingClasses
+                        uniqueClassesKnown.Add(trainingClass);
+                        totalNumUniqueClasses++;
+                    }
+                }
+            }
+
+        }
+
 
         /// <summary>
         /// Reloads all unique outputs based on training examples nodes passed in
