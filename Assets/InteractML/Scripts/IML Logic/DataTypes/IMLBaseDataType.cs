@@ -26,6 +26,18 @@ namespace InteractML
         public abstract void SetValues(float[] newValues);
 
         /// <summary>
+        /// Returns internal values as a string
+        /// </summary>
+        /// <returns></returns>
+        public virtual string GetValuesString()
+        {
+            if (Values == null)
+                throw new System.NullReferenceException("Values are null when accessed in IMLBaseDataType");
+            string values = string.Join(",", Values);            
+            return values;
+        }
+
+        /// <summary>
         /// Adds an amount to the internal data structure
         /// </summary>
         /// <param name="amount"></param>

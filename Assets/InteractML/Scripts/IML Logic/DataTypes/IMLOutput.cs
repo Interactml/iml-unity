@@ -35,6 +35,17 @@ namespace InteractML
 
         }
 
+        public string GetOutputDataString()
+        {
+            if (OutputData == null)
+            {
+                throw new NullReferenceException("Output Data is null when accessed!");
+            }
+
+            return OutputData.GetValuesString();
+
+        }
+
     }
 
 }

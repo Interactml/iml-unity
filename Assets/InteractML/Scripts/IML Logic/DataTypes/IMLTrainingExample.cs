@@ -162,5 +162,23 @@ namespace InteractML
 
             return returnValues;
         }
+        
+        public string GetOutputsString()
+        {
+
+            if (m_Outputs == null)
+                m_Outputs = new List<IMLOutput>();
+
+            // OUTPUT VECTOR STRING
+            string outputsString = "";
+            // Go through all Output features in IML Training Example and get their size
+            for (int k = 0; k < m_Outputs.Count; k++)
+            {
+                outputsString = string.Join(",", outputsString, m_Outputs[k].GetOutputDataString());
+            }
+
+            return outputsString;
+
+        }
     }
 }
