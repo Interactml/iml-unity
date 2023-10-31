@@ -15,7 +15,10 @@ namespace InteractML
         // reference to the graph
         private IMLGraph graph;
 
-        private bool m_UseTestingState = true;
+        /// <summary>
+        /// Controls whether Regression and DTW nodes show
+        /// </summary>
+        private bool m_UseTestingState = false;
 
         /// <summary>
         /// initialise graph reference when created
