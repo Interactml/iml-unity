@@ -2053,7 +2053,7 @@ namespace InteractML
             if (!alreadyChecked)
             {
                 // if the number of input features connected is the same to that of the connected training examples set matching to true
-                matchLiveDataInputs = (numberOfTrainingDataInputs == GetInputPort("InputFeatures").GetConnections().Count()) ?  true : false;
+                matchLiveDataInputs = (GetInputPort("InputFeatures") != null && (numberOfTrainingDataInputs == GetInputPort("InputFeatures").GetConnections().Count())) ?  true : false;
             }                
 
         }
