@@ -52,7 +52,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 1
+  Counter: 4
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -106,7 +106,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 1
+  Counter: 4
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -145,7 +145,7 @@ MonoBehaviour:
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
   state: 0
-  GOHashCode: 23662
+  GOHashCode: 24728
   CreatedDuringPlaymode: 0
 --- !u!114 &-5924435642314681474
 MonoBehaviour:
@@ -708,7 +708,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 1
+  Counter: 4
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -721,40 +721,6 @@ MonoBehaviour:
     - -77.77
     - 151.2
     - 18.13
---- !u!114 &-1440914878965251900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
-  m_Name: colorChanger (Script)
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 744, y: -8}
-  ports:
-    keys:
-    - SetAbsoluteColour
-    values:
-    - _fieldName: SetAbsoluteColour
-      _node: {fileID: -1440914878965251900}
-      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-  id: 92f617d8-3db8-4586-95a2-8055c8aead12
-  numberInComponentList: -1
-  m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 23704
-  m_PortsPerFieldInfo:
-    m_keys: []
-  CreatedDuringPlaymode: 0
 --- !u!114 &-1056633813424785009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1287,7 +1253,7 @@ MonoBehaviour:
   RecordDataKey: 0
   showWarning: 0
   canCollect: 1
-  listNo: 2
+  listNo: 0
   SubFolderDataPath: 
 --- !u!114 &11400000
 MonoBehaviour:
@@ -1711,54 +1677,9 @@ MonoBehaviour:
   id: f3e315e7-b9b8-48ba-97f9-ab518242a33d
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 23704
+  ScriptHashCode: 24770
   m_PortsPerFieldInfo:
-    m_keys:
-    - _fieldName: colour
-      _node: {fileID: 1680446731028304498}
-      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_Out
-        node: {fileID: -8809672337999772747}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-  CreatedDuringPlaymode: 0
---- !u!114 &3096610333751521317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
-  m_Name: Capsule (GameObject)
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: -968, y: 56}
-  ports:
-    keys:
-    - GameObjectDataOut
-    values:
-    - _fieldName: GameObjectDataOut
-      _node: {fileID: 3096610333751521317}
-      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 0
-  id: 4e3416e5-8a9d-4be5-ad45-791b75b3711e
-  numberInComponentList: -1
-  GameObjectDataOut: {fileID: 0}
-  state: 0
-  GOHashCode: 23662
+    m_keys: []
   CreatedDuringPlaymode: 0
 --- !u!114 &3740228562435652138
 MonoBehaviour:

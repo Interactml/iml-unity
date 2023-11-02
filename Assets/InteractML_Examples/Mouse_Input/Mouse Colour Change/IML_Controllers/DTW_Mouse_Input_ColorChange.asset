@@ -372,7 +372,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 4
+  Counter: 1
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -419,7 +419,7 @@ MonoBehaviour:
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
   state: 0
-  GOHashCode: 24594
+  GOHashCode: 24832
   CreatedDuringPlaymode: 0
 --- !u!114 &-4001488984950691715
 MonoBehaviour:
@@ -470,7 +470,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 4
+  Counter: 1
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -871,7 +871,7 @@ MonoBehaviour:
   id: faea245a-5858-4f4e-b956-05f542cb3b58
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 24650
+  ScriptHashCode: 24888
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: colour
@@ -964,7 +964,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 4
+  Counter: 1
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -1018,7 +1018,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 4
+  Counter: 1
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
