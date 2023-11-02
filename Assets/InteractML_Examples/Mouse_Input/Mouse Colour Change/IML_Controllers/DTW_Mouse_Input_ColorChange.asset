@@ -155,6 +155,12 @@ MonoBehaviour:
   ModeOfCollection: 1
   m_DesiredInputsConfig: 03000000
   m_DesiredOutputsConfig: 01000000
+  m_UniqueClasses: []
+  m_UniqueSeriesClasses:
+  - "[\r\n  {\r\n    \"Values\": [\r\n      1.0\r\n    ],\r\n    \"DataType\": 1\r\n 
+    }\r\n]"
+  - "[\r\n  {\r\n    \"Values\": [\r\n      2.0\r\n    ],\r\n    \"DataType\": 1\r\n 
+    }\r\n]"
   MLSystemNodesConnected:
   - {fileID: -7185948775889766281}
   StartDelay: 0
@@ -189,6 +195,7 @@ MonoBehaviour:
     - ToggleRunInputBool
     - ToggleTrainInputBoolPort
     - ToggleRunInputBoolPort
+    - Out 0 (Int)
     values:
     - _fieldName: IMLTrainingExamplesNodes
       _node: {fileID: -7185948775889766281}
@@ -267,6 +274,18 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+    - _fieldName: Out 0 (Int)
+      _node: {fileID: -7185948775889766281}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_In
+        node: {fileID: 4530786106063301245}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   id: 58164a29-d238-4d5e-a53a-2b8fea136f7c
   numberInComponentList: -1
   IMLTrainingExamplesNodes:
@@ -285,13 +304,25 @@ MonoBehaviour:
   EnableKeyboardControl: 0
   TrainingKey: 0
   RunningKey: 0
+  m_TotalNumUniqueClasses: 2
+  m_TotalUniqueTrainingClasses: []
+  m_TotalUniqueTrainingSeriesClasses:
+  - "[\r\n  {\r\n    \"Values\": [\r\n      1.0\r\n    ],\r\n    \"DataType\": 1\r\n 
+    }\r\n]"
+  - "[\r\n  {\r\n    \"Values\": [\r\n      2.0\r\n    ],\r\n    \"DataType\": 1\r\n 
+    }\r\n]"
   TrainOnPlaymodeChange: 1
-  RunOnAwake: 1
+  RunOnAwake: 0
   matchLiveDataInputs: 1
   matchVectorLength: 1
   warning: You are in edit mode live data in from objects will only workin play mode
   error: 1
   trainOnLoad: 0
+  m_TestingDataCollectedThisIteration: 1
+  StartDelay: 0
+  CaptureRate: 10
+  RecordTime: -1
+  m_AllRatingQuestionsAnswered: 0
 --- !u!114 &-5672025770827786827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,7 +372,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 1
+  Counter: 4
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -354,73 +385,6 @@ MonoBehaviour:
     - -7.36
     - 2.07
     - 3.9
---- !u!114 &-5020083817285506259
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
-  m_Name: colorChanger (Script)
-  m_EditorClassIdentifier: 
-  graph: {fileID: 11400000}
-  position: {x: 2168, y: -280}
-  ports:
-    keys:
-    - SetAbsoluteColour
-    - array1
-    - array2
-    - send
-    values:
-    - _fieldName: SetAbsoluteColour
-      _node: {fileID: -5020083817285506259}
-      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_Out
-        node: {fileID: 848793323497249020}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: array1
-      _node: {fileID: -5020083817285506259}
-      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: array2
-      _node: {fileID: -5020083817285506259}
-      _typeQualifiedName: System.Single[], mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-    - _fieldName: send
-      _node: {fileID: -5020083817285506259}
-      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections: []
-      _direction: 1
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
-  id: 713cd1d3-f011-4638-9104-c9c8fd9382fc
-  numberInComponentList: -1
-  m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 15514
-  m_PortsPerFieldInfo:
-    m_keys: []
-  CreatedDuringPlaymode: 0
 --- !u!114 &-4252377271869290375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,7 +419,7 @@ MonoBehaviour:
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
   state: 0
-  GOHashCode: 15458
+  GOHashCode: 24594
   CreatedDuringPlaymode: 0
 --- !u!114 &-4001488984950691715
 MonoBehaviour:
@@ -501,16 +465,16 @@ MonoBehaviour:
   numberInComponentList: -1
   ValueName: 
   m_In: 0
-  m_Value: 0
+  m_Value: 2
   m_Out: 0
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 1
+  Counter: 4
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
-  - 0
+  - 2
 --- !u!114 &-2133740154751886441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -874,6 +838,55 @@ MonoBehaviour:
   - Joystick8Button18
   - Joystick8Button19
   name: Keyboard Input
+--- !u!114 &-1096152552305572337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
+  m_Name: colorChanger (Script)
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 2232, y: -264}
+  ports:
+    keys:
+    - colour
+    values:
+    - _fieldName: colour
+      _node: {fileID: -1096152552305572337}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: 848793323497249020}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  id: faea245a-5858-4f4e-b956-05f542cb3b58
+  numberInComponentList: -1
+  m_ScriptInternal: {fileID: 0}
+  ScriptHashCode: 24650
+  m_PortsPerFieldInfo:
+    m_keys:
+    - _fieldName: colour
+      _node: {fileID: -1096152552305572337}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: 848793323497249020}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  CreatedDuringPlaymode: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -891,12 +904,14 @@ MonoBehaviour:
   - {fileID: -4001488984950691715}
   - {fileID: -7185948775889766281}
   - {fileID: 848793323497249020}
-  - {fileID: -5020083817285506259}
   - {fileID: -5672025770827786827}
   - {fileID: -4252377271869290375}
   - {fileID: -2133740154751886441}
   - {fileID: 7347512182463859293}
+  - {fileID: 4530786106063301245}
+  - {fileID: -1096152552305572337}
   SceneComponent: {fileID: 0}
+  m_ID: 
 --- !u!114 &848793323497249020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -933,8 +948,8 @@ MonoBehaviour:
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: SetAbsoluteColour
-        node: {fileID: -5020083817285506259}
+      - fieldName: colour
+        node: {fileID: -1096152552305572337}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -949,11 +964,65 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 1
+  Counter: 4
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
   - 0
+--- !u!114 &4530786106063301245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d534d44a87f50e4f80bf8cd2142328f, type: 3}
+  m_Name: Integer
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 1810.9298, y: 62.546204}
+  ports:
+    keys:
+    - m_In
+    - m_Out
+    values:
+    - _fieldName: m_In
+      _node: {fileID: 4530786106063301245}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: Out 0 (Int)
+        node: {fileID: -7185948775889766281}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+    - _fieldName: m_Out
+      _node: {fileID: 4530786106063301245}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  id: daecb189-ef9b-45c4-a264-ec8455d12ba6
+  numberInComponentList: -1
+  ValueName: 
+  m_In: 0
+  m_Value: 2
+  m_Out: 0
+  ReceivingData: 0
+  FeatureValueReceivingData: 00
+  InputConnected: 1
+  Counter: 4
+  Count: 5
+  ToggleSwitches: 01
+  ReceivedValue:
+  - 2
 --- !u!114 &7347512182463859293
 MonoBehaviour:
   m_ObjectHideFlags: 0
