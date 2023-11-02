@@ -49,7 +49,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 3
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -209,6 +209,8 @@ MonoBehaviour:
   ModeOfCollection: 1
   m_DesiredInputsConfig: 03000000
   m_DesiredOutputsConfig: 01000000
+  m_UniqueClasses: []
+  m_UniqueSeriesClasses: []
   MLSystemNodesConnected:
   - {fileID: 1681949129486989380}
   StartDelay: 0
@@ -216,7 +218,7 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 0
-  showWarning: 1
+  showWarning: 0
   canCollect: 1
   listNo: 0
   SubFolderDataPath: 
@@ -243,6 +245,7 @@ MonoBehaviour:
   - {fileID: 3868867034826940665}
   - {fileID: 3077310984843355560}
   SceneComponent: {fileID: 0}
+  m_ID: 
 --- !u!114 &86512709622124523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,7 +295,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 3
+  Counter: 5
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -434,6 +437,9 @@ MonoBehaviour:
   EnableKeyboardControl: 1
   TrainingKey: 116
   RunningKey: 0
+  m_TotalNumUniqueClasses: 0
+  m_TotalUniqueTrainingClasses: []
+  m_TotalUniqueTrainingSeriesClasses: []
   TrainOnPlaymodeChange: 1
   RunOnAwake: 0
   matchLiveDataInputs: 1
@@ -441,6 +447,11 @@ MonoBehaviour:
   warning: You are in edit mode live data in from objects will only workin play mode
   error: 1
   trainOnLoad: 1
+  m_TestingDataCollectedThisIteration: 0
+  StartDelay: 0
+  CaptureRate: 10
+  RecordTime: -1
+  m_AllRatingQuestionsAnswered: 0
 --- !u!114 &3077310984843355560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1219,7 +1230,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 3
+  Counter: 5
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -1257,7 +1268,7 @@ MonoBehaviour:
   id: b770b61b-4249-4971-9cfd-f9d194e3d371
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 21934
+  ScriptHashCode: 20438
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: motionController
@@ -1307,5 +1318,5 @@ MonoBehaviour:
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
   state: 1
-  GOHashCode: 21772
+  GOHashCode: 20276
   CreatedDuringPlaymode: 0
