@@ -49,7 +49,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 0
-  Counter: 5
+  Counter: 2
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -295,7 +295,7 @@ MonoBehaviour:
   numberInComponentList: -1
   ReceivingData: 0
   FeatureValueReceivingData: 000000
-  Counter: 5
+  Counter: 2
   Count: 5
   ToggleSwitches: 010101
   ReceivedValue: []
@@ -1230,7 +1230,7 @@ MonoBehaviour:
   ReceivingData: 0
   FeatureValueReceivingData: 00
   InputConnected: 1
-  Counter: 5
+  Counter: 2
   Count: 5
   ToggleSwitches: 01
   ReceivedValue:
@@ -1268,7 +1268,7 @@ MonoBehaviour:
   id: b770b61b-4249-4971-9cfd-f9d194e3d371
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 20438
+  ScriptHashCode: 24210
   m_PortsPerFieldInfo:
     m_keys:
     - _fieldName: motionController
@@ -1318,5 +1318,5 @@ MonoBehaviour:
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
   state: 1
-  GOHashCode: 20276
+  GOHashCode: 24048
   CreatedDuringPlaymode: 0
