@@ -36,8 +36,8 @@ MonoBehaviour:
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
       connections:
-      - fieldName: SetAbsoluteColour
-        node: {fileID: -1440914878965251900}
+      - fieldName: colour
+        node: {fileID: 1680446731028304498}
         reroutePoints: []
       _direction: 1
       _connectionType: 0
@@ -111,6 +111,42 @@ MonoBehaviour:
   ToggleSwitches: 01
   ReceivedValue:
   - 0
+--- !u!114 &-6289157094496160936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43fc602e16b045142bc5c26d2ce145a6, type: 3}
+  m_Name: Capsule (GameObject)
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: -1048, y: -24}
+  ports:
+    keys:
+    - GameObjectDataOut
+    values:
+    - _fieldName: GameObjectDataOut
+      _node: {fileID: -6289157094496160936}
+      _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      connections:
+      - fieldName: GameObjectDataIn
+        node: {fileID: -1488345423759169497}
+        reroutePoints: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 0
+  id: fe4ca23e-4c04-48d5-ae2e-079b4a045562
+  numberInComponentList: -1
+  GameObjectDataOut: {fileID: 0}
+  state: 0
+  GOHashCode: 23662
+  CreatedDuringPlaymode: 0
 --- !u!114 &-5924435642314681474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,6 +170,7 @@ MonoBehaviour:
     - ToggleTrainInputBoolPort
     - ToggleRunInputBoolPort
     - Output 0
+    - Out 0 (Int)
     values:
     - _fieldName: IMLTrainingExamplesNodes
       _node: {fileID: -5924435642314681474}
@@ -215,6 +252,15 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 1
+    - _fieldName: Out 0 (Int)
+      _node: {fileID: -5924435642314681474}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections: []
+      _direction: 1
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
   id: f2ce0e37-69a0-4214-9cd6-6e9f69787825
   numberInComponentList: -1
   IMLTrainingExamplesNodes:
@@ -224,10 +270,10 @@ MonoBehaviour:
   ToggleTrainInputBool: 0
   ToggleRunInputBool: 0
   PredictedRapidlibOutput:
-  - 1
+  - 0
   DelayedPredictedOutput:
   - 1
-  m_NumExamplesTrainedOn: 2
+  m_NumExamplesTrainedOn: 0
   m_ExpectedInputList: 03000000
   m_ExpectedOutputList: 01000000
   m_trainingType: 0
@@ -235,6 +281,9 @@ MonoBehaviour:
   EnableKeyboardControl: 1
   TrainingKey: 116
   RunningKey: 0
+  m_TotalNumUniqueClasses: 0
+  m_TotalUniqueTrainingClasses: []
+  m_TotalUniqueTrainingSeriesClasses: []
   TrainOnPlaymodeChange: 0
   RunOnAwake: 0
   matchLiveDataInputs: 1
@@ -242,6 +291,11 @@ MonoBehaviour:
   warning: You are in edit mode live data in from objects will only workin play mode
   error: 1
   trainOnLoad: 1
+  m_TestingDataCollectedThisIteration: 0
+  StartDelay: 0
+  CaptureRate: 10
+  RecordTime: -1
+  m_AllRatingQuestionsAnswered: 0
 --- !u!114 &-4731633178876650026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,7 +684,7 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       connections:
       - fieldName: GameObjectDataOut
-        node: {fileID: 3096610333751521317}
+        node: {fileID: -6289157094496160936}
         reroutePoints: []
       _direction: 0
       _connectionType: 0
@@ -689,10 +743,7 @@ MonoBehaviour:
       _node: {fileID: -1440914878965251900}
       _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
         PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_Out
-        node: {fileID: -8809672337999772747}
-        reroutePoints: []
+      connections: []
       _direction: 0
       _connectionType: 0
       _typeConstraint: 0
@@ -700,21 +751,9 @@ MonoBehaviour:
   id: 92f617d8-3db8-4586-95a2-8055c8aead12
   numberInComponentList: -1
   m_ScriptInternal: {fileID: 0}
-  ScriptHashCode: 15388
+  ScriptHashCode: 23704
   m_PortsPerFieldInfo:
-    m_keys:
-    - _fieldName: SetAbsoluteColour
-      _node: {fileID: -1440914878965251900}
-      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
-        PublicKeyToken=b77a5c561934e089
-      connections:
-      - fieldName: m_Out
-        node: {fileID: -8809672337999772747}
-        reroutePoints: []
-      _direction: 0
-      _connectionType: 0
-      _typeConstraint: 0
-      _dynamic: 1
+    m_keys: []
   CreatedDuringPlaymode: 0
 --- !u!114 &-1056633813424785009
 MonoBehaviour:
@@ -1237,6 +1276,8 @@ MonoBehaviour:
   ModeOfCollection: 0
   m_DesiredInputsConfig: 03000000
   m_DesiredOutputsConfig: 01000000
+  m_UniqueClasses: []
+  m_UniqueSeriesClasses: []
   MLSystemNodesConnected:
   - {fileID: -5924435642314681474}
   StartDelay: 0
@@ -1244,9 +1285,9 @@ MonoBehaviour:
   RecordTime: -1
   EnableKeyboardControl: 0
   RecordDataKey: 0
-  showWarning: 1
+  showWarning: 0
   canCollect: 1
-  listNo: 0
+  listNo: 2
   SubFolderDataPath: 
 --- !u!114 &11400000
 MonoBehaviour:
@@ -1261,18 +1302,19 @@ MonoBehaviour:
   m_Name: Classification_mouse_input_colorchange
   m_EditorClassIdentifier: 
   nodes:
-  - {fileID: 3096610333751521317}
   - {fileID: -5924435642314681474}
   - {fileID: -6454712093436097475}
   - {fileID: -632994164534965650}
   - {fileID: -1488345423759169497}
   - {fileID: 65732278623731996}
-  - {fileID: -1440914878965251900}
   - {fileID: -4731633178876650026}
   - {fileID: -8809672337999772747}
   - {fileID: 3740228562435652138}
   - {fileID: -1056633813424785009}
+  - {fileID: -6289157094496160936}
+  - {fileID: 1680446731028304498}
   SceneComponent: {fileID: 0}
+  m_ID: 
 --- !u!114 &65732278623731996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1636,6 +1678,55 @@ MonoBehaviour:
   - Joystick8Button18
   - Joystick8Button19
   name: Keyboard Input
+--- !u!114 &1680446731028304498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e955aaefcc0cc3438b670a24cf66a3a, type: 3}
+  m_Name: colorChanger (Script)
+  m_EditorClassIdentifier: 
+  graph: {fileID: 11400000}
+  position: {x: 856, y: -8}
+  ports:
+    keys:
+    - colour
+    values:
+    - _fieldName: colour
+      _node: {fileID: 1680446731028304498}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: -8809672337999772747}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  id: f3e315e7-b9b8-48ba-97f9-ab518242a33d
+  numberInComponentList: -1
+  m_ScriptInternal: {fileID: 0}
+  ScriptHashCode: 23704
+  m_PortsPerFieldInfo:
+    m_keys:
+    - _fieldName: colour
+      _node: {fileID: 1680446731028304498}
+      _typeQualifiedName: System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral,
+        PublicKeyToken=b77a5c561934e089
+      connections:
+      - fieldName: m_Out
+        node: {fileID: -8809672337999772747}
+        reroutePoints: []
+      _direction: 0
+      _connectionType: 0
+      _typeConstraint: 0
+      _dynamic: 1
+  CreatedDuringPlaymode: 0
 --- !u!114 &3096610333751521317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1658,10 +1749,7 @@ MonoBehaviour:
       _node: {fileID: 3096610333751521317}
       _typeQualifiedName: UnityEngine.GameObject, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-      connections:
-      - fieldName: GameObjectDataIn
-        node: {fileID: -1488345423759169497}
-        reroutePoints: []
+      connections: []
       _direction: 1
       _connectionType: 0
       _typeConstraint: 0
@@ -1670,7 +1758,7 @@ MonoBehaviour:
   numberInComponentList: -1
   GameObjectDataOut: {fileID: 0}
   state: 0
-  GOHashCode: 15332
+  GOHashCode: 23662
   CreatedDuringPlaymode: 0
 --- !u!114 &3740228562435652138
 MonoBehaviour:
