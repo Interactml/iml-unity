@@ -965,7 +965,7 @@ namespace InteractML
         {
             bool canRun = false;
             // If the system is not running and it is trained, it is not traing and the vectors match 
-            if (Model.IsInit && TotalNumTrainingDataConnected > 0 && !m_Running && Trained && !Training && matchLiveDataInputs && matchVectorLength) 
+            if (Model != null && Model.IsInit && TotalNumTrainingDataConnected > 0 && !m_Running && Trained && !Training && matchLiveDataInputs && matchVectorLength) 
             {
                 canRun = true;
             }
