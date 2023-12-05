@@ -61,6 +61,8 @@ namespace InteractML.ControllerCustomisers
         public override string GetButtonName()
         {
             string buttonName = button.button.name;
+            string controllerName = System.Enum.GetName(typeof(IMLSides), hand);
+            buttonName = string.Concat(controllerName, buttonName);
             return buttonName;
         }
 
