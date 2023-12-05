@@ -19,12 +19,15 @@ namespace InteractML.ControllerCustomisers
         VRTrigger press;
         int count = 0;
         int counter = 4;
+        GUIStyle style;
 
 
         public override void OnBodyGUI()
         {
             press = target as VRTrigger;
             base.OnBodyGUI();
+            if (style == null)
+                style = Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label");
         }
 
 
@@ -35,7 +38,7 @@ namespace InteractML.ControllerCustomisers
             GUILayout.Space(-80);
             GUILayout.BeginHorizontal();
             GUILayout.Space(10);
-            GUILayout.Label("Controller", Resources.Load<GUISkin>("GUIStyles/InteractMLGUISkin").GetStyle("Port Label"), GUILayout.MinWidth(100));
+            GUILayout.Label("Controller", style, GUILayout.MinWidth(100));
             press.hand = (IMLSides)EditorGUILayout.EnumPopup(press.hand);
                 press.OnSideChange();
                 //mark as changed
